@@ -10,7 +10,7 @@ let portCounter = 11000;
 
 export const startFixture = (fixtureName: string): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    const config = require(`${fixtureName}/webpack.config.js`);
+    const config = require(`../fixtures/${fixtureName}/webpack.config.js`);
     const compiler = webpack(config);
 
     const port = portCounter++;
