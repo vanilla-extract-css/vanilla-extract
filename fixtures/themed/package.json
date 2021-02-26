@@ -1,0 +1,22 @@
+{
+  "name": "@treat/fixture-themed",
+  "version": "1.0.0",
+  "author": "SEEK",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve"
+  },
+  "dependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@vocab/cli": "^0.0.16",
+    "@vocab/react": "^0.0.12",
+    "babel-loader": "^8.2.1",
+    "html-webpack-plugin": "^4.5.0",
+    "path-browserify": "^1.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "webpack": "^5.11.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

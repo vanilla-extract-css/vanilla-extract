@@ -1,0 +1,12 @@
+{
+  "name": "@treat/test-helpers",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Matt Jones",
+  "license": "MIT",
+  "dependencies": {
+    "@types/webpack-dev-server": "^3.11.1",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
