@@ -95,8 +95,8 @@ export function defineVars<VarContract extends Walkable>(
   return {
     className: rootVarsClassName,
     vars,
-    alternate: <AltThemeContract extends PartialAlternateContract<VarContract>>(
-      altVarContract: AltThemeContract,
+    alternate: <AltVarContract extends PartialAlternateContract<VarContract>>(
+      altVarContract: AltVarContract,
     ) => {
       // @ts-expect-error // Revisit types here, maybe even library itself
       const mergedContract = deepMerge(varContract, altVarContract);
