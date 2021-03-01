@@ -7,8 +7,12 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
+    "dedent": "^0.7.0",
     "deepmerge": "^4.2.2",
     "postcss": "^8.2.6",
     "postcss-js": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/dedent": "^0.7.0"
   }
 }

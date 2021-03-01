@@ -11,8 +11,9 @@
     "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
   "exclude": ["node_modules", "**/dist/**"],
-  "include": ["packages/**/*", "examples/**/*", "site/**/*"]
+  "include": ["packages/**/*", "examples/**/*", "site/**/*", "fixtures/themed/webpack.config.js"]
 }

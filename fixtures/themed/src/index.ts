@@ -1,12 +1,23 @@
-import { mainTheme, altTheme } from './themes.treat';
-
-import { button, rows } from './styles.treat';
+import { theme, altTheme } from './themes.treat';
+import { button, container } from './styles.treat';
 
 document.body.innerHTML = `
-  <div class="${mainTheme.className}"> 
-    <div class="${rows}">
-      <div><button class="${button}">Main theme button</button></div>
-      <div class="${altTheme.className}"><button class="${button}">Alt theme button</button></div>
+  <div> 
+    Root theme
+    <div class="${container}">
+      <button class="${button}">Main theme button</button>
+      <div class="${altTheme}"> 
+        Alt theme
+        <div class="${container}">
+          <button class="${button}">Alt theme button</button>
+          <div class="${theme.className}"> 
+            Back to root theme
+            <div class="${container}">
+              <button class="${button}">Main theme button</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 `;

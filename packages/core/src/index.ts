@@ -3,18 +3,19 @@ import postcss from 'postcss';
 // @ts-expect-error
 import postcssJs from 'postcss-js';
 import deepMerge from 'deepmerge';
+import dedent from 'dedent';
 
-type StyleRule = any;
+type PartialAlternateContract<T> = {
+  [P in keyof T]?: T[P] extends Record<string | number, unknown>
+    ? PartialAlternateContract<T[P]>
+    : T[P];
+};
 
 type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends object
     ? MapLeafNodes<Obj[Prop], LeafType>
     : LeafType;
 };
-
-type ThemeRef = string;
-
-type ThemeRefs<ThemeContract> = MapLeafNodes<ThemeContract, ThemeRef>;
 
 type Primitive = string | number | boolean;
 type WalkableValue = Primitive | WalkableObject | WalkableArray;
@@ -29,11 +30,11 @@ const styleEl = document.createElement('style');
 document.head.appendChild(styleEl);
 const styleSheet = styleEl.sheet;
 
-const walkObject = <T extends Walkable>(
+const walkObject = <T extends Walkable, MapTo>(
   obj: T,
-  fn: (value: Primitive, path: string) => string,
+  fn: (value: Primitive, path: string) => MapTo,
   path: Array<string> = [],
-) => {
+): MapLeafNodes<T, MapTo> => {
   const clone = obj.constructor();
 
   for (let key in obj) {
@@ -50,80 +51,72 @@ const walkObject = <T extends Walkable>(
   return clone;
 };
 
-const appendRule = (className: string, rule: string) => {
-  const css = `.${className} {
-        ${rule}
-    }`;
+const hashToClassName = (h: string) => (/^[0-9]/.test(h[0]) ? `_${h}` : h);
 
-  styleSheet?.insertRule(css);
+const appendCss = (selector: string, cssObj: any) => {
+  postcss()
+    .process(cssObj, { parser: postcssJs, from: undefined })
+    .then(({ css }) => {
+      const classDefinition = dedent`${selector} {
+          ${css}
+      }`;
+
+      console.log(classDefinition);
+
+      styleSheet?.insertRule(classDefinition);
+    });
 };
 
-const style = <ThemeRef, Utils>(themeRefs: ThemeRef, utils: Utils) => (
-  styleFn: (theme: ThemeRef, utils: Utils) => StyleRule,
-) => {
-  const styleValue = styleFn(themeRefs, utils);
-  const styleRuleName = `_${hash(JSON.stringify(styleValue))}`;
+export function style(css: any) {
+  const styleRuleName = hashToClassName(hash(JSON.stringify(css)));
 
-  postcss()
-    .process(styleValue, { parser: postcssJs, from: undefined })
-    .then(({ css }) => {
-      appendRule(styleRuleName, css);
-    });
+  appendCss(`.${styleRuleName}`, css);
 
   return styleRuleName;
-};
-
-interface Theme<ThemeContract, Utils> {
-  className: string;
-  style: (theme: ThemeRefs<ThemeContract>, utils: Utils) => StyleRule;
-  alternate: (theme: ThemeContract) => Theme<ThemeContract, Utils>;
 }
 
-const makeTheme = <ThemeContract extends Walkable, Utils>(baseTheme?: {
-  theme: ThemeContract;
-  themeHash: string;
-  utils: Utils | undefined;
-}) => (
-  theme: ThemeContract,
-  createUtils?: (themeRefs: ThemeRefs<ThemeContract>) => Utils,
-): Theme<ThemeContract, Utils> => {
-  // @ts-expect-error
-  const finalTheme = deepMerge(baseTheme?.theme, theme);
-  const finalThemeHash = hash(JSON.stringify(finalTheme));
-
+export function defineVars<VarContract extends Walkable>(
+  varContract: VarContract,
+) {
+  const contractHash = hash(JSON.stringify(varContract));
+  const rootVarsClassName = hashToClassName(contractHash);
   const cssVars: { [cssVarName: string]: Primitive } = {};
-  const themeHash = baseTheme?.themeHash ?? finalThemeHash;
 
-  const themeRefs: ThemeRefs<ThemeContract> = walkObject(
-    finalTheme,
-    (value, path) => {
-      const cssVarName = `--${hash(themeHash + path)}`;
+  const vars = walkObject(varContract, (value, path) => {
+    const cssVarName = `--${hash(contractHash + path)}`;
 
-      cssVars[cssVarName] = value;
+    cssVars[cssVarName] = value;
 
-      return `var(${cssVarName})`;
-    },
-  );
+    return `var(${cssVarName})`;
+  });
 
-  const utils =
-    !baseTheme && createUtils ? createUtils(themeRefs) : baseTheme?.utils;
-
-  const themeClassName = `_${finalThemeHash}`;
-
-  postcss()
-    .process(cssVars, { parser: postcssJs, from: undefined })
-    .then(({ css }) => {
-      appendRule(themeClassName, css);
-    });
+  appendCss(`:root, .${rootVarsClassName}`, cssVars);
 
   return {
-    className: themeClassName,
-    style: style(themeRefs, utils),
-    alternate: makeTheme({ theme: finalTheme, themeHash, utils }),
-  };
-};
+    className: rootVarsClassName,
+    vars,
+    alternate: <AltThemeContract extends PartialAlternateContract<VarContract>>(
+      altVarContract: AltThemeContract,
+    ) => {
+      // @ts-expect-error // Revisit types here, maybe even library itself
+      const mergedContract = deepMerge(varContract, altVarContract);
+      const altContractHash = hash(JSON.stringify(mergedContract));
+      const altVarsClassName = hashToClassName(altContractHash);
+      const altCssVars: { [cssVarName: string]: Primitive } = {};
 
-export const createTheme = <ThemeContract extends Walkable, Utils>(
-  theme: ThemeContract,
-  createUtils?: (themeRefs: ThemeRefs<ThemeContract>) => Utils,
-) => makeTheme()(theme, createUtils);
+      /* TODO 
+        - validate new variables arn't set
+        - validate arrays have the same length as contract
+      */
+      walkObject(mergedContract, (value, path) => {
+        const cssVarName = `--${hash(contractHash + path)}`;
+
+        altCssVars[cssVarName] = value;
+      });
+
+      appendCss(`.${altVarsClassName}`, altCssVars);
+
+      return altVarsClassName;
+    },
+  };
+}

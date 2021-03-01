@@ -1,32 +1,24 @@
-import { createTheme } from '@treat/core';
+import { defineVars } from '@treat/core';
 
-export const mainTheme = createTheme(
-  {
-    colors: {
-      primary: 'blue',
-      secondary: 'pink',
-    },
-    space: {
-      1: '4px',
-      2: '8px',
-      3: '12px',
-    },
-  },
-  (theme) => ({
-    paddingX: (space: number) => ({
-      paddingLeft: theme.space[space],
-      paddingRight: theme.space[space],
-    }),
-  }),
-);
-
-export const altTheme = mainTheme.alternate({
+export const theme = defineVars({
   colors: {
-    primary: 'yellow',
-    secondary: 'blue',
+    background: 'blue',
+    text: 'white',
   },
   space: {
-    1: '40px',
-    2: '80px',
+    1: '4px',
+    2: '8px',
+    3: '12px',
+  },
+});
+
+export const altTheme = theme.alternate({
+  colors: {
+    background: 'green',
+  },
+  space: {
+    1: '8px',
+    2: '12px',
+    3: '16px',
   },
 });

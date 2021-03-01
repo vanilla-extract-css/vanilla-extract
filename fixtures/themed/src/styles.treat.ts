@@ -1,15 +1,15 @@
-import { mainTheme } from './themes.treat';
+import { style } from '@treat/core';
+import { theme } from './themes.treat';
 
-const { style } = mainTheme;
+export const button = style({
+  backgroundColor: theme.vars.colors.background,
+  color: theme.vars.colors.text,
+});
 
-export const button = style((theme, utils) => ({
-  backgroundColor: theme.colors.primary,
-  color: theme.colors.secondary,
-  ...utils.paddingX(3),
-}));
-
-export const rows = style((theme) => ({
+export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[2],
-}));
+  gap: theme.vars.space[2],
+  padding: theme.vars.space[3],
+  border: `1px solid ${theme.vars.colors.background}`,
+});
