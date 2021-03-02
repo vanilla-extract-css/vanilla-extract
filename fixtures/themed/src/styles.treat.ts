@@ -8,6 +8,11 @@ export const button = [
   style({
     backgroundColor: theme.vars.colors.background,
     color: theme.vars.colors.text,
+    '@media': {
+      'only screen and (min-width: 500px)': {
+        borderRadius: '9999px',
+      },
+    },
   }),
   shadow,
 ];
@@ -18,7 +23,7 @@ export const container = style({
   gap: theme.vars.space[2],
   padding: theme.vars.space[3],
   '@media': {
-    'screen and (min-width: 500px)': {
+    'only screen and (min-width: 500px)': {
       border: `1px solid ${theme.vars.colors.background}`,
     },
   },

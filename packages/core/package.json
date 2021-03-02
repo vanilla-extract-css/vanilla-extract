@@ -10,7 +10,8 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "adapter.ts"
+      "adapter.ts",
+      "generateCss.ts"
     ]
   },
   "author": "Matt Jones",

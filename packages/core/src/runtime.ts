@@ -1,4 +1,5 @@
-import type { Adapter } from './types';
+import { generateCss } from './generateCss';
+import type { Adapter, CSS } from './types';
 
 let styleSheet: CSSStyleSheet | null;
 
@@ -14,7 +15,11 @@ function getStylesheet() {
 }
 
 export const browserRuntimeAdapter: Adapter = {
-  appendCss: (css) => {
-    getStylesheet()?.insertRule(css);
+  appendCss: (cssObj: CSS) => {
+    const css = generateCss(cssObj);
+
+    for (const rule of css) {
+      getStylesheet()?.insertRule(rule);
+    }
   },
 };

@@ -1,12 +1,7 @@
-// @ts-expect-error
-import postcssJs from 'postcss-js';
 import hash from '@emotion/hash';
 import deepMerge from 'deepmerge';
-import postcss from 'postcss';
-import dedent from 'dedent';
 
 import { appendCss } from './adapter';
-import transformCss from './transformCss';
 
 type PartialAlternateContract<T> = {
   [P in keyof T]?: T[P] extends Record<string | number, unknown>
@@ -35,21 +30,6 @@ let fileScope = 'DEFAULT_FILE_SCOPE';
 export function setFileScope(newFileScope: string) {
   refCounter = 0;
   fileScope = newFileScope;
-}
-
-function attachCssRule(selector: string, cssObj: any) {
-  const normalisedCss = transformCss(selector, cssObj);
-
-  console.log(cssObj, normalisedCss);
-
-  const { css } = postcss().process(normalisedCss, {
-    parser: postcssJs,
-    from: undefined,
-  });
-
-  // console.log(classDefinition);
-
-  appendCss(css);
 }
 
 const createFileScopeIdent = () => {
@@ -81,10 +61,10 @@ const walkObject = <T extends Walkable, MapTo>(
 
 const hashToClassName = (h: string) => (/^[0-9]/.test(h[0]) ? `_${h}` : h);
 
-export function style(css: any) {
+export function style(rules: any) {
   const styleRuleName = hashToClassName(createFileScopeIdent());
 
-  attachCssRule(`.${styleRuleName}`, css);
+  appendCss({ selector: `.${styleRuleName}`, rules }, fileScope);
 
   return styleRuleName;
 }
@@ -104,7 +84,10 @@ export function defineVars<VarContract extends Walkable>(
     return `var(${cssVarName})`;
   });
 
-  attachCssRule(`:root, .${rootVarsClassName}`, cssVars);
+  appendCss(
+    { selector: `:root, .${rootVarsClassName}`, rules: cssVars },
+    fileScope,
+  );
 
   return {
     className: rootVarsClassName,
@@ -128,7 +111,10 @@ export function defineVars<VarContract extends Walkable>(
         altCssVars[cssVarName] = value;
       });
 
-      attachCssRule(`.${altVarsClassName}`, altCssVars);
+      appendCss(
+        { selector: `.${altVarsClassName}`, rules: altCssVars },
+        fileScope,
+      );
 
       return altVarsClassName;
     },

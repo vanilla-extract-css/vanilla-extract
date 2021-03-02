@@ -3,14 +3,12 @@ import path from 'path';
 import evalCode from 'eval';
 import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
-import dedent from 'dedent';
 import { stringify } from 'javascript-stringify';
-import debug from 'debug';
+import { generateCss } from '@treat/core/generateCss';
 
+import { debug, formatResourcePath } from './logger';
 import TreatError from './TreatError';
 import { getCompiledSource } from './treatCompiler';
-
-const log = debug('treat:loader');
 
 const stringifyLoaderRequest = (loaderConfig) => {
   if (typeof loaderConfig === 'string') {
@@ -48,6 +46,10 @@ export function pitch() {
 }
 
 async function produce(loader) {
+  const log = debug(`treat:loader:${formatResourcePath(loader.resourcePath)}`);
+
+  log('Loading resource');
+
   const { outputCss } = loaderUtils.getOptions(loader);
 
   const isHmr = typeof hmr === 'boolean' ? hmr : loader.hot;
@@ -68,24 +70,31 @@ async function produce(loader) {
     );
 
     // TODO use better noop file
-    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@treat/webpack-plugin/loader`;
+    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@treat/core`;
 
-    log('%s Add CSS request %s', loader.resourcePath, cssRequest);
+    log('Add CSS request %s', cssRequest);
 
     return cssRequest;
   };
 
-  const fileCss = [];
-  let result;
+  const cssByFileScope = new Map();
 
   const __webpack_adapter__ = {
-    appendCss: (css) => {
-      fileCss.push(css);
+    appendCss: (css, fileScope) => {
+      if (outputCss) {
+        log('Adding styles for file scope %s', fileScope);
+        const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
+
+        fileScopeCss.push(css);
+
+        cssByFileScope.set(fileScope, fileScopeCss);
+      }
     },
   };
 
   const sourceWithBoundLoaderInstance = `require('@treat/core/adapter').setAdapter(__webpack_adapter__);\n${source}`;
 
+  let result;
   try {
     result = evalCode(
       sourceWithBoundLoaderInstance,
@@ -100,7 +109,16 @@ async function produce(loader) {
     throw new TreatError(e);
   }
 
-  const cssRequests = outputCss ? fileCss.map((css) => makeCssModule(css)) : [];
+  const cssRequests = [];
+
+  // TODO  ???? Why can't I iterate the Map without Array.from ????
+  for (const [_fileScope, fileScopeCss] of Array.from(
+    cssByFileScope.entries(),
+  )) {
+    const css = generateCss(...fileScopeCss).join('\n');
+
+    cssRequests.push(makeCssModule(css));
+  }
 
   return serializeTreatModule(loader, cssRequests, result, isHmr);
 }

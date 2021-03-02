@@ -1,0 +1,8 @@
+{
+  "main": "dist/treat-core-generateCss.cjs.js",
+  "module": "dist/treat-core-generateCss.esm.js",
+  "browser": {
+    "./dist/treat-core-generateCss.cjs.js": "./dist/treat-core-generateCss.browser.cjs.js",
+    "./dist/treat-core-generateCss.esm.js": "./dist/treat-core-generateCss.browser.esm.js"
+  }
+}
