@@ -6,6 +6,7 @@ import postcss from 'postcss';
 import dedent from 'dedent';
 
 import { appendCss } from './adapter';
+import transformCss from './transformCss';
 
 type PartialAlternateContract<T> = {
   [P in keyof T]?: T[P] extends Record<string | number, unknown>
@@ -37,18 +38,18 @@ export function setFileScope(newFileScope: string) {
 }
 
 function attachCssRule(selector: string, cssObj: any) {
-  const { css } = postcss().process(cssObj, {
+  const normalisedCss = transformCss(selector, cssObj);
+
+  console.log(cssObj, normalisedCss);
+
+  const { css } = postcss().process(normalisedCss, {
     parser: postcssJs,
     from: undefined,
   });
 
-  const classDefinition = dedent`${selector} {
-      ${css}
-  }`;
-
   // console.log(classDefinition);
 
-  appendCss(classDefinition);
+  appendCss(css);
 }
 
 const createFileScopeIdent = () => {

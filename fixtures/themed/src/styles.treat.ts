@@ -17,9 +17,9 @@ export const container = style({
   flexDirection: 'column',
   gap: theme.vars.space[2],
   padding: theme.vars.space[3],
-  // '@media': {
-  //   'screen and (min-width: 500px)': {
-  //     border: `1px solid ${theme.vars.colors.background}`,
-  //   },
-  // },
+  '@media': {
+    'screen and (min-width: 500px)': {
+      border: `1px solid ${theme.vars.colors.background}`,
+    },
+  },
 });
