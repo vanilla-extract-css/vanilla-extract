@@ -2,3 +2,4 @@ node_modules
 dist
 tsconfig.tsbuildinfo
 yarn-error.log
+treat-file-within

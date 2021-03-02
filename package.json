@@ -6,8 +6,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "preconstruct dev",
+    "build": "preconstruct build",
     "start-fixture": "ts-node ./test-helpers/startFixture",
-    "start": "yarn dev && yarn start-fixture themed"
+    "start": "yarn start-fixture themed",
+    "postinstall": "yarn dev"
   },
   "workspaces": [
     "packages/*",

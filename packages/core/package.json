@@ -3,16 +3,28 @@
   "version": "1.0.0",
   "main": "dist/treat-core.cjs.js",
   "module": "dist/treat-core.esm.js",
+  "browser": {
+    "./dist/treat-core.cjs.js": "./dist/treat-core.browser.cjs.js",
+    "./dist/treat-core.esm.js": "./dist/treat-core.browser.esm.js"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "adapter.ts"
+    ]
+  },
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
     "dedent": "^0.7.0",
     "deepmerge": "^4.2.2",
+    "lodash": "^4.17.21",
     "postcss": "^8.2.6",
     "postcss-js": "^3.0.3"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0"
+    "@types/dedent": "^0.7.0",
+    "@types/lodash": "^4.14.168"
   }
 }

@@ -1,0 +1,4 @@
+{
+  "main": "dist/treat-webpack-plugin-loader.cjs.js",
+  "module": "dist/treat-webpack-plugin-loader.esm.js"
+}

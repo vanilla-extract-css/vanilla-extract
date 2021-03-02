@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { TreatPlugin } = require('@treat/webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: require.resolve('./src/index.ts'),
@@ -31,5 +33,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin(),
+    new MiniCssExtractPlugin(),
+    new TreatPlugin({ outputLoaders: [MiniCssExtractPlugin.loader] }),
+  ],
 };
