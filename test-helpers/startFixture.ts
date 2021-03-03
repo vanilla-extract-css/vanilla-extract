@@ -1,5 +1,37 @@
+import { TreatPlugin } from '@treat/webpack-plugin';
 import WDS from 'webpack-dev-server';
-import webpack from 'webpack';
+import webpack, { Configuration } from 'webpack';
+import webpackMerge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+const defaultWebpackConfig: Configuration = {
+  resolve: {
+    extensions: ['.js', '.json', '.ts', '.tsx'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+    },
+  },
+  mode: 'development',
+  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.(js|ts|tsx)$/,
+        exclude: [/node_modules/],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
+};
 
 export interface TestServer {
   url: string;
@@ -8,9 +40,29 @@ export interface TestServer {
 
 let portCounter = 11000;
 
-export const startFixture = (fixtureName: string): Promise<TestServer> =>
+interface FixtureOptions {
+  type?: 'browser' | 'mini-css-extract' | 'style-loader';
+}
+export const startFixture = (
+  fixtureName: string,
+  { type = 'mini-css-extract' }: FixtureOptions = {},
+): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    const config = require(`../fixtures/${fixtureName}/webpack.config.js`);
+    const fixtureEntry = require.resolve(`../fixtures/${fixtureName}`);
+    const config = webpackMerge<Configuration>(defaultWebpackConfig, {
+      entry: fixtureEntry,
+      plugins:
+        type !== 'browser'
+          ? [
+              new TreatPlugin({
+                outputLoaders:
+                  type === 'mini-css-extract'
+                    ? [MiniCssExtractPlugin.loader]
+                    : undefined,
+              }),
+            ]
+          : undefined,
+    });
     const compiler = webpack(config);
 
     const port = portCounter++;
