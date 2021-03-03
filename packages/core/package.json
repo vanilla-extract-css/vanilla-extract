@@ -23,7 +23,7 @@
     "dedent": "^0.7.0",
     "deepmerge": "^4.2.2",
     "lodash": "^4.17.21",
-    "postcss": "^8.2.6",
+    "postcss": "^8.2.7",
     "postcss-js": "^3.0.3"
   },
   "devDependencies": {

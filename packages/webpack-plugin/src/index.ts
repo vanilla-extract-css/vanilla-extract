@@ -59,7 +59,7 @@ export class TreatPlugin {
       isProductionLikeMode(compiler.options),
     );
 
-    compiler.options.module.rules.splice(
+    compiler.options.module?.rules.splice(
       0,
       0,
       {

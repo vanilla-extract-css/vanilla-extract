@@ -8,9 +8,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const defaultWebpackConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx'],
-    fallback: {
-      path: require.resolve('path-browserify'),
-    },
   },
   mode: 'development',
   devtool: 'source-map',
