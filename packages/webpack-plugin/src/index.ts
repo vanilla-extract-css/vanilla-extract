@@ -75,6 +75,12 @@ export class TreatPlugin {
               }),
             },
           },
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [require.resolve('@treat/babel-plugin')],
+            },
+          },
         ],
       },
       {

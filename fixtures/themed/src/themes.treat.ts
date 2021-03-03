@@ -1,6 +1,4 @@
-import { defineVars, setFileScope } from '@treat/core';
-
-setFileScope('themes');
+import { defineVars } from '@treat/core';
 
 export const theme = defineVars({
   colors: {

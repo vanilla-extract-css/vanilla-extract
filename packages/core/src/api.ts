@@ -35,9 +35,7 @@ export function setFileScope(newFileScope: string) {
 }
 
 const createFileScopeIdent = () => {
-  // return `${hash(fileScope)}${refCounter++}`;
-
-  return `${fileScope}_${refCounter++}`;
+  return `${hash(fileScope)}_${refCounter++}`;
 };
 
 const walkObject = <T extends Walkable, MapTo>(

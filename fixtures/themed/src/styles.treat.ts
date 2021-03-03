@@ -1,8 +1,6 @@
 import { shadow } from './shared.treat';
-import { style, setFileScope } from '@treat/core';
+import { style } from '@treat/core';
 import { theme } from './themes.treat';
-
-setFileScope('styles');
 
 export const button = [
   style({

@@ -12,6 +12,9 @@
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@treat/babel-plugin": "^1.0.0",
+    "babel-loader": "^8.2.2",
     "css-loader": "^5.1.1",
     "debug": "^4.3.1",
     "dedent": "^0.7.0",

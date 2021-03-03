@@ -1,0 +1,17 @@
+{
+  "name": "@treat/babel-plugin",
+  "version": "1.0.0",
+  "main": "dist/treat-babel-plugin.cjs.js",
+  "module": "dist/treat-babel-plugin.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "author": "Matt Jones",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.12.10"
+  },
+  "devDependencies": {}
+}
