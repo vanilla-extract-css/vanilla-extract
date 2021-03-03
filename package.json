@@ -9,7 +9,8 @@
     "build": "preconstruct build",
     "start-fixture": "ts-node ./test-helpers/startFixture",
     "start": "yarn start-fixture themed",
-    "postinstall": "yarn dev"
+    "postinstall": "yarn dev",
+    "test": "jest"
   },
   "workspaces": [
     "packages/*",

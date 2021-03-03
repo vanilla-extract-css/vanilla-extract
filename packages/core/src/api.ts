@@ -2,6 +2,7 @@ import hash from '@emotion/hash';
 import deepMerge from 'deepmerge';
 
 import { appendCss } from './adapter';
+import type { StyleRule } from './types';
 
 type PartialAlternateContract<T> = {
   [P in keyof T]?: T[P] extends Record<string | number, unknown>
@@ -61,10 +62,10 @@ const walkObject = <T extends Walkable, MapTo>(
 
 const hashToClassName = (h: string) => (/^[0-9]/.test(h[0]) ? `_${h}` : h);
 
-export function style(rules: any) {
+export function style(rule: StyleRule) {
   const styleRuleName = hashToClassName(createFileScopeIdent());
 
-  appendCss({ selector: `.${styleRuleName}`, rules }, fileScope);
+  appendCss({ selector: `.${styleRuleName}`, rule }, fileScope);
 
   return styleRuleName;
 }
@@ -85,7 +86,7 @@ export function defineVars<VarContract extends Walkable>(
   });
 
   appendCss(
-    { selector: `:root, .${rootVarsClassName}`, rules: cssVars },
+    { selector: `:root, .${rootVarsClassName}`, rule: cssVars },
     fileScope,
   );
 
@@ -112,7 +113,7 @@ export function defineVars<VarContract extends Walkable>(
       });
 
       appendCss(
-        { selector: `.${altVarsClassName}`, rules: altCssVars },
+        { selector: `.${altVarsClassName}`, rule: altCssVars },
         fileScope,
       );
 

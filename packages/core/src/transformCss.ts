@@ -1,9 +1,8 @@
-import merge from 'lodash/merge';
-import mapKeys from 'lodash/mapKeys';
+import hash from '@emotion/hash';
 import each from 'lodash/each';
-import pickBy from 'lodash/pickBy';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import type { CSSKeyframes, StyleRule, CSS, CSSProperties } from './types';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -100,84 +99,138 @@ export type SimplePseudos = typeof simplePseudos;
 
 const simplePseudoSet = new Set<string>(simplePseudos);
 
-const normalizeStyles = (className: string, styles: any) => {
-  const omitThese = [...simplePseudos, '@media', '@supports', 'selectors'];
+function handleKeyframes(rule: CSSProperties, rules: Array<CSSRule>) {
+  let { '@keyframes': keyframes, animation, animationName, ...rest } = rule;
 
-  const pseudoStyles = mapKeys(
-    pickBy(styles, (_, key) => simplePseudoSet.has(key)),
-    (_, pseudo) => `${className}${pseudo}`,
-  );
+  if (!keyframes && !rule.animation && !rule.animationName) {
+    return rest;
+  }
 
-  let selectorStyles = {};
-  if (styles.selectors) {
-    selectorStyles = mapKeys(styles.selectors, (_, selector) => {
-      return selector.replace(RegExp('&', 'g'), className);
+  let keyframesRef = typeof keyframes === 'string' ? keyframes : '';
+
+  if (keyframes && typeof keyframes !== 'string') {
+    keyframesRef = hash(JSON.stringify(keyframes));
+
+    rules.unshift({
+      selector: `@keyframes ${keyframesRef}`,
+      rule: keyframes,
     });
   }
 
-  const rawRules = omit(styles, omitThese);
+  return {
+    ...rest,
+    animation:
+      animation && typeof animation === 'string'
+        ? // @ts-expect-error Why???????????
+          animation.replace('@keyframes', keyframesRef)
+        : animation,
+    animationName: animationName ? undefined : keyframesRef,
+  };
+}
 
-  const rawStyles =
-    Object.keys(rawRules).length > 0
-      ? {
-          [className]: rawRules,
+interface CSSRule {
+  conditions?: Array<string>;
+  selector: string;
+  rule: CSSProperties;
+}
+
+class Stylesheet {
+  rules: Array<CSSRule>;
+
+  constructor() {
+    this.rules = [];
+  }
+
+  addRule(cssRule: CSSRule) {
+    const rule = handleKeyframes(cssRule.rule, this.rules);
+
+    this.rules.push({
+      selector: cssRule.selector,
+      rule,
+      conditions: cssRule.conditions ? cssRule.conditions.sort() : undefined,
+    });
+  }
+
+  toPostcssJs() {
+    const styles: any = {};
+
+    for (const rule of this.rules) {
+      if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {
+        // Ignore conditional rules if they are identical to a non-conditional rule
+        continue;
+      }
+
+      let styleNode = styles;
+
+      for (const condition of rule.conditions ?? []) {
+        if (!styleNode[condition]) {
+          styleNode[condition] = {};
         }
-      : {};
+        styleNode = styleNode[condition];
+      }
 
-  const allStyles = Object.assign(rawStyles, pseudoStyles, selectorStyles);
+      styleNode[rule.selector] = rule.rule;
+    }
 
-  Object.keys(allStyles).forEach((ident) => {
-    if (allStyles[ident]['@keyframes']) {
-      const { '@keyframes': keyframeRef, animation } = allStyles[ident];
+    return styles;
+  }
+}
 
-      if (keyframeRef) {
-        Object.assign(allStyles[ident], {
-          animation: animation
-            ? animation.replace('@keyframes', keyframeRef)
-            : undefined,
-          animationName: animation ? undefined : keyframeRef,
-          '@keyframes': undefined,
+const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
+
+export function transformCss(...allCssObjs: Array<CSS>) {
+  const stylesheet = new Stylesheet();
+
+  for (const root of allCssObjs) {
+    // Add main styles
+    const mainRule = omit(root.rule, specialKeys);
+    stylesheet.addRule({
+      selector: root.selector,
+      rule: mainRule,
+    });
+
+    for (const key in root.rule) {
+      if (simplePseudoSet.has(key)) {
+        stylesheet.addRule({
+          selector: `${root.selector}${key}`,
+          rule: root.rule[key as keyof typeof root.rule] as CSSProperties,
         });
       }
     }
-  });
 
-  return allStyles;
-};
+    if (root.rule['@media']) {
+      each(root.rule['@media'], (mediaRule, query) => {
+        const conditions = [`@media ${query}`];
 
-export default (selector: string, cssObj: any) => {
-  const stylesheet = {};
-  const responsiveStylesheet = {};
-
-  const defaultStyles = normalizeStyles(selector, cssObj);
-  const responsiveStyles = {};
-
-  if (cssObj['@media']) {
-    each(cssObj['@media'], (mediaStyles, query) => {
-      const blockStyles = normalizeStyles(selector, mediaStyles);
-
-      if (!isEqual(defaultStyles, blockStyles)) {
-        merge(responsiveStyles, {
-          [`@media ${query}`]: blockStyles,
+        stylesheet.addRule({
+          conditions,
+          selector: root.selector,
+          rule: omit(mediaRule, specialKeys),
         });
-      }
-    });
+      });
+    }
+
+    if (root.rule['@supports']) {
+      each(root.rule['@supports'], (supportsRule, query) => {
+        const conditions = [`@supports ${query}`];
+
+        stylesheet.addRule({
+          conditions,
+          selector: root.selector,
+          rule: omit(supportsRule, specialKeys),
+        });
+      });
+    }
+
+    if (root.rule.selectors) {
+      each(root.rule.selectors, (selectorRule, selector) => {
+        stylesheet.addRule({
+          selector: selector.replace(RegExp('&', 'g'), root.selector),
+          rule: selectorRule,
+        });
+      });
+    }
   }
 
-  if (cssObj['@supports']) {
-    each(cssObj['@supports'], (mediaStyles, query) => {
-      const blockStyles = normalizeStyles(selector, mediaStyles);
-
-      if (!isEqual(defaultStyles, blockStyles)) {
-        merge(responsiveStyles, {
-          [`@supports ${query}`]: blockStyles,
-        });
-      }
-    });
-  }
-
-  merge(stylesheet, defaultStyles);
-  merge(responsiveStylesheet, responsiveStyles);
-
-  return Object.assign(stylesheet, responsiveStylesheet);
-};
+  return stylesheet.toPostcssJs();
+}
