@@ -1,6 +1,7 @@
 {
   "name": "@treat/webpack-plugin",
   "version": "0.0.1",
+  "private": true,
   "main": "dist/treat-webpack-plugin.cjs.js",
   "module": "dist/treat-webpack-plugin.esm.js",
   "preconstruct": {
