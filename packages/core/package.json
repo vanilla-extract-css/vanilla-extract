@@ -1,6 +1,7 @@
 {
   "name": "@treat/core",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "private": true,
   "main": "dist/treat-core.cjs.js",
   "module": "dist/treat-core.esm.js",
   "browser": {

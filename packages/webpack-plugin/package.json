@@ -1,6 +1,6 @@
 {
   "name": "@treat/webpack-plugin",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/treat-webpack-plugin.cjs.js",
   "module": "dist/treat-webpack-plugin.esm.js",
   "preconstruct": {
@@ -13,8 +13,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.12.10",
-    "@treat/babel-plugin": "^1.0.0",
+    "@treat/babel-plugin": "^0.0.1",
+    "@treat/core": "^0.0.1",
     "babel-loader": "^8.2.2",
+    "chalk": "^4.1.0",
     "css-loader": "^5.1.1",
     "debug": "^4.3.1",
     "dedent": "^0.7.0",

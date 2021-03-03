@@ -1,6 +1,7 @@
 {
   "name": "@treat/babel-plugin",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "private": true,
   "main": "dist/treat-babel-plugin.cjs.js",
   "module": "dist/treat-babel-plugin.esm.js",
   "preconstruct": {
