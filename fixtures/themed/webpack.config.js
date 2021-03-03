@@ -21,12 +21,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              babelrc: false,
-              presets: [
-                ['@babel/preset-env', { modules: false }],
-                '@babel/preset-typescript',
-                '@babel/preset-react',
-              ],
+              babelrc: true,
             },
           },
         ],

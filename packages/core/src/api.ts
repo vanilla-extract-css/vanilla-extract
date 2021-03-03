@@ -1,8 +1,9 @@
 import hash from '@emotion/hash';
 import deepMerge from 'deepmerge';
 
-import { appendCss } from './adapter';
 import type { StyleRule } from './types';
+import { appendCss } from './adapter';
+import { sanitiseIdent } from './utils';
 
 type PartialAlternateContract<T> = {
   [P in keyof T]?: T[P] extends Record<string | number, unknown>
@@ -60,10 +61,8 @@ const walkObject = <T extends Walkable, MapTo>(
   return clone;
 };
 
-const hashToClassName = (h: string) => (/^[0-9]/.test(h[0]) ? `_${h}` : h);
-
 export function style(rule: StyleRule) {
-  const styleRuleName = hashToClassName(createFileScopeIdent());
+  const styleRuleName = sanitiseIdent(createFileScopeIdent());
 
   appendCss({ selector: `.${styleRuleName}`, rule }, fileScope);
 
@@ -74,7 +73,7 @@ export function defineVars<VarContract extends Walkable>(
   varContract: VarContract,
 ) {
   const varContractHash = createFileScopeIdent();
-  const rootVarsClassName = hashToClassName(varContractHash);
+  const rootVarsClassName = sanitiseIdent(varContractHash);
   const cssVars: { [cssVarName: string]: Primitive } = {};
 
   const vars = walkObject(varContract, (value, path) => {
@@ -99,7 +98,7 @@ export function defineVars<VarContract extends Walkable>(
       // @ts-expect-error // Revisit types here, maybe even library itself
       const mergedContract = deepMerge(varContract, altVarContract);
       const altVarContractHash = createFileScopeIdent();
-      const altVarsClassName = hashToClassName(altVarContractHash);
+      const altVarsClassName = sanitiseIdent(altVarContractHash);
       const altCssVars: { [cssVarName: string]: Primitive } = {};
 
       /* TODO 

@@ -2,7 +2,9 @@ import hash from '@emotion/hash';
 import each from 'lodash/each';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
-import type { CSSKeyframes, StyleRule, CSS, CSSProperties } from './types';
+
+import type { CSS, CSSProperties } from './types';
+import { sanitiseIdent } from './utils';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -99,35 +101,6 @@ export type SimplePseudos = typeof simplePseudos;
 
 const simplePseudoSet = new Set<string>(simplePseudos);
 
-function handleKeyframes(rule: CSSProperties, rules: Array<CSSRule>) {
-  let { '@keyframes': keyframes, animation, animationName, ...rest } = rule;
-
-  if (!keyframes && !rule.animation && !rule.animationName) {
-    return rest;
-  }
-
-  let keyframesRef = typeof keyframes === 'string' ? keyframes : '';
-
-  if (keyframes && typeof keyframes !== 'string') {
-    keyframesRef = hash(JSON.stringify(keyframes));
-
-    rules.unshift({
-      selector: `@keyframes ${keyframesRef}`,
-      rule: keyframes,
-    });
-  }
-
-  return {
-    ...rest,
-    animation:
-      animation && typeof animation === 'string'
-        ? // @ts-expect-error Why???????????
-          animation.replace('@keyframes', keyframesRef)
-        : animation,
-    animationName: animationName ? undefined : keyframesRef,
-  };
-}
-
 interface CSSRule {
   conditions?: Array<string>;
   selector: string;
@@ -142,13 +115,43 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    const rule = handleKeyframes(cssRule.rule, this.rules);
+    const rule = this.processRuleKeyframes(cssRule.rule);
 
     this.rules.push({
       selector: cssRule.selector,
       rule,
       conditions: cssRule.conditions ? cssRule.conditions.sort() : undefined,
     });
+  }
+
+  processRuleKeyframes(rule: CSSProperties) {
+    let { '@keyframes': keyframes, animation, animationName, ...rest } = rule;
+
+    if (!keyframes && !rule.animation && !rule.animationName) {
+      return rest;
+    }
+
+    let keyframesRef = typeof keyframes === 'string' ? keyframes : '';
+
+    if (keyframes && typeof keyframes !== 'string') {
+      keyframesRef = sanitiseIdent(hash(JSON.stringify(keyframes)));
+
+      // Hoist keyframes to the top of the stylesheet
+      this.rules.unshift({
+        selector: `@keyframes ${keyframesRef}`,
+        rule: keyframes,
+      });
+    }
+
+    return {
+      ...rest,
+      animation:
+        animation && typeof animation === 'string'
+          ? // @ts-expect-error Why???????????
+            animation.replace('@keyframes', keyframesRef)
+          : animation,
+      animationName: animationName ? undefined : keyframesRef,
+    };
   }
 
   toPostcssJs() {
