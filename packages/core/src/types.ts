@@ -37,8 +37,8 @@ export interface StyleWithSelectors extends CSSPropertiesAndPseudos {
 }
 
 export type StyleRule = StyleWithSelectors &
-  MediaQueries<StyleWithSelectors> &
-  FeatureQueries<StyleWithSelectors>;
+  MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>> &
+  FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>;
 
 export interface CSS {
   selector: string;

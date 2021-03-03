@@ -210,6 +210,38 @@ describe('transformCss', () => {
                 `);
   });
 
+  it('should handle complex selectors within media queries', () => {
+    expect(
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          color: 'red',
+          '@media': {
+            'screen and (min-width: 700px)': {
+              selectors: {
+                '&:nth-child(3)': {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        ".testClass": Object {
+          "color": "red",
+        },
+        "@media screen and (min-width: 700px)": Object {
+          ".testClass": Object {},
+          ".testClass:nth-child(3)": Object {
+            "color": "blue",
+          },
+        },
+      }
+    `);
+  });
+
   it('should handle @supports queries', () => {
     expect(
       transformCss({
@@ -231,6 +263,59 @@ describe('transformCss', () => {
         "@supports (display: grid)": Object {
           ".testClass": Object {
             "display": "grid",
+          },
+        },
+      }
+    `);
+  });
+
+  it('should handle nested @supports and @media queries', () => {
+    expect(
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          display: 'flex',
+          '@supports': {
+            '(display: grid)': {
+              backgroundColor: 'yellow',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+          '@media': {
+            'screen and (min-width: 700px)': {
+              color: 'green',
+              '@supports': {
+                '(display: grid)': {
+                  borderColor: 'blue',
+                },
+              },
+            },
+          },
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        ".testClass": Object {
+          "display": "flex",
+        },
+        "@media screen and (min-width: 700px)": Object {
+          ".testClass": Object {
+            "color": "green",
+          },
+          "@supports (display: grid)": Object {
+            ".testClass": Object {
+              "borderColor": "blue",
+              "display": "grid",
+            },
+          },
+        },
+        "@supports (display: grid)": Object {
+          ".testClass": Object {
+            "backgroundColor": "yellow",
           },
         },
       }

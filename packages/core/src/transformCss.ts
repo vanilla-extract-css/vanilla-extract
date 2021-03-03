@@ -3,7 +3,13 @@ import each from 'lodash/each';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 
-import type { CSS, CSSProperties } from './types';
+import type {
+  CSS,
+  CSSProperties,
+  FeatureQueries,
+  MediaQueries,
+  StyleWithSelectors,
+} from './types';
 import { sanitiseIdent } from './utils';
 
 export const simplePseudos = [
@@ -172,7 +178,10 @@ class Stylesheet {
         styleNode = styleNode[condition];
       }
 
-      styleNode[rule.selector] = rule.rule;
+      styleNode[rule.selector] = {
+        ...styleNode[rule.selector],
+        ...rule.rule,
+      };
     }
 
     return styles;
@@ -180,6 +189,75 @@ class Stylesheet {
 }
 
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
+
+function transformSelectors(
+  stylesheet: Stylesheet,
+  rule: StyleWithSelectors,
+  rootSelector: string,
+  conditions?: Array<string>,
+) {
+  each(rule.selectors, (selectorRule, selector) => {
+    stylesheet.addRule({
+      conditions,
+      selector: selector.replace(RegExp('&', 'g'), rootSelector),
+      rule: selectorRule,
+    });
+  });
+}
+
+function transformMedia(
+  stylesheet: Stylesheet,
+  rules:
+    | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
+    | undefined,
+  rootSelector: string,
+  parentConditions: Array<string> = [],
+) {
+  each(rules, (mediaRule, query) => {
+    const conditions = [`@media ${query}`, ...parentConditions];
+
+    stylesheet.addRule({
+      conditions,
+      selector: rootSelector,
+      rule: omit(mediaRule, specialKeys),
+    });
+
+    transformSelectors(stylesheet, mediaRule!, rootSelector, conditions);
+    transformSupports(
+      stylesheet,
+      mediaRule!['@supports'],
+      rootSelector,
+      conditions,
+    );
+  });
+}
+
+function transformSupports(
+  stylesheet: Stylesheet,
+  rules:
+    | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
+    | undefined,
+  rootSelector: string,
+  parentConditions: Array<string> = [],
+) {
+  each(rules, (supportsRule, query) => {
+    const conditions = [`@supports ${query}`, ...parentConditions];
+
+    stylesheet.addRule({
+      conditions,
+      selector: rootSelector,
+      rule: omit(supportsRule, specialKeys),
+    });
+
+    transformSelectors(stylesheet, supportsRule!, rootSelector, conditions);
+    transformMedia(
+      stylesheet,
+      supportsRule!['@media'],
+      rootSelector,
+      conditions,
+    );
+  });
+}
 
 export function transformCss(...allCssObjs: Array<CSS>) {
   const stylesheet = new Stylesheet();
@@ -201,38 +279,11 @@ export function transformCss(...allCssObjs: Array<CSS>) {
       }
     }
 
-    if (root.rule['@media']) {
-      each(root.rule['@media'], (mediaRule, query) => {
-        const conditions = [`@media ${query}`];
+    transformMedia(stylesheet, root.rule['@media'], root.selector);
 
-        stylesheet.addRule({
-          conditions,
-          selector: root.selector,
-          rule: omit(mediaRule, specialKeys),
-        });
-      });
-    }
+    transformSupports(stylesheet, root.rule['@supports'], root.selector);
 
-    if (root.rule['@supports']) {
-      each(root.rule['@supports'], (supportsRule, query) => {
-        const conditions = [`@supports ${query}`];
-
-        stylesheet.addRule({
-          conditions,
-          selector: root.selector,
-          rule: omit(supportsRule, specialKeys),
-        });
-      });
-    }
-
-    if (root.rule.selectors) {
-      each(root.rule.selectors, (selectorRule, selector) => {
-        stylesheet.addRule({
-          selector: selector.replace(RegExp('&', 'g'), root.selector),
-          rule: selectorRule,
-        });
-      });
-    }
+    transformSelectors(stylesheet, root.rule, root.selector);
   }
 
   return stylesheet.toPostcssJs();
