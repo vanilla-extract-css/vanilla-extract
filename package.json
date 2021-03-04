@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "preconstruct dev",
     "build": "preconstruct build",
-    "start-fixture": "ts-node ./test-helpers/startFixture",
+    "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
     "start": "yarn start-fixture themed",
     "postinstall": "yarn dev",
     "test": "jest",
@@ -35,10 +35,13 @@
     "@manypkg/cli": "^0.17.0",
     "@preconstruct/cli": "^2.0.1",
     "@types/jest": "^26.0.20",
+    "@types/jest-environment-puppeteer": "^4.4.1",
+    "@types/puppeteer": "^5.4.3",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
     "jest-puppeteer": "^4.1.0",
     "prettier": "^2.2.1",
+    "puppeteer": "^8.0.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }

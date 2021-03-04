@@ -5,6 +5,9 @@ import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
+export const getTestNodes = (fixture: string) =>
+  require(`@treat/fixture-${fixture}/test-nodes.json`);
+
 const defaultWebpackConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx'],
@@ -30,22 +33,25 @@ const defaultWebpackConfig: Configuration = {
   plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
 };
 
+type StyleType = 'browser' | 'mini-css-extract' | 'style-loader';
+
 export interface TestServer {
+  type: StyleType;
   url: string;
   close: () => void;
 }
 
 let portCounter = 11000;
 
-interface FixtureOptions {
-  type?: 'browser' | 'mini-css-extract' | 'style-loader';
+export interface FixtureOptions {
+  type?: StyleType;
 }
 export const startFixture = (
   fixtureName: string,
   { type = 'mini-css-extract' }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    const fixtureEntry = require.resolve(`../fixtures/${fixtureName}`);
+    const fixtureEntry = require.resolve(`@treat/fixture-${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
       plugins:
@@ -66,15 +72,14 @@ export const startFixture = (
     const server = new WDS(compiler);
 
     compiler.hooks.done.tap('treat-test-helper', () => {
-      resolve({ url: `http://localhost:${port}`, close: () => server.close() });
+      resolve({
+        url: `http://localhost:${port}`,
+        close: () => {
+          server.close();
+        },
+        type,
+      });
     });
 
     server.listen(port);
   });
-
-const fixtureName = process.argv[2];
-
-startFixture(fixtureName).then((server) => {
-  // eslint-disable-next-line no-console
-  console.log('Fixture running on', server.url);
-});

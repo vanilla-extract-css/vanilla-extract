@@ -1,0 +1,9 @@
+{
+  "root": "root",
+  "rootContainer": "rootContainer",
+  "rootButton": "rootButton",
+  "altContainer": "altContainer",
+  "altButton": "altButton",
+  "nestedRootContainer": "nestedRootContainer",
+  "nestedRootButton": "nestedRootButton"
+}

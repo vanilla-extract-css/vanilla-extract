@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Styling and specificity Themed on desktop all builds should match 1`] = `
+Object {
+  "altButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 128, 0)",
+    "color" => "rgb(255, 255, 255)",
+    "border-radius" => "9999px",
+    "border-top-left-radius" => "9999px",
+    "border-top-right-radius" => "9999px",
+    "border-bottom-right-radius" => "9999px",
+    "border-bottom-left-radius" => "9999px",
+  },
+  "altContainer": Map {
+    "border" => "1px solid var(--13sc4r3)",
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+  "nestedRootButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 0, 255)",
+    "color" => "rgb(255, 255, 255)",
+    "border-radius" => "9999px",
+    "border-top-left-radius" => "9999px",
+    "border-top-right-radius" => "9999px",
+    "border-bottom-right-radius" => "9999px",
+    "border-bottom-left-radius" => "9999px",
+  },
+  "nestedRootContainer": Map {
+    "border" => "1px solid var(--13sc4r3)",
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+  "root": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+  },
+  "rootButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 0, 255)",
+    "color" => "rgb(255, 255, 255)",
+    "border-radius" => "9999px",
+    "border-top-left-radius" => "9999px",
+    "border-top-right-radius" => "9999px",
+    "border-bottom-right-radius" => "9999px",
+    "border-bottom-left-radius" => "9999px",
+  },
+  "rootContainer": Map {
+    "border" => "1px solid var(--13sc4r3)",
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+}
+`;
+
+exports[`Styling and specificity Themed on mobile all builds should match 1`] = `
+Object {
+  "altButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 128, 0)",
+    "color" => "rgb(255, 255, 255)",
+  },
+  "altContainer": Map {
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+  "nestedRootButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 0, 255)",
+    "color" => "rgb(255, 255, 255)",
+  },
+  "nestedRootContainer": Map {
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+  "root": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+  },
+  "rootButton": Map {
+    "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
+    "background-color" => "rgb(0, 0, 255)",
+    "color" => "rgb(255, 255, 255)",
+  },
+  "rootContainer": Map {
+    "display" => "flex",
+    "flex-direction" => "column",
+    "gap" => "var(--ewyfx3)",
+    "padding" => "var(--1xoggkt)",
+  },
+}
+`;
