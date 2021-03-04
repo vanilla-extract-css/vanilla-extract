@@ -15,9 +15,12 @@
   ],
   "author": "Matt Jones",
   "license": "MIT",
+  "peerDependencies": {
+    "webpack": "^4.30.0 || ^5.20.2"
+  },
   "dependencies": {
     "@mattsjones/css-babel-plugin": "^0.0.1",
-    "@mattsjones/css-core": "^0.0.1",
+    "@mattsjones/css-core": "^0.0.2",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.0",
     "css-loader": "^5.1.1",
@@ -28,13 +31,13 @@
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "style-loader": "^2.0.0",
-    "virtual-resource-loader": "^1.0.0",
-    "webpack": "^5.24.3"
+    "virtual-resource-loader": "^1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/dedent": "^0.7.0",
     "@types/lodash": "^4.14.168",
-    "mini-css-extract-plugin": "^1.3.9"
+    "mini-css-extract-plugin": "^1.3.9",
+    "webpack": "^5.24.3"
   }
 }
