@@ -1,4 +1,4 @@
-import { defineVars } from '@treat/core';
+import { defineVars } from '@mattsjones/css-core';
 
 export const theme = defineVars({
   colors: {

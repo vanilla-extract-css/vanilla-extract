@@ -1,6 +1,6 @@
 import createCompat from './compat';
 
-const TWL = 'treat-webpack-loader';
+export const compilerName = 'treat-webpack-loader';
 
 export const getCompiledSource = async (loader) => {
   const isWebpack5 = Boolean(
@@ -44,7 +44,7 @@ function compileTreatSource(loader, compat) {
     const outputOptions = { filename: loader.resourcePath };
 
     const childCompiler = getRootCompilation(loader).createChildCompiler(
-      TWL,
+      compilerName,
       outputOptions,
     );
 
@@ -85,13 +85,15 @@ function compileTreatSource(loader, compat) {
     }
 
     new LimitChunkCountPlugin({ maxChunks: 1 }).apply(childCompiler);
-    new ExternalsPlugin('commonjs', '@treat/core').apply(childCompiler);
+    new ExternalsPlugin('commonjs', '@mattsjones/css-core').apply(
+      childCompiler,
+    );
 
     let source;
 
     if (compat.isWebpack5) {
-      childCompiler.hooks.compilation.tap(TWL, (compilation) => {
-        compilation.hooks.processAssets.tap(TWL, () => {
+      childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
+        compilation.hooks.processAssets.tap(compilerName, () => {
           source =
             compilation.assets[loader.resourcePath] &&
             compilation.assets[loader.resourcePath].source();
@@ -105,7 +107,7 @@ function compileTreatSource(loader, compat) {
         });
       });
     } else {
-      childCompiler.hooks.afterCompile.tap(TWL, (compilation) => {
+      childCompiler.hooks.afterCompile.tap(compilerName, (compilation) => {
         source =
           compilation.assets[loader.resourcePath] &&
           compilation.assets[loader.resourcePath].source();

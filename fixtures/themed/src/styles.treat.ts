@@ -1,5 +1,5 @@
+import { style } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
-import { style } from '@treat/core';
 import { theme } from './themes.treat';
 
 export const button = [

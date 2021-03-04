@@ -15,7 +15,7 @@ export default function () {
         path: NodePath<t.ImportDeclaration>,
         { opts }: { opts: Options },
       ) {
-        const treatImportIdentifier = opts.alias || '@treat/core';
+        const treatImportIdentifier = opts.alias || '@mattsjones/css-core';
 
         if (path.node.source.value === treatImportIdentifier) {
           this.hasTreatImports = true;
@@ -28,7 +28,7 @@ export default function () {
           { opts }: { opts: Options },
         ) {
           if (this.hasTreatImports) {
-            const treatPackageName = opts.alias || '@treat/core';
+            const treatPackageName = opts.alias || '@mattsjones/css-core';
             // TODO ensure filename is escaped
             const setFileScope = template(
               `

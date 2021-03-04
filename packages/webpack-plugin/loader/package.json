@@ -1,4 +1,4 @@
 {
-  "main": "dist/treat-webpack-plugin-loader.cjs.js",
-  "module": "dist/treat-webpack-plugin-loader.esm.js"
+  "main": "dist/mattsjones-css-webpack-plugin-loader.cjs.js",
+  "module": "dist/mattsjones-css-webpack-plugin-loader.esm.js"
 }

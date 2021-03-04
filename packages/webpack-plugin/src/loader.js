@@ -4,11 +4,11 @@ import evalCode from 'eval';
 import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
-import { generateCss } from '@treat/core/generateCss';
+import { generateCss } from '@mattsjones/css-core/generateCss';
 
 import { debug, formatResourcePath } from './logger';
 import TreatError from './TreatError';
-import { getCompiledSource } from './treatCompiler';
+import { getCompiledSource, compilerName } from './treatCompiler';
 
 const stringifyLoaderRequest = (loaderConfig) => {
   if (typeof loaderConfig === 'string') {
@@ -31,7 +31,7 @@ export function pitch() {
   const compiler = this._compiler;
 
   // TODO link compiler name with treatCompiler file
-  if (compiler.name === 'treat-webpack-loader') {
+  if (compiler.name === compilerName) {
     // Skip treat loader as we are already within a treat child compiler
     return;
   }
@@ -70,7 +70,7 @@ async function produce(loader) {
     );
 
     // TODO use better noop file
-    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@treat/core`;
+    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@mattsjones/css-core`;
 
     log('Add CSS request %s', cssRequest);
 
@@ -92,7 +92,7 @@ async function produce(loader) {
     },
   };
 
-  const sourceWithBoundLoaderInstance = `require('@treat/core/adapter').setAdapter(__webpack_adapter__);\n${source}`;
+  const sourceWithBoundLoaderInstance = `require('@mattsjones/css-core/adapter').setAdapter(__webpack_adapter__);\n${source}`;
 
   let result;
   try {

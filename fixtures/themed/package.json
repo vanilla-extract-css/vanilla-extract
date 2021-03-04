@@ -4,5 +4,7 @@
   "main": "src/index.ts",
   "author": "SEEK",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@mattsjones/css-core": "0.0.1"
+  }
 }

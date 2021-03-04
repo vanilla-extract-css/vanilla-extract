@@ -40,7 +40,7 @@ describe('babel plugin', () => {
 
   it('should add the header when using lib', () => {
     const source = `
-      import { style } from '@treat/core';
+      import { style } from '@mattsjones/css-core';
 
       const one = style({
         zIndex: 2,
@@ -48,9 +48,9 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope } from \\"@treat/core\\";
+      "import { setFileScope } from \\"@mattsjones/css-core\\";
       setFileScope('/my/app/dir/mockFilename.treat.ts');
-      import { style } from '@treat/core';
+      import { style } from '@mattsjones/css-core';
       const one = style({
         zIndex: 2
       });"

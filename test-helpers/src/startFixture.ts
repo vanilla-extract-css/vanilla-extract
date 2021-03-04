@@ -1,4 +1,4 @@
-import { TreatPlugin } from '@treat/webpack-plugin';
+import { TreatPlugin } from '@mattsjones/css-webpack-plugin';
 import WDS from 'webpack-dev-server';
 import webpack, { Configuration } from 'webpack';
 import webpackMerge from 'webpack-merge';

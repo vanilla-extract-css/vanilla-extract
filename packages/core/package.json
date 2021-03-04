@@ -1,12 +1,12 @@
 {
-  "name": "@treat/core",
+  "name": "@mattsjones/css-core",
   "version": "0.0.1",
   "private": true,
-  "main": "dist/treat-core.cjs.js",
-  "module": "dist/treat-core.esm.js",
+  "main": "dist/mattsjones-css-core.cjs.js",
+  "module": "dist/mattsjones-css-core.esm.js",
   "browser": {
-    "./dist/treat-core.cjs.js": "./dist/treat-core.browser.cjs.js",
-    "./dist/treat-core.esm.js": "./dist/treat-core.browser.esm.js"
+    "./dist/mattsjones-css-core.cjs.js": "./dist/mattsjones-css-core.browser.cjs.js",
+    "./dist/mattsjones-css-core.esm.js": "./dist/mattsjones-css-core.browser.esm.js"
   },
   "preconstruct": {
     "entrypoints": [

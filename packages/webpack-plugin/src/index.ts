@@ -66,7 +66,7 @@ export class TreatPlugin {
         test: this.test,
         use: [
           {
-            loader: require.resolve('@treat/webpack-plugin/loader'),
+            loader: require.resolve('@mattsjones/css-webpack-plugin/loader'),
             options: {
               outputCss: this.outputCss,
               minify: optionDefaulter(this.minify, {
@@ -78,7 +78,7 @@ export class TreatPlugin {
           {
             loader: require.resolve('babel-loader'),
             options: {
-              plugins: [require.resolve('@treat/babel-plugin')],
+              plugins: [require.resolve('@mattsjones/css-babel-plugin')],
             },
           },
         ],

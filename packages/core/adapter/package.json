@@ -1,8 +1,8 @@
 {
-  "main": "dist/treat-core-adapter.cjs.js",
-  "module": "dist/treat-core-adapter.esm.js",
+  "main": "dist/mattsjones-css-core-adapter.cjs.js",
+  "module": "dist/mattsjones-css-core-adapter.esm.js",
   "browser": {
-    "./dist/treat-core-adapter.cjs.js": "./dist/treat-core-adapter.browser.cjs.js",
-    "./dist/treat-core-adapter.esm.js": "./dist/treat-core-adapter.browser.esm.js"
+    "./dist/mattsjones-css-core-adapter.cjs.js": "./dist/mattsjones-css-core-adapter.browser.cjs.js",
+    "./dist/mattsjones-css-core-adapter.esm.js": "./dist/mattsjones-css-core-adapter.browser.esm.js"
   }
 }
