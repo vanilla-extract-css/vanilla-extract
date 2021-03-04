@@ -169,6 +169,11 @@ class Stylesheet {
         continue;
       }
 
+      if (Object.keys(rule.rule).length === 0) {
+        // Ignore empty rules
+        continue;
+      }
+
       let styleNode = styles;
 
       for (const condition of rule.conditions ?? []) {

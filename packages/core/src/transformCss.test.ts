@@ -233,7 +233,6 @@ describe('transformCss', () => {
           "color": "red",
         },
         "@media screen and (min-width: 700px)": Object {
-          ".testClass": Object {},
           ".testClass:nth-child(3)": Object {
             "color": "blue",
           },
@@ -382,6 +381,29 @@ describe('transformCss', () => {
           },
           "to": Object {
             "opacity": 1,
+          },
+        },
+      }
+    `);
+  });
+
+  it('should not create empty rules', () => {
+    expect(
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          '@media': {
+            'screen and (min-width: 700px)': {
+              color: 'green',
+            },
+          },
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "@media screen and (min-width: 700px)": Object {
+          ".testClass": Object {
+            "color": "green",
           },
         },
       }
