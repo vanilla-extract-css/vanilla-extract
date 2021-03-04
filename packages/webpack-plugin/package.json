@@ -1,7 +1,6 @@
 {
   "name": "@mattsjones/css-webpack-plugin",
   "version": "0.0.1",
-  "private": true,
   "main": "dist/mattsjones-css-webpack-plugin.cjs.js",
   "module": "dist/mattsjones-css-webpack-plugin.esm.js",
   "preconstruct": {
@@ -10,6 +9,10 @@
       "loader.js"
     ]
   },
+  "files": [
+    "/dist",
+    "/loader"
+  ],
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {

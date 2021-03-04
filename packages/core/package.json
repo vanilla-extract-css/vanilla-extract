@@ -1,7 +1,6 @@
 {
   "name": "@mattsjones/css-core",
   "version": "0.0.1",
-  "private": true,
   "main": "dist/mattsjones-css-core.cjs.js",
   "module": "dist/mattsjones-css-core.esm.js",
   "browser": {
@@ -15,6 +14,11 @@
       "generateCss.ts"
     ]
   },
+  "files": [
+    "/dist",
+    "/adapter",
+    "/generateCss"
+  ],
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {

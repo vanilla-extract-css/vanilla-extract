@@ -1,7 +1,6 @@
 {
   "name": "@mattsjones/css-babel-plugin",
   "version": "0.0.1",
-  "private": true,
   "main": "dist/mattsjones-css-babel-plugin.cjs.js",
   "module": "dist/mattsjones-css-babel-plugin.esm.js",
   "preconstruct": {
@@ -9,6 +8,9 @@
       "index.ts"
     ]
   },
+  "files": [
+    "/dist"
+  ],
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {
