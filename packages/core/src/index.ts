@@ -5,4 +5,5 @@ if (typeof window !== 'undefined') {
   setAdapter(browserRuntimeAdapter);
 }
 
+export type { StyleRule } from './types';
 export * from './api';
