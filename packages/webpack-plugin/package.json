@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@mattsjones/css-babel-plugin": "^0.0.1",
-    "@mattsjones/css-core": "^0.0.2",
+    "@mattsjones/css-core": "^0.0.3",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.0",
     "css-loader": "^5.1.1",
