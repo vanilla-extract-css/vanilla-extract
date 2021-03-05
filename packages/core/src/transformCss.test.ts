@@ -1,5 +1,34 @@
 import { transformCss } from './transformCss';
 
+expect.addSnapshotSerializer({
+  test: () => true,
+  serialize: (val, config, indentation, depth, refs, printer) => {
+    if (typeof val === 'object') {
+      return Object.entries(val)
+        .map(([selector, rule]) => {
+          const indent = [...new Array(depth)]
+            .map(() => config.indent)
+            .join('');
+
+          if (typeof rule === 'object') {
+            return `${indent}"${selector}": {\n${printer(
+              rule,
+              config,
+              indentation,
+              depth + 1,
+              refs,
+            )}\n${indent}}`;
+          }
+
+          return `${indent}"${selector}": ${rule}`;
+        })
+        .join('\n');
+    }
+
+    return val;
+  },
+});
+
 describe('transformCss', () => {
   it('should handle media queries', () => {
     expect(
@@ -18,20 +47,18 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "color": "red",
-        },
-        "@media screen and (min-width: 1000px)": Object {
-          ".testClass": Object {
-            "color": "purple",
-          },
-        },
-        "@media screen and (min-width: 700px)": Object {
-          ".testClass": Object {
-            "color": "green",
-          },
-        },
+      ".testClass": {
+        "color": red
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "color": green
+        }
+      }
+      "@media screen and (min-width: 1000px)": {
+        ".testClass": {
+          "color": purple
+        }
       }
     `);
   });
@@ -50,12 +77,10 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-                            Object {
-                              ".testClass": Object {
-                                "color": "red",
-                              },
-                            }
-                `);
+      ".testClass": {
+        "color": red
+      }
+    `);
   });
 
   it('should combine media queries', () => {
@@ -85,23 +110,21 @@ describe('transformCss', () => {
         },
       ),
     ).toMatchInlineSnapshot(`
-            Object {
-              ".otherClass": Object {
-                "color": "purple",
-              },
-              ".testClass": Object {
-                "color": "green",
-              },
-              "@media screen and (min-width: 700px)": Object {
-                ".otherClass": Object {
-                  "color": "red",
-                },
-                ".testClass": Object {
-                  "color": "red",
-                },
-              },
-            }
-        `);
+      ".testClass": {
+        "color": green
+      }
+      ".otherClass": {
+        "color": purple
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "color": red
+        }
+        ".otherClass": {
+          "color": red
+        }
+      }
+    `);
   });
 
   it('should handle simple pseudos', () => {
@@ -116,72 +139,78 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-                          Object {
-                            ".testClass": Object {
-                              "color": "red",
-                            },
-                            ".testClass:hover": Object {
-                              "color": "blue",
-                            },
-                          }
-                `);
+      ".testClass": {
+        "color": red
+      }
+      ".testClass:hover": {
+        "color": blue
+      }
+    `);
+  });
+
+  it('should handle simple pseudos within conditionals', () => {
+    expect(
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          '@media': {
+            'screen and (min-width: 500px)': {
+              color: 'red',
+              ':hover': {
+                color: 'blue',
+              },
+            },
+          },
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 500px)": {
+        ".testClass": {
+          "color": red
+        }
+        ".testClass:hover": {
+          "color": blue
+        }
+      }
+    `);
   });
 
   it('should honour input order for simple pseudos', () => {
     expect(
-      Object.entries(
-        transformCss({
-          selector: '.testClass',
-          rule: {
-            color: 'red',
-            ':link': {
-              color: 'orange',
-            },
-            ':visited': {
-              color: 'yellow',
-            },
-            ':hover': {
-              color: 'green',
-            },
-            ':active': {
-              color: 'blue',
-            },
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          color: 'red',
+          ':link': {
+            color: 'orange',
           },
-        }),
-      ),
+          ':visited': {
+            color: 'yellow',
+          },
+          ':hover': {
+            color: 'green',
+          },
+          ':active': {
+            color: 'blue',
+          },
+        },
+      }),
     ).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          ".testClass",
-          Object {
-            "color": "red",
-          },
-        ],
-        Array [
-          ".testClass:link",
-          Object {
-            "color": "orange",
-          },
-        ],
-        Array [
-          ".testClass:visited",
-          Object {
-            "color": "yellow",
-          },
-        ],
-        Array [
-          ".testClass:hover",
-          Object {
-            "color": "green",
-          },
-        ],
-        Array [
-          ".testClass:active",
-          Object {
-            "color": "blue",
-          },
-        ],
-      ]
+      ".testClass": {
+        "color": red
+      }
+      ".testClass:link": {
+        "color": orange
+      }
+      ".testClass:visited": {
+        "color": yellow
+      }
+      ".testClass:hover": {
+        "color": green
+      }
+      ".testClass:active": {
+        "color": blue
+      }
     `);
   });
 
@@ -199,15 +228,13 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-                        Object {
-                          ".testClass": Object {
-                            "color": "red",
-                          },
-                          ".testClass:nth-child(3)": Object {
-                            "color": "blue",
-                          },
-                        }
-                `);
+      ".testClass": {
+        "color": red
+      }
+      ".testClass:nth-child(3)": {
+        "color": blue
+      }
+    `);
   });
 
   it('should handle complex selectors within media queries', () => {
@@ -228,15 +255,13 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "color": "red",
-        },
-        "@media screen and (min-width: 700px)": Object {
-          ".testClass:nth-child(3)": Object {
-            "color": "blue",
-          },
-        },
+      ".testClass": {
+        "color": red
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass:nth-child(3)": {
+          "color": blue
+        }
       }
     `);
   });
@@ -255,15 +280,13 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "display": "flex",
-        },
-        "@supports (display: grid)": Object {
-          ".testClass": Object {
-            "display": "grid",
-          },
-        },
+      ".testClass": {
+        "display": flex
+      }
+      "@supports (display: grid)": {
+        ".testClass": {
+          "display": grid
+        }
       }
     `);
   });
@@ -297,26 +320,24 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "display": "flex",
-        },
-        "@media screen and (min-width: 700px)": Object {
-          ".testClass": Object {
-            "color": "green",
-          },
-          "@supports (display: grid)": Object {
-            ".testClass": Object {
-              "borderColor": "blue",
-              "display": "grid",
-            },
-          },
-        },
-        "@supports (display: grid)": Object {
-          ".testClass": Object {
-            "backgroundColor": "yellow",
-          },
-        },
+      ".testClass": {
+        "display": flex
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "color": green
+        }
+        "@supports (display: grid)": {
+          ".testClass": {
+            "borderColor": blue
+            "display": grid
+          }
+        }
+      }
+      "@supports (display: grid)": {
+        ".testClass": {
+          "backgroundColor": yellow
+        }
       }
     `);
   });
@@ -335,15 +356,13 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "display": "grid",
-        },
-        "@supports not (display: grid)": Object {
-          ".testClass": Object {
-            "display": "flex",
-          },
-        },
+      ".testClass": {
+        "display": grid
+      }
+      "@supports not (display: grid)": {
+        ".testClass": {
+          "display": flex
+        }
       }
     `);
   });
@@ -367,22 +386,20 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        ".testClass": Object {
-          "animation": undefined,
-          "animationDuration": "3s",
-          "animationFillMode": "both",
-          "animationName": "ru4hw5",
-          "animationTimingFunction": "linear",
-        },
-        "@keyframes ru4hw5": Object {
-          "from": Object {
-            "opacity": 0,
-          },
-          "to": Object {
-            "opacity": 1,
-          },
-        },
+      "@keyframes ru4hw5": {
+        "from": {
+          "opacity": 0
+        }
+        "to": {
+          "opacity": 1
+        }
+      }
+      ".testClass": {
+        "animationTimingFunction": linear
+        "animationDuration": 3s
+        "animationFillMode": both
+        "animation": undefined
+        "animationName": ru4hw5
       }
     `);
   });
@@ -400,12 +417,63 @@ describe('transformCss', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        "@media screen and (min-width: 700px)": Object {
-          ".testClass": Object {
-            "color": "green",
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "color": green
+        }
+      }
+    `);
+  });
+
+  it('should lower all conditionals styles', () => {
+    expect(
+      transformCss(
+        {
+          selector: '.testClass',
+          rule: {
+            color: 'hotpink',
+            '@media': {
+              'screen and (min-width: 700px)': {
+                color: 'green',
+              },
+            },
           },
         },
+        {
+          selector: '.otherClass',
+          rule: {
+            color: 'indigo',
+            '@media': {
+              'screen and (min-width: 700px)': {
+                color: 'red',
+              },
+            },
+          },
+        },
+        {
+          selector: '.otherOtherClass',
+          rule: {
+            color: 'lightcyan',
+          },
+        },
+      ),
+    ).toMatchInlineSnapshot(`
+      ".testClass": {
+        "color": hotpink
+      }
+      ".otherClass": {
+        "color": indigo
+      }
+      ".otherOtherClass": {
+        "color": lightcyan
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "color": green
+        }
+        ".otherClass": {
+          "color": red
+        }
       }
     `);
   });

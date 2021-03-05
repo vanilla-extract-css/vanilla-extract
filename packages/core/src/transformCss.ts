@@ -115,19 +115,28 @@ interface CSSRule {
 
 class Stylesheet {
   rules: Array<CSSRule>;
+  conditionalRules: Array<CSSRule>;
 
   constructor() {
     this.rules = [];
+    this.conditionalRules = [];
   }
 
   addRule(cssRule: CSSRule) {
     const rule = this.processRuleKeyframes(cssRule.rule);
 
-    this.rules.push({
-      selector: cssRule.selector,
-      rule,
-      conditions: cssRule.conditions ? cssRule.conditions.sort() : undefined,
-    });
+    if (cssRule.conditions) {
+      this.conditionalRules.push({
+        selector: cssRule.selector,
+        rule,
+        conditions: cssRule.conditions.sort(),
+      });
+    } else {
+      this.rules.push({
+        selector: cssRule.selector,
+        rule,
+      });
+    }
   }
 
   processRuleKeyframes(rule: CSSProperties) {
@@ -163,7 +172,7 @@ class Stylesheet {
   toPostcssJs() {
     const styles: any = {};
 
-    for (const rule of this.rules) {
+    for (const rule of [...this.rules, ...this.conditionalRules]) {
       if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {
         // Ignore conditional rules if they are identical to a non-conditional rule
         continue;
@@ -227,6 +236,7 @@ function transformMedia(
       rule: omit(mediaRule, specialKeys),
     });
 
+    transformSimplePsuedos(stylesheet, mediaRule!, rootSelector, conditions);
     transformSelectors(stylesheet, mediaRule!, rootSelector, conditions);
     transformSupports(
       stylesheet,
@@ -254,6 +264,7 @@ function transformSupports(
       rule: omit(supportsRule, specialKeys),
     });
 
+    transformSimplePsuedos(stylesheet, supportsRule!, rootSelector, conditions);
     transformSelectors(stylesheet, supportsRule!, rootSelector, conditions);
     transformMedia(
       stylesheet,
@@ -262,6 +273,24 @@ function transformSupports(
       conditions,
     );
   });
+}
+
+function transformSimplePsuedos(
+  stylesheet: Stylesheet,
+  rule: CSS['rule'],
+  rootSelector: string,
+  conditions?: Array<string>,
+) {
+  for (const key of Object.keys(rule)) {
+    // Process simple psuedos
+    if (simplePseudoSet.has(key)) {
+      stylesheet.addRule({
+        conditions,
+        selector: `${rootSelector}${key}`,
+        rule: rule[key as keyof typeof rule] as CSSProperties,
+      });
+    }
+  }
 }
 
 export function transformCss(...allCssObjs: Array<CSS>) {
@@ -275,14 +304,7 @@ export function transformCss(...allCssObjs: Array<CSS>) {
       rule: mainRule,
     });
 
-    for (const key in root.rule) {
-      if (simplePseudoSet.has(key)) {
-        stylesheet.addRule({
-          selector: `${root.selector}${key}`,
-          rule: root.rule[key as keyof typeof root.rule] as CSSProperties,
-        });
-      }
-    }
+    transformSimplePsuedos(stylesheet, root.rule, root.selector);
 
     transformMedia(stylesheet, root.rule['@media'], root.selector);
 
