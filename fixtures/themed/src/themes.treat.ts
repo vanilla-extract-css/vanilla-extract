@@ -1,7 +1,8 @@
 import {
   createTokens,
-  createRootTheme,
+  createGlobalTheme,
   createTheme,
+  style,
 } from '@mattsjones/css-core';
 
 export const tokens = createTokens({
@@ -16,7 +17,9 @@ export const tokens = createTokens({
   },
 });
 
-export const theme = createRootTheme(tokens);
+export const theme = style({});
+
+createGlobalTheme(`:root, .${theme}`, tokens); // TODO: Do we need a dot here?
 
 export const altTheme = createTheme(tokens, {
   colors: {

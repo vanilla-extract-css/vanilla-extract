@@ -1,13 +1,14 @@
 import hash from '@emotion/hash';
 import deepMerge from 'deepmerge';
+import get from 'lodash/get';
 
 import type { StyleRule } from './types';
 import { appendCss } from './adapter';
 import { sanitiseIdent } from './utils';
 
-type PartialAlternateContract<T> = {
+type PartialTokenContract<T> = {
   [P in keyof T]?: T[P] extends Record<string | number, unknown>
-    ? PartialAlternateContract<T[P]>
+    ? PartialTokenContract<T[P]>
     : T[P];
 };
 
@@ -31,7 +32,7 @@ const createFileScopeIdent = () => {
 
 const walkObject = <T, MapTo>(
   obj: T,
-  fn: (value: string | number, path: string) => MapTo,
+  fn: (value: string | number, path: Array<string>) => MapTo,
   path: Array<string> = [],
 ): MapLeafNodes<T, MapTo> => {
   // @ts-expect-error
@@ -44,7 +45,7 @@ const walkObject = <T, MapTo>(
     if (typeof value === 'object') {
       clone[key] = value ? walkObject(value, fn, currentPath) : value;
     } else if (typeof value === 'string' || typeof value === 'number') {
-      clone[key] = fn(value, currentPath.join('-'));
+      clone[key] = fn(value, currentPath);
     } else {
       console.warn(
         `Skipping invalid key "${currentPath.join(
@@ -71,9 +72,84 @@ export function style(rule: StyleRule) {
   return styleRuleName;
 }
 
-// export function createTokens<TokenContract>() {
+type Tokens<TokenContract> = {
+  vars: MapLeafNodes<TokenContract, string>;
+  values: TokenContract;
+};
 
-// }
+export function createTokens<TokenContract>(
+  tokenContract: TokenContract,
+): Tokens<TokenContract> {
+  const vars = walkObject(tokenContract, (_value, _path) => {
+    return createVar();
+  });
+
+  return {
+    vars,
+    values: tokenContract,
+  };
+}
+
+export function createGlobalTheme<TokenContract>(
+  selector: string,
+  tokens: Tokens<TokenContract>,
+  overrides?: PartialTokenContract<TokenContract>,
+) {
+  // @ts-expect-error // Revisit types here, maybe even library itself
+  const mergedContract = deepMerge(tokens.values, overrides ?? {});
+  const vars: { [cssVarName: string]: string | number } = {};
+
+  /* TODO 
+        - validate new variables arn't set
+        - validate arrays have the same length as contract
+      */
+  walkObject(mergedContract, (value, path) => {
+    vars[get(tokens.vars, path)] = value;
+  });
+
+  appendCss({ selector, rule: { vars } }, fileScope);
+}
+
+export function createTheme<TokenContract>(
+  tokens: Tokens<TokenContract>,
+  overrides?: PartialTokenContract<TokenContract>,
+) {
+  const themeClassName = sanitiseIdent(createFileScopeIdent());
+
+  createGlobalTheme(`.${themeClassName}`, tokens, overrides);
+
+  return themeClassName;
+}
+
+export function createInlineTheme<TokenContract>(
+  tokens: Tokens<TokenContract>,
+  overrides?: PartialTokenContract<TokenContract>,
+) {
+  // @ts-expect-error // Revisit types here, maybe even library itself
+  const mergedContract = deepMerge(tokens.values, overrides ?? {});
+  const styles: { [cssVarName: string]: string } = {};
+
+  /* TODO 
+        - validate new variables arn't set
+        - validate arrays have the same length as contract
+      */
+  walkObject(mergedContract, (value, path) => {
+    const varName = get(tokens.vars, path);
+
+    styles[varName.substring(4, varName.length - 1)] = String(value);
+  });
+
+  Object.defineProperty(styles, 'toString', {
+    value: function () {
+      return Object.keys(this)
+        .map((key) => `${key}:${this[key]}`)
+        .join(';');
+    },
+    writable: false,
+  });
+
+  return styles;
+}
 
 export function defineVars<VarContract>(varContract: VarContract) {
   const varContractHash = createFileScopeIdent();
@@ -96,7 +172,7 @@ export function defineVars<VarContract>(varContract: VarContract) {
   return {
     className: rootVarsClassName,
     vars,
-    alternate: <AltVarContract extends PartialAlternateContract<VarContract>>(
+    alternate: <AltVarContract extends PartialTokenContract<VarContract>>(
       altVarContract: AltVarContract,
     ) => {
       // @ts-expect-error // Revisit types here, maybe even library itself

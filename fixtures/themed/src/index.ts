@@ -25,13 +25,13 @@ document.body.innerHTML = `
           <button id="${testNodes.altButton}" class="${button.join(
   ' ',
 )}">Alt theme button</button>
-          <div class="${theme.className}"> 
+          <div class="${theme}"> 
             Back to root theme
             <div id="${testNodes.nestedRootContainer}" class="${container}">
               <button id="${testNodes.nestedRootButton}" class="${button.join(
   ' ',
 )}">Main theme button</button>
-            <div class="${inlineTheme}"> 
+            <div style="${inlineTheme}"> 
               Inline theme
                 <div id="${
                   testNodes.inlineThemeContainer
