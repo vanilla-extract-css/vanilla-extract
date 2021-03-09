@@ -9,6 +9,9 @@ export interface CSSKeyframes {
 }
 
 export type CSSProperties = BasicCSSProperties & {
+  vars?: {
+    [key: string]: string | number;
+  };
   '@keyframes'?: CSSKeyframes | string;
 };
 

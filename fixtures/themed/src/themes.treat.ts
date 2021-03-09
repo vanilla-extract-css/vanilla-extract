@@ -1,6 +1,10 @@
-import { defineVars } from '@mattsjones/css-core';
+import {
+  createTokens,
+  createRootTheme,
+  createTheme,
+} from '@mattsjones/css-core';
 
-export const theme = defineVars({
+export const tokens = createTokens({
   colors: {
     background: 'blue',
     text: 'white',
@@ -12,7 +16,9 @@ export const theme = defineVars({
   },
 });
 
-export const altTheme = theme.alternate({
+export const theme = createRootTheme(tokens);
+
+export const altTheme = createTheme(tokens, {
   colors: {
     background: 'green',
   },

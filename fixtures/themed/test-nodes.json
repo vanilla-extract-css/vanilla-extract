@@ -5,5 +5,7 @@
   "altContainer": "altContainer",
   "altButton": "altButton",
   "nestedRootContainer": "nestedRootContainer",
-  "nestedRootButton": "nestedRootButton"
+  "nestedRootButton": "nestedRootButton",
+  "inlineThemeContainer": "inlineThemeContainer",
+  "inlineThemeButton": "inlineThemeButton"
 }

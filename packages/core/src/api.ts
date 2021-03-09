@@ -57,6 +57,12 @@ const walkObject = <T, MapTo>(
   return clone;
 };
 
+export function createVar() {
+  const cssVarName = sanitiseIdent(createFileScopeIdent());
+
+  return `var(--${cssVarName})`;
+}
+
 export function style(rule: StyleRule) {
   const styleRuleName = sanitiseIdent(createFileScopeIdent());
 
@@ -64,6 +70,10 @@ export function style(rule: StyleRule) {
 
   return styleRuleName;
 }
+
+// export function createTokens<TokenContract>() {
+
+// }
 
 export function defineVars<VarContract>(varContract: VarContract) {
   const varContractHash = createFileScopeIdent();

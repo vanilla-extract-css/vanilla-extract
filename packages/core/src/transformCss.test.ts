@@ -1,3 +1,4 @@
+import { createVar } from './api';
 import { transformCss } from './transformCss';
 
 expect.addSnapshotSerializer({
@@ -473,6 +474,55 @@ describe('transformCss', () => {
         }
         ".otherClass": {
           "color": red
+        }
+      }
+    `);
+  });
+
+  it('should handle css vars', () => {
+    const testVar = createVar();
+
+    expect(
+      transformCss({
+        selector: '.testClass',
+        rule: {
+          display: 'block',
+          vars: {
+            '--my-var': 'red',
+            [testVar]: 'green',
+          },
+          selectors: {
+            '&:nth-child(3)': {
+              vars: {
+                '--my-var': 'orange',
+                [testVar]: 'black',
+              },
+            },
+          },
+          '@media': {
+            'screen and (min-width: 700px)': {
+              vars: {
+                '--my-var': 'yellow',
+                [testVar]: 'blue',
+              },
+            },
+          },
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      ".testClass": {
+        "--my-var": red
+        "--_17rw2mr_0": green
+        "display": block
+      }
+      ".testClass:nth-child(3)": {
+        "--my-var": orange
+        "--_17rw2mr_0": black
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass": {
+          "--my-var": yellow
+          "--_17rw2mr_0": blue
         }
       }
     `);

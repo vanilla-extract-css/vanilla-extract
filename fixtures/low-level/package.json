@@ -1,0 +1,10 @@
+{
+  "name": "@treat/fixture-low-level",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@mattsjones/css-core": "0.0.3"
+  }
+}

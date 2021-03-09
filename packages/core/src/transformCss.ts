@@ -11,6 +11,7 @@ import type {
   StyleWithSelectors,
 } from './types';
 import { sanitiseIdent } from './utils';
+import { mapKeys } from 'lodash';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -123,7 +124,7 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    const rule = this.processRuleKeyframes(cssRule.rule);
+    const rule = this.processVars(this.processRuleKeyframes(cssRule.rule));
 
     if (cssRule.conditions) {
       this.conditionalRules.push({
@@ -137,6 +138,25 @@ class Stylesheet {
         rule,
       });
     }
+  }
+
+  processVars({ vars, ...rest }: CSSProperties) {
+    if (!vars) {
+      return rest;
+    }
+
+    return {
+      ...mapKeys(vars, (_value, key) => {
+        const matches = key.match(/^var\((.*)\)$/);
+
+        if (matches) {
+          return matches[1];
+        }
+
+        return key;
+      }),
+      ...rest,
+    };
   }
 
   processRuleKeyframes(rule: CSSProperties) {

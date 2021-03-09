@@ -1,11 +1,11 @@
 import { style } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
-import { theme } from './themes.treat';
+import { tokens } from './themes.treat';
 
 export const button = [
   style({
-    backgroundColor: theme.vars.colors.background,
-    color: theme.vars.colors.text,
+    backgroundColor: tokens.colors.background,
+    color: tokens.colors.text,
     '@media': {
       'only screen and (min-width: 500px)': {
         borderRadius: '9999px',
@@ -18,11 +18,11 @@ export const button = [
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.vars.space[2],
-  padding: theme.vars.space[3],
+  gap: tokens.space[2],
+  padding: tokens.space[3],
   '@media': {
     'only screen and (min-width: 500px)': {
-      border: `1px solid ${theme.vars.colors.background}`,
+      border: `1px solid ${tokens.colors.background}`,
     },
   },
 });

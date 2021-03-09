@@ -1,7 +1,16 @@
-import { theme, altTheme } from './themes.treat';
+import { createInlineTheme } from '@mattsjones/css-core';
+
+import { theme, altTheme, tokens } from './themes.treat';
 import { button, container } from './styles.treat';
 import { shadow } from './shared.treat';
 import testNodes from '../test-nodes.json';
+
+const inlineTheme = createInlineTheme(tokens, {
+  colors: {
+    background: 'orange',
+    text: 'black',
+  },
+});
 
 document.body.innerHTML = `
   <div id="${testNodes.root}" class="${shadow}"> 
@@ -22,6 +31,16 @@ document.body.innerHTML = `
               <button id="${testNodes.nestedRootButton}" class="${button.join(
   ' ',
 )}">Main theme button</button>
+            <div class="${inlineTheme}"> 
+              Inline theme
+                <div id="${
+                  testNodes.inlineThemeContainer
+                }" class="${container}">
+                  <button id="${
+                    testNodes.inlineThemeButton
+                  }" class="${button.join(' ')}">Main theme button</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
