@@ -17,15 +17,6 @@ type MapLeafNodes<Obj, LeafType> = {
     : LeafType;
 };
 
-type Primitive = string | number | boolean;
-type WalkableValue = Primitive | WalkableObject | WalkableArray;
-interface WalkableObject {
-  [index: string]: WalkableValue;
-  [index: number]: WalkableValue;
-}
-interface WalkableArray extends Array<WalkableValue> {}
-type Walkable = WalkableObject | WalkableArray;
-
 let refCounter = 0;
 let fileScope = 'DEFAULT_FILE_SCOPE';
 
@@ -38,11 +29,12 @@ const createFileScopeIdent = () => {
   return `${hash(fileScope)}_${refCounter++}`;
 };
 
-const walkObject = <T extends Walkable, MapTo>(
+const walkObject = <T, MapTo>(
   obj: T,
-  fn: (value: Primitive, path: string) => MapTo,
+  fn: (value: string | number, path: string) => MapTo,
   path: Array<string> = [],
 ): MapLeafNodes<T, MapTo> => {
+  // @ts-expect-error
   const clone = obj.constructor();
 
   for (let key in obj) {
@@ -51,8 +43,14 @@ const walkObject = <T extends Walkable, MapTo>(
 
     if (typeof value === 'object') {
       clone[key] = value ? walkObject(value, fn, currentPath) : value;
-    } else {
+    } else if (typeof value === 'string' || typeof value === 'number') {
       clone[key] = fn(value, currentPath.join('-'));
+    } else {
+      console.warn(
+        `Skipping invalid key "${currentPath.join(
+          '.',
+        )}". Should be a string, number or object. Received: "${typeof value}"`,
+      );
     }
   }
 
@@ -67,12 +65,10 @@ export function style(rule: StyleRule) {
   return styleRuleName;
 }
 
-export function defineVars<VarContract extends Walkable>(
-  varContract: VarContract,
-) {
+export function defineVars<VarContract>(varContract: VarContract) {
   const varContractHash = createFileScopeIdent();
   const rootVarsClassName = sanitiseIdent(varContractHash);
-  const cssVars: { [cssVarName: string]: Primitive } = {};
+  const cssVars: { [cssVarName: string]: string | number } = {};
 
   const vars = walkObject(varContract, (value, path) => {
     const cssVarName = `--${hash(varContractHash + path)}`;
@@ -97,7 +93,7 @@ export function defineVars<VarContract extends Walkable>(
       const mergedContract = deepMerge(varContract, altVarContract);
       const altVarContractHash = createFileScopeIdent();
       const altVarsClassName = sanitiseIdent(altVarContractHash);
-      const altCssVars: { [cssVarName: string]: Primitive } = {};
+      const altCssVars: { [cssVarName: string]: string | number } = {};
 
       /* TODO 
         - validate new variables arn't set
