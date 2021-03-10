@@ -8,7 +8,6 @@ import { generateCss } from '@mattsjones/css-core/generateCss';
 
 import { debug, formatResourcePath } from './logger';
 import TreatError from './TreatError';
-import { getCompiledSource, compilerName } from './treatCompiler';
 
 const stringifyLoaderRequest = (loaderConfig) => {
   if (typeof loaderConfig === 'string') {
@@ -25,38 +24,52 @@ export default function (source) {
   return source;
 }
 
-export function pitch() {
+export async function pitch() {
   this.cacheable(true);
+  const { childCompiler, ...options } = loaderUtils.getOptions(this);
+
+  const log = debug(`treat:loader:${formatResourcePath(this.resourcePath)}`);
 
   const compiler = this._compiler;
 
-  // TODO link compiler name with treatCompiler file
-  if (compiler.name === compilerName) {
-    // Skip treat loader as we are already within a treat child compiler
+  const isChildCompiler = childCompiler.isChildCompiler(compiler.name);
+
+  if (
+    isChildCompiler &&
+    compiler.options.output.filename === this.resourcePath
+  ) {
+    log(
+      'Skip treat loader as we are already within a treat child compiler for this file',
+    );
     return;
   }
 
   const callback = this.async();
 
-  produce(this)
-    .then((result) => callback(null, result))
-    .catch((e) => {
-      callback(e);
-    });
+  try {
+    const { source } = await childCompiler.getCompiledSource(this);
+
+    if (isChildCompiler) {
+      // If within a treat child compiler then only compile source, don't eval and assign CSS
+      return callback(null, source);
+    }
+
+    const result = await processSource(this, source, options);
+
+    callback(null, result);
+  } catch (e) {
+    callback(e);
+  }
 }
 
-async function produce(loader) {
+async function processSource(loader, source, { outputCss }) {
   const log = debug(`treat:loader:${formatResourcePath(loader.resourcePath)}`);
 
   log('Loading resource');
 
-  const { outputCss } = loaderUtils.getOptions(loader);
-
   const isHmr = typeof hmr === 'boolean' ? hmr : loader.hot;
 
-  const { source, dependencies } = await getCompiledSource(loader);
-
-  const makeCssModule = (css) => {
+  const makeCssModule = (fileScope, css) => {
     const base64 = Buffer.from(css, 'utf-8').toString('base64');
 
     const virtualResourceLoader = stringifyLoaderRequest({
@@ -64,7 +77,7 @@ async function produce(loader) {
       options: { source: base64 },
     });
     const cssFileName = path.normalize(
-      loaderUtils.interpolateName(loader, '[hash:base64:7].treatcss', {
+      loaderUtils.interpolateName(loader, `${fileScope}.treatcss`, {
         content: css,
       }),
     );
@@ -92,7 +105,8 @@ async function produce(loader) {
     },
   };
 
-  const sourceWithBoundLoaderInstance = `require('@mattsjones/css-core/adapter').setAdapter(__webpack_adapter__);\n${source}`;
+  const sourceWithBoundLoaderInstance = `require('@mattsjones/css-core/adapter').setAdapter(__webpack_adapter__);
+  ${source}`;
 
   let result;
   try {
@@ -112,12 +126,12 @@ async function produce(loader) {
   const cssRequests = [];
 
   // TODO  ???? Why can't I iterate the Map without Array.from ????
-  for (const [_fileScope, fileScopeCss] of Array.from(
+  for (const [fileScope, fileScopeCss] of Array.from(
     cssByFileScope.entries(),
   )) {
     const css = generateCss(...fileScopeCss).join('\n');
 
-    cssRequests.push(makeCssModule(css));
+    cssRequests.push(makeCssModule(fileScope, css));
   }
 
   return serializeTreatModule(loader, cssRequests, result, isHmr);

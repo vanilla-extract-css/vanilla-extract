@@ -43,7 +43,7 @@ document.body.innerHTML = `
                 }" class="${container}">
                   <button id="${
                     testNodes.inlineThemeButton
-                  }" class="${button.join(' ')}">Main theme button</button>
+                  }" class="${button.join(' ')}">Inline theme button</button>
                 </div>
               </div>
             </div>

@@ -2,4 +2,6 @@
 - better style idents
 - potentially cache the theme file as it will be processed a lot
 - detect unused styles
-- property fallbacks
+- HMR
+- Refactor webpack-plugin to TS
+- source maps
