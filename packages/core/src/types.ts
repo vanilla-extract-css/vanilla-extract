@@ -1,8 +1,8 @@
-import type { Properties } from 'csstype';
+import type { PropertiesFallback } from 'csstype';
 
 import type { SimplePseudos } from './transformCSS';
 
-type BasicCSSProperties = Properties<string | number>;
+type BasicCSSProperties = PropertiesFallback<string | number>;
 
 export interface CSSKeyframes {
   [time: string]: BasicCSSProperties;
