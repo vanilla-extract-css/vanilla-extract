@@ -5,12 +5,6 @@ import type { StyleRule } from './types';
 import { appendCss } from './adapter';
 import { sanitiseIdent } from './utils';
 
-type PartialThemeContract<T> = {
-  [P in keyof T]?: T[P] extends Record<string | number, unknown>
-    ? PartialThemeContract<T[P]>
-    : T[P];
-};
-
 type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends object
     ? MapLeafNodes<Obj[Prop], LeafType>
@@ -25,8 +19,12 @@ export function setFileScope(newFileScope: string) {
   fileScope = newFileScope;
 }
 
-const createFileScopeIdent = () => {
-  return `${hash(fileScope)}_${refCounter++}`;
+const createFileScopeId = (debugId?: string) => {
+  if (process.env.NODE_ENV !== 'production' && debugId) {
+    return `${debugId}__${hash(fileScope)}${refCounter++}`;
+  }
+
+  return `${hash(fileScope)}${refCounter++}`;
 };
 
 const walkObject = <T, MapTo>(
@@ -57,14 +55,14 @@ const walkObject = <T, MapTo>(
   return clone;
 };
 
-export function createVar() {
-  const cssVarName = sanitiseIdent(createFileScopeIdent());
+export function createVar(debugId?: string) {
+  const cssVarName = sanitiseIdent(createFileScopeId(debugId));
 
   return `var(--${cssVarName})`;
 }
 
-export function style(rule: StyleRule) {
-  const styleRuleName = sanitiseIdent(createFileScopeIdent());
+export function style(rule: StyleRule, debugId?: string) {
+  const styleRuleName = sanitiseIdent(createFileScopeId(debugId));
 
   appendCss({ selector: `.${styleRuleName}`, rule }, fileScope);
 
@@ -76,8 +74,8 @@ type ThemeVars<ThemeContract> = MapLeafNodes<ThemeContract, string>;
 export function createThemeVars<ThemeContract>(
   themeContract: ThemeContract,
 ): ThemeVars<ThemeContract> {
-  return walkObject(themeContract, (_value, _path) => {
-    return createVar();
+  return walkObject(themeContract, (_value, path) => {
+    return createVar(path.join('-'));
   });
 }
 
@@ -128,7 +126,7 @@ export function createTheme<Tokens>(
   tokens: Tokens,
 ): string;
 export function createTheme(arg1: any, arg2?: any): any {
-  const themeClassName = sanitiseIdent(createFileScopeIdent());
+  const themeClassName = sanitiseIdent(createFileScopeId());
 
   const vars = arg2
     ? createGlobalTheme(`.${themeClassName}`, arg1, arg2)
