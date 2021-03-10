@@ -19,7 +19,7 @@ export function setFileScope(newFileScope: string) {
   fileScope = newFileScope;
 }
 
-const createFileScopeId = (debugId?: string) => {
+const createFileScopeId = (debugId: string | undefined) => {
   if (process.env.NODE_ENV !== 'production' && debugId) {
     return `${debugId}__${hash(fileScope)}${refCounter++}`;
   }
@@ -120,17 +120,22 @@ export function createGlobalTheme(
 
 export function createTheme<ThemeContract>(
   tokens: ThemeContract,
+  debugId?: string,
 ): [className: string, vars: ThemeVars<ThemeContract>];
 export function createTheme<Tokens>(
   themeContract: ThemeVars<Tokens>,
   tokens: Tokens,
+  debugId?: string,
 ): string;
-export function createTheme(arg1: any, arg2?: any): any {
-  const themeClassName = sanitiseIdent(createFileScopeId());
+export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
+  const themeClassName = sanitiseIdent(
+    createFileScopeId(typeof arg2 === 'object' ? arg3 : arg2),
+  );
 
-  const vars = arg2
-    ? createGlobalTheme(`.${themeClassName}`, arg1, arg2)
-    : createGlobalTheme(`.${themeClassName}`, arg1);
+  const vars =
+    typeof arg2 === 'object'
+      ? createGlobalTheme(`.${themeClassName}`, arg1, arg2)
+      : createGlobalTheme(`.${themeClassName}`, arg1);
 
   return vars ? [themeClassName, vars] : themeClassName;
 }
