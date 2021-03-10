@@ -1,14 +1,19 @@
 import { createInlineTheme } from '@mattsjones/css-core';
 
-import { theme, altTheme, tokens } from './themes.treat';
+import { theme, altTheme, vars } from './themes.treat';
 import { button, container } from './styles.treat';
 import { shadow } from './shared.treat';
 import testNodes from '../test-nodes.json';
 
-const inlineTheme = createInlineTheme(tokens, {
+const inlineTheme = createInlineTheme(vars, {
   colors: {
     background: 'orange',
     text: 'black',
+  },
+  space: {
+    1: '4px',
+    2: '8px',
+    3: '12px',
   },
 });
 

@@ -1,0 +1,5 @@
+- better theme var idents
+- better style idents
+- potentially cache the theme file as it will be processed a lot
+- detect unused styles
+- property fallbacks

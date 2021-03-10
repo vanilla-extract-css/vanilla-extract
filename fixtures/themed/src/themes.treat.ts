@@ -1,11 +1,9 @@
-import {
-  createTokens,
-  createGlobalTheme,
-  createTheme,
-  style,
-} from '@mattsjones/css-core';
+import { createGlobalTheme, createTheme, style } from '@mattsjones/css-core';
 
-export const tokens = createTokens({
+export const theme = style({});
+
+// TODO: Do we need a dot here?
+export const vars = createGlobalTheme(`:root, .${theme}`, {
   colors: {
     background: 'blue',
     text: 'white',
@@ -17,13 +15,10 @@ export const tokens = createTokens({
   },
 });
 
-export const theme = style({});
-
-createGlobalTheme(`:root, .${theme}`, tokens); // TODO: Do we need a dot here?
-
-export const altTheme = createTheme(tokens, {
+export const altTheme = createTheme(vars, {
   colors: {
     background: 'green',
+    text: 'white',
   },
   space: {
     1: '8px',
