@@ -7,7 +7,7 @@ import testNodes from '../test-nodes.json';
 
 const inlineTheme = createInlineTheme(vars, {
   colors: {
-    background: 'orange',
+    backgroundColor: 'orange',
     text: 'black',
   },
   space: {

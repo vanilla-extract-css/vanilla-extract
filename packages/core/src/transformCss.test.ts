@@ -512,17 +512,17 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass": {
         "--my-var": red
-        "--_17rw2mr_0": green
+        "--_17rw2mr0": green
         "display": block
       }
       ".testClass:nth-child(3)": {
         "--my-var": orange
-        "--_17rw2mr_0": black
+        "--_17rw2mr0": black
       }
       "@media screen and (min-width: 700px)": {
         ".testClass": {
           "--my-var": yellow
-          "--_17rw2mr_0": blue
+          "--_17rw2mr0": blue
         }
       }
     `);

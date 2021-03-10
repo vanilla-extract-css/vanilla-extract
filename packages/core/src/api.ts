@@ -56,7 +56,11 @@ const walkObject = <T, MapTo>(
 };
 
 export function createVar(debugId?: string) {
-  const cssVarName = sanitiseIdent(createFileScopeId(debugId));
+  // Dashify CSS var names to replicate postcss-js behaviour
+  // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
+  const cssVarName = sanitiseIdent(createFileScopeId(debugId))
+    .replace(/([A-Z])/g, '-$1')
+    .toLowerCase();
 
   return `var(--${cssVarName})`;
 }

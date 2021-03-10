@@ -5,7 +5,7 @@ export const theme = style({});
 // TODO: Do we need a dot here?
 export const vars = createGlobalTheme(`:root, .${theme}`, {
   colors: {
-    background: 'blue',
+    backgroundColor: 'blue',
     text: 'white',
   },
   space: {
@@ -17,7 +17,7 @@ export const vars = createGlobalTheme(`:root, .${theme}`, {
 
 export const altTheme = createTheme(vars, {
   colors: {
-    background: 'green',
+    backgroundColor: 'green',
     text: 'white',
   },
   space: {

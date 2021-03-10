@@ -4,7 +4,7 @@ import { vars } from './themes.treat';
 
 export const button = [
   style({
-    backgroundColor: vars.colors.background,
+    backgroundColor: vars.colors.backgroundColor,
     color: vars.colors.text,
     '@media': {
       'only screen and (min-width: 500px)': {
@@ -22,7 +22,7 @@ export const container = style({
   padding: vars.space[3],
   '@media': {
     'only screen and (min-width: 500px)': {
-      border: `1px solid ${vars.colors.background}`,
+      border: `1px solid ${vars.colors.backgroundColor}`,
     },
   },
 });
