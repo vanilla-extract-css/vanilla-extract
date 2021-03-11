@@ -1,32 +1,63 @@
 import createCompat from './compat';
+import { debug } from './logger';
 
-export const compilerName = 'treat-webpack-loader';
+const log = debug('treat:compiler');
 
-export const getCompiledSource = async (loader) => {
-  const isWebpack5 = Boolean(
-    loader._compiler.webpack && loader._compiler.webpack.version,
-  );
-  const compat = createCompat(isWebpack5);
+const getCompilerName = (resource) => `treat-compiler:${resource}`;
 
-  const {
-    source,
-    fileDependencies,
-    contextDependencies,
-  } = await compileTreatSource(loader, compat);
+const wrapFileScope = (source, fileScope) => `
+  const { setFileScope, endFileScope } = require("@mattsjones/css-core");
+  setFileScope('${fileScope}');
+  ${source}
+  endFileScope()`;
 
-  // Set loader dependencies to dependecies of the child compiler
-  fileDependencies.forEach((dep) => {
-    loader.addDependency(dep);
-  });
-  contextDependencies.forEach((dep) => {
-    loader.addContextDependency(dep);
-  });
+export class ChildCompiler {
+  constructor() {
+    this.cache = new Map();
+  }
 
-  return {
-    source,
-    dependencies: fileDependencies,
-  };
-};
+  clearCache() {
+    log('Clearing child compiler cache');
+    this.cache.clear();
+  }
+
+  isChildCompiler(name) {
+    return typeof name === 'string' && name.startsWith('treat-compiler');
+  }
+
+  async getCompiledSource(loader) {
+    const cacheId = loader.resourcePath;
+    let compilationResult = this.cache.get(cacheId);
+
+    if (!compilationResult) {
+      log('No cached source. Compiling: %s', cacheId);
+      const isWebpack5 = Boolean(
+        loader._compiler.webpack && loader._compiler.webpack.version,
+      );
+      const compat = createCompat(isWebpack5);
+      compilationResult = await compileTreatSource(loader, compat);
+
+      this.cache.set(cacheId, compilationResult);
+    } else {
+      log('Using cached source: %s', cacheId);
+    }
+
+    const { source, fileDependencies, contextDependencies } = compilationResult;
+
+    // Set loader dependencies to dependecies of the child compiler
+    fileDependencies.forEach((dep) => {
+      loader.addDependency(dep);
+    });
+    contextDependencies.forEach((dep) => {
+      loader.addContextDependency(dep);
+    });
+
+    return {
+      source: wrapFileScope(source, loader.resourcePath),
+      dependencies: fileDependencies,
+    };
+  }
+}
 
 function getRootCompilation(loader) {
   var compiler = loader._compiler;
@@ -43,6 +74,7 @@ function compileTreatSource(loader, compat) {
     // Child compiler will compile treat files to be evaled during compilation
     const outputOptions = { filename: loader.resourcePath };
 
+    const compilerName = getCompilerName(loader.resourcePath);
     const childCompiler = getRootCompilation(loader).createChildCompiler(
       compilerName,
       outputOptions,

@@ -12,19 +12,28 @@ type MapLeafNodes<Obj, LeafType> = {
 };
 
 let refCounter = 0;
-let fileScope = 'DEFAULT_FILE_SCOPE';
+const fileScopes = ['DEFAULT_FILE_SCOPE'];
 
 export function setFileScope(newFileScope: string) {
   refCounter = 0;
-  fileScope = newFileScope;
+  fileScopes.unshift(newFileScope);
+}
+
+export function endFileScope() {
+  refCounter = 0;
+  fileScopes.splice(0, 1);
+}
+
+function getFileScope() {
+  return fileScopes[0];
 }
 
 const createFileScopeId = (debugId: string | undefined) => {
   if (process.env.NODE_ENV !== 'production' && debugId) {
-    return `${debugId}__${hash(fileScope)}${refCounter++}`;
+    return `${debugId}__${hash(getFileScope())}${refCounter++}`;
   }
 
-  return `${hash(fileScope)}${refCounter++}`;
+  return `${hash(getFileScope())}${refCounter++}`;
 };
 
 const walkObject = <T, MapTo>(
@@ -68,7 +77,7 @@ export function createVar(debugId?: string) {
 export function style(rule: StyleRule, debugId?: string) {
   const styleRuleName = sanitiseIdent(createFileScopeId(debugId));
 
-  appendCss({ selector: `.${styleRuleName}`, rule }, fileScope);
+  appendCss({ selector: `.${styleRuleName}`, rule }, getFileScope());
 
   return styleRuleName;
 }
@@ -115,7 +124,7 @@ export function createGlobalTheme(
     varSetters[get(themeVars, path)] = value;
   });
 
-  appendCss({ selector, rule: { vars: varSetters } }, fileScope);
+  appendCss({ selector, rule: { vars: varSetters } }, getFileScope());
 
   if (shouldCreateVars) {
     return themeVars;

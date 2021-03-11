@@ -1,5 +1,7 @@
 import type { Compiler, RuleSetRule, RuleSetUseItem } from 'webpack';
 
+import { ChildCompiler } from './compiler';
+
 type TODO = any;
 
 const isProductionLikeMode = (options: TODO) => {
@@ -28,6 +30,7 @@ export class TreatPlugin {
   minify: boolean | undefined;
   outputCss: boolean;
   outputLoaders: Array<RuleSetUseItem>;
+  childCompiler: ChildCompiler;
 
   constructor(options: PluginOptions = {}) {
     const {
@@ -41,19 +44,13 @@ export class TreatPlugin {
     this.minify = minify;
     this.outputCss = outputCss;
     this.outputLoaders = outputLoaders;
+    this.childCompiler = new ChildCompiler();
   }
 
   apply(compiler: Compiler) {
-    // TODO do we need this
-    // compiler.hooks.normalModuleFactory.tap(TWP, (nmf) => {
-    //   nmf.hooks.afterResolve.tap(TWP, (result) => {
-    //     if (this.store.getCSSResources().has(result.matchResource)) {
-    //       result.settings = Object.assign({}, result.settings, {
-    //         sideEffects: true,
-    //       });
-    //     }
-    //   });
-    // });
+    compiler.hooks.watchRun.tap('treat-webpack-plugin', () => {
+      this.childCompiler.clearCache();
+    });
 
     const optionDefaulter = makeOptionDefaulter(
       isProductionLikeMode(compiler.options),
@@ -73,12 +70,7 @@ export class TreatPlugin {
                 dev: false,
                 prod: true,
               }),
-            },
-          },
-          {
-            loader: require.resolve('babel-loader'),
-            options: {
-              plugins: [require.resolve('@mattsjones/css-babel-plugin')],
+              childCompiler: this.childCompiler,
             },
           },
         ],
