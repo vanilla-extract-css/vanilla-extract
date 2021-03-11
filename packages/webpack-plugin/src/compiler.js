@@ -1,3 +1,5 @@
+import path from 'path';
+
 import createCompat from './compat';
 import { debug } from './logger';
 
@@ -26,7 +28,11 @@ export class ChildCompiler {
   }
 
   async getCompiledSource(loader) {
-    const cacheId = loader.resourcePath;
+    const projectRelativeResourcePath = path.relative(
+      loader.rootContext,
+      loader.resourcePath,
+    );
+    const cacheId = projectRelativeResourcePath;
     let compilationResult = this.cache.get(cacheId);
 
     if (!compilationResult) {
@@ -53,7 +59,7 @@ export class ChildCompiler {
     });
 
     return {
-      source: wrapFileScope(source, loader.resourcePath),
+      source: wrapFileScope(source, projectRelativeResourcePath),
       dependencies: fileDependencies,
     };
   }
