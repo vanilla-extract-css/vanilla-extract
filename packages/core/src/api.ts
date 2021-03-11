@@ -6,7 +6,7 @@ import { appendCss } from './adapter';
 import { sanitiseIdent } from './utils';
 
 type MapLeafNodes<Obj, LeafType> = {
-  [Prop in keyof Obj]: Obj[Prop] extends object
+  [Prop in keyof Obj]: Obj[Prop] extends Record<string | number, any>
     ? MapLeafNodes<Obj[Prop], LeafType>
     : LeafType;
 };
@@ -96,10 +96,10 @@ export function createGlobalTheme<ThemeContract>(
   selector: string,
   tokens: ThemeContract,
 ): ThemeVars<ThemeContract>;
-export function createGlobalTheme<Tokens>(
+export function createGlobalTheme<ThemeContract>(
   selector: string,
-  themeContract: ThemeVars<Tokens>,
-  tokens: Tokens,
+  themeContract: ThemeContract,
+  tokens: MapLeafNodes<ThemeContract, string | number>,
 ): void;
 export function createGlobalTheme(
   selector: string,
@@ -135,9 +135,9 @@ export function createTheme<ThemeContract>(
   tokens: ThemeContract,
   debugId?: string,
 ): [className: string, vars: ThemeVars<ThemeContract>];
-export function createTheme<Tokens>(
-  themeContract: ThemeVars<Tokens>,
-  tokens: Tokens,
+export function createTheme<ThemeContract>(
+  themeContract: ThemeContract,
+  tokens: MapLeafNodes<ThemeContract, string | number>,
   debugId?: string,
 ): string;
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
@@ -153,9 +153,9 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
   return vars ? [themeClassName, vars] : themeClassName;
 }
 
-export function createInlineTheme<Tokens>(
-  themeVars: ThemeVars<Tokens>,
-  tokens: Tokens,
+export function createInlineTheme<ThemeContract>(
+  themeVars: ThemeContract,
+  tokens: MapLeafNodes<ThemeContract, string | number>,
 ) {
   const styles: { [cssVarName: string]: string } = {};
 
