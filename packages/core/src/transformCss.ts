@@ -2,6 +2,7 @@ import hash from '@emotion/hash';
 import each from 'lodash/each';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import mapKeys from 'lodash/mapKeys';
 
 import type {
   CSS,
@@ -12,7 +13,7 @@ import type {
 } from './types';
 import { sanitiseIdent } from './utils';
 import { validateSelector } from './validateSelector';
-import { mapKeys } from 'lodash';
+import { getRegisteredClassNames } from './adapter';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -226,20 +227,14 @@ class Stylesheet {
 
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
-const localClassNames = new Set<string>();
-
-export const addLocalClassName = (className: string) =>
-  localClassNames.add(className);
-
 const interpolateLocalClassNames = (selector: string) => {
-  if (localClassNames.size === 0) {
+  const localClassNames = getRegisteredClassNames();
+
+  if (localClassNames.length === 0) {
     return selector;
   }
 
-  const localClassNamesRegex = RegExp(
-    `(${Array.from(localClassNames).join('|')})`,
-    'g',
-  );
+  const localClassNamesRegex = RegExp(`(${localClassNames.join('|')})`, 'g');
 
   return selector.replace(localClassNamesRegex, (_, match) => {
     return `.${match}`;

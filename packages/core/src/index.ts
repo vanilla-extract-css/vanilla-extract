@@ -1,4 +1,4 @@
-import { browserRuntimeAdapter } from './runtime';
+import { browserRuntimeAdapter } from './runtimeAdapter';
 import { setAdapter } from './adapter';
 
 if (typeof window !== 'undefined') {

@@ -1,4 +1,3 @@
-import { dirname, basename } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 
 const exportConfig = {
@@ -12,7 +11,7 @@ const exportConfig = {
 type RelevantExport = keyof typeof exportConfig;
 const relevantExports = Object.keys(exportConfig) as Array<RelevantExport>;
 
-const extractName = (node: t.Node, fileIdentifier: string) => {
+const extractName = (node: t.Node) => {
   if (t.isObjectProperty(node) && t.isIdentifier(node.key)) {
     return node.key.name;
   } else if (
@@ -21,14 +20,11 @@ const extractName = (node: t.Node, fileIdentifier: string) => {
   ) {
     return node.id.name;
   } else if (t.isExportDefaultDeclaration(node)) {
-    return fileIdentifier;
+    return 'default';
   }
 };
 
-const getDebugId = (
-  path: NodePath<t.CallExpression>,
-  fileIdentifier: string,
-) => {
+const getDebugId = (path: NodePath<t.CallExpression>) => {
   const { parent } = path;
 
   if (
@@ -40,7 +36,7 @@ const getDebugId = (
     const names: Array<string> = [];
 
     path.findParent(({ node: parentNode }) => {
-      const name = extractName(parentNode, fileIdentifier);
+      const name = extractName(parentNode);
       if (name) {
         names.unshift(name);
       }
@@ -50,7 +46,7 @@ const getDebugId = (
 
     return names.join('_');
   } else {
-    return extractName(parent, fileIdentifier);
+    return extractName(parent);
   }
 };
 
@@ -85,22 +81,13 @@ interface PluginOptions {
 }
 type Context = PluginPass & {
   opts?: PluginOptions;
-  fileIdentifier: string;
   namespaceImport: string;
   importIdentifiers: Map<string, RelevantExport>;
 };
 
 export default function (): PluginObj<Context> {
   return {
-    pre(state) {
-      const filename = state.opts.filename || '';
-      const shortFilename = basename(filename).split('.')[0];
-
-      this.fileIdentifier =
-        shortFilename.indexOf('index') > -1
-          ? basename(dirname(filename))
-          : shortFilename;
-
+    pre() {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
       this.packageIdentifier = this.opts?.alias || '@mattsjones/css-core';
@@ -136,7 +123,7 @@ export default function (): PluginObj<Context> {
 
         if (usedExport) {
           if (node.arguments.length < exportConfig[usedExport].maxParams) {
-            const debugIdent = getDebugId(path, this.fileIdentifier);
+            const debugIdent = getDebugId(path);
 
             if (debugIdent) {
               node.arguments.push(t.stringLiteral(debugIdent));

@@ -2,9 +2,8 @@ import hash from '@emotion/hash';
 import get from 'lodash/get';
 
 import type { StyleRule } from './types';
-import { appendCss } from './adapter';
+import { appendCss, registerClassName } from './adapter';
 import { sanitiseIdent } from './utils';
-import { addLocalClassName } from './transformCss';
 
 type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends object
@@ -13,7 +12,8 @@ type MapLeafNodes<Obj, LeafType> = {
 };
 
 let refCounter = 0;
-const fileScopes = ['DEFAULT_FILE_SCOPE'];
+const defaultFileScope = 'DEFAULT_FILE_SCOPE';
+const fileScopes = [defaultFileScope];
 
 export function setFileScope(newFileScope: string) {
   refCounter = 0;
@@ -29,12 +29,29 @@ function getFileScope() {
   return fileScopes[0];
 }
 
-const createFileScopeId = (debugId: string | undefined) => {
-  if (process.env.NODE_ENV !== 'production' && debugId) {
-    return `${debugId}__${hash(getFileScope())}${refCounter++}`;
+function getShortFileName() {
+  const fileScope = getFileScope();
+
+  if (fileScope !== defaultFileScope) {
+    const matches = fileScope.match(/.*\/(.*)\..*\..*$/);
+
+    if (matches && matches[1]) {
+      return matches[1];
+    }
   }
 
-  return `${hash(getFileScope())}${refCounter++}`;
+  return '';
+}
+
+const generateClassName = (debugId: string | undefined) => {
+  const className =
+    process.env.NODE_ENV !== 'production' && debugId
+      ? `${getShortFileName()}_${debugId}__${hash(
+          getFileScope(),
+        )}${refCounter++}`
+      : `${hash(getFileScope())}${refCounter++}`;
+
+  return sanitiseIdent(className);
 };
 
 const walkObject = <T, MapTo>(
@@ -66,9 +83,14 @@ const walkObject = <T, MapTo>(
 };
 
 export function createVar(debugId?: string) {
+  const varName =
+    process.env.NODE_ENV !== 'production' && debugId
+      ? `${debugId}__${hash(getFileScope())}${refCounter++}`
+      : `${hash(getFileScope())}${refCounter++}`;
+
   // Dashify CSS var names to replicate postcss-js behaviour
   // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
-  const cssVarName = sanitiseIdent(createFileScopeId(debugId))
+  const cssVarName = sanitiseIdent(varName)
     .replace(/([A-Z])/g, '-$1')
     .toLowerCase();
 
@@ -76,9 +98,9 @@ export function createVar(debugId?: string) {
 }
 
 export function style(rule: StyleRule, debugId?: string) {
-  const className = sanitiseIdent(createFileScopeId(debugId));
+  const className = generateClassName(debugId);
 
-  addLocalClassName(className);
+  registerClassName(className);
   appendCss({ selector: className, rule }, getFileScope());
 
   return className;
@@ -149,11 +171,11 @@ export function createTheme<Tokens>(
   debugId?: string,
 ): string;
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
-  const themeClassName = sanitiseIdent(
-    createFileScopeId(typeof arg2 === 'object' ? arg3 : arg2),
+  const themeClassName = generateClassName(
+    typeof arg2 === 'object' ? arg3 : arg2,
   );
 
-  addLocalClassName(themeClassName);
+  registerClassName(themeClassName);
 
   const vars =
     typeof arg2 === 'object'

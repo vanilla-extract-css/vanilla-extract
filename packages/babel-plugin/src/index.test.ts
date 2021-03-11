@@ -51,26 +51,8 @@ describe('babel plugin', () => {
       "import { style } from '@mattsjones/css-core';
       export default style({
         zIndex: 2
-      }, \\"mockFilename\\");"
+      }, \\"default\\");"
     `);
-  });
-
-  it('should handle style assigned to default export in index.js file', () => {
-    const source = `
-      import { style } from '@mattsjones/css-core';
-
-      export default style({
-          zIndex: 2,
-      });
-    `;
-
-    expect(transform(source, {}, '/someFolder/index.js'))
-      .toMatchInlineSnapshot(`
-        "import { style } from '@mattsjones/css-core';
-        export default style({
-          zIndex: 2
-        }, \\"someFolder\\");"
-      `);
   });
 
   it('should handle style assigned to object property', () => {

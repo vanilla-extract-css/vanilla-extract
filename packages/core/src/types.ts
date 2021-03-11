@@ -50,4 +50,6 @@ export interface CSS {
 
 export interface Adapter {
   appendCss: (css: CSS, fileScope: string) => void;
+  registerClassName: (className: string) => void;
+  getRegisteredClassNames: () => Array<string>;
 }
