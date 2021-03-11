@@ -1,6 +1,6 @@
 {
   "name": "@mattsjones/css-webpack-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/mattsjones-css-webpack-plugin.cjs.js",
   "module": "dist/mattsjones-css-webpack-plugin.esm.js",
   "preconstruct": {
@@ -19,8 +19,8 @@
     "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
-    "@mattsjones/css-babel-plugin": "^0.0.1",
-    "@mattsjones/css-core": "^0.0.5",
+    "@mattsjones/css-babel-plugin": "^0.0.2",
+    "@mattsjones/css-core": "^0.0.6",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.0",
     "css-loader": "^5.1.1",
