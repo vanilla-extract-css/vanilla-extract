@@ -11,6 +11,7 @@ import type {
   StyleWithSelectors,
 } from './types';
 import { sanitiseIdent } from './utils';
+import { validateSelector } from './validateSelector';
 import { mapKeys } from 'lodash';
 
 export const simplePseudos = [
@@ -125,16 +126,17 @@ class Stylesheet {
 
   addRule(cssRule: CSSRule) {
     const rule = this.processVars(this.processRuleKeyframes(cssRule.rule));
+    const interpolatedSelector = interpolateLocalClassNames(cssRule.selector);
 
     if (cssRule.conditions) {
       this.conditionalRules.push({
-        selector: cssRule.selector,
+        selector: interpolatedSelector,
         rule,
         conditions: cssRule.conditions.sort(),
       });
     } else {
       this.rules.push({
-        selector: cssRule.selector,
+        selector: interpolatedSelector,
         rule,
       });
     }
@@ -224,6 +226,26 @@ class Stylesheet {
 
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
+const localClassNames = new Set<string>();
+
+export const addLocalClassName = (className: string) =>
+  localClassNames.add(className);
+
+const interpolateLocalClassNames = (selector: string) => {
+  if (localClassNames.size === 0) {
+    return selector;
+  }
+
+  const localClassNamesRegex = RegExp(
+    `(${Array.from(localClassNames).join('|')})`,
+    'g',
+  );
+
+  return selector.replace(localClassNamesRegex, (_, match) => {
+    return `.${match}`;
+  });
+};
+
 function transformSelectors(
   stylesheet: Stylesheet,
   rule: StyleWithSelectors,
@@ -231,6 +253,8 @@ function transformSelectors(
   conditions?: Array<string>,
 ) {
   each(rule.selectors, (selectorRule, selector) => {
+    validateSelector(selector);
+
     stylesheet.addRule({
       conditions,
       selector: selector.replace(RegExp('&', 'g'), rootSelector),
@@ -325,11 +349,8 @@ export function transformCss(...allCssObjs: Array<CSS>) {
     });
 
     transformSimplePsuedos(stylesheet, root.rule, root.selector);
-
     transformMedia(stylesheet, root.rule['@media'], root.selector);
-
     transformSupports(stylesheet, root.rule['@supports'], root.selector);
-
     transformSelectors(stylesheet, root.rule, root.selector);
   }
 

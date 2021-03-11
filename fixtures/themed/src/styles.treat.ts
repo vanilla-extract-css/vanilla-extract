@@ -1,19 +1,6 @@
 import { style } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
-import { vars } from './themes.treat';
-
-export const button = [
-  style({
-    backgroundColor: vars.colors.backgroundColor,
-    color: vars.colors.text,
-    '@media': {
-      'only screen and (min-width: 500px)': {
-        borderRadius: '9999px',
-      },
-    },
-  }),
-  shadow,
-];
+import { vars, theme, altTheme } from './themes.treat';
 
 export const container = style({
   display: 'flex',
@@ -26,3 +13,21 @@ export const container = style({
     },
   },
 });
+
+export const button = [
+  style({
+    backgroundColor: vars.colors.backgroundColor,
+    color: vars.colors.text,
+    '@media': {
+      'only screen and (min-width: 500px)': {
+        borderRadius: '9999px',
+      },
+    },
+    selectors: {
+      [`${altTheme} ${theme} ${container} &`]: {
+        outline: '5px solid red',
+      },
+    },
+  }),
+  shadow,
+];

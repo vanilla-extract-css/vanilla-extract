@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import type { StyleRule } from './types';
 import { appendCss } from './adapter';
 import { sanitiseIdent } from './utils';
+import { addLocalClassName } from './transformCss';
 
 type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends object
@@ -75,11 +76,12 @@ export function createVar(debugId?: string) {
 }
 
 export function style(rule: StyleRule, debugId?: string) {
-  const styleRuleName = sanitiseIdent(createFileScopeId(debugId));
+  const className = sanitiseIdent(createFileScopeId(debugId));
 
-  appendCss({ selector: `.${styleRuleName}`, rule }, getFileScope());
+  addLocalClassName(className);
+  appendCss({ selector: className, rule }, getFileScope());
 
-  return styleRuleName;
+  return className;
 }
 
 type ThemeVars<ThemeContract> = MapLeafNodes<ThemeContract, string>;
@@ -124,7 +126,13 @@ export function createGlobalTheme(
     varSetters[get(themeVars, path)] = value;
   });
 
-  appendCss({ selector, rule: { vars: varSetters } }, getFileScope());
+  appendCss(
+    {
+      selector: selector,
+      rule: { vars: varSetters },
+    },
+    getFileScope(),
+  );
 
   if (shouldCreateVars) {
     return themeVars;
@@ -145,10 +153,12 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
     createFileScopeId(typeof arg2 === 'object' ? arg3 : arg2),
   );
 
+  addLocalClassName(themeClassName);
+
   const vars =
     typeof arg2 === 'object'
-      ? createGlobalTheme(`.${themeClassName}`, arg1, arg2)
-      : createGlobalTheme(`.${themeClassName}`, arg1);
+      ? createGlobalTheme(themeClassName, arg1, arg2)
+      : createGlobalTheme(themeClassName, arg1);
 
   return vars ? [themeClassName, vars] : themeClassName;
 }
