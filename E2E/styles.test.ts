@@ -67,7 +67,7 @@ describe('Styling and specificity', () => {
         );
 
         for (const result of results) {
-          expect(result).toMatchObject(results[0]);
+          expect(result).toEqual(results[0]);
         }
 
         expect(results[0]).toMatchSnapshot();

@@ -2,6 +2,7 @@ import hash from '@emotion/hash';
 import each from 'lodash/each';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import mapKeys from 'lodash/mapKeys';
 
 import type {
   CSS,
@@ -11,7 +12,8 @@ import type {
   StyleWithSelectors,
 } from './types';
 import { sanitiseIdent } from './utils';
-import { mapKeys } from 'lodash';
+import { validateSelector } from './validateSelector';
+import { getRegisteredClassNames } from './adapter';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -125,16 +127,17 @@ class Stylesheet {
 
   addRule(cssRule: CSSRule) {
     const rule = this.processVars(this.processRuleKeyframes(cssRule.rule));
+    const interpolatedSelector = interpolateLocalClassNames(cssRule.selector);
 
     if (cssRule.conditions) {
       this.conditionalRules.push({
-        selector: cssRule.selector,
+        selector: interpolatedSelector,
         rule,
         conditions: cssRule.conditions.sort(),
       });
     } else {
       this.rules.push({
-        selector: cssRule.selector,
+        selector: interpolatedSelector,
         rule,
       });
     }
@@ -224,6 +227,20 @@ class Stylesheet {
 
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
+const interpolateLocalClassNames = (selector: string) => {
+  const localClassNames = getRegisteredClassNames();
+
+  if (localClassNames.length === 0) {
+    return selector;
+  }
+
+  const localClassNamesRegex = RegExp(`(${localClassNames.join('|')})`, 'g');
+
+  return selector.replace(localClassNamesRegex, (_, match) => {
+    return `.${match}`;
+  });
+};
+
 function transformSelectors(
   stylesheet: Stylesheet,
   rule: StyleWithSelectors,
@@ -231,6 +248,8 @@ function transformSelectors(
   conditions?: Array<string>,
 ) {
   each(rule.selectors, (selectorRule, selector) => {
+    validateSelector(selector);
+
     stylesheet.addRule({
       conditions,
       selector: selector.replace(RegExp('&', 'g'), rootSelector),
@@ -325,11 +344,8 @@ export function transformCss(...allCssObjs: Array<CSS>) {
     });
 
     transformSimplePsuedos(stylesheet, root.rule, root.selector);
-
     transformMedia(stylesheet, root.rule['@media'], root.selector);
-
     transformSupports(stylesheet, root.rule['@supports'], root.selector);
-
     transformSelectors(stylesheet, root.rule, root.selector);
   }
 

@@ -23,7 +23,16 @@ const defaultWebpackConfig: Configuration = {
           {
             loader: 'babel-loader',
             options: {
-              babelrc: true,
+              babelrc: false,
+              presets: [
+                '@babel/preset-typescript',
+                '@babel/preset-react',
+                [
+                  '@babel/preset-env',
+                  { targets: { node: 14 }, modules: false },
+                ],
+              ],
+              plugins: ['@mattsjones/css-babel-plugin'],
             },
           },
         ],

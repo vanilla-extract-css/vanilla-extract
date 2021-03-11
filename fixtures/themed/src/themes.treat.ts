@@ -2,8 +2,7 @@ import { createGlobalTheme, createTheme, style } from '@mattsjones/css-core';
 
 export const theme = style({});
 
-// TODO: Do we need a dot here?
-export const vars = createGlobalTheme(`:root, .${theme}`, {
+export const vars = createGlobalTheme(`:root, ${theme}`, {
   colors: {
     backgroundColor: 'blue',
     text: 'white',

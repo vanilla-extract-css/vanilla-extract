@@ -2,6 +2,7 @@ import { generateCss } from './generateCss';
 import type { Adapter, CSS } from './types';
 
 let styleSheet: CSSStyleSheet | null;
+const localClassNames = new Set<string>();
 
 function getStylesheet() {
   if (styleSheet) {
@@ -22,4 +23,8 @@ export const browserRuntimeAdapter: Adapter = {
       getStylesheet()?.insertRule(rule);
     }
   },
+  registerClassName: (className) => {
+    localClassNames.add(className);
+  },
+  getRegisteredClassNames: () => Array.from(localClassNames),
 };

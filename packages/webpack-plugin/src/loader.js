@@ -4,6 +4,7 @@ import evalCode from 'eval';
 import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
+import { setAdapter } from '@mattsjones/css-core/adapter';
 import { generateCss } from '@mattsjones/css-core/generateCss';
 
 import { debug, formatResourcePath } from './logger';
@@ -91,11 +92,11 @@ async function processSource(loader, source, { outputCss }) {
   };
 
   const cssByFileScope = new Map();
+  const localClassNames = new Set();
 
-  const __webpack_adapter__ = {
+  const cssAdapter = {
     appendCss: (css, fileScope) => {
       if (outputCss) {
-        log('Adding styles for file scope %s', fileScope);
         const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
 
         fileScopeCss.push(css);
@@ -103,7 +104,13 @@ async function processSource(loader, source, { outputCss }) {
         cssByFileScope.set(fileScope, fileScopeCss);
       }
     },
+    registerClassName: (className) => {
+      localClassNames.add(className);
+    },
+    getRegisteredClassNames: () => Array.from(localClassNames),
   };
+
+  setAdapter(cssAdapter);
 
   const sourceWithBoundLoaderInstance = `require('@mattsjones/css-core/adapter').setAdapter(__webpack_adapter__);
   ${source}`;
@@ -115,7 +122,7 @@ async function processSource(loader, source, { outputCss }) {
       loader.resourcePath,
       {
         console,
-        __webpack_adapter__,
+        __webpack_adapter__: cssAdapter,
       },
       true,
     );

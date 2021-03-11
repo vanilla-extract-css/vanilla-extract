@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
+    "css-selector-parser": "^1.4.1",
     "csstype": "^3.0.7",
     "dedent": "^0.7.0",
     "lodash": "^4.17.21",

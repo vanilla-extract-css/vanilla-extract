@@ -15,9 +15,9 @@ Object {
   "altContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
-    "border" => "1px solid var(--colors-background-color__tbcaum1)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
+    "border" => "1px solid var(--colors-background-color__1acqwpj1)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -28,13 +28,17 @@ Object {
     "border-top-right-radius" => "9999px",
     "border-bottom-right-radius" => "9999px",
     "border-bottom-left-radius" => "9999px",
+    "outline" => "5px solid red",
+    "outline-color" => "rgb(255, 0, 0)",
+    "outline-style" => "solid",
+    "outline-width" => "5px",
   },
   "inlineThemeContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
-    "border" => "1px solid var(--colors-background-color__tbcaum1)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
+    "border" => "1px solid var(--colors-background-color__1acqwpj1)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -45,13 +49,17 @@ Object {
     "border-top-right-radius" => "9999px",
     "border-bottom-right-radius" => "9999px",
     "border-bottom-left-radius" => "9999px",
+    "outline" => "5px solid red",
+    "outline-color" => "rgb(255, 0, 0)",
+    "outline-style" => "solid",
+    "outline-width" => "5px",
   },
   "nestedRootContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
-    "border" => "1px solid var(--colors-background-color__tbcaum1)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
+    "border" => "1px solid var(--colors-background-color__1acqwpj1)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -69,9 +77,9 @@ Object {
   "rootContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
-    "border" => "1px solid var(--colors-background-color__tbcaum1)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
+    "border" => "1px solid var(--colors-background-color__1acqwpj1)",
   },
 }
 `;
@@ -86,30 +94,38 @@ Object {
   "altContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
     "background-color" => "rgb(255, 165, 0)",
     "color" => "rgb(0, 0, 0)",
+    "outline" => "5px solid red",
+    "outline-color" => "rgb(255, 0, 0)",
+    "outline-style" => "solid",
+    "outline-width" => "5px",
   },
   "inlineThemeContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
     "background-color" => "rgb(0, 0, 255)",
     "color" => "rgb(255, 255, 255)",
+    "outline" => "5px solid red",
+    "outline-color" => "rgb(255, 0, 0)",
+    "outline-style" => "solid",
+    "outline-width" => "5px",
   },
   "nestedRootContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -122,8 +138,8 @@ Object {
   "rootContainer": Map {
     "display" => "flex",
     "flex-direction" => "column",
-    "gap" => "var(--space-2__tbcaum4)",
-    "padding" => "var(--space-3__tbcaum5)",
+    "gap" => "var(--space-2__1acqwpj4)",
+    "padding" => "var(--space-3__1acqwpj5)",
   },
 }
 `;
