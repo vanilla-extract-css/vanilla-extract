@@ -25,7 +25,7 @@ export default function (source) {
   return source;
 }
 
-export async function pitch() {
+export async function pitch(remainingRequest) {
   this.cacheable(true);
   const { childCompiler, ...options } = loaderUtils.getOptions(this);
 
@@ -48,7 +48,10 @@ export async function pitch() {
   const callback = this.async();
 
   try {
-    const { source } = await childCompiler.getCompiledSource(this);
+    const { source } = await childCompiler.getCompiledSource(
+      this,
+      remainingRequest,
+    );
 
     if (isChildCompiler) {
       // If within a treat child compiler then only compile source, don't eval and assign CSS

@@ -12,6 +12,10 @@ function getStylesheet() {
   document.head.appendChild(styleEl);
   styleSheet = styleEl.sheet;
 
+  if (!styleSheet) {
+    throw new Error('Could create stylesheet');
+  }
+
   return styleSheet;
 }
 
@@ -20,7 +24,7 @@ export const browserRuntimeAdapter: Adapter = {
     const css = generateCss(cssObj);
 
     for (const rule of css) {
-      getStylesheet()?.insertRule(rule);
+      getStylesheet().insertRule(rule);
     }
   },
   registerClassName: (className) => {

@@ -27,7 +27,7 @@ export class ChildCompiler {
     return typeof name === 'string' && name.startsWith('treat-compiler');
   }
 
-  async getCompiledSource(loader) {
+  async getCompiledSource(loader, request) {
     const projectRelativeResourcePath = path.relative(
       loader.rootContext,
       loader.resourcePath,
@@ -41,7 +41,7 @@ export class ChildCompiler {
         loader._compiler.webpack && loader._compiler.webpack.version,
       );
       const compat = createCompat(isWebpack5);
-      compilationResult = await compileTreatSource(loader, compat);
+      compilationResult = await compileTreatSource(loader, compat, request);
 
       this.cache.set(cacheId, compilationResult);
     } else {
@@ -75,7 +75,7 @@ function getRootCompilation(loader) {
   return compilation;
 }
 
-function compileTreatSource(loader, compat) {
+function compileTreatSource(loader, compat, request) {
   return new Promise((resolve, reject) => {
     // Child compiler will compile treat files to be evaled during compilation
     const outputOptions = { filename: loader.resourcePath };
@@ -109,7 +109,7 @@ function compileTreatSource(loader, compat) {
           library: {
             type: 'commonjs2',
           },
-          import: [loader.resourcePath],
+          import: [`!!${request}`],
         },
       });
     } else {
@@ -117,7 +117,7 @@ function compileTreatSource(loader, compat) {
       const { LibraryTemplatePlugin, SingleEntryPlugin } = require('webpack');
 
       new LibraryTemplatePlugin(null, 'commonjs2').apply(childCompiler);
-      new SingleEntryPlugin(loader.context, loader.resourcePath).apply(
+      new SingleEntryPlugin(loader.context, `!!${request}`).apply(
         childCompiler,
       );
     }

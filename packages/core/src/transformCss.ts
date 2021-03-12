@@ -208,7 +208,7 @@ class Stylesheet {
 
       let styleNode = styles;
 
-      for (const condition of rule.conditions ?? []) {
+      for (const condition of rule.conditions || []) {
         if (!styleNode[condition]) {
           styleNode[condition] = {};
         }
