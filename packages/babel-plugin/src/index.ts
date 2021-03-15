@@ -37,6 +37,7 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
   if (
     t.isObjectProperty(parent) ||
     t.isReturnStatement(parent) ||
+    t.isArrowFunctionExpression(parent) ||
     t.isArrayExpression(parent) ||
     t.isSpreadElement(parent)
   ) {

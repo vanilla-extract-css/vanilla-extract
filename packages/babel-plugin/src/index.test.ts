@@ -116,6 +116,28 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle style returned implicitly from an arrow function', () => {
+    const source = `
+      import { style } from '@mattsjones/css-core';
+
+      const test = () => style({
+        color: 'red'
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
+
+      const test = () => style({
+        color: 'red'
+      }, \\"test\\");
+
+      endFileScope()"
+    `);
+  });
+
   it('should handle style returned from a function', () => {
     const source = `
       import { style } from '@mattsjones/css-core';
