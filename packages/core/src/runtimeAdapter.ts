@@ -22,9 +22,14 @@ function getStylesheet() {
 export const browserRuntimeAdapter: Adapter = {
   appendCss: (cssObj: CSS) => {
     const css = generateCss(cssObj);
+    const stylesheet = getStylesheet();
 
     for (const rule of css) {
-      getStylesheet().insertRule(rule);
+      try {
+        stylesheet.insertRule(rule, stylesheet.cssRules.length);
+      } catch (e) {
+        console.warn(e);
+      }
     }
   },
   registerClassName: (className) => {
