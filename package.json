@@ -11,7 +11,9 @@
     "start": "yarn start-fixture themed",
     "postinstall": "yarn dev",
     "test": "jest",
-    "lint": "manypkg check && tsc"
+    "lint": "manypkg check && tsc",
+    "version": "yarn lint && yarn test && yarn build && changeset version",
+    "release": "changeset publish"
   },
   "workspaces": [
     "packages/*",
@@ -32,6 +34,8 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
+    "@changesets/changelog-github": "^0.3.0",
+    "@changesets/cli": "^2.14.1",
     "@manypkg/cli": "^0.17.0",
     "@preconstruct/cli": "^2.0.1",
     "@types/jest": "^26.0.20",

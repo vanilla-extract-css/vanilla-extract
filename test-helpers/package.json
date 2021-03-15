@@ -1,5 +1,5 @@
 {
-  "name": "@treat/test-helpers",
+  "name": "test-helpers",
   "private": true,
   "version": "1.0.0",
   "main": "src/index.ts",

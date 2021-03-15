@@ -3,7 +3,7 @@ import {
   getNodeStyles,
   TestServer,
   getTestNodes,
-} from '@treat/test-helpers';
+} from 'test-helpers';
 import { Viewport } from 'puppeteer';
 
 const variations = ['browser', 'mini-css-extract', 'style-loader'] as const;
@@ -21,6 +21,7 @@ async function getPageStyles(
   const styles = {};
 
   for (const testNodeId of Object.values(testNodes)) {
+    // @ts-expect-error
     styles[testNodeId] = await getNodeStyles(page, `#${testNodeId}`);
   }
 

@@ -26,7 +26,7 @@ export async function getNodeStyles(page: Page, selector: string) {
     computedStyleMap.set(name, value);
   }
 
-  for (const { rule } of styleForSingleNode.matchedCSSRules) {
+  for (const { rule } of styleForSingleNode.matchedCSSRules || []) {
     // Only calculate styles from regular sources, this reduces noise in the output
     if (rule.origin === 'regular') {
       for (const { name, value } of rule.style.cssProperties) {

@@ -6,7 +6,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export const getTestNodes = (fixture: string) =>
-  require(`@treat/fixture-${fixture}/test-nodes.json`);
+  require(`@fixtures/${fixture}/test-nodes.json`);
 
 const defaultWebpackConfig: Configuration = {
   resolve: {
@@ -60,7 +60,7 @@ export const startFixture = (
   { type = 'mini-css-extract' }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    const fixtureEntry = require.resolve(`@treat/fixture-${fixtureName}`);
+    const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
       plugins:
