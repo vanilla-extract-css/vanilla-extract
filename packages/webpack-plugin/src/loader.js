@@ -111,6 +111,7 @@ async function processSource(loader, source, { outputCss }) {
       localClassNames.add(className);
     },
     getRegisteredClassNames: () => Array.from(localClassNames),
+    onEndFileScope: () => {},
   };
 
   setAdapter(cssAdapter);

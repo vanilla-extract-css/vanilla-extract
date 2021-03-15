@@ -3,6 +3,7 @@ import type { Adapter, CSS } from './types';
 
 let styleSheet: CSSStyleSheet | null;
 const localClassNames = new Set<string>();
+let bufferedCSSObjs: Array<CSS> = [];
 
 function getStylesheet() {
   if (styleSheet) {
@@ -21,7 +22,14 @@ function getStylesheet() {
 
 export const browserRuntimeAdapter: Adapter = {
   appendCss: (cssObj: CSS) => {
-    const css = generateCss(cssObj);
+    bufferedCSSObjs.push(cssObj);
+  },
+  registerClassName: (className) => {
+    localClassNames.add(className);
+  },
+  getRegisteredClassNames: () => Array.from(localClassNames),
+  onEndFileScope: () => {
+    const css = generateCss(...bufferedCSSObjs);
     const stylesheet = getStylesheet();
 
     for (const rule of css) {
@@ -31,9 +39,7 @@ export const browserRuntimeAdapter: Adapter = {
         console.warn(e);
       }
     }
+
+    bufferedCSSObjs = [];
   },
-  registerClassName: (className) => {
-    localClassNames.add(className);
-  },
-  getRegisteredClassNames: () => Array.from(localClassNames),
 };

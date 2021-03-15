@@ -4,6 +4,7 @@ let adapter: Adapter = {
   appendCss: () => {},
   registerClassName: () => {},
   getRegisteredClassNames: () => [],
+  onEndFileScope: () => {},
 };
 
 export const setAdapter = (newAdapter: Adapter) => {
@@ -22,4 +23,8 @@ export const getRegisteredClassNames: Adapter['getRegisteredClassNames'] = (
   ...props
 ) => {
   return adapter.getRegisteredClassNames(...props);
+};
+
+export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
+  return adapter.onEndFileScope(...props);
 };

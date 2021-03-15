@@ -1,3 +1,5 @@
+import { onEndFileScope } from './adapter';
+
 let refCounter = 0;
 
 const defaultFileScope = 'DEFAULT_FILE_SCOPE';
@@ -9,6 +11,7 @@ export function setFileScope(newFileScope: string) {
 }
 
 export function endFileScope() {
+  onEndFileScope(getFileScope());
   refCounter = 0;
   fileScopes.splice(0, 1);
 }
