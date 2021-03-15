@@ -1,0 +1,18 @@
+{
+  "name": "@mattsjones/css-utils",
+  "version": "0.0.1",
+  "main": "dist/mattsjones-css-utils.cjs.js",
+  "module": "dist/mattsjones-css-utils.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "files": [
+    "/dist"
+  ],
+  "author": "Matt Jones",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
