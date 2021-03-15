@@ -6,8 +6,9 @@ const log = debug('treat:compiler');
 const getCompilerName = (resource) => `treat-compiler:${resource}`;
 
 export class ChildCompiler {
-  constructor() {
+  constructor(externals) {
     this.cache = new Map();
+    this.externals = externals;
   }
 
   clearCache() {
@@ -25,11 +26,7 @@ export class ChildCompiler {
 
     if (!compilationPromise) {
       log('No cached compilation. Compiling: %s', cacheId);
-      const isWebpack5 = Boolean(
-        loader._compiler.webpack && loader._compiler.webpack.version,
-      );
-      const compat = createCompat(isWebpack5);
-      compilationPromise = compileTreatSource(loader, compat, request);
+      compilationPromise = compileTreatSource(loader, request, this.externals);
 
       this.cache.set(cacheId, compilationPromise);
     } else {
@@ -67,8 +64,12 @@ function getRootCompilation(loader) {
   return compilation;
 }
 
-function compileTreatSource(loader, compat, request) {
+function compileTreatSource(loader, request, externals) {
   return new Promise((resolve, reject) => {
+    const isWebpack5 = Boolean(
+      loader._compiler.webpack && loader._compiler.webpack.version,
+    );
+    const compat = createCompat(isWebpack5);
     // Child compiler will compile treat files to be evaled during compilation
     const outputOptions = { filename: loader.resourcePath };
 
@@ -115,12 +116,11 @@ function compileTreatSource(loader, compat, request) {
     }
 
     new LimitChunkCountPlugin({ maxChunks: 1 }).apply(childCompiler);
-    new ExternalsPlugin('commonjs', '@mattsjones/css-core').apply(
-      childCompiler,
-    );
-    new ExternalsPlugin('commonjs', '@mattsjones/css-core/fileScope').apply(
-      childCompiler,
-    );
+    new ExternalsPlugin('commonjs', [
+      '@mattsjones/css-core',
+      '@mattsjones/css-core/fileScope',
+      externals,
+    ]).apply(childCompiler);
 
     let source;
 

@@ -24,6 +24,7 @@ interface PluginOptions {
   outputCss?: boolean;
   outputLoaders?: Array<RuleSetUseItem>;
   minify?: boolean;
+  externals?: any;
 }
 export class TreatPlugin {
   test: RuleSetRule['test'];
@@ -38,13 +39,14 @@ export class TreatPlugin {
       outputCss = true,
       outputLoaders = ['style-loader'],
       minify,
+      externals,
     } = options;
 
     this.test = test;
     this.minify = minify;
     this.outputCss = outputCss;
     this.outputLoaders = outputLoaders;
-    this.childCompiler = new ChildCompiler();
+    this.childCompiler = new ChildCompiler(externals);
   }
 
   apply(compiler: Compiler) {
