@@ -4,8 +4,6 @@ const defaultFileScope = 'DEFAULT_FILE_SCOPE';
 const fileScopes = [defaultFileScope];
 
 export function setFileScope(newFileScope: string) {
-  console.log('Set file scope', newFileScope);
-
   refCounter = 0;
   fileScopes.unshift(newFileScope);
 }

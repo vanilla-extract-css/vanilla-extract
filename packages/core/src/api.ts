@@ -31,8 +31,6 @@ const generateClassName = (debugId: string | undefined) => {
       ? `${getShortFileName()}_${debugId}__${hash(getFileScope())}${refCount}`
       : `${hash(getFileScope())}${refCount}`;
 
-  console.log(getFileScope(), className);
-
   return sanitiseIdent(className);
 };
 
