@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.5.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "seek-jobs/treat-next" }
-  ],
+  "changelog": "@changesets/cli/changelog",
   "commit": false,
   "linked": [],
   "access": "public",
