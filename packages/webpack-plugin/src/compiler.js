@@ -1,17 +1,9 @@
-import path from 'path';
-
 import createCompat from './compat';
 import { debug } from './logger';
 
 const log = debug('treat:compiler');
 
 const getCompilerName = (resource) => `treat-compiler:${resource}`;
-
-const wrapFileScope = (source, fileScope) => `
-  const { setFileScope, endFileScope } = require("@mattsjones/css-core");
-  setFileScope('${fileScope}');
-  ${source}
-  endFileScope()`;
 
 export class ChildCompiler {
   constructor() {
@@ -28,11 +20,7 @@ export class ChildCompiler {
   }
 
   async getCompiledSource(loader, request) {
-    const projectRelativeResourcePath = path.relative(
-      loader.rootContext,
-      loader.resourcePath,
-    );
-    const cacheId = projectRelativeResourcePath;
+    const cacheId = loader.resourcePath;
     let compilationResult = this.cache.get(cacheId);
 
     if (!compilationResult) {
@@ -59,7 +47,7 @@ export class ChildCompiler {
     });
 
     return {
-      source: wrapFileScope(source, projectRelativeResourcePath),
+      source,
       dependencies: fileDependencies,
     };
   }
@@ -124,6 +112,9 @@ function compileTreatSource(loader, compat, request) {
 
     new LimitChunkCountPlugin({ maxChunks: 1 }).apply(childCompiler);
     new ExternalsPlugin('commonjs', '@mattsjones/css-core').apply(
+      childCompiler,
+    );
+    new ExternalsPlugin('commonjs', '@mattsjones/css-core/fileScope').apply(
       childCompiler,
     );
 

@@ -14,7 +14,8 @@
   "author": "Matt Jones",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.12.10"
+    "@babel/core": "^7.12.10",
+    "@babel/template": "^7.12.13"
   },
   "devDependencies": {}
 }

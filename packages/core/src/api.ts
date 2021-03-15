@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import type { StyleRule } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { sanitiseIdent } from './utils';
+import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
 type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends Record<string | number, any>
@@ -11,45 +12,26 @@ type MapLeafNodes<Obj, LeafType> = {
     : LeafType;
 };
 
-let refCounter = 0;
-const defaultFileScope = 'DEFAULT_FILE_SCOPE';
-const fileScopes = [defaultFileScope];
-
-export function setFileScope(newFileScope: string) {
-  refCounter = 0;
-  fileScopes.unshift(newFileScope);
-}
-
-export function endFileScope() {
-  refCounter = 0;
-  fileScopes.splice(0, 1);
-}
-
-function getFileScope() {
-  return fileScopes[0];
-}
-
 function getShortFileName() {
   const fileScope = getFileScope();
 
-  if (fileScope !== defaultFileScope) {
-    const matches = fileScope.match(/.*\/(.*)\..*\..*$/);
+  const matches = fileScope.match(/.*\/(.*)\..*\..*$/);
 
-    if (matches && matches[1]) {
-      return matches[1];
-    }
+  if (matches && matches[1]) {
+    return matches[1];
   }
 
   return '';
 }
 
 const generateClassName = (debugId: string | undefined) => {
+  const refCount = getAndIncrementRefCounter();
   const className =
     process.env.NODE_ENV !== 'production' && debugId
-      ? `${getShortFileName()}_${debugId}__${hash(
-          getFileScope(),
-        )}${refCounter++}`
-      : `${hash(getFileScope())}${refCounter++}`;
+      ? `${getShortFileName()}_${debugId}__${hash(getFileScope())}${refCount}`
+      : `${hash(getFileScope())}${refCount}`;
+
+  console.log(getFileScope(), className);
 
   return sanitiseIdent(className);
 };
@@ -83,10 +65,11 @@ const walkObject = <T, MapTo>(
 };
 
 export function createVar(debugId?: string) {
+  const refCount = getAndIncrementRefCounter();
   const varName =
     process.env.NODE_ENV !== 'production' && debugId
-      ? `${debugId}__${hash(getFileScope())}${refCounter++}`
-      : `${hash(getFileScope())}${refCounter++}`;
+      ? `${debugId}__${hash(getFileScope())}${refCount}`
+      : `${hash(getFileScope())}${refCount}`;
 
   // Dashify CSS var names to replicate postcss-js behaviour
   // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30

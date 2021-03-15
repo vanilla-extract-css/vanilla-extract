@@ -5,10 +5,11 @@ import plugin from './';
 const transform = (
   source: string,
   options: Options = {},
-  filename = '/my/app/dir/mockFilename.treat.ts',
+  filename = '/root/projects/my-app/dir/mockFilename.treat.ts',
 ) => {
   const result = transformSync(source, {
     filename,
+    root: '/root/projects/my-app',
     plugins: [[plugin, options]],
     configFile: false,
   });
@@ -31,10 +32,13 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       const one = style({
         zIndex: 2
-      }, \\"one\\");"
+      }, \\"one\\");
+      endFileScope()"
     `);
   });
 
@@ -48,10 +52,13 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       export default style({
         zIndex: 2
-      }, \\"default\\");"
+      }, \\"default\\");
+      endFileScope()"
     `);
   });
 
@@ -69,14 +76,17 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       const test = {
         one: {
           two: style({
             zIndex: 2
           }, \\"test_one_two\\")
         }
-      };"
+      };
+      endFileScope()"
     `);
   });
 
@@ -92,13 +102,17 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
-      
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
+
       const test = () => {
         return style({
           color: 'red'
         }, \\"test\\");
-      };"
+      };
+
+      endFileScope()"
     `);
   });
 
@@ -114,13 +128,17 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
-      
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
+
       function test() {
         return style({
           color: 'red'
         }, \\"test\\");
-      }"
+      }
+
+      endFileScope()"
     `);
   });
 
@@ -132,8 +150,11 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createTheme } from '@mattsjones/css-core';
-      const darkTheme = createTheme({}, {}, \\"darkTheme\\");"
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { createTheme } from '@mattsjones/css-core';
+      const darkTheme = createTheme({}, {}, \\"darkTheme\\");
+      endFileScope()"
     `);
   });
 
@@ -149,12 +170,15 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       const three = style({
         testStyle: {
           zIndex: 2
         }
-      }, 'myDebugValue');"
+      }, 'myDebugValue');
+      endFileScope()"
     `);
   });
 
@@ -185,10 +209,13 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style as specialStyle } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style as specialStyle } from '@mattsjones/css-core';
       const four = specialStyle({
         zIndex: 2
-      }, \\"four\\");"
+      }, \\"four\\");
+      endFileScope()"
     `);
   });
 
@@ -202,11 +229,14 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source, { alias: 'my-alias' })).toMatchInlineSnapshot(`
-        "import { style } from 'my-alias';
-        const four = style({
-          zIndex: 2
-        }, \\"four\\");"
-      `);
+      "import { setFileScope, endFileScope } from \\"my-alias/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from 'my-alias';
+      const four = style({
+        zIndex: 2
+      }, \\"four\\");
+      endFileScope()"
+    `);
   });
 
   it('should handle anonymous style in arrays', () => {
@@ -221,10 +251,13 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       export const height = [style({
         zIndex: 2
-      }, \\"height\\")];"
+      }, \\"height\\")];
+      endFileScope()"
     `);
   });
 
@@ -240,12 +273,15 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { style } from '@mattsjones/css-core';
       export const height = {
         full: [style({
           zIndex: 2
         }, \\"height_full\\")]
-      };"
+      };
+      endFileScope()"
     `);
   });
 
@@ -259,10 +295,13 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import * as css from '@mattsjones/css-core';
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import * as css from '@mattsjones/css-core';
       const one = css.style({
         zIndex: 2
-      }, \\"one\\");"
+      }, \\"one\\");
+      endFileScope()"
     `);
   });
 });

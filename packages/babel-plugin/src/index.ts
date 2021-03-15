@@ -1,4 +1,11 @@
+import { relative } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
+import template from '@babel/template';
+
+const buildSetFileScope = template(`
+  import { setFileScope, endFileScope } from %%packageIdentifier%%
+  setFileScope(%%fileScope%%)
+`);
 
 const exportConfig = {
   style: {
@@ -78,21 +85,57 @@ const getRelevantCall = (
 
 interface PluginOptions {
   alias?: string;
+  projectRoot?: string;
 }
 type Context = PluginPass & {
   opts?: PluginOptions;
   namespaceImport: string;
   importIdentifiers: Map<string, RelevantExport>;
+  packageIdentifier: string;
+  fileScope: string;
 };
 
 export default function (): PluginObj<Context> {
   return {
-    pre() {
+    pre({ opts }) {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
       this.packageIdentifier = this.opts?.alias || '@mattsjones/css-core';
+      const projectRoot = this.opts?.projectRoot || opts.root;
+      if (!projectRoot) {
+        // TODO Make error better
+        throw new Error('Project root must be specified');
+      }
+
+      if (!opts.filename) {
+        // TODO Make error better
+        throw new Error('Filename must be available');
+      }
+
+      this.fileScope = relative(projectRoot, opts.filename);
     },
     visitor: {
+      Program: {
+        exit(path) {
+          if (this.importIdentifiers.size > 0 || this.namespaceImport) {
+            // Wrap module with file scope calls
+            path.unshiftContainer(
+              'body',
+              buildSetFileScope({
+                packageIdentifier: t.stringLiteral(
+                  `${this.packageIdentifier}/fileScope`,
+                ),
+                fileScope: t.stringLiteral(this.fileScope),
+              }),
+            );
+
+            path.pushContainer(
+              'body',
+              t.callExpression(t.identifier('endFileScope'), []),
+            );
+          }
+        },
+      },
       ImportDeclaration(path) {
         if (path.node.source.value === this.packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {

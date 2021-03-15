@@ -11,13 +11,15 @@
     "entrypoints": [
       "index.ts",
       "adapter.ts",
-      "generateCss.ts"
+      "generateCss.ts",
+      "fileScope.ts"
     ]
   },
   "files": [
     "/dist",
     "/adapter",
-    "/generateCss"
+    "/generateCss",
+    "/fileScope"
   ],
   "author": "Matt Jones",
   "license": "MIT",
