@@ -21,22 +21,26 @@ export class ChildCompiler {
 
   async getCompiledSource(loader, request) {
     const cacheId = loader.resourcePath;
-    let compilationResult = this.cache.get(cacheId);
+    let compilationPromise = this.cache.get(cacheId);
 
-    if (!compilationResult) {
-      log('No cached source. Compiling: %s', cacheId);
+    if (!compilationPromise) {
+      log('No cached compilation. Compiling: %s', cacheId);
       const isWebpack5 = Boolean(
         loader._compiler.webpack && loader._compiler.webpack.version,
       );
       const compat = createCompat(isWebpack5);
-      compilationResult = await compileTreatSource(loader, compat, request);
+      compilationPromise = compileTreatSource(loader, compat, request);
 
-      this.cache.set(cacheId, compilationResult);
+      this.cache.set(cacheId, compilationPromise);
     } else {
-      log('Using cached source: %s', cacheId);
+      log('Using cached compilation: %s', cacheId);
     }
 
-    const { source, fileDependencies, contextDependencies } = compilationResult;
+    const {
+      source,
+      fileDependencies,
+      contextDependencies,
+    } = await compilationPromise;
 
     // Set loader dependencies to dependecies of the child compiler
     fileDependencies.forEach((dep) => {
