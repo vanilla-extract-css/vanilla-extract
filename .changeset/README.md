@@ -6,3 +6,12 @@ find the full documentation for it [in our repository](https://github.com/change
 
 We have a quick list of common questions to get you started engaging with this project in
 [our documentation](https://github.com/changesets/changesets/blob/master/docs/common-questions.md)
+
+# Publishing
+
+```bash
+$ yarn run version
+$ git commit -am "Version packages"
+$ yarn publish
+$ git push --follow-tags
+```
