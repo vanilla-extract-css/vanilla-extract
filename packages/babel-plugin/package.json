@@ -1,6 +1,6 @@
 {
   "name": "@mattsjones/css-babel-plugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/mattsjones-css-babel-plugin.cjs.js",
   "module": "dist/mattsjones-css-babel-plugin.esm.js",
   "preconstruct": {

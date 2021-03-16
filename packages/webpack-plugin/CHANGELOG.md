@@ -1,6 +1,14 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [c94979f]
+  - @mattsjones/css-core@0.0.10
+
 ## 0.0.6
+
 ### Patch Changes
 
 - ced409d: Wait for end of filescope to insert rules in the browser runtime. This should more accurately reflect statically extracted CSS as it allows for media query merging and other optimizations.

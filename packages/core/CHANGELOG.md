@@ -1,6 +1,13 @@
 # @mattsjones/css-core
 
+## 0.0.10
+
+### Patch Changes
+
+- c94979f: Add `mapToStyles` function
+
 ## 0.0.9
+
 ### Patch Changes
 
 - 2bcf5fd: Insert rules at correct position in browser runtime
