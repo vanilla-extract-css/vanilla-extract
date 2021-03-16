@@ -38,6 +38,7 @@ Object {
     "flex-direction" => "column",
     "gap" => "var(--space-2__1acqwpj4)",
     "padding" => "var(--space-3__1acqwpj5)",
+    "opacity" => "0.25",
     "border" => "1px solid var(--colors-background-color__1acqwpj1)",
   },
   "nestedRootButton": Map {
@@ -111,6 +112,7 @@ Object {
     "flex-direction" => "column",
     "gap" => "var(--space-2__1acqwpj4)",
     "padding" => "var(--space-3__1acqwpj5)",
+    "opacity" => "0.25",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",

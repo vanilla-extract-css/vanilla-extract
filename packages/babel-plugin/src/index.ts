@@ -14,6 +14,9 @@ const exportConfig = {
   createTheme: {
     maxParams: 3,
   },
+  mapToStyles: {
+    maxParams: 3,
+  },
 };
 type RelevantExport = keyof typeof exportConfig;
 const relevantExports = Object.keys(exportConfig) as Array<RelevantExport>;

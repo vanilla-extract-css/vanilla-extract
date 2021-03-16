@@ -87,6 +87,42 @@ export function style(rule: StyleRule, debugId?: string) {
   return className;
 }
 
+export function mapToStyles<
+  StyleMap extends Record<string | number, StyleRule>
+>(styleMap: StyleMap, debugId?: string): Record<keyof StyleMap, string>;
+export function mapToStyles<Data extends Record<string | number, unknown>>(
+  data: Data,
+  mapData: <Key extends keyof Data>(value: Data[Key], key: Key) => StyleRule,
+  debugId?: string,
+): Record<keyof Data, string>;
+export function mapToStyles(...args: any[]) {
+  if (typeof args[1] === 'function') {
+    const data = args[0];
+    const mapData = args[1];
+    const debugId = args[2];
+
+    const classMap: Record<string | number, string> = {};
+    for (const key in data) {
+      classMap[key] = style(
+        mapData(data[key], key),
+        debugId ? `${debugId}_${key}` : key,
+      );
+    }
+
+    return classMap;
+  }
+
+  const styleMap = args[0];
+  const debugId = args[1];
+
+  const classMap: Record<string | number, string> = {};
+  for (const key in styleMap) {
+    classMap[key] = style(styleMap[key], debugId ? `${debugId}_${key}` : key);
+  }
+
+  return classMap;
+}
+
 type ThemeVars<ThemeContract> = MapLeafNodes<ThemeContract, string>;
 
 export function createThemeVars<ThemeContract>(

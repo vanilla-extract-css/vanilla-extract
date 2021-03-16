@@ -1,4 +1,4 @@
-import { style } from '@mattsjones/css-core';
+import { style, mapToStyles } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
 import { vars, theme, altTheme } from './themes.treat';
 
@@ -31,3 +31,11 @@ export const button = [
   }),
   shadow,
 ];
+
+export const opacity = mapToStyles(
+  {
+    half: 0.5,
+    quarter: 0.25,
+  },
+  (value) => ({ opacity: value }),
+);

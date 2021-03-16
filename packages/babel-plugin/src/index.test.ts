@@ -42,6 +42,50 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle mapToStyles assigned to const', () => {
+    const source = `
+      import { mapToStyles } from '@mattsjones/css-core';
+
+      const colors = mapToStyles({
+        red: { color: 'red' }
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { mapToStyles } from '@mattsjones/css-core';
+      const colors = mapToStyles({
+        red: {
+          color: 'red'
+        }
+      }, \\"colors\\");
+      endFileScope()"
+    `);
+  });
+
+  it('should handle mapToStyles with mapper assigned to const', () => {
+    const source = `
+      import { mapToStyles } from '@mattsjones/css-core';
+
+      const colors = mapToStyles({
+        red: 'red'
+      }, (color) => ({ color }));
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { mapToStyles } from '@mattsjones/css-core';
+      const colors = mapToStyles({
+        red: 'red'
+      }, color => ({
+        color
+      }), \\"colors\\");
+      endFileScope()"
+    `);
+  });
+
   it('should handle style assigned to default export', () => {
     const source = `
       import { style } from '@mattsjones/css-core';
@@ -182,24 +226,33 @@ describe('babel plugin', () => {
 
   it('should ignore functions that already supply a debug name', () => {
     const source = `
-      import { style } from '@mattsjones/css-core';
+      import { style, mapToStyles } from '@mattsjones/css-core';
 
       const three = style({
           testStyle: {
             zIndex: 2,
           }
       }, 'myDebugValue');
+
+      const four = mapToStyles({
+        red: { color: 'red' }
+      }, 'myDebugValue');
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
       setFileScope(\\"dir/mockFilename.treat.ts\\");
-      import { style } from '@mattsjones/css-core';
+      import { style, mapToStyles } from '@mattsjones/css-core';
       const three = style({
         testStyle: {
           zIndex: 2
         }
       }, 'myDebugValue');
+      const four = mapToStyles({
+        red: {
+          color: 'red'
+        }
+      }, 'myDebugValue', \\"four\\");
       endFileScope()"
     `);
   });
