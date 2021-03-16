@@ -12,6 +12,6 @@ We have a quick list of common questions to get you started engaging with this p
 ```bash
 $ yarn run version
 $ git commit -am "Version packages"
-$ yarn publish
+$ yarn release
 $ git push --follow-tags
 ```
