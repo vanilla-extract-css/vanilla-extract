@@ -1,5 +1,15 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.8
+
+### Patch Changes
+
+- 8835fec: Refactor webpack plugin to typescript
+- 3ab713c: Escape generated class names
+- Updated dependencies [8835fec]
+- Updated dependencies [3ab713c]
+  - @mattsjones/css-core@0.0.11
+
 ## 0.0.7
 
 ### Patch Changes

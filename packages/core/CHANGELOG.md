@@ -1,5 +1,12 @@
 # @mattsjones/css-core
 
+## 0.0.11
+
+### Patch Changes
+
+- 8835fec: Export Adapter type
+- 3ab713c: Escape generated class names
+
 ## 0.0.10
 
 ### Patch Changes
