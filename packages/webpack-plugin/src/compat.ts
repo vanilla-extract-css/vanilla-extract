@@ -1,6 +1,17 @@
-const webpack4 = {
+import { Compiler, ExternalsPlugin, node, optimize } from 'webpack';
+
+interface WebpackCompat {
+  isWebpack5: boolean;
+  getNodeTemplatePlugin: (compiler: Compiler) => typeof node.NodeTemplatePlugin;
+  getNodeTargetPlugin: (compiler: Compiler) => typeof node.NodeTargetPlugin;
+  getLimitChunkCountPlugin: (
+    compiler: Compiler,
+  ) => typeof optimize.LimitChunkCountPlugin;
+  getExternalsPlugin: (compiler: Compiler) => typeof ExternalsPlugin;
+}
+
+const webpack4: WebpackCompat = {
   isWebpack5: false,
-  getModuleIssuer: (_compilation, module) => module.issuer,
   getNodeTemplatePlugin: () => require('webpack/lib/node/NodeTemplatePlugin'),
   getNodeTargetPlugin: () => require('webpack/lib/node/NodeTargetPlugin'),
   getLimitChunkCountPlugin: () =>
@@ -8,7 +19,7 @@ const webpack4 = {
   getExternalsPlugin: () => require('webpack/lib/ExternalsPlugin'),
 };
 
-const webpack5 = {
+const webpack5: WebpackCompat = {
   isWebpack5: true,
   getNodeTemplatePlugin: (compiler) => compiler.webpack.node.NodeTemplatePlugin,
   getNodeTargetPlugin: (compiler) => compiler.webpack.node.NodeTargetPlugin,
@@ -17,7 +28,7 @@ const webpack5 = {
   getExternalsPlugin: (compiler) => compiler.webpack.ExternalsPlugin,
 };
 
-export default (isWebpack5) => {
+export default (isWebpack5: boolean): WebpackCompat => {
   if (isWebpack5) {
     return webpack5;
   }

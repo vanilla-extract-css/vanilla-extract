@@ -1,16 +1,23 @@
 import path from 'path';
 
+// @ts-expect-error
 import evalCode from 'eval';
+// @ts-expect-error
 import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
+import type { Adapter } from '@mattsjones/css-core';
 import { setAdapter } from '@mattsjones/css-core/adapter';
 import { generateCss } from '@mattsjones/css-core/generateCss';
 
+import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import TreatError from './TreatError';
+import { ChildCompiler } from './compiler';
 
-const stringifyLoaderRequest = (loaderConfig) => {
+const stringifyLoaderRequest = (
+  loaderConfig: string | Record<string | number, any>,
+) => {
   if (typeof loaderConfig === 'string') {
     return loaderConfig;
   }
@@ -20,14 +27,25 @@ const stringifyLoaderRequest = (loaderConfig) => {
   return `${loader}?${JSON.stringify(options)}`;
 };
 
-export default function (source) {
+interface LoaderOptions {
+  outputCss: boolean;
+  hmr: boolean | undefined;
+}
+
+interface InternalLoaderOptions extends LoaderOptions {
+  childCompiler: ChildCompiler;
+}
+
+export default function (this: LoaderContext, source: string) {
   this.cacheable(true);
   return source;
 }
 
-export async function pitch(remainingRequest) {
+export async function pitch(this: LoaderContext, remainingRequest: string) {
   this.cacheable(true);
-  const { childCompiler, ...options } = loaderUtils.getOptions(this);
+  const { childCompiler, ...options } = loaderUtils.getOptions(
+    this,
+  ) as InternalLoaderOptions;
 
   const log = debug(`treat:loader:${formatResourcePath(this.resourcePath)}`);
 
@@ -66,14 +84,18 @@ export async function pitch(remainingRequest) {
   }
 }
 
-async function processSource(loader, source, { outputCss }) {
+async function processSource(
+  loader: LoaderContext,
+  source: string,
+  { outputCss, hmr }: LoaderOptions,
+) {
   const log = debug(`treat:loader:${formatResourcePath(loader.resourcePath)}`);
 
   log('Loading resource');
 
   const isHmr = typeof hmr === 'boolean' ? hmr : loader.hot;
 
-  const makeCssModule = (fileScope, css) => {
+  const makeCssModule = (fileScope: string, css: string) => {
     const base64 = Buffer.from(css, 'utf-8').toString('base64');
 
     const virtualResourceLoader = stringifyLoaderRequest({
@@ -94,10 +116,11 @@ async function processSource(loader, source, { outputCss }) {
     return cssRequest;
   };
 
-  const cssByFileScope = new Map();
-  const localClassNames = new Set();
+  type Css = Parameters<Adapter['appendCss']>[0];
+  const cssByFileScope = new Map<string, Array<Css>>();
+  const localClassNames = new Set<string>();
 
-  const cssAdapter = {
+  const cssAdapter: Adapter = {
     appendCss: (css, fileScope) => {
       if (outputCss) {
         const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
@@ -148,7 +171,7 @@ async function processSource(loader, source, { outputCss }) {
   return serializeTreatModule(loader, cssRequests, result, isHmr);
 }
 
-const stringifyExports = (value) =>
+const stringifyExports = (value: any) =>
   stringify(
     value,
     (value, indent, next) => {
@@ -181,7 +204,12 @@ const stringifyExports = (value) =>
     },
   );
 
-const serializeTreatModule = (loader, cssRequests, exports) => {
+const serializeTreatModule = (
+  loader: LoaderContext,
+  cssRequests: Array<string>,
+  exports: Record<string, unknown>,
+  isHmr: boolean,
+) => {
   const cssImports = cssRequests.map((request) => {
     const relativeRequest = loaderUtils.stringifyRequest(loader, request);
 

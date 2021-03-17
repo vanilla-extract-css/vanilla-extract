@@ -6,7 +6,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "loader.js"
+      "loader.ts"
     ]
   },
   "files": [

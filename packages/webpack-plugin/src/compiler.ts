@@ -1,12 +1,25 @@
+import type { LoaderContext } from './types';
 import createCompat from './compat';
 import { debug } from './logger';
 
 const log = debug('treat:compiler');
 
-const getCompilerName = (resource) => `treat-compiler:${resource}`;
+// Should be "ExternalsItem" but webpack doesn't expose it
+type Externals = any;
+
+interface CompilationResult {
+  source: string;
+  fileDependencies: Array<string>;
+  contextDependencies: Array<string>;
+}
+
+const getCompilerName = (resource: string) => `treat-compiler:${resource}`;
 
 export class ChildCompiler {
-  constructor(externals) {
+  externals: Externals | undefined;
+  cache: Map<string, Promise<CompilationResult>>;
+
+  constructor(externals: Externals) {
     this.cache = new Map();
     this.externals = externals;
   }
@@ -16,11 +29,11 @@ export class ChildCompiler {
     this.cache.clear();
   }
 
-  isChildCompiler(name) {
+  isChildCompiler(name: string | undefined) {
     return typeof name === 'string' && name.startsWith('treat-compiler');
   }
 
-  async getCompiledSource(loader, request) {
+  async getCompiledSource(loader: LoaderContext, request: string) {
     const cacheId = loader.resourcePath;
     let compilationPromise = this.cache.get(cacheId);
 
@@ -54,7 +67,7 @@ export class ChildCompiler {
   }
 }
 
-function getRootCompilation(loader) {
+function getRootCompilation(loader: LoaderContext) {
   var compiler = loader._compiler;
   var compilation = loader._compilation;
   while (compiler.parentCompilation) {
@@ -64,7 +77,11 @@ function getRootCompilation(loader) {
   return compilation;
 }
 
-function compileTreatSource(loader, request, externals) {
+function compileTreatSource(
+  loader: LoaderContext,
+  request: string,
+  externals: Externals | undefined,
+): Promise<CompilationResult> {
   return new Promise((resolve, reject) => {
     const isWebpack5 = Boolean(
       loader._compiler.webpack && loader._compiler.webpack.version,
@@ -77,6 +94,7 @@ function compileTreatSource(loader, request, externals) {
     const childCompiler = getRootCompilation(loader).createChildCompiler(
       compilerName,
       outputOptions,
+      [],
     );
 
     const NodeTemplatePlugin = compat.getNodeTemplatePlugin(loader._compiler);
@@ -122,14 +140,14 @@ function compileTreatSource(loader, request, externals) {
       externals,
     ]).apply(childCompiler);
 
-    let source;
+    let source: string;
 
     if (compat.isWebpack5) {
       childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
         compilation.hooks.processAssets.tap(compilerName, () => {
           source =
             compilation.assets[loader.resourcePath] &&
-            compilation.assets[loader.resourcePath].source();
+            (compilation.assets[loader.resourcePath].source() as string);
 
           // Remove all chunk assets
           compilation.chunks.forEach((chunk) => {
@@ -143,7 +161,7 @@ function compileTreatSource(loader, request, externals) {
       childCompiler.hooks.afterCompile.tap(compilerName, (compilation) => {
         source =
           compilation.assets[loader.resourcePath] &&
-          compilation.assets[loader.resourcePath].source();
+          (compilation.assets[loader.resourcePath].source() as string);
 
         // Remove all chunk assets
         compilation.chunks.forEach((chunk) => {
@@ -156,7 +174,15 @@ function compileTreatSource(loader, request, externals) {
 
     try {
       childCompiler.runAsChild((err, entries, compilation) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
+
+        if (!compilation) {
+          return reject(
+            new Error('Missing compilation in child compiler result'),
+          );
+        }
 
         if (compilation.errors.length > 0) {
           return reject(compilation.errors[0]);
