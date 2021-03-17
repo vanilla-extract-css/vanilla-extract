@@ -27,9 +27,11 @@ export const browserRuntimeAdapter: Adapter = {
   registerClassName: (className) => {
     localClassNames.add(className);
   },
-  getRegisteredClassNames: () => Array.from(localClassNames),
   onEndFileScope: () => {
-    const css = generateCss(...bufferedCSSObjs);
+    const css = generateCss({
+      localClassNames: Array.from(localClassNames),
+      cssObjs: bufferedCSSObjs,
+    });
     const stylesheet = getStylesheet();
 
     for (const rule of css) {

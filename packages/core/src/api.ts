@@ -1,9 +1,9 @@
 import hash from '@emotion/hash';
 import get from 'lodash/get';
+import cssesc from 'cssesc';
 
 import type { StyleRule } from './types';
 import { appendCss, registerClassName } from './adapter';
-import { sanitiseIdent } from './utils';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
 type MapLeafNodes<Obj, LeafType> = {
@@ -26,12 +26,13 @@ function getShortFileName() {
 
 const generateClassName = (debugId: string | undefined) => {
   const refCount = getAndIncrementRefCounter();
+
   const className =
     process.env.NODE_ENV !== 'production' && debugId
       ? `${getShortFileName()}_${debugId}__${hash(getFileScope())}${refCount}`
       : `${hash(getFileScope())}${refCount}`;
 
-  return sanitiseIdent(className);
+  return className.match(/^[0-9]/) ? `_${className}` : className;
 };
 
 const walkObject = <T, MapTo>(
@@ -71,7 +72,9 @@ export function createVar(debugId?: string) {
 
   // Dashify CSS var names to replicate postcss-js behaviour
   // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
-  const cssVarName = sanitiseIdent(varName)
+  const cssVarName = cssesc(varName.match(/^[0-9]/) ? `_${varName}` : varName, {
+    isIdentifier: true,
+  })
     .replace(/([A-Z])/g, '-$1')
     .toLowerCase();
 

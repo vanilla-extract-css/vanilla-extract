@@ -40,7 +40,7 @@ document.body.innerHTML = `
               Inline theme
                 <div id="${
                   testNodes.inlineThemeContainer
-                }" class="${container} ${opacity.quarter}">
+                }" class="${container} ${opacity['1/4']}">
                   <button id="${
                     testNodes.inlineThemeButton
                   }" class="${button.join(' ')}">Inline theme button</button>

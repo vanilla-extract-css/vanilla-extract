@@ -1,3 +1,5 @@
+import cssesc from 'cssesc';
+
 import { createVar } from './api';
 import { transformCss } from './transformCss';
 
@@ -31,21 +33,64 @@ expect.addSnapshotSerializer({
 });
 
 describe('transformCss', () => {
+  it('should escape class names', () => {
+    expect(
+      transformCss({
+        localClassNames: ['test_1/2_className'],
+        cssObjs: [
+          {
+            selector: 'test_1/2_className',
+            rule: {
+              color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toMatchInlineSnapshot(`
+      ".test_1\\/2_className": {
+        "color": red
+      }
+      "@media screen and (min-width: 700px)": {
+        ".test_1\\/2_className": {
+          "color": green
+        }
+      }
+      "@media screen and (min-width: 1000px)": {
+        ".test_1\\/2_className": {
+          "color": purple
+        }
+      }
+    `);
+  });
+
   it('should handle media queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          '@media': {
-            'screen and (min-width: 700px)': {
-              color: 'green',
-            },
-            'screen and (min-width: 1000px)': {
-              color: 'purple',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -67,15 +112,20 @@ describe('transformCss', () => {
   it('should remove irrelevant media queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          '@media': {
-            'screen and (min-width: 700px)': {
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
               color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'red',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -86,30 +136,33 @@ describe('transformCss', () => {
 
   it('should combine media queries', () => {
     expect(
-      transformCss(
-        {
-          selector: '.testClass',
-          rule: {
-            color: 'green',
-            '@media': {
-              'screen and (min-width: 700px)': {
-                color: 'red',
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'green',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'red',
+                },
               },
             },
           },
-        },
-        {
-          selector: '.otherClass',
-          rule: {
-            color: 'purple',
-            '@media': {
-              'screen and (min-width: 700px)': {
-                color: 'red',
+          {
+            selector: '.otherClass',
+            rule: {
+              color: 'purple',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'red',
+                },
               },
             },
           },
-        },
-      ),
+        ],
+      }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
         "color": green
@@ -131,13 +184,18 @@ describe('transformCss', () => {
   it('should handle simple pseudos', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          ':hover': {
-            color: 'blue',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              ':hover': {
+                color: 'blue',
+              },
+            },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -152,17 +210,22 @@ describe('transformCss', () => {
   it('should handle simple pseudos within conditionals', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          '@media': {
-            'screen and (min-width: 500px)': {
-              color: 'red',
-              ':hover': {
-                color: 'blue',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 500px)': {
+                  color: 'red',
+                  ':hover': {
+                    color: 'blue',
+                  },
+                },
               },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       "@media screen and (min-width: 500px)": {
@@ -179,22 +242,27 @@ describe('transformCss', () => {
   it('should honour input order for simple pseudos', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          ':link': {
-            color: 'orange',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              ':link': {
+                color: 'orange',
+              },
+              ':visited': {
+                color: 'yellow',
+              },
+              ':hover': {
+                color: 'green',
+              },
+              ':active': {
+                color: 'blue',
+              },
+            },
           },
-          ':visited': {
-            color: 'yellow',
-          },
-          ':hover': {
-            color: 'green',
-          },
-          ':active': {
-            color: 'blue',
-          },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -218,15 +286,23 @@ describe('transformCss', () => {
   it('should handle complex selectors', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          selectors: {
-            '&:nth-child(3)': {
-              color: 'blue',
+        localClassNames: ['testClass', 'parentClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              selectors: {
+                '&:nth-child(3)': {
+                  color: 'blue',
+                },
+                'parentClass > div > span ~ &.someGlobalClass:hover': {
+                  background: 'green',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -235,25 +311,33 @@ describe('transformCss', () => {
       ".testClass:nth-child(3)": {
         "color": blue
       }
+      ".parentClass > div > span ~ .testClass.someGlobalClass:hover": {
+        "background": green
+      }
     `);
   });
 
   it('should handle complex selectors within media queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          color: 'red',
-          '@media': {
-            'screen and (min-width: 700px)': {
-              selectors: {
-                '&:nth-child(3)': {
-                  color: 'blue',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  selectors: {
+                    '&:nth-child(3)': {
+                      color: 'blue',
+                    },
+                  },
                 },
               },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -270,15 +354,20 @@ describe('transformCss', () => {
   it('should handle @supports queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          display: 'flex',
-          '@supports': {
-            '(display: grid)': {
-              display: 'grid',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@supports': {
+                '(display: grid)': {
+                  display: 'grid',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -295,30 +384,35 @@ describe('transformCss', () => {
   it('should handle nested @supports and @media queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          display: 'flex',
-          '@supports': {
-            '(display: grid)': {
-              backgroundColor: 'yellow',
-              '@media': {
-                'screen and (min-width: 700px)': {
-                  display: 'grid',
-                },
-              },
-            },
-          },
-          '@media': {
-            'screen and (min-width: 700px)': {
-              color: 'green',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
               '@supports': {
                 '(display: grid)': {
-                  borderColor: 'blue',
+                  backgroundColor: 'yellow',
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                    },
+                  },
                 },
               },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -346,15 +440,20 @@ describe('transformCss', () => {
   it('should handle @supports negation queries', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          display: 'grid',
-          '@supports': {
-            'not (display: grid)': {
-              display: 'flex',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              display: 'grid',
+              '@supports': {
+                'not (display: grid)': {
+                  display: 'flex',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
@@ -371,20 +470,25 @@ describe('transformCss', () => {
   it('should handle animations', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          animationTimingFunction: 'linear',
-          animationDuration: '3s',
-          animationFillMode: 'both',
-          '@keyframes': {
-            from: {
-              opacity: 0,
-            },
-            to: {
-              opacity: 1,
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              animationTimingFunction: 'linear',
+              animationDuration: '3s',
+              animationFillMode: 'both',
+              '@keyframes': {
+                from: {
+                  opacity: 0,
+                },
+                to: {
+                  opacity: 1,
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       "@keyframes ru4hw5": {
@@ -408,14 +512,19 @@ describe('transformCss', () => {
   it('should not create empty rules', () => {
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          '@media': {
-            'screen and (min-width: 700px)': {
-              color: 'green',
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                },
+              },
             },
           },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       "@media screen and (min-width: 700px)": {
@@ -428,36 +537,39 @@ describe('transformCss', () => {
 
   it('should lower all conditionals styles', () => {
     expect(
-      transformCss(
-        {
-          selector: '.testClass',
-          rule: {
-            color: 'hotpink',
-            '@media': {
-              'screen and (min-width: 700px)': {
-                color: 'green',
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              color: 'hotpink',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                },
               },
             },
           },
-        },
-        {
-          selector: '.otherClass',
-          rule: {
-            color: 'indigo',
-            '@media': {
-              'screen and (min-width: 700px)': {
-                color: 'red',
+          {
+            selector: '.otherClass',
+            rule: {
+              color: 'indigo',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'red',
+                },
               },
             },
           },
-        },
-        {
-          selector: '.otherOtherClass',
-          rule: {
-            color: 'lightcyan',
+          {
+            selector: '.otherOtherClass',
+            rule: {
+              color: 'lightcyan',
+            },
           },
-        },
-      ),
+        ],
+      }),
     ).toMatchInlineSnapshot(`
       ".testClass": {
         "color": hotpink
@@ -484,30 +596,35 @@ describe('transformCss', () => {
 
     expect(
       transformCss({
-        selector: '.testClass',
-        rule: {
-          display: 'block',
-          vars: {
-            '--my-var': 'red',
-            [testVar]: 'green',
-          },
-          selectors: {
-            '&:nth-child(3)': {
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            selector: 'testClass',
+            rule: {
+              display: 'block',
               vars: {
-                '--my-var': 'orange',
-                [testVar]: 'black',
+                '--my-var': 'red',
+                [testVar]: 'green',
+              },
+              selectors: {
+                '&:nth-child(3)': {
+                  vars: {
+                    '--my-var': 'orange',
+                    [testVar]: 'black',
+                  },
+                },
+              },
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  vars: {
+                    '--my-var': 'yellow',
+                    [testVar]: 'blue',
+                  },
+                },
               },
             },
           },
-          '@media': {
-            'screen and (min-width: 700px)': {
-              vars: {
-                '--my-var': 'yellow',
-                [testVar]: 'blue',
-              },
-            },
-          },
-        },
+        ],
       }),
     ).toMatchInlineSnapshot(`
       ".testClass": {

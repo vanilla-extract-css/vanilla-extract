@@ -5,8 +5,15 @@ import postcss from 'postcss';
 import { CSS } from './types';
 import { transformCss } from './transformCss';
 
-export function generateCss(...allCssObjs: Array<CSS>): Array<string> {
-  const flattenedCss = transformCss(...allCssObjs);
+interface GenerateCssParams {
+  localClassNames: Array<string>;
+  cssObjs: Array<CSS>;
+}
+export function generateCss({
+  localClassNames,
+  cssObjs,
+}: GenerateCssParams): Array<string> {
+  const flattenedCss = transformCss({ localClassNames, cssObjs });
 
   const result = postcss().process(flattenedCss, {
     parser: postcssJs,

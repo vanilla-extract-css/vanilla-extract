@@ -1,3 +1,4 @@
+import cssesc from 'cssesc';
 import hash from '@emotion/hash';
 import each from 'lodash/each';
 import omit from 'lodash/omit';
@@ -11,9 +12,7 @@ import type {
   MediaQueries,
   StyleWithSelectors,
 } from './types';
-import { sanitiseIdent } from './utils';
 import { validateSelector } from './validateSelector';
-import { getRegisteredClassNames } from './adapter';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -109,6 +108,7 @@ export const simplePseudos = [
 export type SimplePseudos = typeof simplePseudos;
 
 const simplePseudoSet = new Set<string>(simplePseudos);
+const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
 interface CSSRule {
   conditions?: Array<string>;
@@ -119,31 +119,50 @@ interface CSSRule {
 class Stylesheet {
   rules: Array<CSSRule>;
   conditionalRules: Array<CSSRule>;
+  localClassNameRegex: RegExp | null;
 
-  constructor() {
+  constructor(localClassNames: Array<string>) {
     this.rules = [];
     this.conditionalRules = [];
+    this.localClassNameRegex =
+      localClassNames.length > 0
+        ? RegExp(`(^|[^\.])(${localClassNames.join('|')})`, 'g')
+        : null;
+  }
+
+  processCssObj(root: CSS) {
+    // Add main styles
+    const mainRule = omit(root.rule, specialKeys);
+    this.addRule({
+      selector: root.selector,
+      rule: mainRule,
+    });
+
+    this.transformSimplePsuedos(root.rule, root.selector);
+    this.transformMedia(root.rule['@media'], root.selector);
+    this.transformSupports(root.rule['@supports'], root.selector);
+    this.transformSelectors(root.rule, root.selector);
   }
 
   addRule(cssRule: CSSRule) {
-    const rule = this.processVars(this.processRuleKeyframes(cssRule.rule));
-    const interpolatedSelector = interpolateLocalClassNames(cssRule.selector);
+    const rule = this.transformVars(this.transformRuleKeyframes(cssRule.rule));
+    const selector = this.transformSelector(cssRule.selector);
 
     if (cssRule.conditions) {
       this.conditionalRules.push({
-        selector: interpolatedSelector,
+        selector,
         rule,
         conditions: cssRule.conditions.sort(),
       });
     } else {
       this.rules.push({
-        selector: interpolatedSelector,
+        selector,
         rule,
       });
     }
   }
 
-  processVars({ vars, ...rest }: CSSProperties) {
+  transformVars({ vars, ...rest }: CSSProperties) {
     if (!vars) {
       return rest;
     }
@@ -162,7 +181,7 @@ class Stylesheet {
     };
   }
 
-  processRuleKeyframes(rule: CSSProperties) {
+  transformRuleKeyframes(rule: CSSProperties) {
     let { '@keyframes': keyframes, animation, animationName, ...rest } = rule;
 
     if (!keyframes && !rule.animation && !rule.animationName) {
@@ -172,7 +191,9 @@ class Stylesheet {
     let keyframesRef = typeof keyframes === 'string' ? keyframes : '';
 
     if (keyframes && typeof keyframes !== 'string') {
-      keyframesRef = sanitiseIdent(hash(JSON.stringify(keyframes)));
+      keyframesRef = cssesc(hash(JSON.stringify(keyframes)), {
+        isIdentifier: true,
+      });
 
       // Hoist keyframes to the top of the stylesheet
       this.rules.unshift({
@@ -190,6 +211,96 @@ class Stylesheet {
           : animation,
       animationName: animationName ? undefined : keyframesRef,
     };
+  }
+
+  transformSelector(selector: string) {
+    return this.localClassNameRegex
+      ? selector.replace(
+          this.localClassNameRegex,
+          (_, leadingChar, className) =>
+            `${leadingChar}.${cssesc(className, { isIdentifier: true })}`,
+        )
+      : selector;
+  }
+
+  transformSelectors(
+    rule: StyleWithSelectors,
+    rootSelector: string,
+    conditions?: Array<string>,
+  ) {
+    each(rule.selectors, (selectorRule, selector) => {
+      const transformedSelector = this.transformSelector(
+        selector.replace(RegExp('&', 'g'), rootSelector),
+      );
+      validateSelector(transformedSelector, rootSelector);
+
+      this.addRule({
+        conditions,
+        selector: transformedSelector,
+        rule: selectorRule,
+      });
+    });
+  }
+
+  transformMedia(
+    rules:
+      | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
+      | undefined,
+    rootSelector: string,
+    parentConditions: Array<string> = [],
+  ) {
+    each(rules, (mediaRule, query) => {
+      const conditions = [`@media ${query}`, ...parentConditions];
+
+      this.addRule({
+        conditions,
+        selector: rootSelector,
+        rule: omit(mediaRule, specialKeys),
+      });
+
+      this.transformSimplePsuedos(mediaRule!, rootSelector, conditions);
+      this.transformSelectors(mediaRule!, rootSelector, conditions);
+      this.transformSupports(mediaRule!['@supports'], rootSelector, conditions);
+    });
+  }
+
+  transformSupports(
+    rules:
+      | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
+      | undefined,
+    rootSelector: string,
+    parentConditions: Array<string> = [],
+  ) {
+    each(rules, (supportsRule, query) => {
+      const conditions = [`@supports ${query}`, ...parentConditions];
+
+      this.addRule({
+        conditions,
+        selector: rootSelector,
+        rule: omit(supportsRule, specialKeys),
+      });
+
+      this.transformSimplePsuedos(supportsRule!, rootSelector, conditions);
+      this.transformSelectors(supportsRule!, rootSelector, conditions);
+      this.transformMedia(supportsRule!['@media'], rootSelector, conditions);
+    });
+  }
+
+  transformSimplePsuedos(
+    rule: CSS['rule'],
+    rootSelector: string,
+    conditions?: Array<string>,
+  ) {
+    for (const key of Object.keys(rule)) {
+      // Process simple psuedos
+      if (simplePseudoSet.has(key)) {
+        this.addRule({
+          conditions,
+          selector: `${rootSelector}${key}`,
+          rule: rule[key as keyof typeof rule] as CSSProperties,
+        });
+      }
+    }
   }
 
   toPostcssJs() {
@@ -225,128 +336,15 @@ class Stylesheet {
   }
 }
 
-const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
-
-const interpolateLocalClassNames = (selector: string) => {
-  const localClassNames = getRegisteredClassNames();
-
-  if (localClassNames.length === 0) {
-    return selector;
-  }
-
-  const localClassNamesRegex = RegExp(`(${localClassNames.join('|')})`, 'g');
-
-  return selector.replace(localClassNamesRegex, (_, match) => {
-    return `.${match}`;
-  });
-};
-
-function transformSelectors(
-  stylesheet: Stylesheet,
-  rule: StyleWithSelectors,
-  rootSelector: string,
-  conditions?: Array<string>,
-) {
-  each(rule.selectors, (selectorRule, selector) => {
-    validateSelector(selector);
-
-    stylesheet.addRule({
-      conditions,
-      selector: selector.replace(RegExp('&', 'g'), rootSelector),
-      rule: selectorRule,
-    });
-  });
+interface TransformCSSParams {
+  localClassNames: Array<string>;
+  cssObjs: Array<CSS>;
 }
+export function transformCss({ localClassNames, cssObjs }: TransformCSSParams) {
+  const stylesheet = new Stylesheet(localClassNames);
 
-function transformMedia(
-  stylesheet: Stylesheet,
-  rules:
-    | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
-    | undefined,
-  rootSelector: string,
-  parentConditions: Array<string> = [],
-) {
-  each(rules, (mediaRule, query) => {
-    const conditions = [`@media ${query}`, ...parentConditions];
-
-    stylesheet.addRule({
-      conditions,
-      selector: rootSelector,
-      rule: omit(mediaRule, specialKeys),
-    });
-
-    transformSimplePsuedos(stylesheet, mediaRule!, rootSelector, conditions);
-    transformSelectors(stylesheet, mediaRule!, rootSelector, conditions);
-    transformSupports(
-      stylesheet,
-      mediaRule!['@supports'],
-      rootSelector,
-      conditions,
-    );
-  });
-}
-
-function transformSupports(
-  stylesheet: Stylesheet,
-  rules:
-    | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
-    | undefined,
-  rootSelector: string,
-  parentConditions: Array<string> = [],
-) {
-  each(rules, (supportsRule, query) => {
-    const conditions = [`@supports ${query}`, ...parentConditions];
-
-    stylesheet.addRule({
-      conditions,
-      selector: rootSelector,
-      rule: omit(supportsRule, specialKeys),
-    });
-
-    transformSimplePsuedos(stylesheet, supportsRule!, rootSelector, conditions);
-    transformSelectors(stylesheet, supportsRule!, rootSelector, conditions);
-    transformMedia(
-      stylesheet,
-      supportsRule!['@media'],
-      rootSelector,
-      conditions,
-    );
-  });
-}
-
-function transformSimplePsuedos(
-  stylesheet: Stylesheet,
-  rule: CSS['rule'],
-  rootSelector: string,
-  conditions?: Array<string>,
-) {
-  for (const key of Object.keys(rule)) {
-    // Process simple psuedos
-    if (simplePseudoSet.has(key)) {
-      stylesheet.addRule({
-        conditions,
-        selector: `${rootSelector}${key}`,
-        rule: rule[key as keyof typeof rule] as CSSProperties,
-      });
-    }
-  }
-}
-
-export function transformCss(...allCssObjs: Array<CSS>) {
-  const stylesheet = new Stylesheet();
-
-  for (const root of allCssObjs) {
-    // Add main styles
-    const mainRule = omit(root.rule, specialKeys);
-    stylesheet.addRule({
-      selector: root.selector,
-      rule: mainRule,
-    });
-
-    transformSimplePsuedos(stylesheet, root.rule, root.selector);
-    transformMedia(stylesheet, root.rule['@media'], root.selector);
-    transformSupports(stylesheet, root.rule['@supports'], root.selector);
-    transformSelectors(stylesheet, root.rule, root.selector);
+  for (const root of cssObjs) {
+    stylesheet.processCssObj(root);
   }
 
   return stylesheet.toPostcssJs();

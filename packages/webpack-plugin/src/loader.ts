@@ -133,7 +133,6 @@ async function processSource(
     registerClassName: (className) => {
       localClassNames.add(className);
     },
-    getRegisteredClassNames: () => Array.from(localClassNames),
     onEndFileScope: () => {},
   };
 
@@ -163,7 +162,10 @@ async function processSource(
   for (const [fileScope, fileScopeCss] of Array.from(
     cssByFileScope.entries(),
   )) {
-    const css = generateCss(...fileScopeCss).join('\n');
+    const css = generateCss({
+      localClassNames: Array.from(localClassNames),
+      cssObjs: fileScopeCss,
+    }).join('\n');
 
     cssRequests.push(makeCssModule(fileScope, css));
   }

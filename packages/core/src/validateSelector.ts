@@ -1,5 +1,11 @@
 import { CssSelectorParser } from 'css-selector-parser';
+import cssesc from 'cssesc';
 import dedent from 'dedent';
+
+// https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+function escapeRegex(string: string) {
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
 
 const parser = new CssSelectorParser();
 parser.registerSelectorPseudos('has');
@@ -7,24 +13,30 @@ parser.registerNestingOperators('>', '+', '~');
 parser.registerAttrEqualityMods('^', '$', '*', '~');
 parser.enableSubstitutes();
 
-export const validateSelector = (selector: string) =>
-  selector.split(',').map((selectorPart) => {
-    if (selectorPart.indexOf('&') === -1) {
+export const validateSelector = (selector: string, targetClassName: string) => {
+  const replaceTarget = () => {
+    const targetRegex = new RegExp(
+      `.${escapeRegex(cssesc(targetClassName, { isIdentifier: true }))}`,
+      'g',
+    );
+    return selector.replace(targetRegex, '&');
+  };
+
+  return selector.split(',').map((selectorPart) => {
+    if (selectorPart.indexOf(targetClassName) === -1) {
       throw new Error(
         dedent`
-          Invalid selector: ${selector}
+          Invalid selector: ${replaceTarget()}
       
           Selectors must target the ampersand character ('&'), which refers to the generated class name, e.g. '&:nth-child(2n)'
         `,
       );
     }
 
-    const ampersand = '____ampersand____';
-
     let currentRule;
 
     try {
-      const result = parser.parse(selectorPart.replace(/&/g, `.${ampersand}`));
+      const result = parser.parse(selectorPart);
 
       if (result.type === 'ruleSet') {
         currentRule = result.rule;
@@ -32,7 +44,7 @@ export const validateSelector = (selector: string) =>
         throw new Error();
       }
     } catch (err) {
-      throw new Error(`Invalid selector: ${selector}`);
+      throw new Error(`Invalid selector: ${replaceTarget()}`);
     }
 
     while (currentRule.rule) {
@@ -44,12 +56,12 @@ export const validateSelector = (selector: string) =>
     if (
       !Array.isArray(targetRule.classNames) ||
       !targetRule.classNames.find(
-        (className: string) => className === ampersand,
+        (className: string) => className === targetClassName,
       )
     ) {
       throw new Error(
         dedent`
-          Invalid selector: ${selector}
+          Invalid selector: ${replaceTarget()}
       
           Style selectors must end with the '&' character (along with any modifiers), e.g. ${'`${parent} &`'} or ${'`${parent} &:hover`'}.
           
@@ -62,3 +74,4 @@ export const validateSelector = (selector: string) =>
       );
     }
   });
+};
