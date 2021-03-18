@@ -126,7 +126,7 @@ class Stylesheet {
     this.conditionalRules = [];
     this.localClassNameRegex =
       localClassNames.length > 0
-        ? RegExp(`(^|[^\.])(${localClassNames.join('|')})`, 'g')
+        ? RegExp(`(${localClassNames.join('|')})`, 'g')
         : null;
   }
 
@@ -215,11 +215,13 @@ class Stylesheet {
 
   transformSelector(selector: string) {
     return this.localClassNameRegex
-      ? selector.replace(
-          this.localClassNameRegex,
-          (_, leadingChar, className) =>
-            `${leadingChar}.${cssesc(className, { isIdentifier: true })}`,
-        )
+      ? selector.replace(this.localClassNameRegex, (_, className, index) => {
+          if (index > 0 && selector[index - 1] === '.') {
+            return className;
+          }
+
+          return `.${cssesc(className, { isIdentifier: true })}`;
+        })
       : selector;
   }
 

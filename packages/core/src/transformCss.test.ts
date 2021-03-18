@@ -299,6 +299,9 @@ describe('transformCss', () => {
                 'parentClass > div > span ~ &.someGlobalClass:hover': {
                   background: 'green',
                 },
+                'parentClass&': {
+                  background: 'black',
+                },
               },
             },
           },
@@ -313,6 +316,9 @@ describe('transformCss', () => {
       }
       ".parentClass > div > span ~ .testClass.someGlobalClass:hover": {
         "background": green
+      }
+      ".parentClass.testClass": {
+        "background": black
       }
     `);
   });
