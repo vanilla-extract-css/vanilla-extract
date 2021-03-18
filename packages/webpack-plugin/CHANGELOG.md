@@ -1,5 +1,13 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.9
+
+### Patch Changes
+
+- fbb5332: Use filescope source for css resource path
+- Updated dependencies [29fa416]
+  - @mattsjones/css-core@0.0.12
+
 ## 0.0.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @mattsjones/css-core
 
+## 0.0.12
+
+### Patch Changes
+
+- 29fa416: Fix selectors using class lists
+
 ## 0.0.11
 
 ### Patch Changes
