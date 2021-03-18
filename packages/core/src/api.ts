@@ -140,6 +140,23 @@ export function createThemeVars<ThemeContract>(
   });
 }
 
+export function assignVars<VarContract>(
+  varContract: VarContract,
+  tokens: MapLeafNodes<VarContract, string | number>,
+): Record<string, string | number> {
+  const varSetters: { [cssVarName: string]: string | number } = {};
+
+  /* TODO
+    - validate new variables arn't set
+    - validate arrays have the same length as contract
+  */
+  walkObject(tokens, (value, path) => {
+    varSetters[get(varContract, path)] = value;
+  });
+
+  return varSetters;
+}
+
 export function createGlobalTheme<ThemeContract>(
   selector: string,
   tokens: ThemeContract,
@@ -162,21 +179,11 @@ export function createGlobalTheme(
 
   const tokens = shouldCreateVars ? arg2 : arg3;
 
-  const varSetters: { [cssVarName: string]: string | number } = {};
-
-  /* TODO 
-    - validate new variables arn't set
-    - validate arrays have the same length as contract
-  */
-  walkObject(tokens, (value, path) => {
-    varSetters[get(themeVars, path)] = value;
-  });
-
   appendCss(
     {
       type: 'global',
       selector: selector,
-      rule: { vars: varSetters },
+      rule: { vars: assignVars(themeVars, tokens) },
     },
     getFileScope(),
   );

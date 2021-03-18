@@ -7,5 +7,7 @@
   "nestedRootContainer": "nestedRootContainer",
   "nestedRootButton": "nestedRootButton",
   "inlineThemeContainer": "inlineThemeContainer",
-  "inlineThemeButton": "inlineThemeButton"
+  "inlineThemeButton": "inlineThemeButton",
+  "responsiveThemeContainer": "responsiveThemeContainer",
+  "responsiveThemeButton": "responsiveThemeButton"
 }

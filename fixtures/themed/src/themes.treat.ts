@@ -1,4 +1,9 @@
-import { createGlobalTheme, createTheme, style } from '@mattsjones/css-core';
+import {
+  createGlobalTheme,
+  createTheme,
+  assignVars,
+  style,
+} from '@mattsjones/css-core';
 
 export const theme = style({});
 
@@ -23,5 +28,27 @@ export const altTheme = createTheme(vars, {
     1: '8px',
     2: '12px',
     3: '16px',
+  },
+});
+
+export const responsiveTheme = style({
+  vars: assignVars(vars, {
+    colors: {
+      backgroundColor: 'pink',
+      text: 'purple',
+    },
+    space: {
+      1: '6px',
+      2: '12px',
+      3: '18px',
+    },
+  }),
+  '@media': {
+    'screen and (min-width: 768px)': {
+      vars: assignVars(vars.colors, {
+        backgroundColor: 'purple',
+        text: 'pink',
+      }),
+    },
   },
 });
