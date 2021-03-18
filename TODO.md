@@ -1,10 +1,9 @@
 - HMR
 - I don't want to accidentally ship the runtime
-- JSDom support
 - Moar tests!
 - Docs/README
 - Var fallbacks
-- setVars ?
+- Clean up utils/calc exports
 
 ## Stretch
 
