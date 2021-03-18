@@ -10,6 +10,7 @@ import type {
   CSSProperties,
   FeatureQueries,
   MediaQueries,
+  StyleRule,
   StyleWithSelectors,
 } from './types';
 import { validateSelector } from './validateSelector';
@@ -138,10 +139,10 @@ class Stylesheet {
       rule: mainRule,
     });
 
-    this.transformSimplePsuedos(root.rule, root.selector);
-    this.transformMedia(root.rule['@media'], root.selector);
-    this.transformSupports(root.rule['@supports'], root.selector);
-    this.transformSelectors(root.rule, root.selector);
+    this.transformSimplePsuedos(root, root.rule);
+    this.transformMedia(root, root.rule['@media']);
+    this.transformSupports(root, root.rule['@supports']);
+    this.transformSelectors(root, root.rule);
   }
 
   addRule(cssRule: CSSRule) {
@@ -226,15 +227,19 @@ class Stylesheet {
   }
 
   transformSelectors(
+    root: CSS,
     rule: StyleWithSelectors,
-    rootSelector: string,
     conditions?: Array<string>,
   ) {
     each(rule.selectors, (selectorRule, selector) => {
+      if (root.type === 'global') {
+        throw new Error('Selectors are not allowed within globalStyle');
+      }
+
       const transformedSelector = this.transformSelector(
-        selector.replace(RegExp('&', 'g'), rootSelector),
+        selector.replace(RegExp('&', 'g'), root.selector),
       );
-      validateSelector(transformedSelector, rootSelector);
+      validateSelector(transformedSelector, root.selector);
 
       this.addRule({
         conditions,
@@ -245,10 +250,10 @@ class Stylesheet {
   }
 
   transformMedia(
+    root: CSS,
     rules:
       | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
       | undefined,
-    rootSelector: string,
     parentConditions: Array<string> = [],
   ) {
     each(rules, (mediaRule, query) => {
@@ -256,21 +261,21 @@ class Stylesheet {
 
       this.addRule({
         conditions,
-        selector: rootSelector,
+        selector: root.selector,
         rule: omit(mediaRule, specialKeys),
       });
 
-      this.transformSimplePsuedos(mediaRule!, rootSelector, conditions);
-      this.transformSelectors(mediaRule!, rootSelector, conditions);
-      this.transformSupports(mediaRule!['@supports'], rootSelector, conditions);
+      this.transformSimplePsuedos(root, mediaRule!, conditions);
+      this.transformSelectors(root, mediaRule!, conditions);
+      this.transformSupports(root, mediaRule!['@supports'], conditions);
     });
   }
 
   transformSupports(
+    root: CSS,
     rules:
       | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
       | undefined,
-    rootSelector: string,
     parentConditions: Array<string> = [],
   ) {
     each(rules, (supportsRule, query) => {
@@ -278,27 +283,31 @@ class Stylesheet {
 
       this.addRule({
         conditions,
-        selector: rootSelector,
+        selector: root.selector,
         rule: omit(supportsRule, specialKeys),
       });
 
-      this.transformSimplePsuedos(supportsRule!, rootSelector, conditions);
-      this.transformSelectors(supportsRule!, rootSelector, conditions);
-      this.transformMedia(supportsRule!['@media'], rootSelector, conditions);
+      this.transformSimplePsuedos(root, supportsRule!, conditions);
+      this.transformSelectors(root, supportsRule!, conditions);
+      this.transformMedia(root, supportsRule!['@media'], conditions);
     });
   }
 
   transformSimplePsuedos(
-    rule: CSS['rule'],
-    rootSelector: string,
+    root: CSS,
+    rule: StyleRule,
     conditions?: Array<string>,
   ) {
     for (const key of Object.keys(rule)) {
       // Process simple psuedos
       if (simplePseudoSet.has(key)) {
+        if (root.type === 'global') {
+          throw new Error('Simple pseudos are not valid in globalStyles');
+        }
+
         this.addRule({
           conditions,
-          selector: `${rootSelector}${key}`,
+          selector: `${root.selector}${key}`,
           rule: rule[key as keyof typeof rule] as CSSProperties,
         });
       }

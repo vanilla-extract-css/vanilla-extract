@@ -2,7 +2,7 @@ import hash from '@emotion/hash';
 import get from 'lodash/get';
 import cssesc from 'cssesc';
 
-import type { StyleRule } from './types';
+import type { GlobalStyleRule, StyleRule } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
@@ -85,9 +85,13 @@ export function style(rule: StyleRule, debugId?: string) {
   const className = generateClassName(debugId);
 
   registerClassName(className);
-  appendCss({ selector: className, rule }, getFileScope());
+  appendCss({ type: 'local', selector: className, rule }, getFileScope());
 
   return className;
+}
+
+export function globalStyle(selector: string, rule: GlobalStyleRule) {
+  appendCss({ type: 'global', selector, rule }, getFileScope());
 }
 
 export function mapToStyles<
@@ -170,6 +174,7 @@ export function createGlobalTheme(
 
   appendCss(
     {
+      type: 'global',
       selector: selector,
       rule: { vars: varSetters },
     },
