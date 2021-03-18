@@ -18,7 +18,15 @@ export const divide = (...operands: Array<Operand>) =>
 
 export const negate = (x: Operand) => multiply(x, -1);
 
-export const calc = (x: Operand) => {
+type CalcChain = {
+  add: (...operands: Array<Operand>) => CalcChain;
+  subtract: (...operands: Array<Operand>) => CalcChain;
+  multiply: (...operands: Array<Operand>) => CalcChain;
+  divide: (...operands: Array<Operand>) => CalcChain;
+  negate: () => CalcChain;
+  value: string | number;
+};
+export const calc = (x: Operand): CalcChain => {
   const chain = {
     add: (...operands: Array<Operand>) => calc(add(x, ...operands)),
     subtract: (...operands: Array<Operand>) => calc(subtract(x, ...operands)),
