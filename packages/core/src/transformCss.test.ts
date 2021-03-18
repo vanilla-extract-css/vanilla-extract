@@ -680,6 +680,16 @@ describe('transformCss', () => {
             selector: 'testClass > div',
             rule: {
               color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'blue',
+                },
+              },
+              '@supports': {
+                'not (display: grid)': {
+                  display: 'flex',
+                },
+              },
             },
           },
         ],
@@ -687,6 +697,16 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass > div": {
         "color": red
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass > div": {
+          "color": blue
+        }
+      }
+      "@supports not (display: grid)": {
+        ".testClass > div": {
+          "display": flex
+        }
       }
     `);
   });
