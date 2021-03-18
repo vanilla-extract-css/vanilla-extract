@@ -1,7 +1,10 @@
 - HMR
-- source maps ???
-- work out how browser runtime will work
+- Source maps ???
+- Work out how browser runtime will work
+- JSDom support
+- Moar tests!
+- Docs
 
 ## Stretch
 
-- detect unused styles
+- Detect unused styles

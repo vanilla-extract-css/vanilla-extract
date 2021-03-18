@@ -7,6 +7,7 @@ export interface LoaderContext {
   target: string;
   resourcePath: string;
   context: string;
+  rootContext: string;
   async: () => (err: unknown, result?: string) => void;
   hot: boolean;
   _compiler: Compiler;

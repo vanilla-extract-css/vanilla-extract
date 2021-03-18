@@ -102,14 +102,10 @@ async function processSource(
       loader: 'virtual-resource-loader',
       options: { source: base64 },
     });
-    const cssFileName = path.normalize(
-      loaderUtils.interpolateName(loader, `${fileScope}.treatcss`, {
-        content: css,
-      }),
-    );
+    const cssFileName = `${fileScope}.treatcss`;
+    const absoluteFileScope = path.join(loader.rootContext, fileScope);
 
-    // TODO use better noop file
-    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@mattsjones/css-core`;
+    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!${absoluteFileScope}`;
 
     log('Add CSS request %s', cssRequest);
 
