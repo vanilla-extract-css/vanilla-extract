@@ -24,22 +24,15 @@ type CalcChain = {
   multiply: (...operands: Array<Operand>) => CalcChain;
   divide: (...operands: Array<Operand>) => CalcChain;
   negate: () => CalcChain;
-  value: string | number;
+  toString: () => string;
 };
 export const calc = (x: Operand): CalcChain => {
-  const chain = {
+  return {
     add: (...operands: Array<Operand>) => calc(add(x, ...operands)),
     subtract: (...operands: Array<Operand>) => calc(subtract(x, ...operands)),
     multiply: (...operands: Array<Operand>) => calc(multiply(x, ...operands)),
     divide: (...operands: Array<Operand>) => calc(divide(x, ...operands)),
     negate: () => calc(negate(x)),
-    value: x,
+    toString: () => x.toString(),
   };
-
-  Object.defineProperty(chain, 'toString', {
-    value: () => x,
-    writable: false,
-  });
-
-  return chain;
 };
