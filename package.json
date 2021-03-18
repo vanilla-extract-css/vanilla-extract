@@ -38,6 +38,8 @@
     "@changesets/cli": "^2.14.1",
     "@manypkg/cli": "^0.17.0",
     "@preconstruct/cli": "^2.0.1",
+    "@testing-library/dom": "^7.30.0",
+    "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^26.0.20",
     "@types/jest-environment-puppeteer": "^4.4.1",
     "@types/puppeteer": "^5.4.3",
