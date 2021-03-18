@@ -43,7 +43,12 @@ export type StyleRule = StyleWithSelectors &
   MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>> &
   FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>;
 
+export type GlobalStyleRule = CSSProperties &
+  MediaQueries<CSSProperties & FeatureQueries<CSSProperties>> &
+  FeatureQueries<CSSProperties & MediaQueries<CSSProperties>>;
+
 export interface CSS {
+  type: 'local' | 'global';
   selector: string;
   rule: StyleRule;
 }

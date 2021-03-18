@@ -39,6 +39,7 @@ describe('transformCss', () => {
         localClassNames: ['test_1/2_className'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'test_1/2_className',
             rule: {
               color: 'red',
@@ -77,6 +78,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -115,6 +117,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -140,6 +143,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'green',
@@ -151,6 +155,7 @@ describe('transformCss', () => {
             },
           },
           {
+            type: 'local',
             selector: '.otherClass',
             rule: {
               color: 'purple',
@@ -187,6 +192,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -213,6 +219,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               '@media': {
@@ -245,6 +252,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -289,6 +297,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass', 'parentClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -329,6 +338,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'red',
@@ -363,6 +373,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               display: 'flex',
@@ -393,6 +404,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               display: 'flex',
@@ -449,6 +461,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               display: 'grid',
@@ -479,6 +492,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               animationTimingFunction: 'linear',
@@ -521,6 +535,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               '@media': {
@@ -547,6 +562,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               color: 'hotpink',
@@ -558,6 +574,7 @@ describe('transformCss', () => {
             },
           },
           {
+            type: 'local',
             selector: '.otherClass',
             rule: {
               color: 'indigo',
@@ -569,6 +586,7 @@ describe('transformCss', () => {
             },
           },
           {
+            type: 'local',
             selector: '.otherOtherClass',
             rule: {
               color: 'lightcyan',
@@ -605,6 +623,7 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
+            type: 'local',
             selector: 'testClass',
             rule: {
               display: 'block',
@@ -649,5 +668,86 @@ describe('transformCss', () => {
         }
       }
     `);
+  });
+
+  it('should allow valid global styles', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'testClass > div',
+            rule: {
+              color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'blue',
+                },
+              },
+              '@supports': {
+                'not (display: grid)': {
+                  display: 'flex',
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toMatchInlineSnapshot(`
+      ".testClass > div": {
+        "color": red
+      }
+      "@media screen and (min-width: 700px)": {
+        ".testClass > div": {
+          "color": blue
+        }
+      }
+      "@supports not (display: grid)": {
+        ".testClass > div": {
+          "display": flex
+        }
+      }
+    `);
+  });
+
+  it('should not allow simple psuedos on global styles', () => {
+    expect(() =>
+      transformCss({
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'div',
+            rule: {
+              ':hover': {
+                color: 'red',
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrow();
+  });
+
+  it('should not allow selectors on global styles', () => {
+    expect(() =>
+      transformCss({
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'div',
+            rule: {
+              selectors: {
+                '& > span': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrow();
   });
 });
