@@ -1,5 +1,13 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies [4c031de]
+- Updated dependencies [7ad9b9a]
+  - @mattsjones/css-core@0.0.13
+
 ## 0.0.9
 
 ### Patch Changes

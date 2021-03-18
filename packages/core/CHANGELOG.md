@@ -1,5 +1,12 @@
 # @mattsjones/css-core
 
+## 0.0.13
+
+### Patch Changes
+
+- 4c031de: Add globalStyle
+- 7ad9b9a: Add 'assignVars' function
+
 ## 0.0.12
 
 ### Patch Changes
