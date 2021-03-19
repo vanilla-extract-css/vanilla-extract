@@ -31,6 +31,12 @@ const extractName = (node: t.Node) => {
     return node.id.name;
   } else if (t.isExportDefaultDeclaration(node)) {
     return 'default';
+  } else if (
+    t.isVariableDeclarator(node) &&
+    t.isArrayPattern(node.id) &&
+    t.isIdentifier(node.id.elements[0])
+  ) {
+    return node.id.elements[0].name;
   }
 };
 

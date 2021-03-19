@@ -224,6 +224,22 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle createTheme using destructuring', () => {
+    const source = `
+      import { createTheme } from '@mattsjones/css-core';
+
+      const [theme, vars] = createTheme({}, {});
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { createTheme } from '@mattsjones/css-core';
+      const [theme, vars] = createTheme({}, {}, \\"theme\\");
+      endFileScope()"
+    `);
+  });
+
   it('should ignore functions that already supply a debug name', () => {
     const source = `
       import { style, mapToStyles } from '@mattsjones/css-core';
