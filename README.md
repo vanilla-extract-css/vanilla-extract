@@ -1,14 +1,14 @@
 # 🧁
 
-**Zero-runtime CSS-in-JS for CSS developers.**
+**Zero-runtime CSS-in-TypeScript for CSS developers.**
 
-Author your styles in JavaScript/TypeScript with locally scoped class names and CSS Variables, then generate purely static CSS files.
+Write your style sheets in TypeScript (or JavaScript) with local scoping of class names and CSS Variables, then generate purely static CSS files at build time.
 
-Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-in-JS” but with more features.
+Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-in-TypeScript” but with scoped CSS Variables + more.
 
 ---
 
-**🚧 &nbsp; PLEASE NOTE: THIS IS AN ALPHA RELEASE &nbsp; 🚧**
+**🚧 &nbsp; Please note, this is an alpha release.**
 
 ---
 
@@ -28,37 +28,41 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 ---
 
-**Author your styles in `.css.ts` files — or JS, if you prefer.**
+**Write your styles in `.css.ts` files.**
 
 ```ts
 // styles.css.ts
 
 import { createTheme, style } from '@mattsjones/css-core';
 
-export const [theme, vars] = createTheme({
-  brandColor: 'blue',
-  fontFamily: 'arial'
+export const [themeClass, themeVars] = createTheme({
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 
 export const exampleStyle = style({
-  backgroundColor: vars.brandColor,
-  fontFamily: vars.fontFamily,
+  backgroundColor: themeVars.color.brand,
+  fontFamily: themeVars.font.body,
   color: 'white',
   padding: 10
 });
 ```
 
-> 💡 These `.css.ts`/`.css.js` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using JavaScript/TypeScript as your preprocessor.
+> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor.
 
 **Then consume them in your markup.**
 
-```tsx
+```ts
 // app.ts
 
-import { theme, exampleStyle } from './styles.css.ts';
+import { themeClass, exampleStyle } from './styles.css.ts';
 
 document.write(`
-  <section class="${theme}">
+  <section class="${themeClass}">
     <h1 class="${exampleStyle}">Hello world!</h1>
   </section>
 `);
@@ -77,6 +81,7 @@ document.write(`
   - [mapToStyles](#maptostyles)
   - [createVar](#createvar)
   - [assignVars](#assignvars)
+  - [inlineTheme](#inlinetheme)
 - [Thanks](#thanks)
 
 ---
@@ -130,13 +135,16 @@ export const className = style({
 });
 ```
 
-Simple psuedos, selectors, `@media`/`@supports` queries and CSS Variables (custom properties) are all supported.
+Simple psuedos, selectors, CSS Variables (custom properties), `@media`/`@supports` queries and `@keyframes` are all supported.
 
-```tsx
+```ts
 import { style } from '@mattsjones/css-core';
 
 export const className = style({
   display: 'flex',
+  vars: {
+    '--global-variable': 'purple'
+  },
   ':hover': {
     color: 'red'
   },
@@ -152,12 +160,18 @@ export const className = style({
   },
   '@supports': {
     '(display: grid)': {
-      display: grid;
+      display: 'grid'
     }
   },
-  vars: {
-    '--global-variable': 'purple'
-  }
+  '@keyframes': {
+    from: {
+      transform: 'rotate(0deg)'
+    },
+    to: {
+      transform: 'rotate(359deg)'
+    }
+  },
+  animation: '@keyframes 1.5s linear'
 });
 ```
 
@@ -180,9 +194,13 @@ Creates a locally scoped theme class and a collection of scoped CSS Variables.
 ```ts
 import { createTheme, style } from '@mattsjones/css-core';
 
-export const [theme, vars] = createTheme({
-  brandColor: 'blue',
-  fontFamily: 'arial'
+export const [themeClass, themeVars] = createTheme({
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 ```
 
@@ -191,16 +209,26 @@ You can create theme variants by passing a variables object as the first argumen
 ```ts
 import { createTheme, style } from '@mattsjones/css-core';
 
-export const [themeA, vars] = createTheme({
-  brandColor: 'blue',
-  fontFamily: 'arial'
+export const [themeA, themeVars] = createTheme({
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 
-export const themeB = createTheme(vars, {
-  brandColor: 'pink',
-  fontFamily: 'comic sans ms'
+export const themeB = createTheme(themeVars, {
+  color: {
+    brand: 'pink'
+  },
+  font: {
+    body: 'comic sans ms'
+  }
 });
 ```
+
+> 💡 All theme variants must provide a value for every variable or it’s a type error.
 
 ### createThemeVars
 
@@ -214,21 +242,35 @@ import {
   createTheme
 } from '@mattsjones/css-core';
 
-export const vars = createThemeVars({
-  brandColor: null,
-  fontFamily: null
+export const themeVars = createThemeVars({
+  color: {
+    brand: null
+  },
+  font: {
+    body: null
+  }
 });
 
-export const themeA = createTheme(vars, {
-  brandColor: 'blue',
-  fontFamily: 'arial'
+export const themeA = createTheme(themeVars, {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 
-export const themeB = createTheme(vars, {
-  brandColor: 'pink',
-  fontFamily: 'comic sans ms'
+export const themeB = createTheme(themeVars, {
+  color: {
+    brand: 'pink'
+  },
+  font: {
+    body: 'comic sans ms'
+  }
 });
 ```
+
+> 💡 All theme variants must provide a value for every variable or it’s a type error.
 
 ### createGlobalTheme
 
@@ -237,9 +279,13 @@ Creates a globally scoped theme, but with locally scoped variable names.
 ```ts
 import { createGlobalTheme } from '@mattsjones/css-core';
 
-export const vars = createGlobalTheme(':root', {
-  brandColor: 'blue',
-  fontFamily: 'arial'
+export const themeVars = createGlobalTheme(':root', {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 ```
 
@@ -295,7 +341,7 @@ Scoped variables can be set via the `vars` property on style objects.
 
 ```ts
 import { createVar, style } from '@mattsjones/css-core';
-import { colorVar } from './vars.css';
+import { colorVar } from './vars.css.ts';
 
 export const parentStyle = style({
   vars: {
@@ -308,9 +354,9 @@ export const parentStyle = style({
 
 Allows you to set an entire collection of CSS Variables anywhere within a style block.
 
-```tsx
+```ts
 import { style, assignVars } from '@mattsjones/css-core';
-import { themeVars } from './vars.css';
+import { themeVars } from './vars.css.ts';
 
 export const exampleStyle = style({
   vars: assignVars(themeVars.space, {
@@ -328,6 +374,29 @@ export const exampleStyle = style({
     }
   }
 });
+```
+
+> 💡 All variables passed into this function must be assigned or it’s a type error.
+
+### inlineTheme
+
+Generates a custom theme at runtime as an inline style object.
+
+```ts
+import { inlineTheme } from '@mattsjones/css-core';
+import { themeVars, exampleStyle } from './styles.css.ts';
+
+const customTheme = inlineTheme(themeVars, {
+  small: 4,
+  medium: 8,
+  large: 16
+});
+
+document.write(`
+  <section style="${customTheme}">
+    <h1 class="${exampleStyle}">Hello world!</h1>
+  </section>
+`);
 ```
 
 ---
