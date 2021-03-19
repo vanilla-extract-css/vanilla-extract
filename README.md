@@ -12,19 +12,19 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 ---
 
-🔥 &nbsp; All styles generated at build time — just like Sass, Less, etc.
+🔥 &nbsp; All styles generated at build time — just like [Sass](https://sass-lang.com), [Less](http://lesscss.org), etc.
 
 ✨ &nbsp; Minimal abstraction over standard CSS. All CSS features are available.
 
-🌳 &nbsp; Locally scoped class names — just like CSS Modules.
+🌳 &nbsp; Locally scoped class names — just like [CSS Modules.](https://github.com/css-modules/css-modules)
 
-🛠 &nbsp; Locally scoped custom property names, i.e. CSS Variables.
+🛠 &nbsp; Locally scoped custom property names, i.e. [CSS Variables.](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 
 🎨 &nbsp; High-level theme system with support for simultaneous themes. No globals!
 
-🏃‍♂️ &nbsp; Optional runtime version for development and testing.
+💪 &nbsp; Type-safe styles thanks to [CSSType.](https://github.com/frenic/csstype)
 
-💪 &nbsp; First-class TypeScript support.
+🏃‍♂️ &nbsp; Optional runtime version for development and testing.
 
 ---
 
