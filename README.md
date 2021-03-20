@@ -82,6 +82,8 @@ document.write(`
   - [createVar](#createvar)
   - [assignVars](#assignvars)
   - [inlineTheme](#inlinetheme)
+- [Utility functions](#utility-functions)
+  - [calc](#calc)
 - [Thanks](#thanks)
 
 ---
@@ -397,6 +399,49 @@ document.write(`
     <h1 class="${exampleStyle}">Hello world!</h1>
   </section>
 `);
+```
+
+## Utility functions
+
+We also provide a standalone package of optional utility functions to make it easier to work with CSS in TypeScript.
+
+> 💡 This package can be used with any CSS-in-JS library.
+
+```bash
+$ yarn add --dev @mattsjones/css-utils
+```
+
+### calc
+
+Streamlines the creation of CSS calc expressions.
+
+```ts
+import { calc } from '@mattsjones/css-utils';
+
+const styles = {
+  height: calc.multiply('var(--grid-unit)', 2)
+};
+```
+
+The following functions are available.
+
+- `calc.add`
+- `calc.subtract`
+- `calc.multiply`
+- `calc.divide`
+- `calc.negate`
+
+The `calc` export is also a function, providing a chainable API for complex calc expressions.
+
+```ts
+import { calc } from '@mattsjones/css-utils';
+
+const styles = {
+  marginTop: calc('var(--space-large)')
+    .divide(2)
+    .negate()
+    .toString()
+};
 ```
 
 ---

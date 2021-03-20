@@ -4,19 +4,19 @@ type Operand = string | number;
 const toExpression = (operator: Operator, ...operands: Array<Operand>) =>
   operands.join(` ${operator} `).replace(/calc/g, '');
 
-export const add = (...operands: Array<Operand>) =>
+const add = (...operands: Array<Operand>) =>
   `calc(${toExpression('+', ...operands)})`;
 
-export const subtract = (...operands: Array<Operand>) =>
+const subtract = (...operands: Array<Operand>) =>
   `calc(${toExpression('-', ...operands)})`;
 
-export const multiply = (...operands: Array<Operand>) =>
+const multiply = (...operands: Array<Operand>) =>
   `calc(${toExpression('*', ...operands)})`;
 
-export const divide = (...operands: Array<Operand>) =>
+const divide = (...operands: Array<Operand>) =>
   `calc(${toExpression('/', ...operands)})`;
 
-export const negate = (x: Operand) => multiply(x, -1);
+const negate = (x: Operand) => multiply(x, -1);
 
 type CalcChain = {
   add: (...operands: Array<Operand>) => CalcChain;
@@ -26,13 +26,32 @@ type CalcChain = {
   negate: () => CalcChain;
   toString: () => string;
 };
-export const calc = (x: Operand): CalcChain => {
-  return {
-    add: (...operands: Array<Operand>) => calc(add(x, ...operands)),
-    subtract: (...operands: Array<Operand>) => calc(subtract(x, ...operands)),
-    multiply: (...operands: Array<Operand>) => calc(multiply(x, ...operands)),
-    divide: (...operands: Array<Operand>) => calc(divide(x, ...operands)),
-    negate: () => calc(negate(x)),
-    toString: () => x.toString(),
-  };
-};
+
+interface Calc {
+  (x: Operand): CalcChain;
+  add: typeof add;
+  subtract: typeof subtract;
+  multiply: typeof multiply;
+  divide: typeof divide;
+  negate: typeof negate;
+}
+
+export const calc: Calc = Object.assign(
+  (x: Operand): CalcChain => {
+    return {
+      add: (...operands) => calc(add(x, ...operands)),
+      subtract: (...operands) => calc(subtract(x, ...operands)),
+      multiply: (...operands) => calc(multiply(x, ...operands)),
+      divide: (...operands) => calc(divide(x, ...operands)),
+      negate: () => calc(negate(x)),
+      toString: () => x.toString(),
+    };
+  },
+  {
+    add,
+    subtract,
+    multiply,
+    divide,
+    negate,
+  },
+);

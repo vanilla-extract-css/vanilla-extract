@@ -3,7 +3,6 @@
 - Moar tests!
 - Docs/README
 - Var fallbacks
-- Clean up utils/calc exports
 - Improve babel plugin for destructured themes e.g. `const [className, vars] = createTheme({})`
 
 ## Stretch
