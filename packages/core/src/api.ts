@@ -81,6 +81,24 @@ export function createVar(debugId?: string) {
   return `var(--${cssVarName})`;
 }
 
+export function fallbackVar(...values: [...Array<string>, string | number]) {
+  let finalValue = '';
+
+  values.reverse().forEach((value) => {
+    if (finalValue === '') {
+      finalValue = String(value);
+    } else {
+      if (typeof value !== 'string' || !/^var\(--.*\)$/.test(value)) {
+        throw new Error(`Invalid variable name: ${value}`);
+      }
+
+      finalValue = value.replace(/\)$/, `, ${finalValue})`);
+    }
+  });
+
+  return finalValue;
+}
+
 export function style(rule: StyleRule, debugId?: string) {
   const className = generateClassName(debugId);
 

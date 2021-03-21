@@ -1,4 +1,9 @@
-import { style, mapToStyles } from '@mattsjones/css-core';
+import {
+  style,
+  mapToStyles,
+  createVar,
+  fallbackVar,
+} from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
 import { vars, theme, altTheme } from './themes.treat';
 
@@ -16,7 +21,10 @@ export const container = style({
 
 export const button = [
   style({
-    backgroundColor: vars.colors.backgroundColor,
+    backgroundColor: fallbackVar(
+      vars.colors.backgroundColor,
+      '"THIS FALLBACK VALUE SHOULD NEVER BE USED"',
+    ),
     color: vars.colors.text,
     '@media': {
       'only screen and (min-width: 500px)': {
@@ -32,10 +40,13 @@ export const button = [
   shadow,
 ];
 
+const undefinedVar1 = createVar();
+const undefinedVar2 = createVar();
+
 export const opacity = mapToStyles(
   {
-    '1/2': 0.5,
-    '1/4': 0.25,
+    '1/2': fallbackVar(undefinedVar1, 0.5),
+    '1/4': fallbackVar(undefinedVar1, undefinedVar2, 0.25),
   },
   (value) => ({ opacity: value }),
 );

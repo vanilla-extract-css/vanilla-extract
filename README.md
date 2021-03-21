@@ -80,6 +80,7 @@ document.write(`
 - [Advanced API](#advanced-api)
   - [mapToStyles](#maptostyles)
   - [createVar](#createvar)
+  - [fallbackVar](#fallbackvar)
   - [assignVars](#assignvars)
   - [inlineTheme](#inlinetheme)
 - [Utility functions](#utility-functions)
@@ -349,6 +350,33 @@ export const parentStyle = style({
   vars: {
     [colorVar]: 'blue'
   }
+});
+```
+
+### fallbackVar
+
+Provides fallback values when consuming variables.
+
+```ts
+import { createVar, fallbackVar, style } from '@mattsjones/css-core';
+
+export const colorVar = createVar();
+
+export const exampleStyle = style({
+  color: fallbackVar(colorVar, 'blue');
+});
+```
+
+Multiple fallbacks are also supported.
+
+```ts
+import { createVar, fallbackVar, style } from '@mattsjones/css-core';
+
+export const primaryColorVar = createVar();
+export const secondaryColorVar = createVar();
+
+export const exampleStyle = style({
+  color: fallbackVar(primaryColorVar, secondaryColorVar, 'blue');
 });
 ```
 
