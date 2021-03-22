@@ -1,8 +1,8 @@
 # 🧁
 
-**Zero-runtime CSS-in-TypeScript for CSS developers.**
+**Zero-runtime Stylesheets-in-TypeScript.**
 
-Write your style sheets in TypeScript (or JavaScript) with local scoping of class names and CSS Variables, then generate purely static CSS files at build time.
+Write your styles in TypeScript (or JavaScript) with local scoping of class names and CSS Variables, then generate purely static CSS files at build time.
 
 Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-in-TypeScript” but with scoped CSS Variables + more.
 
@@ -175,7 +175,7 @@ export const className = style({
 
 ### globalStyle
 
-Creates globally scoped CSS.
+Creates globally scoped styles attached to a selector.
 
 ```ts
 import { globalStyle } from '@mattsjones/css-core';
@@ -230,9 +230,9 @@ export const themeB = createTheme(themeVars, {
 
 ### createThemeVars
 
-Creates a collection of CSS Variables without coupling them to a specific theme implementation.
+Creates a collection of CSS Variables without coupling them to a specific theme variant.
 
-This is particularly useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
+> 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
 ```ts
 import {
@@ -324,7 +324,7 @@ export const text = style({
 
 ### keyframes
 
-Creates a locally scoped set of keyframes for an animation.
+Creates a locally scoped set of keyframes.
 
 ```ts
 import { keyframes, style } from '@mattsjones/css-core';
@@ -341,7 +341,7 @@ export const animated = style({
 
 ### globalKeyframes
 
-Creates a globally scoped set of keyframes for an animation.
+Creates a globally scoped set of keyframes.
 
 ```ts
 import { globalKeyframes, style } from '@mattsjones/css-core';
@@ -362,7 +362,9 @@ export const animated = style({
 
 ### mapToStyles
 
-Creates an object that maps style names to hashed class names. This is particularly useful for mapping to component props, e.g. `<div className={styles.padding[props.padding]}>`
+Creates an object that maps style names to hashed class names.
+
+> 💡 This is useful for mapping to component props, e.g. `<div className={styles.padding[props.padding]}>`
 
 ```ts
 import { mapToStyles } from '@mattsjones/css-core';
@@ -374,7 +376,7 @@ export const padding = mapToStyles({
 });
 ```
 
-You can also provide a map function as the second argument.
+You can also transform the values by providing a map function as the second argument.
 
 ```ts
 import { mapToStyles } from '@mattsjones/css-core';
