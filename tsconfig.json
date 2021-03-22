@@ -16,5 +16,11 @@
     "isolatedModules": true
   },
   "exclude": ["node_modules", "**/dist/**"],
-  "include": ["./jest.setup.ts", "packages/**/*", "fixtures/src/**/*", "test-helpers/**/*", "tests/**/*"]
+  "include": [
+    "./jest.setup.ts",
+    "packages/**/*",
+    "fixtures/src/**/*",
+    "test-helpers/**/*",
+    "tests/**/*"
+  ]
 }

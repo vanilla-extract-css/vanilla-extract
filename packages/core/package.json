@@ -11,14 +11,14 @@
     "entrypoints": [
       "index.ts",
       "adapter.ts",
-      "generateCss.ts",
+      "transformCss.ts",
       "fileScope.ts"
     ]
   },
   "files": [
     "/dist",
     "/adapter",
-    "/generateCss",
+    "/transformCss",
     "/fileScope"
   ],
   "author": "Matt Jones",
@@ -28,9 +28,7 @@
     "css-selector-parser": "^1.4.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
-    "dedent": "^0.7.0",
-    "postcss": "^8.2.7",
-    "postcss-js": "^3.0.3"
+    "dedent": "^0.7.0"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0",

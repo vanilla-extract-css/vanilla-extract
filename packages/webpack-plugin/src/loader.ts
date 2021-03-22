@@ -8,7 +8,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
 import type { Adapter } from '@mattsjones/css-core';
 import { setAdapter } from '@mattsjones/css-core/adapter';
-import { generateCss } from '@mattsjones/css-core/generateCss';
+import { transformCss } from '@mattsjones/css-core/transformCss';
 
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
@@ -158,7 +158,7 @@ async function processSource(
   for (const [fileScope, fileScopeCss] of Array.from(
     cssByFileScope.entries(),
   )) {
-    const css = generateCss({
+    const css = transformCss({
       localClassNames: Array.from(localClassNames),
       cssObjs: fileScopeCss,
     }).join('\n');

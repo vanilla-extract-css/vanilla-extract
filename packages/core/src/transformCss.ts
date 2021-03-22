@@ -15,6 +15,31 @@ import type {
 import { validateSelector } from './validateSelector';
 import { forEach, omit, mapKeys, isEqual } from './utils';
 
+const UNITLESS: Record<string, boolean> = {
+  boxFlex: true,
+  boxFlexGroup: true,
+  columnCount: true,
+  flex: true,
+  flexGrow: true,
+  flexPositive: true,
+  flexShrink: true,
+  flexNegative: true,
+  fontWeight: true,
+  lineClamp: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  tabSize: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
+  fillOpacity: true,
+  strokeDashoffset: true,
+  strokeOpacity: true,
+  strokeWidth: true,
+};
+
 export const simplePseudos = [
   ':-moz-any-link',
   ':-moz-full-screen',
@@ -106,6 +131,15 @@ export const simplePseudos = [
   ':visited',
 ] as const;
 
+function dashify(str: string) {
+  return str
+    .replace(/([A-Z])/g, '-$1')
+    .replace(/^ms-/, '-ms-')
+    .toLowerCase();
+}
+
+const DOUBLE_SPACE = '  ';
+
 export type SimplePseudos = typeof simplePseudos;
 
 const simplePseudoSet = new Set<string>(simplePseudos);
@@ -161,7 +195,8 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    const rule = this.transformVars(cssRule.rule);
+    // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
     if (cssRule.conditions) {
@@ -176,6 +211,21 @@ class Stylesheet {
         rule,
       });
     }
+  }
+
+  pixelifyProperties(cssRule: CSSProperties) {
+    forEach(cssRule, (value, key) => {
+      if (
+        typeof value === 'number' &&
+        value !== 0 &&
+        !UNITLESS[key as keyof CSSProperties]
+      ) {
+        // @ts-expect-error Any ideas?
+        cssRule[key] = `${value}px`;
+      }
+    });
+
+    return cssRule;
   }
 
   transformVars({ vars, ...rest }: CSSProperties) {
@@ -336,6 +386,38 @@ class Stylesheet {
 
     return styles;
   }
+
+  toCss() {
+    const styles = this.toPostcssJs();
+
+    function walkCss(v: any, indent: string = '') {
+      const rules: Array<string> = [];
+
+      for (const key of Object.keys(v)) {
+        const value = v[key];
+
+        if (value && Array.isArray(value)) {
+          rules.push(
+            ...value.map((v) => walkCss({ [key]: v }, indent).join('\n')),
+          );
+        } else if (value && typeof value === 'object') {
+          rules.push(
+            `${indent}${key} {\n${walkCss(value, indent + DOUBLE_SPACE).join(
+              '\n',
+            )}\n${indent}}\n`,
+          );
+        } else {
+          rules.push(
+            `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
+          );
+        }
+      }
+
+      return rules;
+    }
+
+    return walkCss(styles);
+  }
 }
 
 interface TransformCSSParams {
@@ -349,5 +431,5 @@ export function transformCss({ localClassNames, cssObjs }: TransformCSSParams) {
     stylesheet.processCssObj(root);
   }
 
-  return stylesheet.toPostcssJs();
+  return stylesheet.toCss();
 }

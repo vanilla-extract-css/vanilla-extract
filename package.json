@@ -11,7 +11,8 @@
     "start": "yarn start-fixture themed",
     "postinstall": "yarn dev",
     "test": "jest",
-    "lint": "manypkg check && yarn tsc",
+    "format": "prettier --write .",
+    "lint": "manypkg check && prettier --check . && tsc",
     "version": "yarn lint && yarn test && yarn build && changeset version",
     "release": "changeset publish"
   },

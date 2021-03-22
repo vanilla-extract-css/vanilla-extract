@@ -1,36 +1,5 @@
-import cssesc from 'cssesc';
-
 import { createVar } from './api';
 import { transformCss } from './transformCss';
-
-expect.addSnapshotSerializer({
-  test: () => true,
-  serialize: (val, config, indentation, depth, refs, printer) => {
-    if (typeof val === 'object') {
-      return Object.entries(val)
-        .map(([selector, rule]) => {
-          const indent = [...new Array(depth)]
-            .map(() => config.indent)
-            .join('');
-
-          if (typeof rule === 'object') {
-            return `${indent}"${selector}": {\n${printer(
-              rule,
-              config,
-              indentation,
-              depth + 1,
-              refs,
-            )}\n${indent}}`;
-          }
-
-          return `${indent}"${selector}": ${rule}`;
-        })
-        .join('\n');
-    }
-
-    return val;
-  },
-});
 
 describe('transformCss', () => {
   it('should escape class names', () => {
@@ -54,21 +23,26 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".test_1\\/2_className": {
-        "color": red
+      ".test_1\\\\/2_className {
+        color: red;
       }
-      "@media screen and (min-width: 700px)": {
-        ".test_1\\/2_className": {
-          "color": green
+
+      @media screen and (min-width: 700px) {
+        .test_1\\\\/2_className {
+          color: green;
         }
+
       }
-      "@media screen and (min-width: 1000px)": {
-        ".test_1\\/2_className": {
-          "color": purple
+
+      @media screen and (min-width: 1000px) {
+        .test_1\\\\/2_className {
+          color: purple;
         }
+
       }
+      "
     `);
   });
 
@@ -93,21 +67,26 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "color": green
+
+      @media screen and (min-width: 700px) {
+        .testClass {
+          color: green;
         }
+
       }
-      "@media screen and (min-width: 1000px)": {
-        ".testClass": {
-          "color": purple
+
+      @media screen and (min-width: 1000px) {
+        .testClass {
+          color: purple;
         }
+
       }
+      "
     `);
   });
 
@@ -129,11 +108,12 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
+      "
     `);
   });
 
@@ -167,22 +147,27 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": green
+      ".testClass {
+        color: green;
       }
-      ".otherClass": {
-        "color": purple
+
+      .otherClass {
+        color: purple;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "color": red
+
+      @media screen and (min-width: 700px) {
+        .testClass {
+          color: red;
         }
-        ".otherClass": {
-          "color": red
+
+        .otherClass {
+          color: red;
         }
+
       }
+      "
     `);
   });
 
@@ -202,14 +187,76 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
-      ".testClass:hover": {
-        "color": blue
+
+      .testClass:hover {
+        color: blue;
       }
+      "
+    `);
+  });
+
+  it('should handle property fallbacks', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: ['red', 'blue'],
+              ':hover': {
+                color: ['blue', 'red', 'yellow'],
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        color: red;
+        color: blue;
+      }
+
+      .testClass:hover {
+        color: blue;
+        color: red;
+        color: yellow;
+      }
+      "
+    `);
+  });
+
+  it('should dashify properties but leave custom properties', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              backgroundColor: 'green',
+              WebkitAlignContent: 'end',
+              vars: {
+                '--myCustomVar': '10px',
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        --myCustomVar: 10px;
+        background-color: green;
+        -webkit-align-content: end;
+      }
+      "
     `);
   });
 
@@ -233,16 +280,19 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 500px)": {
-        ".testClass": {
-          "color": red
+      "@media screen and (min-width: 500px) {
+        .testClass {
+          color: red;
         }
-        ".testClass:hover": {
-          "color": blue
+
+        .testClass:hover {
+          color: blue;
         }
+
       }
+      "
     `);
   });
 
@@ -271,23 +321,28 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
-      ".testClass:link": {
-        "color": orange
+
+      .testClass:link {
+        color: orange;
       }
-      ".testClass:visited": {
-        "color": yellow
+
+      .testClass:visited {
+        color: yellow;
       }
-      ".testClass:hover": {
-        "color": green
+
+      .testClass:hover {
+        color: green;
       }
-      ".testClass:active": {
-        "color": blue
+
+      .testClass:active {
+        color: blue;
       }
+      "
     `);
   });
 
@@ -315,20 +370,24 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
-      ".testClass:nth-child(3)": {
-        "color": blue
+
+      .testClass:nth-child(3) {
+        color: blue;
       }
-      ".parentClass > div > span ~ .testClass.someGlobalClass:hover": {
-        "background": green
+
+      .parentClass > div > span ~ .testClass.someGlobalClass:hover {
+        background: green;
       }
-      ".parentClass.testClass": {
-        "background": black
+
+      .parentClass.testClass {
+        background: black;
       }
+      "
     `);
   });
 
@@ -354,16 +413,19 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": red
+      ".testClass {
+        color: red;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass:nth-child(3)": {
-          "color": blue
+
+      @media screen and (min-width: 700px) {
+        .testClass:nth-child(3) {
+          color: blue;
         }
+
       }
+      "
     `);
   });
 
@@ -385,16 +447,19 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "display": flex
+      ".testClass {
+        display: flex;
       }
-      "@supports (display: grid)": {
-        ".testClass": {
-          "display": grid
+
+      @supports (display: grid) {
+        .testClass {
+          display: grid;
         }
+
       }
+      "
     `);
   });
 
@@ -431,27 +496,34 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "display": flex
+      ".testClass {
+        display: flex;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "color": green
+
+      @media screen and (min-width: 700px) {
+        .testClass {
+          color: green;
         }
-        "@supports (display: grid)": {
-          ".testClass": {
-            "borderColor": blue
-            "display": grid
+
+        @supports (display: grid) {
+          .testClass {
+            border-color: blue;
+            display: grid;
           }
+
         }
+
       }
-      "@supports (display: grid)": {
-        ".testClass": {
-          "backgroundColor": yellow
+
+      @supports (display: grid) {
+        .testClass {
+          background-color: yellow;
         }
+
       }
+      "
     `);
   });
 
@@ -473,16 +545,19 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "display": grid
+      ".testClass {
+        display: grid;
       }
-      "@supports not (display: grid)": {
-        ".testClass": {
-          "display": flex
+
+      @supports not (display: grid) {
+        .testClass {
+          display: flex;
         }
+
       }
+      "
     `);
   });
 
@@ -504,16 +579,19 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@keyframes myAnimation": {
-        "from": {
-          "opacity": 0
+      "@keyframes myAnimation {
+        from {
+          opacity: 0;
         }
-        "to": {
-          "opacity": 1
+
+        to {
+          opacity: 1;
         }
+
       }
+      "
     `);
   });
 
@@ -529,13 +607,12 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face": {
-        "0": {
-          "src": local("Comic Sans MS")
-        }
+      "@font-face {
+        src: local(\\"Comic Sans MS\\");
       }
+      "
     `);
   });
 
@@ -559,18 +636,18 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face": {
-        "0": {
-          "fontFamily": MyFont1
-          "src": local("Comic Sans MS")
-        }
-        "1": {
-          "fontFamily": MyFont2
-          "src": local("Impact")
-        }
+      "@font-face {
+        font-family: MyFont1;
+        src: local(\\"Comic Sans MS\\");
       }
+
+      @font-face {
+        font-family: MyFont2;
+        src: local(\\"Impact\\");
+      }
+      "
     `);
   });
 
@@ -591,13 +668,15 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "color": green
+      "@media screen and (min-width: 700px) {
+        .testClass {
+          color: green;
         }
+
       }
+      "
     `);
   });
 
@@ -638,25 +717,31 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "color": hotpink
+      ".testClass {
+        color: hotpink;
       }
-      ".otherClass": {
-        "color": indigo
+
+      .otherClass {
+        color: indigo;
       }
-      ".otherOtherClass": {
-        "color": lightcyan
+
+      .otherOtherClass {
+        color: lightcyan;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "color": green
+
+      @media screen and (min-width: 700px) {
+        .testClass {
+          color: green;
         }
-        ".otherClass": {
-          "color": red
+
+        .otherClass {
+          color: red;
         }
+
       }
+      "
     `);
   });
 
@@ -695,23 +780,61 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass": {
-        "--my-var": red
-        "--_17rw2mr0": green
-        "display": block
+      ".testClass {
+        --my-var: red;
+        --_17rw2mr0: green;
+        display: block;
       }
-      ".testClass:nth-child(3)": {
-        "--my-var": orange
-        "--_17rw2mr0": black
+
+      .testClass:nth-child(3) {
+        --my-var: orange;
+        --_17rw2mr0: black;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass": {
-          "--my-var": yellow
-          "--_17rw2mr0": blue
+
+      @media screen and (min-width: 700px) {
+        .testClass {
+          --my-var: yellow;
+          --_17rw2mr0: blue;
         }
+
       }
+      "
+    `);
+  });
+
+  it('should cast property values to pixels when relevant', () => {
+    const testVar = createVar();
+
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'block',
+              paddingTop: 10,
+              lineHeight: 20,
+              vars: {
+                '--my-var': 12,
+                [testVar]: 24,
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        --my-var: 12;
+        --_17rw2mr1: 24;
+        display: block;
+        padding-top: 10px;
+        line-height: 20;
+      }
+      "
     `);
   });
 
@@ -738,21 +861,26 @@ describe('transformCss', () => {
             },
           },
         ],
-      }),
+      }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass > div": {
-        "color": red
+      ".testClass > div {
+        color: red;
       }
-      "@media screen and (min-width: 700px)": {
-        ".testClass > div": {
-          "color": blue
+
+      @media screen and (min-width: 700px) {
+        .testClass > div {
+          color: blue;
         }
+
       }
-      "@supports not (display: grid)": {
-        ".testClass > div": {
-          "display": flex
+
+      @supports not (display: grid) {
+        .testClass > div {
+          display: flex;
         }
+
       }
+      "
     `);
   });
 
@@ -772,7 +900,9 @@ describe('transformCss', () => {
           },
         ],
       }),
-    ).toThrow();
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Simple pseudos are not valid in globalStyles"`,
+    );
   });
 
   it('should not allow selectors on global styles', () => {
@@ -793,6 +923,8 @@ describe('transformCss', () => {
           },
         ],
       }),
-    ).toThrow();
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Selectors are not allowed within globalStyle"`,
+    );
   });
 });

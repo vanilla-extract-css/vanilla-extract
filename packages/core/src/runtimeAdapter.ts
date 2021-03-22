@@ -1,5 +1,5 @@
-import { generateCss } from './generateCss';
 import type { Adapter, CSS } from './types';
+import { transformCss } from './transformCSS';
 
 let styleSheet: CSSStyleSheet | null;
 const localClassNames = new Set<string>();
@@ -28,7 +28,7 @@ export const browserRuntimeAdapter: Adapter = {
     localClassNames.add(className);
   },
   onEndFileScope: () => {
-    const css = generateCss({
+    const css = transformCss({
       localClassNames: Array.from(localClassNames),
       cssObjs: bufferedCSSObjs,
     });
