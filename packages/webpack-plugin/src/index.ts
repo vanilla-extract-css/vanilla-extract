@@ -2,23 +2,6 @@ import type { Compiler, RuleSetRule, RuleSetUseItem } from 'webpack';
 
 import { ChildCompiler } from './compiler';
 
-type TODO = any;
-
-const isProductionLikeMode = (options: TODO) => {
-  return options.mode === 'production' || !options.mode;
-};
-
-const makeOptionDefaulter = (prodLike: boolean) => (
-  option: TODO,
-  { dev, prod }: TODO,
-) => {
-  if (typeof option !== 'undefined') {
-    return option;
-  }
-
-  return prodLike ? prod : dev;
-};
-
 interface PluginOptions {
   test?: RuleSetRule['test'];
   outputCss?: boolean;

@@ -1,5 +1,4 @@
 import cssesc from 'cssesc';
-import hash from '@emotion/hash';
 
 import type {
   CSS,

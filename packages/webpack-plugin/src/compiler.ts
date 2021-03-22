@@ -173,7 +173,7 @@ function compileTreatSource(
     }
 
     try {
-      childCompiler.runAsChild((err, entries, compilation) => {
+      childCompiler.runAsChild((err, _entries, compilation) => {
         if (err) {
           return reject(err);
         }

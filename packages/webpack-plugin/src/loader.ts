@@ -172,7 +172,7 @@ async function processSource(
 const stringifyExports = (value: any) =>
   stringify(
     value,
-    (value, indent, next) => {
+    (value, _indent, next) => {
       const valueType = typeof value;
       if (
         valueType === 'string' ||
@@ -206,7 +206,7 @@ const serializeTreatModule = (
   loader: LoaderContext,
   cssRequests: Array<string>,
   exports: Record<string, unknown>,
-  isHmr: boolean,
+  _isHmr: boolean,
 ) => {
   const cssImports = cssRequests.map((request) => {
     const relativeRequest = loaderUtils.stringifyRequest(loader, request);
