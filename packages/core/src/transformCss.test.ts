@@ -492,39 +492,27 @@ describe('transformCss', () => {
         localClassNames: ['testClass'],
         cssObjs: [
           {
-            type: 'local',
-            selector: 'testClass',
+            type: 'keyframes',
+            name: 'myAnimation',
             rule: {
-              animationTimingFunction: 'linear',
-              animationDuration: '3s',
-              animationFillMode: 'both',
-              '@keyframes': {
-                from: {
-                  opacity: 0,
-                },
-                to: {
-                  opacity: 1,
-                },
+              from: {
+                opacity: 0,
+              },
+              to: {
+                opacity: 1,
               },
             },
           },
         ],
       }),
     ).toMatchInlineSnapshot(`
-      "@keyframes ru4hw5": {
+      "@keyframes myAnimation": {
         "from": {
           "opacity": 0
         }
         "to": {
           "opacity": 1
         }
-      }
-      ".testClass": {
-        "animationTimingFunction": linear
-        "animationDuration": 3s
-        "animationFillMode": both
-        "animation": undefined
-        "animationName": ru4hw5
       }
     `);
   });

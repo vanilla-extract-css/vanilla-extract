@@ -20,6 +20,9 @@ const exportConfig = {
   fontFace: {
     maxParams: 2,
   },
+  keyframes: {
+    maxParams: 2,
+  },
 };
 type RelevantExport = keyof typeof exportConfig;
 const relevantExports = Object.keys(exportConfig) as Array<RelevantExport>;

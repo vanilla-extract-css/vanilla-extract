@@ -6,6 +6,7 @@ import type {
   GlobalStyleRule,
   StyleRule,
   FontFaceRule,
+  CSSKeyframes,
   MapLeafNodes,
 } from './types';
 import { appendCss, registerClassName } from './adapter';
@@ -112,6 +113,20 @@ export function globalFontFace(fontFamily: string, rule: FontFaceRule) {
     { type: 'fontFace', rule: { ...rule, fontFamily } },
     getFileScope(),
   );
+}
+
+export function keyframes(rule: CSSKeyframes, debugId?: string) {
+  const name = cssesc(generateIdentifier(debugId), {
+    isIdentifier: true,
+  });
+
+  appendCss({ type: 'keyframes', name, rule }, getFileScope());
+
+  return name;
+}
+
+export function globalKeyframes(name: string, rule: CSSKeyframes) {
+  appendCss({ type: 'keyframes', name, rule }, getFileScope());
 }
 
 export function mapToStyles<

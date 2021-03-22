@@ -4,6 +4,7 @@ import hash from '@emotion/hash';
 import type {
   CSS,
   CSSStyleBlock,
+  CSSKeyframesBlock,
   CSSProperties,
   FeatureQueries,
   MediaQueries,
@@ -120,12 +121,14 @@ class Stylesheet {
   rules: Array<CSSRule>;
   conditionalRules: Array<CSSRule>;
   fontFaceRules: Array<GlobalFontFaceRule>;
+  keyframesRules: Array<CSSKeyframesBlock>;
   localClassNameRegex: RegExp | null;
 
   constructor(localClassNames: Array<string>) {
     this.rules = [];
     this.conditionalRules = [];
     this.fontFaceRules = [];
+    this.keyframesRules = [];
     this.localClassNameRegex =
       localClassNames.length > 0
         ? RegExp(`(${localClassNames.join('|')})`, 'g')
@@ -135,6 +138,11 @@ class Stylesheet {
   processCssObj(root: CSS) {
     if (root.type === 'fontFace') {
       this.fontFaceRules.push(root.rule);
+
+      return;
+    }
+    if (root.type === 'keyframes') {
+      this.keyframesRules.push(root);
 
       return;
     }
@@ -153,7 +161,7 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    const rule = this.transformVars(this.transformRuleKeyframes(cssRule.rule));
+    const rule = this.transformVars(cssRule.rule);
     const selector = this.transformSelector(cssRule.selector);
 
     if (cssRule.conditions) {
@@ -186,38 +194,6 @@ class Stylesheet {
         return key;
       }),
       ...rest,
-    };
-  }
-
-  transformRuleKeyframes(rule: CSSProperties) {
-    let { '@keyframes': keyframes, animation, animationName, ...rest } = rule;
-
-    if (!keyframes && !rule.animation && !rule.animationName) {
-      return rest;
-    }
-
-    let keyframesRef = typeof keyframes === 'string' ? keyframes : '';
-
-    if (keyframes && typeof keyframes !== 'string') {
-      keyframesRef = cssesc(hash(JSON.stringify(keyframes)), {
-        isIdentifier: true,
-      });
-
-      // Hoist keyframes to the top of the stylesheet
-      this.rules.unshift({
-        selector: `@keyframes ${keyframesRef}`,
-        rule: keyframes,
-      });
-    }
-
-    return {
-      ...rest,
-      animation:
-        animation && typeof animation === 'string'
-          ? // @ts-expect-error Why???????????
-            animation.replace('@keyframes', keyframesRef)
-          : animation,
-      animationName: animationName ? undefined : keyframesRef,
     };
   }
 
@@ -327,6 +303,10 @@ class Stylesheet {
     if (this.fontFaceRules.length > 0) {
       styles['@font-face'] = this.fontFaceRules;
     }
+
+    this.keyframesRules.forEach((rule) => {
+      styles[`@keyframes ${rule.name}`] = rule.rule;
+    });
 
     for (const rule of [...this.rules, ...this.conditionalRules]) {
       if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {

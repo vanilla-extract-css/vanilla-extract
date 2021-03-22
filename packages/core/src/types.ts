@@ -12,7 +12,6 @@ export type CSSProperties = BasicCSSProperties & {
   vars?: {
     [key: string]: string | number;
   };
-  '@keyframes'?: CSSKeyframes | string;
 };
 
 type PseudoProperties = { [key in SimplePseudos[number]]?: CSSProperties };
@@ -62,7 +61,13 @@ export type CSSFontFaceBlock = {
   rule: GlobalFontFaceRule;
 };
 
-export type CSS = CSSStyleBlock | CSSFontFaceBlock;
+export type CSSKeyframesBlock = {
+  type: 'keyframes';
+  name: string;
+  rule: CSSKeyframes;
+};
+
+export type CSS = CSSStyleBlock | CSSFontFaceBlock | CSSKeyframesBlock;
 
 export interface Adapter {
   appendCss: (css: CSS, fileScope: string) => void;

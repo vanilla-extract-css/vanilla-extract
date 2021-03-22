@@ -79,6 +79,8 @@ document.write(`
   - [createGlobalTheme](#createglobaltheme)
   - [fontFace](#fontface)
   - [globalFontFace](#globalfontface)
+  - [keyframes](#keyframes)
+  - [globalKeyframes](#globalkeyframes)
 - [Advanced API](#advanced-api)
   - [mapToStyles](#maptostyles)
   - [createVar](#createvar)
@@ -140,7 +142,7 @@ export const className = style({
 });
 ```
 
-Simple psuedos, selectors, CSS Variables (custom properties), `@media`/`@supports` queries and `@keyframes` are all supported.
+CSS Variables (custom properties), simple pseudos, selectors and media/feature queries are all supported.
 
 ```ts
 import { style } from '@mattsjones/css-core';
@@ -167,16 +169,7 @@ export const className = style({
     '(display: grid)': {
       display: 'grid'
     }
-  },
-  '@keyframes': {
-    from: {
-      transform: 'rotate(0deg)'
-    },
-    to: {
-      transform: 'rotate(359deg)'
-    }
-  },
-  animation: '@keyframes 1.5s linear'
+  }
 });
 ```
 
@@ -326,6 +319,40 @@ globalFontFace('MyGlobalFont', {
 
 export const text = style({
   fontFamily: 'MyGlobalFont'
+});
+```
+
+### keyframes
+
+Creates a locally scoped set of keyframes for an animation.
+
+```ts
+import { keyframes, style } from '@mattsjones/css-core';
+
+const rotate = keyframes({
+  '0%': { rotate: '0deg' },
+  '100%': { rotate: '360deg' },
+});
+
+export const animated = style({
+  animation: `3s infinite ${rotate}`;
+});
+```
+
+### globalKeyframes
+
+Creates a globally scoped set of keyframes for an animation.
+
+```ts
+import { globalKeyframes, style } from '@mattsjones/css-core';
+
+globalKeyframes('rotate', {
+  '0%': { rotate: '0deg' },
+  '100%': { rotate: '360deg' },
+});
+
+export const animated = style({
+  animation: `3s infinite rotate`;
 });
 ```
 

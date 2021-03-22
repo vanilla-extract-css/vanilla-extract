@@ -5,6 +5,8 @@ import {
   fallbackVar,
   fontFace,
   globalFontFace,
+  keyframes,
+  globalKeyframes,
 } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
 import { vars, theme, altTheme } from './themes.treat';
@@ -17,7 +19,26 @@ globalFontFace('MyGlobalComicSans', {
   src: 'local("Comic Sans MS")',
 });
 
+const slide = keyframes({
+  '0%': {
+    transform: 'translateY(-4px)',
+  },
+  '100%': {
+    transform: 'translateY(4px)',
+  },
+});
+
+globalKeyframes('globalSlide', {
+  '0%': {
+    transform: 'translateY(-4px)',
+  },
+  '100%': {
+    transform: 'translateY(4px)',
+  },
+});
+
 export const container = style({
+  animation: `3s infinite alternate globalSlide ease-in-out`,
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space[2],
@@ -31,6 +52,7 @@ export const container = style({
 
 export const button = [
   style({
+    animation: `3s infinite alternate ${slide} ease-in-out`,
     fontFamily: impact,
     backgroundColor: fallbackVar(
       vars.colors.backgroundColor,

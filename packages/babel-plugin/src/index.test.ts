@@ -228,6 +228,32 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle keyframes assigned to const', () => {
+    const source = `
+      import { keyframes } from '@mattsjones/css-core';
+
+      const myAnimation = keyframes({
+        from: { transform: 'rotate(0deg)' },
+        to: { transform: 'rotate(360deg)' }
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { keyframes } from '@mattsjones/css-core';
+      const myAnimation = keyframes({
+        from: {
+          transform: 'rotate(0deg)'
+        },
+        to: {
+          transform: 'rotate(360deg)'
+        }
+      }, \\"myAnimation\\");
+      endFileScope()"
+    `);
+  });
+
   it('should handle createTheme assigned to const', () => {
     const source = `
       import { createTheme } from '@mattsjones/css-core';
