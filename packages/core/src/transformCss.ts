@@ -1,9 +1,5 @@
 import cssesc from 'cssesc';
 import hash from '@emotion/hash';
-import each from 'lodash/each';
-import omit from 'lodash/omit';
-import isEqual from 'lodash/isEqual';
-import mapKeys from 'lodash/mapKeys';
 
 import type {
   CSS,
@@ -16,6 +12,7 @@ import type {
   GlobalFontFaceRule,
 } from './types';
 import { validateSelector } from './validateSelector';
+import { forEach, omit, mapKeys, isEqual } from './utils';
 
 export const simplePseudos = [
   ':-moz-any-link',
@@ -241,7 +238,7 @@ class Stylesheet {
     rule: StyleWithSelectors,
     conditions?: Array<string>,
   ) {
-    each(rule.selectors, (selectorRule, selector) => {
+    forEach(rule.selectors, (selectorRule, selector) => {
       if (root.type === 'global') {
         throw new Error('Selectors are not allowed within globalStyle');
       }
@@ -266,7 +263,7 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    each(rules, (mediaRule, query) => {
+    forEach(rules, (mediaRule, query) => {
       const conditions = [`@media ${query}`, ...parentConditions];
 
       this.addRule({
@@ -288,7 +285,7 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    each(rules, (supportsRule, query) => {
+    forEach(rules, (supportsRule, query) => {
       const conditions = [`@supports ${query}`, ...parentConditions];
 
       this.addRule({

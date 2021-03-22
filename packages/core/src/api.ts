@@ -1,17 +1,16 @@
 import hash from '@emotion/hash';
-import get from 'lodash/get';
 import cssesc from 'cssesc';
 import dedent from 'dedent';
 
-import type { GlobalStyleRule, StyleRule, FontFaceRule } from './types';
+import type {
+  GlobalStyleRule,
+  StyleRule,
+  FontFaceRule,
+  MapLeafNodes,
+} from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
-
-type MapLeafNodes<Obj, LeafType> = {
-  [Prop in keyof Obj]: Obj[Prop] extends Record<string | number, any>
-    ? MapLeafNodes<Obj[Prop], LeafType>
-    : LeafType;
-};
+import { walkObject, get } from './utils';
 
 function getShortFileName() {
   const fileScope = getFileScope();
@@ -34,34 +33,6 @@ const generateIdentifier = (debugId: string | undefined) => {
       : `${hash(getFileScope())}${refCount}`;
 
   return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
-};
-
-const walkObject = <T, MapTo>(
-  obj: T,
-  fn: (value: string | number, path: Array<string>) => MapTo,
-  path: Array<string> = [],
-): MapLeafNodes<T, MapTo> => {
-  // @ts-expect-error
-  const clone = obj.constructor();
-
-  for (let key in obj) {
-    const value = obj[key];
-    const currentPath = [...path, key];
-
-    if (typeof value === 'object') {
-      clone[key] = value ? walkObject(value, fn, currentPath) : value;
-    } else if (typeof value === 'string' || typeof value === 'number') {
-      clone[key] = fn(value, currentPath);
-    } else {
-      console.warn(
-        `Skipping invalid key "${currentPath.join(
-          '.',
-        )}". Should be a string, number or object. Received: "${typeof value}"`,
-      );
-    }
-  }
-
-  return clone;
 };
 
 export function createVar(debugId?: string) {

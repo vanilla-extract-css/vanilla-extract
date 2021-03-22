@@ -69,3 +69,9 @@ export interface Adapter {
   registerClassName: (className: string) => void;
   onEndFileScope: (fileScope: string) => void;
 }
+
+export type MapLeafNodes<Obj, LeafType> = {
+  [Prop in keyof Obj]: Obj[Prop] extends Record<string | number, any>
+    ? MapLeafNodes<Obj[Prop], LeafType>
+    : LeafType;
+};
