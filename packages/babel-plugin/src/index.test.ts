@@ -208,6 +208,26 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle fontFace assigned to const', () => {
+    const source = `
+      import { fontFace } from '@mattsjones/css-core';
+
+      const myFont = fontFace({
+        src: 'local("Comic Sans MS")',
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { fontFace } from '@mattsjones/css-core';
+      const myFont = fontFace({
+        src: 'local(\\"Comic Sans MS\\")'
+      }, \\"myFont\\");
+      endFileScope()"
+    `);
+  });
+
   it('should handle createTheme assigned to const', () => {
     const source = `
       import { createTheme } from '@mattsjones/css-core';

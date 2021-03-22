@@ -1,8 +1,9 @@
 import hash from '@emotion/hash';
 import get from 'lodash/get';
 import cssesc from 'cssesc';
+import dedent from 'dedent';
 
-import type { GlobalStyleRule, StyleRule } from './types';
+import type { GlobalStyleRule, StyleRule, FontFaceRule } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
@@ -24,15 +25,15 @@ function getShortFileName() {
   return '';
 }
 
-const generateClassName = (debugId: string | undefined) => {
+const generateIdentifier = (debugId: string | undefined) => {
   const refCount = getAndIncrementRefCounter();
 
-  const className =
+  const identifier =
     process.env.NODE_ENV !== 'production' && debugId
       ? `${getShortFileName()}_${debugId}__${hash(getFileScope())}${refCount}`
       : `${hash(getFileScope())}${refCount}`;
 
-  return className.match(/^[0-9]/) ? `_${className}` : className;
+  return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
 };
 
 const walkObject = <T, MapTo>(
@@ -100,7 +101,7 @@ export function fallbackVar(...values: [...Array<string>, string | number]) {
 }
 
 export function style(rule: StyleRule, debugId?: string) {
-  const className = generateClassName(debugId);
+  const className = generateIdentifier(debugId);
 
   registerClassName(className);
   appendCss({ type: 'local', selector: className, rule }, getFileScope());
@@ -110,6 +111,36 @@ export function style(rule: StyleRule, debugId?: string) {
 
 export function globalStyle(selector: string, rule: GlobalStyleRule) {
   appendCss({ type: 'global', selector, rule }, getFileScope());
+}
+
+export function fontFace(rule: FontFaceRule, debugId?: string) {
+  const fontFamily = `"${cssesc(generateIdentifier(debugId), {
+    quotes: 'double',
+  })}"`;
+
+  if ('fontFamily' in rule) {
+    throw new Error(
+      dedent`
+        This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
+
+        If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
+      `,
+    );
+  }
+
+  appendCss(
+    { type: 'fontFace', rule: { ...rule, fontFamily } },
+    getFileScope(),
+  );
+
+  return fontFamily;
+}
+
+export function globalFontFace(fontFamily: string, rule: FontFaceRule) {
+  appendCss(
+    { type: 'fontFace', rule: { ...rule, fontFamily } },
+    getFileScope(),
+  );
 }
 
 export function mapToStyles<
@@ -221,7 +252,7 @@ export function createTheme<ThemeContract>(
   debugId?: string,
 ): string;
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
-  const themeClassName = generateClassName(
+  const themeClassName = generateIdentifier(
     typeof arg2 === 'object' ? arg3 : arg2,
   );
 

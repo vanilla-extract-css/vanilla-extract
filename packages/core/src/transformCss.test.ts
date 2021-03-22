@@ -529,6 +529,63 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle font face', () => {
+    expect(
+      transformCss({
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'fontFace',
+            rule: {
+              src: 'local("Comic Sans MS")',
+            },
+          },
+        ],
+      }),
+    ).toMatchInlineSnapshot(`
+      "@font-face": {
+        "0": {
+          "src": local("Comic Sans MS")
+        }
+      }
+    `);
+  });
+
+  it('should handle multiple font faces', () => {
+    expect(
+      transformCss({
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont1',
+              src: 'local("Comic Sans MS")',
+            },
+          },
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont2',
+              src: 'local("Impact")',
+            },
+          },
+        ],
+      }),
+    ).toMatchInlineSnapshot(`
+      "@font-face": {
+        "0": {
+          "fontFamily": MyFont1
+          "src": local("Comic Sans MS")
+        }
+        "1": {
+          "fontFamily": MyFont2
+          "src": local("Impact")
+        }
+      }
+    `);
+  });
+
   it('should not create empty rules', () => {
     expect(
       transformCss({

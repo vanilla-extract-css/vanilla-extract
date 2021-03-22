@@ -17,6 +17,9 @@ const exportConfig = {
   mapToStyles: {
     maxParams: 3,
   },
+  fontFace: {
+    maxParams: 2,
+  },
 };
 type RelevantExport = keyof typeof exportConfig;
 const relevantExports = Object.keys(exportConfig) as Array<RelevantExport>;

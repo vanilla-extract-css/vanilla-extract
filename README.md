@@ -77,6 +77,8 @@ document.write(`
   - [createTheme](#createtheme)
   - [createThemeVars](#createthemevars)
   - [createGlobalTheme](#createglobaltheme)
+  - [fontFace](#fontface)
+  - [globalFontFace](#globalfontface)
 - [Advanced API](#advanced-api)
   - [mapToStyles](#maptostyles)
   - [createVar](#createvar)
@@ -289,6 +291,41 @@ export const themeVars = createGlobalTheme(':root', {
   font: {
     body: 'arial'
   }
+});
+```
+
+### fontFace
+
+Creates a locally scoped custom font.
+
+```ts
+import { fontFace, style } from '@mattsjones/css-core';
+
+const myFont = fontFace({
+  src: 'local("Comic Sans MS")'
+});
+
+export const text = style({
+  fontFamily: myFont
+});
+```
+
+### globalFontFace
+
+Creates a globally scoped custom font.
+
+```ts
+import {
+  globalFontFace,
+  style
+} from '@mattsjones/css-core';
+
+globalFontFace('MyGlobalFont', {
+  src: 'local("Comic Sans MS")'
+});
+
+export const text = style({
+  fontFamily: 'MyGlobalFont'
 });
 ```
 

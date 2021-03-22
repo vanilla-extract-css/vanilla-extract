@@ -7,11 +7,13 @@ import mapKeys from 'lodash/mapKeys';
 
 import type {
   CSS,
+  CSSStyleBlock,
   CSSProperties,
   FeatureQueries,
   MediaQueries,
   StyleRule,
   StyleWithSelectors,
+  GlobalFontFaceRule,
 } from './types';
 import { validateSelector } from './validateSelector';
 
@@ -120,11 +122,13 @@ interface CSSRule {
 class Stylesheet {
   rules: Array<CSSRule>;
   conditionalRules: Array<CSSRule>;
+  fontFaceRules: Array<GlobalFontFaceRule>;
   localClassNameRegex: RegExp | null;
 
   constructor(localClassNames: Array<string>) {
     this.rules = [];
     this.conditionalRules = [];
+    this.fontFaceRules = [];
     this.localClassNameRegex =
       localClassNames.length > 0
         ? RegExp(`(${localClassNames.join('|')})`, 'g')
@@ -132,6 +136,12 @@ class Stylesheet {
   }
 
   processCssObj(root: CSS) {
+    if (root.type === 'fontFace') {
+      this.fontFaceRules.push(root.rule);
+
+      return;
+    }
+
     // Add main styles
     const mainRule = omit(root.rule, specialKeys);
     this.addRule({
@@ -227,7 +237,7 @@ class Stylesheet {
   }
 
   transformSelectors(
-    root: CSS,
+    root: CSSStyleBlock,
     rule: StyleWithSelectors,
     conditions?: Array<string>,
   ) {
@@ -250,7 +260,7 @@ class Stylesheet {
   }
 
   transformMedia(
-    root: CSS,
+    root: CSSStyleBlock,
     rules:
       | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
       | undefined,
@@ -272,7 +282,7 @@ class Stylesheet {
   }
 
   transformSupports(
-    root: CSS,
+    root: CSSStyleBlock,
     rules:
       | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
       | undefined,
@@ -294,7 +304,7 @@ class Stylesheet {
   }
 
   transformSimplePsuedos(
-    root: CSS,
+    root: CSSStyleBlock,
     rule: StyleRule,
     conditions?: Array<string>,
   ) {
@@ -316,6 +326,10 @@ class Stylesheet {
 
   toPostcssJs() {
     const styles: any = {};
+
+    if (this.fontFaceRules.length > 0) {
+      styles['@font-face'] = this.fontFaceRules;
+    }
 
     for (const rule of [...this.rules, ...this.conditionalRules]) {
       if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {

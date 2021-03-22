@@ -1,4 +1,4 @@
-import type { PropertiesFallback } from 'csstype';
+import type { PropertiesFallback, AtRule } from 'csstype';
 
 import type { SimplePseudos } from './transformCSS';
 
@@ -47,11 +47,22 @@ export type GlobalStyleRule = CSSProperties &
   MediaQueries<CSSProperties & FeatureQueries<CSSProperties>> &
   FeatureQueries<CSSProperties & MediaQueries<CSSProperties>>;
 
-export interface CSS {
+export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
+  Required<Pick<AtRule.FontFaceFallback, 'src'>>;
+export type FontFaceRule = Omit<GlobalFontFaceRule, 'fontFamily'>;
+
+export type CSSStyleBlock = {
   type: 'local' | 'global';
   selector: string;
   rule: StyleRule;
-}
+};
+
+export type CSSFontFaceBlock = {
+  type: 'fontFace';
+  rule: GlobalFontFaceRule;
+};
+
+export type CSS = CSSStyleBlock | CSSFontFaceBlock;
 
 export interface Adapter {
   appendCss: (css: CSS, fileScope: string) => void;

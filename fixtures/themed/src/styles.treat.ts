@@ -3,9 +3,19 @@ import {
   mapToStyles,
   createVar,
   fallbackVar,
+  fontFace,
+  globalFontFace,
 } from '@mattsjones/css-core';
 import { shadow } from './shared.treat';
 import { vars, theme, altTheme } from './themes.treat';
+
+const impact = fontFace({
+  src: 'local("Impact")',
+});
+
+globalFontFace('MyGlobalComicSans', {
+  src: 'local("Comic Sans MS")',
+});
 
 export const container = style({
   display: 'flex',
@@ -21,6 +31,7 @@ export const container = style({
 
 export const button = [
   style({
+    fontFamily: impact,
     backgroundColor: fallbackVar(
       vars.colors.backgroundColor,
       '"THIS FALLBACK VALUE SHOULD NEVER BE USED"',
@@ -33,6 +44,7 @@ export const button = [
     },
     selectors: {
       [`${altTheme} ${theme} ${container} &`]: {
+        fontFamily: 'MyGlobalComicSans',
         outline: '5px solid red',
       },
     },
