@@ -11,7 +11,7 @@
   "files": [
     "/dist"
   ],
-  "author": "Matt Jones",
+  "author": "SEEK",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.13.10",

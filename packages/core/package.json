@@ -21,7 +21,7 @@
     "/transformCss",
     "/fileScope"
   ],
-  "author": "Matt Jones",
+  "author": "SEEK",
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",

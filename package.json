@@ -2,7 +2,7 @@
   "name": "treat-next",
   "version": "1.0.0",
   "private": true,
-  "author": "Matt Jones",
+  "author": "SEEK",
   "license": "MIT",
   "scripts": {
     "dev": "preconstruct dev",
