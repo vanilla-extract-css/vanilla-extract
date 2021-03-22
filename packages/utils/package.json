@@ -12,7 +12,5 @@
     "/dist"
   ],
   "author": "Matt Jones",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "license": "MIT"
 }

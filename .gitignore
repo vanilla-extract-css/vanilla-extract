@@ -3,3 +3,11 @@ dist
 tsconfig.tsbuildinfo
 yarn-error.log
 treat-file-within
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

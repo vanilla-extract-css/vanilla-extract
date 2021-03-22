@@ -11,7 +11,7 @@
     "start": "yarn start-fixture themed",
     "postinstall": "yarn dev",
     "test": "jest",
-    "lint": "manypkg check && tsc",
+    "lint": "manypkg check && yarn tsc",
     "version": "yarn lint && yarn test && yarn build && changeset version",
     "release": "changeset publish"
   },
@@ -30,7 +30,7 @@
     "yarn": "1.22.10"
   },
   "dependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
