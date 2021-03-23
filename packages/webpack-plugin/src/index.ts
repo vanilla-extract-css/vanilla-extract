@@ -29,17 +29,27 @@ export class TreatPlugin {
       this.childCompiler.clearCache();
     });
 
-    compiler.options.module?.rules.splice(0, 0, {
-      test: this.test,
-      use: [
-        {
-          loader: require.resolve('@mattsjones/css-webpack-plugin/loader'),
-          options: {
-            outputCss: this.outputCss,
-            childCompiler: this.childCompiler,
+    compiler.options.module?.rules.splice(
+      0,
+      0,
+      {
+        test: this.test,
+        use: [
+          {
+            loader: require.resolve('@mattsjones/css-webpack-plugin/loader'),
+            options: {
+              outputCss: this.outputCss,
+              childCompiler: this.childCompiler,
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+      {
+        test: /\.vanilla\.css$/,
+        use: [
+          require.resolve('@mattsjones/css-webpack-plugin/validate-loader'),
+        ],
+      },
+    );
   }
 }

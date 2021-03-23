@@ -106,9 +106,7 @@ async function processSource(
     const cssFileName = `${fileScope}.vanilla.css`;
     const absoluteFileScope = path.join(loader.rootContext, fileScope);
 
-    const cssRequest = `${cssFileName}!=!${require.resolve(
-      '@mattsjones/css-webpack-plugin/validate-loader',
-    )}!${virtualResourceLoader}!${absoluteFileScope}`;
+    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!${absoluteFileScope}`;
 
     log('Add CSS request %s', cssRequest);
 
