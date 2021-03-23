@@ -492,6 +492,8 @@ export const exampleStyle = style({
 
 Allows you to set an entire collection of CSS Variables anywhere within a style block.
 
+> 💡 This is useful for creating responsive themes since it can be used within an `@media` block.
+
 ```ts
 import { style, assignVars } from '@mattsjones/css-core';
 import { themeVars } from './vars.css.ts';
