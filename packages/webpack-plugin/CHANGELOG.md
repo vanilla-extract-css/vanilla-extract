@@ -1,5 +1,11 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.12
+
+### Patch Changes
+
+- 3b83142: Move validate loader setup to plugin
+
 ## 0.0.11
 
 ### Patch Changes
