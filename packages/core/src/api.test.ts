@@ -8,8 +8,8 @@ describe('fallbackVar', () => {
   });
 
   it('supports a single numeric fallback', () => {
-    expect(fallbackVar('var(--foo-bar)', 10)).toMatchInlineSnapshot(
-      `"var(--foo-bar, 10)"`,
+    expect(fallbackVar('var(--foo-bar)', '10px')).toMatchInlineSnapshot(
+      `"var(--foo-bar, 10px)"`,
     );
   });
 
@@ -27,8 +27,8 @@ describe('fallbackVar', () => {
 
   it('supports multiple fallbacks resolving to a number', () => {
     expect(
-      fallbackVar('var(--foo)', 'var(--bar)', 'var(--baz)', 10),
-    ).toMatchInlineSnapshot(`"var(--foo, var(--bar, var(--baz, 10)))"`);
+      fallbackVar('var(--foo)', 'var(--bar)', 'var(--baz)', '10px'),
+    ).toMatchInlineSnapshot(`"var(--foo, var(--bar, var(--baz, 10px)))"`);
   });
 
   it('supports multiple fallbacks resolving to a var', () => {
@@ -46,11 +46,11 @@ describe('fallbackVar', () => {
 
   it('should throw with invalid vars', () => {
     expect(() => {
-      fallbackVar('INVALID', 10);
+      fallbackVar('INVALID', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
 
     expect(() => {
-      fallbackVar('INVALID1', 'INVALID2', 10);
+      fallbackVar('INVALID1', 'INVALID2', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID2"`);
 
     expect(() => {
@@ -59,11 +59,11 @@ describe('fallbackVar', () => {
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: 10"`);
 
     expect(() => {
-      fallbackVar('var(--foo-bar)', 'INVALID', 10);
+      fallbackVar('var(--foo-bar)', 'INVALID', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
 
     expect(() => {
-      fallbackVar('INVALID', 'var(--foo-bar)', 10);
+      fallbackVar('INVALID', 'var(--foo-bar)', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
   });
 });

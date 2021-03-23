@@ -8,6 +8,8 @@ import type {
   FontFaceRule,
   CSSKeyframes,
   MapLeafNodes,
+  Tokens,
+  Contract,
 } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
@@ -54,7 +56,7 @@ export function createVar(debugId?: string) {
   return `var(--${cssVarName})`;
 }
 
-export function fallbackVar(...values: [...Array<string>, string | number]) {
+export function fallbackVar(...values: [...Array<string>, string]) {
   let finalValue = '';
 
   values.reverse().forEach((value) => {
@@ -165,9 +167,12 @@ export function mapToStyles(...args: any[]) {
   return classMap;
 }
 
-type ThemeVars<ThemeContract> = MapLeafNodes<ThemeContract, string>;
+type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
+  ThemeContract,
+  string
+>;
 
-export function createThemeVars<ThemeContract>(
+export function createThemeVars<ThemeContract extends Contract>(
   themeContract: ThemeContract,
 ): ThemeVars<ThemeContract> {
   return walkObject(themeContract, (_value, path) => {
@@ -175,31 +180,31 @@ export function createThemeVars<ThemeContract>(
   });
 }
 
-export function assignVars<VarContract>(
+export function assignVars<VarContract extends Contract>(
   varContract: VarContract,
-  tokens: MapLeafNodes<VarContract, string | number>,
-): Record<string, string | number> {
-  const varSetters: { [cssVarName: string]: string | number } = {};
+  tokens: MapLeafNodes<VarContract, string>,
+): Record<string, string> {
+  const varSetters: { [cssVarName: string]: string } = {};
 
   /* TODO
     - validate new variables arn't set
     - validate arrays have the same length as contract
   */
   walkObject(tokens, (value, path) => {
-    varSetters[get(varContract, path)] = value;
+    varSetters[get(varContract, path)] = String(value);
   });
 
   return varSetters;
 }
 
-export function createGlobalTheme<ThemeContract>(
+export function createGlobalTheme<ThemeTokens extends Tokens>(
   selector: string,
-  tokens: ThemeContract,
-): ThemeVars<ThemeContract>;
-export function createGlobalTheme<ThemeContract>(
+  tokens: ThemeTokens,
+): ThemeVars<ThemeTokens>;
+export function createGlobalTheme<ThemeContract extends Contract>(
   selector: string,
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string | number>,
+  tokens: ThemeVars<ThemeContract>,
 ): void;
 export function createGlobalTheme(
   selector: string,
@@ -228,13 +233,13 @@ export function createGlobalTheme(
   }
 }
 
-export function createTheme<ThemeContract>(
-  tokens: ThemeContract,
+export function createTheme<ThemeTokens extends Tokens>(
+  tokens: ThemeTokens,
   debugId?: string,
-): [className: string, vars: ThemeVars<ThemeContract>];
-export function createTheme<ThemeContract>(
+): [className: string, vars: ThemeVars<ThemeTokens>];
+export function createTheme<ThemeContract extends Contract>(
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string | number>,
+  tokens: MapLeafNodes<ThemeContract, string>,
   debugId?: string,
 ): string;
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
@@ -252,9 +257,9 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
   return vars ? [themeClassName, vars] : themeClassName;
 }
 
-export function createInlineTheme<ThemeContract>(
+export function createInlineTheme<ThemeContract extends Contract>(
   themeVars: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string | number>,
+  tokens: MapLeafNodes<ThemeContract, string>,
 ) {
   const styles: { [cssVarName: string]: string } = {};
 

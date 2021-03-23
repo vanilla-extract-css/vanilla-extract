@@ -79,8 +79,8 @@ const undefinedVar2 = createVar();
 
 export const opacity = mapToStyles(
   {
-    '1/2': fallbackVar(undefinedVar1, 0.5),
-    '1/4': fallbackVar(undefinedVar1, undefinedVar2, 0.25),
+    '1/2': fallbackVar(undefinedVar1, '0.5'),
+    '1/4': fallbackVar(undefinedVar1, undefinedVar2, '0.25'),
   },
   (value) => ({ opacity: value }),
 );

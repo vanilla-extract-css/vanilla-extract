@@ -10,7 +10,7 @@ export interface CSSKeyframes {
 
 export type CSSProperties = BasicCSSProperties & {
   vars?: {
-    [key: string]: string | number;
+    [key: string]: string;
   };
 };
 
@@ -74,6 +74,14 @@ export interface Adapter {
   registerClassName: (className: string) => void;
   onEndFileScope: (fileScope: string) => void;
 }
+
+export type Contract = {
+  [key: string]: string | null | Contract;
+};
+
+export type Tokens = {
+  [key: string]: string | Tokens;
+};
 
 export type MapLeafNodes<Obj, LeafType> = {
   [Prop in keyof Obj]: Obj[Prop] extends Record<string | number, any>

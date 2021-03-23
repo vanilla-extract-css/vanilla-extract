@@ -819,8 +819,8 @@ describe('transformCss', () => {
               paddingTop: 10,
               lineHeight: 20,
               vars: {
-                '--my-var': 12,
-                [testVar]: 24,
+                '--my-var': '12',
+                [testVar]: '24',
               },
             },
           },
