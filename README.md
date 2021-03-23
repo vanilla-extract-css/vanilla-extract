@@ -182,7 +182,7 @@ export const className = style({
     color: 'red'
   },
   selectors: {
-    '&:nth-child(2)': {
+    '&:nth-child(2n)': {
       background: '#fafafa'
     }
   },
@@ -196,6 +196,22 @@ export const className = style({
       display: 'grid'
     }
   }
+});
+```
+
+Selectors can also contain references to other scoped class names.
+
+```ts
+import { style } from '@mattsjones/css-core';
+
+export const parentClass = style({});
+
+export const childClass = style({
+  selectors: {
+    [`${parentClass}:focus &`]: {
+      background: '#fafafa'
+    }
+  },
 });
 ```
 
@@ -315,7 +331,7 @@ export const themeB = createTheme(themeVars, {
 
 ### fontFace
 
-Creates a custom font atached to a locally scoped font name.
+Creates a custom font attached to a locally scoped font name.
 
 ```ts
 import { fontFace, style } from '@mattsjones/css-core';
