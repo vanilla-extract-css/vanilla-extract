@@ -63,17 +63,20 @@ export const startFixture = (
     const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
-      plugins:
-        type !== 'browser'
-          ? [
-              new TreatPlugin({
-                outputLoaders:
-                  type === 'mini-css-extract'
-                    ? [MiniCssExtractPlugin.loader]
-                    : undefined,
-              }),
-            ]
-          : undefined,
+      module: {
+        rules: [
+          {
+            test: /\.css$/i,
+            use: [
+              type === 'mini-css-extract'
+                ? MiniCssExtractPlugin.loader
+                : 'style-loader',
+              'css-loader',
+            ],
+          },
+        ],
+      },
+      plugins: type !== 'browser' ? [new TreatPlugin()] : undefined,
     });
     const compiler = webpack(config);
 

@@ -8,8 +8,8 @@ import {
   keyframes,
   globalKeyframes,
 } from '@mattsjones/css-core';
-import { shadow } from './shared.treat';
-import { vars, theme, altTheme } from './themes.treat';
+import { shadow } from './shared.css';
+import { vars, theme, altTheme } from './themes.css';
 
 const impact = fontFace({
   src: 'local("Impact")',

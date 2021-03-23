@@ -113,19 +113,42 @@ $ yarn add --dev @mattsjones/css-core @mattsjones/css-babel-plugin @mattsjones/c
 3. Add the [webpack](https://webpack.js.org) plugin.
 
 ```js
-const {
-  TreatPlugin
-} = require('@mattsjones/css-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { TreatPlugin } = require('@mattsjones/css-webpack-plugin');
 
 module.exports = {
-  plugins: [
-    new TreatPlugin({
-      outputLoaders: [MiniCssExtractPlugin.loader]
-    })
-  ]
+  plugins: [new TreatPlugin()],
 };
 ```
+
+<details>
+  <summary>You'll need to ensure you're handling CSS files in your webpack config.</summary>
+
+  <br/>
+  For example:
+  
+  ```js
+  const { TreatPlugin } = require('@mattsjones/css-webpack-plugin');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+  module.exports = {
+    plugins: [
+      new TreatPlugin(),
+      new MiniCssExtractPlugin()
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.css$/i,
+          use: [
+            MiniCssExtractPlugin.loader
+            'css-loader',
+          ],
+        },
+      ],
+    },
+  };
+  ```
+</details>
 
 ---
 

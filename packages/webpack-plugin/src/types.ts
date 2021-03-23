@@ -10,6 +10,8 @@ export interface LoaderContext {
   rootContext: string;
   async: () => (err: unknown, result?: string) => void;
   hot: boolean;
+  loaders: any[];
+  emitError: (error: Error) => void;
   _compiler: Compiler;
   _compilation: Compilation;
 }

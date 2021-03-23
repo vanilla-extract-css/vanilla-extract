@@ -1,8 +1,8 @@
 import { createInlineTheme } from '@mattsjones/css-core';
 
-import { theme, altTheme, responsiveTheme, vars } from './themes.treat';
-import { button, container, opacity } from './styles.treat';
-import { shadow } from './shared.treat';
+import { theme, altTheme, responsiveTheme, vars } from './themes.css';
+import { button, container, opacity } from './styles.css';
+import { shadow } from './shared.css';
 import testNodes from '../test-nodes.json';
 
 const inlineTheme = createInlineTheme(vars, {

@@ -6,6 +6,7 @@ import evalCode from 'eval';
 import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
+import dedent from 'dedent';
 import type { Adapter } from '@mattsjones/css-core';
 import { setAdapter } from '@mattsjones/css-core/adapter';
 import { transformCss } from '@mattsjones/css-core/transformCss';
@@ -99,13 +100,15 @@ async function processSource(
     const base64 = Buffer.from(css, 'utf-8').toString('base64');
 
     const virtualResourceLoader = stringifyLoaderRequest({
-      loader: 'virtual-resource-loader',
+      loader: require.resolve('virtual-resource-loader'),
       options: { source: base64 },
     });
-    const cssFileName = `${fileScope}.treatcss`;
+    const cssFileName = `${fileScope}.vanilla.css`;
     const absoluteFileScope = path.join(loader.rootContext, fileScope);
 
-    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!${absoluteFileScope}`;
+    const cssRequest = `${cssFileName}!=!${require.resolve(
+      '@mattsjones/css-webpack-plugin/validate-loader',
+    )}!${virtualResourceLoader}!${absoluteFileScope}`;
 
     log('Add CSS request %s', cssRequest);
 
@@ -185,14 +188,11 @@ const stringifyExports = (value: any) =>
         return next(value);
       }
 
-      // TODO handle incorrect function exports, maybe allowlist our API
-      next(null);
+      throw new Error(dedent`
+        Invalid exports.
 
-      // throw new Error(dedent`
-      //   Invalid treat file exports.
-
-      //   You can only export plain objects, arrays, strings, numbers and null/undefined from a treat file.
-      // `);
+        You can only export plain objects, arrays, strings, numbers and null/undefined.
+      `);
     },
     0,
     {

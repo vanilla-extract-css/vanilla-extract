@@ -1,0 +1,4 @@
+{
+  "main": "dist/mattsjones-css-webpack-plugin-validate-loader.cjs.js",
+  "module": "dist/mattsjones-css-webpack-plugin-validate-loader.esm.js"
+}
