@@ -1,5 +1,11 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.13
+
+### Patch Changes
+
+- 261007e: Remove validate-loader
+
 ## 0.0.12
 
 ### Patch Changes
