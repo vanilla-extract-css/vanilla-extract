@@ -1,6 +1,7 @@
 {
   "name": "@mattsjones/css-utils",
   "version": "0.0.4",
+  "sideEffects": false,
   "main": "dist/mattsjones-css-utils.cjs.js",
   "module": "dist/mattsjones-css-utils.esm.js",
   "preconstruct": {

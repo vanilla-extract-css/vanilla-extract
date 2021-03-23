@@ -1,6 +1,7 @@
 {
   "name": "@mattsjones/css-core",
   "version": "0.0.14",
+  "sideEffects": false,
   "main": "dist/mattsjones-css-core.cjs.js",
   "module": "dist/mattsjones-css-core.esm.js",
   "browser": {
