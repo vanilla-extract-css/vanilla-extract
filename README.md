@@ -2,9 +2,9 @@
 
 **Zero-runtime Stylesheets-in-TypeScript.**
 
-Write your styles in TypeScript (or JavaScript) with local scoping of class names and CSS Variables, then generate purely static CSS files at build time.
+Write your styles in TypeScript (or JS) with locally scoped class names and CSS Variables, then generate static CSS files at build time.
 
-Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-in-TypeScript” but with scoped CSS Variables + more.
+Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-in-TypeScript” but with scoped CSS Variables + heaps more.
 
 ---
 
@@ -14,15 +14,17 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 🔥 &nbsp; All styles generated at build time — just like [Sass](https://sass-lang.com), [Less](http://lesscss.org), etc.
 
-✨ &nbsp; Minimal abstraction over standard CSS. All CSS features are available.
+✨ &nbsp; Minimal abstraction over standard CSS.
 
 🌳 &nbsp; Locally scoped class names — just like [CSS Modules.](https://github.com/css-modules/css-modules)
 
-🛠 &nbsp; Locally scoped custom property names, i.e. [CSS Variables.](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+🚀 &nbsp; Locally scoped [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), `@keyframes` and `@font-face` rules.
 
 🎨 &nbsp; High-level theme system with support for simultaneous themes. No globals!
 
-💪 &nbsp; Type-safe styles thanks to [CSSType.](https://github.com/frenic/csstype)
+🛠 &nbsp; Utils for generating variable-based `calc` expressions.
+
+💪 &nbsp; Type-safe styles via [CSSType.](https://github.com/frenic/csstype)
 
 🏃‍♂️ &nbsp; Optional runtime version for development and testing.
 
@@ -52,7 +54,7 @@ export const exampleStyle = style({
 });
 ```
 
-> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor.
+> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
 
 **Then consume them in your markup.**
 
@@ -75,8 +77,8 @@ document.write(`
   - [style](#style)
   - [globalStyle](#globalstyle)
   - [createTheme](#createtheme)
-  - [createThemeVars](#createthemevars)
   - [createGlobalTheme](#createglobaltheme)
+  - [createThemeVars](#createthemevars)
   - [fontFace](#fontface)
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
@@ -156,7 +158,7 @@ module.exports = {
 
 ### style
 
-Create individual style rules.
+Creates styles attached to a locally scoped class name.
 
 ```ts
 import { style } from '@mattsjones/css-core';
@@ -199,7 +201,7 @@ export const className = style({
 
 ### globalStyle
 
-Creates globally scoped styles attached to a selector.
+Creates styles attached to a global selector.
 
 ```ts
 import { globalStyle } from '@mattsjones/css-core';
@@ -226,7 +228,7 @@ export const [themeClass, themeVars] = createTheme({
 });
 ```
 
-You can create theme variants by passing a variables object as the first argument to `createTheme`.
+You can create theme variants by passing a collection of theme variables as the first argument to `createTheme`.
 
 ```ts
 import { createTheme, style } from '@mattsjones/css-core';
@@ -246,6 +248,25 @@ export const themeB = createTheme(themeVars, {
   },
   font: {
     body: 'comic sans ms'
+  }
+});
+```
+
+> 💡 All theme variants must provide a value for every variable or it’s a type error.
+
+### createGlobalTheme
+
+Creates a theme attached to a global selector, but with locally scoped variable names.
+
+```ts
+import { createGlobalTheme } from '@mattsjones/css-core';
+
+export const themeVars = createGlobalTheme(':root', {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
   }
 });
 ```
@@ -292,28 +313,9 @@ export const themeB = createTheme(themeVars, {
 });
 ```
 
-> 💡 All theme variants must provide a value for every variable or it’s a type error.
-
-### createGlobalTheme
-
-Creates a globally scoped theme, but with locally scoped variable names.
-
-```ts
-import { createGlobalTheme } from '@mattsjones/css-core';
-
-export const themeVars = createGlobalTheme(':root', {
-  color: {
-    brand: 'blue'
-  },
-  font: {
-    body: 'arial'
-  }
-});
-```
-
 ### fontFace
 
-Creates a locally scoped custom font.
+Creates a custom font atached to a locally scoped font name.
 
 ```ts
 import { fontFace, style } from '@mattsjones/css-core';
