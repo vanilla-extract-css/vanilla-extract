@@ -1,5 +1,18 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.11
+
+### Patch Changes
+
+- e3abd5c: Remove `outputLoaders` in favour of consumers webpack config targetting '.css' files
+- bad1361: Remove PostCSS from core
+- Updated dependencies [3d39457]
+- Updated dependencies [9b1bf7e]
+- Updated dependencies [08c2b1f]
+- Updated dependencies [bad1361]
+- Updated dependencies [4360915]
+  - @mattsjones/css-core@0.0.14
+
 ## 0.0.10
 
 ### Patch Changes

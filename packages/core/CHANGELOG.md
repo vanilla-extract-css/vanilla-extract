@@ -1,5 +1,15 @@
 # @mattsjones/css-core
 
+## 0.0.14
+
+### Patch Changes
+
+- 3d39457: Remove lodash from core
+- 9b1bf7e: Add 'keyframes' and 'globalKeyframes' functions
+- 08c2b1f: Add 'fontFace' and 'globalFontFace' functions
+- bad1361: Remove PostCSS from core
+- 4360915: Add 'fallbackVar' function
+
 ## 0.0.13
 
 ### Patch Changes
