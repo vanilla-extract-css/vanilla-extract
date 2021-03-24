@@ -1,5 +1,16 @@
 # @mattsjones/css-webpack-plugin
 
+## 0.0.14
+
+### Patch Changes
+
+- 0c086b1: Detect unwanted use of the runtime
+- Updated dependencies [71d9595]
+- Updated dependencies [863419c]
+- Updated dependencies [87525d9]
+- Updated dependencies [bcfb7b0]
+  - @mattsjones/css-core@0.0.15
+
 ## 0.0.13
 
 ### Patch Changes

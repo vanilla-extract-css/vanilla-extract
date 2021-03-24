@@ -1,5 +1,11 @@
 # @mattsjones/css-utils
 
+## 0.0.5
+
+### Patch Changes
+
+- 863419c: Mark utils and core as sideEffect free
+
 ## 0.0.4
 
 ### Patch Changes

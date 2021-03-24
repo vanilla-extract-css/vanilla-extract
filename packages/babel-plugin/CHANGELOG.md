@@ -1,5 +1,11 @@
 # @mattsjones/css-babel-plugin
 
+## 0.0.7
+
+### Patch Changes
+
+- bf2f380: Add debug ID to `createVar` calls, detect global style calls
+
 ## 0.0.6
 
 ### Patch Changes

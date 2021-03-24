@@ -1,5 +1,14 @@
 # @mattsjones/css-core
 
+## 0.0.15
+
+### Patch Changes
+
+- 71d9595: Prevent new styles from being registered dynamically after initial boot to ensure that styles are statically extractible
+- 863419c: Mark utils and core as sideEffect free
+- 87525d9: Expose `createInlineTheme` as a separate entrypoint
+- bcfb7b0: Ensure CSS variables are always strings
+
 ## 0.0.14
 
 ### Patch Changes
