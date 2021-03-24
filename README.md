@@ -88,7 +88,7 @@ document.write(`
   - [createVar](#createvar)
   - [fallbackVar](#fallbackvar)
   - [assignVars](#assignvars)
-  - [inlineTheme](#inlinetheme)
+  - [createInlineTheme](#createinlinetheme)
 - [Utility functions](#utility-functions)
   - [calc](#calc)
 - [Thanks](#thanks)
