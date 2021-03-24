@@ -2,8 +2,7 @@ import { onEndFileScope } from './adapter';
 
 let refCounter = 0;
 
-const defaultFileScope = 'DEFAULT_FILE_SCOPE';
-const fileScopes = [defaultFileScope];
+const fileScopes: Array<string> = [];
 
 export function setFileScope(newFileScope: string) {
   refCounter = 0;
@@ -17,6 +16,12 @@ export function endFileScope() {
 }
 
 export function getFileScope() {
+  if (fileScopes.length === 0) {
+    throw new Error(
+      'New styles cannot be registered dynamically after initial boot. This is to ensure that styles are statically extractible.',
+    );
+  }
+
   return fileScopes[0];
 }
 

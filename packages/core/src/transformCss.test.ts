@@ -1,6 +1,11 @@
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
 
+import { setFileScope, endFileScope } from './fileScope';
+setFileScope('test');
+
+const testVar = createVar();
+
 describe('transformCss', () => {
   it('should escape class names', () => {
     expect(
@@ -746,8 +751,6 @@ describe('transformCss', () => {
   });
 
   it('should handle css vars', () => {
-    const testVar = createVar();
-
     expect(
       transformCss({
         localClassNames: ['testClass'],
@@ -784,19 +787,19 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass {
         --my-var: red;
-        --_17rw2mr0: green;
+        --skkcyc0: green;
         display: block;
       }
 
       .testClass:nth-child(3) {
         --my-var: orange;
-        --_17rw2mr0: black;
+        --skkcyc0: black;
       }
 
       @media screen and (min-width: 700px) {
         .testClass {
           --my-var: yellow;
-          --_17rw2mr0: blue;
+          --skkcyc0: blue;
         }
 
       }
@@ -805,8 +808,6 @@ describe('transformCss', () => {
   });
 
   it('should cast property values to pixels when relevant', () => {
-    const testVar = createVar();
-
     expect(
       transformCss({
         localClassNames: ['testClass'],
@@ -829,7 +830,7 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass {
         --my-var: 12;
-        --_17rw2mr1: 24;
+        --skkcyc0: 24;
         display: block;
         padding-top: 10px;
         line-height: 20;
@@ -928,3 +929,5 @@ describe('transformCss', () => {
     );
   });
 });
+
+endFileScope();
