@@ -88,3 +88,8 @@ export type MapLeafNodes<Obj, LeafType> = {
     ? MapLeafNodes<Obj[Prop], LeafType>
     : LeafType;
 };
+
+export type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
+  ThemeContract,
+  string
+>;

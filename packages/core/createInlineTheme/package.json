@@ -1,0 +1,9 @@
+{
+  "main": "dist/mattsjones-css-core-createInlineTheme.cjs.js",
+  "module": "dist/mattsjones-css-core-createInlineTheme.esm.js",
+  "browser": {
+    "./dist/mattsjones-css-core-createInlineTheme.cjs.js": "./dist/mattsjones-css-core-createInlineTheme.browser.cjs.js",
+    "./dist/mattsjones-css-core-createInlineTheme.esm.js": "./dist/mattsjones-css-core-createInlineTheme.browser.esm.js"
+  },
+  "sideEffects": false
+}

@@ -1,7 +1,7 @@
 {
   "name": "@mattsjones/css-core",
   "version": "0.0.14",
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "dist/mattsjones-css-core.cjs.js",
   "module": "dist/mattsjones-css-core.esm.js",
   "browser": {
@@ -13,14 +13,16 @@
       "index.ts",
       "adapter.ts",
       "transformCss.ts",
-      "fileScope.ts"
+      "fileScope.ts",
+      "createInlineTheme.ts"
     ]
   },
   "files": [
     "/dist",
     "/adapter",
     "/transformCss",
-    "/fileScope"
+    "/fileScope",
+    "/createInlineTheme"
   ],
   "author": "SEEK",
   "license": "MIT",

@@ -1,4 +1,4 @@
-import { createInlineTheme } from '@mattsjones/css-core';
+import { createInlineTheme } from '@mattsjones/css-core/createInlineTheme';
 
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';

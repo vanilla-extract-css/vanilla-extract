@@ -1,4 +1,4 @@
-import { createVar } from './api';
+import { createVar } from './vars';
 import { transformCss } from './transformCss';
 
 describe('transformCss', () => {

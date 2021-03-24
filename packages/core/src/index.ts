@@ -1,9 +1,7 @@
-import { browserRuntimeAdapter } from './runtimeAdapter';
-import { setAdapter } from './adapter';
-
-if (typeof window !== 'undefined') {
-  setAdapter(browserRuntimeAdapter);
-}
+import './runtimeAdapter';
 
 export type { StyleRule, GlobalStyleRule, Adapter } from './types';
-export * from './api';
+export * from './identifier';
+export * from './theme';
+export * from './style';
+export * from './vars';

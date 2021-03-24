@@ -1,5 +1,6 @@
 import type { Adapter, CSS } from './types';
 import { transformCss } from './transformCSS';
+import { setAdapter } from './adapter';
 
 let styleSheet: CSSStyleSheet | null;
 const localClassNames = new Set<string>();
@@ -20,7 +21,7 @@ function getStylesheet() {
   return styleSheet;
 }
 
-export const browserRuntimeAdapter: Adapter = {
+const browserRuntimeAdapter: Adapter = {
   appendCss: (cssObj: CSS) => {
     bufferedCSSObjs.push(cssObj);
   },
@@ -45,3 +46,7 @@ export const browserRuntimeAdapter: Adapter = {
     bufferedCSSObjs = [];
   },
 };
+
+if (typeof window !== 'undefined') {
+  setAdapter(browserRuntimeAdapter);
+}

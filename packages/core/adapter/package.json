@@ -4,5 +4,6 @@
   "browser": {
     "./dist/mattsjones-css-core-adapter.cjs.js": "./dist/mattsjones-css-core-adapter.browser.cjs.js",
     "./dist/mattsjones-css-core-adapter.esm.js": "./dist/mattsjones-css-core-adapter.browser.esm.js"
-  }
+  },
+  "sideEffects": false
 }

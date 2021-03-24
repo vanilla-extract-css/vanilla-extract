@@ -518,15 +518,15 @@ export const exampleStyle = style({
 
 > 💡 All variables passed into this function must be assigned or it’s a type error.
 
-### inlineTheme
+### createInlineTheme
 
 Generates a custom theme at runtime as an inline style object.
 
 ```ts
-import { inlineTheme } from '@mattsjones/css-core';
+import { createInlineTheme } from '@mattsjones/css-core/createInlineTheme';
 import { themeVars, exampleStyle } from './styles.css.ts';
 
-const customTheme = inlineTheme(themeVars, {
+const customTheme = createInlineTheme(themeVars, {
   small: 4,
   medium: 8,
   large: 16

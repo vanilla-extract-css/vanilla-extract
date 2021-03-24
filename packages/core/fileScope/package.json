@@ -4,5 +4,6 @@
   "browser": {
     "./dist/mattsjones-css-core-fileScope.cjs.js": "./dist/mattsjones-css-core-fileScope.browser.cjs.js",
     "./dist/mattsjones-css-core-fileScope.esm.js": "./dist/mattsjones-css-core-fileScope.browser.esm.js"
-  }
+  },
+  "sideEffects": false
 }

@@ -1,4 +1,4 @@
-import { fallbackVar } from './api';
+import { fallbackVar } from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
