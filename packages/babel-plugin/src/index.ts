@@ -7,7 +7,7 @@ const buildSetFileScope = template(`
   setFileScope(%%fileScope%%)
 `);
 
-const exportConfig = {
+const debuggableFunctionConfig = {
   style: {
     maxParams: 2,
   },
@@ -23,9 +23,23 @@ const exportConfig = {
   keyframes: {
     maxParams: 2,
   },
+  createVar: {
+    maxParams: 1,
+  },
 };
-type RelevantExport = keyof typeof exportConfig;
-const relevantExports = Object.keys(exportConfig) as Array<RelevantExport>;
+
+const styleFunctions = [
+  ...(Object.keys(debuggableFunctionConfig) as Array<
+    keyof typeof debuggableFunctionConfig
+  >),
+  'globalStyle',
+  'createGlobalTheme',
+  'createThemeVars',
+  'globalFontFace',
+  'globalKeyframes',
+];
+
+type StyleFunction = typeof styleFunctions[number];
 
 const extractName = (node: t.Node) => {
   if (t.isObjectProperty(node) && t.isIdentifier(node.key)) {
@@ -76,7 +90,7 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
 const getRelevantCall = (
   node: t.CallExpression,
   namespaceImport: string,
-  importIdentifiers: Map<string, RelevantExport>,
+  importIdentifiers: Map<string, StyleFunction>,
 ) => {
   const { callee } = node;
 
@@ -85,7 +99,7 @@ const getRelevantCall = (
     t.isMemberExpression(callee) &&
     t.isIdentifier(callee.object, { name: namespaceImport })
   ) {
-    return relevantExports.find((exportName) =>
+    return styleFunctions.find((exportName) =>
       t.isIdentifier(callee.property, { name: exportName }),
     );
   } else {
@@ -106,7 +120,7 @@ interface PluginOptions {
 type Context = PluginPass & {
   opts?: PluginOptions;
   namespaceImport: string;
-  importIdentifiers: Map<string, RelevantExport>;
+  importIdentifiers: Map<string, StyleFunction>;
   packageIdentifier: string;
   fileScope: string;
 };
@@ -162,9 +176,9 @@ export default function (): PluginObj<Context> {
 
               const importName = (t.isIdentifier(imported)
                 ? imported.name
-                : imported.value) as RelevantExport;
+                : imported.value) as StyleFunction;
 
-              if (relevantExports.includes(importName)) {
+              if (styleFunctions.includes(importName)) {
                 this.importIdentifiers.set(local.name, importName);
               }
             }
@@ -180,8 +194,13 @@ export default function (): PluginObj<Context> {
           this.importIdentifiers,
         );
 
-        if (usedExport) {
-          if (node.arguments.length < exportConfig[usedExport].maxParams) {
+        if (usedExport && usedExport in debuggableFunctionConfig) {
+          if (
+            node.arguments.length <
+            debuggableFunctionConfig[
+              usedExport as keyof typeof debuggableFunctionConfig
+            ].maxParams
+          ) {
             const debugIdent = getDebugId(path);
 
             if (debugIdent) {

@@ -208,6 +208,40 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle globalStyle', () => {
+    const source = `
+      import { globalStyle } from '@mattsjones/css-core';
+
+      globalStyle('html, body', { margin: 0 });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { globalStyle } from '@mattsjones/css-core';
+      globalStyle('html, body', {
+        margin: 0
+      });
+      endFileScope()"
+    `);
+  });
+
+  it('should handle createVar assigned to const', () => {
+    const source = `
+      import { createVar } from '@mattsjones/css-core';
+
+      const myVar = createVar();
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { createVar } from '@mattsjones/css-core';
+      const myVar = createVar(\\"myVar\\");
+      endFileScope()"
+    `);
+  });
+
   it('should handle fontFace assigned to const', () => {
     const source = `
       import { fontFace } from '@mattsjones/css-core';
@@ -224,6 +258,26 @@ describe('babel plugin', () => {
       const myFont = fontFace({
         src: 'local(\\"Comic Sans MS\\")'
       }, \\"myFont\\");
+      endFileScope()"
+    `);
+  });
+
+  it('should handle globalFontFace', () => {
+    const source = `
+      import { globalFontFace } from '@mattsjones/css-core';
+
+      globalFontFace('myFont', {
+        src: 'local("Comic Sans MS")',
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { globalFontFace } from '@mattsjones/css-core';
+      globalFontFace('myFont', {
+        src: 'local(\\"Comic Sans MS\\")'
+      });
       endFileScope()"
     `);
   });
@@ -250,6 +304,32 @@ describe('babel plugin', () => {
           transform: 'rotate(360deg)'
         }
       }, \\"myAnimation\\");
+      endFileScope()"
+    `);
+  });
+
+  it('should handle global keyframes', () => {
+    const source = `
+      import { globalKeyframes } from '@mattsjones/css-core';
+
+      globalKeyframes('myKeyframes', {
+        from: { transform: 'rotate(0deg)' },
+        to: { transform: 'rotate(360deg)' }
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { globalKeyframes } from '@mattsjones/css-core';
+      globalKeyframes('myKeyframes', {
+        from: {
+          transform: 'rotate(0deg)'
+        },
+        to: {
+          transform: 'rotate(360deg)'
+        }
+      });
       endFileScope()"
     `);
   });
@@ -282,6 +362,44 @@ describe('babel plugin', () => {
       setFileScope(\\"dir/mockFilename.treat.ts\\");
       import { createTheme } from '@mattsjones/css-core';
       const [theme, vars] = createTheme({}, {}, \\"theme\\");
+      endFileScope()"
+    `);
+  });
+
+  it('should handle createGlobalTheme', () => {
+    const source = `
+      import { createGlobalTheme } from '@mattsjones/css-core';
+
+      const themeVars = createGlobalTheme(':root', { foo: 'bar' });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { createGlobalTheme } from '@mattsjones/css-core';
+      const themeVars = createGlobalTheme(':root', {
+        foo: 'bar'
+      });
+      endFileScope()"
+    `);
+  });
+
+  it('should handle createThemeVars', () => {
+    const source = `
+      import { createThemeVars } from '@mattsjones/css-core';
+
+      const themeVars = createThemeVars({
+        foo: 'bar'
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from \\"@mattsjones/css-core/fileScope\\";
+      setFileScope(\\"dir/mockFilename.treat.ts\\");
+      import { createThemeVars } from '@mattsjones/css-core';
+      const themeVars = createThemeVars({
+        foo: 'bar'
+      });
       endFileScope()"
     `);
   });
