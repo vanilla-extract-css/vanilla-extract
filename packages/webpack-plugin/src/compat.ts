@@ -1,4 +1,11 @@
-import { Compiler, ExternalsPlugin, node, optimize } from 'webpack';
+import {
+  Compiler,
+  ExternalsPlugin,
+  Compilation,
+  Module,
+  node,
+  optimize,
+} from 'webpack';
 
 interface WebpackCompat {
   isWebpack5: boolean;
@@ -8,6 +15,7 @@ interface WebpackCompat {
     compiler: Compiler,
   ) => typeof optimize.LimitChunkCountPlugin;
   getExternalsPlugin: (compiler: Compiler) => typeof ExternalsPlugin;
+  isModuleUsed: (compilation: Compilation, module: Module) => boolean;
 }
 
 const webpack4: WebpackCompat = {
@@ -17,6 +25,8 @@ const webpack4: WebpackCompat = {
   getLimitChunkCountPlugin: () =>
     require('webpack/lib/optimize/LimitChunkCountPlugin'),
   getExternalsPlugin: () => require('webpack/lib/ExternalsPlugin'),
+  isModuleUsed: (_compilation, module) =>
+    typeof module.used === 'boolean' ? module.used : true,
 };
 
 const webpack5: WebpackCompat = {
@@ -26,6 +36,11 @@ const webpack5: WebpackCompat = {
   getLimitChunkCountPlugin: (compiler) =>
     compiler.webpack.optimize.LimitChunkCountPlugin,
   getExternalsPlugin: (compiler) => compiler.webpack.ExternalsPlugin,
+  isModuleUsed: (compilation, module) => {
+    const exportsInfo = compilation.moduleGraph.getExportsInfo(module);
+
+    return exportsInfo.isModuleUsed('main');
+  },
 };
 
 export default (isWebpack5: boolean): WebpackCompat => {

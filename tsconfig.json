@@ -15,7 +15,8 @@
     "incremental": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "downlevelIteration": true
   },
   "exclude": ["node_modules", "**/dist/**"],
   "include": [
