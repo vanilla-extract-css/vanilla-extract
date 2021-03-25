@@ -94,6 +94,42 @@ export class TreatPlugin {
       });
     }
 
+    compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
+      if (compat.isWebpack5) {
+        nmf.hooks.createModule.tap(
+          pluginName,
+          // @ts-expect-error CreateData is typed as 'object'...
+          (createData: {
+            matchResource?: string;
+            settings: { sideEffects?: boolean };
+          }) => {
+            if (
+              createData.matchResource &&
+              createData.matchResource.endsWith('.vanilla.css')
+            ) {
+              createData.settings.sideEffects = true;
+            }
+          },
+        );
+      } else {
+        nmf.hooks.afterResolve.tap(
+          pluginName,
+          // @ts-expect-error Can't be typesafe for webpack 4
+          (result: {
+            matchResource?: string;
+            settings: { sideEffects?: boolean };
+          }) => {
+            if (
+              result.matchResource &&
+              result.matchResource.endsWith('.vanilla.css')
+            ) {
+              result.settings.sideEffects = true;
+            }
+          },
+        );
+      }
+    });
+
     compiler.options.module?.rules.splice(0, 0, {
       test: this.test,
       use: [

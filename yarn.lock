@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@mattsjones/css-core": 0.0.15
+    "@mattsjones/css-core": 0.0.16
   languageName: unknown
   linkType: soft
 
@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@mattsjones/css-core": 0.0.15
+    "@mattsjones/css-core": 0.0.16
   languageName: unknown
   linkType: soft
 
@@ -1901,7 +1901,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mattsjones/css-core@0.0.15, @mattsjones/css-core@^0.0.15, @mattsjones/css-core@workspace:packages/core":
+"@mattsjones/css-core@0.0.16, @mattsjones/css-core@^0.0.16, @mattsjones/css-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@mattsjones/css-core@workspace:packages/core"
   dependencies:
@@ -1925,7 +1925,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mattsjones/css-webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
-    "@mattsjones/css-core": ^0.0.15
+    "@mattsjones/css-core": ^0.0.16
     "@types/debug": ^4.1.5
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
