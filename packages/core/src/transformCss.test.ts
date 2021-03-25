@@ -2,6 +2,7 @@ import { createVar } from './vars';
 import { transformCss } from './transformCss';
 
 import { setFileScope, endFileScope } from './fileScope';
+
 setFileScope('test');
 
 const testVar = createVar();
@@ -33,21 +34,16 @@ describe('transformCss', () => {
       ".test_1\\\\/2_className {
         color: red;
       }
-
       @media screen and (min-width: 700px) {
         .test_1\\\\/2_className {
           color: green;
         }
-
       }
-
       @media screen and (min-width: 1000px) {
         .test_1\\\\/2_className {
           color: purple;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -77,21 +73,73 @@ describe('transformCss', () => {
       ".testClass {
         color: red;
       }
-
       @media screen and (min-width: 700px) {
         .testClass {
           color: green;
         }
-
       }
-
       @media screen and (min-width: 1000px) {
         .testClass {
           color: purple;
         }
+      }"
+    `);
+  });
 
+  it('should handle media queries inside selectors', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'green',
+                },
+              },
+              selectors: {
+                'body &': {
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      color: 'green',
+                    },
+                    'screen and (min-width: 1000px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        color: red;
       }
-      "
+      @media screen and (min-width: 700px) {
+        .testClass {
+          color: yellow;
+        }
+        body .testClass {
+          color: green;
+        }
+      }
+      @media screen and (min-width: 1000px) {
+        .testClass {
+          color: green;
+        }
+        body .testClass {
+          color: purple;
+        }
+      }"
     `);
   });
 
@@ -117,8 +165,7 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass {
         color: red;
-      }
-      "
+      }"
     `);
   });
 
@@ -157,22 +204,17 @@ describe('transformCss', () => {
       ".testClass {
         color: green;
       }
-
       .otherClass {
         color: purple;
       }
-
       @media screen and (min-width: 700px) {
         .testClass {
           color: red;
         }
-
         .otherClass {
           color: red;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -197,11 +239,9 @@ describe('transformCss', () => {
       ".testClass {
         color: red;
       }
-
       .testClass:hover {
         color: blue;
-      }
-      "
+      }"
     `);
   });
 
@@ -227,13 +267,11 @@ describe('transformCss', () => {
         color: red;
         color: blue;
       }
-
       .testClass:hover {
         color: blue;
         color: red;
         color: yellow;
-      }
-      "
+      }"
     `);
   });
 
@@ -260,8 +298,7 @@ describe('transformCss', () => {
         --myCustomVar: 10px;
         background-color: green;
         -webkit-align-content: end;
-      }
-      "
+      }"
     `);
   });
 
@@ -291,13 +328,10 @@ describe('transformCss', () => {
         .testClass {
           color: red;
         }
-
         .testClass:hover {
           color: blue;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -331,23 +365,18 @@ describe('transformCss', () => {
       ".testClass {
         color: red;
       }
-
       .testClass:link {
         color: orange;
       }
-
       .testClass:visited {
         color: yellow;
       }
-
       .testClass:hover {
         color: green;
       }
-
       .testClass:active {
         color: blue;
-      }
-      "
+      }"
     `);
   });
 
@@ -380,19 +409,15 @@ describe('transformCss', () => {
       ".testClass {
         color: red;
       }
-
       .testClass:nth-child(3) {
         color: blue;
       }
-
       .parentClass > div > span ~ .testClass.someGlobalClass:hover {
         background: green;
       }
-
       .parentClass.testClass {
         background: black;
-      }
-      "
+      }"
     `);
   });
 
@@ -423,14 +448,11 @@ describe('transformCss', () => {
       ".testClass {
         color: red;
       }
-
       @media screen and (min-width: 700px) {
         .testClass:nth-child(3) {
           color: blue;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -457,14 +479,11 @@ describe('transformCss', () => {
       ".testClass {
         display: flex;
       }
-
       @supports (display: grid) {
         .testClass {
           display: grid;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -506,29 +525,22 @@ describe('transformCss', () => {
       ".testClass {
         display: flex;
       }
-
       @media screen and (min-width: 700px) {
         .testClass {
           color: green;
         }
-
         @supports (display: grid) {
           .testClass {
             border-color: blue;
             display: grid;
           }
-
         }
-
       }
-
       @supports (display: grid) {
         .testClass {
           background-color: yellow;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -555,14 +567,11 @@ describe('transformCss', () => {
       ".testClass {
         display: grid;
       }
-
       @supports not (display: grid) {
         .testClass {
           display: flex;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -590,13 +599,10 @@ describe('transformCss', () => {
         from {
           opacity: 0;
         }
-
         to {
           opacity: 1;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -616,8 +622,7 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       "@font-face {
         src: local(\\"Comic Sans MS\\");
-      }
-      "
+      }"
     `);
   });
 
@@ -647,12 +652,10 @@ describe('transformCss', () => {
         font-family: MyFont1;
         src: local(\\"Comic Sans MS\\");
       }
-
       @font-face {
         font-family: MyFont2;
         src: local(\\"Impact\\");
-      }
-      "
+      }"
     `);
   });
 
@@ -679,9 +682,7 @@ describe('transformCss', () => {
         .testClass {
           color: green;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -727,26 +728,20 @@ describe('transformCss', () => {
       ".testClass {
         color: hotpink;
       }
-
       .otherClass {
         color: indigo;
       }
-
       .otherOtherClass {
         color: lightcyan;
       }
-
       @media screen and (min-width: 700px) {
         .testClass {
           color: green;
         }
-
         .otherClass {
           color: red;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -790,20 +785,16 @@ describe('transformCss', () => {
         --skkcyc0: green;
         display: block;
       }
-
       .testClass:nth-child(3) {
         --my-var: orange;
         --skkcyc0: black;
       }
-
       @media screen and (min-width: 700px) {
         .testClass {
           --my-var: yellow;
           --skkcyc0: blue;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -834,8 +825,7 @@ describe('transformCss', () => {
         display: block;
         padding-top: 10px;
         line-height: 20;
-      }
-      "
+      }"
     `);
   });
 
@@ -867,21 +857,16 @@ describe('transformCss', () => {
       ".testClass > div {
         color: red;
       }
-
       @media screen and (min-width: 700px) {
         .testClass > div {
           color: blue;
         }
-
       }
-
       @supports not (display: grid) {
         .testClass > div {
           display: flex;
         }
-
-      }
-      "
+      }"
     `);
   });
 
@@ -894,6 +879,7 @@ describe('transformCss', () => {
             type: 'global',
             selector: 'div',
             rule: {
+              // @ts-expect-error
               ':hover': {
                 color: 'red',
               },
@@ -902,7 +888,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Simple pseudos are not valid in globalStyles"`,
+      `"Simple pseudos are not valid in \\"globalStyle\\""`,
     );
   });
 
@@ -915,6 +901,7 @@ describe('transformCss', () => {
             type: 'global',
             selector: 'div',
             rule: {
+              // @ts-expect-error
               selectors: {
                 '& > span': {
                   color: 'red',
@@ -925,7 +912,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Selectors are not allowed within globalStyle"`,
+      `"Selectors are not allowed within \\"globalStyle\\""`,
     );
   });
 });

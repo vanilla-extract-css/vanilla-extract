@@ -19,7 +19,9 @@ type PseudoProperties = { [key in SimplePseudos[number]]?: CSSProperties };
 type CSSPropertiesAndPseudos = CSSProperties & PseudoProperties;
 
 interface SelectorMap {
-  [selector: string]: CSSProperties;
+  [selector: string]: CSSProperties &
+    MediaQueries<CSSProperties & FeatureQueries<CSSProperties>> &
+    FeatureQueries<CSSProperties & MediaQueries<CSSProperties>>;
 }
 
 export interface MediaQueries<StyleType> {
@@ -51,7 +53,7 @@ export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
 export type FontFaceRule = Omit<GlobalFontFaceRule, 'fontFamily'>;
 
 export type CSSStyleBlock = {
-  type: 'local' | 'global';
+  type: 'local';
   selector: string;
   rule: StyleRule;
 };
@@ -67,7 +69,17 @@ export type CSSKeyframesBlock = {
   rule: CSSKeyframes;
 };
 
-export type CSS = CSSStyleBlock | CSSFontFaceBlock | CSSKeyframesBlock;
+export type CSSSelectorBlock = {
+  type: 'selector' | 'global';
+  selector: string;
+  rule: GlobalStyleRule;
+};
+
+export type CSS =
+  | CSSStyleBlock
+  | CSSFontFaceBlock
+  | CSSKeyframesBlock
+  | CSSSelectorBlock;
 
 export interface Adapter {
   appendCss: (css: CSS, fileScope: string) => void;

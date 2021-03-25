@@ -10,6 +10,7 @@ import type {
   StyleRule,
   StyleWithSelectors,
   GlobalFontFaceRule,
+  CSSSelectorBlock,
 } from './types';
 import { validateSelector } from './validateSelector';
 import { forEach, omit, mapKeys, isEqual } from './utils';
@@ -259,13 +260,17 @@ class Stylesheet {
   }
 
   transformSelectors(
-    root: CSSStyleBlock,
+    root: CSSStyleBlock | CSSSelectorBlock,
     rule: StyleWithSelectors,
     conditions?: Array<string>,
   ) {
     forEach(rule.selectors, (selectorRule, selector) => {
-      if (root.type === 'global') {
-        throw new Error('Selectors are not allowed within globalStyle');
+      if (root.type !== 'local') {
+        throw new Error(
+          `Selectors are not allowed within ${
+            root.type === 'global' ? '"globalStyle"' : '"selectors"'
+          }`,
+        );
       }
 
       const transformedSelector = this.transformSelector(
@@ -276,13 +281,26 @@ class Stylesheet {
       this.addRule({
         conditions,
         selector: transformedSelector,
-        rule: selectorRule,
+        rule: omit(selectorRule, specialKeys),
       });
+
+      const selectorRoot: CSSSelectorBlock = {
+        type: 'selector',
+        selector: transformedSelector,
+        rule: selectorRule,
+      };
+
+      this.transformSupports(
+        selectorRoot,
+        selectorRule!['@supports'],
+        conditions,
+      );
+      this.transformMedia(selectorRoot, selectorRule!['@media'], conditions);
     });
   }
 
   transformMedia(
-    root: CSSStyleBlock,
+    root: CSSStyleBlock | CSSSelectorBlock,
     rules:
       | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
       | undefined,
@@ -297,14 +315,17 @@ class Stylesheet {
         rule: omit(mediaRule, specialKeys),
       });
 
-      this.transformSimplePsuedos(root, mediaRule!, conditions);
-      this.transformSelectors(root, mediaRule!, conditions);
+      if (root.type === 'local') {
+        this.transformSimplePsuedos(root, mediaRule!, conditions);
+        this.transformSelectors(root, mediaRule!, conditions);
+      }
+
       this.transformSupports(root, mediaRule!['@supports'], conditions);
     });
   }
 
   transformSupports(
-    root: CSSStyleBlock,
+    root: CSSStyleBlock | CSSSelectorBlock,
     rules:
       | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
       | undefined,
@@ -319,22 +340,28 @@ class Stylesheet {
         rule: omit(supportsRule, specialKeys),
       });
 
-      this.transformSimplePsuedos(root, supportsRule!, conditions);
-      this.transformSelectors(root, supportsRule!, conditions);
+      if (root.type === 'local') {
+        this.transformSimplePsuedos(root, supportsRule!, conditions);
+        this.transformSelectors(root, supportsRule!, conditions);
+      }
       this.transformMedia(root, supportsRule!['@media'], conditions);
     });
   }
 
   transformSimplePsuedos(
-    root: CSSStyleBlock,
+    root: CSSStyleBlock | CSSSelectorBlock,
     rule: StyleRule,
     conditions?: Array<string>,
   ) {
     for (const key of Object.keys(rule)) {
       // Process simple psuedos
       if (simplePseudoSet.has(key)) {
-        if (root.type === 'global') {
-          throw new Error('Simple pseudos are not valid in globalStyles');
+        if (root.type !== 'local') {
+          throw new Error(
+            `Simple pseudos are not valid in ${
+              root.type === 'global' ? '"globalStyle"' : '"selectors"'
+            }`,
+          );
         }
 
         this.addRule({
@@ -403,7 +430,7 @@ class Stylesheet {
           rules.push(
             `${indent}${key} {\n${walkCss(value, indent + DOUBLE_SPACE).join(
               '\n',
-            )}\n${indent}}\n`,
+            )}\n${indent}}`,
           );
         } else {
           rules.push(
