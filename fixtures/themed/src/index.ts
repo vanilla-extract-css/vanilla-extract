@@ -17,25 +17,26 @@ const inlineTheme = createInlineTheme(vars, {
   },
 });
 
-document.body.innerHTML = `
+function render() {
+  document.body.innerHTML = `
   <div id="${testNodes.root}" class="${shadow}"> 
     Root theme
     <div id="${testNodes.rootContainer}" class="${container}">
       <button id="${testNodes.rootButton}" class="${button.join(
-  ' ',
-)}">Main theme button</button>
+    ' ',
+  )}">Main theme button</button>
       <div class="${altTheme}"> 
         Alt theme
         <div id="${testNodes.altContainer}" class="${container}">
           <button id="${testNodes.altButton}" class="${button.join(
-  ' ',
-)}">Alt theme button</button>
+    ' ',
+  )}">Alt theme button</button>
           <div class="${theme}"> 
             Back to root theme
             <div id="${testNodes.nestedRootContainer}" class="${container}">
               <button id="${testNodes.nestedRootButton}" class="${button.join(
-  ' ',
-)}">Main theme button</button>
+    ' ',
+  )}">Main theme button</button>
             <div style="${inlineTheme}">
               Inline theme
                 <div id="${
@@ -44,8 +45,8 @@ document.body.innerHTML = `
                   <button id="${
                     testNodes.inlineThemeButton
                   }" class="${button.join(' ')} ${
-  opacity['1/2']
-}">Inline theme button</button>
+    opacity['1/2']
+  }">Inline theme button</button>
                   <div class="${responsiveTheme}">
               Responsive theme
                 <div id="${
@@ -54,8 +55,8 @@ document.body.innerHTML = `
                   <button id="${
                     testNodes.responsiveThemeButton
                   }" class="${button.join(
-  ' ',
-)}">Responsive theme button</button>
+    ' ',
+  )}">Responsive theme button</button>
                 </div>
               </div>
             </div>
@@ -68,3 +69,14 @@ document.body.innerHTML = `
     </div>
   </div>
 `;
+}
+
+render();
+
+// @ts-expect-error
+if (module.hot) {
+  // @ts-expect-error
+  module.hot.accept(['./shared.css', './styles.css', './themes.css'], () => {
+    render();
+  });
+}

@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@mattsjones/css-core": 0.0.14
+    "@mattsjones/css-core": 0.0.15
   languageName: unknown
   linkType: soft
 
@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@mattsjones/css-core": 0.0.14
+    "@mattsjones/css-core": 0.0.15
   languageName: unknown
   linkType: soft
 
@@ -1901,7 +1901,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mattsjones/css-core@0.0.14, @mattsjones/css-core@^0.0.14, @mattsjones/css-core@workspace:packages/core":
+"@mattsjones/css-core@0.0.15, @mattsjones/css-core@^0.0.15, @mattsjones/css-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@mattsjones/css-core@workspace:packages/core"
   dependencies:
@@ -1925,7 +1925,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mattsjones/css-webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
-    "@mattsjones/css-core": ^0.0.14
+    "@mattsjones/css-core": ^0.0.15
     "@types/debug": ^4.1.5
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
@@ -2481,7 +2481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minimist@npm:^1.2.0":
+"@types/minimist@npm:^1, @types/minimist@npm:^1.2.0":
   version: 1.2.1
   resolution: "@types/minimist@npm:1.2.1"
   checksum: 3a6f5fe35f1656b34a4ccd5a5db1c38509d8d5b59625865b8c2b997994fcb0cfde0d9af7c5507b95dc5a0a32a22886c189e505cd2e52a7ef36d3c9982f07ed5a
@@ -10962,11 +10962,13 @@ fsevents@^1.2.7:
   dependencies:
     "@babel/core": ^7.13.10
     "@types/mini-css-extract-plugin": ^1.2.2
+    "@types/minimist": ^1
     "@types/webpack-dev-server": ^3.11.1
     babel-loader: ^8.2.2
     css-loader: ^5.1.3
     html-webpack-plugin: ^5.2.0
     mini-css-extract-plugin: ^1.3.9
+    minimist: ^1.2.5
     path-browserify: ^1.0.1
     style-loader: ^2.0.0
     webpack: ^5.27.1

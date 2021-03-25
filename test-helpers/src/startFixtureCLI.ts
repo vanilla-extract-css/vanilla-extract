@@ -1,8 +1,13 @@
+import parseArgs from 'minimist';
 import { startFixture } from './startFixture';
 
-const fixtureName = process.argv[2];
+const {
+  _: [fixtureName],
+  type,
+  hot,
+} = parseArgs(process.argv.slice(2));
 
-startFixture(fixtureName).then((server) => {
+startFixture(fixtureName, { type, hot }).then((server) => {
   // eslint-disable-next-line no-console
   console.log('Fixture running on', server.url);
 });

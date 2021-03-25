@@ -54,12 +54,16 @@ let portCounter = 11000;
 
 export interface FixtureOptions {
   type?: StyleType;
+  hot?: boolean;
 }
 export const startFixture = (
   fixtureName: string,
-  { type = 'mini-css-extract' }: FixtureOptions = {},
+  { type = 'mini-css-extract', hot = false }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
+    console.log(
+      `Starting ${fixtureName} fixture using ${type}${hot ? ' with HMR' : ''}`,
+    );
     const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
@@ -81,9 +85,11 @@ export const startFixture = (
     const compiler = webpack(config);
 
     const port = portCounter++;
-    const server = new WDS(compiler);
+    const server = new WDS(compiler, {
+      hot,
+    });
 
-    compiler.hooks.done.tap('treat-test-helper', () => {
+    compiler.hooks.done.tap('vanilla-extract-test-helper', () => {
       resolve({
         url: `http://localhost:${port}`,
         close: () => {

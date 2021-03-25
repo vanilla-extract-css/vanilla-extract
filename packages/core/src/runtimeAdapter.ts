@@ -2,23 +2,24 @@ import type { Adapter, CSS } from './types';
 import { transformCss } from './transformCSS';
 import { setAdapter } from './adapter';
 
-let styleSheet: CSSStyleSheet | null;
+const stylesheets: Record<string, CSSStyleSheet> = {};
+
 const localClassNames = new Set<string>();
 let bufferedCSSObjs: Array<CSS> = [];
 
-function getStylesheet() {
-  if (styleSheet) {
-    return styleSheet;
+function getStylesheet(fileScope: string) {
+  if (stylesheets[fileScope]) {
+    return stylesheets[fileScope];
   }
   const styleEl = document.createElement('style');
   document.head.appendChild(styleEl);
-  styleSheet = styleEl.sheet;
 
-  if (!styleSheet) {
-    throw new Error('Could create stylesheet');
+  if (!styleEl.sheet) {
+    throw new Error(`Couldn't create stylesheet`);
   }
+  stylesheets[fileScope] = styleEl.sheet;
 
-  return styleSheet;
+  return styleEl.sheet;
 }
 
 const browserRuntimeAdapter: Adapter = {
@@ -28,19 +29,33 @@ const browserRuntimeAdapter: Adapter = {
   registerClassName: (className) => {
     localClassNames.add(className);
   },
-  onEndFileScope: () => {
+  onEndFileScope: (fileScope) => {
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
       cssObjs: bufferedCSSObjs,
     });
-    const stylesheet = getStylesheet();
+    const stylesheet = getStylesheet(fileScope);
+    const existingRuleCount = stylesheet.cssRules.length;
+
+    let ruleIndex = 0;
 
     for (const rule of css) {
       try {
-        stylesheet.insertRule(rule, stylesheet.cssRules.length);
+        if (ruleIndex < existingRuleCount) {
+          stylesheet.deleteRule(ruleIndex);
+        }
+        stylesheet.insertRule(rule, ruleIndex++);
       } catch (e) {
-        console.warn(e);
+        console.warn(`Failed to insert rule\n${rule}`);
+
+        // insert placeholder rule to keep index count correct
+        stylesheet.insertRule('.--placeholder-rule--{}', ruleIndex - 1);
       }
+    }
+
+    // Delete remaining rules
+    while (ruleIndex < existingRuleCount) {
+      stylesheet.deleteRule(ruleIndex++);
     }
 
     bufferedCSSObjs = [];
