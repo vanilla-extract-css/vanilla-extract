@@ -1,5 +1,12 @@
 # @mattsjones/css-core
 
+## 0.0.16
+
+### Patch Changes
+
+- ee57f9a: Support hot module reloading for the browser runtime
+- 9b847d4: Support @media and @support rules in selectors
+
 ## 0.0.15
 
 ### Patch Changes

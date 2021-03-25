@@ -5,6 +5,6 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@mattsjones/css-core": "0.0.15"
+    "@mattsjones/css-core": "0.0.16"
   }
 }
