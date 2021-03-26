@@ -35,9 +35,10 @@ describe('Styling and specificity', () => {
 
     beforeAll(async () => {
       servers = await Promise.all(
-        variations.map((variation) =>
+        variations.map((variation, index) =>
           startFixture('themed', {
             type: variation,
+            basePort: index + 1 * 10000,
           }),
         ),
       );

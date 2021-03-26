@@ -1,11 +1,11 @@
 {
   "name": "@fixtures/themed",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@mattsjones/css-core": "0.0.16"
+    "@vanilla-extract/css": "0.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import { style } from '@mattsjones/css-core';
+import { style } from '@vanilla-extract/css';
 
 export default style({
   boxSizing: 'border-box',

@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@mattsjones/css-core": 0.0.16
+    "@vanilla-extract/css": 0.0.0
   languageName: unknown
   linkType: soft
 
@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@mattsjones/css-core": 0.0.16
+    "@vanilla-extract/css": 0.0.0
   languageName: unknown
   linkType: soft
 
@@ -1588,7 +1588,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@mattsjones/css-core": 0.0.16
+    "@vanilla-extract/css": 0.0.0
   languageName: unknown
   linkType: soft
 
@@ -1899,57 +1899,6 @@ __metadata:
   checksum: 6e5567c4305b2e5918277cdf709d9d3cbe581b47b7558388e2cbe9fb362a1e5671588fa8be4eac7c748947b527726faa585bf25caded19ae08fb6e265bebd6e7
   languageName: node
   linkType: hard
-
-"@mattsjones/css-babel-plugin@workspace:packages/babel-plugin":
-  version: 0.0.0-use.local
-  resolution: "@mattsjones/css-babel-plugin@workspace:packages/babel-plugin"
-  dependencies:
-    "@babel/core": ^7.13.10
-    "@babel/template": ^7.12.13
-  languageName: unknown
-  linkType: soft
-
-"@mattsjones/css-core@0.0.16, @mattsjones/css-core@^0.0.16, @mattsjones/css-core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@mattsjones/css-core@workspace:packages/core"
-  dependencies:
-    "@emotion/hash": ^0.8.0
-    "@types/cssesc": ^3.0.0
-    "@types/dedent": ^0.7.0
-    css-selector-parser: ^1.4.1
-    cssesc: ^3.0.0
-    csstype: ^3.0.7
-    dedent: ^0.7.0
-  languageName: unknown
-  linkType: soft
-
-"@mattsjones/css-utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@mattsjones/css-utils@workspace:packages/utils"
-  languageName: unknown
-  linkType: soft
-
-"@mattsjones/css-webpack-plugin@workspace:packages/webpack-plugin":
-  version: 0.0.0-use.local
-  resolution: "@mattsjones/css-webpack-plugin@workspace:packages/webpack-plugin"
-  dependencies:
-    "@mattsjones/css-core": ^0.0.16
-    "@types/debug": ^4.1.5
-    "@types/dedent": ^0.7.0
-    "@types/lodash": ^4.14.168
-    chalk: ^4.1.0
-    debug: ^4.3.1
-    dedent: ^0.7.0
-    eval: ^0.1.6
-    javascript-stringify: ^2.0.1
-    loader-utils: ^2.0.0
-    lodash: ^4.17.21
-    virtual-resource-loader: ^1.0.0
-    webpack: ^5.27.1
-  peerDependencies:
-    webpack: ^4.30.0 || ^5.20.2
-  languageName: unknown
-  linkType: soft
 
 "@mrmlnc/readdir-enhanced@npm:^2.2.1":
   version: 2.2.1
@@ -2718,6 +2667,57 @@ __metadata:
   checksum: de89460f6bc272f9169013f1b8add1b46e4f0740b74700d6b3422078a2f3b38de7993c24e4752312f549406898451f4de8598b4168d2a4a6f546fa9bdc09c959
   languageName: node
   linkType: hard
+
+"@vanilla-extract/babel-plugin@workspace:packages/babel-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/babel-plugin@workspace:packages/babel-plugin"
+  dependencies:
+    "@babel/core": ^7.13.10
+    "@babel/template": ^7.12.13
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/css-utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/css-utils@workspace:packages/utils"
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/css@0.0.0, @vanilla-extract/css@^0.0.0, @vanilla-extract/css@workspace:packages/css":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/css@workspace:packages/css"
+  dependencies:
+    "@emotion/hash": ^0.8.0
+    "@types/cssesc": ^3.0.0
+    "@types/dedent": ^0.7.0
+    css-selector-parser: ^1.4.1
+    cssesc: ^3.0.0
+    csstype: ^3.0.7
+    dedent: ^0.7.0
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
+  dependencies:
+    "@types/debug": ^4.1.5
+    "@types/dedent": ^0.7.0
+    "@types/lodash": ^4.14.168
+    "@vanilla-extract/css": ^0.0.0
+    chalk: ^4.1.0
+    debug: ^4.3.1
+    dedent: ^0.7.0
+    eval: ^0.1.6
+    javascript-stringify: ^2.0.1
+    loader-utils: ^2.0.0
+    lodash: ^4.17.21
+    virtual-resource-loader: ^1.0.0
+    webpack: ^5.27.1
+  peerDependencies:
+    webpack: ^4.30.0 || ^5.20.2
+  languageName: unknown
+  linkType: soft
 
 "@webassemblyjs/ast@npm:1.11.0":
   version: 1.11.0
@@ -9293,7 +9293,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"portfinder@npm:^1.0.26":
+"portfinder@npm:^1.0.26, portfinder@npm:^1.0.28":
   version: 1.0.28
   resolution: "portfinder@npm:1.0.28"
   dependencies:
@@ -11127,6 +11127,7 @@ fsevents@^1.2.7:
     mini-css-extract-plugin: ^1.3.9
     minimist: ^1.2.5
     path-browserify: ^1.0.1
+    portfinder: ^1.0.28
     style-loader: ^2.0.0
     webpack: ^5.27.1
     webpack-dev-server: ^3.11.2
@@ -11263,33 +11264,6 @@ fsevents@^1.2.7:
   checksum: c8c221907944e8b577c4fff14d180a213c21a29b54a12a031aa6986cbb711a5d470588b556a7be9c7844f09142e12deef6b76fe10f6bd4d274b54f1a7e0aac9e
   languageName: node
   linkType: hard
-
-"treat-next@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "treat-next@workspace:."
-  dependencies:
-    "@babel/core": ^7.13.10
-    "@babel/preset-env": ^7.12.11
-    "@babel/preset-react": ^7.12.10
-    "@babel/preset-typescript": ^7.12.7
-    "@changesets/changelog-github": ^0.3.0
-    "@changesets/cli": ^2.14.1
-    "@manypkg/cli": ^0.17.0
-    "@preconstruct/cli": ^2.0.1
-    "@testing-library/dom": ^7.30.0
-    "@testing-library/jest-dom": ^5.11.9
-    "@types/jest": ^26.0.20
-    "@types/jest-environment-puppeteer": ^4.4.1
-    "@types/puppeteer": ^5.4.3
-    babel-jest: ^26.6.3
-    jest: ^26.6.3
-    jest-puppeteer: ^4.1.0
-    prettier: ^2.2.1
-    puppeteer: ^8.0.0
-    ts-node: ^9.1.1
-    typescript: ^4.1.3
-  languageName: unknown
-  linkType: soft
 
 "tree-kill@npm:^1.2.2":
   version: 1.2.2
@@ -11682,6 +11656,33 @@ typescript@^4.1.3:
   checksum: 3c5a5b154a32d141a8fff660e4cdfcbd359bfafb1fc544772d50fb04377bea2eb7073bd49d914309c21c1fd19af68849e8022791573b88fc6413560a8dcf5016
   languageName: node
   linkType: hard
+
+"vanilla-extract@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "vanilla-extract@workspace:."
+  dependencies:
+    "@babel/core": ^7.13.10
+    "@babel/preset-env": ^7.12.11
+    "@babel/preset-react": ^7.12.10
+    "@babel/preset-typescript": ^7.12.7
+    "@changesets/changelog-github": ^0.3.0
+    "@changesets/cli": ^2.14.1
+    "@manypkg/cli": ^0.17.0
+    "@preconstruct/cli": ^2.0.1
+    "@testing-library/dom": ^7.30.0
+    "@testing-library/jest-dom": ^5.11.9
+    "@types/jest": ^26.0.20
+    "@types/jest-environment-puppeteer": ^4.4.1
+    "@types/puppeteer": ^5.4.3
+    babel-jest: ^26.6.3
+    jest: ^26.6.3
+    jest-puppeteer: ^4.1.0
+    prettier: ^2.2.1
+    puppeteer: ^8.0.0
+    ts-node: ^9.1.1
+    typescript: ^4.1.3
+  languageName: unknown
+  linkType: soft
 
 "vary@npm:~1.1.2":
   version: 1.1.2

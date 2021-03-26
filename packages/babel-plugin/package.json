@@ -1,8 +1,9 @@
 {
-  "name": "@mattsjones/css-babel-plugin",
-  "version": "0.0.7",
-  "main": "dist/mattsjones-css-babel-plugin.cjs.js",
-  "module": "dist/mattsjones-css-babel-plugin.esm.js",
+  "name": "@vanilla-extract/babel-plugin",
+  "version": "0.0.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "main": "dist/vanilla-extract-babel-plugin.cjs.js",
+  "module": "dist/vanilla-extract-babel-plugin.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
@@ -11,6 +12,11 @@
   "files": [
     "/dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/babel-plugin"
+  },
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {

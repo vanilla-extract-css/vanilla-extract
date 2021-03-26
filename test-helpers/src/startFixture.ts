@@ -1,6 +1,7 @@
-import { TreatPlugin } from '@mattsjones/css-webpack-plugin';
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import WDS from 'webpack-dev-server';
 import webpack, { Configuration } from 'webpack';
+import portfinder from 'portfinder';
 import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -36,7 +37,7 @@ const defaultWebpackConfig: Configuration = {
                   { targets: { node: 14 }, modules: false },
                 ],
               ],
-              plugins: ['@mattsjones/css-babel-plugin'],
+              plugins: ['@vanilla-extract/babel-plugin'],
             },
           },
         ],
@@ -65,6 +66,7 @@ export interface FixtureOptions {
   type?: StyleType;
   hot?: boolean;
   mode?: 'development' | 'production';
+  basePort?: number;
 }
 export const startFixture = (
   fixtureName: string,
@@ -72,6 +74,7 @@ export const startFixture = (
     type = 'mini-css-extract',
     hot = false,
     mode = 'development',
+    basePort,
   }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
@@ -100,11 +103,11 @@ export const startFixture = (
           },
         ],
       },
-      plugins: type !== 'browser' ? [new TreatPlugin()] : undefined,
+      plugins: type !== 'browser' ? [new VanillaExtractPlugin()] : undefined,
     });
     const compiler = webpack(config);
 
-    const port = portCounter++;
+    const port = await portfinder.getPortPromise({ port: basePort });
     const server = new WDS(compiler, {
       hot,
     });

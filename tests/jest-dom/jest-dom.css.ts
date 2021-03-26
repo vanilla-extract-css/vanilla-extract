@@ -1,4 +1,4 @@
-import { style, createTheme, createGlobalTheme } from '@mattsjones/css-core';
+import { style, createTheme, createGlobalTheme } from '@vanilla-extract/css';
 
 export const themeVars = createGlobalTheme(':root', {
   space: `10px`,

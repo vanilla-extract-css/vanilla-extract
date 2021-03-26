@@ -1,4 +1,4 @@
-import { style, createVar } from '@mattsjones/css-core';
+import { style, createVar } from '@vanilla-extract/css';
 
 const color = createVar();
 

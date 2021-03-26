@@ -1,4 +1,4 @@
-import { style } from '@mattsjones/css-core';
+import { style } from '@vanilla-extract/css';
 import { sharedStyle } from '../shared';
 
 const className = style({

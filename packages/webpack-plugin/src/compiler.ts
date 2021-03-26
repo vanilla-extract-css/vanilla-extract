@@ -2,7 +2,7 @@ import type { LoaderContext } from './types';
 import createCompat from './compat';
 import { debug } from './logger';
 
-const log = debug('treat:compiler');
+const log = debug('vanilla-extract:compiler');
 
 // Should be "ExternalsItem" but webpack doesn't expose it
 type Externals = any;
@@ -13,7 +13,8 @@ interface CompilationResult {
   contextDependencies: Array<string>;
 }
 
-const getCompilerName = (resource: string) => `treat-compiler:${resource}`;
+const getCompilerName = (resource: string) =>
+  `vanilla-extract-compiler:${resource}`;
 
 export class ChildCompiler {
   externals: Externals | undefined;
@@ -30,7 +31,9 @@ export class ChildCompiler {
   }
 
   isChildCompiler(name: string | undefined) {
-    return typeof name === 'string' && name.startsWith('treat-compiler');
+    return (
+      typeof name === 'string' && name.startsWith('vanilla-extract-compiler')
+    );
   }
 
   async getCompiledSource(loader: LoaderContext, request: string) {
@@ -39,7 +42,11 @@ export class ChildCompiler {
 
     if (!compilationPromise) {
       log('No cached compilation. Compiling: %s', cacheId);
-      compilationPromise = compileTreatSource(loader, request, this.externals);
+      compilationPromise = compileVanillaSource(
+        loader,
+        request,
+        this.externals,
+      );
 
       this.cache.set(cacheId, compilationPromise);
     } else {
@@ -77,7 +84,7 @@ function getRootCompilation(loader: LoaderContext) {
   return compilation;
 }
 
-function compileTreatSource(
+function compileVanillaSource(
   loader: LoaderContext,
   request: string,
   externals: Externals | undefined,
@@ -87,7 +94,7 @@ function compileTreatSource(
       loader._compiler.webpack && loader._compiler.webpack.version,
     );
     const compat = createCompat(isWebpack5);
-    // Child compiler will compile treat files to be evaled during compilation
+    // Child compiler will compile vanilla-extract files to be evaled during compilation
     const outputOptions = { filename: loader.resourcePath };
 
     const compilerName = getCompilerName(loader.resourcePath);
@@ -135,8 +142,8 @@ function compileTreatSource(
 
     new LimitChunkCountPlugin({ maxChunks: 1 }).apply(childCompiler);
     new ExternalsPlugin('commonjs', [
-      '@mattsjones/css-core',
-      '@mattsjones/css-core/fileScope',
+      '@vanilla-extract/css',
+      '@vanilla-extract/css/fileScope',
       externals,
     ]).apply(childCompiler);
 

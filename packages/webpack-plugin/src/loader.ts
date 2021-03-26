@@ -7,13 +7,13 @@ import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
 import dedent from 'dedent';
-import type { Adapter } from '@mattsjones/css-core';
-import { setAdapter } from '@mattsjones/css-core/adapter';
-import { transformCss } from '@mattsjones/css-core/transformCss';
+import type { Adapter } from '@vanilla-extract/css';
+import { setAdapter } from '@vanilla-extract/css/adapter';
+import { transformCss } from '@vanilla-extract/css/transformCss';
 
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
-import TreatError from './TreatError';
+import VanillaExtractError from './VanillaExtractError';
 import { ChildCompiler } from './compiler';
 
 const stringifyLoaderRequest = (
@@ -30,7 +30,6 @@ const stringifyLoaderRequest = (
 
 interface LoaderOptions {
   outputCss: boolean;
-  hmr: boolean | undefined;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {
@@ -48,7 +47,9 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
     this,
   ) as InternalLoaderOptions;
 
-  const log = debug(`treat:loader:${formatResourcePath(this.resourcePath)}`);
+  const log = debug(
+    `vanilla-extract:loader:${formatResourcePath(this.resourcePath)}`,
+  );
 
   const compiler = this._compiler;
 
@@ -59,7 +60,7 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
     compiler.options.output.filename === this.resourcePath
   ) {
     log(
-      'Skip treat loader as we are already within a treat child compiler for this file',
+      'Skip vanilla-extract loader as we are already within a child compiler for this file',
     );
     return;
   }
@@ -73,7 +74,7 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
     );
 
     if (isChildCompiler) {
-      // If within a treat child compiler then only compile source, don't eval and assign CSS
+      // If within a vanilla-extract child compiler then only compile source, don't eval and assign CSS
       return callback(null, source);
     }
 
@@ -88,13 +89,13 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
 async function processSource(
   loader: LoaderContext,
   source: string,
-  { outputCss, hmr }: LoaderOptions,
+  { outputCss }: LoaderOptions,
 ) {
-  const log = debug(`treat:loader:${formatResourcePath(loader.resourcePath)}`);
+  const log = debug(
+    `vanilla-extract:loader:${formatResourcePath(loader.resourcePath)}`,
+  );
 
   log('Loading resource');
-
-  const isHmr = typeof hmr === 'boolean' ? hmr : loader.hot;
 
   const makeCssModule = (fileScope: string, css: string) => {
     const base64 = Buffer.from(css, 'utf-8').toString('base64');
@@ -135,7 +136,7 @@ async function processSource(
 
   setAdapter(cssAdapter);
 
-  const sourceWithBoundLoaderInstance = `require('@mattsjones/css-core/adapter').setAdapter(__webpack_adapter__);
+  const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__webpack_adapter__);
   ${source}`;
 
   let result;
@@ -150,7 +151,7 @@ async function processSource(
       true,
     );
   } catch (e) {
-    throw new TreatError(e);
+    throw new VanillaExtractError(e);
   }
 
   const cssRequests = [];
@@ -167,7 +168,7 @@ async function processSource(
     cssRequests.push(makeCssModule(fileScope, css));
   }
 
-  return serializeTreatModule(loader, cssRequests, result, isHmr);
+  return serializeVanillaModule(loader, cssRequests, result);
 }
 
 const stringifyExports = (value: any) =>
@@ -200,11 +201,10 @@ const stringifyExports = (value: any) =>
     },
   );
 
-const serializeTreatModule = (
+const serializeVanillaModule = (
   loader: LoaderContext,
   cssRequests: Array<string>,
   exports: Record<string, unknown>,
-  _isHmr: boolean,
 ) => {
   const cssImports = cssRequests.map((request) => {
     const relativeRequest = loaderUtils.stringifyRequest(loader, request);

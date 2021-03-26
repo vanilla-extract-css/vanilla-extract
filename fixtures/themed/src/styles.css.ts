@@ -7,7 +7,7 @@ import {
   globalFontFace,
   keyframes,
   globalKeyframes,
-} from '@mattsjones/css-core';
+} from '@vanilla-extract/css';
 import { shadow } from './shared.css';
 import { vars, theme, altTheme } from './themes.css';
 

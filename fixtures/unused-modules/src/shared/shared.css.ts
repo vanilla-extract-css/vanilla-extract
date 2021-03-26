@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@mattsjones/css-core';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 globalStyle('body', {
   border: '5px solid black',

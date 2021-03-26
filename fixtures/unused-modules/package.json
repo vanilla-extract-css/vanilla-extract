@@ -8,6 +8,6 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@mattsjones/css-core": "0.0.16"
+    "@vanilla-extract/css": "0.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import { globalStyle } from '@mattsjones/css-core';
+import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('body', {
   backgroundColor: 'lavender',

@@ -130,7 +130,7 @@ export default function (): PluginObj<Context> {
     pre({ opts }) {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
-      this.packageIdentifier = this.opts?.alias || '@mattsjones/css-core';
+      this.packageIdentifier = this.opts?.alias || '@vanilla-extract/css';
       const projectRoot = this.opts?.projectRoot || opts.root;
       if (!projectRoot) {
         // TODO Make error better

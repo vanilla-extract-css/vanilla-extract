@@ -1,9 +1,10 @@
 {
-  "name": "@mattsjones/css-utils",
-  "version": "0.0.5",
+  "name": "@vanilla-extract/css-utils",
+  "version": "0.0.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/mattsjones-css-utils.cjs.js",
-  "module": "dist/mattsjones-css-utils.esm.js",
+  "main": "dist/vanilla-extract-css-utils.cjs.js",
+  "module": "dist/vanilla-extract-css-utils.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
@@ -12,6 +13,11 @@
   "files": [
     "/dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/utils"
+  },
   "author": "SEEK",
   "license": "MIT"
 }

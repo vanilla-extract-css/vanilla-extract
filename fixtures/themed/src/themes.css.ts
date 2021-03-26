@@ -3,7 +3,7 @@ import {
   createTheme,
   assignVars,
   style,
-} from '@mattsjones/css-core';
+} from '@vanilla-extract/css';
 
 export const theme = style({});
 

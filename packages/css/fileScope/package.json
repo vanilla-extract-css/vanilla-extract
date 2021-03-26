@@ -1,0 +1,9 @@
+{
+  "main": "dist/vanilla-extract-css-fileScope.cjs.js",
+  "module": "dist/vanilla-extract-css-fileScope.esm.js",
+  "browser": {
+    "./dist/vanilla-extract-css-fileScope.cjs.js": "./dist/vanilla-extract-css-fileScope.browser.cjs.js",
+    "./dist/vanilla-extract-css-fileScope.esm.js": "./dist/vanilla-extract-css-fileScope.browser.esm.js"
+  },
+  "sideEffects": false
+}

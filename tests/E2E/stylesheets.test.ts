@@ -10,6 +10,7 @@ describe('Stylesheet', () => {
       server = await startFixture(fixture, {
         type: 'mini-css-extract',
         mode: 'production',
+        basePort: 9000,
       });
     });
 
