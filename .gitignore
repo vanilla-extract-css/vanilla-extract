@@ -2,7 +2,7 @@ node_modules
 dist
 tsconfig.tsbuildinfo
 yarn-error.log
-treat-file-within
+packages/**/README.md
 
 .yarn/*
 !.yarn/patches
