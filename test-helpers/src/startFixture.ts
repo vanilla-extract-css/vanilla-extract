@@ -5,6 +5,8 @@ import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
+import { stylesheetName } from './getStylesheet';
+
 export const getTestNodes = (fixture: string) =>
   require(`@fixtures/${fixture}/test-nodes.json`);
 
@@ -12,8 +14,10 @@ const defaultWebpackConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },
-  mode: 'development',
   devtool: 'source-map',
+  optimization: {
+    minimize: false,
+  },
   module: {
     rules: [
       {
@@ -39,7 +43,12 @@ const defaultWebpackConfig: Configuration = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: stylesheetName,
+    }),
+  ],
 };
 
 type StyleType = 'browser' | 'mini-css-extract' | 'style-loader';
@@ -55,18 +64,29 @@ let portCounter = 11000;
 export interface FixtureOptions {
   type?: StyleType;
   hot?: boolean;
+  mode?: 'development' | 'production';
 }
 export const startFixture = (
   fixtureName: string,
-  { type = 'mini-css-extract', hot = false }: FixtureOptions = {},
+  {
+    type = 'mini-css-extract',
+    hot = false,
+    mode = 'development',
+  }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    console.log(
-      `Starting ${fixtureName} fixture using ${type}${hot ? ' with HMR' : ''}`,
+    console.log(`Starting ${fixtureName} fixture`);
+    console.table(
+      Object.entries({
+        type,
+        hot,
+        mode,
+      }),
     );
     const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
+      mode,
       module: {
         rules: [
           {

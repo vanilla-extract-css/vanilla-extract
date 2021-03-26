@@ -5,9 +5,10 @@ const {
   _: [fixtureName],
   type,
   hot,
+  mode,
 } = parseArgs(process.argv.slice(2));
 
-startFixture(fixtureName, { type, hot }).then((server) => {
+startFixture(fixtureName, { type, hot, mode }).then((server) => {
   // eslint-disable-next-line no-console
   console.log('Fixture running on', server.url);
 });

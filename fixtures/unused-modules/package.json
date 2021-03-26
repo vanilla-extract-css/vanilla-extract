@@ -1,8 +1,10 @@
 {
-  "name": "@fixtures/themed",
+  "name": "@fixtures/unused-modules",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "sideEffects": true,
+  "sideEffects": [
+    "src/global.css.ts"
+  ],
   "author": "SEEK",
   "private": true,
   "dependencies": {

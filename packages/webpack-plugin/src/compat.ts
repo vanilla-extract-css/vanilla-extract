@@ -7,7 +7,7 @@ import {
   optimize,
 } from 'webpack';
 
-interface WebpackCompat {
+export interface WebpackCompat {
   isWebpack5: boolean;
   getNodeTemplatePlugin: (compiler: Compiler) => typeof node.NodeTemplatePlugin;
   getNodeTargetPlugin: (compiler: Compiler) => typeof node.NodeTargetPlugin;

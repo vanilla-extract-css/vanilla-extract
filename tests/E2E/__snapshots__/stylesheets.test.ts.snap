@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stylesheet themed should create valid stylesheet 1`] = `
+":root, .themes_theme__40jr0n0 {
+  --colors-background-color__40jr0n1: blue;
+  --colors-text__40jr0n2: white;
+  --space-1__40jr0n3: 4px;
+  --space-2__40jr0n4: 8px;
+  --space-3__40jr0n5: 12px;
+}
+.themes_altTheme__40jr0n6 {
+  --colors-background-color__40jr0n1: green;
+  --colors-text__40jr0n2: white;
+  --space-1__40jr0n3: 8px;
+  --space-2__40jr0n4: 12px;
+  --space-3__40jr0n5: 16px;
+}
+.themes_responsiveTheme__40jr0n7 {
+  --colors-background-color__40jr0n1: pink;
+  --colors-text__40jr0n2: purple;
+  --space-1__40jr0n3: 6px;
+  --space-2__40jr0n4: 12px;
+  --space-3__40jr0n5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__40jr0n7 {
+    --colors-background-color__40jr0n1: purple;
+    --colors-text__40jr0n2: pink;
+  }
+}
+.shared_shadow__fb6bqk0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles_impact__bh8jtc0\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+@keyframes styles_slide__bh8jtc1 {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+@keyframes globalSlide {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+.styles_container__bh8jtc2 {
+  animation: 3s infinite alternate globalSlide ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__40jr0n4);
+  padding: var(--space-3__40jr0n5);
+}
+.styles_button__bh8jtc3 {
+  animation: 3s infinite alternate styles_slide__bh8jtc1 ease-in-out;
+  font-family: \\"styles_impact__bh8jtc0\\";
+  background-color: var(--colors-background-color__40jr0n1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__40jr0n2);
+}
+.themes_altTheme__40jr0n6 .themes_theme__40jr0n0 .styles_container__bh8jtc2 .styles_button__bh8jtc3 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+.styles_opacity_1\\\\/2__bh8jtc6 {
+  opacity: var(--undefined-var1__bh8jtc4, 0.5);
+}
+.styles_opacity_1\\\\/4__bh8jtc7 {
+  opacity: var(--undefined-var1__bh8jtc4, var(--undefined-var2__bh8jtc5, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__bh8jtc2 {
+    border: 1px solid var(--colors-background-color__40jr0n1);
+  }
+  .styles_button__bh8jtc3 {
+    border-radius: 9999px;
+  }
+}
+
+/*# sourceMappingURL=main.css.map*/"
+`;
+
+exports[`Stylesheet unused-modules should create valid stylesheet 1`] = `
+"body {
+  background-color: lavender;
+}
+.reset_default__uwiqg30 {
+  box-sizing: border-box;
+}
+body {
+  border: 5px solid black;
+}
+.shared_default__1qsu10z0 {
+  display: flex;
+}
+.used_className__1q2bj4l0 {
+  height: 100px;
+  width: 100px;
+  background: green;
+}
+
+/*# sourceMappingURL=main.css.map*/"
+`;

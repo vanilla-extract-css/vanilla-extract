@@ -3,7 +3,7 @@ import type { Compiler, RuleSetRule } from 'webpack';
 import chalk from 'chalk';
 
 import { ChildCompiler } from './compiler';
-import createCompat from './compat';
+import createCompat, { WebpackCompat } from './compat';
 
 const pluginName = 'treat-webpack-plugin';
 
@@ -14,6 +14,44 @@ const resolvedFileScopeModule = path.dirname(
 const resolvedCoreModule = path.dirname(
   require.resolve('@mattsjones/css-core/package.json'),
 );
+
+function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
+  compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
+    if (compat.isWebpack5) {
+      nmf.hooks.createModule.tap(
+        pluginName,
+        // @ts-expect-error CreateData is typed as 'object'...
+        (createData: {
+          matchResource?: string;
+          settings: { sideEffects?: boolean };
+        }) => {
+          if (
+            createData.matchResource &&
+            createData.matchResource.endsWith('.vanilla.css')
+          ) {
+            createData.settings.sideEffects = true;
+          }
+        },
+      );
+    } else {
+      nmf.hooks.afterResolve.tap(
+        pluginName,
+        // @ts-expect-error Can't be typesafe for webpack 4
+        (result: {
+          matchResource?: string;
+          settings: { sideEffects?: boolean };
+        }) => {
+          if (
+            result.matchResource &&
+            result.matchResource.endsWith('.vanilla.css')
+          ) {
+            result.settings.sideEffects = true;
+          }
+        },
+      );
+    }
+  });
+}
 
 interface PluginOptions {
   test?: RuleSetRule['test'];
@@ -94,41 +132,7 @@ export class TreatPlugin {
       });
     }
 
-    compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
-      if (compat.isWebpack5) {
-        nmf.hooks.createModule.tap(
-          pluginName,
-          // @ts-expect-error CreateData is typed as 'object'...
-          (createData: {
-            matchResource?: string;
-            settings: { sideEffects?: boolean };
-          }) => {
-            if (
-              createData.matchResource &&
-              createData.matchResource.endsWith('.vanilla.css')
-            ) {
-              createData.settings.sideEffects = true;
-            }
-          },
-        );
-      } else {
-        nmf.hooks.afterResolve.tap(
-          pluginName,
-          // @ts-expect-error Can't be typesafe for webpack 4
-          (result: {
-            matchResource?: string;
-            settings: { sideEffects?: boolean };
-          }) => {
-            if (
-              result.matchResource &&
-              result.matchResource.endsWith('.vanilla.css')
-            ) {
-              result.settings.sideEffects = true;
-            }
-          },
-        );
-      }
-    });
+    markCSSFilesAsSideEffects(compiler, compat);
 
     compiler.options.module?.rules.splice(0, 0, {
       test: this.test,
