@@ -60,8 +60,6 @@ export interface TestServer {
   close: () => void;
 }
 
-let portCounter = 11000;
-
 export interface FixtureOptions {
   type?: StyleType;
   hot?: boolean;
