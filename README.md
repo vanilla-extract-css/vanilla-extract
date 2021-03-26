@@ -16,6 +16,8 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 ✨ &nbsp; Minimal abstraction over standard CSS.
 
+🦄 &nbsp; Works with any front-end framework — or even without one.
+
 🌳 &nbsp; Locally scoped class names — just like [CSS Modules.](https://github.com/css-modules/css-modules)
 
 🚀 &nbsp; Locally scoped [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), `@keyframes` and `@font-face` rules.
