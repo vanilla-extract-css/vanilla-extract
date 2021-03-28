@@ -1,6 +1,6 @@
 import type { PropertiesFallback, AtRule } from 'csstype';
 
-import type { SimplePseudos } from './transformCSS';
+import type { SimplePseudos } from './transformCss';
 
 type BasicCSSProperties = PropertiesFallback<string | number>;
 
