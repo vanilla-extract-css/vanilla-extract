@@ -21,7 +21,7 @@ jobs:
           node-version: 14.x
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --immutable
 
       - name: Lint
         run: yarn lint

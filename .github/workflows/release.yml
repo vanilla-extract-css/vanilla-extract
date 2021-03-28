@@ -25,7 +25,7 @@ jobs:
           node-version: 14.x
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --immutable
 
       - name: Create release PR or publish to npm
         uses: changesets/action@b3300fad33b6ab794313da28d27424c0e2f78991
