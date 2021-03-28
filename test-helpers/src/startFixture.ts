@@ -65,6 +65,7 @@ export interface FixtureOptions {
   hot?: boolean;
   mode?: 'development' | 'production';
   basePort?: number;
+  logLevel?: Configuration['stats'];
 }
 export const startFixture = (
   fixtureName: string,
@@ -73,17 +74,21 @@ export const startFixture = (
     hot = false,
     mode = 'development',
     basePort,
+    logLevel = 'errors-only',
   }: FixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    console.log(`Starting ${fixtureName} fixture`);
-    console.table(
-      Object.entries({
-        type,
-        hot,
-        mode,
-      }),
+    console.log(
+      [
+        `Starting ${fixtureName} fixture`,
+        ...Object.entries({
+          type,
+          hot,
+          mode,
+        }).map(([key, value]) => `- ${key}: ${value}`),
+      ].join('\n'),
     );
+
     const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
@@ -108,6 +113,8 @@ export const startFixture = (
     const port = await portfinder.getPortPromise({ port: basePort });
     const server = new WDS(compiler, {
       hot,
+      stats: logLevel,
+      noInfo: true,
     });
 
     compiler.hooks.done.tap('vanilla-extract-test-helper', () => {
