@@ -4,7 +4,7 @@ on: push
 
 jobs:
   test:
-    name: Line & Test
+    name: Lint & Test
     runs-on: ubuntu-latest
     env:
       CI: true
