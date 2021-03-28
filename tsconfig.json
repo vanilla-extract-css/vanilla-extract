@@ -22,7 +22,7 @@
   "include": [
     "./jest.setup.ts",
     "packages/**/*",
-    "fixtures/src/**/*",
+    "fixtures/*/src/**/*",
     "test-helpers/**/*",
     "tests/**/*"
   ]
