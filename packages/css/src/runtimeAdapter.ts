@@ -1,5 +1,5 @@
 import type { Adapter, CSS } from './types';
-import { transformCss } from './transformCSS';
+import { transformCss } from './transformCss';
 import { setAdapter } from './adapter';
 
 const stylesheets: Record<string, CSSStyleSheet> = {};

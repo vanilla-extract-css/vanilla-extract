@@ -1,0 +1,33 @@
+name: Validate
+
+on: push
+
+jobs:
+  test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+        with:
+          # This makes Actions fetch all Git history so that chromatic can diff against previous commits
+          fetch-depth: 0
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@main
+        with:
+          node-version: 14.x
+
+      - name: Install Dependencies
+        run: yarn --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test

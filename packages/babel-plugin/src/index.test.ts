@@ -5,11 +5,11 @@ import plugin from './';
 const transform = (
   source: string,
   options: Options = {},
-  filename = '/root/projects/my-app/dir/mockFilename.css.ts',
+  filename = './my-app/dir/mockFilename.css.ts',
 ) => {
   const result = transformSync(source, {
     filename,
-    root: '/root/projects/my-app',
+    root: './my-app',
     plugins: [[plugin, options]],
     configFile: false,
   });
