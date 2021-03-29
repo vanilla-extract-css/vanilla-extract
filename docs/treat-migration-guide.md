@@ -50,7 +50,7 @@ export const App = () => (
 
 ## Handling portals
 
-CSS Variables don't follow the rules of React context, which means that theming won't automatically work when [rendering to portal.](https://reactjs.org/docs/portals.html) To handle this, you'll need to ensure your theme class is available on context so you can access it when needed.
+CSS Variables don't follow the rules of React context, which means that theming won't automatically work when [rendering to a portal.](https://reactjs.org/docs/portals.html) To handle this, you'll need to ensure your theme class is available on context so you can access it when needed.
 
 As a basic example, let's set up a `VanillaThemeContext`.
 
@@ -72,6 +72,8 @@ export const useVanillaTheme = () => {
   if (themeClass === null) {
     throw new Error('Must be inside VanillaThemeProvider');
   }
+
+  return themeClass;
 };
 ```
 
