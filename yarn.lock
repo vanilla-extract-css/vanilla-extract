@@ -2708,6 +2708,7 @@ __metadata:
     chalk: ^4.1.0
     debug: ^4.3.1
     dedent: ^0.7.0
+    esbuild: ^0.10.2
     eval: ^0.1.6
     javascript-stringify: ^2.0.1
     loader-utils: ^2.0.0
@@ -5051,6 +5052,15 @@ __metadata:
   version: 0.4.1
   resolution: "es-module-lexer@npm:0.4.1"
   checksum: 0c634ce62d3a77b04aa56b9ca2af2b58ff73a834afc76ac6747b25173e97d9050a28451b6ed39b54b84b8498d887ac8bd5bcf2c9aa9ba948ca0aee0acd613618
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.10.2":
+  version: 0.10.2
+  resolution: "esbuild@npm:0.10.2"
+  bin:
+    esbuild: bin/esbuild
+  checksum: 54bb44ea101f8dedea286b321c71b9ba2c739e6979b06696009da0bdd4fc8cf61a452e055ddef5b458c25e6c7ce353ba09e56b592b2beaaffaa72b13ed9b4d6c
   languageName: node
   linkType: hard
 
