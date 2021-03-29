@@ -153,6 +153,9 @@ module.exports = {
   ```
 </details>
 
+### Gatsby
+To add to your Gatsby site, use the [gatsby-plugin-vanilla-extract](https://github.com/KyleAMathews/gatsby-plugin-vanilla-extract) plugin.
+
 ---
 
 ## API
