@@ -18,8 +18,8 @@ describe('Stylesheet', () => {
       expect(await getStylesheet(server.url)).toMatchSnapshot();
     });
 
-    afterAll(() => {
-      server.close();
+    afterAll(async () => {
+      await server.close();
     });
   });
 });
