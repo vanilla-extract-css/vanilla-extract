@@ -1,24 +1,26 @@
 # 🍬 treat migration guide
 
-## `*.treat.ts`
+## New file extension
 
 The file extension has changed from `*.treat.ts` to `*.css.ts`.
 
 ## `.css.ts` files can import other `.css.ts` files
 
-If you've worked around this limitation in the past, you don't have to worry about this anymore! 😎
+This was a limitation in treat. If you've had to work around this in the past, you don't need to worry anymore! 😎
 
-## Autoprefixer
+## Autoprefixer is no longer included
 
-Autoprefixer isn't included in vanilla-extract. If you want this, you'll need to [manually add it to your webpack config.](https://github.com/webpack-contrib/postcss-loader#autoprefixer)
+If you want Autoprefixer, you'll need to [manually add it to your webpack config.](https://github.com/webpack-contrib/postcss-loader#autoprefixer)
 
-On the bright side, this means you have a lot more control over the handling of generated CSS. 😎
+On the bright side, this means you have a lot more control over the handling of generated CSS 😎
 
 ## `createTheme` / `TreatProvider`
 
 **If you only have a single theme,** you can keep things simple by using `createGlobalTheme` and targeting `:root`. If you do this, your variables will just work without having to wire anything up to the document.
 
 ```ts
+// themeVars.css.ts
+
 import { createGlobalTheme } from '@vanilla-extract/css';
 
 export const themeVars = createGlobalTheme(':root', { ... });
@@ -48,7 +50,27 @@ export const App = () => (
 );
 ```
 
-## Handling portals
+## Theme tokens must be strings
+
+To avoid errors when migrating unitless numbers to CSS Variables, numbers are no longer accepted as theme token values. This forces you to be explicit about `px` units, or lack thereof. Think of it as writing a CSS string rather than a JavaScript value since this goes directly into the generated CSS.
+
+```diff
+const themeClass = createGlobalTheme(':root', {
+-  grid: 4,
++  grid: '4px',
+});
+```
+
+If you need a unitless number, just convert it to a string as-is.
+
+```diff
+const themeClass = createGlobalTheme(':root', {
+-  headingWeight: 600,
++  headingWeight: '600',
+});
+```
+
+## Theme classes must be forwarded through React portals
 
 CSS Variables don't follow the rules of React context, which means that theming won't automatically work when [rendering to a portal.](https://reactjs.org/docs/portals.html) To handle this, you'll need to ensure your theme class is available on context so you can access it when needed.
 
@@ -156,11 +178,11 @@ Note that this means the theme is no longer global! You don't need to worry abou
 
 ## `styleMap`
 
-You can use [`mapToStyles`](https://github.com/seek-oss/vanilla-extract#maptostyles) as a drop-in replacement. Note that it now accepts a map function as the second argument, so you may be able to simplify some of your code.
+You can use [`mapToStyles`](https://github.com/seek-oss/vanilla-extract#maptostyles) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify some of your code 😎
 
 ## `styleTree`
 
-Since you now have direct access to theme objects outside of a style block, this function is no longer necessary.
+Since you now have direct access to theme objects outside of a style block, this function is no longer necessary 😎
 
 ## Style calculations
 
