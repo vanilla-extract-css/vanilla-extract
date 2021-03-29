@@ -6,13 +6,13 @@ import {
 } from 'test-helpers';
 import { Viewport } from 'puppeteer';
 
-const variations = ['browser', 'mini-css-extract', 'style-loader'] as const;
+const compileTypes = ['browser', 'mini-css-extract', 'style-loader'] as const;
 
 async function getPageStyles(
   url: string,
   testNodes: Record<string, string>,
   viewport?: Viewport,
-) {
+): Promise<any> {
   await page.goto(url);
   if (viewport) {
     await page.setViewport(viewport);
@@ -30,56 +30,38 @@ async function getPageStyles(
 
 describe('Styling and specificity', () => {
   describe(`Themed`, () => {
-    let servers: Array<TestServer>;
-    const testNodes = getTestNodes('themed');
+    describe.each(compileTypes)('%s', (compileType) => {
+      let server: TestServer;
+      const testNodes = getTestNodes('themed');
 
-    beforeAll(async () => {
-      servers = await Promise.all(
-        variations.map((variation, index) =>
-          startFixture('themed', {
-            type: variation,
-            basePort: index + 1 * 10000,
-          }),
-        ),
-      );
-    });
-
-    describe('on mobile', () => {
-      it('all builds should match', async () => {
-        const results = await Promise.all(
-          servers.map((server) =>
-            getPageStyles(server.url, testNodes, { width: 400, height: 800 }),
-          ),
-        );
-
-        for (const result of results) {
-          expect(result).toEqual(results[0]);
-        }
-
-        expect(results[0]).toMatchSnapshot();
+      beforeAll(async () => {
+        server = await startFixture('themed', {
+          type: compileType,
+          basePort: 10000,
+        });
       });
-    });
 
-    describe('on desktop', () => {
-      it('all builds should match', async () => {
-        const results = await Promise.all(
-          servers.map((server) =>
-            getPageStyles(server.url, testNodes, { width: 1200, height: 900 }),
-          ),
-        );
+      it('on mobile all builds should match', async () => {
+        const pageStyles = await getPageStyles(server.url, testNodes, {
+          width: 400,
+          height: 800,
+        });
 
-        for (const result of results) {
-          expect(result).toEqual(results[0]);
-        }
-
-        expect(results[0]).toMatchSnapshot();
+        expect(pageStyles).toMatchSnapshot();
       });
-    });
 
-    afterAll(() => {
-      for (const server of servers) {
-        server.close();
-      }
+      it('on desktop all builds should match', async () => {
+        const pageStyles = await getPageStyles(server.url, testNodes, {
+          width: 1200,
+          height: 900,
+        });
+
+        expect(pageStyles).toMatchSnapshot();
+      });
+
+      afterAll(async () => {
+        await server.close();
+      });
     });
   });
 });

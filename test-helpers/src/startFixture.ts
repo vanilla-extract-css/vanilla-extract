@@ -57,7 +57,7 @@ type StyleType = 'browser' | 'mini-css-extract' | 'style-loader';
 export interface TestServer {
   type: StyleType;
   url: string;
-  close: () => void;
+  close: () => Promise<void>;
 }
 
 export interface FixtureOptions {
@@ -111,20 +111,23 @@ export const startFixture = (
     const compiler = webpack(config);
 
     const port = await portfinder.getPortPromise({ port: basePort });
+
     const server = new WDS(compiler, {
       hot,
       stats: logLevel,
       noInfo: true,
-    });
-
-    compiler.hooks.done.tap('vanilla-extract-test-helper', () => {
-      resolve({
-        url: `http://localhost:${port}`,
-        close: () => {
-          server.close();
-        },
-        type,
-      });
+      onListening: () => {
+        resolve({
+          url: `http://localhost:${port}`,
+          close: () =>
+            new Promise<void>((resolveClose) =>
+              server.close(() => {
+                compiler.close(() => resolveClose());
+              }),
+            ),
+          type,
+        });
+      },
     });
 
     server.listen(port);
