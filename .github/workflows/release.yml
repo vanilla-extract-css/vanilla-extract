@@ -17,7 +17,6 @@ jobs:
         with:
           # This makes Actions fetch all Git history for semantic-release
           fetch-depth: 0
-          token: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
 
       - name: Setup Node.js 14.x
         uses: actions/setup-node@main
