@@ -6,7 +6,8 @@ import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import { stylesheetName } from './getStylesheet';
+import { stylesheetName } from '../getStylesheet';
+import { TestServer } from './types';
 
 export const getTestNodes = (fixture: string) =>
   require(`@fixtures/${fixture}/test-nodes.json`);
@@ -52,22 +53,14 @@ const defaultWebpackConfig: Configuration = {
   ],
 };
 
-type StyleType = 'browser' | 'mini-css-extract' | 'style-loader';
-
-export interface TestServer {
-  type: StyleType;
-  url: string;
-  close: () => Promise<void>;
-}
-
-export interface FixtureOptions {
-  type?: StyleType;
+export interface WebpackFixtureOptions {
+  type?: 'browser' | 'mini-css-extract' | 'style-loader';
   hot?: boolean;
   mode?: 'development' | 'production';
   basePort?: number;
   logLevel?: Configuration['stats'];
 }
-export const startFixture = (
+export const startWebpackFixture = (
   fixtureName: string,
   {
     type = 'mini-css-extract',
@@ -75,7 +68,7 @@ export const startFixture = (
     mode = 'development',
     basePort,
     logLevel = 'errors-only',
-  }: FixtureOptions = {},
+  }: WebpackFixtureOptions = {},
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
     console.log(

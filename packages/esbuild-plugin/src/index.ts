@@ -1,4 +1,4 @@
-import { join, relative } from 'path';
+import { dirname } from 'path';
 import { promises as fs } from 'fs';
 
 import type { Adapter } from '@vanilla-extract/css';
@@ -11,34 +11,28 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 
-const vanillaNamespace = 'vanilla-extract-ns';
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
 const vanillaExtractFilescopePlugin: Plugin = {
   name: 'vanilla-extract-filescope',
   setup(build) {
-    build.onResolve({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, (args) => ({
-      path: args.path,
-      namespace: vanillaNamespace,
-    }));
+    build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+      console.log('Loading child filescope', path);
 
-    build.onLoad(
-      { filter: /.*/, namespace: vanillaNamespace },
-      async ({ path }) => {
-        const originalSource = await fs.readFile(path, 'utf-8');
+      const originalSource = await fs.readFile(path, 'utf-8');
 
-        const contents = `
+      const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
         setFileScope("${path}");
         ${originalSource}
         endFileScope()
         `;
 
-        return {
-          contents,
-        };
-      },
-    );
+      return {
+        contents,
+        resolveDir: dirname(path),
+      };
+    });
   },
 };
 
@@ -46,7 +40,7 @@ export function vanillaExtractPlugin(): Plugin {
   return {
     name: 'vanilla-extract',
     setup(build) {
-      build.onResolve({ filter: /vanilla\.css?source=.*$/ }, (args) => ({
+      build.onResolve({ filter: /vanilla\.css\?source=.*$/ }, (args) => ({
         path: args.path,
         namespace: vanillaCssNamespace,
       }));
@@ -54,22 +48,20 @@ export function vanillaExtractPlugin(): Plugin {
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         ({ path }) => {
-          const url = new URL(path);
-          const sourceBase64 = url.searchParams.get('source');
+          const [, source] = path.match(/\?source=(.*)$/) ?? [];
 
-          if (!sourceBase64) {
+          if (!source) {
             throw new Error('No source in vanilla CSS file');
           }
 
           return {
-            content: Buffer.from(sourceBase64, 'base64').toString('utf-8'),
+            contents: Buffer.from(source, 'base64').toString('utf-8'),
             loader: 'css',
           };
         },
       );
 
       build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
-        console.log('Found', path);
         const result = await esbuild({
           entryPoints: [path],
           metafile: true,
@@ -78,11 +70,12 @@ export function vanillaExtractPlugin(): Plugin {
           platform: 'node',
           write: false,
           plugins: [vanillaExtractFilescopePlugin],
+          treeShaking: 'ignore-annotations',
         });
 
         const { outputFiles } = result;
 
-        if (outputFiles.length !== 1) {
+        if (!outputFiles || outputFiles.length !== 1) {
           throw new Error('Invalid child compilation');
         }
 
@@ -106,7 +99,14 @@ export function vanillaExtractPlugin(): Plugin {
 
         setAdapter(cssAdapter);
 
-        const evalResult = evalCode(outputFiles[0], path, { console }, true);
+        const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__adapter__);${outputFiles[0].text}`;
+
+        const evalResult = evalCode(
+          sourceWithBoundLoaderInstance,
+          path,
+          { console, __adapter__: cssAdapter },
+          true,
+        );
 
         const cssRequests = [];
 
@@ -117,18 +117,10 @@ export function vanillaExtractPlugin(): Plugin {
           }).join('\n');
           const base64Css = Buffer.from(css, 'utf-8').toString('base64');
 
-          const absoluteFileScope = join(
-            build.initialOptions.sourceRoot ?? '',
-            fileScope,
-          );
-          const request = relative(path, absoluteFileScope);
-
-          cssRequests.push(`${request}.vanilla.css?source=${base64Css}`);
+          cssRequests.push(`${fileScope}.vanilla.css?source=${base64Css}`);
         }
 
         const contents = serializeVanillaModule(cssRequests, evalResult);
-
-        console.log(contents);
 
         return {
           contents,
