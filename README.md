@@ -75,6 +75,8 @@ document.write(`
 ---
 
 - [Setup](#setup)
+  - [webpack](#webpack)
+  - [Gatsby](#gatsby)
 - [API](#api)
   - [style](#style)
   - [globalStyle](#globalstyle)
@@ -98,6 +100,10 @@ document.write(`
 ---
 
 ## Setup
+
+There are currently a couple of integrations to choose from.
+
+### webpack
 
 1. Install the dependencies.
 
@@ -154,7 +160,8 @@ module.exports = {
 </details>
 
 ### Gatsby
-To add to your Gatsby site, use the [gatsby-plugin-vanilla-extract](https://github.com/KyleAMathews/gatsby-plugin-vanilla-extract) plugin.
+
+To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-vanilla-extract](https://github.com/KyleAMathews/gatsby-plugin-vanilla-extract) plugin.
 
 ---
 
