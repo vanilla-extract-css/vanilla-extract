@@ -58,7 +58,7 @@ If you're bundle-splitting your themes, you'll probably want the [`createThemeVa
 
 ## `TreatProvider`
 
-If you've only got a single theme set up via `createGlobalTheme`, this isn't needed anymore.
+> 💡 This isn't required if you only have a single global theme set up via `createGlobalTheme`.
 
 If you do have multiple themes, you no longer need React bindings for theming since we're just using standard CSS Variables. Instead of using a provider at the root of your app, you need to attach your theme class to an element instead.
 
@@ -93,6 +93,8 @@ const themeClass = createGlobalTheme(':root', {
 ```
 
 ## Theme classes must be forwarded through React portals
+
+> 💡 This isn't required if you only have a single global theme set up via `createGlobalTheme`.
 
 CSS Variables don't follow the rules of React context, which means that theming won't automatically work when [rendering to a portal.](https://reactjs.org/docs/portals.html) To handle this, you'll need to ensure your theme class is available on context so you can access it when needed.
 
