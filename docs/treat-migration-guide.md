@@ -133,7 +133,7 @@ import { VanillaThemeProvider } from './VanillaThemeContext';
 export const App = () => (
   <VanillaThemeProvider value={themeClass}>
     <div className={themeClass}>...</div>
-  </VanillaThemeContext>
+  </VanillaThemeProvider>
 );
 ```
 
