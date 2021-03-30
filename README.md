@@ -167,6 +167,8 @@ To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-v
 
 ## API
 
+> 🍬 If you're a [treat](https://seek-oss.github.io/treat) user, check out our [migration guide.](./docs/treat-migration-guide.md)
+
 ### style
 
 Creates styles attached to a locally scoped class name.
