@@ -192,7 +192,7 @@ To get access to variables, we now import theme variables from the `.css.ts` fil
 +import { themeVars } from '../themeVars.css';
 +
 +export const className = style({
-+  marginTop: themeVars.space.small
++  paddingTop: themeVars.space.small
 +});
 ```
 
