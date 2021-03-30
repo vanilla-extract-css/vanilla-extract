@@ -131,7 +131,7 @@ import { themeClass } from './vars.css';
 import { VanillaThemeProvider } from './VanillaThemeContext';
 
 export const App = () => (
-  <VanillaThemeContext value={themeClass}>
+  <VanillaThemeProvider value={themeClass}>
     <div className={themeClass}>...</div>
   </VanillaThemeContext>
 );
