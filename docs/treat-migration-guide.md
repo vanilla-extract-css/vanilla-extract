@@ -60,7 +60,7 @@ If you're bundle-splitting your themes, you'll probably want the [`createThemeVa
 
 > 💡 This isn't required if you only have a single global theme set up via `createGlobalTheme`.
 
-If you do have multiple themes, you no longer need React bindings for theming since we're just using standard CSS Variables. Instead of using a provider at the root of your app, you need to attach your theme class to an element instead.
+You no longer need React bindings to switch themes at runtime since we're just using standard CSS Variables. Instead of using something like `TreatProvider` at the root of your app, you need to attach your theme class to an element instead.
 
 ```tsx
 // App.ts
