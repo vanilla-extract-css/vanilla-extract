@@ -18,46 +18,51 @@ export const startEsbuildFixture = async (
   { mode = 'development', port = 3000 }: EsbuildFixtureOptions = {
     type: 'esbuild',
   },
-): Promise<TestServer> => {
-  const entry = require.resolve(`@fixtures/${fixtureName}`);
-  const outdir = path.join(
-    path.dirname(require.resolve(`@fixtures/${fixtureName}/package.json`)),
-    'dist',
-  );
+): Promise<TestServer> =>
+  new Promise(async (resolve) => {
+    const entry = require.resolve(`@fixtures/${fixtureName}`);
+    const outdir = path.join(
+      path.dirname(require.resolve(`@fixtures/${fixtureName}/package.json`)),
+      'dist',
+    );
 
-  const result = await build({
-    entryPoints: [entry],
-    platform: 'browser',
-    bundle: true,
-    minify: mode === 'production',
-    plugins: [vanillaExtractPlugin()],
-    outdir,
-    watch: true,
-  });
+    const result = await build({
+      entryPoints: [entry],
+      metafile: true,
+      platform: 'browser',
+      bundle: true,
+      minify: mode === 'production',
+      plugins: [vanillaExtractPlugin()],
+      outdir,
+      write: true,
+      watch: true,
+    });
 
-  const scripts = [];
-  const stylesheets = [];
+    const scripts = [];
+    const stylesheets = [];
 
-  for (const file of result.outputFiles || []) {
-    if (file.path.endsWith('.css')) {
-      stylesheets.push(
-        `<link rel="stylesheet" type="text/css" href="${file.path}" />`,
-      );
-    } else if (file.path.endsWith('.js')) {
-      scripts.push(`<script src="${file.path}"></script>`);
-    } else {
-      console.warn('Unsupported output file:', file.path);
+    for (const filePath of Object.keys(result.metafile?.outputs || {})) {
+      const relativeFilePath = path.relative(outdir, filePath);
+
+      if (relativeFilePath.endsWith('.css')) {
+        stylesheets.push(
+          `<link rel="stylesheet" type="text/css" href="${relativeFilePath}" />`,
+        );
+      } else if (relativeFilePath.endsWith('.js')) {
+        scripts.push(`<script src="${relativeFilePath}"></script>`);
+      } else {
+        console.warn('Unsupported output file:', relativeFilePath);
+      }
     }
-  }
 
-  await fs.writeFile(
-    path.join(outdir, 'index.html'),
-    `
+    await fs.writeFile(
+      path.join(outdir, 'index.html'),
+      `
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>esbuild - dicture</title>
+        <title>esbuild - ${fixtureName}</title>
        ${stylesheets.join('\n')}
     </head>
     <body>
@@ -65,30 +70,28 @@ export const startEsbuildFixture = async (
     </body>
     </html>
   `,
-  );
+    );
 
-  const server = http.createServer((request, response) => {
-    return handler(request, response, { public: outdir });
+    const server = http.createServer((request, response) => {
+      return handler(request, response, { public: outdir });
+    });
+
+    const url = `http://localhost:${port}`;
+
+    server.listen(port, () => {
+      resolve({
+        type: 'esbuild',
+        url,
+        close: () =>
+          new Promise<void>((resolve) => {
+            if (result.stop) {
+              result.stop();
+            }
+
+            server.close(() => {
+              resolve();
+            });
+          }),
+      });
+    });
   });
-
-  const url = `http://localhost:${port}`;
-
-  server.listen(port, () => {
-    console.log(`Running at ${url}`);
-  });
-
-  return {
-    type: 'esbuild',
-    url,
-    close: () =>
-      new Promise<void>((resolve) => {
-        if (result.stop) {
-          result.stop();
-        }
-
-        server.close(() => {
-          resolve();
-        });
-      }),
-  };
-};

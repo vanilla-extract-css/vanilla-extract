@@ -17,8 +17,6 @@ const vanillaExtractFilescopePlugin: Plugin = {
   name: 'vanilla-extract-filescope',
   setup(build) {
     build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
-      console.log('Loading child filescope', path);
-
       const originalSource = await fs.readFile(path, 'utf-8');
 
       const contents = `

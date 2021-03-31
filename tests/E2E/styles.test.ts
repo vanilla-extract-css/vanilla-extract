@@ -6,7 +6,12 @@ import {
 } from 'test-helpers';
 import { Viewport } from 'puppeteer';
 
-const compileTypes = ['browser', 'mini-css-extract', 'style-loader'] as const;
+const compileTypes = [
+  'browser',
+  'mini-css-extract',
+  'style-loader',
+  'esbuild',
+] as const;
 
 async function getPageStyles(
   url: string,
