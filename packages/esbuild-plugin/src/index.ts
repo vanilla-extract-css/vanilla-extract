@@ -36,7 +36,14 @@ const vanillaExtractFilescopePlugin: Plugin = {
   },
 };
 
-export function vanillaExtractPlugin(): Plugin {
+interface VanillaExtractPluginOptions {
+  outputCss?: boolean;
+  externals?: Array<string>;
+}
+export function vanillaExtractPlugin({
+  outputCss = true,
+  externals = [],
+}: VanillaExtractPluginOptions = {}): Plugin {
   return {
     name: 'vanilla-extract',
     setup(build) {
@@ -66,7 +73,7 @@ export function vanillaExtractPlugin(): Plugin {
           entryPoints: [path],
           metafile: true,
           bundle: true,
-          external: ['@vanilla-extract'],
+          external: ['@vanilla-extract', ...externals],
           platform: 'node',
           write: false,
           plugins: [vanillaExtractFilescopePlugin],
@@ -85,11 +92,13 @@ export function vanillaExtractPlugin(): Plugin {
 
         const cssAdapter: Adapter = {
           appendCss: (css, fileScope) => {
-            const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
+            if (outputCss) {
+              const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
 
-            fileScopeCss.push(css);
+              fileScopeCss.push(css);
 
-            cssByFileScope.set(fileScope, fileScopeCss);
+              cssByFileScope.set(fileScope, fileScopeCss);
+            }
           },
           registerClassName: (className) => {
             localClassNames.add(className);

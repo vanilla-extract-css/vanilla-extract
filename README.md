@@ -76,6 +76,7 @@ document.write(`
 
 - [Setup](#setup)
   - [webpack](#webpack)
+  - [esbuild](#esbuild)
   - [Gatsby](#gatsby)
 - [API](#api)
   - [style](#style)
@@ -101,7 +102,7 @@ document.write(`
 
 ## Setup
 
-There are currently a couple of integrations to choose from.
+There are currently a few integrations to choose from.
 
 ### webpack
 
@@ -158,6 +159,29 @@ module.exports = {
   };
   ```
 </details>
+
+### esbuild
+
+> Note: We don't currently support automatic readable class names in dev for esbuild.
+
+1. Install the dependencies.
+
+```bash
+$ yarn add --dev @vanilla-extract/css @vanilla-extract/esbuild-plugin
+```
+
+2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
+
+```js
+const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
+
+require('esbuild').buildSync({
+  entryPoints: ['app.ts'],
+  bundle: true,
+  plugins: [vanillaExtractPlugin()],
+  outfile: 'out.js',
+})
+```
 
 ### Gatsby
 
