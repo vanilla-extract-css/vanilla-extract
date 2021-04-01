@@ -5,3 +5,4 @@ dist
 CHANGELOG.md
 .yarn/
 README.md
+.yarnrc.yml
