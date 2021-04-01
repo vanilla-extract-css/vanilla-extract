@@ -30,7 +30,7 @@ describe('Stylesheet', () => {
       server = await startFixture(fixture, {
         type: 'esbuild',
         mode: 'production',
-        basePort: 9000,
+        basePort: 13000,
       });
     });
 

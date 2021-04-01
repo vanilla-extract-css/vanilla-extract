@@ -2,9 +2,7 @@ import path from 'path';
 import { promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
-import { build } from 'esbuild';
-import handler from 'serve-handler';
-import http from 'http';
+import { serve } from 'esbuild';
 
 import { TestServer } from './types';
 
@@ -16,80 +14,50 @@ export interface EsbuildFixtureOptions {
 export const startEsbuildFixture = async (
   fixtureName: string,
   { mode = 'development', port = 3000 }: EsbuildFixtureOptions,
-): Promise<TestServer> =>
-  new Promise(async (resolve) => {
-    const entry = require.resolve(`@fixtures/${fixtureName}`);
-    const outdir = path.join(
-      path.dirname(require.resolve(`@fixtures/${fixtureName}/package.json`)),
-      'dist',
-    );
+): Promise<TestServer> => {
+  const entry = require.resolve(`@fixtures/${fixtureName}`);
+  const projectRoot = path.dirname(
+    require.resolve(`@fixtures/${fixtureName}/package.json`),
+  );
+  const outdir = path.join(projectRoot, 'dist');
 
-    const result = await build({
+  const server = await serve(
+    { servedir: outdir, port },
+    {
       entryPoints: [entry],
       metafile: true,
       platform: 'browser',
       bundle: true,
       minify: mode === 'production',
-      plugins: [vanillaExtractPlugin()],
+      plugins: [vanillaExtractPlugin({ projectRoot })],
       outdir,
-      write: true,
-      watch: true,
-    });
+    },
+  );
 
-    const scripts = [];
-    const stylesheets = [];
-
-    for (const filePath of Object.keys(result.metafile?.outputs || {})) {
-      const relativeFilePath = path.relative(outdir, filePath);
-
-      if (relativeFilePath.endsWith('.css')) {
-        stylesheets.push(
-          `<link rel="stylesheet" type="text/css" href="${relativeFilePath}" />`,
-        );
-      } else if (relativeFilePath.endsWith('.js')) {
-        scripts.push(`<script src="${relativeFilePath}"></script>`);
-      } else {
-        console.warn('Unsupported output file:', relativeFilePath);
-      }
-    }
-
-    await fs.writeFile(
-      path.join(outdir, 'index.html'),
-      `
+  await fs.writeFile(
+    path.join(outdir, 'index.html'),
+    `
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <title>esbuild - ${fixtureName}</title>
-       ${stylesheets.join('\n')}
-    </head>
+      <meta charset="utf-8">
+      <title>esbuild - ${fixtureName}</title>
+      <link rel="stylesheet" type="text/css" href="index.css" />
+      </head>
     <body>
-        ${scripts.join('\n')}
+      <script src="index.js"></script>
     </body>
     </html>
   `,
-    );
+  );
 
-    const server = http.createServer((request, response) => {
-      return handler(request, response, { public: outdir });
-    });
+  return {
+    type: 'esbuild',
+    url: `http://localhost:${port}`,
+    close: () => {
+      server.stop();
 
-    const url = `http://localhost:${port}`;
-
-    server.listen(port, () => {
-      resolve({
-        type: 'esbuild',
-        url,
-        close: () =>
-          new Promise<void>((resolve) => {
-            if (result.stop) {
-              result.stop();
-            }
-
-            server.close(() => {
-              resolve();
-            });
-          }),
-      });
-    });
-  });
+      return Promise.resolve();
+    },
+  };
+};

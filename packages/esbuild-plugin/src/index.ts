@@ -1,4 +1,4 @@
-import { dirname } from 'path';
+import { dirname, relative } from 'path';
 import { promises as fs } from 'fs';
 
 import type { Adapter } from '@vanilla-extract/css';
@@ -13,16 +13,23 @@ import isPlainObject from 'lodash/isPlainObject';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
-const vanillaExtractFilescopePlugin: Plugin = {
+interface FilescopePluginOptions {
+  projectRoot?: string;
+}
+const vanillaExtractFilescopePlugin = ({
+  projectRoot,
+}: FilescopePluginOptions): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
     build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
       if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
+        const fileScope = projectRoot ? relative(projectRoot, path) : path;
+
         const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${path}");
+        setFileScope("${fileScope}");
         ${originalSource}
         endFileScope()
         `;
@@ -34,23 +41,27 @@ const vanillaExtractFilescopePlugin: Plugin = {
       }
     });
   },
-};
+});
 
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   externals?: Array<string>;
+  projectRoot?: string;
 }
 export function vanillaExtractPlugin({
   outputCss = true,
   externals = [],
+  projectRoot,
 }: VanillaExtractPluginOptions = {}): Plugin {
   return {
     name: 'vanilla-extract',
     setup(build) {
-      build.onResolve({ filter: /vanilla\.css\?source=.*$/ }, (args) => ({
-        path: args.path,
-        namespace: vanillaCssNamespace,
-      }));
+      build.onResolve({ filter: /vanilla\.css\?source=.*$/ }, (args) => {
+        return {
+          path: args.path,
+          namespace: vanillaCssNamespace,
+        };
+      });
 
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
@@ -76,7 +87,7 @@ export function vanillaExtractPlugin({
           external: ['@vanilla-extract', ...externals],
           platform: 'node',
           write: false,
-          plugins: [vanillaExtractFilescopePlugin],
+          plugins: [vanillaExtractFilescopePlugin({ projectRoot })],
           treeShaking: 'ignore-annotations',
         });
 

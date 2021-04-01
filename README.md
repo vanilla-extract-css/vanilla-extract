@@ -162,7 +162,10 @@ module.exports = {
 
 ### esbuild
 
-> Note: We don't currently support automatic readable class names in dev for esbuild.
+Current limitations:
+
+- No automatic readable class names in dev
+- The `projectRoot` plugin option must be set to get deterministic class name hashes between build systems
 
 1. Install the dependencies.
 
