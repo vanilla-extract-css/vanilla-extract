@@ -188,9 +188,6 @@ const serializeVanillaModule = (
   const cssImports = cssRequests.map((request) => {
     return `import '${request}';`;
   });
-  // // Ensure consitent import order for content hashing
-  // // Chunk ordering is fixed by the webpack plugin
-  // const sortedCssImports = sortBy(cssImports);
 
   const moduleExports = Object.keys(exports).map((key) =>
     key === 'default'
