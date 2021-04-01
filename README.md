@@ -181,7 +181,7 @@ const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 require('esbuild').buildSync({
   entryPoints: ['app.ts'],
   bundle: true,
-  plugins: [vanillaExtractPlugin()],
+  plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
   outfile: 'out.js',
 })
 ```
