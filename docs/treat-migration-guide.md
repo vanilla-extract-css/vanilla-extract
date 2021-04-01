@@ -228,7 +228,7 @@ Simple calculations (addition, subtraction, multiplication, division) are covere
 
 If you're doing anything more advanced with theme variables that the browser doesn't natively support (e.g. rounding numbers, modifying colours), you'll need to hoist this logic into your theme as CSS Variables.
 
-For example, let's assume you've calculated a lighter colour variant inline using using [Polished.](https://polished.js.org/)
+For example, let's assume you've calculated a lighter colour variant inline using [Polished.](https://polished.js.org/)
 
 ```ts
 import { style } from 'treat';
