@@ -1,3 +1,5 @@
+import portfinder from 'portfinder';
+
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 
@@ -9,14 +11,35 @@ export interface TestServer {
   close: () => Promise<void>;
 }
 
-type FixtureOptions = EsbuildFixtureOptions | WebpackFixtureOptions;
+type SharedOptions = {
+  basePort: number;
+};
+
+type FixtureOptions = SharedOptions &
+  Omit<EsbuildFixtureOptions | WebpackFixtureOptions, 'port'>;
 export async function startFixture(
   fixtureName: string,
-  options: FixtureOptions,
+  { type, basePort, ...options }: FixtureOptions,
 ): Promise<TestServer> {
-  if (options.type === 'esbuild') {
-    return startEsbuildFixture(fixtureName, options);
+  const port = await portfinder.getPortPromise({ port: basePort });
+
+  console.log(
+    [
+      `Starting ${fixtureName} fixture`,
+      ...Object.entries({
+        type,
+        port,
+        ...options,
+      }).map(([key, value]) => `- ${key}: ${value}`),
+    ].join('\n'),
+  );
+
+  if (type === 'esbuild') {
+    return startEsbuildFixture(fixtureName, {
+      type: 'esbuild',
+      port,
+    });
   }
 
-  return startWebpackFixture(fixtureName, options);
+  return startWebpackFixture(fixtureName, { type, ...options, port });
 }

@@ -1,5 +1,196 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Stylesheet themed - esbuild should create valid stylesheet 1`] = `
+"/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/themed/src/shared.css.ts.vanilla.css?source=Ll8xb2tuaWluMCB7CiAgYm94LXNoYWRvdzogMCAwIDVweCByZWQ7Cn0KYm9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogc2t5Ymx1ZTsKfQ== */
+._1okniin0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+
+/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/themed/src/styles.css.ts.vanilla.css?source=QGZvbnQtZmFjZSB7CiAgc3JjOiBsb2NhbCgiSW1wYWN0Iik7CiAgZm9udC1mYW1pbHk6ICJfMTF0ajZrMzAiOwp9CkBmb250LWZhY2UgewogIHNyYzogbG9jYWwoIkNvbWljIFNhbnMgTVMiKTsKICBmb250LWZhbWlseTogTXlHbG9iYWxDb21pY1NhbnM7Cn0KQGtleWZyYW1lcyBfMTF0ajZrMzEgewogIDAlIHsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtNHB4KTsKICB9CiAgMTAwJSB7CiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoNHB4KTsKICB9Cn0KQGtleWZyYW1lcyBnbG9iYWxTbGlkZSB7CiAgMCUgewogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC00cHgpOwogIH0KICAxMDAlIHsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg0cHgpOwogIH0KfQouXzExdGo2azMyIHsKICBhbmltYXRpb246IDNzIGluZmluaXRlIGFsdGVybmF0ZSBnbG9iYWxTbGlkZSBlYXNlLWluLW91dDsKICBkaXNwbGF5OiBmbGV4OwogIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgZ2FwOiB2YXIoLS1zcGFjZS0yX18xOXZ6ZnE4NCk7CiAgcGFkZGluZzogdmFyKC0tc3BhY2UtM19fMTl2emZxODUpOwp9Ci5fMTF0ajZrMzMgewogIGFuaW1hdGlvbjogM3MgaW5maW5pdGUgYWx0ZXJuYXRlIF8xMXRqNmszMSBlYXNlLWluLW91dDsKICBmb250LWZhbWlseTogIl8xMXRqNmszMCI7CiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfXzE5dnpmcTgxLCAiVEhJUyBGQUxMQkFDSyBWQUxVRSBTSE9VTEQgTkVWRVIgQkUgVVNFRCIpOwogIGNvbG9yOiB2YXIoLS1jb2xvcnMtdGV4dF9fMTl2emZxODIpOwp9Ci5fMTl2emZxODYgLl8xOXZ6ZnE4MCAuXzExdGo2azMyIC5fMTF0ajZrMzMgewogIGZvbnQtZmFtaWx5OiBNeUdsb2JhbENvbWljU2FuczsKICBvdXRsaW5lOiA1cHggc29saWQgcmVkOwp9Ci5zdHlsZXNfMVwvMl9fMTF0ajZrMzYgewogIG9wYWNpdHk6IHZhcigtLV8xMXRqNmszNCwgMC41KTsKfQouc3R5bGVzXzFcLzRfXzExdGo2azM3IHsKICBvcGFjaXR5OiB2YXIoLS1fMTF0ajZrMzQsIHZhcigtLV8xMXRqNmszNSwgMC4yNSkpOwp9CkBtZWRpYSBvbmx5IHNjcmVlbiBhbmQgKG1pbi13aWR0aDogNTAwcHgpIHsKICAuXzExdGo2azMyIHsKICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWNvbG9ycy1iYWNrZ3JvdW5kLWNvbG9yX18xOXZ6ZnE4MSk7CiAgfQogIC5fMTF0ajZrMzMgewogICAgYm9yZGVyLXJhZGl1czogOTk5OXB4OwogIH0KfQ== */
+@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"_11tj6k30\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+@keyframes _11tj6k31 {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+@keyframes globalSlide {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+._11tj6k32 {
+  animation: 3s infinite alternate globalSlide ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__19vzfq84);
+  padding: var(--space-3__19vzfq85);
+}
+._11tj6k33 {
+  animation: 3s infinite alternate _11tj6k31 ease-in-out;
+  font-family: \\"_11tj6k30\\";
+  background-color: var(--colors-background-color__19vzfq81, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__19vzfq82);
+}
+._19vzfq86 ._19vzfq80 ._11tj6k32 ._11tj6k33 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+.styles_1\\\\/2__11tj6k36 {
+  opacity: var(--_11tj6k34, 0.5);
+}
+.styles_1\\\\/4__11tj6k37 {
+  opacity: var(--_11tj6k34, var(--_11tj6k35, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  ._11tj6k32 {
+    border: 1px solid var(--colors-background-color__19vzfq81);
+  }
+  ._11tj6k33 {
+    border-radius: 9999px;
+  }
+}
+
+/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/themed/src/themes.css.ts.vanilla.css?source=OnJvb3QsIC5fMTl2emZxODAgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfXzE5dnpmcTgxOiBibHVlOwogIC0tY29sb3JzLXRleHRfXzE5dnpmcTgyOiB3aGl0ZTsKICAtLXNwYWNlLTFfXzE5dnpmcTgzOiA0cHg7CiAgLS1zcGFjZS0yX18xOXZ6ZnE4NDogOHB4OwogIC0tc3BhY2UtM19fMTl2emZxODU6IDEycHg7Cn0KLl8xOXZ6ZnE4NiB7CiAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fMTl2emZxODE6IGdyZWVuOwogIC0tY29sb3JzLXRleHRfXzE5dnpmcTgyOiB3aGl0ZTsKICAtLXNwYWNlLTFfXzE5dnpmcTgzOiA4cHg7CiAgLS1zcGFjZS0yX18xOXZ6ZnE4NDogMTJweDsKICAtLXNwYWNlLTNfXzE5dnpmcTg1OiAxNnB4Owp9Ci5fMTl2emZxODcgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfXzE5dnpmcTgxOiBwaW5rOwogIC0tY29sb3JzLXRleHRfXzE5dnpmcTgyOiBwdXJwbGU7CiAgLS1zcGFjZS0xX18xOXZ6ZnE4MzogNnB4OwogIC0tc3BhY2UtMl9fMTl2emZxODQ6IDEycHg7CiAgLS1zcGFjZS0zX18xOXZ6ZnE4NTogMThweDsKfQpAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkgewogIC5fMTl2emZxODcgewogICAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fMTl2emZxODE6IHB1cnBsZTsKICAgIC0tY29sb3JzLXRleHRfXzE5dnpmcTgyOiBwaW5rOwogIH0KfQ== */
+:root,
+._19vzfq80 {
+  --colors-background-color__19vzfq81: blue;
+  --colors-text__19vzfq82: white;
+  --space-1__19vzfq83: 4px;
+  --space-2__19vzfq84: 8px;
+  --space-3__19vzfq85: 12px;
+}
+._19vzfq86 {
+  --colors-background-color__19vzfq81: green;
+  --colors-text__19vzfq82: white;
+  --space-1__19vzfq83: 8px;
+  --space-2__19vzfq84: 12px;
+  --space-3__19vzfq85: 16px;
+}
+._19vzfq87 {
+  --colors-background-color__19vzfq81: pink;
+  --colors-text__19vzfq82: purple;
+  --space-1__19vzfq83: 6px;
+  --space-2__19vzfq84: 12px;
+  --space-3__19vzfq85: 18px;
+}
+@media screen and (min-width: 768px) {
+  ._19vzfq87 {
+    --colors-background-color__19vzfq81: purple;
+    --colors-text__19vzfq82: pink;
+  }
+}
+"
+`;
+
+exports[`Stylesheet themed - webpack should create valid stylesheet 1`] = `
+":root, .themes_theme__40jr0n0 {
+  --colors-background-color__40jr0n1: blue;
+  --colors-text__40jr0n2: white;
+  --space-1__40jr0n3: 4px;
+  --space-2__40jr0n4: 8px;
+  --space-3__40jr0n5: 12px;
+}
+.themes_altTheme__40jr0n6 {
+  --colors-background-color__40jr0n1: green;
+  --colors-text__40jr0n2: white;
+  --space-1__40jr0n3: 8px;
+  --space-2__40jr0n4: 12px;
+  --space-3__40jr0n5: 16px;
+}
+.themes_responsiveTheme__40jr0n7 {
+  --colors-background-color__40jr0n1: pink;
+  --colors-text__40jr0n2: purple;
+  --space-1__40jr0n3: 6px;
+  --space-2__40jr0n4: 12px;
+  --space-3__40jr0n5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__40jr0n7 {
+    --colors-background-color__40jr0n1: purple;
+    --colors-text__40jr0n2: pink;
+  }
+}
+.shared_shadow__fb6bqk0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles_impact__bh8jtc0\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+@keyframes styles_slide__bh8jtc1 {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+@keyframes globalSlide {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+.styles_container__bh8jtc2 {
+  animation: 3s infinite alternate globalSlide ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__40jr0n4);
+  padding: var(--space-3__40jr0n5);
+}
+.styles_button__bh8jtc3 {
+  animation: 3s infinite alternate styles_slide__bh8jtc1 ease-in-out;
+  font-family: \\"styles_impact__bh8jtc0\\";
+  background-color: var(--colors-background-color__40jr0n1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__40jr0n2);
+}
+.themes_altTheme__40jr0n6 .themes_theme__40jr0n0 .styles_container__bh8jtc2 .styles_button__bh8jtc3 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+.styles_opacity_1\\\\/2__bh8jtc6 {
+  opacity: var(--undefined-var1__bh8jtc4, 0.5);
+}
+.styles_opacity_1\\\\/4__bh8jtc7 {
+  opacity: var(--undefined-var1__bh8jtc4, var(--undefined-var2__bh8jtc5, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__bh8jtc2 {
+    border: 1px solid var(--colors-background-color__40jr0n1);
+  }
+  .styles_button__bh8jtc3 {
+    border-radius: 9999px;
+  }
+}
+
+/*# sourceMappingURL=main.css.map*/"
+`;
+
 exports[`Stylesheet themed should create valid stylesheet 1`] = `
 ":root, .themes_theme__40jr0n0 {
   --colors-background-color__40jr0n1: blue;
@@ -88,6 +279,56 @@ body {
   .styles_button__bh8jtc3 {
     border-radius: 9999px;
   }
+}
+
+/*# sourceMappingURL=main.css.map*/"
+`;
+
+exports[`Stylesheet unused-modules - esbuild should create valid stylesheet 1`] = `
+"/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/unused-modules/src/global.css.ts.vanilla.css?source=Ym9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogbGF2ZW5kZXI7Cn0= */
+body {
+  background-color: lavender;
+}
+
+/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/unused-modules/src/reset/reset.css.ts.vanilla.css?source=Lm4xdG5tMjAgewogIGJveC1zaXppbmc6IGJvcmRlci1ib3g7Cn0= */
+.n1tnm20 {
+  box-sizing: border-box;
+}
+
+/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/unused-modules/src/shared/shared.css.ts.vanilla.css?source=Ym9keSB7CiAgYm9yZGVyOiA1cHggc29saWQgYmxhY2s7Cn0KLmVyNTVjNTAgewogIGRpc3BsYXk6IGZsZXg7Cn0= */
+body {
+  border: 5px solid black;
+}
+.er55c50 {
+  display: flex;
+}
+
+/* vanilla-extract-css-ns:/Users/mjones/projects/vanilla-extract/fixtures/unused-modules/src/used/used.css.ts.vanilla.css?source=Ll8xYm90cnVkMCB7CiAgaGVpZ2h0OiAxMDBweDsKICB3aWR0aDogMTAwcHg7CiAgYmFja2dyb3VuZDogZ3JlZW47Cn0= */
+._1botrud0 {
+  height: 100px;
+  width: 100px;
+  background: green;
+}
+"
+`;
+
+exports[`Stylesheet unused-modules - webpack should create valid stylesheet 1`] = `
+"body {
+  background-color: lavender;
+}
+.reset_default__uwiqg30 {
+  box-sizing: border-box;
+}
+body {
+  border: 5px solid black;
+}
+.shared_default__1qsu10z0 {
+  display: flex;
+}
+.used_className__1q2bj4l0 {
+  height: 100px;
+  width: 100px;
+  background: green;
 }
 
 /*# sourceMappingURL=main.css.map*/"

@@ -11,13 +11,11 @@ import { TestServer } from './types';
 export interface EsbuildFixtureOptions {
   type: 'esbuild';
   mode?: 'development' | 'production';
-  port?: number;
+  port: number;
 }
 export const startEsbuildFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: EsbuildFixtureOptions = {
-    type: 'esbuild',
-  },
+  { mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
     const entry = require.resolve(`@fixtures/${fixtureName}`);

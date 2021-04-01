@@ -16,20 +16,22 @@ const vanillaCssNamespace = 'vanilla-extract-css-ns';
 const vanillaExtractFilescopePlugin: Plugin = {
   name: 'vanilla-extract-filescope',
   setup(build) {
-    build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+    build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      const contents = `
+      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
+        const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
         setFileScope("${path}");
         ${originalSource}
         endFileScope()
         `;
 
-      return {
-        contents,
-        resolveDir: dirname(path),
-      };
+        return {
+          contents,
+          resolveDir: dirname(path),
+        };
+      }
     });
   },
 };

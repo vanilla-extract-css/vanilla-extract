@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "peerDependencies": {
-    "esbuild": "*"
+    "esbuild": "^0.11.1"
   },
   "dependencies": {
     "@vanilla-extract/css": "^0.1.0",
