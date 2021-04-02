@@ -1,5 +1,5 @@
 import path from 'path';
-import { promises as fs } from 'fs';
+import { existsSync, promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { serve } from 'esbuild';
@@ -20,6 +20,12 @@ export const startEsbuildFixture = async (
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
   const outdir = path.join(projectRoot, 'dist');
+
+  if (existsSync(outdir)) {
+    await fs.rm(outdir, { recursive: true });
+  }
+
+  await fs.mkdir(outdir);
 
   const server = await serve(
     { servedir: outdir, port },
