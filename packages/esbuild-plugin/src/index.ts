@@ -88,7 +88,6 @@ export function vanillaExtractPlugin({
           platform: 'node',
           write: false,
           plugins: [vanillaExtractFilescopePlugin({ projectRoot })],
-          treeShaking: 'ignore-annotations',
         });
 
         const { outputFiles } = result;
