@@ -178,13 +178,12 @@ $ yarn add --dev @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```js
 const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 
-require('esbuild').buildSync({
+require('esbuild').build({
   entryPoints: ['app.ts'],
   bundle: true,
   plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
   outfile: 'out.js',
-})
-```
+}).catch(() => process.exit(1))
 
 ### Gatsby
 
