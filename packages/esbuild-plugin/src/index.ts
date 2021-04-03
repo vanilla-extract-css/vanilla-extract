@@ -11,6 +11,10 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 
+const vanillaExtractPath = dirname(
+  require.resolve('@vanilla-extract/css/package.json'),
+);
+
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
 interface FilescopePluginOptions {
@@ -24,7 +28,10 @@ const vanillaExtractFilescopePlugin = ({
     build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
+      if (
+        path.indexOf(vanillaExtractPath) === -1 &&
+        originalSource.indexOf('@vanilla-extract/css/fileScope') === -1
+      ) {
         const fileScope = projectRoot ? relative(projectRoot, path) : path;
 
         const contents = `
