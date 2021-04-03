@@ -24,7 +24,10 @@ const vanillaExtractFilescopePlugin = ({
     build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
+      if (
+        originalSource.indexOf('@vanilla-extract/css') > -1 &&
+        originalSource.indexOf('@vanilla-extract/css/fileScope') === -1
+      ) {
         const fileScope = projectRoot ? relative(projectRoot, path) : path;
 
         const contents = `
@@ -47,12 +50,19 @@ interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   externals?: Array<string>;
   projectRoot?: string;
+  runtime?: boolean;
 }
 export function vanillaExtractPlugin({
   outputCss = true,
   externals = [],
   projectRoot,
+  runtime = false,
 }: VanillaExtractPluginOptions = {}): Plugin {
+  if (runtime) {
+    // If using runtime CSS then just apply fileScopes to code
+    return vanillaExtractFilescopePlugin({ projectRoot });
+  }
+
   return {
     name: 'vanilla-extract',
     setup(build) {

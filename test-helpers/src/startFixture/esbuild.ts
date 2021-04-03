@@ -7,13 +7,13 @@ import { serve } from 'esbuild';
 import { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
-  type: 'esbuild';
+  type: 'esbuild' | 'esbuild-runtime';
   mode?: 'development' | 'production';
   port: number;
 }
 export const startEsbuildFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: EsbuildFixtureOptions,
+  { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
   const entry = require.resolve(`@fixtures/${fixtureName}`);
   const projectRoot = path.dirname(
@@ -35,8 +35,16 @@ export const startEsbuildFixture = async (
       platform: 'browser',
       bundle: true,
       minify: mode === 'production',
-      plugins: [vanillaExtractPlugin({ projectRoot })],
+      plugins: [
+        vanillaExtractPlugin({
+          projectRoot,
+          runtime: type === 'esbuild-runtime',
+        }),
+      ],
       outdir,
+      define: {
+        'process.env.NODE_ENV': JSON.stringify(mode),
+      },
     },
   );
 

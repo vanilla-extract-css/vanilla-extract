@@ -11,6 +11,7 @@ const compileTypes = [
   'mini-css-extract',
   'style-loader',
   'esbuild',
+  'esbuild-runtime',
 ] as const;
 
 async function getPageStyles(
