@@ -184,6 +184,7 @@ require('esbuild').build({
   plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
   outfile: 'out.js',
 }).catch(() => process.exit(1))
+```
 
 ### Gatsby
 

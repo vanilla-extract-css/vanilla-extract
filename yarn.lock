@@ -2710,7 +2710,7 @@ __metadata:
     javascript-stringify: ^2.0.1
     lodash: ^4.17.21
   peerDependencies:
-    esbuild: ^0.11.1
+    esbuild: ">=0.11.1"
   languageName: unknown
   linkType: soft
 
