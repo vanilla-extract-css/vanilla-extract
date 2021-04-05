@@ -74,7 +74,7 @@ function render() {
 render();
 
 // @ts-expect-error
-if (module.hot) {
+if (typeof module !== 'undefined' && module.hot) {
   // @ts-expect-error
   module.hot.accept(['./shared.css', './styles.css', './themes.css'], () => {
     render();

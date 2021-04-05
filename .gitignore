@@ -11,3 +11,4 @@ packages/**/README.md
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.rollup.cache

@@ -2,7 +2,8 @@ export type BuildType =
   | 'browser'
   | 'mini-css-extract'
   | 'style-loader'
-  | 'esbuild';
+  | 'esbuild'
+  | 'rollup';
 
 export interface TestServer {
   type: BuildType;

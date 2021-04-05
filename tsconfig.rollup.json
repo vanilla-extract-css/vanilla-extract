@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["es2015", "es2017", "dom"],
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "allowJs": true,
+    "incremental": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "downlevelIteration": true
+  },
+  "exclude": ["node_modules", "**/dist/**"],
+  "include": [
+    "./jest.setup.ts",
+    "packages/**/*",
+    "fixtures/*/src/**/*",
+    "test-helpers/**/*",
+    "tests/**/*"
+  ]
+}
