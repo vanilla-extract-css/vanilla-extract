@@ -2697,6 +2697,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
+  dependencies:
+    "@types/dedent": ^0.7.0
+    "@vanilla-extract/css": ^0.1.0
+    chalk: ^4.1.0
+    dedent: ^0.7.0
+    esbuild: ^0.11.1
+    eval: ^0.1.6
+    javascript-stringify: ^2.0.1
+    lodash: ^4.17.21
+  peerDependencies:
+    esbuild: ">=0.11.1"
+  languageName: unknown
+  linkType: soft
+
 "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
@@ -5051,6 +5068,15 @@ __metadata:
   version: 0.4.1
   resolution: "es-module-lexer@npm:0.4.1"
   checksum: 0c634ce62d3a77b04aa56b9ca2af2b58ff73a834afc76ac6747b25173e97d9050a28451b6ed39b54b84b8498d887ac8bd5bcf2c9aa9ba948ca0aee0acd613618
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "esbuild@npm:0.11.1"
+  bin:
+    esbuild: bin/esbuild
+  checksum: 76d8993d3e3c6712ec4106bd5d82222bc22a51e17d0fcc1a1c4ca2253ebf6f3bd26c7f70ff2e4baaa03f41a1ff0423966db3180b401dd8330514ac6d2da1f919
   languageName: node
   linkType: hard
 

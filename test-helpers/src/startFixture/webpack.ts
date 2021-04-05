@@ -1,12 +1,12 @@
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import WDS from 'webpack-dev-server';
 import webpack, { Configuration } from 'webpack';
-import portfinder from 'portfinder';
 import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import { stylesheetName } from './getStylesheet';
+import { stylesheetName } from '../getStylesheet';
+import { TestServer } from './types';
 
 export const getTestNodes = (fixture: string) =>
   require(`@fixtures/${fixture}/test-nodes.json`);
@@ -52,43 +52,24 @@ const defaultWebpackConfig: Configuration = {
   ],
 };
 
-type StyleType = 'browser' | 'mini-css-extract' | 'style-loader';
-
-export interface TestServer {
-  type: StyleType;
-  url: string;
-  close: () => Promise<void>;
-}
-
-export interface FixtureOptions {
-  type?: StyleType;
+export interface WebpackFixtureOptions {
+  type: 'browser' | 'mini-css-extract' | 'style-loader';
   hot?: boolean;
   mode?: 'development' | 'production';
-  basePort?: number;
+  port: number;
   logLevel?: Configuration['stats'];
 }
-export const startFixture = (
+export const startWebpackFixture = (
   fixtureName: string,
   {
-    type = 'mini-css-extract',
+    type,
     hot = false,
     mode = 'development',
-    basePort,
+    port,
     logLevel = 'errors-only',
-  }: FixtureOptions = {},
+  }: WebpackFixtureOptions,
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    console.log(
-      [
-        `Starting ${fixtureName} fixture`,
-        ...Object.entries({
-          type,
-          hot,
-          mode,
-        }).map(([key, value]) => `- ${key}: ${value}`),
-      ].join('\n'),
-    );
-
     const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
@@ -109,8 +90,6 @@ export const startFixture = (
       plugins: type !== 'browser' ? [new VanillaExtractPlugin()] : undefined,
     });
     const compiler = webpack(config);
-
-    const port = await portfinder.getPortPromise({ port: basePort });
 
     const server = new WDS(compiler, {
       hot,

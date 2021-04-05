@@ -1,6 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Stylesheet themed should create valid stylesheet 1`] = `
+exports[`Stylesheet themed - esbuild should create valid stylesheet 1`] = `
+"/* vanilla-extract-css-ns:src/shared.css.ts.vanilla.css?source=Ll85azJ3YXIwIHsKICBib3gtc2hhZG93OiAwIDAgNXB4IHJlZDsKfQpib2R5IHsKICBiYWNrZ3JvdW5kLWNvbG9yOiBza3libHVlOwp9 */
+._9k2war0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+
+/* vanilla-extract-css-ns:src/styles.css.ts.vanilla.css?source=QGZvbnQtZmFjZSB7CiAgc3JjOiBsb2NhbCgiSW1wYWN0Iik7CiAgZm9udC1mYW1pbHk6ICJnN3ZjZTkwIjsKfQpAZm9udC1mYWNlIHsKICBzcmM6IGxvY2FsKCJDb21pYyBTYW5zIE1TIik7CiAgZm9udC1mYW1pbHk6IE15R2xvYmFsQ29taWNTYW5zOwp9CkBrZXlmcmFtZXMgZzd2Y2U5MSB7CiAgMCUgewogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC00cHgpOwogIH0KICAxMDAlIHsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg0cHgpOwogIH0KfQpAa2V5ZnJhbWVzIGdsb2JhbFNsaWRlIHsKICAwJSB7CiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTRweCk7CiAgfQogIDEwMCUgewogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDRweCk7CiAgfQp9Ci5nN3ZjZTkyIHsKICBhbmltYXRpb246IDNzIGluZmluaXRlIGFsdGVybmF0ZSBnbG9iYWxTbGlkZSBlYXNlLWluLW91dDsKICBkaXNwbGF5OiBmbGV4OwogIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgZ2FwOiB2YXIoLS1zcGFjZS0yX182Y2JtbHM0KTsKICBwYWRkaW5nOiB2YXIoLS1zcGFjZS0zX182Y2JtbHM1KTsKfQouZzd2Y2U5MyB7CiAgYW5pbWF0aW9uOiAzcyBpbmZpbml0ZSBhbHRlcm5hdGUgZzd2Y2U5MSBlYXNlLWluLW91dDsKICBmb250LWZhbWlseTogImc3dmNlOTAiOwogIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWNvbG9ycy1iYWNrZ3JvdW5kLWNvbG9yX182Y2JtbHMxLCAiVEhJUyBGQUxMQkFDSyBWQUxVRSBTSE9VTEQgTkVWRVIgQkUgVVNFRCIpOwogIGNvbG9yOiB2YXIoLS1jb2xvcnMtdGV4dF9fNmNibWxzMik7Cn0KLl82Y2JtbHM2IC5fNmNibWxzMCAuZzd2Y2U5MiAuZzd2Y2U5MyB7CiAgZm9udC1mYW1pbHk6IE15R2xvYmFsQ29taWNTYW5zOwogIG91dGxpbmU6IDVweCBzb2xpZCByZWQ7Cn0KLnN0eWxlc18xXC8yX19nN3ZjZTk2IHsKICBvcGFjaXR5OiB2YXIoLS1nN3ZjZTk0LCAwLjUpOwp9Ci5zdHlsZXNfMVwvNF9fZzd2Y2U5NyB7CiAgb3BhY2l0eTogdmFyKC0tZzd2Y2U5NCwgdmFyKC0tZzd2Y2U5NSwgMC4yNSkpOwp9CkBtZWRpYSBvbmx5IHNjcmVlbiBhbmQgKG1pbi13aWR0aDogNTAwcHgpIHsKICAuZzd2Y2U5MiB7CiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fNmNibWxzMSk7CiAgfQogIC5nN3ZjZTkzIHsKICAgIGJvcmRlci1yYWRpdXM6IDk5OTlweDsKICB9Cn0= */
+@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"g7vce90\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+@keyframes g7vce91 {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+@keyframes globalSlide {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+.g7vce92 {
+  animation: 3s infinite alternate globalSlide ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__6cbmls4);
+  padding: var(--space-3__6cbmls5);
+}
+.g7vce93 {
+  animation: 3s infinite alternate g7vce91 ease-in-out;
+  font-family: \\"g7vce90\\";
+  background-color: var(--colors-background-color__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__6cbmls2);
+}
+._6cbmls6 ._6cbmls0 .g7vce92 .g7vce93 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+.styles_1\\\\/2__g7vce96 {
+  opacity: var(--g7vce94, 0.5);
+}
+.styles_1\\\\/4__g7vce97 {
+  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .g7vce92 {
+    border: 1px solid var(--colors-background-color__6cbmls1);
+  }
+  .g7vce93 {
+    border-radius: 9999px;
+  }
+}
+
+/* vanilla-extract-css-ns:src/themes.css.ts.vanilla.css?source=OnJvb3QsIC5fNmNibWxzMCB7CiAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fNmNibWxzMTogYmx1ZTsKICAtLWNvbG9ycy10ZXh0X182Y2JtbHMyOiB3aGl0ZTsKICAtLXNwYWNlLTFfXzZjYm1sczM6IDRweDsKICAtLXNwYWNlLTJfXzZjYm1sczQ6IDhweDsKICAtLXNwYWNlLTNfXzZjYm1sczU6IDEycHg7Cn0KLl82Y2JtbHM2IHsKICAtLWNvbG9ycy1iYWNrZ3JvdW5kLWNvbG9yX182Y2JtbHMxOiBncmVlbjsKICAtLWNvbG9ycy10ZXh0X182Y2JtbHMyOiB3aGl0ZTsKICAtLXNwYWNlLTFfXzZjYm1sczM6IDhweDsKICAtLXNwYWNlLTJfXzZjYm1sczQ6IDEycHg7CiAgLS1zcGFjZS0zX182Y2JtbHM1OiAxNnB4Owp9Ci5fNmNibWxzNyB7CiAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fNmNibWxzMTogcGluazsKICAtLWNvbG9ycy10ZXh0X182Y2JtbHMyOiBwdXJwbGU7CiAgLS1zcGFjZS0xX182Y2JtbHMzOiA2cHg7CiAgLS1zcGFjZS0yX182Y2JtbHM0OiAxMnB4OwogIC0tc3BhY2UtM19fNmNibWxzNTogMThweDsKfQpAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkgewogIC5fNmNibWxzNyB7CiAgICAtLWNvbG9ycy1iYWNrZ3JvdW5kLWNvbG9yX182Y2JtbHMxOiBwdXJwbGU7CiAgICAtLWNvbG9ycy10ZXh0X182Y2JtbHMyOiBwaW5rOwogIH0KfQ== */
+:root,
+._6cbmls0 {
+  --colors-background-color__6cbmls1: blue;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 4px;
+  --space-2__6cbmls4: 8px;
+  --space-3__6cbmls5: 12px;
+}
+._6cbmls6 {
+  --colors-background-color__6cbmls1: green;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 8px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 16px;
+}
+._6cbmls7 {
+  --colors-background-color__6cbmls1: pink;
+  --colors-text__6cbmls2: purple;
+  --space-1__6cbmls3: 6px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 18px;
+}
+@media screen and (min-width: 768px) {
+  ._6cbmls7 {
+    --colors-background-color__6cbmls1: purple;
+    --colors-text__6cbmls2: pink;
+  }
+}
+"
+`;
+
+exports[`Stylesheet themed - webpack should create valid stylesheet 1`] = `
 ":root, .themes_theme__40jr0n0 {
   --colors-background-color__40jr0n1: blue;
   --colors-text__40jr0n2: white;
@@ -93,7 +191,35 @@ body {
 /*# sourceMappingURL=main.css.map*/"
 `;
 
-exports[`Stylesheet unused-modules should create valid stylesheet 1`] = `
+exports[`Stylesheet unused-modules - esbuild should create valid stylesheet 1`] = `
+"/* vanilla-extract-css-ns:src/global.css.ts.vanilla.css?source=Ym9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogbGF2ZW5kZXI7Cn0= */
+body {
+  background-color: lavender;
+}
+
+/* vanilla-extract-css-ns:src/reset/reset.css.ts.vanilla.css?source=Ll8xM2RneDV4MCB7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQ== */
+._13dgx5x0 {
+  box-sizing: border-box;
+}
+
+/* vanilla-extract-css-ns:src/shared/shared.css.ts.vanilla.css?source=Ym9keSB7CiAgYm9yZGVyOiA1cHggc29saWQgYmxhY2s7Cn0KLmRobW5lbDAgewogIGRpc3BsYXk6IGZsZXg7Cn0= */
+body {
+  border: 5px solid black;
+}
+.dhmnel0 {
+  display: flex;
+}
+
+/* vanilla-extract-css-ns:src/used/used.css.ts.vanilla.css?source=Ll8xZnVvc2x3MCB7CiAgaGVpZ2h0OiAxMDBweDsKICB3aWR0aDogMTAwcHg7CiAgYmFja2dyb3VuZDogZ3JlZW47Cn0= */
+._1fuoslw0 {
+  height: 100px;
+  width: 100px;
+  background: green;
+}
+"
+`;
+
+exports[`Stylesheet unused-modules - webpack should create valid stylesheet 1`] = `
 "body {
   background-color: lavender;
 }
