@@ -30,10 +30,7 @@ const vanillaExtractFilescopePlugin = ({
       return null;
     }
 
-    if (
-      code.indexOf('@vanilla-extract/css') > -1 &&
-      code.indexOf('@vanilla-extract/css/fileScope') === -1
-    ) {
+    if (code.indexOf('@vanilla-extract/css/fileScope') === -1) {
       return (
         await transformAsync(code, {
           filename: id,
