@@ -1,14 +1,22 @@
-import { relative } from 'path';
+import { dirname } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import dedent from 'dedent';
 import { rollup, Plugin } from 'rollup';
 import { createFilter } from '@rollup/pluginutils';
+import { transformAsync } from '@babel/core';
+import babelPlugin from '@vanilla-extract/babel-plugin';
 // @ts-expect-error
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
+
+const vanillaExtractPath = dirname(
+  require.resolve('@vanilla-extract/css/package.json'),
+);
+
+const isVanillaFile = createFilter(/\.css\.(ts|tsx|js|jsx)$/);
 
 interface FilescopePluginOptions {
   projectRoot?: string;
@@ -17,19 +25,22 @@ const vanillaExtractFilescopePlugin = ({
   projectRoot,
 }: FilescopePluginOptions = {}): Plugin => ({
   name: 'vanilla-extract-filescope',
-  transform(code, id) {
+  async transform(code, id) {
+    if (id.indexOf(vanillaExtractPath) > -1) {
+      return null;
+    }
+
     if (
-      code.indexOf('@vanilla-extract/css') > 0 &&
+      code.indexOf('@vanilla-extract/css') > -1 &&
       code.indexOf('@vanilla-extract/css/fileScope') === -1
     ) {
-      const fileScope = projectRoot ? relative(projectRoot, id) : id;
-
-      return dedent`
-        import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${fileScope}");
-        ${code}
-        endFileScope()
-      `;
+      return (
+        await transformAsync(code, {
+          filename: id,
+          configFile: false,
+          plugins: [[babelPlugin, { projectRoot }]],
+        })
+      )?.code;
     }
   },
 });
@@ -40,6 +51,7 @@ interface VanillaExtractPluginOptions {
   externals?: Array<string>;
   projectRoot?: string;
   plugins?: Array<Plugin>;
+  runtime?: boolean;
 }
 export const vanillaExtractPlugin = ({
   outputCss = true,
@@ -47,8 +59,12 @@ export const vanillaExtractPlugin = ({
   externals = [],
   projectRoot,
   plugins = [],
+  runtime = false,
 }: VanillaExtractPluginOptions = {}): Plugin => {
-  const isVanillaFile = createFilter(/\.css\.(ts|tsx|js|jsx)$/);
+  if (runtime) {
+    // If using runtime CSS then just apply fileScopes to code
+    return vanillaExtractFilescopePlugin({ projectRoot });
+  }
 
   type Css = Parameters<Adapter['appendCss']>[0];
   const cssByFileScope = new Map<string, Array<Css>>();
@@ -61,10 +77,6 @@ export const vanillaExtractPlugin = ({
     async transform(_code, id) {
       if (!isVanillaFile(id)) {
         return null;
-      }
-
-      if (this.cache.has(id)) {
-        return this.cache.get(id);
       }
 
       const bundle = await rollup({
@@ -108,14 +120,18 @@ export const vanillaExtractPlugin = ({
         true,
       );
 
-      for (const [_fileScope, fileScopeCss] of cssByFileScope) {
-        const css = transformCss({
-          localClassNames: Array.from(localClassNames),
-          cssObjs: fileScopeCss,
-        }).join('\n');
+      const processedCss: Array<string> = [];
 
-        processedCssById.set(id, `${processedCssById.get(id) ?? ''}${css}`);
+      for (const [_fileScope, fileScopeCss] of cssByFileScope) {
+        processedCss.push(
+          transformCss({
+            localClassNames: Array.from(localClassNames),
+            cssObjs: fileScopeCss,
+          }).join('\n'),
+        );
       }
+
+      processedCssById.set(id, processedCss.join('\n'));
 
       return serializeVanillaModule(evalResult);
     },
@@ -125,15 +141,10 @@ export const vanillaExtractPlugin = ({
         return;
       }
 
-      let source = '';
-
-      [...this.getModuleIds()].map((moduleId) => {
-        const css = processedCssById.get(moduleId);
-
-        if (css) {
-          source += css;
-        }
-      });
+      const source = [...this.getModuleIds()]
+        .map((moduleId) => processedCssById.get(moduleId))
+        .filter(Boolean)
+        .join('\n');
 
       this.emitFile({
         type: 'asset',

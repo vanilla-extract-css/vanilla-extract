@@ -2,7 +2,7 @@ import path from 'path';
 import { promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/rollup-plugin';
-import { rollup, Plugin } from 'rollup';
+import { rollup } from 'rollup';
 import resolvePlugin from '@rollup/plugin-node-resolve';
 import commonjsPlugin from '@rollup/plugin-commonjs';
 import replacePlugin from 'rollup-plugin-replace';
@@ -12,30 +12,6 @@ import jsonPlugin from '@rollup/plugin-json';
 import servePlugin from 'rollup-plugin-serve';
 
 import { TestServer } from './types';
-
-interface FilescopePluginOptions {
-  projectRoot?: string;
-}
-const vanillaExtractFilescopePlugin = ({
-  projectRoot,
-}: FilescopePluginOptions = {}): Plugin => ({
-  name: 'vanilla-extract-filescope',
-  transform(code, id) {
-    if (
-      code.indexOf('@vanilla-extract/css') > 0 &&
-      code.indexOf('@vanilla-extract/css/fileScope') === -1
-    ) {
-      const fileScope = projectRoot ? path.relative(projectRoot, id) : id;
-
-      return `
-        import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${fileScope}");
-        ${code}
-        endFileScope()
-      `;
-    }
-  },
-});
 
 export interface RollupFixtureOptions {
   type: 'rollup';
@@ -52,6 +28,7 @@ export const startRollupFixture = async (
   );
   const outdir = path.join(projectRoot, 'dist');
 
+  let server: any;
   const bundle = await rollup({
     input: entry,
     plugins: [
@@ -66,7 +43,6 @@ export const startRollupFixture = async (
         tsconfig: path.resolve(__dirname, '../../../tsconfig.rollup.json'),
       }),
       jsonPlugin(),
-      // vanillaExtractFilescopePlugin({ projectRoot }),
       vanillaExtractPlugin({
         projectRoot,
         fileName: 'index.css',
@@ -86,13 +62,12 @@ export const startRollupFixture = async (
         contentBase: outdir,
         host: 'localhost',
         port,
-        // onListening(server: any) {
-        //   resolvePromise(server);
-        // },
+        onListening(s: any) {
+          server = s;
+        },
       }),
     ],
   });
-  // });
 
   await bundle.write({
     file: path.join(outdir, 'bundle.js'),
@@ -120,7 +95,7 @@ export const startRollupFixture = async (
     type: 'rollup',
     url: `http://localhost:${port}`,
     close: () => {
-      // server.stop()
+      server.stop();
 
       return Promise.resolve();
     },

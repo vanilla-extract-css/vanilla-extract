@@ -15,8 +15,10 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.13.10",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@rollup/pluginutils": "^4.1.0",
+    "@vanilla-extract/babel-plugin": "^0.1.0",
     "@vanilla-extract/css": "^0.1.0",
     "chalk": "^4.1.0",
     "dedent": "^0.7.0",

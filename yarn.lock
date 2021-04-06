@@ -2727,7 +2727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/babel-plugin@workspace:packages/babel-plugin":
+"@vanilla-extract/babel-plugin@^0.1.0, @vanilla-extract/babel-plugin@workspace:packages/babel-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/babel-plugin@workspace:packages/babel-plugin"
   dependencies:
@@ -2777,9 +2777,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/rollup-plugin@workspace:packages/rollup-plugin"
   dependencies:
+    "@babel/core": ^7.13.10
     "@rollup/plugin-node-resolve": ^11.2.1
     "@rollup/pluginutils": ^4.1.0
     "@types/dedent": ^0.7.0
+    "@vanilla-extract/babel-plugin": ^0.1.0
     "@vanilla-extract/css": ^0.1.0
     chalk: ^4.1.0
     dedent: ^0.7.0
