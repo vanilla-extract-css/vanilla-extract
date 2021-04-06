@@ -1,5 +1,5 @@
 import path from 'path';
-import { promises as fs } from 'fs';
+import { existsSync, promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { serve } from 'esbuild';
@@ -7,19 +7,25 @@ import { serve } from 'esbuild';
 import { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
-  type: 'esbuild';
+  type: 'esbuild' | 'esbuild-runtime';
   mode?: 'development' | 'production';
   port: number;
 }
 export const startEsbuildFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: EsbuildFixtureOptions,
+  { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
   const entry = require.resolve(`@fixtures/${fixtureName}`);
   const projectRoot = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
   const outdir = path.join(projectRoot, 'dist');
+
+  if (existsSync(outdir)) {
+    await fs.rm(outdir, { recursive: true });
+  }
+
+  await fs.mkdir(outdir);
 
   const server = await serve(
     { servedir: outdir, port },
@@ -29,8 +35,16 @@ export const startEsbuildFixture = async (
       platform: 'browser',
       bundle: true,
       minify: mode === 'production',
-      plugins: [vanillaExtractPlugin({ projectRoot })],
+      plugins: [
+        vanillaExtractPlugin({
+          projectRoot,
+          runtime: type === 'esbuild-runtime',
+        }),
+      ],
       outdir,
+      define: {
+        'process.env.NODE_ENV': JSON.stringify(mode),
+      },
     },
   );
 

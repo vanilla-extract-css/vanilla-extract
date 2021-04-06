@@ -4,15 +4,16 @@ import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startRollupFixture, RollupFixtureOptions } from './rollup';
 
-type StyleType =
+type BuildType =
   | 'browser'
   | 'mini-css-extract'
   | 'style-loader'
   | 'esbuild'
+  | 'esbuild-runtime'
   | 'rollup';
 
 export interface TestServer {
-  type: StyleType;
+  type: BuildType;
   url: string;
   close: () => Promise<void>;
 }
@@ -43,16 +44,16 @@ export async function startFixture(
     ].join('\n'),
   );
 
-  if (type === 'esbuild') {
+  if (type === 'esbuild' || type === 'esbuild-runtime') {
     return startEsbuildFixture(fixtureName, {
-      type: 'esbuild',
+      type,
       port,
     });
   }
 
   if (type === 'rollup') {
     return startRollupFixture(fixtureName, {
-      type: 'rollup',
+      type,
       port,
     });
   }

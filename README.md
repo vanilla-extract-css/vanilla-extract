@@ -164,7 +164,7 @@ module.exports = {
 
 Current limitations:
 
-- No automatic readable class names in dev
+- No automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 - The `projectRoot` plugin option must be set to get deterministic class name hashes between build systems
 
 1. Install the dependencies.
@@ -178,12 +178,12 @@ $ yarn add --dev @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```js
 const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 
-require('esbuild').buildSync({
+require('esbuild').build({
   entryPoints: ['app.ts'],
   bundle: true,
   plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
   outfile: 'out.js',
-})
+}).catch(() => process.exit(1))
 ```
 
 ### Gatsby
