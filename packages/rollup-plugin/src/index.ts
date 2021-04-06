@@ -68,7 +68,7 @@ export const vanillaExtractPlugin = ({
 
   type Css = Parameters<Adapter['appendCss']>[0];
   const cssByFileScope = new Map<string, Array<Css>>();
-  const processedCssById = new Map<string, string>();
+  const processedCssById = new Map<string, Array<string>>();
   const localClassNames = new Set<string>();
 
   return {
@@ -131,7 +131,7 @@ export const vanillaExtractPlugin = ({
         );
       }
 
-      processedCssById.set(id, processedCss.join('\n'));
+      processedCssById.set(id, processedCss);
 
       return serializeVanillaModule(evalResult);
     },
@@ -141,10 +141,16 @@ export const vanillaExtractPlugin = ({
         return;
       }
 
-      const source = [...this.getModuleIds()]
-        .map((moduleId) => processedCssById.get(moduleId))
-        .filter(Boolean)
-        .join('\n');
+      const dedupedCss = new Set<string>();
+
+      const moduleIds = [...this.getModuleIds()];
+      moduleIds.forEach((moduleId) => {
+        processedCssById.get(moduleId)?.forEach((css) => {
+          dedupedCss.add(css);
+        });
+      });
+
+      const source = [...dedupedCss.values()].join('\n');
 
       this.emitFile({
         type: 'asset',
