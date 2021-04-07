@@ -82,6 +82,10 @@ export const vanillaExtractPlugin = ({
         plugins: [vanillaExtractFilescopePlugin({ projectRoot }), ...plugins],
       });
 
+      for (const watchFile of bundle.watchFiles) {
+        this.addWatchFile(watchFile);
+      }
+
       const { output } = await bundle.generate({
         format: 'cjs',
       });
