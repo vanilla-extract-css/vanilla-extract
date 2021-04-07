@@ -7,4 +7,4 @@ const className = style({
   background: 'green',
 });
 
-export default `${className} ${sharedStyle}`;
+export const usedStyle = `${className} ${sharedStyle}`;

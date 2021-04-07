@@ -42,4 +42,24 @@ describe('Stylesheet', () => {
       await server.close();
     });
   });
+
+  describe.each(fixtures)('%s - rollup', (fixture) => {
+    let server: TestServer;
+
+    beforeAll(async () => {
+      server = await startFixture(fixture, {
+        type: 'rollup',
+        mode: 'production',
+        basePort: 16000,
+      });
+    });
+
+    it('should create valid stylesheet', async () => {
+      expect(await getStylesheet(server.url, 'index.css')).toMatchSnapshot();
+    });
+
+    afterAll(async () => {
+      await server.close();
+    });
+  });
 });

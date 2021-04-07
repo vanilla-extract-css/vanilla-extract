@@ -98,6 +98,97 @@ body {
 "
 `;
 
+exports[`Stylesheet themed - rollup should create valid stylesheet 1`] = `
+":root, .themes_theme__6cbmls0 {
+  --colors-background-color__6cbmls1: blue;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 4px;
+  --space-2__6cbmls4: 8px;
+  --space-3__6cbmls5: 12px;
+}
+.themes_altTheme__6cbmls6 {
+  --colors-background-color__6cbmls1: green;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 8px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 16px;
+}
+.themes_responsiveTheme__6cbmls7 {
+  --colors-background-color__6cbmls1: pink;
+  --colors-text__6cbmls2: purple;
+  --space-1__6cbmls3: 6px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__6cbmls7 {
+    --colors-background-color__6cbmls1: purple;
+    --colors-text__6cbmls2: pink;
+  }
+}
+.shared_shadow__9k2war0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles_impact__g7vce90\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+@keyframes styles_slide__g7vce91 {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+@keyframes globalSlide {
+  0% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+.styles_container__g7vce92 {
+  animation: 3s infinite alternate globalSlide ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__6cbmls4);
+  padding: var(--space-3__6cbmls5);
+}
+.styles_button__g7vce93 {
+  animation: 3s infinite alternate styles_slide__g7vce91 ease-in-out;
+  font-family: \\"styles_impact__g7vce90\\";
+  background-color: var(--colors-background-color__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__6cbmls2);
+}
+.themes_altTheme__6cbmls6 .themes_theme__6cbmls0 .styles_container__g7vce92 .styles_button__g7vce93 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+.styles_opacity_1\\\\/2__g7vce96 {
+  opacity: var(--undefined-var1__g7vce94, 0.5);
+}
+.styles_opacity_1\\\\/4__g7vce97 {
+  opacity: var(--undefined-var1__g7vce94, var(--undefined-var2__g7vce95, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__g7vce92 {
+    border: 1px solid var(--colors-background-color__6cbmls1);
+  }
+  .styles_button__g7vce93 {
+    border-radius: 9999px;
+  }
+}"
+`;
+
 exports[`Stylesheet themed - webpack should create valid stylesheet 1`] = `
 ":root, .themes_theme__40jr0n0 {
   --colors-background-color__40jr0n1: blue;
@@ -219,17 +310,41 @@ body {
 "
 `;
 
-exports[`Stylesheet unused-modules - webpack should create valid stylesheet 1`] = `
+exports[`Stylesheet unused-modules - rollup should create valid stylesheet 1`] = `
 "body {
   background-color: lavender;
 }
-.reset_default__uwiqg30 {
+.reset_resetStyle__13dgx5x0 {
   box-sizing: border-box;
 }
 body {
   border: 5px solid black;
 }
-.shared_default__1qsu10z0 {
+.shared_sharedStyle__dhmnel0 {
+  display: flex;
+}
+.unused_className__11jrfhp0 {
+  color: red;
+  background-color: blue;
+}
+.used_className__1fuoslw0 {
+  height: 100px;
+  width: 100px;
+  background: green;
+}"
+`;
+
+exports[`Stylesheet unused-modules - webpack should create valid stylesheet 1`] = `
+"body {
+  background-color: lavender;
+}
+.reset_resetStyle__uwiqg30 {
+  box-sizing: border-box;
+}
+body {
+  border: 5px solid black;
+}
+.shared_sharedStyle__1qsu10z0 {
   display: flex;
 }
 .used_className__1q2bj4l0 {

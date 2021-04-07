@@ -1,1 +1,1 @@
-export { default as sharedStyle } from './shared.css';
+export { sharedStyle } from './shared.css';

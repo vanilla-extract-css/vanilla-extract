@@ -10,7 +10,8 @@ type BuildType =
   | 'style-loader'
   | 'esbuild'
   | 'esbuild-runtime'
-  | 'rollup';
+  | 'rollup'
+  | 'rollup-runtime';
 
 export interface TestServer {
   type: BuildType;
@@ -51,7 +52,7 @@ export async function startFixture(
     });
   }
 
-  if (type === 'rollup') {
+  if (type === 'rollup' || type === 'rollup-runtime') {
     return startRollupFixture(fixtureName, {
       type,
       port,

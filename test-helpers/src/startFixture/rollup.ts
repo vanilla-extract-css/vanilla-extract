@@ -14,13 +14,13 @@ import servePlugin from 'rollup-plugin-serve';
 import { TestServer } from './types';
 
 export interface RollupFixtureOptions {
-  type: 'rollup';
+  type: 'rollup' | 'rollup-runtime';
   mode?: 'development' | 'production';
   port: number;
 }
 export const startRollupFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: RollupFixtureOptions,
+  { type, mode = 'development', port = 3000 }: RollupFixtureOptions,
 ): Promise<TestServer> => {
   const entry = require.resolve(`@fixtures/${fixtureName}`);
   const projectRoot = path.dirname(
@@ -44,6 +44,7 @@ export const startRollupFixture = async (
       }),
       jsonPlugin(),
       vanillaExtractPlugin({
+        runtime: type === 'rollup-runtime',
         projectRoot,
         fileName: 'index.css',
         plugins: [
@@ -94,10 +95,9 @@ export const startRollupFixture = async (
   return {
     type: 'rollup',
     url: `http://localhost:${port}`,
-    close: () => {
-      server.stop();
-
-      return Promise.resolve();
-    },
+    close: () =>
+      new Promise((resolve) => {
+        server.close(() => resolve());
+      }),
   };
 };

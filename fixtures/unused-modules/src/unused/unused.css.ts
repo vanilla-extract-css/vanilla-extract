@@ -6,4 +6,4 @@ const className = style({
   backgroundColor: 'blue',
 });
 
-export default `${className} ${sharedStyle}`;
+export const unusedStyle = `${className} ${sharedStyle}`;

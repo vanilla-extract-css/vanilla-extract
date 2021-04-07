@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
 
-export default style({
+export const resetStyle = style({
   boxSizing: 'border-box',
 });

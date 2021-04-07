@@ -1,1 +1,1 @@
-export { default as unusedStyle } from './unused.css';
+export { unusedStyle } from './unused.css';

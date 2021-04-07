@@ -1,1 +1,1 @@
-export { default as resetStyle } from './reset.css';
+export { resetStyle } from './reset.css';

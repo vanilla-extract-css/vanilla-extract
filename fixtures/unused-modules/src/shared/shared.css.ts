@@ -4,6 +4,6 @@ globalStyle('body', {
   border: '5px solid black',
 });
 
-export default style({
+export const sharedStyle = style({
   display: 'flex',
 });

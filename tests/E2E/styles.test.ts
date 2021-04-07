@@ -12,6 +12,8 @@ const compileTypes = [
   'style-loader',
   'esbuild',
   'esbuild-runtime',
+  'rollup',
+  'rollup-runtime',
 ] as const;
 
 async function getPageStyles(
