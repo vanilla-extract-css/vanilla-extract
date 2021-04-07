@@ -151,6 +151,10 @@ export const vanillaExtractPlugin = ({
         });
       });
 
+      if (dedupedCss.size === 0) {
+        return;
+      }
+
       const source = [...dedupedCss.values()].join('\n');
 
       this.emitFile({
