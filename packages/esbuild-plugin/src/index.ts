@@ -104,7 +104,7 @@ export function vanillaExtractPlugin({
           plugins: [vanillaExtractFilescopePlugin({ projectRoot })],
         });
 
-        const { outputFiles } = result;
+        const { outputFiles, metafile } = result;
 
         if (!outputFiles || outputFiles.length !== 1) {
           throw new Error('Invalid child compilation');
@@ -158,6 +158,7 @@ export function vanillaExtractPlugin({
         return {
           contents,
           loader: 'js',
+          watchFiles: Object.keys(metafile?.inputs || {}),
         };
       });
     },
