@@ -158,7 +158,7 @@ export function vanillaExtractPlugin({
         return {
           contents,
           loader: 'js',
-          watchFiles: Object.keys(metafile?.inputs || []),
+          watchFiles: Object.keys(metafile?.inputs || {}),
         };
       });
     },
