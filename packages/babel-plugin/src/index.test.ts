@@ -474,23 +474,6 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should handle package aliases', () => {
-    const source = `
-      import { style } from 'my-alias';
-
-      const four = style({
-        zIndex: 2,  
-      });
-    `;
-
-    expect(transform(source, { alias: 'my-alias' })).toMatchInlineSnapshot(`
-      "import { style } from 'my-alias';
-      const four = style({
-        zIndex: 2
-      });"
-    `);
-  });
-
   it('should handle anonymous style in arrays', () => {
     const source = `
        import { style } from '@vanilla-extract/css';
