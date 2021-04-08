@@ -33,7 +33,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
       const one = style({
         zIndex: 2
@@ -53,7 +53,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { mapToStyles } from '@vanilla-extract/css';
       const colors = mapToStyles({
         red: {
@@ -75,7 +75,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { mapToStyles } from '@vanilla-extract/css';
       const colors = mapToStyles({
         red: 'red'
@@ -97,7 +97,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
       export default style({
         zIndex: 2
@@ -121,7 +121,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
       const test = {
         one: {
@@ -147,7 +147,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
 
       const test = () => {
@@ -171,7 +171,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
 
       const test = () => style({
@@ -195,7 +195,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
 
       function test() {
@@ -217,7 +217,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { globalStyle } from '@vanilla-extract/css';
       globalStyle('html, body', {
         margin: 0
@@ -235,7 +235,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { createVar } from '@vanilla-extract/css';
       const myVar = createVar(\\"myVar\\");
       endFileScope()"
@@ -253,7 +253,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { fontFace } from '@vanilla-extract/css';
       const myFont = fontFace({
         src: 'local(\\"Comic Sans MS\\")'
@@ -273,7 +273,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { globalFontFace } from '@vanilla-extract/css';
       globalFontFace('myFont', {
         src: 'local(\\"Comic Sans MS\\")'
@@ -294,7 +294,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { keyframes } from '@vanilla-extract/css';
       const myAnimation = keyframes({
         from: {
@@ -320,7 +320,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { globalKeyframes } from '@vanilla-extract/css';
       globalKeyframes('myKeyframes', {
         from: {
@@ -343,7 +343,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { createTheme } from '@vanilla-extract/css';
       const darkTheme = createTheme({}, {}, \\"darkTheme\\");
       endFileScope()"
@@ -359,7 +359,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { createTheme } from '@vanilla-extract/css';
       const [theme, vars] = createTheme({}, {}, \\"theme\\");
       endFileScope()"
@@ -375,7 +375,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { createGlobalTheme } from '@vanilla-extract/css';
       const themeVars = createGlobalTheme(':root', {
         foo: 'bar'
@@ -395,7 +395,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { createThemeVars } from '@vanilla-extract/css';
       const themeVars = createThemeVars({
         foo: 'bar'
@@ -421,7 +421,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style, mapToStyles } from '@vanilla-extract/css';
       const three = style({
         testStyle: {
@@ -465,7 +465,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style as specialStyle } from '@vanilla-extract/css';
       const four = specialStyle({
         zIndex: 2
@@ -484,13 +484,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source, { alias: 'my-alias' })).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"my-alias/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
-      import { style } from 'my-alias';
+      "import { style } from 'my-alias';
       const four = style({
         zIndex: 2
-      }, \\"four\\");
-      endFileScope()"
+      });"
     `);
   });
 
@@ -507,7 +504,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
       export const height = [style({
         zIndex: 2
@@ -529,7 +526,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import { style } from '@vanilla-extract/css';
       export const height = {
         full: [style({
@@ -551,7 +548,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-      setFileScope(\\"dir/mockFilename.css.ts\\");
+      setFileScope(\\"my-app/dir/mockFilename.css.ts\\", \\"vanilla-extract\\");
       import * as css from '@vanilla-extract/css';
       const one = css.style({
         zIndex: 2

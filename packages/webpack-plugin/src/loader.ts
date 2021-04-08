@@ -1,5 +1,3 @@
-import path from 'path';
-
 // @ts-expect-error
 import evalCode from 'eval';
 // @ts-expect-error
@@ -7,7 +5,7 @@ import loaderUtils from 'loader-utils';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringify } from 'javascript-stringify';
 import dedent from 'dedent';
-import type { Adapter } from '@vanilla-extract/css';
+import type { Adapter, FileScope } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 
@@ -97,22 +95,36 @@ async function processSource(
 
   log('Loading resource');
 
-  const makeCssModule = (fileScope: string, css: string) => {
+  const makeCssModule = ({ packageName, filePath }: FileScope, css: string) => {
     const base64 = Buffer.from(css, 'utf-8').toString('base64');
 
     const virtualResourceLoader = stringifyLoaderRequest({
       loader: require.resolve('virtual-resource-loader'),
       options: { source: base64 },
     });
-    const cssFileName = `${fileScope}.vanilla.css`;
-    const absoluteFileScope = path.join(loader.rootContext, fileScope);
+    const cssFileName = packageName
+      ? `${packageName}/${filePath}.vanilla.css`
+      : `${filePath}.vanilla.css`;
 
-    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!${absoluteFileScope}`;
+    const cssRequest = `${cssFileName}!=!${virtualResourceLoader}!@vanilla-extract/webpack-plugin/extracted`;
 
     log('Add CSS request %s', cssRequest);
 
     return cssRequest;
   };
+
+  function stringifyFileScope({ packageName, filePath }: FileScope): string {
+    return packageName ? `${filePath}$$$${packageName}` : filePath;
+  }
+
+  function parseFileScope(serialisedFileScope: string): FileScope {
+    const [filePath, packageName] = serialisedFileScope.split('$$$');
+
+    return {
+      filePath,
+      packageName,
+    };
+  }
 
   type Css = Parameters<Adapter['appendCss']>[0];
   const cssByFileScope = new Map<string, Array<Css>>();
@@ -121,11 +133,12 @@ async function processSource(
   const cssAdapter: Adapter = {
     appendCss: (css, fileScope) => {
       if (outputCss) {
-        const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
+        const serialisedFileScope = stringifyFileScope(fileScope);
+        const fileScopeCss = cssByFileScope.get(serialisedFileScope) ?? [];
 
         fileScopeCss.push(css);
 
-        cssByFileScope.set(fileScope, fileScopeCss);
+        cssByFileScope.set(serialisedFileScope, fileScopeCss);
       }
     },
     registerClassName: (className) => {
@@ -156,10 +169,8 @@ async function processSource(
 
   const cssRequests = [];
 
-  // TODO  ???? Why can't I iterate the Map without Array.from ????
-  for (const [fileScope, fileScopeCss] of Array.from(
-    cssByFileScope.entries(),
-  )) {
+  for (const [serialisedFileScope, fileScopeCss] of cssByFileScope.entries()) {
+    const fileScope = parseFileScope(serialisedFileScope);
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
       cssObjs: fileScopeCss,

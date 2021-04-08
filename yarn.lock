@@ -2674,6 +2674,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.13.10
     "@babel/template": ^7.12.13
+    find-up: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -2707,6 +2708,7 @@ __metadata:
     dedent: ^0.7.0
     esbuild: ^0.11.1
     eval: ^0.1.6
+    find-up: ^5.0.0
     javascript-stringify: ^2.0.1
     lodash: ^4.17.21
   peerDependencies:

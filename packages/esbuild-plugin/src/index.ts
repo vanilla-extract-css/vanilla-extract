@@ -1,10 +1,11 @@
 import { dirname, relative } from 'path';
 import { promises as fs } from 'fs';
 
-import type { Adapter } from '@vanilla-extract/css';
+import type { Adapter, FileScope } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import dedent from 'dedent';
+import findUp from 'find-up';
 import { build as esbuild, Plugin } from 'esbuild';
 // @ts-expect-error
 import evalCode from 'eval';
@@ -18,10 +19,13 @@ const vanillaExtractPath = dirname(
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
 interface FilescopePluginOptions {
-  projectRoot?: string;
+  packageInfo: {
+    name: string;
+    dirname: string;
+  };
 }
 const vanillaExtractFilescopePlugin = ({
-  projectRoot,
+  packageInfo,
 }: FilescopePluginOptions): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
@@ -32,11 +36,11 @@ const vanillaExtractFilescopePlugin = ({
         path.indexOf(vanillaExtractPath) === -1 &&
         originalSource.indexOf('@vanilla-extract/css/fileScope') === -1
       ) {
-        const fileScope = projectRoot ? relative(projectRoot, path) : path;
+        const filePath = relative(packageInfo.dirname, path);
 
         const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${fileScope}");
+        setFileScope("${filePath}", "${packageInfo.name}");
         ${originalSource}
         endFileScope()
         `;
@@ -53,18 +57,31 @@ const vanillaExtractFilescopePlugin = ({
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   externals?: Array<string>;
-  projectRoot?: string;
+  cwd?: string;
   runtime?: boolean;
 }
 export function vanillaExtractPlugin({
   outputCss = true,
   externals = [],
-  projectRoot,
+  cwd,
   runtime = false,
 }: VanillaExtractPluginOptions = {}): Plugin {
+  const packageJsonPath = findUp.sync('package.json', { cwd });
+
+  if (!packageJsonPath) {
+    throw new Error(`Can't find package.json`);
+  }
+
+  const { name } = require(packageJsonPath);
+  const packageInfo = {
+    name,
+    path: packageJsonPath,
+    dirname: dirname(packageJsonPath),
+  };
+
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
-    return vanillaExtractFilescopePlugin({ projectRoot });
+    return vanillaExtractFilescopePlugin({ packageInfo });
   }
 
   return {
@@ -101,13 +118,29 @@ export function vanillaExtractPlugin({
           external: ['@vanilla-extract', ...externals],
           platform: 'node',
           write: false,
-          plugins: [vanillaExtractFilescopePlugin({ projectRoot })],
+          plugins: [vanillaExtractFilescopePlugin({ packageInfo })],
         });
 
         const { outputFiles, metafile } = result;
 
         if (!outputFiles || outputFiles.length !== 1) {
           throw new Error('Invalid child compilation');
+        }
+
+        function stringifyFileScope({
+          packageName,
+          filePath,
+        }: FileScope): string {
+          return packageName ? `${filePath}$$$${packageName}` : filePath;
+        }
+
+        function parseFileScope(serialisedFileScope: string): FileScope {
+          const [filePath, packageName] = serialisedFileScope.split('$$$');
+
+          return {
+            filePath,
+            packageName,
+          };
         }
 
         type Css = Parameters<Adapter['appendCss']>[0];
@@ -117,11 +150,13 @@ export function vanillaExtractPlugin({
         const cssAdapter: Adapter = {
           appendCss: (css, fileScope) => {
             if (outputCss) {
-              const fileScopeCss = cssByFileScope.get(fileScope) ?? [];
+              const serialisedFileScope = stringifyFileScope(fileScope);
+              const fileScopeCss =
+                cssByFileScope.get(serialisedFileScope) ?? [];
 
               fileScopeCss.push(css);
 
-              cssByFileScope.set(fileScope, fileScopeCss);
+              cssByFileScope.set(serialisedFileScope, fileScopeCss);
             }
           },
           registerClassName: (className) => {
@@ -143,14 +178,18 @@ export function vanillaExtractPlugin({
 
         const cssRequests = [];
 
-        for (const [fileScope, fileScopeCss] of cssByFileScope) {
+        for (const [serialisedFileScope, fileScopeCss] of cssByFileScope) {
+          const { packageName, filePath } = parseFileScope(serialisedFileScope);
           const css = transformCss({
             localClassNames: Array.from(localClassNames),
             cssObjs: fileScopeCss,
           }).join('\n');
           const base64Css = Buffer.from(css, 'utf-8').toString('base64');
+          const fileName = packageName
+            ? `${packageName}/${filePath}`
+            : filePath;
 
-          cssRequests.push(`${fileScope}.vanilla.css?source=${base64Css}`);
+          cssRequests.push(`${fileName}.vanilla.css?source=${base64Css}`);
         }
 
         const contents = serializeVanillaModule(cssRequests, evalResult);
