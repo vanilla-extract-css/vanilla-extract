@@ -1,0 +1,9 @@
+{
+  "main": "dist/vanilla-extract-css-dynamic.cjs.js",
+  "module": "dist/vanilla-extract-css-dynamic.esm.js",
+  "browser": {
+    "./dist/vanilla-extract-css-dynamic.cjs.js": "./dist/vanilla-extract-css-dynamic.browser.cjs.js",
+    "./dist/vanilla-extract-css-dynamic.esm.js": "./dist/vanilla-extract-css-dynamic.browser.esm.js"
+  },
+  "sideEffects": false
+}

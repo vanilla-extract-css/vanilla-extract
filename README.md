@@ -84,7 +84,6 @@ document.write(`
   - [mapToStyles](#maptostyles)
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
-  - [createInlineTheme](#createinlinetheme)
   - [createThemeVars](#createthemevars)
   - [assignVars](#assignvars)
   - [createVar](#createvar)
@@ -93,6 +92,10 @@ document.write(`
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
+- [Dynamic API](#dynamic-api)
+  - [createInlineTheme](#createinlinetheme)
+  - [setElementVar](#setelementvar)
+  - [assignElementVars](#assignelementvars)
 - [Utility functions](#utility-functions)
   - [calc](#calc)
 - [Thanks](#thanks)
@@ -361,27 +364,6 @@ export const themeVars = createGlobalTheme(':root', {
 
 > 💡 All theme variants must provide a value for every variable or it’s a type error.
 
-### createInlineTheme
-
-Generates a custom theme at runtime as an inline style object.
-
-```ts
-import { createInlineTheme } from '@vanilla-extract/css/createInlineTheme';
-import { themeVars, exampleStyle } from './styles.css.ts';
-
-const customTheme = createInlineTheme(themeVars, {
-  small: '4px',
-  medium: '8px',
-  large: '16px'
-});
-
-document.write(`
-  <section style="${customTheme}">
-    <h1 class="${exampleStyle}">Hello world!</h1>
-  </section>
-`);
-```
-
 ### createThemeVars
 
 Creates a collection of CSS Variables without coupling them to a specific theme variant.
@@ -424,7 +406,7 @@ export const themeB = createTheme(themeVars, {
 
 ### assignVars
 
-Allows you to set an entire collection of CSS Variables anywhere within a style block.
+Sets an entire collection of CSS Variables anywhere within a style block.
 
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
@@ -581,6 +563,63 @@ export const animated = style({
   animation: `3s infinite rotate`;
 });
 ```
+
+## Dynamic API
+
+The following functions are available at runtime to support dynamic theming.
+
+> 💡 These functions are all imported from `'@vanilla-extract/css/dynamic'`
+
+### createInlineTheme
+
+Generates a custom theme at runtime as an inline style object.
+
+```ts
+import { createInlineTheme } from '@vanilla-extract/css/dynamic';
+import { themeVars, exampleStyle } from './styles.css.ts';
+
+const customTheme = createInlineTheme(themeVars, {
+  small: '4px',
+  medium: '8px',
+  large: '16px'
+});
+
+document.write(`
+  <section style="${customTheme}">
+    <h1 class="${exampleStyle}">Hello world!</h1>
+  </section>
+`);
+```
+
+### setElementVar
+
+Sets a single var on an element.
+
+```ts
+import { setElementVar } from '@vanilla-extract/css/dynamic';
+import { themeVars } from './styles.css.ts';
+
+const element = document.getElementById('myElement');
+setElementVar(element, themeVars.color.brand, 'darksalmon');
+```
+
+### assignElementVars
+
+Sets an entire collection of CSS Variables on an element.
+
+```ts
+import { assignElementVars } from '@vanilla-extract/css/dynamic';
+import { themeVars } from './styles.css.ts';
+
+const element = document.getElementById('myElement');
+assignElementVars(element, themeVars, {
+  small: '4px',
+  medium: '8px',
+  large: '16px'
+});
+```
+
+> 💡 All variables passed into this function must be assigned or it’s a type error.
 
 ## Utility functions
 

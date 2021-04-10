@@ -15,7 +15,7 @@
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts",
-      "createInlineTheme.ts"
+      "dynamic.ts"
     ]
   },
   "files": [
@@ -23,7 +23,7 @@
     "/adapter",
     "/transformCss",
     "/fileScope",
-    "/createInlineTheme"
+    "/dynamic"
   ],
   "repository": {
     "type": "git",

@@ -13,6 +13,7 @@ import type {
   CSSSelectorBlock,
 } from './types';
 import { validateSelector } from './validateSelector';
+import { getVarName } from './getVarName';
 import { forEach, omit, mapKeys, isEqual } from './utils';
 
 const UNITLESS: Record<string, boolean> = {
@@ -234,15 +235,7 @@ class Stylesheet {
     }
 
     return {
-      ...mapKeys(vars, (_value, key) => {
-        const matches = key.match(/^var\((.*)\)$/);
-
-        if (matches) {
-          return matches[1];
-        }
-
-        return key;
-      }),
+      ...mapKeys(vars, (_value, key) => getVarName(key)),
       ...rest,
     };
   }
