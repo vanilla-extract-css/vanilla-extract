@@ -255,6 +255,8 @@ export const childClass = style({
 });
 ```
 
+> 💡 Each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element, e.g. `'&:hover:active'`. If you want to target nodes globally within the current element, you should use [`globalStyle`](#globalstyle) instead.
+
 ### globalStyle
 
 Creates styles attached to a global selector.
@@ -264,6 +266,18 @@ import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
   margin: 0
+});
+```
+
+Global selectors can also contain references to other scoped class names.
+
+```ts
+import { globalStyle } from '@vanilla-extract/css';
+
+export const parentClass = style({});
+
+globalStyle(`${parentClass} a`, {
+  color: 'pink'
 });
 ```
 
