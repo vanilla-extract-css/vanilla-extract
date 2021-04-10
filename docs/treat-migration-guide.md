@@ -18,11 +18,49 @@ The Babel plugin was optional in treat, but it's required in vanilla-extract.
 
 This wasn't possible in treat with `*.treat.ts` files. If you've had to work around this limitation in the past, you don't need to worry anymore!
 
+## Your webpack config must handle CSS files
+
+In treat, we automatically handled all generated CSS files for you. With vanilla-extract we've taken a more lightweight approach. Instead, we generate regular global CSS files and assume you've configured webpack to handle this. This makes things a lot simpler, but also a lot more configurable.
+
+For more detail, check out the [webpack setup guide.](https://github.com/seek-oss/vanilla-extract#webpack)
+
 ## Autoprefixer is no longer included
 
 If you want Autoprefixer, you'll need to [manually add it to your webpack config.](https://github.com/webpack-contrib/postcss-loader#autoprefixer)
 
 Note that this also means you have a lot more control over the handling of generated CSS. For example, you might want to use [postcss-preset-env](https://github.com/webpack-contrib/postcss-loader#postcss-preset-env) instead.
+
+## URL handling should be disabled for `*.vanilla.css` files
+
+In treat, we set css-loader's [`url` option](https://webpack.js.org/loaders/css-loader/#url) to `false`. This was to ensure that JavaScript import statements were always used for assets (e.g. `import logoUrl from './logo.png'`) rather than allowing the CSS to create implicit imports (e.g. `background: "url('./logo.png')"`).
+
+If you want to reinstate treat's approach to asset imports without affecting other CSS files, you can configure css-loader seprately for `*.vanilla.css` files. For example:
+
+```ts
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: (file) => file.endsWith('.vanilla.css'),
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { url: false }
+          }
+        ]
+      },
+      {
+        test: (file) =>
+          file.endsWith('.css') &&
+          !file.endsWith('.vanilla.css'),
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
+  },
+  plugins: [new VanillaExtractPlugin()]
+};
+```
 
 ## `createTheme`
 
