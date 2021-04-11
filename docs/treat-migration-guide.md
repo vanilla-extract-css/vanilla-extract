@@ -41,24 +41,29 @@ module.exports = {
   module: {
     rules: [
       {
-        test: (file) => file.endsWith('.vanilla.css'),
-        use: [
-          MiniCssExtractPlugin.loader,
+        test: /\.css$/i,
+        oneOf: [
           {
-            loader: 'css-loader',
-            options: { url: false }
+            test: /\.vanilla\.css$/i,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader',
+                options: { url: false }
+              }
+            ]
+          },
+          {
+            use: [MiniCssExtractPlugin.loader, 'css-loader']
           }
         ]
-      },
-      {
-        test: (file) =>
-          file.endsWith('.css') &&
-          !file.endsWith('.vanilla.css'),
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
-  plugins: [new VanillaExtractPlugin()]
+  plugins: [
+    new VanillaExtractPlugin(),
+    new MiniCssExtractPlugin()
+  ]
 };
 ```
 
