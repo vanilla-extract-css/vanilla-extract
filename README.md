@@ -162,10 +162,6 @@ module.exports = {
 
 ### esbuild
 
-Current limitations:
-
-- No automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
-
 1. Install the dependencies.
 
 ```bash
@@ -184,6 +180,8 @@ require('esbuild').build({
   outfile: 'out.js',
 }).catch(() => process.exit(1))
 ```
+
+> Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 
 ### Gatsby
 
