@@ -1,3 +1,4 @@
+import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
 
 import type {
@@ -13,7 +14,6 @@ import type {
   CSSSelectorBlock,
 } from './types';
 import { validateSelector } from './validateSelector';
-import { getVarName } from './getVarName';
 import { forEach, omit, mapKeys, isEqual } from './utils';
 
 const UNITLESS: Record<string, boolean> = {
