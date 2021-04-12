@@ -1,5 +1,9 @@
-import { Contract, MapLeafNodes } from './types';
-import { get, walkObject } from './utils';
+import {
+  get,
+  walkObject,
+  Contract,
+  MapLeafNodes,
+} from '@vanilla-extract/private';
 
 export function assignVars<VarContract extends Contract>(
   varContract: VarContract,

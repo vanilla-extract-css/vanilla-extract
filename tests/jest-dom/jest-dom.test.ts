@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { screen } from '@testing-library/dom';
-import { createInlineTheme } from '@vanilla-extract/css/dynamic';
+import { createInlineTheme } from '@vanilla-extract/dynamic';
 
 import { hide, padding, twentyTheme, themeVars, blackBg } from './jest-dom.css';
 

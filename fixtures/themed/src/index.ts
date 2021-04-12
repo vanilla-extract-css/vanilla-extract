@@ -1,8 +1,8 @@
 import {
-  assignElementVars,
   createInlineTheme,
+  setElementTheme,
   setElementVar,
-} from '@vanilla-extract/css/dynamic';
+} from '@vanilla-extract/dynamic';
 
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';
@@ -86,31 +86,35 @@ function render() {
     </div>
   </div>
 `;
+
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer,
+  );
+
+  if (!dynamicVarsContainer) {
+    throw new Error('Dynamic vars container not found.');
+  }
+
+  setElementTheme(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: 'transparent',
+      text: 'papayawhip',
+    },
+    space: {
+      1: '5px',
+      2: '10px',
+      3: '15px',
+    },
+  });
+
+  setElementVar(
+    dynamicVarsContainer,
+    vars.colors.backgroundColor,
+    'darksalmon',
+  );
 }
 
 render();
-
-const dynamicVarsContainer = document.getElementById(
-  testNodes.dynamicVarsContainer,
-);
-
-if (!dynamicVarsContainer) {
-  throw new Error('Dynamic vars container not found.');
-}
-
-assignElementVars(dynamicVarsContainer, vars, {
-  colors: {
-    backgroundColor: 'transparent',
-    text: 'papayawhip',
-  },
-  space: {
-    1: '5px',
-    2: '10px',
-    3: '15px',
-  },
-});
-
-setElementVar(dynamicVarsContainer, vars.colors.backgroundColor, 'darksalmon');
 
 // @ts-expect-error
 if (module.hot) {

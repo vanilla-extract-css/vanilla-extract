@@ -1,16 +1,4 @@
-import { MapLeafNodes } from './types';
-
 type BasicObj = { [key: string]: any };
-
-export function get(obj: any, path: Array<string>) {
-  let result = obj;
-
-  for (const key of path) {
-    result = result[key];
-  }
-
-  return result;
-}
 
 export function forEach<Input extends BasicObj>(
   obj: Input | undefined,
@@ -47,34 +35,6 @@ export function mapKeys<Input extends BasicObj>(
   }
 
   return result;
-}
-
-export function walkObject<T, MapTo>(
-  obj: T,
-  fn: (value: string | number, path: Array<string>) => MapTo,
-  path: Array<string> = [],
-): MapLeafNodes<T, MapTo> {
-  // @ts-expect-error
-  const clone = obj.constructor();
-
-  for (let key in obj) {
-    const value = obj[key];
-    const currentPath = [...path, key];
-
-    if (typeof value === 'object') {
-      clone[key] = value ? walkObject(value, fn, currentPath) : value;
-    } else if (typeof value === 'string' || typeof value === 'number') {
-      clone[key] = fn(value, currentPath);
-    } else {
-      console.warn(
-        `Skipping invalid key "${currentPath.join(
-          '.',
-        )}". Should be a string, number or object. Received: "${typeof value}"`,
-      );
-    }
-  }
-
-  return clone;
 }
 
 export function isEqual(a: any, b: any) {

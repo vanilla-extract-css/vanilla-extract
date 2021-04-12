@@ -1,8 +1,12 @@
-import { Contract, MapLeafNodes } from './types';
-import { get, walkObject } from './utils';
+import {
+  get,
+  walkObject,
+  Contract,
+  MapLeafNodes,
+} from '@vanilla-extract/private';
 import { setElementVar } from './setElementVar';
 
-export function assignElementVars<VarContract extends Contract>(
+export function setElementTheme<VarContract extends Contract>(
   element: HTMLElement,
   varContract: VarContract,
   tokens: MapLeafNodes<VarContract, string>,

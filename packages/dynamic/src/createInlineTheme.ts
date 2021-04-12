@@ -1,5 +1,9 @@
-import type { Contract, MapLeafNodes } from './types';
-import { walkObject, get } from './utils';
+import {
+  walkObject,
+  get,
+  Contract,
+  MapLeafNodes,
+} from '@vanilla-extract/private';
 
 export function createInlineTheme<ThemeContract extends Contract>(
   themeVars: ThemeContract,

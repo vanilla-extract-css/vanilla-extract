@@ -1,0 +1,21 @@
+{
+  "name": "@vanilla-extract/dynamic",
+  "version": "0.1.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "sideEffects": false,
+  "main": "dist/vanilla-extract-dynamic.cjs.js",
+  "module": "dist/vanilla-extract-dynamic.esm.js",
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/dynamic"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@vanilla-extract/private": "^0.1.0"
+  }
+}

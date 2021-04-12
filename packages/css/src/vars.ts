@@ -1,9 +1,13 @@
+import {
+  get,
+  walkObject,
+  Contract,
+  MapLeafNodes,
+} from '@vanilla-extract/private';
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import type { Contract, MapLeafNodes } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
-import { get, walkObject } from './utils';
 
 type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
   ThemeContract,
