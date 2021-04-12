@@ -29,6 +29,7 @@ jobs:
       - name: Create release PR or publish to npm
         uses: changesets/action@b3300fad33b6ab794313da28d27424c0e2f78991
         with:
+          version: yarn run version
           publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
