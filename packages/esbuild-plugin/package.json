@@ -22,6 +22,7 @@
     "chalk": "^4.1.0",
     "dedent": "^0.7.0",
     "eval": "^0.1.6",
+    "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21"
   },

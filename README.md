@@ -162,11 +162,6 @@ module.exports = {
 
 ### esbuild
 
-Current limitations:
-
-- No automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
-- The `projectRoot` plugin option must be set to get deterministic class name hashes between build systems
-
 1. Install the dependencies.
 
 ```bash
@@ -181,10 +176,12 @@ const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 require('esbuild').build({
   entryPoints: ['app.ts'],
   bundle: true,
-  plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
+  plugins: [vanillaExtractPlugin()],
   outfile: 'out.js',
 }).catch(() => process.exit(1))
 ```
+
+> Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 
 ### Gatsby
 

@@ -16,10 +16,10 @@ export const startEsbuildFixture = async (
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
   const entry = require.resolve(`@fixtures/${fixtureName}`);
-  const projectRoot = path.dirname(
+  const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
-  const outdir = path.join(projectRoot, 'dist');
+  const outdir = path.join(absWorkingDir, 'dist');
 
   if (existsSync(outdir)) {
     await fs.rm(outdir, { recursive: true });
@@ -37,10 +37,10 @@ export const startEsbuildFixture = async (
       minify: mode === 'production',
       plugins: [
         vanillaExtractPlugin({
-          projectRoot,
           runtime: type === 'esbuild-runtime',
         }),
       ],
+      absWorkingDir,
       outdir,
       define: {
         'process.env.NODE_ENV': JSON.stringify(mode),

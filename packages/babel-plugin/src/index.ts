@@ -1,10 +1,13 @@
-import { relative } from 'path';
+import { relative, dirname } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
+import findUp from 'find-up';
+
+const packageIdentifier = '@vanilla-extract/css';
 
 const buildSetFileScope = template(`
   import { setFileScope, endFileScope } from %%packageIdentifier%%
-  setFileScope(%%fileScope%%)
+  setFileScope(%%filePath%%, %%packageName%%)
 `);
 
 const debuggableFunctionConfig = {
@@ -113,36 +116,63 @@ const getRelevantCall = (
   }
 };
 
-interface PluginOptions {
-  alias?: string;
-  projectRoot?: string;
-}
 type Context = PluginPass & {
-  opts?: PluginOptions;
   namespaceImport: string;
   importIdentifiers: Map<string, StyleFunction>;
   packageIdentifier: string;
-  fileScope: string;
+  filePath: string;
+  packageName: string;
 };
 
 export default function (): PluginObj<Context> {
+  let packageInfo: { name: string; dirname: string; path: string } | undefined;
+  let hasResolvedPackageJson = false;
+  function getPackageInfo(cwd?: string | null) {
+    if (hasResolvedPackageJson) {
+      return packageInfo;
+    }
+
+    hasResolvedPackageJson = true;
+    const packageJsonPath = findUp.sync('package.json', {
+      cwd: cwd || undefined,
+    });
+
+    if (packageJsonPath) {
+      const { name } = require(packageJsonPath);
+      packageInfo = {
+        name,
+        path: packageJsonPath,
+        dirname: dirname(packageJsonPath),
+      };
+    }
+    return packageInfo;
+  }
+
   return {
     pre({ opts }) {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
-      this.packageIdentifier = this.opts?.alias || '@vanilla-extract/css';
-      const projectRoot = this.opts?.projectRoot || opts.root;
-      if (!projectRoot) {
-        // TODO Make error better
-        throw new Error('Project root must be specified');
-      }
 
       if (!opts.filename) {
         // TODO Make error better
         throw new Error('Filename must be available');
       }
 
-      this.fileScope = relative(projectRoot, opts.filename);
+      const packageInfo = getPackageInfo(opts.cwd);
+
+      if (!packageInfo) {
+        throw new Error(
+          `Couldn't find parent package.json for ${opts.filename}`,
+        );
+      }
+
+      if (!packageInfo.name) {
+        throw new Error(
+          `Closest package.json (${packageInfo.path}) must specify name`,
+        );
+      }
+      this.packageName = packageInfo.name;
+      this.filePath = relative(packageInfo.dirname, opts.filename);
     },
     visitor: {
       Program: {
@@ -153,9 +183,10 @@ export default function (): PluginObj<Context> {
               'body',
               buildSetFileScope({
                 packageIdentifier: t.stringLiteral(
-                  `${this.packageIdentifier}/fileScope`,
+                  `${packageIdentifier}/fileScope`,
                 ),
-                fileScope: t.stringLiteral(this.fileScope),
+                filePath: t.stringLiteral(this.filePath),
+                packageName: t.stringLiteral(this.packageName),
               }),
             );
 
@@ -167,7 +198,7 @@ export default function (): PluginObj<Context> {
         },
       },
       ImportDeclaration(path) {
-        if (path.node.source.value === this.packageIdentifier) {
+        if (path.node.source.value === packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;
