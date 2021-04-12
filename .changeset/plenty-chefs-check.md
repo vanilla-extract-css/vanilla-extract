@@ -2,4 +2,4 @@
 '@vanilla-extract/esbuild-plugin': minor
 ---
 
-Remove `projectRoot` option in favor of `cwd` option. `cwd` is defaulted to `process.cwd()`
+Remove `projectRoot` option in favor of `package.json` resolution

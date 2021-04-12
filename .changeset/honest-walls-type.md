@@ -7,4 +7,6 @@
 
 Ensure generated hashes are scoped by package
 
-This change adds support for pre-compilation of packages. Prior to this change, packages consumed from `node_modules` would need to be compiled (through babel) to add filescope information. This was to ensure class names would never clash. Adding package name information to the filescope allows vanilla-extract to safely pre-compile packages before publishing to npm without risk of class name clashes.
+vanilla-extract uses file path to ensure unique identifier (e.g. class names, CSS Variables, keyframes, etc) hashes across your application. This information is added to your `*.css.ts` files at build time. The issue with this approach is it meant `*.css.ts` files couldn't be pre-compiled when being published to npm.
+
+This change adds support for pre-compilation of packages by adding package name information to identifier hashes.

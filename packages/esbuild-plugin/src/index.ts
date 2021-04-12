@@ -18,17 +18,24 @@ const vanillaExtractPath = dirname(
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
-interface FilescopePluginOptions {
-  packageInfo: {
-    name: string;
-    dirname: string;
-  };
-}
-const vanillaExtractFilescopePlugin = ({
-  packageInfo,
-}: FilescopePluginOptions): Plugin => ({
+const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
+    const packageJsonPath = findUp.sync('package.json', {
+      cwd: build.initialOptions.absWorkingDir,
+    });
+
+    if (!packageJsonPath) {
+      throw new Error(`Can't find package.json`);
+    }
+
+    const { name } = require(packageJsonPath);
+    const packageInfo = {
+      name,
+      path: packageJsonPath,
+      dirname: dirname(packageJsonPath),
+    };
+
     build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
@@ -57,31 +64,16 @@ const vanillaExtractFilescopePlugin = ({
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   externals?: Array<string>;
-  cwd?: string;
   runtime?: boolean;
 }
 export function vanillaExtractPlugin({
   outputCss = true,
   externals = [],
-  cwd,
   runtime = false,
 }: VanillaExtractPluginOptions = {}): Plugin {
-  const packageJsonPath = findUp.sync('package.json', { cwd });
-
-  if (!packageJsonPath) {
-    throw new Error(`Can't find package.json`);
-  }
-
-  const { name } = require(packageJsonPath);
-  const packageInfo = {
-    name,
-    path: packageJsonPath,
-    dirname: dirname(packageJsonPath),
-  };
-
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
-    return vanillaExtractFilescopePlugin({ packageInfo });
+    return vanillaExtractFilescopePlugin();
   }
 
   return {
@@ -118,7 +110,8 @@ export function vanillaExtractPlugin({
           external: ['@vanilla-extract', ...externals],
           platform: 'node',
           write: false,
-          plugins: [vanillaExtractFilescopePlugin({ packageInfo })],
+          plugins: [vanillaExtractFilescopePlugin()],
+          absWorkingDir: build.initialOptions.absWorkingDir,
         });
 
         const { outputFiles, metafile } = result;
