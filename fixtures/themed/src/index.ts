@@ -1,4 +1,8 @@
-import { createInlineTheme } from '@vanilla-extract/css/createInlineTheme';
+import {
+  createInlineTheme,
+  setElementTheme,
+  setElementVar,
+} from '@vanilla-extract/dynamic';
 
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';
@@ -47,6 +51,16 @@ function render() {
                   }" class="${button.join(' ')} ${
     opacity['1/2']
   }">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id="${
+                      testNodes.dynamicVarsContainer
+                    }" class="${container}">
+                      <button id="${
+                        testNodes.dynamicVarsButton
+                      }" class="${button.join(
+    ' ',
+  )}">Dynamic vars button</button>
                   <div class="${responsiveTheme}">
               Responsive theme
                 <div id="${
@@ -57,9 +71,12 @@ function render() {
                   }" class="${button.join(
     ' ',
   )}">Responsive theme button</button>
-                </div>
-              </div>
-            </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -69,6 +86,32 @@ function render() {
     </div>
   </div>
 `;
+
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer,
+  );
+
+  if (!dynamicVarsContainer) {
+    throw new Error('Dynamic vars container not found.');
+  }
+
+  setElementTheme(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: 'transparent',
+      text: 'papayawhip',
+    },
+    space: {
+      1: '5px',
+      2: '10px',
+      3: '15px',
+    },
+  });
+
+  setElementVar(
+    dynamicVarsContainer,
+    vars.colors.backgroundColor,
+    'darksalmon',
+  );
 }
 
 render();

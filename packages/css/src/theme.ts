@@ -1,4 +1,5 @@
-import type { Contract, MapLeafNodes, ThemeVars, Tokens } from './types';
+import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
+import type { ThemeVars, Tokens } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';

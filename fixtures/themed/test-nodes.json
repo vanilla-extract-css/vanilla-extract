@@ -8,6 +8,8 @@
   "nestedRootButton": "nestedRootButton",
   "inlineThemeContainer": "inlineThemeContainer",
   "inlineThemeButton": "inlineThemeButton",
+  "dynamicVarsContainer": "dynamicVarsContainer",
+  "dynamicVarsButton": "dynamicVarsButton",
   "responsiveThemeContainer": "responsiveThemeContainer",
   "responsiveThemeButton": "responsiveThemeButton"
 }

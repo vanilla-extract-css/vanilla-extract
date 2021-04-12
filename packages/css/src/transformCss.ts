@@ -1,3 +1,4 @@
+import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
 
 import type {
@@ -234,15 +235,7 @@ class Stylesheet {
     }
 
     return {
-      ...mapKeys(vars, (_value, key) => {
-        const matches = key.match(/^var\((.*)\)$/);
-
-        if (matches) {
-          return matches[1];
-        }
-
-        return key;
-      }),
+      ...mapKeys(vars, (_value, key) => getVarName(key)),
       ...rest,
     };
   }

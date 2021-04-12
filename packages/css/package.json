@@ -14,16 +14,14 @@
       "index.ts",
       "adapter.ts",
       "transformCss.ts",
-      "fileScope.ts",
-      "createInlineTheme.ts"
+      "fileScope.ts"
     ]
   },
   "files": [
     "/dist",
     "/adapter",
     "/transformCss",
-    "/fileScope",
-    "/createInlineTheme"
+    "/fileScope"
   ],
   "repository": {
     "type": "git",
@@ -34,6 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
+    "@vanilla-extract/private": "^0.1.0",
     "css-selector-parser": "^1.4.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
