@@ -81,10 +81,15 @@ export type CSS =
   | CSSKeyframesBlock
   | CSSSelectorBlock;
 
+export type FileScope = {
+  packageName?: string;
+  filePath: string;
+};
+
 export interface Adapter {
-  appendCss: (css: CSS, fileScope: string) => void;
+  appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string) => void;
-  onEndFileScope: (fileScope: string) => void;
+  onEndFileScope: (fileScope: FileScope) => void;
 }
 
 export type Contract = {

@@ -165,11 +165,6 @@ module.exports = {
 
 ### esbuild
 
-Current limitations:
-
-- No automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
-- The `projectRoot` plugin option must be set to get deterministic class name hashes between build systems
-
 1. Install the dependencies.
 
 ```bash
@@ -184,10 +179,12 @@ const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 require('esbuild').build({
   entryPoints: ['app.ts'],
   bundle: true,
-  plugins: [vanillaExtractPlugin({ projectRoot: '...' })],
+  plugins: [vanillaExtractPlugin()],
   outfile: 'out.js',
 }).catch(() => process.exit(1))
 ```
+
+> Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 
 ### Gatsby
 
@@ -258,6 +255,12 @@ export const childClass = style({
 });
 ```
 
+> 💡 To improve maintainability, each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element. For example, `'&:hover:not(:active)'` is considered valid, while `'& > a'` and ``[`& ${childClass}`]`` are not.
+>
+>If you want to target another scoped class then it should be defined within the `style` block of that class instead. For example, ``[`& ${childClass}`]`` is invalid since it targets `${childClass}`, so it should instead be defined in the `style` block for `childClass`.
+>
+>If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
+
 ### globalStyle
 
 Creates styles attached to a global selector.
@@ -267,6 +270,18 @@ import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
   margin: 0
+});
+```
+
+Global selectors can also contain references to other scoped class names.
+
+```ts
+import { globalStyle } from '@vanilla-extract/css';
+
+export const parentClass = style({});
+
+globalStyle(`${parentClass} > a`, {
+  color: 'pink'
 });
 ```
 

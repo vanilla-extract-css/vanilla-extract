@@ -1,4 +1,4 @@
-import type { Adapter, CSS } from './types';
+import type { Adapter, CSS, FileScope } from './types';
 import { transformCss } from './transformCss';
 import { setAdapter } from './adapter';
 
@@ -7,9 +7,10 @@ const stylesheets: Record<string, CSSStyleSheet> = {};
 const localClassNames = new Set<string>();
 let bufferedCSSObjs: Array<CSS> = [];
 
-function getStylesheet(fileScope: string) {
-  if (stylesheets[fileScope]) {
-    return stylesheets[fileScope];
+function getStylesheet({ packageName, filePath }: FileScope) {
+  const fileScopeId = packageName ? `${packageName}${filePath}` : filePath;
+  if (stylesheets[fileScopeId]) {
+    return stylesheets[fileScopeId];
   }
   const styleEl = document.createElement('style');
   document.head.appendChild(styleEl);
@@ -17,7 +18,7 @@ function getStylesheet(fileScope: string) {
   if (!styleEl.sheet) {
     throw new Error(`Couldn't create stylesheet`);
   }
-  stylesheets[fileScope] = styleEl.sheet;
+  stylesheets[fileScopeId] = styleEl.sheet;
 
   return styleEl.sheet;
 }

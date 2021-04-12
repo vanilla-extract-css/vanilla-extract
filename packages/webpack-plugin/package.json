@@ -8,13 +8,15 @@
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "validate-loader.ts"
+      "validate-loader.ts",
+      "extracted.js"
     ]
   },
   "files": [
     "/dist",
     "/loader",
-    "/validate-loader"
+    "/validate-loader",
+    "/extracted"
   ],
   "repository": {
     "type": "git",
