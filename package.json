@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",
+    "version": "changeset version && yarn",
     "release": "yarn copy-readme-to-packages && yarn build && changeset publish"
   },
   "workspaces": [
