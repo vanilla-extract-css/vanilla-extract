@@ -201,8 +201,8 @@ export default function (): PluginObj<Context> {
         },
       },
       ImportDeclaration(path) {
-        if (!this.isCssFile) {
-          // Bail early if file isn't a .css.ts file
+        if (!this.isCssFile || this.alreadyCompiled) {
+          // Bail early if file isn't a .css.ts file or the file has already been compiled
           return path.stop();
         }
 
