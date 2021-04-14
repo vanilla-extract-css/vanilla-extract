@@ -41,10 +41,7 @@ const vanillaExtractFilescopePlugin = (): Plugin => ({
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      if (
-        path.indexOf(vanillaExtractPath) === -1 &&
-        originalSource.indexOf('@vanilla-extract/css/fileScope') === -1
-      ) {
+      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
         const filePath = relative(packageInfo.dirname, path);
 
         const contents = `

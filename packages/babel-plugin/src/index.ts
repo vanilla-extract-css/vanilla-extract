@@ -4,9 +4,10 @@ import template from '@babel/template';
 import findUp from 'find-up';
 
 const packageIdentifier = '@vanilla-extract/css';
+const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
 
 const buildSetFileScope = template(`
-  import { setFileScope, endFileScope } from %%packageIdentifier%%
+  import { setFileScope, endFileScope } from '${filescopePackageIdentifier}'
   setFileScope(%%filePath%%, %%packageName%%)
 `);
 
@@ -123,6 +124,7 @@ type Context = PluginPass & {
   filePath: string;
   packageName: string;
   isCssFile: boolean;
+  alreadyCompiled: boolean;
 };
 
 export default function (): PluginObj<Context> {
@@ -157,6 +159,7 @@ export default function (): PluginObj<Context> {
       }
 
       this.isCssFile = /\.css\.(js|ts|jsx|tsx)$/.test(opts.filename);
+      this.alreadyCompiled = false;
 
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
@@ -180,14 +183,11 @@ export default function (): PluginObj<Context> {
     visitor: {
       Program: {
         exit(path) {
-          if (this.isCssFile) {
+          if (this.isCssFile && !this.alreadyCompiled) {
             // Wrap module with file scope calls
             path.unshiftContainer(
               'body',
               buildSetFileScope({
-                packageIdentifier: t.stringLiteral(
-                  `${packageIdentifier}/fileScope`,
-                ),
                 filePath: t.stringLiteral(this.filePath),
                 packageName: t.stringLiteral(this.packageName),
               }),
@@ -206,7 +206,11 @@ export default function (): PluginObj<Context> {
           return path.stop();
         }
 
-        if (path.node.source.value === packageIdentifier) {
+        if (path.node.source.value === filescopePackageIdentifier) {
+          // If file scope import is found it means the file has already been compiled
+          this.alreadyCompiled = true;
+          return path.stop();
+        } else if (path.node.source.value === packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;
@@ -225,8 +229,8 @@ export default function (): PluginObj<Context> {
         }
       },
       CallExpression(path) {
-        if (!this.isCssFile) {
-          // Bail early if file isn't a .css.ts file
+        if (!this.isCssFile || this.alreadyCompiled) {
+          // Bail early if file isn't a .css.ts file or the file has already been compiled
           return path.stop();
         }
 
