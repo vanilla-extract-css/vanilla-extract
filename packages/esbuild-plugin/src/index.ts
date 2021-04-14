@@ -12,10 +12,6 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 
-const vanillaExtractPath = dirname(
-  require.resolve('@vanilla-extract/css/package.json'),
-);
-
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
 const cssFileFilter = /\.css\.(js|jsx|ts|tsx)$/;
