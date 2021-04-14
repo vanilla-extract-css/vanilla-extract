@@ -437,7 +437,7 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should only apply to functions imported from the relevant package', () => {
+  it('should only apply to .css.ts files', () => {
     const source = `
       import { style } from 'some-other-package';
 
@@ -446,7 +446,8 @@ describe('babel plugin', () => {
       });
     `;
 
-    expect(transform(source)).toMatchInlineSnapshot(`
+    expect(transform(source, {}, './dir/mockFilename.ts'))
+      .toMatchInlineSnapshot(`
       "import { style } from 'some-other-package';
       const three = style({
         zIndex: 2

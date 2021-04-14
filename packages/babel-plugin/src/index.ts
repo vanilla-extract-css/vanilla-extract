@@ -122,6 +122,7 @@ type Context = PluginPass & {
   packageIdentifier: string;
   filePath: string;
   packageName: string;
+  isCssFile: boolean;
 };
 
 export default function (): PluginObj<Context> {
@@ -150,13 +151,15 @@ export default function (): PluginObj<Context> {
 
   return {
     pre({ opts }) {
-      this.importIdentifiers = new Map();
-      this.namespaceImport = '';
-
       if (!opts.filename) {
         // TODO Make error better
         throw new Error('Filename must be available');
       }
+
+      this.isCssFile = /\.css\.(js|ts|jsx|tsx)$/.test(opts.filename);
+
+      this.importIdentifiers = new Map();
+      this.namespaceImport = '';
 
       const packageInfo = getPackageInfo(opts.cwd);
 
@@ -177,7 +180,7 @@ export default function (): PluginObj<Context> {
     visitor: {
       Program: {
         exit(path) {
-          if (this.importIdentifiers.size > 0 || this.namespaceImport) {
+          if (this.isCssFile) {
             // Wrap module with file scope calls
             path.unshiftContainer(
               'body',
@@ -198,6 +201,11 @@ export default function (): PluginObj<Context> {
         },
       },
       ImportDeclaration(path) {
+        if (!this.isCssFile) {
+          // Bail early if file isn't a .css.ts file
+          return path.stop();
+        }
+
         if (path.node.source.value === packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
@@ -217,6 +225,11 @@ export default function (): PluginObj<Context> {
         }
       },
       CallExpression(path) {
+        if (!this.isCssFile) {
+          // Bail early if file isn't a .css.ts file
+          return path.stop();
+        }
+
         const { node } = path;
 
         const usedExport = getRelevantCall(

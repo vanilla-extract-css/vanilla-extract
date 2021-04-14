@@ -18,6 +18,8 @@ const vanillaExtractPath = dirname(
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
+const cssFileFilter = /\.css\.(js|jsx|ts|tsx)$/;
+
 const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
@@ -36,7 +38,7 @@ const vanillaExtractFilescopePlugin = (): Plugin => ({
       dirname: dirname(packageJsonPath),
     };
 
-    build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+    build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
       if (
@@ -102,7 +104,7 @@ export function vanillaExtractPlugin({
         },
       );
 
-      build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+      build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
         const result = await esbuild({
           entryPoints: [path],
           metafile: true,
