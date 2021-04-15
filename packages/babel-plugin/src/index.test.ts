@@ -32,7 +32,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
       const one = style({
@@ -52,7 +52,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { mapToStyles } from '@vanilla-extract/css';
       const colors = mapToStyles({
@@ -74,7 +74,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { mapToStyles } from '@vanilla-extract/css';
       const colors = mapToStyles({
@@ -96,7 +96,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
       export default style({
@@ -120,7 +120,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
       const test = {
@@ -146,7 +146,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
 
@@ -170,7 +170,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
 
@@ -194,7 +194,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
 
@@ -216,7 +216,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { globalStyle } from '@vanilla-extract/css';
       globalStyle('html, body', {
@@ -234,7 +234,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createVar } from '@vanilla-extract/css';
       const myVar = createVar(\\"myVar\\");
@@ -252,7 +252,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { fontFace } from '@vanilla-extract/css';
       const myFont = fontFace({
@@ -272,7 +272,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { globalFontFace } from '@vanilla-extract/css';
       globalFontFace('myFont', {
@@ -293,7 +293,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { keyframes } from '@vanilla-extract/css';
       const myAnimation = keyframes({
@@ -319,7 +319,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { globalKeyframes } from '@vanilla-extract/css';
       globalKeyframes('myKeyframes', {
@@ -342,7 +342,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createTheme } from '@vanilla-extract/css';
       const darkTheme = createTheme({}, {}, \\"darkTheme\\");
@@ -358,7 +358,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createTheme } from '@vanilla-extract/css';
       const [theme, vars] = createTheme({}, {}, \\"theme\\");
@@ -374,7 +374,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createGlobalTheme } from '@vanilla-extract/css';
       const themeVars = createGlobalTheme(':root', {
@@ -394,7 +394,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createThemeVars } from '@vanilla-extract/css';
       const themeVars = createThemeVars({
@@ -420,7 +420,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style, mapToStyles } from '@vanilla-extract/css';
       const three = style({
@@ -437,7 +437,7 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should only apply to functions imported from the relevant package', () => {
+  it('should only apply debug ids to functions imported from the relevant package', () => {
     const source = `
       import { style } from 'some-other-package';
 
@@ -447,10 +447,54 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from 'some-other-package';
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      import { style } from 'some-other-package';
+      const three = style({
+        zIndex: 2
+      });
+      endFileScope()"
+    `);
+  });
+
+  it('should only apply to .css.ts files', () => {
+    const source = `
+      import { style } from '@vanilla-extract/css';
+
+      const three = style({
+        zIndex: 2,  
+      });
+    `;
+
+    expect(transform(source, {}, './dir/mockFilename.ts'))
+      .toMatchInlineSnapshot(`
+      "import { style } from '@vanilla-extract/css';
       const three = style({
         zIndex: 2
       });"
+    `);
+  });
+
+  it('should ignore files that already have filescope information', () => {
+    const source = `
+      import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+      setFileScope('src/dir/someFileName.css.ts', 'some-package');
+      import { style } from '@vanilla-extract/css';
+
+      const three = style({
+        zIndex: 2,  
+      });
+      endFileScope();
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+      setFileScope('src/dir/someFileName.css.ts', 'some-package');
+      import { style } from '@vanilla-extract/css';
+      const three = style({
+        zIndex: 2
+      });
+      endFileScope();"
     `);
   });
 
@@ -464,7 +508,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style as specialStyle } from '@vanilla-extract/css';
       const four = specialStyle({
@@ -486,7 +530,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
       export const height = [style({
@@ -508,7 +552,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { style } from '@vanilla-extract/css';
       export const height = {
@@ -530,7 +574,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import * as css from '@vanilla-extract/css';
       const one = css.style({

@@ -12,11 +12,9 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 
-const vanillaExtractPath = dirname(
-  require.resolve('@vanilla-extract/css/package.json'),
-);
-
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
+
+const cssFileFilter = /\.css\.(js|jsx|ts|tsx)$/;
 
 const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
@@ -36,13 +34,10 @@ const vanillaExtractFilescopePlugin = (): Plugin => ({
       dirname: dirname(packageJsonPath),
     };
 
-    build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+    build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      if (
-        path.indexOf(vanillaExtractPath) === -1 &&
-        originalSource.indexOf('@vanilla-extract/css/fileScope') === -1
-      ) {
+      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
         const filePath = relative(packageInfo.dirname, path);
 
         const contents = `
@@ -102,7 +97,7 @@ export function vanillaExtractPlugin({
         },
       );
 
-      build.onLoad({ filter: /\.css\.(js|jsx|ts|tsx)$/ }, async ({ path }) => {
+      build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
         const result = await esbuild({
           entryPoints: [path],
           metafile: true,
