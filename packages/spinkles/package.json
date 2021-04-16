@@ -1,0 +1,21 @@
+{
+  "name": "@vanilla-extract/spinkles",
+  "version": "0.1.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "sideEffects": false,
+  "main": "dist/vanilla-extract-spinkles.cjs.js",
+  "module": "dist/vanilla-extract-spinkles.esm.js",
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/spinkles"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@vanilla-extract/css": "^0.1.0"
+  }
+}
