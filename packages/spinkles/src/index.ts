@@ -1,8 +1,6 @@
 import type * as CSS from 'csstype';
 
-// type CSSProperties = {
-//   [Property in keyof StandardLonghandProperties]?: StandardLonghandProperties[Property];
-// };
+import { Spread } from './types';
 
 interface Condition {
   '@media'?: string;
@@ -48,6 +46,14 @@ export function createAtomicStyles<
   return null as any;
 }
 
+export function composeAtomicStyles<
+  InputAtomicStyles extends Array<
+    ConditionalAtomicStyles<any> | AtomicStyles<any>
+  >
+>(...inputAtomicStyle: InputAtomicStyles): Spread<InputAtomicStyles> {
+  return null as any;
+}
+
 const a = createAtomicStyles({
   conditions: {
     mobile: {
@@ -63,13 +69,15 @@ const a = createAtomicStyles({
   },
 });
 
-const b = ['flex', 'none', 'block'] as const;
+const b = createAtomicStyles({
+  properties: {
+    color: {
+      critical: 'red',
+      happy: 'green',
+    },
+  },
+});
 
-type A = keyof typeof b;
+const c = composeAtomicStyles(a, b);
 
-// Tests
-a.paddingTop.small.mobile;
-a.paddingTop.medium.mobile;
-a.display.block.mobile;
-// @ts-expect-error
-a.paddingTop.large;
+c.paddingTop.medium.mobile;
