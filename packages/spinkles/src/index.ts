@@ -49,11 +49,11 @@ export function createAtomicStyles<
 }
 
 const a = createAtomicStyles({
-  //   conditions: {
-  //     mobile: {
-  //       '@media': '',
-  //     },
-  //   },
+  conditions: {
+    mobile: {
+      '@media': '',
+    },
+  },
   properties: {
     display: ['flex', 'none', 'block'],
     paddingTop: {
