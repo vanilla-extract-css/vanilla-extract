@@ -1,13 +1,19 @@
 {
-  "name": "@vanilla-extract/spinkles",
+  "name": "@vanilla-extract/sprinkles",
   "version": "0.1.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-spinkles.cjs.js",
-  "module": "dist/vanilla-extract-spinkles.esm.js",
+  "main": "dist/vanilla-extract-sprinkles.cjs.js",
+  "module": "dist/vanilla-extract-sprinkles.esm.js",
   "files": [
     "/dist"
   ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "createAtomsFn.ts"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
@@ -15,7 +21,7 @@
   },
   "author": "SEEK",
   "license": "MIT",
-  "dependencies": {
-    "@vanilla-extract/css": "^0.1.0"
+  "peerDependencies": {
+    "@vanilla-extract/css": "^0.2.0"
   }
 }

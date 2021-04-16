@@ -1576,6 +1576,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fixtures/sprinkles@workspace:fixtures/sprinkles":
+  version: 0.0.0-use.local
+  resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
+  dependencies:
+    "@vanilla-extract/css": 0.2.0
+    "@vanilla-extract/sprinkles": 0.1.0
+  languageName: unknown
+  linkType: soft
+
 "@fixtures/themed@workspace:fixtures/themed":
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
@@ -2729,6 +2738,14 @@ __metadata:
 "@vanilla-extract/private@^0.1.0, @vanilla-extract/private@workspace:packages/private":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/private@workspace:packages/private"
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/sprinkles@0.1.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
+  peerDependencies:
+    "@vanilla-extract/css": ^0.2.0
   languageName: unknown
   linkType: soft
 

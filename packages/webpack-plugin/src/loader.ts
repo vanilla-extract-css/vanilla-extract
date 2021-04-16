@@ -152,6 +152,8 @@ async function processSource(
   const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__webpack_adapter__);
   ${source}`;
 
+  console.log(sourceWithBoundLoaderInstance);
+
   let result;
   try {
     result = evalCode(
