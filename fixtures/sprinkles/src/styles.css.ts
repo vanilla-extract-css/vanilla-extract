@@ -2,8 +2,12 @@ import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
 export const a = createAtomicStyles({
   conditions: {
-    mobile: {
+    mobile: {},
+    tablet: {
       '@media': 'screen and (min-width: 768px)',
+    },
+    desktop: {
+      '@media': 'screen and (min-width: 1024px)',
     },
   },
   properties: {

@@ -64,7 +64,27 @@ export function createAtomicStyles<
               conditionName as keyof typeof options.conditions
             ];
 
-          if (condition['@media']) {
+          if (condition['@media'] && condition['@supports']) {
+            styles[key][variantName][conditionName] = style({
+              '@supports': {
+                [condition['@supports']]: {
+                  '@media': {
+                    [condition['@media']]: {
+                      [key]: value,
+                    },
+                  },
+                },
+              },
+            });
+          } else if (condition['@supports']) {
+            styles[key][variantName][conditionName] = style({
+              '@supports': {
+                [condition['@supports']]: {
+                  [key]: value,
+                },
+              },
+            });
+          } else if (condition['@media']) {
             styles[key][variantName][conditionName] = style({
               '@media': {
                 [condition['@media']]: {
@@ -72,15 +92,9 @@ export function createAtomicStyles<
                 },
               },
             });
-          }
-
-          if (condition['@supports']) {
+          } else {
             styles[key][variantName][conditionName] = style({
-              '@supports': {
-                [condition['@supports']]: {
-                  [key]: value,
-                },
-              },
+              [key]: value,
             });
           }
         }
