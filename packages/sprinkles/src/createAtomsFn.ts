@@ -8,17 +8,19 @@ type AtomicStyles = {
   };
 };
 
-type AtomProps<Styles extends AtomicStyles> = {
-  [Prop in keyof Styles]?: Styles[Prop][string] extends string
-    ? keyof Styles[Prop]
+type AtomProps<Atoms extends AtomicStyles> = {
+  [Prop in keyof Atoms]?: Atoms[Prop][keyof Atoms[Prop]] extends string
+    ? keyof Atoms[Prop]
     :
-        | keyof Styles[Prop]
+        | keyof Atoms[Prop]
         | {
-            [Condition in keyof Styles[Prop][string]]?: Styles[Prop];
+            [Condition in keyof Atoms[Prop][keyof Atoms[Prop]]]?: keyof Atoms[Prop];
           };
 };
 
-type AtomsFn<Styles extends AtomicStyles> = (props: AtomProps<Styles>) => void;
+type AtomsFn<Styles extends AtomicStyles> = (
+  props: AtomProps<Styles>,
+) => string;
 
 export function createAtomsFn<Styles extends AtomicStyles>(
   atomicStyles: Styles,
@@ -28,9 +30,30 @@ export function createAtomsFn<Styles extends AtomicStyles>(
 
 const atoms = createAtomsFn({
   display: {
-    flex: { mobile: 'hi' },
-    block: { mobile: 'hi' },
+    flex: {
+      mobile: 'className',
+      desktop: 'className',
+    },
+    none: {
+      mobile: 'className',
+      desktop: 'className',
+    },
+  },
+  background: {
+    pink: 'className',
+    blue: 'className',
   },
 });
 
-atoms({ display: 'blok' });
+// These are valid
+atoms({ display: { desktop: 'flex' } });
+atoms({ display: { mobile: 'flex', desktop: 'none' } });
+atoms({ background: 'pink' });
+
+// These are invalid
+//@ts-expect-error
+atoms({ background: 'INVALID' });
+//@ts-expect-error
+atoms({ display: 'INVALID' });
+//@ts-expect-error
+atoms({ display: { INVALID: 'flex' } });
