@@ -6,6 +6,8 @@ interface Condition {
   '@supports'?: string;
 }
 
+type BaseConditions = Record<string, Condition>;
+
 interface BaseAtomicOptions {
   properties: {
     [Property in keyof CSS.Properties]?:
@@ -15,10 +17,13 @@ interface BaseAtomicOptions {
 }
 
 interface AtomicOptions extends BaseAtomicOptions {
+  defaultCondition?: never;
   conditions?: never;
 }
-interface ConditionalAtomicOptions extends BaseAtomicOptions {
-  conditions: Record<string, Condition>;
+interface ConditionalAtomicOptions<Conditions extends BaseConditions>
+  extends BaseAtomicOptions {
+  defaultCondition: keyof Conditions | false;
+  conditions: Conditions;
 }
 
 type AtomicStyles<Options extends BaseAtomicOptions, Result = string> = {
@@ -30,21 +35,28 @@ type AtomicStyles<Options extends BaseAtomicOptions, Result = string> = {
 };
 
 type ConditionalAtomicStyles<
-  Options extends ConditionalAtomicOptions
+  Conditions extends BaseConditions,
+  Options extends ConditionalAtomicOptions<Conditions>
 > = AtomicStyles<
   Options,
   {
-    [Rule in keyof Options['conditions']]: string;
+    defaultCondition?: string;
+    conditions: {
+      [Rule in keyof Options['conditions']]: string;
+    };
   }
 >;
 
-export function createAtomicStyles<
-  Options extends AtomicOptions | ConditionalAtomicOptions
->(
+export function createAtomicStyles<Options extends AtomicOptions>(
   options: Options,
-): Options extends ConditionalAtomicOptions
-  ? ConditionalAtomicStyles<Options>
-  : AtomicStyles<Options> {
+): AtomicStyles<Options>;
+export function createAtomicStyles<
+  Conditions extends BaseConditions,
+  Options extends ConditionalAtomicOptions<Conditions>
+>(options: Options): ConditionalAtomicStyles<Conditions, Options>;
+export function createAtomicStyles(
+  options: AtomicOptions | ConditionalAtomicOptions<BaseConditions>,
+): any {
   let styles = {} as any;
 
   for (const key in options.properties) {
@@ -56,16 +68,19 @@ export function createAtomicStyles<
       value: string,
     ) => {
       if (typeof options.conditions === 'object') {
-        styles[key][variantName] = {};
+        styles[key][variantName] = {
+          conditions: {},
+        };
 
         for (const conditionName in options.conditions) {
+          let className;
           const condition =
             options.conditions[
               conditionName as keyof typeof options.conditions
             ];
 
           if (condition['@media'] && condition['@supports']) {
-            styles[key][variantName][conditionName] = style({
+            className = style({
               '@supports': {
                 [condition['@supports']]: {
                   '@media': {
@@ -77,7 +92,7 @@ export function createAtomicStyles<
               },
             });
           } else if (condition['@supports']) {
-            styles[key][variantName][conditionName] = style({
+            className = style({
               '@supports': {
                 [condition['@supports']]: {
                   [key]: value,
@@ -85,7 +100,7 @@ export function createAtomicStyles<
               },
             });
           } else if (condition['@media']) {
-            styles[key][variantName][conditionName] = style({
+            className = style({
               '@media': {
                 [condition['@media']]: {
                   [key]: value,
@@ -93,9 +108,15 @@ export function createAtomicStyles<
               },
             });
           } else {
-            styles[key][variantName][conditionName] = style({
+            className = style({
               [key]: value,
             });
+          }
+
+          styles[key][variantName].conditions[conditionName] = className;
+
+          if (conditionName === options.defaultCondition) {
+            styles[key][variantName].defaultCondition = className;
           }
         }
       } else {
