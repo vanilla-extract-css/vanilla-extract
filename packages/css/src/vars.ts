@@ -15,7 +15,8 @@ type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
 >;
 
 export function createVar(debugId?: string) {
-  const refCount = getAndIncrementRefCounter();
+  // Convert ref count to base 36 for optimal hash lengths
+  const refCount = getAndIncrementRefCounter().toString(36);
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,
