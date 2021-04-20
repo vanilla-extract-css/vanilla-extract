@@ -1,6 +1,8 @@
 import { style } from '@vanilla-extract/css';
 import type * as CSS from 'csstype';
 
+import { ResponsiveArrayConfig } from './types';
+
 interface Condition {
   '@media'?: string;
   '@supports'?: string;
@@ -20,11 +22,13 @@ interface BaseAtomicOptions {
 interface AtomicOptions extends BaseAtomicOptions {
   defaultCondition?: never;
   conditions?: never;
+  responsiveArray?: never;
 }
 interface ConditionalAtomicOptions<Conditions extends BaseConditions>
   extends BaseAtomicOptions {
-  defaultCondition: keyof Conditions | false;
   conditions: Conditions;
+  defaultCondition: keyof Conditions | false;
+  responsiveArray?: ResponsiveArrayConfig<keyof Conditions>;
 }
 
 type AtomicStyles<Options extends BaseAtomicOptions, Result = string> = {
@@ -45,6 +49,7 @@ type ConditionalAtomicStyles<
     conditions: {
       [Rule in keyof Options['conditions']]: string;
     };
+    responsiveArray: Options['responsiveArray'];
   }
 >;
 
@@ -113,6 +118,10 @@ export function createAtomicStyles(
 
           if (conditionName === options.defaultCondition) {
             styles[key][variantName].defaultCondition = className;
+          }
+
+          if (options.responsiveArray) {
+            styles[key][variantName].responsiveArray = options.responsiveArray;
           }
         }
       } else {
