@@ -1,6 +1,7 @@
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
 export const a = createAtomicStyles({
+  defaultCondition: 'mobile',
   conditions: {
     mobile: {},
     tablet: {
@@ -8,6 +9,11 @@ export const a = createAtomicStyles({
     },
     desktop: {
       '@media': 'screen and (min-width: 1024px)',
+    },
+    darkDesktop: {
+      '@supports': 'not (display: grid)',
+      '@media': 'screen and (min-width: 1024px)',
+      selector: '[data-dark-mode] &',
     },
   },
   properties: {

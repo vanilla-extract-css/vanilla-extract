@@ -4,6 +4,7 @@ import type * as CSS from 'csstype';
 interface Condition {
   '@media'?: string;
   '@supports'?: string;
+  selector?: string;
 }
 
 type BaseConditions = Record<string, Condition>;
@@ -73,45 +74,40 @@ export function createAtomicStyles(
         };
 
         for (const conditionName in options.conditions) {
-          let className;
           const condition =
             options.conditions[
               conditionName as keyof typeof options.conditions
             ];
 
-          if (condition['@media'] && condition['@supports']) {
-            className = style({
+          let styleValue = {
+            [key]: value,
+          } as any;
+
+          if (condition['@supports']) {
+            styleValue = {
               '@supports': {
-                [condition['@supports']]: {
-                  '@media': {
-                    [condition['@media']]: {
-                      [key]: value,
-                    },
-                  },
-                },
+                [condition['@supports']]: styleValue,
               },
-            });
-          } else if (condition['@supports']) {
-            className = style({
-              '@supports': {
-                [condition['@supports']]: {
-                  [key]: value,
-                },
-              },
-            });
-          } else if (condition['@media']) {
-            className = style({
-              '@media': {
-                [condition['@media']]: {
-                  [key]: value,
-                },
-              },
-            });
-          } else {
-            className = style({
-              [key]: value,
-            });
+            };
           }
+
+          if (condition['@media']) {
+            styleValue = {
+              '@media': {
+                [condition['@media']]: styleValue,
+              },
+            };
+          }
+
+          if (condition.selector) {
+            styleValue = {
+              selectors: {
+                [condition.selector]: styleValue,
+              },
+            };
+          }
+
+          const className = style(styleValue);
 
           styles[key][variantName].conditions[conditionName] = className;
 
