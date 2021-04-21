@@ -18,7 +18,7 @@ const debuggableFunctionConfig = {
   createTheme: {
     maxParams: 3,
   },
-  mapToStyles: {
+  styleVariants: {
     maxParams: 3,
   },
   fontFace: {
