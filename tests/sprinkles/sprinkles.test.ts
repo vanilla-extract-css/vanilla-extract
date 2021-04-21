@@ -66,9 +66,17 @@ describe('sprinkles', () => {
     expect(atomicStyles).toMatchInlineSnapshot(`
       Object {
         "color": Object {
-          "gray-500": "_1kw4bre0",
-          "green-300": "_1kw4bre2",
-          "red-500": "_1kw4bre1",
+          "values": Object {
+            "gray-500": Object {
+              "defaultClass": "_1kw4bre0",
+            },
+            "green-300": Object {
+              "defaultClass": "_1kw4bre2",
+            },
+            "red-500": Object {
+              "defaultClass": "_1kw4bre1",
+            },
+          },
         },
       }
     `);
@@ -78,85 +86,69 @@ describe('sprinkles', () => {
     expect(conditionalAtomicStyles).toMatchInlineSnapshot(`
       Object {
         "display": Object {
-          "block": Object {
-            "conditions": Object {
-              "desktop": "_1kw4bre5",
-              "mobile": "_1kw4bre3",
-              "tablet": "_1kw4bre4",
+          "responsiveArray": Array [
+            "mobile",
+            "desktop",
+            "tablet",
+          ],
+          "values": Object {
+            "block": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bre5",
+                "mobile": "_1kw4bre3",
+                "tablet": "_1kw4bre4",
+              },
+              "defaultClass": "_1kw4bre3",
             },
-            "defaultCondition": "_1kw4bre3",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
-          },
-          "flex": Object {
-            "conditions": Object {
-              "desktop": "_1kw4breb",
-              "mobile": "_1kw4bre9",
-              "tablet": "_1kw4brea",
+            "flex": Object {
+              "conditions": Object {
+                "desktop": "_1kw4breb",
+                "mobile": "_1kw4bre9",
+                "tablet": "_1kw4brea",
+              },
+              "defaultClass": "_1kw4bre9",
             },
-            "defaultCondition": "_1kw4bre9",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
-          },
-          "none": Object {
-            "conditions": Object {
-              "desktop": "_1kw4bre8",
-              "mobile": "_1kw4bre6",
-              "tablet": "_1kw4bre7",
+            "none": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bre8",
+                "mobile": "_1kw4bre6",
+                "tablet": "_1kw4bre7",
+              },
+              "defaultClass": "_1kw4bre6",
             },
-            "defaultCondition": "_1kw4bre6",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
           },
         },
         "paddingTop": Object {
-          "large": Object {
-            "conditions": Object {
-              "desktop": "_1kw4brek",
-              "mobile": "_1kw4brei",
-              "tablet": "_1kw4brej",
+          "responsiveArray": Array [
+            "mobile",
+            "desktop",
+            "tablet",
+          ],
+          "values": Object {
+            "large": Object {
+              "conditions": Object {
+                "desktop": "_1kw4brek",
+                "mobile": "_1kw4brei",
+                "tablet": "_1kw4brej",
+              },
+              "defaultClass": "_1kw4brei",
             },
-            "defaultCondition": "_1kw4brei",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
-          },
-          "medium": Object {
-            "conditions": Object {
-              "desktop": "_1kw4breh",
-              "mobile": "_1kw4bref",
-              "tablet": "_1kw4breg",
+            "medium": Object {
+              "conditions": Object {
+                "desktop": "_1kw4breh",
+                "mobile": "_1kw4bref",
+                "tablet": "_1kw4breg",
+              },
+              "defaultClass": "_1kw4bref",
             },
-            "defaultCondition": "_1kw4bref",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
-          },
-          "small": Object {
-            "conditions": Object {
-              "desktop": "_1kw4bree",
-              "mobile": "_1kw4brec",
-              "tablet": "_1kw4bred",
+            "small": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bree",
+                "mobile": "_1kw4brec",
+                "tablet": "_1kw4bred",
+              },
+              "defaultClass": "_1kw4brec",
             },
-            "defaultCondition": "_1kw4brec",
-            "responsiveArray": Array [
-              "mobile",
-              "desktop",
-              "tablet",
-            ],
           },
         },
       }

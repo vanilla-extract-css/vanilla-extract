@@ -1,41 +1,47 @@
 import { ResponsiveArray } from './types';
 
-type Variants = {
-  [variant: string]: string;
+type ConditionalProperty = {
+  responsiveArray: Array<string> | undefined;
+  values: {
+    [valueName: string]: {
+      defaultClass: string;
+      conditions: {
+        [conditionName: string]: string;
+      };
+    };
+  };
 };
 
-type ConditionalVariants = {
-  [variant: string]: {
-    conditions: {
-      [condition: string]: string;
+type UnconditionalProperty = {
+  values: {
+    [valueName: string]: {
+      defaultClass: string;
     };
-    defaultCondition?: string;
-    responsiveArray?: Array<string>;
   };
 };
 
 type AtomicStyles = {
-  [property: string]: Variants | ConditionalVariants;
+  [property: string]: ConditionalProperty | UnconditionalProperty;
 };
 
 type ResponsiveArrayVariant<
-  Variant extends ConditionalVariants,
+  Variant extends ConditionalProperty,
   Values extends string | number | symbol
-> = Variant[keyof Variant]['responsiveArray'] extends {
+> = Variant['responsiveArray'] extends {
   length: number;
 }
-  ? ResponsiveArray<Variant[keyof Variant]['responsiveArray']['length'], Values>
+  ? ResponsiveArray<Variant['responsiveArray']['length'], Values>
   : never;
 
 type AtomProps<Atoms extends AtomicStyles> = {
-  [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalVariants
+  [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalProperty
     ?
-        | keyof Atoms[Prop]
+        | keyof Atoms[Prop]['values']
         | {
-            [Condition in keyof Atoms[Prop][keyof Atoms[Prop]]['conditions']]?: keyof Atoms[Prop];
+            [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
           }
-        | ResponsiveArrayVariant<Atoms[Prop], keyof Atoms[Prop]>
-    : keyof Atoms[Prop];
+        | ResponsiveArrayVariant<Atoms[Prop], keyof Atoms[Prop]['values']>
+    : keyof Atoms[Prop]['values'];
 };
 
 type AtomsFn<Styles extends AtomicStyles> = (
@@ -52,36 +58,28 @@ export function createAtomsFn<Styles extends AtomicStyles>(
       const propValue = props[prop];
 
       if (typeof propValue === 'string') {
-        const propStyle = atomicStyles[prop][propValue];
-        if (typeof propStyle === 'string') {
-          // Non-conditional style
-          classNames.push(propStyle);
-        } else {
-          // Conditional style using default condition
-          // @ts-expect-error Better types needed
-          classNames.push(propStyle.defaultCondition);
-        }
+        classNames.push(atomicStyles[prop].values[propValue].defaultClass);
       } else if (Array.isArray(propValue)) {
         for (const responsiveIndex in propValue) {
-          const responsiveVariant = propValue[responsiveIndex];
+          const responsiveValue = propValue[responsiveIndex];
           const conditionName =
             // @ts-expect-error
-            atomicStyles[prop][responsiveVariant].responsiveArray[
-              responsiveIndex
-            ];
+            atomicStyles[prop].responsiveArray[responsiveIndex];
           classNames.push(
             // @ts-expect-error Better types needed
-            atomicStyles[prop][responsiveVariant].conditions[conditionName],
+            atomicStyles[prop].values[responsiveValue].conditions[
+              conditionName
+            ],
           );
         }
       } else {
         for (const conditionName in propValue) {
           // Conditional style
           // @ts-expect-error Better types needed
-          const variant = propValue[conditionName];
+          const value = propValue[conditionName];
           classNames.push(
             // @ts-expect-error Better types needed
-            atomicStyles[prop][variant].conditions[conditionName],
+            atomicStyles[prop].values[value].conditions[conditionName],
           );
         }
       }

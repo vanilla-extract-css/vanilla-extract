@@ -31,31 +31,39 @@ interface ConditionalAtomicOptions<Conditions extends BaseConditions>
   responsiveArray?: ResponsiveArrayConfig<keyof Conditions>;
 }
 
-type AtomicStyles<Options extends BaseAtomicOptions, Result = string> = {
+type Values<Property, Result> = {
+  [Value in Property extends Array<any>
+    ? Property[number]
+    : keyof Property]: Result;
+};
+
+type UnconditionalAtomicStyles<Options extends AtomicOptions> = {
   [Property in keyof Options['properties']]: {
-    [Variant in Options['properties'][Property] extends Array<any>
-      ? Options['properties'][Property][number]
-      : keyof Options['properties'][Property]]: Result;
+    values: Values<Options['properties'][Property], { defaultClass: string }>;
   };
 };
 
 type ConditionalAtomicStyles<
   Conditions extends BaseConditions,
   Options extends ConditionalAtomicOptions<Conditions>
-> = AtomicStyles<
-  Options,
-  {
-    defaultCondition?: string;
-    conditions: {
-      [Rule in keyof Options['conditions']]: string;
-    };
-    responsiveArray: Options['responsiveArray'];
-  }
->;
+> = {
+  [Property in keyof Options['properties']]: {
+    responsiveArray: Array<keyof Conditions>;
+    values: Values<
+      Options['properties'][Property],
+      {
+        defaultClass: string;
+        conditions: {
+          [Rule in keyof Options['conditions']]: string;
+        };
+      }
+    >;
+  };
+};
 
 export function createAtomicStyles<Options extends AtomicOptions>(
   options: Options,
-): AtomicStyles<Options>;
+): UnconditionalAtomicStyles<Options>;
 export function createAtomicStyles<
   Conditions extends BaseConditions,
   Options extends ConditionalAtomicOptions<Conditions>
@@ -67,14 +75,17 @@ export function createAtomicStyles(
 
   for (const key in options.properties) {
     const property = options.properties[key as keyof typeof options.properties];
-    styles[key] = {};
+    styles[key] = {
+      values: {},
+    };
 
-    const processVariant = (
-      variantName: keyof typeof property,
-      value: string,
-    ) => {
+    if (options.responsiveArray) {
+      styles[key].responsiveArray = options.responsiveArray;
+    }
+
+    const processValue = (valueName: keyof typeof property, value: string) => {
       if (typeof options.conditions === 'object') {
-        styles[key][variantName] = {
+        styles[key].values[valueName] = {
           conditions: {},
         };
 
@@ -114,33 +125,29 @@ export function createAtomicStyles(
 
           const className = style(styleValue);
 
-          styles[key][variantName].conditions[conditionName] = className;
+          styles[key].values[valueName].conditions[conditionName] = className;
 
           if (conditionName === options.defaultCondition) {
-            styles[key][variantName].defaultCondition = className;
-          }
-
-          if (options.responsiveArray) {
-            styles[key][variantName].responsiveArray = options.responsiveArray;
+            styles[key].values[valueName].defaultClass = className;
           }
         }
       } else {
-        styles[key][variantName] = style({
-          [key]: value,
-        });
+        styles[key].values[valueName] = {
+          defaultClass: style({ [key]: value }),
+        };
       }
     };
 
     if (Array.isArray(property)) {
-      for (const variant of property) {
+      for (const value of property) {
         // @ts-expect-error
-        processVariant(variant, variant);
+        processValue(value, value);
       }
     } else {
-      for (const variantName in property) {
-        const variant = property[variantName];
+      for (const valueName in property) {
+        const value = property[valueName];
         // @ts-expect-error
-        processVariant(variantName, variant);
+        processValue(valueName, value);
       }
     }
   }
