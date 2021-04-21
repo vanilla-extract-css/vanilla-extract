@@ -33,9 +33,12 @@ interface ConditionalAtomicOptions<Conditions extends BaseConditions>
 
 type AtomicStyles<Options extends BaseAtomicOptions, Result = string> = {
   [Property in keyof Options['properties']]: {
-    [Variant in Options['properties'][Property] extends Array<any>
-      ? Options['properties'][Property][number]
-      : keyof Options['properties'][Property]]: Result;
+    configIndex: number;
+    variants: {
+      [Variant in Options['properties'][Property] extends Array<any>
+        ? Options['properties'][Property][number]
+        : keyof Options['properties'][Property]]: Result;
+    };
   };
 };
 
@@ -45,21 +48,32 @@ type ConditionalAtomicStyles<
 > = AtomicStyles<
   Options,
   {
-    defaultCondition?: string;
-    conditions: {
-      [Rule in keyof Options['conditions']]: string;
-    };
-    responsiveArray: Options['responsiveArray'];
+    [Rule in keyof Options['conditions']]: string;
   }
 >;
 
+type AtomicRuntimeConfig<Options extends BaseAtomicOptions> = {
+  styles: AtomicStyles<Options>;
+};
+
+type ConditionalAtomicRuntimeConfig<
+  Conditions extends BaseConditions,
+  Options extends ConditionalAtomicOptions<Conditions>
+> = {
+  config: {
+    defaultCondition: keyof Conditions | false;
+    responsiveArray?: Array<keyof Conditions>;
+  };
+  styles: ConditionalAtomicStyles<Conditions, Options>;
+};
+
 export function createAtomicStyles<Options extends AtomicOptions>(
   options: Options,
-): AtomicStyles<Options>;
+): AtomicRuntimeConfig<Options>;
 export function createAtomicStyles<
   Conditions extends BaseConditions,
   Options extends ConditionalAtomicOptions<Conditions>
->(options: Options): ConditionalAtomicStyles<Conditions, Options>;
+>(options: Options): ConditionalAtomicRuntimeConfig<Conditions, Options>;
 export function createAtomicStyles(
   options: AtomicOptions | ConditionalAtomicOptions<BaseConditions>,
 ): any {
