@@ -28,7 +28,7 @@ describe('sprinkles', () => {
             desktop: 'flex',
           },
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4bre11"`);
+      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4breb"`);
     });
 
     it('should return correct classnames', () => {
@@ -45,7 +45,7 @@ describe('sprinkles', () => {
           },
           color: 'gray-500',
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4bre11 _1kw4bre0"`);
+      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4breb _1kw4bre0"`);
     });
 
     it('should return correct classnames', () => {
@@ -58,7 +58,7 @@ describe('sprinkles', () => {
         atoms({
           display: ['block', 'flex', 'block'],
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4bre11 _1kw4bre4"`);
+      ).toMatchInlineSnapshot(`"_1kw4bre3 _1kw4breb _1kw4bre4"`);
     });
   });
 
@@ -93,9 +93,9 @@ describe('sprinkles', () => {
           },
           "flex": Object {
             "conditions": Object {
-              "desktop": "_1kw4bre11",
+              "desktop": "_1kw4breb",
               "mobile": "_1kw4bre9",
-              "tablet": "_1kw4bre10",
+              "tablet": "_1kw4brea",
             },
             "defaultCondition": "_1kw4bre9",
             "responsiveArray": Array [
@@ -121,11 +121,11 @@ describe('sprinkles', () => {
         "paddingTop": Object {
           "large": Object {
             "conditions": Object {
-              "desktop": "_1kw4bre20",
-              "mobile": "_1kw4bre18",
-              "tablet": "_1kw4bre19",
+              "desktop": "_1kw4brek",
+              "mobile": "_1kw4brei",
+              "tablet": "_1kw4brej",
             },
-            "defaultCondition": "_1kw4bre18",
+            "defaultCondition": "_1kw4brei",
             "responsiveArray": Array [
               "mobile",
               "desktop",
@@ -134,11 +134,11 @@ describe('sprinkles', () => {
           },
           "medium": Object {
             "conditions": Object {
-              "desktop": "_1kw4bre17",
-              "mobile": "_1kw4bre15",
-              "tablet": "_1kw4bre16",
+              "desktop": "_1kw4breh",
+              "mobile": "_1kw4bref",
+              "tablet": "_1kw4breg",
             },
-            "defaultCondition": "_1kw4bre15",
+            "defaultCondition": "_1kw4bref",
             "responsiveArray": Array [
               "mobile",
               "desktop",
@@ -147,11 +147,11 @@ describe('sprinkles', () => {
           },
           "small": Object {
             "conditions": Object {
-              "desktop": "_1kw4bre14",
-              "mobile": "_1kw4bre12",
-              "tablet": "_1kw4bre13",
+              "desktop": "_1kw4bree",
+              "mobile": "_1kw4brec",
+              "tablet": "_1kw4bred",
             },
-            "defaultCondition": "_1kw4bre12",
+            "defaultCondition": "_1kw4brec",
             "responsiveArray": Array [
               "mobile",
               "desktop",
