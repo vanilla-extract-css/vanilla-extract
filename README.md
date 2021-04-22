@@ -94,7 +94,7 @@ document.write(`
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
-  - [compose](#compose)
+  - [composeStyles](#composestyles)
 - [Dynamic API](#dynamic-api)
   - [createInlineTheme](#createinlinetheme)
   - [setElementTheme](#setelementtheme)
