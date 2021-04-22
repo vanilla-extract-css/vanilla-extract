@@ -17,15 +17,21 @@ type AtomicProperties = {
     | Array<CSS.Properties[Property]>;
 };
 
+type ShorthandOptions<
+  Properties extends AtomicProperties,
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+> = {
+  shorthands: Shorthands;
+};
+
 type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
   properties: Properties;
 };
 
 type ConditionalAtomicOptions<
-  Conditions extends { [conditionName: string]: Condition },
-  Properties extends AtomicProperties
-> = {
-  properties: Properties;
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition }
+> = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: keyof Conditions | false;
   responsiveArray?: ResponsiveArrayConfig<keyof Conditions>;
@@ -44,8 +50,8 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 };
 
 type ConditionalAtomicStyles<
-  Conditions extends { [conditionName: string]: Condition },
-  Properties extends AtomicProperties
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition }
 > = {
   [Property in keyof Properties]: {
     responsiveArray: Array<keyof Conditions>;
@@ -61,21 +67,64 @@ type ConditionalAtomicStyles<
   };
 };
 
+type ConditionalShorthands<
+  Shorthands extends {
+    [shorthandName: string]: Array<string | number | symbol>;
+  },
+  Conditions extends { [conditionName: string]: Condition }
+> = {
+  [Shorthand in keyof Shorthands]: {
+    _conditions: keyof Conditions;
+    mappings: Shorthands[Shorthand];
+  };
+};
+
+type UnconditionalShorthands<
+  Shorthands extends {
+    [shorthandName: string]: Array<string | number | symbol>;
+  }
+> = {
+  [Shorthand in keyof Shorthands]: {
+    mappings: Shorthands[Shorthand];
+  };
+};
+
+// Conditional + Shorthands
 export function createAtomicStyles<
+  Properties extends AtomicProperties,
   Conditions extends BaseConditions,
-  Properties extends AtomicProperties
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
 >(
-  options: ConditionalAtomicOptions<Conditions, Properties>,
-): ConditionalAtomicStyles<Conditions, Properties>;
+  options: ConditionalAtomicOptions<Properties, Conditions> &
+    ShorthandOptions<Properties, Shorthands>,
+): ConditionalAtomicStyles<Properties, Conditions> &
+  ConditionalShorthands<Shorthands, Conditions>;
+// Conditional
+export function createAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends BaseConditions
+>(
+  options: ConditionalAtomicOptions<Properties, Conditions>,
+): ConditionalAtomicStyles<Properties, Conditions>;
+// Unconditional + Shorthands
+export function createAtomicStyles<
+  Properties extends AtomicProperties,
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+>(
+  options: UnconditionalAtomicOptions<Properties> &
+    ShorthandOptions<Properties, Shorthands>,
+): UnconditionalAtomicStyles<Properties> & UnconditionalShorthands<Shorthands>;
+// Unconditional
 export function createAtomicStyles<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
 ): UnconditionalAtomicStyles<Properties>;
-export function createAtomicStyles(
-  options:
-    | UnconditionalAtomicOptions<AtomicProperties>
-    | ConditionalAtomicOptions<BaseConditions, AtomicProperties>,
-): any {
-  let styles = {} as any;
+export function createAtomicStyles(options: any): any {
+  let styles: any = Object.fromEntries(
+    Object.entries(options.shorthands).map(([prop, mappings]) => [
+      prop,
+      { mappings },
+    ]),
+  );
 
   for (const key in options.properties) {
     const property = options.properties[key as keyof typeof options.properties];
@@ -144,13 +193,11 @@ export function createAtomicStyles(
 
     if (Array.isArray(property)) {
       for (const value of property) {
-        // @ts-expect-error
         processValue(value, value);
       }
     } else {
       for (const valueName in property) {
         const value = property[valueName];
-        // @ts-expect-error
         processValue(valueName, value);
       }
     }

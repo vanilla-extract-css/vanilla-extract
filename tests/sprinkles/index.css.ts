@@ -13,6 +13,11 @@ export const atomicStyles = createAtomicStyles({
       'red-500': '#EF4444',
       'green-300': '#6EE7B7',
     },
+    paddingLeft: spacing,
+    paddingRight: spacing,
+  },
+  shorthands: {
+    paddingX: ['paddingLeft', 'paddingRight'],
   },
 });
 
@@ -29,5 +34,9 @@ export const conditionalAtomicStyles = createAtomicStyles({
   properties: {
     display: ['block', 'none', 'flex'],
     paddingTop: spacing,
+    paddingBottom: spacing,
+  },
+  shorthands: {
+    paddingY: ['paddingBottom', 'paddingTop'],
   },
 });
