@@ -5,4 +5,4 @@ export * from './identifier';
 export * from './theme';
 export * from './style';
 export * from './vars';
-export { compose } from './compose';
+export { composeStyles } from './composeStyles';

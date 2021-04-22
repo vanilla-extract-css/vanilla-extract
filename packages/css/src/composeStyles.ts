@@ -1,6 +1,9 @@
 type ClassNames = string | Array<ClassNames>;
 
-function composeWithSet(set: Set<string>, ...classnames: Array<ClassNames>) {
+function composeStylesWithSet(
+  set: Set<string>,
+  ...classnames: Array<ClassNames>
+) {
   for (const classname of classnames) {
     if (classname.length === 0) {
       continue;
@@ -8,18 +11,18 @@ function composeWithSet(set: Set<string>, ...classnames: Array<ClassNames>) {
 
     if (typeof classname === 'string') {
       if (classname.includes(' ')) {
-        composeWithSet(set, ...classname.trim().split(' '));
+        composeStylesWithSet(set, ...classname.trim().split(' '));
       } else {
         set.add(classname);
       }
     } else if (Array.isArray(classname)) {
-      composeWithSet(set, ...classname);
+      composeStylesWithSet(set, ...classname);
     }
   }
 
   return Array.from(set).join(' ');
 }
 
-export function compose(...classnames: Array<ClassNames>) {
-  return composeWithSet(new Set(), ...classnames);
+export function composeStyles(...classnames: Array<ClassNames>) {
+  return composeStylesWithSet(new Set(), ...classnames);
 }

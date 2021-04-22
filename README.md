@@ -581,27 +581,27 @@ export const animated = style({
 });
 ```
 
-### compose
+### composeStyles
 
-Merges mutliple class names into a single class string, while also deduplicating and removing unnecessary spaces.
+Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
 
 ```ts
-import { style, compose } from '@vanilla-extract/css';
+import { style, composeStyles } from '@vanilla-extract/css';
 
 const base = style({
   padding: 12
 });
 
-export const blue = compose(base, style({
+export const blue = composeStyles(base, style({
   background: 'blue'
 }));
 
-export const green = compose(base, style({
+export const green = composeStyles(base, style({
   background: 'green'
 }));
 ```
 
-> 💡 Class names can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)
+> 💡 Styles can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)
 
 ## Dynamic API
 

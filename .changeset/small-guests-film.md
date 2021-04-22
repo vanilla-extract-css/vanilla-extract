@@ -2,4 +2,4 @@
 '@vanilla-extract/css': minor
 ---
 
-Add `compose` function for merging classes together
+Add `composeStyles` function for merging classes together
