@@ -1,5 +1,30 @@
 # @vanilla-extract/css
 
+## 0.3.0
+
+### Minor Changes
+
+- [#38](https://github.com/seek-oss/vanilla-extract/pull/38) [`156b491`](https://github.com/seek-oss/vanilla-extract/commit/156b49182367bf233564eae7fd3ea9d3f50fd68a) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `composeStyles` function
+
+* [#37](https://github.com/seek-oss/vanilla-extract/pull/37) [`ae9864c`](https://github.com/seek-oss/vanilla-extract/commit/ae9864c727c2edd0d415b77f738a3c959c98fca6) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Rename `mapToStyles` to `styleVariants`
+
+  **BREAKING CHANGE**
+
+  ```diff
+  -import { mapToStyles } from '@vanilla-extract/css';
+  +import { styleVariants } from '@vanilla-extract/css';
+
+  -export const variant = mapToStyles({
+  +export const variant = styleVariants({
+    primary: { background: 'blue' },
+    secondary: { background: 'aqua' },
+  });
+  ```
+
+### Patch Changes
+
+- [#34](https://github.com/seek-oss/vanilla-extract/pull/34) [`756d9b0`](https://github.com/seek-oss/vanilla-extract/commit/756d9b0d0305e8b8a63f0ca1ebe635ab320a5f5b) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Reduce CSS var and identifier lengths
+
 ## 0.2.0
 
 ### Minor Changes
