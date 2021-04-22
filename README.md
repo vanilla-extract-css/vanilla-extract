@@ -82,8 +82,8 @@ document.write(`
   - [Gatsby](#gatsby)
 - [API](#api)
   - [style](#style)
+  - [styleVariants](#styleVariants)
   - [globalStyle](#globalstyle)
-  - [mapToStyles](#maptostyles)
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
   - [createThemeVars](#createthemevars)
@@ -264,6 +264,37 @@ export const childClass = style({
 >
 >If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
 
+### styleVariants
+
+Creates a collection of named style variants.
+
+```ts
+import { styleVariants } from '@vanilla-extract/css';
+
+export const variant = styleVariants({
+  primary: { background: 'blue' },
+  secondary: { background: 'aqua' },
+});
+```
+
+> 💡 This is useful for mapping component props to styles, e.g. `<button className={styles.variant[props.variant]}>`
+
+You can also transform the values by providing a map function as the second argument.
+
+```ts
+import { styleVariants } from '@vanilla-extract/css';
+
+const spaceScale = {
+  small: 4,
+  medium: 8,
+  large: 16
+};
+
+export const padding = styleVariants(spaceScale, (space) => ({
+  padding: space
+}));
+```
+
 ### globalStyle
 
 Creates styles attached to a global selector.
@@ -286,38 +317,6 @@ export const parentClass = style({});
 globalStyle(`${parentClass} > a`, {
   color: 'pink'
 });
-```
-
-### mapToStyles
-
-Creates an object that maps style names to hashed class names.
-
-> 💡 This is useful for mapping to component props, e.g. `<div className={styles.padding[props.padding]}>`
-
-```ts
-import { mapToStyles } from '@vanilla-extract/css';
-
-export const padding = mapToStyles({
-  small: { padding: 4 },
-  medium: { padding: 8 },
-  large: { padding: 16 }
-});
-```
-
-You can also transform the values by providing a map function as the second argument.
-
-```ts
-import { mapToStyles } from '@vanilla-extract/css';
-
-const spaceScale = {
-  small: 4,
-  medium: 8,
-  large: 16
-};
-
-export const padding = mapToStyles(spaceScale, (space) => ({
-  padding: space
-}));
 ```
 
 ### createTheme

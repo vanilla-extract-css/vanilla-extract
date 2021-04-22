@@ -42,11 +42,11 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should handle mapToStyles assigned to const', () => {
+  it('should handle styleVariants assigned to const', () => {
     const source = `
-      import { mapToStyles } from '@vanilla-extract/css';
+      import { styleVariants } from '@vanilla-extract/css';
 
-      const colors = mapToStyles({
+      const colors = styleVariants({
         red: { color: 'red' }
       });
     `;
@@ -54,8 +54,8 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
-      import { mapToStyles } from '@vanilla-extract/css';
-      const colors = mapToStyles({
+      import { styleVariants } from '@vanilla-extract/css';
+      const colors = styleVariants({
         red: {
           color: 'red'
         }
@@ -64,11 +64,11 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should handle mapToStyles with mapper assigned to const', () => {
+  it('should handle styleVariants with mapper assigned to const', () => {
     const source = `
-      import { mapToStyles } from '@vanilla-extract/css';
+      import { styleVariants } from '@vanilla-extract/css';
 
-      const colors = mapToStyles({
+      const colors = styleVariants({
         red: 'red'
       }, (color) => ({ color }));
     `;
@@ -76,8 +76,8 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
-      import { mapToStyles } from '@vanilla-extract/css';
-      const colors = mapToStyles({
+      import { styleVariants } from '@vanilla-extract/css';
+      const colors = styleVariants({
         red: 'red'
       }, color => ({
         color
@@ -406,7 +406,7 @@ describe('babel plugin', () => {
 
   it('should ignore functions that already supply a debug name', () => {
     const source = `
-      import { style, mapToStyles } from '@vanilla-extract/css';
+      import { style, styleVariants } from '@vanilla-extract/css';
 
       const three = style({
           testStyle: {
@@ -414,7 +414,7 @@ describe('babel plugin', () => {
           }
       }, 'myDebugValue');
 
-      const four = mapToStyles({
+      const four = styleVariants({
         red: { color: 'red' }
       }, 'myDebugValue');
     `;
@@ -422,13 +422,13 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
-      import { style, mapToStyles } from '@vanilla-extract/css';
+      import { style, styleVariants } from '@vanilla-extract/css';
       const three = style({
         testStyle: {
           zIndex: 2
         }
       }, 'myDebugValue');
-      const four = mapToStyles({
+      const four = styleVariants({
         red: {
           color: 'red'
         }
