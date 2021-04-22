@@ -94,6 +94,7 @@ document.write(`
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
+  - [compose](#compose)
 - [Dynamic API](#dynamic-api)
   - [createInlineTheme](#createinlinetheme)
   - [setElementTheme](#setelementtheme)
@@ -579,6 +580,26 @@ globalKeyframes('rotate', {
 export const animated = style({
   animation: `3s infinite rotate`;
 });
+```
+
+### compose
+
+Merges mutliple class names into a single string.
+
+```ts
+import { style, compose } from '@vanilla-extract/css';
+
+const base = style({
+  padding: 12
+});
+
+export const blue = compose(base, style({
+  background: 'blue'
+}));
+
+export const green = compose(base, style({
+  background: 'green'
+}));
 ```
 
 ## Dynamic API
