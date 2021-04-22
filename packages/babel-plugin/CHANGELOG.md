@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin
 
+## 0.3.1
+
+### Patch Changes
+
+- [#41](https://github.com/seek-oss/vanilla-extract/pull/41) [`3e7d861`](https://github.com/seek-oss/vanilla-extract/commit/3e7d861187ab398eb623be751782a29d7e98144f) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue where babel-plugin would cause other babel plugins to exit early
+
 ## 0.3.0
 
 ### Minor Changes
