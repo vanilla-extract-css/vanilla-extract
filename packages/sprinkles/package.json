@@ -18,11 +18,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/spinkles"
+    "directory": "packages/sprinkles"
   },
   "author": "SEEK",
   "license": "MIT",
   "peerDependencies": {
     "@vanilla-extract/css": "^0.2.0"
+  },
+  "devDependencies": {
+    "@vanilla-extract/css": "*"
   }
 }
