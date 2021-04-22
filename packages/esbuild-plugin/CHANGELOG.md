@@ -1,5 +1,12 @@
 # @vanilla-extract/esbuild-plugin
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`156b491`](https://github.com/seek-oss/vanilla-extract/commit/156b49182367bf233564eae7fd3ea9d3f50fd68a), [`ae9864c`](https://github.com/seek-oss/vanilla-extract/commit/ae9864c727c2edd0d415b77f738a3c959c98fca6), [`756d9b0`](https://github.com/seek-oss/vanilla-extract/commit/756d9b0d0305e8b8a63f0ca1ebe635ab320a5f5b)]:
+  - @vanilla-extract/css@0.3.0
+
 ## 0.1.1
 
 ### Patch Changes

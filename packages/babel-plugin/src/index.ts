@@ -18,7 +18,7 @@ const debuggableFunctionConfig = {
   createTheme: {
     maxParams: 3,
   },
-  mapToStyles: {
+  styleVariants: {
     maxParams: 3,
   },
   fontFace: {
@@ -203,13 +203,13 @@ export default function (): PluginObj<Context> {
       ImportDeclaration(path) {
         if (!this.isCssFile || this.alreadyCompiled) {
           // Bail early if file isn't a .css.ts file or the file has already been compiled
-          return path.stop();
+          return;
         }
 
         if (path.node.source.value === filescopePackageIdentifier) {
           // If file scope import is found it means the file has already been compiled
           this.alreadyCompiled = true;
-          return path.stop();
+          return;
         } else if (path.node.source.value === packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
@@ -231,7 +231,7 @@ export default function (): PluginObj<Context> {
       CallExpression(path) {
         if (!this.isCssFile || this.alreadyCompiled) {
           // Bail early if file isn't a .css.ts file or the file has already been compiled
-          return path.stop();
+          return;
         }
 
         const { node } = path;

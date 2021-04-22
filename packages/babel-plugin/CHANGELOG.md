@@ -1,5 +1,30 @@
 # @vanilla-extract/babel-plugin
 
+## 0.3.1
+
+### Patch Changes
+
+- [#41](https://github.com/seek-oss/vanilla-extract/pull/41) [`3e7d861`](https://github.com/seek-oss/vanilla-extract/commit/3e7d861187ab398eb623be751782a29d7e98144f) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue where babel-plugin would cause other babel plugins to exit early
+
+## 0.3.0
+
+### Minor Changes
+
+- [#37](https://github.com/seek-oss/vanilla-extract/pull/37) [`ae9864c`](https://github.com/seek-oss/vanilla-extract/commit/ae9864c727c2edd0d415b77f738a3c959c98fca6) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Rename `mapToStyles` to `styleVariants`
+
+  **BREAKING CHANGE**
+
+  ```diff
+  -import { mapToStyles } from '@vanilla-extract/css';
+  +import { styleVariants } from '@vanilla-extract/css';
+
+  -export const variant = mapToStyles({
+  +export const variant = styleVariants({
+    primary: { background: 'blue' },
+    secondary: { background: 'aqua' },
+  });
+  ```
+
 ## 0.2.1
 
 ### Patch Changes
