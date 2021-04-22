@@ -1,4 +1,4 @@
-type ClassNames = string | Array<string> | Array<ClassNames>;
+type ClassNames = string | Array<ClassNames>;
 
 function composeWithSet(set: Set<string>, ...classnames: Array<ClassNames>) {
   for (const classname of classnames) {
