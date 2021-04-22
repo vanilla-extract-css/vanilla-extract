@@ -1,4 +1,3 @@
-import { atomicStyles } from './../../../tests/sprinkles/index.css';
 import { ResponsiveArray } from './types';
 
 type ConditionalProperty = {
@@ -21,20 +20,14 @@ type UnconditionalProperty = {
   };
 };
 
-type UnconditionalShorthandProperty = {
-  mappings: Array<string>;
-};
-
-type ConditionalShorthandProperty = {
-  _conditions: string;
+type ShorthandProperty = {
   mappings: Array<string>;
 };
 
 type AtomicStyles = {
   [property: string]:
     | ConditionalProperty
-    | ConditionalShorthandProperty
-    | UnconditionalShorthandProperty
+    | ShorthandProperty
     | UnconditionalProperty;
 };
 
@@ -55,7 +48,7 @@ type AtomProps<Atoms extends AtomicStyles> = {
             [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
           }
         | ResponsiveArrayVariant<Atoms[Prop], keyof Atoms[Prop]['values']>
-    : Atoms[Prop] extends ConditionalShorthandProperty
+    : Atoms[Prop] extends ShorthandProperty
     ? Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalProperty
       ?
           | keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
@@ -66,9 +59,7 @@ type AtomProps<Atoms extends AtomicStyles> = {
               Atoms[Atoms[Prop]['mappings'][number]],
               keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
             >
-      : never
-    : Atoms[Prop] extends UnconditionalShorthandProperty
-    ? Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
+      : Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
       ? keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
       : never
     : Atoms[Prop] extends UnconditionalProperty

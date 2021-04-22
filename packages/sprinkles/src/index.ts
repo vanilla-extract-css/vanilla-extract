@@ -67,19 +67,7 @@ type ConditionalAtomicStyles<
   };
 };
 
-type ConditionalShorthands<
-  Shorthands extends {
-    [shorthandName: string]: Array<string | number | symbol>;
-  },
-  Conditions extends { [conditionName: string]: Condition }
-> = {
-  [Shorthand in keyof Shorthands]: {
-    _conditions: keyof Conditions;
-    mappings: Shorthands[Shorthand];
-  };
-};
-
-type UnconditionalShorthands<
+type ShorthandMappings<
   Shorthands extends {
     [shorthandName: string]: Array<string | number | symbol>;
   }
@@ -98,7 +86,7 @@ export function createAtomicStyles<
   options: ConditionalAtomicOptions<Properties, Conditions> &
     ShorthandOptions<Properties, Shorthands>,
 ): ConditionalAtomicStyles<Properties, Conditions> &
-  ConditionalShorthands<Shorthands, Conditions>;
+  ShorthandMappings<Shorthands>;
 // Conditional
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -113,7 +101,7 @@ export function createAtomicStyles<
 >(
   options: UnconditionalAtomicOptions<Properties> &
     ShorthandOptions<Properties, Shorthands>,
-): UnconditionalAtomicStyles<Properties> & UnconditionalShorthands<Shorthands>;
+): UnconditionalAtomicStyles<Properties> & ShorthandMappings<Shorthands>;
 // Unconditional
 export function createAtomicStyles<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
