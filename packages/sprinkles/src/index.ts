@@ -162,12 +162,15 @@ export function createAtomicStyles<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
 ): UnconditionalAtomicStyles<Properties>;
 export function createAtomicStyles(options: any): any {
-  let styles: any = Object.fromEntries(
-    Object.entries(options.shorthands).map(([prop, mappings]) => [
-      prop,
-      { mappings },
-    ]),
-  );
+  let styles: any =
+    'shorthands' in options
+      ? Object.fromEntries(
+          Object.entries(options.shorthands).map(([prop, mappings]) => [
+            prop,
+            { mappings },
+          ]),
+        )
+      : {};
 
   for (const key in options.properties) {
     const property = options.properties[key as keyof typeof options.properties];

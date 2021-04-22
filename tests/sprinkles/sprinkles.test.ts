@@ -1,6 +1,10 @@
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
-import { atomicStyles, conditionalAtomicStyles } from './index.css';
+import {
+  atomicStyles,
+  atomicWithShorthandStyles,
+  conditionalAtomicStyles,
+} from './index.css';
 
 describe('sprinkles', () => {
   describe('createAtomsFn', () => {
@@ -13,9 +17,17 @@ describe('sprinkles', () => {
     });
 
     it('should return correct classnames', () => {
+      const atoms = createAtomsFn(atomicWithShorthandStyles);
+
+      expect(atoms({ color: 'green-300' })).toMatchInlineSnapshot(
+        `"_1kw4breb"`,
+      );
+    });
+
+    it('should return correct classnames', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
-      expect(atoms({ display: 'block' })).toMatchInlineSnapshot(`"_1kw4bre9"`);
+      expect(atoms({ display: 'block' })).toMatchInlineSnapshot(`"_1kw4brei"`);
     });
 
     it('should return correct classnames', () => {
@@ -28,12 +40,12 @@ describe('sprinkles', () => {
             desktop: 'flex',
           },
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breh"`);
+      ).toMatchInlineSnapshot(`"_1kw4brei _1kw4breq"`);
     });
 
     it('should return correct classnames', () => {
       const atoms = createAtomsFn({
-        ...atomicStyles,
+        ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
       });
 
@@ -45,12 +57,12 @@ describe('sprinkles', () => {
           },
           color: 'gray-500',
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breh _1kw4bre0"`);
+      ).toMatchInlineSnapshot(`"_1kw4brei _1kw4breq _1kw4bre9"`);
     });
 
     it('should return correct classnames', () => {
       const atoms = createAtomsFn({
-        ...atomicStyles,
+        ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
       });
 
@@ -58,12 +70,12 @@ describe('sprinkles', () => {
         atoms({
           display: ['block', 'flex', 'block'],
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breg _1kw4breb"`);
+      ).toMatchInlineSnapshot(`"_1kw4brei _1kw4brep _1kw4brek"`);
     });
 
     it('should return correct classnames', () => {
       const atoms = createAtomsFn({
-        ...atomicStyles,
+        ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
       });
 
@@ -71,12 +83,12 @@ describe('sprinkles', () => {
         atoms({
           display: ['block', null, 'flex'],
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breh"`);
+      ).toMatchInlineSnapshot(`"_1kw4brei _1kw4breq"`);
     });
 
     it('should return correct classnames', () => {
       const atoms = createAtomsFn({
-        ...atomicStyles,
+        ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
       });
 
@@ -90,13 +102,13 @@ describe('sprinkles', () => {
           paddingTop: 'medium',
         }),
       ).toMatchInlineSnapshot(
-        `"_1kw4bre3 _1kw4bre6 _1kw4breu _1kw4brez _1kw4brel"`,
+        `"_1kw4brec _1kw4bref _1kw4bre13 _1kw4bre18 _1kw4breu"`,
       );
     });
 
     describe('types', () => {
       const atoms = createAtomsFn({
-        ...atomicStyles,
+        ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
       });
 
@@ -131,44 +143,44 @@ describe('sprinkles', () => {
   });
 
   it('should create atomic styles', () => {
-    expect(atomicStyles).toMatchInlineSnapshot(`
+    expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
       Object {
         "color": Object {
           "values": Object {
             "gray-500": Object {
-              "defaultClass": "_1kw4bre0",
+              "defaultClass": "_1kw4bre9",
             },
             "green-300": Object {
-              "defaultClass": "_1kw4bre2",
+              "defaultClass": "_1kw4breb",
             },
             "red-500": Object {
-              "defaultClass": "_1kw4bre1",
+              "defaultClass": "_1kw4brea",
             },
           },
         },
         "paddingLeft": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "_1kw4bre5",
+              "defaultClass": "_1kw4bree",
             },
             "medium": Object {
-              "defaultClass": "_1kw4bre4",
+              "defaultClass": "_1kw4bred",
             },
             "small": Object {
-              "defaultClass": "_1kw4bre3",
+              "defaultClass": "_1kw4brec",
             },
           },
         },
         "paddingRight": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "_1kw4bre8",
+              "defaultClass": "_1kw4breh",
             },
             "medium": Object {
-              "defaultClass": "_1kw4bre7",
+              "defaultClass": "_1kw4breg",
             },
             "small": Object {
-              "defaultClass": "_1kw4bre6",
+              "defaultClass": "_1kw4bref",
             },
           },
         },
@@ -194,31 +206,64 @@ describe('sprinkles', () => {
           "values": Object {
             "block": Object {
               "conditions": Object {
-                "desktop": "_1kw4breb",
-                "mobile": "_1kw4bre9",
-                "tablet": "_1kw4brea",
+                "desktop": "_1kw4brek",
+                "mobile": "_1kw4brei",
+                "tablet": "_1kw4brej",
               },
-              "defaultClass": "_1kw4bre9",
+              "defaultClass": "_1kw4brei",
             },
             "flex": Object {
               "conditions": Object {
-                "desktop": "_1kw4breh",
-                "mobile": "_1kw4bref",
-                "tablet": "_1kw4breg",
+                "desktop": "_1kw4breq",
+                "mobile": "_1kw4breo",
+                "tablet": "_1kw4brep",
               },
-              "defaultClass": "_1kw4bref",
+              "defaultClass": "_1kw4breo",
             },
             "none": Object {
               "conditions": Object {
-                "desktop": "_1kw4bree",
-                "mobile": "_1kw4brec",
-                "tablet": "_1kw4bred",
+                "desktop": "_1kw4bren",
+                "mobile": "_1kw4brel",
+                "tablet": "_1kw4brem",
               },
-              "defaultClass": "_1kw4brec",
+              "defaultClass": "_1kw4brel",
             },
           },
         },
         "paddingBottom": Object {
+          "responsiveArray": Array [
+            "mobile",
+            "tablet",
+            "desktop",
+          ],
+          "values": Object {
+            "large": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bre18",
+                "mobile": "_1kw4bre16",
+                "tablet": "_1kw4bre17",
+              },
+              "defaultClass": "_1kw4bre16",
+            },
+            "medium": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bre15",
+                "mobile": "_1kw4bre13",
+                "tablet": "_1kw4bre14",
+              },
+              "defaultClass": "_1kw4bre13",
+            },
+            "small": Object {
+              "conditions": Object {
+                "desktop": "_1kw4bre12",
+                "mobile": "_1kw4bre10",
+                "tablet": "_1kw4bre11",
+              },
+              "defaultClass": "_1kw4bre10",
+            },
+          },
+        },
+        "paddingTop": Object {
           "responsiveArray": Array [
             "mobile",
             "tablet",
@@ -248,39 +293,6 @@ describe('sprinkles', () => {
                 "tablet": "_1kw4bres",
               },
               "defaultClass": "_1kw4brer",
-            },
-          },
-        },
-        "paddingTop": Object {
-          "responsiveArray": Array [
-            "mobile",
-            "tablet",
-            "desktop",
-          ],
-          "values": Object {
-            "large": Object {
-              "conditions": Object {
-                "desktop": "_1kw4breq",
-                "mobile": "_1kw4breo",
-                "tablet": "_1kw4brep",
-              },
-              "defaultClass": "_1kw4breo",
-            },
-            "medium": Object {
-              "conditions": Object {
-                "desktop": "_1kw4bren",
-                "mobile": "_1kw4brel",
-                "tablet": "_1kw4brem",
-              },
-              "defaultClass": "_1kw4brel",
-            },
-            "small": Object {
-              "conditions": Object {
-                "desktop": "_1kw4brek",
-                "mobile": "_1kw4brei",
-                "tablet": "_1kw4brej",
-              },
-              "defaultClass": "_1kw4brei",
             },
           },
         },

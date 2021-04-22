@@ -16,6 +16,18 @@ export const atomicStyles = createAtomicStyles({
     paddingLeft: spacing,
     paddingRight: spacing,
   },
+});
+
+export const atomicWithShorthandStyles = createAtomicStyles({
+  properties: {
+    color: {
+      'gray-500': '#6B7280',
+      'red-500': '#EF4444',
+      'green-300': '#6EE7B7',
+    },
+    paddingLeft: spacing,
+    paddingRight: spacing,
+  },
   shorthands: {
     paddingX: ['paddingLeft', 'paddingRight'],
   },
