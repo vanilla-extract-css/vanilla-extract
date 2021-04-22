@@ -1,6 +1,6 @@
 import {
   style,
-  mapToStyles,
+  styleVariants,
   createVar,
   fallbackVar,
   fontFace,
@@ -77,7 +77,7 @@ export const button = [
 const undefinedVar1 = createVar();
 const undefinedVar2 = createVar();
 
-export const opacity = mapToStyles(
+export const opacity = styleVariants(
   {
     '1/2': fallbackVar(undefinedVar1, '0.5'),
     '1/4': fallbackVar(undefinedVar1, undefinedVar2, '0.25'),

@@ -318,7 +318,7 @@ You would then update your styles to use this new CSS Variable instead.
 
 ## `styleMap`
 
-You can use [`mapToStyles`](https://github.com/seek-oss/vanilla-extract#maptostyles) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
+You can use [`styleVariants`](https://github.com/seek-oss/vanilla-extract#stylevariants) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
 
 ## `styleTree`
 
