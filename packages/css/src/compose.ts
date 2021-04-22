@@ -20,6 +20,6 @@ function composeWithSet(set: Set<string>, ...classnames: Array<ClassNames>) {
   return Array.from(set).join(' ');
 }
 
-export function compose(...args: Array<ClassNames>) {
-  return composeWithSet(new Set(), ...args);
+export function compose(...classnames: Array<ClassNames>) {
+  return composeWithSet(new Set(), ...classnames);
 }
