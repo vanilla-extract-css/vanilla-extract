@@ -28,16 +28,21 @@ type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
   properties: Properties;
 };
 
-type ConditionalAtomicOptions<
-  Properties extends AtomicProperties,
+type ResponsiveArrayOptions<
   Conditions extends { [conditionName: string]: Condition },
   ResponsiveLength extends number
+> = {
+  responsiveArray: ResponsiveArrayConfig<keyof Conditions> & {
+    length: ResponsiveLength;
+  };
+};
+
+type ConditionalAtomicOptions<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition }
 > = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: keyof Conditions | false;
-  responsiveArray?: ResponsiveArrayConfig<keyof Conditions> & {
-    length: ResponsiveLength;
-  };
 };
 
 type Values<Property, Result> = {
@@ -53,6 +58,23 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 };
 
 type ConditionalAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition }
+> = {
+  [Property in keyof Properties]: {
+    values: Values<
+      Properties[Property],
+      {
+        defaultClass: string;
+        conditions: {
+          [Rule in keyof Conditions]: string;
+        };
+      }
+    >;
+  };
+};
+
+type ConditionalWithResponsiveArrayAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
   ResponsiveLength extends number
@@ -81,25 +103,52 @@ type ShorthandMappings<
   };
 };
 
-// Conditional + Shorthands
+// Conditional + Shorthands + ResponsiveArray
 export function createAtomicStyles<
   Properties extends AtomicProperties,
   ResponsiveLength extends number,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
 >(
-  options: ConditionalAtomicOptions<Properties, Conditions, ResponsiveLength> &
-    ShorthandOptions<Properties, Shorthands>,
-): ConditionalAtomicStyles<Properties, Conditions, ResponsiveLength> &
+  options: ConditionalAtomicOptions<Properties, Conditions> &
+    ShorthandOptions<Properties, Shorthands> &
+    ResponsiveArrayOptions<Conditions, ResponsiveLength>,
+): ConditionalWithResponsiveArrayAtomicStyles<
+  Properties,
+  Conditions,
+  ResponsiveLength
+> &
   ShorthandMappings<Shorthands>;
-// Conditional
+// Conditional + Shorthands
+export function createAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends BaseConditions,
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+>(
+  options: ConditionalAtomicOptions<Properties, Conditions> &
+    ShorthandOptions<Properties, Shorthands>,
+): ConditionalAtomicStyles<Properties, Conditions> &
+  ShorthandMappings<Shorthands>;
+// Conditional + ResponsiveArray
 export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   ResponsiveLength extends number
 >(
-  options: ConditionalAtomicOptions<Properties, Conditions, ResponsiveLength>,
-): ConditionalAtomicStyles<Properties, Conditions, ResponsiveLength>;
+  options: ConditionalAtomicOptions<Properties, Conditions> &
+    ResponsiveArrayOptions<Conditions, ResponsiveLength>,
+): ConditionalWithResponsiveArrayAtomicStyles<
+  Properties,
+  Conditions,
+  ResponsiveLength
+>;
+// Conditional
+export function createAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends BaseConditions
+>(
+  options: ConditionalAtomicOptions<Properties, Conditions>,
+): ConditionalAtomicStyles<Properties, Conditions>;
 // Unconditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,

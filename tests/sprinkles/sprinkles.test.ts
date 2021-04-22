@@ -69,7 +69,7 @@ describe('sprinkles', () => {
 
       expect(
         atoms({
-          display: ['block', null, 'block'],
+          display: ['block', null, 'flex'],
         }),
       ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4brea"`);
     });

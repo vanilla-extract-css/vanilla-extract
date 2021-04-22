@@ -1,7 +1,18 @@
 import { ResponsiveArray } from './types';
 
+type ConditionalWithResponsiveArrayProperty = {
+  responsiveArray: Array<string>;
+  values: {
+    [valueName: string]: {
+      defaultClass: string;
+      conditions: {
+        [conditionName: string]: string;
+      };
+    };
+  };
+};
+
 type ConditionalProperty = {
-  responsiveArray: Array<string> | undefined;
   values: {
     [valueName: string]: {
       defaultClass: string;
@@ -26,30 +37,33 @@ type ShorthandProperty = {
 
 type AtomicStyles = {
   [property: string]:
+    | ConditionalWithResponsiveArrayProperty
     | ConditionalProperty
     | ShorthandProperty
     | UnconditionalProperty;
 };
 
 type ResponsiveArrayVariant<
-  Variant extends ConditionalProperty,
+  Variant extends ConditionalWithResponsiveArrayProperty,
   Values extends string | number | symbol
-> = Variant['responsiveArray'] extends {
-  length: number;
-}
-  ? ResponsiveArray<Variant['responsiveArray']['length'], Values | null>
-  : never;
+> = ResponsiveArray<Variant['responsiveArray']['length'], Values | null>;
 
 type AtomProps<Atoms extends AtomicStyles> = {
-  [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalProperty
+  [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalWithResponsiveArrayProperty
     ?
         | keyof Atoms[Prop]['values']
         | {
             [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
           }
         | ResponsiveArrayVariant<Atoms[Prop], keyof Atoms[Prop]['values']>
+    : Atoms[Prop] extends ConditionalProperty
+    ?
+        | keyof Atoms[Prop]['values']
+        | {
+            [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
+          }
     : Atoms[Prop] extends ShorthandProperty
-    ? Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalProperty
+    ? Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
       ?
           | keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
           | {
@@ -59,6 +73,12 @@ type AtomProps<Atoms extends AtomicStyles> = {
               Atoms[Atoms[Prop]['mappings'][number]],
               keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
             >
+      : Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
+      ?
+          | keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
+          | {
+              [Condition in keyof Atoms[Atoms[Prop]['mappings'][number]]['values'][keyof Atoms[Atoms[Prop]['mappings'][number]]['values']]['conditions']]?: keyof Atoms[Atoms[Prop]['mappings'][number]]['values'];
+            }
       : Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
       ? keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
       : never
