@@ -94,6 +94,7 @@ document.write(`
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
+  - [composeStyles](#composestyles)
 - [Dynamic API](#dynamic-api)
   - [createInlineTheme](#createinlinetheme)
   - [setElementTheme](#setelementtheme)
@@ -579,6 +580,28 @@ export const animated = style({
   animation: `3s infinite rotate`;
 });
 ```
+
+### composeStyles
+
+Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
+
+```ts
+import { style, composeStyles } from '@vanilla-extract/css';
+
+const base = style({
+  padding: 12
+});
+
+export const blue = composeStyles(base, style({
+  background: 'blue'
+}));
+
+export const green = composeStyles(base, style({
+  background: 'green'
+}));
+```
+
+> 💡 Styles can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)
 
 ## Dynamic API
 
