@@ -1,25 +1,22 @@
 import { ResponsiveArray } from './types';
 
+type ConditionalValue = {
+  defaultClass: string;
+  conditions: {
+    [conditionName: string]: string;
+  };
+};
+
 type ConditionalWithResponsiveArrayProperty = {
   responsiveArray: Array<string>;
   values: {
-    [valueName: string]: {
-      defaultClass: string;
-      conditions: {
-        [conditionName: string]: string;
-      };
-    };
+    [valueName: string]: ConditionalValue;
   };
 };
 
 type ConditionalProperty = {
   values: {
-    [valueName: string]: {
-      defaultClass: string;
-      conditions: {
-        [conditionName: string]: string;
-      };
-    };
+    [valueName: string]: ConditionalValue;
   };
 };
 
@@ -44,41 +41,37 @@ type AtomicStyles = {
 };
 
 type ResponsiveArrayVariant<
-  Variant extends ConditionalWithResponsiveArrayProperty,
+  RA extends { length: number },
   Values extends string | number | symbol
-> = ResponsiveArray<Variant['responsiveArray']['length'], Values | null>;
+> = ResponsiveArray<RA['length'], Values | null>;
+
+type ConditionalStyle<Values extends { [key: string]: ConditionalValue }> =
+  | keyof Values
+  | {
+      [Condition in keyof Values[keyof Values]['conditions']]?: keyof Values;
+    };
+
+type ConditionalStyleWithResponsiveArray<
+  Values extends { [key: string]: ConditionalValue },
+  RA extends { length: number }
+> = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
 type AtomProps<Atoms extends AtomicStyles> = {
   [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalWithResponsiveArrayProperty
-    ?
-        | keyof Atoms[Prop]['values']
-        | {
-            [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
-          }
-        | ResponsiveArrayVariant<Atoms[Prop], keyof Atoms[Prop]['values']>
+    ? ConditionalStyleWithResponsiveArray<
+        Atoms[Prop]['values'],
+        Atoms[Prop]['responsiveArray']
+      >
     : Atoms[Prop] extends ConditionalProperty
-    ?
-        | keyof Atoms[Prop]['values']
-        | {
-            [Condition in keyof Atoms[Prop]['values'][keyof Atoms[Prop]['values']]['conditions']]?: keyof Atoms[Prop]['values'];
-          }
+    ? ConditionalStyle<Atoms[Prop]['values']>
     : Atoms[Prop] extends ShorthandProperty
     ? Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
-      ?
-          | keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
-          | {
-              [Condition in keyof Atoms[Atoms[Prop]['mappings'][number]]['values'][keyof Atoms[Atoms[Prop]['mappings'][number]]['values']]['conditions']]?: keyof Atoms[Atoms[Prop]['mappings'][number]]['values'];
-            }
-          | ResponsiveArrayVariant<
-              Atoms[Atoms[Prop]['mappings'][number]],
-              keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
-            >
+      ? ConditionalStyleWithResponsiveArray<
+          Atoms[Atoms[Prop]['mappings'][number]]['values'],
+          Atoms[Atoms[Prop]['mappings'][number]]['responsiveArray']
+        >
       : Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
-      ?
-          | keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
-          | {
-              [Condition in keyof Atoms[Atoms[Prop]['mappings'][number]]['values'][keyof Atoms[Atoms[Prop]['mappings'][number]]['values']]['conditions']]?: keyof Atoms[Atoms[Prop]['mappings'][number]]['values'];
-            }
+      ? ConditionalStyle<Atoms[Atoms[Prop]['mappings'][number]]['values']>
       : Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
       ? keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
       : never

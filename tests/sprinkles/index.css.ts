@@ -30,7 +30,7 @@ export const conditionalAtomicStyles = createAtomicStyles({
       '@media': 'screen and (min-width: 786px)',
     },
   },
-  responsiveArray: ['mobile', 'desktop', 'tablet'],
+  responsiveArray: ['mobile', 'tablet', 'desktop'],
   properties: {
     display: ['block', 'none', 'flex'],
     paddingTop: spacing,

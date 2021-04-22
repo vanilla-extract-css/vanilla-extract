@@ -58,7 +58,7 @@ describe('sprinkles', () => {
         atoms({
           display: ['block', 'flex', 'block'],
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breh _1kw4brea"`);
+      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breg _1kw4breb"`);
     });
 
     it('should return correct classnames', () => {
@@ -71,7 +71,7 @@ describe('sprinkles', () => {
         atoms({
           display: ['block', null, 'flex'],
         }),
-      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4brea"`);
+      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4breh"`);
     });
 
     it('should return correct classnames', () => {
@@ -153,8 +153,8 @@ describe('sprinkles', () => {
         "display": Object {
           "responsiveArray": Array [
             "mobile",
-            "desktop",
             "tablet",
+            "desktop",
           ],
           "values": Object {
             "block": Object {
@@ -186,8 +186,8 @@ describe('sprinkles', () => {
         "paddingBottom": Object {
           "responsiveArray": Array [
             "mobile",
-            "desktop",
             "tablet",
+            "desktop",
           ],
           "values": Object {
             "large": Object {
@@ -219,8 +219,8 @@ describe('sprinkles', () => {
         "paddingTop": Object {
           "responsiveArray": Array [
             "mobile",
-            "desktop",
             "tablet",
+            "desktop",
           ],
           "values": Object {
             "large": Object {
