@@ -69,6 +69,19 @@ describe('sprinkles', () => {
 
       expect(
         atoms({
+          display: ['block', null, 'block'],
+        }),
+      ).toMatchInlineSnapshot(`"_1kw4bre9 _1kw4brea"`);
+    });
+
+    it('should return correct classnames', () => {
+      const atoms = createAtomsFn({
+        ...atomicStyles,
+        ...conditionalAtomicStyles,
+      });
+
+      expect(
+        atoms({
           paddingX: 'small',
           paddingY: {
             mobile: 'medium',

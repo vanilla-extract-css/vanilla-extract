@@ -37,7 +37,7 @@ type ResponsiveArrayVariant<
 > = Variant['responsiveArray'] extends {
   length: number;
 }
-  ? ResponsiveArray<Variant['responsiveArray']['length'], Values>
+  ? ResponsiveArray<Variant['responsiveArray']['length'], Values | null>
   : never;
 
 type AtomProps<Atoms extends AtomicStyles> = {
@@ -109,10 +109,13 @@ export function createAtomsFn<Styles extends AtomicStyles>(
       } else if (Array.isArray(propValue)) {
         for (const responsiveIndex in propValue) {
           const responsiveValue = propValue[responsiveIndex];
-          const conditionName = atomicProperty.responsiveArray[responsiveIndex];
-          classNames.push(
-            atomicProperty.values[responsiveValue].conditions[conditionName],
-          );
+          if (responsiveValue) {
+            const conditionName =
+              atomicProperty.responsiveArray[responsiveIndex];
+            classNames.push(
+              atomicProperty.values[responsiveValue].conditions[conditionName],
+            );
+          }
         }
       } else {
         for (const conditionName in propValue) {
