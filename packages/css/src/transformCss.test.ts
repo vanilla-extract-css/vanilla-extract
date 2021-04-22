@@ -782,17 +782,17 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass {
         --my-var: red;
-        --skkcyc0: green;
+        --askkcyc: green;
         display: block;
       }
       .testClass:nth-child(3) {
         --my-var: orange;
-        --skkcyc0: black;
+        --askkcyc: black;
       }
       @media screen and (min-width: 700px) {
         .testClass {
           --my-var: yellow;
-          --skkcyc0: blue;
+          --askkcyc: blue;
         }
       }"
     `);
@@ -821,7 +821,7 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       ".testClass {
         --my-var: 12;
-        --skkcyc0: 24;
+        --askkcyc: 24;
         display: block;
         padding-top: 10px;
         line-height: 20;

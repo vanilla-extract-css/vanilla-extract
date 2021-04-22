@@ -16,7 +16,7 @@ function getShortFileName() {
 
 export function generateIdentifier(debugId: string | undefined) {
   // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter().toString(36);
+  const refCount = getAndIncrementRefCounter();
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,
@@ -24,8 +24,8 @@ export function generateIdentifier(debugId: string | undefined) {
 
   const identifier =
     process.env.NODE_ENV !== 'production' && debugId
-      ? `${getShortFileName()}_${debugId}__${fileScopeHash}${refCount}`
-      : `${fileScopeHash}${refCount}`;
+      ? `${getShortFileName()}_${debugId}__${refCount}${fileScopeHash}`
+      : `${refCount}${fileScopeHash}`;
 
   return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
 }

@@ -16,15 +16,15 @@ type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
 
 export function createVar(debugId?: string) {
   // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter().toString(36);
+  const refCount = getAndIncrementRefCounter();
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,
   );
   const varName =
     process.env.NODE_ENV !== 'production' && debugId
-      ? `${debugId}__${fileScopeHash}${refCount}`
-      : `${fileScopeHash}${refCount}`;
+      ? `${debugId}__${refCount}${fileScopeHash}`
+      : `${refCount}${fileScopeHash}`;
 
   // Dashify CSS var names to replicate postcss-js behaviour
   // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
