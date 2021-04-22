@@ -1,6 +1,6 @@
 import hash from '@emotion/hash';
 
-import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { getAndIncrementRefCount, getFileScope } from './fileScope';
 
 function getShortFileName() {
   const { filePath } = getFileScope();
@@ -16,7 +16,7 @@ function getShortFileName() {
 
 export function generateIdentifier(debugId: string | undefined) {
   // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter();
+  const refCount = getAndIncrementRefCount();
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,

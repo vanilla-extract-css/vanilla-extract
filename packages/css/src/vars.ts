@@ -7,7 +7,7 @@ import {
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { getAndIncrementRefCount, getFileScope } from './fileScope';
 
 type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
   ThemeContract,
@@ -16,7 +16,7 @@ type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
 
 export function createVar(debugId?: string) {
   // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter();
+  const refCount = getAndIncrementRefCount();
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,

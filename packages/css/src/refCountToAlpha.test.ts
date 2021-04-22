@@ -1,4 +1,4 @@
-import { refCountToAlpha } from './fileScope';
+import { refCountToAlpha } from './refCountToAlpha';
 
 describe('refCountToAlpha', () => {
   it('works', () => {
