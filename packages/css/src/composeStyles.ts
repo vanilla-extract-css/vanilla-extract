@@ -1,6 +1,6 @@
 type ClassNames = string | Array<ClassNames>;
 
-function composeStylesWithSet(
+function composeStylesIntoSet(
   set: Set<string>,
   ...classnames: Array<ClassNames>
 ) {
@@ -11,18 +11,20 @@ function composeStylesWithSet(
 
     if (typeof classname === 'string') {
       if (classname.includes(' ')) {
-        composeStylesWithSet(set, ...classname.trim().split(' '));
+        composeStylesIntoSet(set, ...classname.trim().split(' '));
       } else {
         set.add(classname);
       }
     } else if (Array.isArray(classname)) {
-      composeStylesWithSet(set, ...classname);
+      composeStylesIntoSet(set, ...classname);
     }
   }
-
-  return Array.from(set).join(' ');
 }
 
 export function composeStyles(...classnames: Array<ClassNames>) {
-  return composeStylesWithSet(new Set(), ...classnames);
+  const set: Set<string> = new Set();
+
+  composeStylesIntoSet(set, ...classnames);
+
+  return Array.from(set).join(' ');
 }
