@@ -9,27 +9,27 @@ interface Condition {
   selector?: string;
 }
 
-type BaseConditions = Record<string, Condition>;
+type BaseConditions = { [conditionName: string]: Condition };
 
-interface BaseAtomicOptions {
-  properties: {
-    [Property in keyof CSS.Properties]?:
-      | Record<string, CSS.Properties[Property]>
-      | Array<CSS.Properties[Property]>;
-  };
-}
+type AtomicProperties = {
+  [Property in keyof CSS.Properties]?:
+    | Record<string, CSS.Properties[Property]>
+    | Array<CSS.Properties[Property]>;
+};
 
-interface AtomicOptions extends BaseAtomicOptions {
-  defaultCondition?: never;
-  conditions?: never;
-  responsiveArray?: never;
-}
-interface ConditionalAtomicOptions<Conditions extends BaseConditions>
-  extends BaseAtomicOptions {
+type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
+  properties: Properties;
+};
+
+type ConditionalAtomicOptions<
+  Conditions extends { [conditionName: string]: Condition },
+  Properties extends AtomicProperties
+> = {
+  properties: Properties;
   conditions: Conditions;
   defaultCondition: keyof Conditions | false;
   responsiveArray?: ResponsiveArrayConfig<keyof Conditions>;
-}
+};
 
 type Values<Property, Result> = {
   [Value in Property extends Array<any>
@@ -37,39 +37,43 @@ type Values<Property, Result> = {
     : keyof Property]: Result;
 };
 
-type UnconditionalAtomicStyles<Options extends AtomicOptions> = {
-  [Property in keyof Options['properties']]: {
-    values: Values<Options['properties'][Property], { defaultClass: string }>;
+type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
+  [Property in keyof Properties]: {
+    values: Values<Properties[Property], { defaultClass: string }>;
   };
 };
 
 type ConditionalAtomicStyles<
-  Conditions extends BaseConditions,
-  Options extends ConditionalAtomicOptions<Conditions>
+  Conditions extends { [conditionName: string]: Condition },
+  Properties extends AtomicProperties
 > = {
-  [Property in keyof Options['properties']]: {
+  [Property in keyof Properties]: {
     responsiveArray: Array<keyof Conditions>;
     values: Values<
-      Options['properties'][Property],
+      Properties[Property],
       {
         defaultClass: string;
         conditions: {
-          [Rule in keyof Options['conditions']]: string;
+          [Rule in keyof Conditions]: string;
         };
       }
     >;
   };
 };
 
-export function createAtomicStyles<Options extends AtomicOptions>(
-  options: Options,
-): UnconditionalAtomicStyles<Options>;
 export function createAtomicStyles<
   Conditions extends BaseConditions,
-  Options extends ConditionalAtomicOptions<Conditions>
->(options: Options): ConditionalAtomicStyles<Conditions, Options>;
+  Properties extends AtomicProperties
+>(
+  options: ConditionalAtomicOptions<Conditions, Properties>,
+): ConditionalAtomicStyles<Conditions, Properties>;
+export function createAtomicStyles<Properties extends AtomicProperties>(
+  options: UnconditionalAtomicOptions<Properties>,
+): UnconditionalAtomicStyles<Properties>;
 export function createAtomicStyles(
-  options: AtomicOptions | ConditionalAtomicOptions<BaseConditions>,
+  options:
+    | UnconditionalAtomicOptions<AtomicProperties>
+    | ConditionalAtomicOptions<BaseConditions, AtomicProperties>,
 ): any {
   let styles = {} as any;
 
@@ -79,12 +83,12 @@ export function createAtomicStyles(
       values: {},
     };
 
-    if (options.responsiveArray) {
+    if ('responsiveArray' in options) {
       styles[key].responsiveArray = options.responsiveArray;
     }
 
     const processValue = (valueName: keyof typeof property, value: string) => {
-      if (typeof options.conditions === 'object') {
+      if ('conditions' in options) {
         styles[key].values[valueName] = {
           conditions: {},
         };
