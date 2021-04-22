@@ -93,6 +93,41 @@ describe('sprinkles', () => {
         `"_1kw4bre3 _1kw4bre6 _1kw4breu _1kw4brez _1kw4brel"`,
       );
     });
+
+    describe('types', () => {
+      const atoms = createAtomsFn({
+        ...atomicStyles,
+        ...conditionalAtomicStyles,
+      });
+
+      it('to be type safe', () => {
+        expect(() =>
+          atoms({
+            // @ts-expect-error
+            paddingX: 'smalll',
+            paddingY: {
+              mobile: 'medium',
+              desktop: 'large',
+            },
+            paddingTop: 'medium',
+          }),
+        ).toBeTruthy();
+      });
+
+      it('to be type safe', () => {
+        expect(() =>
+          atoms({
+            paddingX: 'small',
+            paddingY: {
+              // @ts-expect-error
+              mobie: 'medium',
+              desktop: 'large',
+            },
+            paddingTop: 'medium',
+          }),
+        ).toBeTruthy();
+      });
+    });
   });
 
   it('should create atomic styles', () => {
