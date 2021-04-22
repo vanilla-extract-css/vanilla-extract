@@ -2,29 +2,29 @@ type ClassNames = string | Array<ClassNames>;
 
 function composeStylesIntoSet(
   set: Set<string>,
-  ...classnames: Array<ClassNames>
+  ...classNames: Array<ClassNames>
 ) {
-  for (const classname of classnames) {
-    if (classname.length === 0) {
+  for (const className of classNames) {
+    if (className.length === 0) {
       continue;
     }
 
-    if (typeof classname === 'string') {
-      if (classname.includes(' ')) {
-        composeStylesIntoSet(set, ...classname.trim().split(' '));
+    if (typeof className === 'string') {
+      if (className.includes(' ')) {
+        composeStylesIntoSet(set, ...className.trim().split(' '));
       } else {
-        set.add(classname);
+        set.add(className);
       }
-    } else if (Array.isArray(classname)) {
-      composeStylesIntoSet(set, ...classname);
+    } else if (Array.isArray(className)) {
+      composeStylesIntoSet(set, ...className);
     }
   }
 }
 
-export function composeStyles(...classnames: Array<ClassNames>) {
+export function composeStyles(...classNames: Array<ClassNames>) {
   const set: Set<string> = new Set();
 
-  composeStylesIntoSet(set, ...classnames);
+  composeStylesIntoSet(set, ...classNames);
 
   return Array.from(set).join(' ');
 }
