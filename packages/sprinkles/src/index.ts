@@ -30,11 +30,14 @@ type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
 
 type ConditionalAtomicOptions<
   Properties extends AtomicProperties,
-  Conditions extends { [conditionName: string]: Condition }
+  Conditions extends { [conditionName: string]: Condition },
+  ResponsiveLength extends number
 > = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: keyof Conditions | false;
-  responsiveArray?: ResponsiveArrayConfig<keyof Conditions>;
+  responsiveArray?: ResponsiveArrayConfig<keyof Conditions> & {
+    length: ResponsiveLength;
+  };
 };
 
 type Values<Property, Result> = {
@@ -51,10 +54,11 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 
 type ConditionalAtomicStyles<
   Properties extends AtomicProperties,
-  Conditions extends { [conditionName: string]: Condition }
+  Conditions extends { [conditionName: string]: Condition },
+  ResponsiveLength extends number
 > = {
   [Property in keyof Properties]: {
-    responsiveArray: Array<keyof Conditions>;
+    responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
     values: Values<
       Properties[Property],
       {
@@ -80,20 +84,22 @@ type ShorthandMappings<
 // Conditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
+  ResponsiveLength extends number,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
 >(
-  options: ConditionalAtomicOptions<Properties, Conditions> &
+  options: ConditionalAtomicOptions<Properties, Conditions, ResponsiveLength> &
     ShorthandOptions<Properties, Shorthands>,
-): ConditionalAtomicStyles<Properties, Conditions> &
+): ConditionalAtomicStyles<Properties, Conditions, ResponsiveLength> &
   ShorthandMappings<Shorthands>;
 // Conditional
 export function createAtomicStyles<
   Properties extends AtomicProperties,
-  Conditions extends BaseConditions
+  Conditions extends BaseConditions,
+  ResponsiveLength extends number
 >(
-  options: ConditionalAtomicOptions<Properties, Conditions>,
-): ConditionalAtomicStyles<Properties, Conditions>;
+  options: ConditionalAtomicOptions<Properties, Conditions, ResponsiveLength>,
+): ConditionalAtomicStyles<Properties, Conditions, ResponsiveLength>;
 // Unconditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
