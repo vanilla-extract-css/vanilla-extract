@@ -4,6 +4,7 @@ import {
   atomicStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
+  conditionalStylesWithoutDefaultCondition,
 } from './index.css';
 
 describe('sprinkles', () => {
@@ -149,12 +150,12 @@ describe('sprinkles', () => {
     });
 
     describe('types', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
-
       it('to be type safe', () => {
+        const atoms = createAtomsFn({
+          ...atomicWithShorthandStyles,
+          ...conditionalAtomicStyles,
+        });
+
         expect(() =>
           atoms({
             // @ts-expect-error
@@ -169,6 +170,11 @@ describe('sprinkles', () => {
       });
 
       it('to be type safe', () => {
+        const atoms = createAtomsFn({
+          ...atomicWithShorthandStyles,
+          ...conditionalAtomicStyles,
+        });
+
         expect(() =>
           atoms({
             paddingX: 'small',
@@ -178,6 +184,17 @@ describe('sprinkles', () => {
               desktop: 'large',
             },
             paddingTop: 'medium',
+          }),
+        ).toBeTruthy();
+      });
+
+      it('should prevent default conditions when set to false', () => {
+        const atoms = createAtomsFn(conditionalStylesWithoutDefaultCondition);
+
+        expect(() =>
+          atoms({
+            // @ts-expect-error
+            transform: 'shrink',
           }),
         ).toBeTruthy();
       });

@@ -53,3 +53,17 @@ export const conditionalAtomicStyles = createAtomicStyles({
     paddingY: ['paddingBottom', 'paddingTop'],
   },
 });
+
+export const conditionalStylesWithoutDefaultCondition = createAtomicStyles({
+  defaultCondition: false,
+  conditions: {
+    active: {
+      selector: '&:active',
+    },
+  },
+  properties: {
+    transform: {
+      shrink: 'scale(0.8)',
+    },
+  },
+});
