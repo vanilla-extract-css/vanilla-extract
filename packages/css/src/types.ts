@@ -94,7 +94,7 @@ export interface Adapter {
 }
 
 export type Tokens = {
-  [key: string]: string | Tokens;
+  [key: string]: string | number | Tokens;
 };
 
 export type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
