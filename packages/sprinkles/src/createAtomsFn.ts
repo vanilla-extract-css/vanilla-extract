@@ -1,7 +1,7 @@
 import { ResponsiveArray } from './types';
 
 type ConditionalValue = {
-  defaultClass: string;
+  defaultClass: string | undefined;
   conditions: {
     [conditionName: string]: string;
   };
@@ -46,7 +46,7 @@ type ResponsiveArrayVariant<
 > = ResponsiveArray<RA['length'], Values | null>;
 
 type ConditionalStyle<Values extends { [key: string]: ConditionalValue }> =
-  | keyof Values
+  | (Values[keyof Values]['defaultClass'] extends string ? keyof Values : never)
   | {
       [Condition in keyof Values[keyof Values]['conditions']]?: keyof Values;
     };

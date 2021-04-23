@@ -67,7 +67,7 @@ type ConditionalAtomicStyles<
     values: Values<
       Properties[Property],
       {
-        defaultClass: DefaultCondition extends false ? never : string;
+        defaultClass: DefaultCondition extends string ? string : undefined;
         conditions: {
           [Rule in keyof Conditions]: string;
         };
@@ -79,14 +79,15 @@ type ConditionalAtomicStyles<
 type ConditionalWithResponsiveArrayAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  ResponsiveLength extends number
+  ResponsiveLength extends number,
+  DefaultCondition extends keyof Conditions | false
 > = {
   [Property in keyof Properties]: {
     responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
     values: Values<
       Properties[Property],
       {
-        defaultClass: string;
+        defaultClass: DefaultCondition extends string ? string : undefined;
         conditions: {
           [Rule in keyof Conditions]: string;
         };
@@ -119,7 +120,8 @@ export function createAtomicStyles<
 ): ConditionalWithResponsiveArrayAtomicStyles<
   Properties,
   Conditions,
-  ResponsiveLength
+  ResponsiveLength,
+  DefaultCondition
 > &
   ShorthandMappings<Shorthands>;
 // Conditional + Shorthands
@@ -131,7 +133,7 @@ export function createAtomicStyles<
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
-): ConditionalAtomicStyles<Properties, Conditions> &
+): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
   ShorthandMappings<Shorthands>;
 // Conditional + ResponsiveArray
 export function createAtomicStyles<
@@ -145,7 +147,8 @@ export function createAtomicStyles<
 ): ConditionalWithResponsiveArrayAtomicStyles<
   Properties,
   Conditions,
-  ResponsiveLength
+  ResponsiveLength,
+  DefaultCondition
 >;
 // Conditional
 export function createAtomicStyles<
@@ -154,7 +157,7 @@ export function createAtomicStyles<
   DefaultCondition extends keyof Conditions | false
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
-): ConditionalAtomicStyles<Properties, Conditions>;
+): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
 // Unconditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
