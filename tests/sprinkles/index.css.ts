@@ -30,6 +30,7 @@ export const atomicWithShorthandStyles = createAtomicStyles({
   },
   shorthands: {
     paddingX: ['paddingLeft', 'paddingRight'],
+    anotherPaddingX: ['paddingLeft', 'paddingRight'],
   },
 });
 

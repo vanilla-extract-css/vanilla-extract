@@ -91,22 +91,24 @@ export function createAtomsFn<Styles extends AtomicStyles>(
     const atomicStyles = input as any;
     const classNames = [];
     const shorthands: any = {};
+    const nonShorthands: any = { ...props };
     let hasShorthands = false;
 
     for (const prop in props) {
       const propValue = props[prop];
       const atomicProperty = atomicStyles[prop];
-
-      if (atomicProperty.mappings) {
+      if (typeof propValue !== 'undefined' && atomicProperty.mappings) {
         // Found a shorthand property
         hasShorthands = true;
         for (const propMapping of atomicProperty.mappings) {
           shorthands[propMapping] = propValue;
+          delete nonShorthands[propMapping];
         }
       }
     }
-
-    const finalProps = hasShorthands ? { ...shorthands, ...props } : props;
+    const finalProps = hasShorthands
+      ? { ...shorthands, ...nonShorthands }
+      : props;
 
     for (const prop in finalProps) {
       const propValue = finalProps[prop];
@@ -134,9 +136,12 @@ export function createAtomsFn<Styles extends AtomicStyles>(
         for (const conditionName in propValue) {
           // Conditional style
           const value = propValue[conditionName];
-          classNames.push(
-            atomicProperty.values[value].conditions[conditionName],
-          );
+
+          if (value) {
+            classNames.push(
+              atomicProperty.values[value].conditions[conditionName],
+            );
+          }
         }
       }
     }

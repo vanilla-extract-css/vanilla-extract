@@ -222,7 +222,10 @@ export function createAtomicStyles(options: any): any {
             };
           }
 
-          const className = style(styleValue);
+          const className = style(
+            styleValue,
+            `${key}_${String(valueName)}_${conditionName}`,
+          );
 
           styles[key].values[valueName].conditions[conditionName] = className;
 
@@ -232,7 +235,7 @@ export function createAtomicStyles(options: any): any {
         }
       } else {
         styles[key].values[valueName] = {
-          defaultClass: style({ [key]: value }),
+          defaultClass: style({ [key]: value }, `${key}_${String(valueName)}`),
         };
       }
     };
