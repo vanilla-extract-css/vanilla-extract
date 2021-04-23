@@ -13,6 +13,7 @@ export const atomicStyles = createAtomicStyles({
       'red-500': '#EF4444',
       'green-300': '#6EE7B7',
     },
+    top: [0],
     paddingLeft: spacing,
     paddingRight: spacing,
   },

@@ -12,8 +12,8 @@ describe('sprinkles', () => {
     it('should return correct classnames', () => {
       const atoms = createAtomsFn(atomicStyles);
 
-      expect(atoms({ color: 'green-300' })).toMatchInlineSnapshot(
-        `"index_color_green-300__1kw4bre2"`,
+      expect(atoms({ top: 0, color: 'green-300' })).toMatchInlineSnapshot(
+        `"index_top_0__1kw4bre3 index_color_green-300__1kw4bre2"`,
       );
     });
 
@@ -21,7 +21,7 @@ describe('sprinkles', () => {
       const atoms = createAtomsFn(atomicWithShorthandStyles);
 
       expect(atoms({ color: 'green-300' })).toMatchInlineSnapshot(
-        `"index_color_green-300__1kw4breb"`,
+        `"index_color_green-300__1kw4brec"`,
       );
     });
 
@@ -29,7 +29,7 @@ describe('sprinkles', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
       expect(atoms({ display: 'block' })).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brei"`,
+        `"index_display_block_mobile__1kw4brej"`,
       );
     });
 
@@ -44,7 +44,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brei index_display_flex_desktop__1kw4breq"`,
+        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer"`,
       );
     });
 
@@ -63,7 +63,7 @@ describe('sprinkles', () => {
           color: 'gray-500',
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brei index_display_flex_desktop__1kw4breq index_color_gray-500__1kw4bre9"`,
+        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer index_color_gray-500__1kw4brea"`,
       );
     });
 
@@ -78,7 +78,7 @@ describe('sprinkles', () => {
           display: ['block', 'flex', 'block'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brei index_display_flex_tablet__1kw4brep index_display_block_desktop__1kw4brek"`,
+        `"index_display_block_mobile__1kw4brej index_display_flex_tablet__1kw4breq index_display_block_desktop__1kw4brel"`,
       );
     });
 
@@ -93,7 +93,7 @@ describe('sprinkles', () => {
           display: ['block', null, 'flex'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brei index_display_flex_desktop__1kw4breq"`,
+        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer"`,
       );
     });
 
@@ -113,7 +113,7 @@ describe('sprinkles', () => {
           paddingTop: 'medium',
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_small__1kw4brec index_paddingRight_small__1kw4bref index_paddingBottom_medium_mobile__1kw4bre13 index_paddingBottom_large_desktop__1kw4bre18 index_paddingTop_medium_mobile__1kw4breu index_paddingTop_large_desktop__1kw4brez"`,
+        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_medium_mobile__1kw4brev index_paddingTop_large_desktop__1kw4bre10"`,
       );
     });
 
@@ -129,7 +129,7 @@ describe('sprinkles', () => {
           paddingTop: undefined,
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingBottom_small_mobile__1kw4bre10 index_paddingTop_small_mobile__1kw4brer"`,
+        `"index_paddingBottom_small_mobile__1kw4bre11 index_paddingTop_small_mobile__1kw4bres"`,
       );
     });
 
@@ -145,7 +145,7 @@ describe('sprinkles', () => {
           anotherPaddingX: undefined,
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_small__1kw4brec index_paddingRight_small__1kw4bref"`,
+        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg"`,
       );
     });
 
@@ -213,39 +213,39 @@ describe('sprinkles', () => {
         "color": Object {
           "values": Object {
             "gray-500": Object {
-              "defaultClass": "index_color_gray-500__1kw4bre9",
+              "defaultClass": "index_color_gray-500__1kw4brea",
             },
             "green-300": Object {
-              "defaultClass": "index_color_green-300__1kw4breb",
+              "defaultClass": "index_color_green-300__1kw4brec",
             },
             "red-500": Object {
-              "defaultClass": "index_color_red-500__1kw4brea",
+              "defaultClass": "index_color_red-500__1kw4breb",
             },
           },
         },
         "paddingLeft": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "index_paddingLeft_large__1kw4bree",
+              "defaultClass": "index_paddingLeft_large__1kw4bref",
             },
             "medium": Object {
-              "defaultClass": "index_paddingLeft_medium__1kw4bred",
+              "defaultClass": "index_paddingLeft_medium__1kw4bree",
             },
             "small": Object {
-              "defaultClass": "index_paddingLeft_small__1kw4brec",
+              "defaultClass": "index_paddingLeft_small__1kw4bred",
             },
           },
         },
         "paddingRight": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "index_paddingRight_large__1kw4breh",
+              "defaultClass": "index_paddingRight_large__1kw4brei",
             },
             "medium": Object {
-              "defaultClass": "index_paddingRight_medium__1kw4breg",
+              "defaultClass": "index_paddingRight_medium__1kw4breh",
             },
             "small": Object {
-              "defaultClass": "index_paddingRight_small__1kw4bref",
+              "defaultClass": "index_paddingRight_small__1kw4breg",
             },
           },
         },
@@ -271,27 +271,27 @@ describe('sprinkles', () => {
           "values": Object {
             "block": Object {
               "conditions": Object {
-                "desktop": "index_display_block_desktop__1kw4brek",
-                "mobile": "index_display_block_mobile__1kw4brei",
-                "tablet": "index_display_block_tablet__1kw4brej",
+                "desktop": "index_display_block_desktop__1kw4brel",
+                "mobile": "index_display_block_mobile__1kw4brej",
+                "tablet": "index_display_block_tablet__1kw4brek",
               },
-              "defaultClass": "index_display_block_mobile__1kw4brei",
+              "defaultClass": "index_display_block_mobile__1kw4brej",
             },
             "flex": Object {
               "conditions": Object {
-                "desktop": "index_display_flex_desktop__1kw4breq",
-                "mobile": "index_display_flex_mobile__1kw4breo",
-                "tablet": "index_display_flex_tablet__1kw4brep",
+                "desktop": "index_display_flex_desktop__1kw4brer",
+                "mobile": "index_display_flex_mobile__1kw4brep",
+                "tablet": "index_display_flex_tablet__1kw4breq",
               },
-              "defaultClass": "index_display_flex_mobile__1kw4breo",
+              "defaultClass": "index_display_flex_mobile__1kw4brep",
             },
             "none": Object {
               "conditions": Object {
-                "desktop": "index_display_none_desktop__1kw4bren",
-                "mobile": "index_display_none_mobile__1kw4brel",
-                "tablet": "index_display_none_tablet__1kw4brem",
+                "desktop": "index_display_none_desktop__1kw4breo",
+                "mobile": "index_display_none_mobile__1kw4brem",
+                "tablet": "index_display_none_tablet__1kw4bren",
               },
-              "defaultClass": "index_display_none_mobile__1kw4brel",
+              "defaultClass": "index_display_none_mobile__1kw4brem",
             },
           },
         },
@@ -304,27 +304,27 @@ describe('sprinkles', () => {
           "values": Object {
             "large": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_large_desktop__1kw4bre18",
-                "mobile": "index_paddingBottom_large_mobile__1kw4bre16",
-                "tablet": "index_paddingBottom_large_tablet__1kw4bre17",
+                "desktop": "index_paddingBottom_large_desktop__1kw4bre19",
+                "mobile": "index_paddingBottom_large_mobile__1kw4bre17",
+                "tablet": "index_paddingBottom_large_tablet__1kw4bre18",
               },
-              "defaultClass": "index_paddingBottom_large_mobile__1kw4bre16",
+              "defaultClass": "index_paddingBottom_large_mobile__1kw4bre17",
             },
             "medium": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_medium_desktop__1kw4bre15",
-                "mobile": "index_paddingBottom_medium_mobile__1kw4bre13",
-                "tablet": "index_paddingBottom_medium_tablet__1kw4bre14",
+                "desktop": "index_paddingBottom_medium_desktop__1kw4bre16",
+                "mobile": "index_paddingBottom_medium_mobile__1kw4bre14",
+                "tablet": "index_paddingBottom_medium_tablet__1kw4bre15",
               },
-              "defaultClass": "index_paddingBottom_medium_mobile__1kw4bre13",
+              "defaultClass": "index_paddingBottom_medium_mobile__1kw4bre14",
             },
             "small": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_small_desktop__1kw4bre12",
-                "mobile": "index_paddingBottom_small_mobile__1kw4bre10",
-                "tablet": "index_paddingBottom_small_tablet__1kw4bre11",
+                "desktop": "index_paddingBottom_small_desktop__1kw4bre13",
+                "mobile": "index_paddingBottom_small_mobile__1kw4bre11",
+                "tablet": "index_paddingBottom_small_tablet__1kw4bre12",
               },
-              "defaultClass": "index_paddingBottom_small_mobile__1kw4bre10",
+              "defaultClass": "index_paddingBottom_small_mobile__1kw4bre11",
             },
           },
         },
@@ -337,27 +337,27 @@ describe('sprinkles', () => {
           "values": Object {
             "large": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_large_desktop__1kw4brez",
-                "mobile": "index_paddingTop_large_mobile__1kw4brex",
-                "tablet": "index_paddingTop_large_tablet__1kw4brey",
+                "desktop": "index_paddingTop_large_desktop__1kw4bre10",
+                "mobile": "index_paddingTop_large_mobile__1kw4brey",
+                "tablet": "index_paddingTop_large_tablet__1kw4brez",
               },
-              "defaultClass": "index_paddingTop_large_mobile__1kw4brex",
+              "defaultClass": "index_paddingTop_large_mobile__1kw4brey",
             },
             "medium": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_medium_desktop__1kw4brew",
-                "mobile": "index_paddingTop_medium_mobile__1kw4breu",
-                "tablet": "index_paddingTop_medium_tablet__1kw4brev",
+                "desktop": "index_paddingTop_medium_desktop__1kw4brex",
+                "mobile": "index_paddingTop_medium_mobile__1kw4brev",
+                "tablet": "index_paddingTop_medium_tablet__1kw4brew",
               },
-              "defaultClass": "index_paddingTop_medium_mobile__1kw4breu",
+              "defaultClass": "index_paddingTop_medium_mobile__1kw4brev",
             },
             "small": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_small_desktop__1kw4bret",
-                "mobile": "index_paddingTop_small_mobile__1kw4brer",
-                "tablet": "index_paddingTop_small_tablet__1kw4bres",
+                "desktop": "index_paddingTop_small_desktop__1kw4breu",
+                "mobile": "index_paddingTop_small_mobile__1kw4bres",
+                "tablet": "index_paddingTop_small_tablet__1kw4bret",
               },
-              "defaultClass": "index_paddingTop_small_mobile__1kw4brer",
+              "defaultClass": "index_paddingTop_small_mobile__1kw4bres",
             },
           },
         },

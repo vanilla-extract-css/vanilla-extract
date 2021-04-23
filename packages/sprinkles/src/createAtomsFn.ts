@@ -119,7 +119,7 @@ export function createAtomsFn<Styles extends AtomicStyles>(
         continue;
       }
 
-      if (typeof propValue === 'string') {
+      if (typeof propValue === 'string' || typeof propValue === 'number') {
         classNames.push(atomicProperty.values[propValue].defaultClass);
       } else if (Array.isArray(propValue)) {
         for (const responsiveIndex in propValue) {

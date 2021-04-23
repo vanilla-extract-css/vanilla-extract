@@ -191,7 +191,10 @@ export function createAtomicStyles(options: any): any {
       styles[key].responsiveArray = options.responsiveArray;
     }
 
-    const processValue = (valueName: keyof typeof property, value: string) => {
+    const processValue = (
+      valueName: keyof typeof property,
+      value: string | number,
+    ) => {
       if ('conditions' in options) {
         styles[key].values[valueName] = {
           conditions: {},
