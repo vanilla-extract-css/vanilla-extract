@@ -29,7 +29,7 @@ export function walkObject<T extends Walkable, MapTo>(
       console.warn(
         `Skipping invalid key "${currentPath.join(
           '.',
-        )}". Should be a string, number or object. Received: "${
+        )}". Should be a string, number, null or object. Received: "${
           Array.isArray(value) ? 'Array' : typeof value
         }"`,
       );
