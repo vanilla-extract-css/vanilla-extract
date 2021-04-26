@@ -102,10 +102,13 @@ export function createAtomsFn<Styles extends AtomicStyles>(
         hasShorthands = true;
         for (const propMapping of atomicProperty.mappings) {
           shorthands[propMapping] = propValue;
-          delete nonShorthands[propMapping];
+          if (!nonShorthands[propMapping]) {
+            delete nonShorthands[propMapping];
+          }
         }
       }
     }
+
     const finalProps = hasShorthands
       ? { ...shorthands, ...nonShorthands }
       : props;

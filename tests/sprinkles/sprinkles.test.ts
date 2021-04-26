@@ -4,12 +4,11 @@ import {
   atomicStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
-  conditionalStylesWithoutDefaultCondition,
 } from './index.css';
 
 describe('sprinkles', () => {
   describe('createAtomsFn', () => {
-    it('should return correct classnames', () => {
+    it('should handle unconditional styles', () => {
       const atoms = createAtomsFn(atomicStyles);
 
       expect(atoms({ top: 0, color: 'green-300' })).toMatchInlineSnapshot(
@@ -17,15 +16,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
-      const atoms = createAtomsFn(atomicWithShorthandStyles);
-
-      expect(atoms({ color: 'green-300' })).toMatchInlineSnapshot(
-        `"index_color_green-300__1kw4brec"`,
-      );
-    });
-
-    it('should return correct classnames', () => {
+    it('should handle default classes on conditional styles', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
       expect(atoms({ display: 'block' })).toMatchInlineSnapshot(
@@ -33,7 +24,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
+    it('should handle conditional styles with different variants', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
       expect(
@@ -48,7 +39,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
+    it('should handle a mix of unconditional and conditional styles', () => {
       const atoms = createAtomsFn({
         ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
@@ -67,7 +58,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
+    it('should handle responsive arrays', () => {
       const atoms = createAtomsFn({
         ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
@@ -82,7 +73,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
+    it('should handle responsive arrays with null values', () => {
       const atoms = createAtomsFn({
         ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
@@ -97,7 +88,58 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should return correct classnames', () => {
+    it('should handle responsive arrays that end early', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({
+          display: ['block', 'flex'],
+        }),
+      ).toMatchInlineSnapshot(
+        `"index_display_block_mobile__1kw4brej index_display_flex_tablet__1kw4breq"`,
+      );
+    });
+
+    it('should handle shorthand properties with a default condition', () => {
+      const atoms = createAtomsFn(atomicWithShorthandStyles);
+
+      expect(
+        atoms({
+          paddingX: 'large',
+        }),
+      ).toMatchInlineSnapshot(
+        `"index_paddingLeft_large__1kw4bref index_paddingRight_large__1kw4brei"`,
+      );
+    });
+
+    it('should handle shorthand properties with a conditional value', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({
+          paddingY: {
+            mobile: 'medium',
+            tablet: 'large',
+          },
+        }),
+      ).toMatchInlineSnapshot(
+        `"index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_tablet__1kw4bre18 index_paddingTop_medium_mobile__1kw4brev index_paddingTop_large_tablet__1kw4brez"`,
+      );
+    });
+
+    it('should handle shorthand properties with a responsive array', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({
+          paddingY: ['small', 'medium', 'large'],
+        }),
+      ).toMatchInlineSnapshot(
+        `"index_paddingBottom_small_mobile__1kw4bre11 index_paddingBottom_medium_tablet__1kw4bre15 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_small_mobile__1kw4bres index_paddingTop_medium_tablet__1kw4brew index_paddingTop_large_desktop__1kw4bre10"`,
+      );
+    });
+
+    it('should merge shorthand styles with non-shorthands', () => {
       const atoms = createAtomsFn({
         ...atomicWithShorthandStyles,
         ...conditionalAtomicStyles,
@@ -110,10 +152,10 @@ describe('sprinkles', () => {
             mobile: 'medium',
             desktop: 'large',
           },
-          paddingTop: 'medium',
+          paddingTop: 'small',
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_medium_mobile__1kw4brev index_paddingTop_large_desktop__1kw4bre10"`,
+        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_small_mobile__1kw4bres"`,
       );
     });
 
@@ -147,57 +189,6 @@ describe('sprinkles', () => {
       ).toMatchInlineSnapshot(
         `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg"`,
       );
-    });
-
-    describe('types', () => {
-      it('to be type safe', () => {
-        const atoms = createAtomsFn({
-          ...atomicWithShorthandStyles,
-          ...conditionalAtomicStyles,
-        });
-
-        expect(() =>
-          atoms({
-            // @ts-expect-error
-            paddingX: 'smalll',
-            paddingY: {
-              mobile: 'medium',
-              desktop: 'large',
-            },
-            paddingTop: 'medium',
-          }),
-        ).toBeTruthy();
-      });
-
-      it('to be type safe', () => {
-        const atoms = createAtomsFn({
-          ...atomicWithShorthandStyles,
-          ...conditionalAtomicStyles,
-        });
-
-        expect(() =>
-          atoms({
-            paddingX: 'small',
-            paddingY: {
-              // @ts-expect-error
-              mobie: 'medium',
-              desktop: 'large',
-            },
-            paddingTop: 'medium',
-          }),
-        ).toBeTruthy();
-      });
-
-      it('should prevent default conditions when set to false', () => {
-        const atoms = createAtomsFn(conditionalStylesWithoutDefaultCondition);
-
-        expect(() =>
-          atoms({
-            // @ts-expect-error
-            transform: 'shrink',
-          }),
-        ).toBeTruthy();
-      });
     });
   });
 

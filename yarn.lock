@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
-    "@vanilla-extract/css": 0.3.0
+    "@vanilla-extract/css": 0.3.1
     "@vanilla-extract/sprinkles": 0.1.0
   languageName: unknown
   linkType: soft
@@ -2708,20 +2708,6 @@ __metadata:
     dedent: ^0.7.0
   languageName: unknown
   linkType: soft
-
-"@vanilla-extract/css@npm:0.3.0":
-  version: 0.3.0
-  resolution: "@vanilla-extract/css@npm:0.3.0"
-  dependencies:
-    "@emotion/hash": ^0.8.0
-    "@vanilla-extract/private": ^0.1.0
-    css-selector-parser: ^1.4.1
-    cssesc: ^3.0.0
-    csstype: ^3.0.7
-    dedent: ^0.7.0
-  checksum: 9aa85af82a65bff4cff759b88968c527f8654ced9b19ba24a42d1dd9d12e90cddd11cde175dd408fa90b97adb12e0db082a9bee3658cf9a0b1d2d372c2d3c43c
-  languageName: node
-  linkType: hard
 
 "@vanilla-extract/dynamic@0.1.0, @vanilla-extract/dynamic@workspace:packages/dynamic":
   version: 0.0.0-use.local
