@@ -2,16 +2,20 @@ import hash from '@emotion/hash';
 
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
-function getShortFileName() {
+function getDevPrefix(debugId: string | undefined) {
+  const parts = debugId ? [debugId] : [];
   const { filePath } = getFileScope();
 
-  const matches = filePath.match(/.*\/(.*)\..*\..*$/);
+  const matches = filePath.match(
+    /(?<dir>[^\/]*)?\/?(?<file>[^\/]*)\.css\.(ts|js|tsx|jsx)$/,
+  );
 
-  if (matches && matches[1]) {
-    return matches[1];
+  if (matches && matches.groups) {
+    const { dir, file } = matches.groups;
+    parts.unshift(file && file !== 'index' ? file : dir);
   }
 
-  return '';
+  return parts.join('_');
 }
 
 export function generateIdentifier(debugId: string | undefined) {
@@ -22,10 +26,15 @@ export function generateIdentifier(debugId: string | undefined) {
     packageName ? `${packageName}${filePath}` : filePath,
   );
 
-  const identifier =
-    process.env.NODE_ENV !== 'production' && debugId
-      ? `${getShortFileName()}_${debugId}__${fileScopeHash}${refCount}`
-      : `${fileScopeHash}${refCount}`;
+  let identifier = `${fileScopeHash}${refCount}`;
+
+  if (process.env.NODE_ENV !== 'production') {
+    const devPrefix = getDevPrefix(debugId);
+
+    if (devPrefix) {
+      identifier = `${devPrefix}__${identifier}`;
+    }
+  }
 
   return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
 }
