@@ -1,23 +1,22 @@
-import { a } from './styles.css';
+import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
+
+import { atomicStyles } from './styles.css';
 import testNodes from '../test-nodes.json';
 
-console.log(a);
+const atoms = createAtomsFn(atomicStyles);
 
 function render() {
   document.body.innerHTML = `
-  <div id="${testNodes.root}""> 
-    Root theme
-    
+  <div id="${testNodes.root}" class="${atoms({
+    display: 'block',
+    paddingTop: {
+      mobile: 'small',
+      desktop: 'medium',
+    },
+  })}"> 
+    Sprinkles
   </div>
 `;
 }
 
 render();
-
-// @ts-expect-error
-if (module.hot) {
-  // @ts-expect-error
-  module.hot.accept(['./styles.css'], () => {
-    render();
-  });
-}

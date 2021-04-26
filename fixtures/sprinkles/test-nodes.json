@@ -1,15 +1,3 @@
 {
-  "root": "root",
-  "rootContainer": "rootContainer",
-  "rootButton": "rootButton",
-  "altContainer": "altContainer",
-  "altButton": "altButton",
-  "nestedRootContainer": "nestedRootContainer",
-  "nestedRootButton": "nestedRootButton",
-  "inlineThemeContainer": "inlineThemeContainer",
-  "inlineThemeButton": "inlineThemeButton",
-  "dynamicVarsContainer": "dynamicVarsContainer",
-  "dynamicVarsButton": "dynamicVarsButton",
-  "responsiveThemeContainer": "responsiveThemeContainer",
-  "responsiveThemeButton": "responsiveThemeButton"
+  "root": "root"
 }

@@ -1,5 +1,147 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Stylesheet sprinkles - esbuild should create valid stylesheet 1`] = `
+"/* vanilla-extract-css-ns:@fixtures/sprinkles/src/styles.css.ts.vanilla.css?source=LnN0eWxlc19kaXNwbGF5X2ZsZXhfbW9iaWxlX18xajV6bDkyMCB7CiAgZGlzcGxheTogZmxleDsKfQouc3R5bGVzX2Rpc3BsYXlfbm9uZV9tb2JpbGVfXzFqNXpsOTI0IHsKICBkaXNwbGF5OiBub25lOwp9Ci5zdHlsZXNfZGlzcGxheV9ibG9ja19tb2JpbGVfXzFqNXpsOTI4IHsKICBkaXNwbGF5OiBibG9jazsKfQouc3R5bGVzX3BhZGRpbmdUb3Bfc21hbGxfbW9iaWxlX18xajV6bDkyYyB7CiAgcGFkZGluZy10b3A6IDEwcHg7Cn0KLnN0eWxlc19wYWRkaW5nVG9wX21lZGl1bV9tb2JpbGVfXzFqNXpsOTJnIHsKICBwYWRkaW5nLXRvcDogMjBweDsKfQpAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkgewogIC5zdHlsZXNfZGlzcGxheV9mbGV4X3RhYmxldF9fMWo1emw5MjEgewogICAgZGlzcGxheTogZmxleDsKICB9CiAgLnN0eWxlc19kaXNwbGF5X25vbmVfdGFibGV0X18xajV6bDkyNSB7CiAgICBkaXNwbGF5OiBub25lOwogIH0KICAuc3R5bGVzX2Rpc3BsYXlfYmxvY2tfdGFibGV0X18xajV6bDkyOSB7CiAgICBkaXNwbGF5OiBibG9jazsKICB9CiAgLnN0eWxlc19wYWRkaW5nVG9wX3NtYWxsX3RhYmxldF9fMWo1emw5MmQgewogICAgcGFkZGluZy10b3A6IDEwcHg7CiAgfQogIC5zdHlsZXNfcGFkZGluZ1RvcF9tZWRpdW1fdGFibGV0X18xajV6bDkyaCB7CiAgICBwYWRkaW5nLXRvcDogMjBweDsKICB9Cn0KQG1lZGlhIHNjcmVlbiBhbmQgKG1pbi13aWR0aDogMTAyNHB4KSB7CiAgLnN0eWxlc19kaXNwbGF5X2ZsZXhfZGVza3RvcF9fMWo1emw5MjIgewogICAgZGlzcGxheTogZmxleDsKICB9CiAgQHN1cHBvcnRzIG5vdCAoZGlzcGxheTogZ3JpZCkgewogICAgW2RhdGEtZGFyay1tb2RlXSAuc3R5bGVzX2Rpc3BsYXlfZmxleF9kYXJrRGVza3RvcF9fMWo1emw5MjMgewogICAgICBkaXNwbGF5OiBmbGV4OwogICAgfQogICAgW2RhdGEtZGFyay1tb2RlXSAuc3R5bGVzX2Rpc3BsYXlfbm9uZV9kYXJrRGVza3RvcF9fMWo1emw5MjcgewogICAgICBkaXNwbGF5OiBub25lOwogICAgfQogICAgW2RhdGEtZGFyay1tb2RlXSAuc3R5bGVzX2Rpc3BsYXlfYmxvY2tfZGFya0Rlc2t0b3BfXzFqNXpsOTJiIHsKICAgICAgZGlzcGxheTogYmxvY2s7CiAgICB9CiAgICBbZGF0YS1kYXJrLW1vZGVdIC5zdHlsZXNfcGFkZGluZ1RvcF9zbWFsbF9kYXJrRGVza3RvcF9fMWo1emw5MmYgewogICAgICBwYWRkaW5nLXRvcDogMTBweDsKICAgIH0KICAgIFtkYXRhLWRhcmstbW9kZV0gLnN0eWxlc19wYWRkaW5nVG9wX21lZGl1bV9kYXJrRGVza3RvcF9fMWo1emw5MmogewogICAgICBwYWRkaW5nLXRvcDogMjBweDsKICAgIH0KICB9CiAgLnN0eWxlc19kaXNwbGF5X25vbmVfZGVza3RvcF9fMWo1emw5MjYgewogICAgZGlzcGxheTogbm9uZTsKICB9CiAgLnN0eWxlc19kaXNwbGF5X2Jsb2NrX2Rlc2t0b3BfXzFqNXpsOTJhIHsKICAgIGRpc3BsYXk6IGJsb2NrOwogIH0KICAuc3R5bGVzX3BhZGRpbmdUb3Bfc21hbGxfZGVza3RvcF9fMWo1emw5MmUgewogICAgcGFkZGluZy10b3A6IDEwcHg7CiAgfQogIC5zdHlsZXNfcGFkZGluZ1RvcF9tZWRpdW1fZGVza3RvcF9fMWo1emw5MmkgewogICAgcGFkZGluZy10b3A6IDIwcHg7CiAgfQp9 */
+.styles_display_flex_mobile__1j5zl920 {
+  display: flex;
+}
+.styles_display_none_mobile__1j5zl924 {
+  display: none;
+}
+.styles_display_block_mobile__1j5zl928 {
+  display: block;
+}
+.styles_paddingTop_small_mobile__1j5zl92c {
+  padding-top: 10px;
+}
+.styles_paddingTop_medium_mobile__1j5zl92g {
+  padding-top: 20px;
+}
+@media screen and (min-width: 768px) {
+  .styles_display_flex_tablet__1j5zl921 {
+    display: flex;
+  }
+  .styles_display_none_tablet__1j5zl925 {
+    display: none;
+  }
+  .styles_display_block_tablet__1j5zl929 {
+    display: block;
+  }
+  .styles_paddingTop_small_tablet__1j5zl92d {
+    padding-top: 10px;
+  }
+  .styles_paddingTop_medium_tablet__1j5zl92h {
+    padding-top: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .styles_display_flex_desktop__1j5zl922 {
+    display: flex;
+  }
+  @supports not (display: grid) {
+    [data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923 {
+      display: flex;
+    }
+    [data-dark-mode] .styles_display_none_darkDesktop__1j5zl927 {
+      display: none;
+    }
+    [data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b {
+      display: block;
+    }
+    [data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f {
+      padding-top: 10px;
+    }
+    [data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j {
+      padding-top: 20px;
+    }
+  }
+  .styles_display_none_desktop__1j5zl926 {
+    display: none;
+  }
+  .styles_display_block_desktop__1j5zl92a {
+    display: block;
+  }
+  .styles_paddingTop_small_desktop__1j5zl92e {
+    padding-top: 10px;
+  }
+  .styles_paddingTop_medium_desktop__1j5zl92i {
+    padding-top: 20px;
+  }
+}
+"
+`;
+
+exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
+".styles_display_flex_mobile__3nw5tz0 {
+  display: flex;
+}
+.styles_display_none_mobile__3nw5tz4 {
+  display: none;
+}
+.styles_display_block_mobile__3nw5tz8 {
+  display: block;
+}
+.styles_paddingTop_small_mobile__3nw5tzc {
+  padding-top: 10px;
+}
+.styles_paddingTop_medium_mobile__3nw5tzg {
+  padding-top: 20px;
+}
+@media screen and (min-width: 768px) {
+  .styles_display_flex_tablet__3nw5tz1 {
+    display: flex;
+  }
+  .styles_display_none_tablet__3nw5tz5 {
+    display: none;
+  }
+  .styles_display_block_tablet__3nw5tz9 {
+    display: block;
+  }
+  .styles_paddingTop_small_tablet__3nw5tzd {
+    padding-top: 10px;
+  }
+  .styles_paddingTop_medium_tablet__3nw5tzh {
+    padding-top: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .styles_display_flex_desktop__3nw5tz2 {
+    display: flex;
+  }
+  @supports not (display: grid) {
+    [data-dark-mode] .styles_display_flex_darkDesktop__3nw5tz3 {
+      display: flex;
+    }
+    [data-dark-mode] .styles_display_none_darkDesktop__3nw5tz7 {
+      display: none;
+    }
+    [data-dark-mode] .styles_display_block_darkDesktop__3nw5tzb {
+      display: block;
+    }
+    [data-dark-mode] .styles_paddingTop_small_darkDesktop__3nw5tzf {
+      padding-top: 10px;
+    }
+    [data-dark-mode] .styles_paddingTop_medium_darkDesktop__3nw5tzj {
+      padding-top: 20px;
+    }
+  }
+  .styles_display_none_desktop__3nw5tz6 {
+    display: none;
+  }
+  .styles_display_block_desktop__3nw5tza {
+    display: block;
+  }
+  .styles_paddingTop_small_desktop__3nw5tze {
+    padding-top: 10px;
+  }
+  .styles_paddingTop_medium_desktop__3nw5tzi {
+    padding-top: 20px;
+  }
+}
+
+/*# sourceMappingURL=main.css.map*/"
+`;
+
 exports[`Stylesheet themed - esbuild should create valid stylesheet 1`] = `
 "/* vanilla-extract-css-ns:@fixtures/themed/src/shared.css.ts.vanilla.css?source=LnNoYXJlZF9fNGR0ZmVuMCB7CiAgYm94LXNoYWRvdzogMCAwIDVweCByZWQ7Cn0KYm9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogc2t5Ymx1ZTsKfQ== */
 .shared__4dtfen0 {
