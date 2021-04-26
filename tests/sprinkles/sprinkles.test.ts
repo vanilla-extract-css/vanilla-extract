@@ -12,7 +12,7 @@ describe('sprinkles', () => {
       const atoms = createAtomsFn(atomicStyles);
 
       expect(atoms({ top: 0, color: 'green-300' })).toMatchInlineSnapshot(
-        `"index_top_0__1kw4bre3 index_color_green-300__1kw4bre2"`,
+        `"sprinkles_top_0__1kw4bre3 sprinkles_color_green-300__1kw4bre2"`,
       );
     });
 
@@ -20,7 +20,7 @@ describe('sprinkles', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
       expect(atoms({ display: 'block' })).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej"`,
+        `"sprinkles_display_block_mobile__1kw4brej"`,
       );
     });
 
@@ -35,7 +35,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer"`,
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_desktop__1kw4brer"`,
       );
     });
 
@@ -54,7 +54,7 @@ describe('sprinkles', () => {
           color: 'gray-500',
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer index_color_gray-500__1kw4brea"`,
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_desktop__1kw4brer sprinkles_color_gray-500__1kw4brea"`,
       );
     });
 
@@ -69,7 +69,7 @@ describe('sprinkles', () => {
           display: ['block', 'flex', 'block'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej index_display_flex_tablet__1kw4breq index_display_block_desktop__1kw4brel"`,
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_tablet__1kw4breq sprinkles_display_block_desktop__1kw4brel"`,
       );
     });
 
@@ -84,7 +84,7 @@ describe('sprinkles', () => {
           display: ['block', null, 'flex'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej index_display_flex_desktop__1kw4brer"`,
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_desktop__1kw4brer"`,
       );
     });
 
@@ -96,7 +96,7 @@ describe('sprinkles', () => {
           display: ['block', 'flex'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_display_block_mobile__1kw4brej index_display_flex_tablet__1kw4breq"`,
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_tablet__1kw4breq"`,
       );
     });
 
@@ -108,7 +108,7 @@ describe('sprinkles', () => {
           paddingX: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_large__1kw4bref index_paddingRight_large__1kw4brei"`,
+        `"sprinkles_paddingLeft_large__1kw4bref sprinkles_paddingRight_large__1kw4brei"`,
       );
     });
 
@@ -123,7 +123,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_tablet__1kw4bre18 index_paddingTop_medium_mobile__1kw4brev index_paddingTop_large_tablet__1kw4brez"`,
+        `"sprinkles_paddingBottom_medium_mobile__1kw4bre14 sprinkles_paddingBottom_large_tablet__1kw4bre18 sprinkles_paddingTop_medium_mobile__1kw4brev sprinkles_paddingTop_large_tablet__1kw4brez"`,
       );
     });
 
@@ -135,7 +135,7 @@ describe('sprinkles', () => {
           paddingY: ['small', 'medium', 'large'],
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingBottom_small_mobile__1kw4bre11 index_paddingBottom_medium_tablet__1kw4bre15 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_small_mobile__1kw4bres index_paddingTop_medium_tablet__1kw4brew index_paddingTop_large_desktop__1kw4bre10"`,
+        `"sprinkles_paddingBottom_small_mobile__1kw4bre11 sprinkles_paddingBottom_medium_tablet__1kw4bre15 sprinkles_paddingBottom_large_desktop__1kw4bre19 sprinkles_paddingTop_small_mobile__1kw4bres sprinkles_paddingTop_medium_tablet__1kw4brew sprinkles_paddingTop_large_desktop__1kw4bre10"`,
       );
     });
 
@@ -155,7 +155,7 @@ describe('sprinkles', () => {
           paddingTop: 'small',
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg index_paddingBottom_medium_mobile__1kw4bre14 index_paddingBottom_large_desktop__1kw4bre19 index_paddingTop_small_mobile__1kw4bres"`,
+        `"sprinkles_paddingLeft_small__1kw4bred sprinkles_paddingRight_small__1kw4breg sprinkles_paddingBottom_medium_mobile__1kw4bre14 sprinkles_paddingBottom_large_desktop__1kw4bre19 sprinkles_paddingTop_small_mobile__1kw4bres"`,
       );
     });
 
@@ -171,7 +171,7 @@ describe('sprinkles', () => {
           paddingTop: undefined,
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingBottom_small_mobile__1kw4bre11 index_paddingTop_small_mobile__1kw4bres"`,
+        `"sprinkles_paddingBottom_small_mobile__1kw4bre11 sprinkles_paddingTop_small_mobile__1kw4bres"`,
       );
     });
 
@@ -187,7 +187,7 @@ describe('sprinkles', () => {
           anotherPaddingX: undefined,
         }),
       ).toMatchInlineSnapshot(
-        `"index_paddingLeft_small__1kw4bred index_paddingRight_small__1kw4breg"`,
+        `"sprinkles_paddingLeft_small__1kw4bred sprinkles_paddingRight_small__1kw4breg"`,
       );
     });
   });
@@ -204,39 +204,39 @@ describe('sprinkles', () => {
         "color": Object {
           "values": Object {
             "gray-500": Object {
-              "defaultClass": "index_color_gray-500__1kw4brea",
+              "defaultClass": "sprinkles_color_gray-500__1kw4brea",
             },
             "green-300": Object {
-              "defaultClass": "index_color_green-300__1kw4brec",
+              "defaultClass": "sprinkles_color_green-300__1kw4brec",
             },
             "red-500": Object {
-              "defaultClass": "index_color_red-500__1kw4breb",
+              "defaultClass": "sprinkles_color_red-500__1kw4breb",
             },
           },
         },
         "paddingLeft": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "index_paddingLeft_large__1kw4bref",
+              "defaultClass": "sprinkles_paddingLeft_large__1kw4bref",
             },
             "medium": Object {
-              "defaultClass": "index_paddingLeft_medium__1kw4bree",
+              "defaultClass": "sprinkles_paddingLeft_medium__1kw4bree",
             },
             "small": Object {
-              "defaultClass": "index_paddingLeft_small__1kw4bred",
+              "defaultClass": "sprinkles_paddingLeft_small__1kw4bred",
             },
           },
         },
         "paddingRight": Object {
           "values": Object {
             "large": Object {
-              "defaultClass": "index_paddingRight_large__1kw4brei",
+              "defaultClass": "sprinkles_paddingRight_large__1kw4brei",
             },
             "medium": Object {
-              "defaultClass": "index_paddingRight_medium__1kw4breh",
+              "defaultClass": "sprinkles_paddingRight_medium__1kw4breh",
             },
             "small": Object {
-              "defaultClass": "index_paddingRight_small__1kw4breg",
+              "defaultClass": "sprinkles_paddingRight_small__1kw4breg",
             },
           },
         },
@@ -262,27 +262,27 @@ describe('sprinkles', () => {
           "values": Object {
             "block": Object {
               "conditions": Object {
-                "desktop": "index_display_block_desktop__1kw4brel",
-                "mobile": "index_display_block_mobile__1kw4brej",
-                "tablet": "index_display_block_tablet__1kw4brek",
+                "desktop": "sprinkles_display_block_desktop__1kw4brel",
+                "mobile": "sprinkles_display_block_mobile__1kw4brej",
+                "tablet": "sprinkles_display_block_tablet__1kw4brek",
               },
-              "defaultClass": "index_display_block_mobile__1kw4brej",
+              "defaultClass": "sprinkles_display_block_mobile__1kw4brej",
             },
             "flex": Object {
               "conditions": Object {
-                "desktop": "index_display_flex_desktop__1kw4brer",
-                "mobile": "index_display_flex_mobile__1kw4brep",
-                "tablet": "index_display_flex_tablet__1kw4breq",
+                "desktop": "sprinkles_display_flex_desktop__1kw4brer",
+                "mobile": "sprinkles_display_flex_mobile__1kw4brep",
+                "tablet": "sprinkles_display_flex_tablet__1kw4breq",
               },
-              "defaultClass": "index_display_flex_mobile__1kw4brep",
+              "defaultClass": "sprinkles_display_flex_mobile__1kw4brep",
             },
             "none": Object {
               "conditions": Object {
-                "desktop": "index_display_none_desktop__1kw4breo",
-                "mobile": "index_display_none_mobile__1kw4brem",
-                "tablet": "index_display_none_tablet__1kw4bren",
+                "desktop": "sprinkles_display_none_desktop__1kw4breo",
+                "mobile": "sprinkles_display_none_mobile__1kw4brem",
+                "tablet": "sprinkles_display_none_tablet__1kw4bren",
               },
-              "defaultClass": "index_display_none_mobile__1kw4brem",
+              "defaultClass": "sprinkles_display_none_mobile__1kw4brem",
             },
           },
         },
@@ -295,27 +295,27 @@ describe('sprinkles', () => {
           "values": Object {
             "large": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_large_desktop__1kw4bre19",
-                "mobile": "index_paddingBottom_large_mobile__1kw4bre17",
-                "tablet": "index_paddingBottom_large_tablet__1kw4bre18",
+                "desktop": "sprinkles_paddingBottom_large_desktop__1kw4bre19",
+                "mobile": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
+                "tablet": "sprinkles_paddingBottom_large_tablet__1kw4bre18",
               },
-              "defaultClass": "index_paddingBottom_large_mobile__1kw4bre17",
+              "defaultClass": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
             },
             "medium": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_medium_desktop__1kw4bre16",
-                "mobile": "index_paddingBottom_medium_mobile__1kw4bre14",
-                "tablet": "index_paddingBottom_medium_tablet__1kw4bre15",
+                "desktop": "sprinkles_paddingBottom_medium_desktop__1kw4bre16",
+                "mobile": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
+                "tablet": "sprinkles_paddingBottom_medium_tablet__1kw4bre15",
               },
-              "defaultClass": "index_paddingBottom_medium_mobile__1kw4bre14",
+              "defaultClass": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
             },
             "small": Object {
               "conditions": Object {
-                "desktop": "index_paddingBottom_small_desktop__1kw4bre13",
-                "mobile": "index_paddingBottom_small_mobile__1kw4bre11",
-                "tablet": "index_paddingBottom_small_tablet__1kw4bre12",
+                "desktop": "sprinkles_paddingBottom_small_desktop__1kw4bre13",
+                "mobile": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
+                "tablet": "sprinkles_paddingBottom_small_tablet__1kw4bre12",
               },
-              "defaultClass": "index_paddingBottom_small_mobile__1kw4bre11",
+              "defaultClass": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
             },
           },
         },
@@ -328,27 +328,27 @@ describe('sprinkles', () => {
           "values": Object {
             "large": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_large_desktop__1kw4bre10",
-                "mobile": "index_paddingTop_large_mobile__1kw4brey",
-                "tablet": "index_paddingTop_large_tablet__1kw4brez",
+                "desktop": "sprinkles_paddingTop_large_desktop__1kw4bre10",
+                "mobile": "sprinkles_paddingTop_large_mobile__1kw4brey",
+                "tablet": "sprinkles_paddingTop_large_tablet__1kw4brez",
               },
-              "defaultClass": "index_paddingTop_large_mobile__1kw4brey",
+              "defaultClass": "sprinkles_paddingTop_large_mobile__1kw4brey",
             },
             "medium": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_medium_desktop__1kw4brex",
-                "mobile": "index_paddingTop_medium_mobile__1kw4brev",
-                "tablet": "index_paddingTop_medium_tablet__1kw4brew",
+                "desktop": "sprinkles_paddingTop_medium_desktop__1kw4brex",
+                "mobile": "sprinkles_paddingTop_medium_mobile__1kw4brev",
+                "tablet": "sprinkles_paddingTop_medium_tablet__1kw4brew",
               },
-              "defaultClass": "index_paddingTop_medium_mobile__1kw4brev",
+              "defaultClass": "sprinkles_paddingTop_medium_mobile__1kw4brev",
             },
             "small": Object {
               "conditions": Object {
-                "desktop": "index_paddingTop_small_desktop__1kw4breu",
-                "mobile": "index_paddingTop_small_mobile__1kw4bres",
-                "tablet": "index_paddingTop_small_tablet__1kw4bret",
+                "desktop": "sprinkles_paddingTop_small_desktop__1kw4breu",
+                "mobile": "sprinkles_paddingTop_small_mobile__1kw4bres",
+                "tablet": "sprinkles_paddingTop_small_tablet__1kw4bret",
               },
-              "defaultClass": "index_paddingTop_small_mobile__1kw4bres",
+              "defaultClass": "sprinkles_paddingTop_small_mobile__1kw4bres",
             },
           },
         },
