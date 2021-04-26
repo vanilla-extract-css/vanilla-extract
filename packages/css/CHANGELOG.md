@@ -1,5 +1,18 @@
 # @vanilla-extract/css
 
+## 0.3.2
+
+### Patch Changes
+
+- [#47](https://github.com/seek-oss/vanilla-extract/pull/47) [`a18bc03`](https://github.com/seek-oss/vanilla-extract/commit/a18bc034885a8b1cc1396b3890111067d4858626) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve dev prefixes on generated class names
+
+  - Add file name to class names even if no debug id is present
+  - If file is the index file use directory name instead
+
+* [#49](https://github.com/seek-oss/vanilla-extract/pull/49) [`2ae4db3`](https://github.com/seek-oss/vanilla-extract/commit/2ae4db3cd442fc493ccc00fd519841b72f1381bf) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Update the unit-less property map
+
+  The original list was borrowed from the [postcss-js parser](https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L5), but decided to reverse engineer an updated list from [csstype](https://github.com/frenic/csstype) for more thorough coverage.
+
 ## 0.3.1
 
 ### Patch Changes
