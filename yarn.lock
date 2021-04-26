@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
   languageName: unknown
   linkType: soft
 
@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
     "@vanilla-extract/dynamic": 0.1.0
   languageName: unknown
   linkType: soft
@@ -1589,7 +1589,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
   languageName: unknown
   linkType: soft
 
@@ -2685,7 +2685,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@0.3.1, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@0.3.2, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
