@@ -45,12 +45,12 @@ export const className = atoms({
 $ yarn add @vanilla-extract/sprinkles
 ```
 
-**Configure atomic styles in a `.css.ts` file.**
+**Create and export your atoms function in a `.css.ts` file.**
 
 ```ts
 // atoms.css.ts
 
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import { createAtoms } from '@vanilla-extract/sprinkles';
 
 const space = {
   none: 0,
@@ -59,7 +59,7 @@ const space = {
   large: 16,
 };
 
-export const createAtomicStyles = createAtomicStyles({
+export const atoms = createAtoms({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -83,17 +83,6 @@ export const createAtomicStyles = createAtomicStyles({
 });
 ```
 
-**Then create your `atoms` function in a regular `.ts` file.**
-
-```ts
-// atoms.ts
-
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
-import { createAtomicStyles } from './atoms.css.ts';
-
-export const atoms = createAtoms(createAtomicStyles);
-```
-
 **🎉 That's it! You’re ready to go.**
 
 ## Usage
@@ -103,7 +92,7 @@ You can now use your `atoms` function in `.css.ts` files for zero-runtime usage.
 ```ts
 // styles.css.ts
 
-import { atoms } from './atoms.ts';
+import { atoms } from './atoms.css.ts';
 
 export const container = atoms({
   display: 'flex',
@@ -121,7 +110,7 @@ Atomic styles can be combined with custom styles using vanilla-extract's `compos
 // styles.css.ts
 
 import { style, composeStyles } from '@vanilla-extract/css';
-import { atoms } from './atoms.ts';
+import { atoms } from './atoms.css.ts';
 
 export const container = composeStyles(
   atoms({
@@ -141,7 +130,7 @@ If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
 ```tsx
 // app.ts
 
-import { atoms } from './atoms.ts';
+import { atoms } from './atoms.css.ts';
 
 document.write(`
   <section class="${atoms({ display: 'flex', flexDirection: 'column' })}">

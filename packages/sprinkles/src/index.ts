@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import type * as CSS from 'csstype';
+import { createAtomsFn } from './createAtomsFn';
 
 import { ResponsiveArrayConfig } from './types';
 
@@ -265,4 +266,21 @@ export function createAtomicStyles(options: any): any {
   }
 
   return styles;
+}
+
+export function createAtoms(config: any): any {
+  const atomicStyles = createAtomicStyles(config);
+
+  const atoms = createAtomsFn(atomicStyles);
+
+  Object.defineProperty(atoms, '__recipe__', {
+    value: {
+      importPath: '@vanilla-extract/sprinkles/createAtomsFn',
+      importName: 'createAtomsFn',
+      args: [atomicStyles],
+    },
+    writable: false,
+  });
+
+  return atoms;
 }

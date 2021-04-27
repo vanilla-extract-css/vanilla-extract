@@ -1,9 +1,5 @@
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
-
-import { atomicStyles } from './styles.css';
+import { atoms } from './styles.css';
 import testNodes from '../test-nodes.json';
-
-const atoms = createAtomsFn(atomicStyles);
 
 function render() {
   document.body.innerHTML = `

@@ -1,6 +1,6 @@
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import { createAtoms } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+export const atoms = createAtoms({
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},

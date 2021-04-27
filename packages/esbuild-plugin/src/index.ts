@@ -192,7 +192,7 @@ export function vanillaExtractPlugin({
   };
 }
 
-const stringifyExports = (value: any) =>
+const stringifyExports = (recipeImports: Set<string>, value: any): any =>
   stringify(
     value,
     (value, _indent, next) => {
@@ -206,6 +206,35 @@ const stringifyExports = (value: any) =>
         isPlainObject(value)
       ) {
         return next(value);
+      }
+
+      if (valueType === 'function' && value.__recipe__) {
+        const { importPath, importName, args } = value.__recipe__;
+
+        if (
+          typeof importPath !== 'string' ||
+          typeof importName !== 'string' ||
+          !Array.isArray(args)
+        ) {
+          throw new Error('Invalid recipe');
+        }
+
+        try {
+          const guardedImportName = `__${importName}__`;
+
+          recipeImports.add(
+            `import { ${importName} as ${guardedImportName} } from '${importPath}';`,
+          );
+
+          return `${guardedImportName}(...${stringifyExports(
+            recipeImports,
+            args,
+          )})`;
+        } catch (err) {
+          console.error(err);
+
+          throw new Error('Invalid recipe.');
+        }
       }
 
       throw new Error(dedent`
@@ -230,13 +259,15 @@ const serializeVanillaModule = (
     return `import '${request}';`;
   });
 
+  const recipeImports = new Set<string>();
+
   const moduleExports = Object.keys(exports).map((key) =>
     key === 'default'
-      ? `export default ${stringifyExports(exports[key])};`
-      : `export var ${key} = ${stringifyExports(exports[key])};`,
+      ? `export default ${stringifyExports(recipeImports, exports[key])};`
+      : `export var ${key} = ${stringifyExports(recipeImports, exports[key])};`,
   );
 
-  const outputCode = [...cssImports, ...moduleExports];
+  const outputCode = [...cssImports, ...recipeImports, ...moduleExports];
 
   return outputCode.join('\n');
 };

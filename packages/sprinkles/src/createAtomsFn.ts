@@ -32,7 +32,7 @@ type ShorthandProperty = {
   mappings: Array<string>;
 };
 
-type AtomicStyles = {
+export type AtomicStyles = {
   [property: string]:
     | ConditionalWithResponsiveArrayProperty
     | ConditionalProperty
@@ -80,7 +80,7 @@ type AtomProps<Atoms extends AtomicStyles> = {
     : never;
 };
 
-type AtomsFn<Styles extends AtomicStyles> = (
+export type AtomsFn<Styles extends AtomicStyles> = (
   props: AtomProps<Styles>,
 ) => string;
 
