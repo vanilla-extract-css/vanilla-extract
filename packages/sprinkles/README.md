@@ -11,7 +11,7 @@ Basically, it’s like building your own type-safe, zero-runtime version of [Tai
 ```tsx
 export const className = atoms({
   display: 'flex',
-  gap: 'small',
+  paddingX: 'small',
   flexDirection: {
     mobile: 'column',
     desktop: 'row',
@@ -48,7 +48,7 @@ $ yarn add @vanilla-extract/sprinkles
 **Configure atomic styles in a `.css.ts` file.**
 
 ```ts
-// atomicStyles.css.ts
+// atoms.css.ts
 
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
@@ -59,7 +59,7 @@ const space = {
   large: 16,
 };
 
-export const atomicStyles = createAtomicStyles({
+export const createAtomicStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -69,14 +69,11 @@ export const atomicStyles = createAtomicStyles({
   properties: {
     display: ['none', 'block', 'flex'],
     flexDirection: ['row', 'column'],
-    alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
-    justifyContent: ['stretch', 'flex-start', 'center', 'flex-end'],
-    gap: space,
     paddingTop: space,
     paddingBottom: space,
     paddingLeft: space,
     paddingRight: space,
-    // etc.
+    // etc...
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
@@ -91,22 +88,26 @@ export const atomicStyles = createAtomicStyles({
 ```ts
 // atoms.ts
 
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn'
-import { atomicStyles } from './atomicStyles.css.ts';
+import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
+import { createAtomicStyles } from './atoms.css.ts';
 
-export const atoms = createAtomsFn(atomicStyles);
+export const atoms = createAtoms(createAtomicStyles);
 ```
 
-**You can now use your `atoms` function in `.css.ts` files for zero-runtime usage.**
+**🎉 That's it! You’re ready to go.**
+
+## Usage
+
+You can now use your `atoms` function in `.css.ts` files for zero-runtime usage.
 
 ```ts
-// container.css.ts
+// styles.css.ts
 
 import { atoms } from './atoms.ts';
 
 export const container = atoms({
   display: 'flex',
-  gap: 'small',
+  paddingX: 'small',
   flexDirection: {
     mobile: 'column',
     desktop: 'row',
@@ -114,26 +115,39 @@ export const container = atoms({
 });
 ```
 
-**You can even use your `atoms` function at runtime! 🏃‍♂️**
+Atomic styles can be combined with custom styles using vanilla-extract's `composeStyles` function.
 
-```tsx
-// Container.tsx
+```ts
+// styles.css.ts
 
-import React, { ReactNode } from 'react';
+import { style, composeStyles } from '@vanilla-extract/css';
 import { atoms } from './atoms.ts';
 
-export default ({ children }: { children: ReactNode }) => (
-  <div className={atoms({
+export const container = composeStyles(
+  atoms({
     display: 'flex',
-    gap: 'small',
-    flexDirection: {
-      mobile: 'column',
-      desktop: 'row',
-    },
-  })}>
-    {children}
-  </div>
+    paddingX: 'small',
+  }),
+  style({
+    ':hover': {
+      background: 'honeydew'
+    }
+  })
 );
+```
+
+If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
+
+```tsx
+// app.ts
+
+import { atoms } from './atoms.ts';
+
+document.write(`
+  <section class="${atoms({ display: 'flex', flexDirection: 'column' })}">
+    ...
+  </section>
+`);
 ```
 
 ---
