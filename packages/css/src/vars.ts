@@ -72,7 +72,7 @@ export function assignVars<VarContract extends Contract>(
   return varSetters;
 }
 
-export function createThemeVars<ThemeContract extends Contract>(
+export function createThemeContract<ThemeContract extends Contract>(
   themeContract: ThemeContract,
 ): ThemeVars<ThemeContract> {
   return walkObject(themeContract, (_value, path) => {

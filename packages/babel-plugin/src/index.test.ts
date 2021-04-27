@@ -370,25 +370,25 @@ describe('babel plugin', () => {
     const source = `
       import { createGlobalTheme } from '@vanilla-extract/css';
 
-      const themeVars = createGlobalTheme(':root', { foo: 'bar' });
+      const vars = createGlobalTheme(':root', { foo: 'bar' });
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
       import { createGlobalTheme } from '@vanilla-extract/css';
-      const themeVars = createGlobalTheme(':root', {
+      const vars = createGlobalTheme(':root', {
         foo: 'bar'
       });
       endFileScope()"
     `);
   });
 
-  it('should handle createThemeVars', () => {
+  it('should handle createThemeContract', () => {
     const source = `
-      import { createThemeVars } from '@vanilla-extract/css';
+      import { createThemeContract } from '@vanilla-extract/css';
 
-      const themeVars = createThemeVars({
+      const vars = createThemeContract({
         foo: 'bar'
       });
     `;
@@ -396,8 +396,8 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
       setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
-      import { createThemeVars } from '@vanilla-extract/css';
-      const themeVars = createThemeVars({
+      import { createThemeContract } from '@vanilla-extract/css';
+      const vars = createThemeContract({
         foo: 'bar'
       });
       endFileScope()"
