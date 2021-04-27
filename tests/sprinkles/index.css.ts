@@ -68,3 +68,20 @@ export const conditionalStylesWithoutDefaultCondition = createAtomicStyles({
     },
   },
 });
+
+export const conditionalStylesWithoutResponsiveArray = createAtomicStyles({
+  defaultCondition: 'mobile',
+  conditions: {
+    mobile: {},
+    tablet: {},
+    desktop: {
+      '@media': 'screen and (min-width: 786px)',
+    },
+  },
+  properties: {
+    marginTop: spacing,
+  },
+  shorthands: {
+    marginY: ['marginTop'],
+  },
+});

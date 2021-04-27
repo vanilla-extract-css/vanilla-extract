@@ -70,7 +70,7 @@ type AtomProps<Atoms extends AtomicStyles> = {
           Atoms[Atoms[Prop]['mappings'][number]]['values'],
           Atoms[Atoms[Prop]['mappings'][number]]['responsiveArray']
         >
-      : Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
+      : Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalProperty
       ? ConditionalStyle<Atoms[Atoms[Prop]['mappings'][number]]['values']>
       : Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
       ? keyof Atoms[Atoms[Prop]['mappings'][number]]['values']

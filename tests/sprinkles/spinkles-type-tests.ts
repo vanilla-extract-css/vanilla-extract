@@ -8,6 +8,7 @@ import {
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
   conditionalStylesWithoutDefaultCondition,
+  conditionalStylesWithoutResponsiveArray,
 } from './index.css';
 
 () => {
@@ -15,6 +16,7 @@ import {
     ...atomicWithShorthandStyles,
     ...conditionalAtomicStyles,
     ...conditionalStylesWithoutDefaultCondition,
+    ...conditionalStylesWithoutResponsiveArray,
   });
 
   atoms({
@@ -87,5 +89,10 @@ import {
   atoms({
     // @ts-expect-error No default class allowed
     transform: 'shrink',
+  });
+
+  // Valid value - shorthand conditional without responsive array
+  atoms({
+    marginY: { mobile: 'medium' },
   });
 };
