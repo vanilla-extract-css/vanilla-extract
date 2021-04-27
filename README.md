@@ -393,7 +393,7 @@ export const vars = createGlobalTheme(':root', {
 
 Creates a contract for themes to implement.
 
-**This function must be called within a `.css.ts` context, otherwise variable names will be mismatched between themes.**
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between themes.**
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
