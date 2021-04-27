@@ -12,12 +12,12 @@ import {
 } from './index.css';
 
 () => {
-  const atoms = createAtomsFn({
-    ...atomicWithShorthandStyles,
-    ...conditionalAtomicStyles,
-    ...conditionalStylesWithoutDefaultCondition,
-    ...conditionalStylesWithoutResponsiveArray,
-  });
+  const atoms = createAtomsFn(
+    atomicWithShorthandStyles,
+    conditionalAtomicStyles,
+    conditionalStylesWithoutDefaultCondition,
+    conditionalStylesWithoutResponsiveArray,
+  );
 
   atoms({
     // @ts-expect-error Invalid value

@@ -56,7 +56,7 @@ type ConditionalStyleWithResponsiveArray<
   RA extends { length: number }
 > = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
-type AtomProps<Atoms extends AtomicStyles> = {
+type ChildAtomProps<Atoms extends AtomicStyles> = {
   [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalWithResponsiveArrayProperty
     ? ConditionalStyleWithResponsiveArray<
         Atoms[Prop]['values'],
@@ -80,15 +80,23 @@ type AtomProps<Atoms extends AtomicStyles> = {
     : never;
 };
 
-export type AtomsFn<Styles extends AtomicStyles> = (
-  props: AtomProps<Styles>,
+type AtomProps<Args extends ReadonlyArray<any>> = Args extends [
+  infer L,
+  ...infer R
+]
+  ? (L extends AtomicStyles ? ChildAtomProps<L> : never) & AtomProps<R>
+  : {};
+
+export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = (
+  props: AtomProps<Args>,
 ) => string;
 
-export function createAtomsFn<Styles extends AtomicStyles>(
-  input: Styles,
-): AtomsFn<Styles> {
+export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
+  ...args: Args
+): AtomsFn<Args> {
+  const atomicStyles = Object.assign({}, ...args);
+
   return (props: any) => {
-    const atomicStyles = input as any;
     const classNames = [];
     const shorthands: any = {};
     const nonShorthands: any = { ...props };

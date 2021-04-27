@@ -40,10 +40,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle a mix of unconditional and conditional styles', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
@@ -59,10 +59,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
@@ -74,10 +74,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with null values', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
@@ -140,10 +140,10 @@ describe('sprinkles', () => {
     });
 
     it('should merge shorthand styles with non-shorthands', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
@@ -160,10 +160,10 @@ describe('sprinkles', () => {
     });
 
     it('should ignore undefined longhand values when resolving shorthands', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
@@ -176,10 +176,10 @@ describe('sprinkles', () => {
     });
 
     it('should ignore undefined shorthand values when resolving shorthands', () => {
-      const atoms = createAtomsFn({
-        ...atomicWithShorthandStyles,
-        ...conditionalAtomicStyles,
-      });
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
 
       expect(
         atoms({
