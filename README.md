@@ -41,7 +41,7 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 import { createTheme, style } from '@vanilla-extract/css';
 
-export const [themeClass, themeVars] = createTheme({
+export const [themeClass, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -51,8 +51,8 @@ export const [themeClass, themeVars] = createTheme({
 });
 
 export const exampleStyle = style({
-  backgroundColor: themeVars.color.brand,
-  fontFamily: themeVars.font.body,
+  backgroundColor: vars.color.brand,
+  fontFamily: vars.font.body,
   color: 'white',
   padding: 10
 });
@@ -90,7 +90,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [globalStyle](#globalstyle)
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
-  - [createThemeVars](#createthemevars)
+  - [createThemeContract](#createthemecontract)
   - [assignVars](#assignvars)
   - [createVar](#createvar)
   - [fallbackVar](#fallbackvar)
@@ -219,10 +219,12 @@ CSS Variables, simple pseudos, selectors and media/feature queries are all suppo
 
 ```ts
 import { style } from '@vanilla-extract/css';
+import { vars } from './vars.css.ts';
 
 export const className = style({
   display: 'flex',
   vars: {
+    [vars.localVar]: 'green',
     '--global-variable': 'purple'
   },
   ':hover': {
@@ -325,12 +327,14 @@ globalStyle(`${parentClass} > a`, {
 
 ### createTheme
 
-Creates a locally scoped theme class and a collection of scoped CSS Variables.
+Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
 
 ```ts
-import { createTheme, style } from '@vanilla-extract/css';
+// theme.css.ts
 
-export const [themeClass, themeVars] = createTheme({
+import { createTheme } from '@vanilla-extract/css';
+
+export const [themeClass, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -340,12 +344,14 @@ export const [themeClass, themeVars] = createTheme({
 });
 ```
 
-You can create theme variants by passing a collection of theme variables as the first argument to `createTheme`.
+You can create theme variants by passing a theme contract as the first argument to `createTheme`.
 
 ```ts
-import { createTheme, style } from '@vanilla-extract/css';
+// themes.css.ts
 
-export const [themeA, themeVars] = createTheme({
+import { createTheme } from '@vanilla-extract/css';
+
+export const [themeA, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -354,7 +360,7 @@ export const [themeA, themeVars] = createTheme({
   }
 });
 
-export const themeB = createTheme(themeVars, {
+export const themeB = createTheme(vars, {
   color: {
     brand: 'pink'
   },
@@ -371,9 +377,11 @@ export const themeB = createTheme(themeVars, {
 Creates a theme attached to a global selector, but with locally scoped variable names.
 
 ```ts
+// theme.css.ts
+
 import { createGlobalTheme } from '@vanilla-extract/css';
 
-export const themeVars = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(':root', {
   color: {
     brand: 'blue'
   },
@@ -385,19 +393,23 @@ export const themeVars = createGlobalTheme(':root', {
 
 > 💡 All theme variants must provide a value for every variable or it’s a type error.
 
-### createThemeVars
+### createThemeContract
 
-Creates a collection of CSS Variables without coupling them to a specific theme variant.
+Creates a contract for themes to implement.
+
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between themes.**
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
 ```ts
+// themes.css.ts
+
 import {
-  createThemeVars,
+  createThemeContract,
   createTheme
 } from '@vanilla-extract/css';
 
-export const themeVars = createThemeVars({
+export const vars = createThemeContract({
   color: {
     brand: null
   },
@@ -406,7 +418,7 @@ export const themeVars = createThemeVars({
   }
 });
 
-export const themeA = createTheme(themeVars, {
+export const themeA = createTheme(vars, {
   color: {
     brand: 'blue'
   },
@@ -415,7 +427,7 @@ export const themeA = createTheme(themeVars, {
   }
 });
 
-export const themeB = createTheme(themeVars, {
+export const themeB = createTheme(vars, {
   color: {
     brand: 'pink'
   },
@@ -432,9 +444,9 @@ Assigns a collection of CSS Variables anywhere within a style block.
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
 ```ts
-import { style, createThemeVars, assignVars } from '@vanilla-extract/css';
+import { createThemeContract, style, assignVars } from '@vanilla-extract/css';
 
-export const themeVars = createThemeVars({
+export const vars = createThemeContract({
   space: {
     small: null,
     medium: null,
@@ -443,14 +455,14 @@ export const themeVars = createThemeVars({
 });
 
 export const responsiveSpaceTheme = style({
-  vars: assignVars(themeVars.space, {
+  vars: assignVars(vars.space, {
     small: '4px',
     medium: '8px',
     large: '16px'
   }),
   '@media': {
     'screen and (min-width: 1024px)': {
-      vars: assignVars(themeVars.space, {
+      vars: assignVars(vars.space, {
         small: '8px',
         medium: '16px',
         large: '32px'
@@ -617,13 +629,13 @@ $ yarn add --dev @vanilla-extract/dynamic
 
 ### createInlineTheme
 
-Generates a custom theme at runtime as an inline style object.
+Implements a theme contract at runtime as an inline style object.
 
 ```ts
 import { createInlineTheme } from '@vanilla-extract/dynamic';
-import { themeVars, exampleStyle } from './styles.css.ts';
+import { vars, exampleStyle } from './styles.css.ts';
 
-const customTheme = createInlineTheme(themeVars, {
+const customTheme = createInlineTheme(vars, {
   small: '4px',
   medium: '8px',
   large: '16px'
@@ -638,14 +650,14 @@ document.write(`
 
 ### setElementTheme
 
-Sets a collection of CSS Variables on an element.
+Implements a theme contract on an element.
 
 ```ts
 import { setElementTheme } from '@vanilla-extract/dynamic';
-import { themeVars } from './styles.css.ts';
+import { vars } from './styles.css.ts';
 
 const element = document.getElementById('myElement');
-setElementTheme(element, themeVars, {
+setElementTheme(element, vars, {
   small: '4px',
   medium: '8px',
   large: '16px'
@@ -660,10 +672,10 @@ Sets a single var on an element.
 
 ```ts
 import { setElementVar } from '@vanilla-extract/dynamic';
-import { themeVars } from './styles.css.ts';
+import { vars } from './styles.css.ts';
 
 const element = document.getElementById('myElement');
-setElementVar(element, themeVars.color.brand, 'darksalmon');
+setElementVar(element, vars.color.brand, 'darksalmon');
 ```
 
 ## Utility functions

@@ -38,7 +38,7 @@ const styleFunctions = [
   >),
   'globalStyle',
   'createGlobalTheme',
-  'createThemeVars',
+  'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
 ];

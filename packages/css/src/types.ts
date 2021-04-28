@@ -1,9 +1,20 @@
 import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
-import type { PropertiesFallback, AtRule } from 'csstype';
+import type { PropertiesFallback, AtRule, Properties } from 'csstype';
 
 import type { SimplePseudos } from './transformCss';
 
-type BasicCSSProperties = PropertiesFallback<string | number>;
+export type CSSVarFunction =
+  | `var(--${string})`
+  | `var(--${string}, ${string | number})`;
+
+type CSSTypeProperties = PropertiesFallback<string | number>;
+
+type BasicCSSProperties = {
+  [Property in keyof CSSTypeProperties]:
+    | CSSTypeProperties[Property]
+    | CSSVarFunction
+    | Array<CSSVarFunction | Properties[Property]>;
+};
 
 export interface CSSKeyframes {
   [time: string]: BasicCSSProperties;
@@ -99,5 +110,5 @@ export type Tokens = {
 
 export type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
   ThemeContract,
-  string
+  CSSVarFunction
 >;

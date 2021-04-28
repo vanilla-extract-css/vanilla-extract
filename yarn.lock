@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
   languageName: unknown
   linkType: soft
 
@@ -1589,7 +1589,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
     "@vanilla-extract/dynamic": 0.1.0
   languageName: unknown
   linkType: soft
@@ -1598,7 +1598,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 0.3.1
+    "@vanilla-extract/css": 0.3.2
   languageName: unknown
   linkType: soft
 
@@ -2694,7 +2694,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@*, @vanilla-extract/css@0.3.1, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@0.3.2, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
@@ -2708,6 +2708,20 @@ __metadata:
     dedent: ^0.7.0
   languageName: unknown
   linkType: soft
+
+"@vanilla-extract/css@npm:0.3.1":
+  version: 0.3.1
+  resolution: "@vanilla-extract/css@npm:0.3.1"
+  dependencies:
+    "@emotion/hash": ^0.8.0
+    "@vanilla-extract/private": ^0.1.1
+    css-selector-parser: ^1.4.1
+    cssesc: ^3.0.0
+    csstype: ^3.0.7
+    dedent: ^0.7.0
+  checksum: ad7e1c827a855ba67fec96ebf26e8105a09398938537f338e7eaab5fbd83ee7ec2ac35f8de86db262b615505a25b371208cf43ee9929bc02687f1df04f1326ba
+  languageName: node
+  linkType: hard
 
 "@vanilla-extract/dynamic@0.1.0, @vanilla-extract/dynamic@workspace:packages/dynamic":
   version: 0.0.0-use.local
