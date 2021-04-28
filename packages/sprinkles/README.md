@@ -1,4 +1,4 @@
-# 🍦 sprinkles
+# 🍨 Sprinkles
 
 **Zero-runtime atomic CSS framework in TypeScript.**
 
@@ -35,7 +35,7 @@ export const className = atoms({
 
 💪 &nbsp; Type-safe functional API for accessing atoms.
 
-🏃‍♂️ &nbsp; Compose atoms in `.css.ts` files — or compose them dynamically at runtime!
+🏃‍♂️ &nbsp; Compose atoms in `.css.ts` files, or dynamically at runtime!
 
 ---
 
@@ -129,6 +129,8 @@ export const container = composeStyles(
 
 If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
 
+> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. All styles are still generated at build time.
+
 ```tsx
 // app.ts
 
@@ -166,7 +168,7 @@ Configures your utility classes.
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
 export const atomicStyles = createAtomicStyles({
-  // etc...
+  // ...
 });
 ```
 
