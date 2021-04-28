@@ -197,6 +197,10 @@ require('esbuild').build({
 
 To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-vanilla-extract](https://github.com/KyleAMathews/gatsby-plugin-vanilla-extract) plugin.
 
+### Vite
+
+For [Vite](https://github.com/vitejs/vite) projects, use the [vite-vanilla-extract](https://github.com/fnky/vite-vanilla-extract) plugin.
+
 ---
 
 ## API
