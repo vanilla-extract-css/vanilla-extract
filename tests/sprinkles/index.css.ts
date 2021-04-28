@@ -19,20 +19,6 @@ export const atomicStyles = createAtomicStyles({
   },
 });
 
-export const atomicWithPaddingShorthandStyles = createAtomicStyles({
-  properties: {
-    paddingLeft: spacing,
-    paddingRight: spacing,
-    paddingTop: spacing,
-    paddingBottom: spacing,
-  },
-  shorthands: {
-    padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
-    paddingX: ['paddingLeft', 'paddingRight'],
-    paddingY: ['paddingTop', 'paddingBottom'],
-  },
-});
-
 export const atomicWithShorthandStyles = createAtomicStyles({
   properties: {
     color: {
@@ -97,5 +83,19 @@ export const conditionalStylesWithoutResponsiveArray = createAtomicStyles({
   },
   shorthands: {
     marginY: ['marginTop'],
+  },
+});
+
+export const atomicWithPaddingShorthandStyles = createAtomicStyles({
+  properties: {
+    paddingLeft: spacing,
+    paddingRight: spacing,
+    paddingTop: spacing,
+    paddingBottom: spacing,
+  },
+  shorthands: {
+    padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
+    paddingX: ['paddingLeft', 'paddingRight'],
+    paddingY: ['paddingTop', 'paddingBottom'],
   },
 });

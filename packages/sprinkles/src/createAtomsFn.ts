@@ -95,6 +95,9 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...args: Args
 ): AtomsFn<Args> {
   const atomicStyles = Object.assign({}, ...args);
+  const shorthandNames = Object.keys(atomicStyles).filter(
+    (property) => 'mappings' in atomicStyles[property],
+  );
 
   return (props: any) => {
     const classNames = [];
@@ -102,14 +105,13 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
     const nonShorthands: any = { ...props };
     let hasShorthands = false;
 
-    for (const prop in props) {
-      const propValue = props[prop];
-      const atomicProperty = atomicStyles[prop];
-      if (typeof propValue !== 'undefined' && atomicProperty.mappings) {
-        // Found a shorthand property
+    for (const shorthand of shorthandNames) {
+      const value = props[shorthand];
+      if (value) {
+        const atomicProperty = atomicStyles[shorthand];
         hasShorthands = true;
         for (const propMapping of atomicProperty.mappings) {
-          shorthands[propMapping] = propValue;
+          shorthands[propMapping] = value;
           if (!nonShorthands[propMapping]) {
             delete nonShorthands[propMapping];
           }
