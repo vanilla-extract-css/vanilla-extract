@@ -1,12 +1,12 @@
 # 🍨 Sprinkles
 
-**Zero-runtime atomic CSS framework in TypeScript.**
+**Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)**
 
-Configure a custom set of responsive utility classes, then compose them via a functional TypeScript API — but without the usual runtime overhead of CSS-in-JS, thanks to [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
+Configure a custom set of responsive utility classes, then compose them via a functional TypeScript API — without the usual runtime overhead of CSS-in-JS.
 
 Basically, it’s like building your own type-safe, zero-runtime version of [Tailwind](https://tailwindcss.com), [Styled System](https://styled-system.com), etc.
 
-> 💡 All of these properties, values and breakpoints are configurable!
+> 💡 All of these properties, values and conditions are configurable!
 
 ```tsx
 export const className = atoms({
@@ -17,8 +17,8 @@ export const className = atoms({
     desktop: 'row'
   },
   background: {
-    light: 'blue50',
-    dark: 'gray700'
+    lightMode: 'blue50',
+    darkMode: 'gray700'
   }
 });
 ```
@@ -37,9 +37,11 @@ export const className = atoms({
 
 🖥 &nbsp; Conditional atoms to target media/feature queries and selectors.
 
+✨ &nbsp; Support for scoping of conditions to individual properties.
+
 💪 &nbsp; Type-safe functional API for accessing atoms.
 
-🏃‍♂️ &nbsp; Compose atoms in `.css.ts` files, or dynamically at runtime!
+🏃‍♂️ &nbsp; Compose atoms statically in `.css.ts` files, or dynamically at runtime!
 
 ---
 
@@ -49,11 +51,10 @@ export const className = atoms({
 $ yarn add @vanilla-extract/sprinkles
 ```
 
-**Create and export your atoms function in a `.css.ts` file.**
+**Create an `atoms.css.ts` file, then configure and export your `atoms` function.**
 
 ```ts
 // atoms.css.ts
-
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const space = {
@@ -95,8 +96,8 @@ const layoutStyles = createAtomicStyles({
 
 const colorStyles = createAtomicStyles({
   conditions: {
-    light: {},
-    dark: { '@media': '(prefers-color-scheme: dark)' }
+    lightMode: {},
+    darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   properties: {
@@ -117,7 +118,6 @@ You can now use your `atoms` function in `.css.ts` files for zero-runtime usage.
 
 ```ts
 // styles.css.ts
-
 import { atoms } from './atoms.css.ts';
 
 export const container = atoms({
@@ -128,17 +128,16 @@ export const container = atoms({
     desktop: 'row',
   },
   background: {
-    light: 'blue50',
-    dark: 'gray700',
+    lightMode: 'blue50',
+    darkMode: 'gray700',
   }
 });
 ```
 
-Atomic styles can be combined with custom styles using vanilla-extract's `composeStyles` function.
+Combine with any custom styles using vanilla-extract's `composeStyles` function.
 
 ```ts
 // styles.css.ts
-
 import { style, composeStyles } from '@vanilla-extract/css';
 import { atoms } from './atoms.css.ts';
 
@@ -146,10 +145,6 @@ export const container = composeStyles(
   atoms({
     display: 'flex',
     paddingX: 'small',
-    background: {
-      light: 'blue50',
-      dark: 'gray700',
-    },
   })
   style({
     ':hover': {
@@ -161,11 +156,8 @@ export const container = composeStyles(
 
 If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
 
-> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. All styles are still generated at build time.
-
 ```tsx
 // app.ts
-
 import { atoms } from './atoms.css.ts';
 
 document.write(`
@@ -174,6 +166,8 @@ document.write(`
   </section>
 `);
 ```
+
+> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
 
 ---
 
@@ -195,14 +189,6 @@ document.write(`
 ### createAtomicStyles
 
 Configures your utility classes.
-
-```ts
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
-
-const layoutStyles = createAtomicStyles({
-  // etc.
-});
-```
 
 If you need to scope different [conditions](#conditions) to different properties, you can provide multiple sets of atomic styles to `createAtomsFn`.
 
@@ -242,8 +228,8 @@ const layoutStyles = createAtomicStyles({
 
 const colorStyles = createAtomicStyles({
   conditions: {
-    light: {},
-    dark: { '@media': '(prefers-color-scheme: dark)' }
+    lightMode: {},
+    darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   properties: {
@@ -299,7 +285,7 @@ const layoutStyles = createAtomicStyles({
 });
 ```
 
-For themed atoms, [vanilla-extract themes](https://github.com/seek-oss/vanilla-extract#createtheme) can be used as values.
+You can also use [vanilla-extract themes](https://github.com/seek-oss/vanilla-extract#createtheme) to configure themed atoms.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -317,7 +303,7 @@ const layoutStyles = createAtomicStyles({
 
 Maps custom shorthand properties to multiple underlying CSS properties. This is useful for mapping values like `padding`/`paddingX`/`paddingY` to their underlying longhand values.
 
-**Note that shorthands are evaluated in the order that they were defined in your config.** Shorthands with lower specificity should be higher in the list, e.g. `padding` should come before `paddingX`/`paddingY`.
+**Note that shorthands are evaluated in the order that they were defined in your config.** Shorthands that are less specific should be higher in the list, e.g. `padding` should come before `paddingX`/`paddingY`.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -399,8 +385,8 @@ import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
 const layoutStyles = createAtomicStyles({
   conditions: {
-    light: { '@media': '(prefers-color-scheme: light)' },
-    dark: { '@media': '(prefers-color-scheme: dark)' }
+    lightMode: { '@media': '(prefers-color-scheme: light)' },
+    darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   // etc.

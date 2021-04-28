@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract/sprinkles",
   "version": "0.1.0",
-  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
   "module": "dist/vanilla-extract-sprinkles.esm.js",
