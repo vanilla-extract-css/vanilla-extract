@@ -50,7 +50,7 @@ $ yarn add @vanilla-extract/sprinkles
 ```ts
 // atoms.css.ts
 
-import { createAtoms } from '@vanilla-extract/sprinkles';
+import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const space = {
   none: 0,
@@ -59,7 +59,7 @@ const space = {
   large: 16,
 };
 
-export const atoms = createAtoms({
+const styles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -81,6 +81,8 @@ export const atoms = createAtoms({
     paddingY: ['paddingTop', 'paddingBottom'],
   }
 });
+
+export const atoms = createAtomsFn(styles);
 ```
 
 **🎉 That's it! You’re ready to go.**
@@ -168,16 +170,23 @@ export const atomicStyles = createAtomicStyles({
 });
 ```
 
-If you need to scope different [conditions](#conditions) to different properties, you can spread multiple sets of atomic styles into a single object.
+If you need to scope different [conditions](#conditions) to different properties, you can provide multiple sets of atomic styles to `createAtomsFn`.
 
 ```ts
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = {
-  ...createAtomicStyles({ /* ... */ }),
-  ...createAtomicStyles({ /* ... */ }),
-  ...createAtomicStyles({ /* ... */ }),
-};
+const layoutStyles = createAtomicStyles({
+  // ...
+});
+
+const colorStyles = createAtomicStyles({
+  // ...
+});
+
+export const atoms = createAtomsFn(
+  layoutStyles,
+  colorStyles
+);
 ```
 
 #### `properties`
@@ -347,17 +356,23 @@ export const atomicStyles = createAtomicStyles({
 
 ### createAtomsFn
 
-Turns your atomic styles object into a type-safe function for accessing atoms.
-
-> 💡 This should be exported from a regular `.ts` file since `.css.ts` files can only export static data.
+Turns your atomic styles object into a type-safe function for accessing atoms. Multiple sets of atomic styles can be combined into a single function.
 
 ```ts
-// atoms.ts
+import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn'
-import { atomicStyles } from './atomicStyles.css.ts';
+const layoutStyles = createAtomicStyles({
+  // ...
+});
 
-export const atoms = createAtomsFn(atomicStyles);
+const colorStyles = createAtomicStyles({
+  // ...
+});
+
+export const atoms = createAtomsFn(
+  layoutStyles,
+  colorStyles
+);
 ```
 
 ---
