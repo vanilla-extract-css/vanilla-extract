@@ -3,7 +3,7 @@ import type { ThemeVars, Tokens } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
-import { assignVars, createThemeVars } from './vars';
+import { createThemeContract, assignVars } from './vars';
 
 export function createGlobalTheme<ThemeTokens extends Tokens>(
   selector: string,
@@ -22,7 +22,7 @@ export function createGlobalTheme(
   const shouldCreateVars = Boolean(!arg3);
 
   const themeVars = shouldCreateVars
-    ? createThemeVars(arg2)
+    ? createThemeContract(arg2)
     : (arg2 as ThemeVars<any>);
 
   const tokens = shouldCreateVars ? arg2 : arg3;
