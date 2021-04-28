@@ -2,13 +2,17 @@
 
 **Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)**
 
-Configure a custom set of responsive utility classes, then compose them via a functional TypeScript API — without the usual runtime overhead of CSS-in-JS.
+Configure a custom set of utility classes, then compose them — either statically at build time, or dynamically at runtime — via a functional TypeScript API. All this without the usual style generation overhead of CSS-in-JS.
 
-Basically, it’s like building your own type-safe, zero-runtime version of [Tailwind](https://tailwindcss.com), [Styled System](https://styled-system.com), etc.
+Basically, it’s like building your own zero-runtime, type-safe version of [Tailwind](https://tailwindcss.com), [Styled System](https://styled-system.com), etc.
 
-> 💡 All of these properties, values and conditions are configurable!
+---
 
-```tsx
+**Compose atoms statically at build time.**
+
+```ts
+// styles.css.ts
+
 export const className = atoms({
   display: 'flex',
   paddingX: 'small',
@@ -23,6 +27,22 @@ export const className = atoms({
 });
 ```
 
+**Or compose them dynamically at runtime! 🏃‍♂️**
+
+```ts
+// app.ts
+
+import { atoms } from './atoms.css.ts';
+
+const flexDirection = Math.random() > 0.5 ? 'column' : 'row';
+
+document.write(`
+  <section class="${atoms({ display: 'flex', flexDirection })}">
+    ...
+  </section>
+`);
+```
+
 ---
 
 **🚧 &nbsp; Please note, this is an alpha release.**
@@ -33,15 +53,17 @@ export const className = atoms({
 
 🛠 &nbsp; Create your own custom set of atomic classes with declarative config.
 
+💪 &nbsp; Type-safe functional API for accessing atoms.
+
+🏃‍♂️ &nbsp; Compose atoms statically in `.css.ts` files, or dynamically at runtime (<0.5KB Gzip)
+
 🎨 &nbsp; Generate theme-based scales with CSS Variables using [vanilla-extract themes.](https://github.com/seek-oss/vanilla-extract#createtheme)
+
+✍️ &nbsp; Configure shorthands for common property combinations, e.g. `paddingX` / `paddingY`.
 
 🖥 &nbsp; Conditional atoms to target media/feature queries and selectors.
 
-✨ &nbsp; Support for scoping of conditions to individual properties.
-
-💪 &nbsp; Type-safe functional API for accessing atoms.
-
-🏃‍♂️ &nbsp; Compose atoms statically in `.css.ts` files, or dynamically at runtime!
+✨ &nbsp; Scope conditions to individual properties.
 
 ---
 
