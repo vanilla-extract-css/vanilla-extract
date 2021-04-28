@@ -31,7 +31,7 @@ export const className = atoms({
 
 🔥 &nbsp; Zero-runtime CSS-in-TypeScript with all styles generated at build time via [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
 
-🛠 &nbsp; Create your own custom set of atomic classes with a single declarative config.
+🛠 &nbsp; Create your own custom set of atomic classes with declarative config.
 
 🎨 &nbsp; Generate theme-based scales with CSS Variables using [vanilla-extract themes.](https://github.com/seek-oss/vanilla-extract#createtheme)
 
@@ -47,11 +47,17 @@ export const className = atoms({
 
 ## Setup
 
+> 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
+
+Install Sprinkles.
+
 ```bash
-$ yarn add @vanilla-extract/sprinkles
+$ npm install @vanilla-extract/sprinkles
 ```
 
-**Create an `atoms.css.ts` file, then configure and export your `atoms` function.**
+Create an `atoms.css.ts` file, then configure and export your `atoms` function.
+
+> 💡 This is just an example! Feel free to customise properties, values and conditions to match your requirements.
 
 ```ts
 // atoms.css.ts
@@ -64,7 +70,7 @@ const space = {
   large: 16
 };
 
-const palette = {
+const colors = {
   blue50: '#eff6ff',
   blue100: '#dbeafe',
   blue200: '#bfdbfe',
@@ -96,13 +102,13 @@ const layoutStyles = createAtomicStyles({
 
 const colorStyles = createAtomicStyles({
   conditions: {
-    lightMode: {},
+    lightMode: { '@media': '(prefers-color-scheme: light)' },
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   properties: {
-    color: palette,
-    background: palette
+    color: colors,
+    background: colors
   },
   // etc.
 });
@@ -110,7 +116,7 @@ const colorStyles = createAtomicStyles({
 export const atoms = createAtomsFn(layoutStyles, colorStyles);
 ```
 
-**🎉 That's it! You’re ready to go.**
+**🎉 That's it — you’re ready to go!**
 
 ## Usage
 
@@ -134,7 +140,7 @@ export const container = atoms({
 });
 ```
 
-Combine with any custom styles using vanilla-extract's `composeStyles` function.
+Combine with any custom styles using vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function.
 
 ```ts
 // styles.css.ts
@@ -144,7 +150,7 @@ import { atoms } from './atoms.css.ts';
 export const container = composeStyles(
   atoms({
     display: 'flex',
-    paddingX: 'small',
+    paddingX: 'small'
   })
   style({
     ':hover': {
@@ -160,8 +166,10 @@ If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
 // app.ts
 import { atoms } from './atoms.css.ts';
 
+const flexDirection = Math.random() > 0.5 ? 'column' : 'row';
+
 document.write(`
-  <section class="${atoms({ display: 'flex', flexDirection: 'column' })}">
+  <section class="${atoms({ display: 'flex', flexDirection })}">
     ...
   </section>
 `);
@@ -188,11 +196,9 @@ document.write(`
 
 ### createAtomicStyles
 
-Configures your utility classes.
+Configures a collection of utility classes with [properties](#properties), [conditions](#conditions) and [shorthands.](#shorthandfs)
 
-If you need to scope different [conditions](#conditions) to different properties, you can provide multiple sets of atomic styles to `createAtomsFn`.
-
-For example, you might want color properties to support light mode and dark mode variants.
+If you need to scope different conditions to different properties (e.g. some properties support breakpoints, some support light mode and dark mode, some are unconditional), you can provide as many collections of atomic styles to [`createAtomsFn`](#createatomsfn) as you like.
 
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
@@ -204,7 +210,7 @@ const space = {
   large: 16
 };
 
-const palette = {
+const colors = {
   blue50: '#eff6ff',
   blue100: '#dbeafe',
   blue200: '#bfdbfe',
@@ -228,13 +234,13 @@ const layoutStyles = createAtomicStyles({
 
 const colorStyles = createAtomicStyles({
   conditions: {
-    lightMode: {},
+    lightMode: { '@media': '(prefers-color-scheme: light)' },
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   properties: {
-    color: palette,
-    background: palette
+    color: colors,
+    background: colors
   },
   // etc.
 });
@@ -267,7 +273,7 @@ const layoutStyles = createAtomicStyles({
 });
 ```
 
-For semantic mappings (e.g. space scales, color palettes), values can be provided as an object.
+For semantic mappings (e.g. space scales, color colorss), values can be provided as an object.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -289,11 +295,11 @@ You can also use [vanilla-extract themes](https://github.com/seek-oss/vanilla-ex
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
-import { themeVars } from './themeVars.css.ts';
+import { vars } from './vars.css.ts';
 
 const layoutStyles = createAtomicStyles({
   properties: {
-    gap: themeVars.space,
+    gap: vars.space,
     // etc.
   }
 });
@@ -307,14 +313,14 @@ Maps custom shorthand properties to multiple underlying CSS properties. This is 
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
-import { themeVars } from './themeVars.css.ts';
+import { vars } from './vars.css.ts';
 
 const layoutStyles = createAtomicStyles({
   properties: {
-    paddingTop: themeVars.space,
-    paddingBottom: themeVars.space,
-    paddingLeft: themeVars.space,
-    paddingRight: themeVars.space
+    paddingTop: vars.space,
+    paddingBottom: vars.space,
+    paddingLeft: vars.space,
+    paddingRight: vars.space
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
@@ -347,7 +353,7 @@ Classes can also be scoped to selectors.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const styles = createAtomicStyles({
   conditions: {
     default: {},
     hover: { selector: '&:hover' },
@@ -360,9 +366,9 @@ const layoutStyles = createAtomicStyles({
 
 #### `defaultCondition`
 
-Defines which condition should be used when a non-conditional value is requested, e.g. the condition that `atoms({ display: 'flex' })` resolve to
+Defines which condition should be used when a non-conditional value is requested, e.g. `atoms({ display: 'flex' })`.
 
-> 💡 When using mobile-first responsive conditions, this should your lowest breakpoint.
+> 💡 When using mobile-first responsive conditions, this should be your lowest breakpoint.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -378,7 +384,9 @@ const layoutStyles = createAtomicStyles({
 });
 ```
 
-You can also set `defaultCondition` to `false` to enforce that all values should be explicitly bound to a condition.
+You can also set `defaultCondition` to `false`. This forces you to be explicit about which conditions you’re targeting.
+
+> 💡 This is useful when your conditions are mutually exclusive.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -414,7 +422,7 @@ const layoutStyles = createAtomicStyles({
 
 ### createAtomsFn
 
-Turns your atomic styles into a type-safe function for accessing atoms.
+Turns your [atomic styles](#createatomicstyles) into a type-safe function for accessing atoms. You can provide as many atomic style collections as you like.
 
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
@@ -427,9 +435,14 @@ const colorStyles = createAtomicStyles({
   // etc.
 });
 
+const typographyStyles = createAtomicStyles({
+  // etc.
+});
+
 export const atoms = createAtomsFn(
   layoutStyles,
-  colorStyles
+  colorStyles,
+  typographyStyles
 );
 ```
 
