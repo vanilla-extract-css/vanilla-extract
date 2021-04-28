@@ -1581,7 +1581,7 @@ __metadata:
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
     "@vanilla-extract/css": 0.4.0
-    "@vanilla-extract/sprinkles": 1.0.0
+    "@vanilla-extract/sprinkles": 0.1.0
   languageName: unknown
   linkType: soft
 
@@ -2741,7 +2741,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/sprinkles@1.0.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+"@vanilla-extract/sprinkles@0.1.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
   dependencies:
