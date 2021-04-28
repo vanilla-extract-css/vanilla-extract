@@ -1,5 +1,31 @@
 # @vanilla-extract/babel-plugin
 
+## 0.4.0
+
+### Minor Changes
+
+- [#52](https://github.com/seek-oss/vanilla-extract/pull/52) [`2d98bcc`](https://github.com/seek-oss/vanilla-extract/commit/2d98bccb40603585cf9eab70ff0afc52c33f803d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Rename `createThemeVars` to `createThemeContract`
+
+  **BREAKING CHANGE**
+
+  ```diff
+  import {
+  -  createThemeVars,
+  +  createThemeContract,
+    createTheme
+  } from '@vanilla-extract/css';
+
+  -export const vars = createThemeVars({
+  +export const vars = createThemeContract({
+    color: {
+      brand: null
+    },
+    font: {
+      body: null
+    }
+  });
+  ```
+
 ## 0.3.1
 
 ### Patch Changes
