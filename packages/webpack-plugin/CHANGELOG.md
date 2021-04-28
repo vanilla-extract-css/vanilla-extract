@@ -1,5 +1,16 @@
 # @vanilla-extract/webpack-plugin
 
+## 0.3.0
+
+### Minor Changes
+
+- [#53](https://github.com/seek-oss/vanilla-extract/pull/53) [`58e4f8a`](https://github.com/seek-oss/vanilla-extract/commit/58e4f8aa6a2c56c5f26408539756529705a598b8) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Support exporting functions from `.css.ts` files via recipes
+
+### Patch Changes
+
+- Updated dependencies [[`48c4a78`](https://github.com/seek-oss/vanilla-extract/commit/48c4a7866a8361de712b89b06abb380bf4709656), [`2d98bcc`](https://github.com/seek-oss/vanilla-extract/commit/2d98bccb40603585cf9eab70ff0afc52c33f803d)]:
+  - @vanilla-extract/css@0.4.0
+
 ## 0.2.1
 
 ### Patch Changes

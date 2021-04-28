@@ -1,5 +1,35 @@
 # @vanilla-extract/css
 
+## 0.4.0
+
+### Minor Changes
+
+- [#52](https://github.com/seek-oss/vanilla-extract/pull/52) [`2d98bcc`](https://github.com/seek-oss/vanilla-extract/commit/2d98bccb40603585cf9eab70ff0afc52c33f803d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Rename `createThemeVars` to `createThemeContract`
+
+  **BREAKING CHANGE**
+
+  ```diff
+  import {
+  -  createThemeVars,
+  +  createThemeContract,
+    createTheme
+  } from '@vanilla-extract/css';
+
+  -export const vars = createThemeVars({
+  +export const vars = createThemeContract({
+    color: {
+      brand: null
+    },
+    font: {
+      body: null
+    }
+  });
+  ```
+
+### Patch Changes
+
+- [#50](https://github.com/seek-oss/vanilla-extract/pull/50) [`48c4a78`](https://github.com/seek-oss/vanilla-extract/commit/48c4a7866a8361de712b89b06abb380bf4709656) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow vars to be passed as values to all style properties
+
 ## 0.3.2
 
 ### Patch Changes

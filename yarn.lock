@@ -1572,7 +1572,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 0.3.2
+    "@vanilla-extract/css": 0.4.0
   languageName: unknown
   linkType: soft
 
@@ -1580,7 +1580,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
-    "@vanilla-extract/css": 0.3.2
+    "@vanilla-extract/css": 0.4.0
     "@vanilla-extract/sprinkles": 0.1.0
   languageName: unknown
   linkType: soft
@@ -1589,7 +1589,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 0.3.2
+    "@vanilla-extract/css": 0.4.0
     "@vanilla-extract/dynamic": 0.1.0
   languageName: unknown
   linkType: soft
@@ -1598,7 +1598,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 0.3.2
+    "@vanilla-extract/css": 0.4.0
   languageName: unknown
   linkType: soft
 
@@ -2694,7 +2694,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@*, @vanilla-extract/css@0.3.2, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@0.4.0, @vanilla-extract/css@^0.4.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
@@ -2722,7 +2722,7 @@ __metadata:
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
     "@types/dedent": ^0.7.0
-    "@vanilla-extract/css": ^0.3.0
+    "@vanilla-extract/css": ^0.4.0
     chalk: ^4.1.0
     dedent: ^0.7.0
     esbuild: ^0.11.1
@@ -2758,7 +2758,7 @@ __metadata:
     "@types/debug": ^4.1.5
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
-    "@vanilla-extract/css": ^0.3.0
+    "@vanilla-extract/css": ^0.4.0
     chalk: ^4.1.0
     debug: ^4.3.1
     dedent: ^0.7.0
