@@ -14,8 +14,12 @@ export const className = atoms({
   paddingX: 'small',
   flexDirection: {
     mobile: 'column',
-    desktop: 'row',
+    desktop: 'row'
   },
+  background: {
+    light: 'blue50',
+    dark: 'gray700'
+  }
 });
 ```
 
@@ -56,14 +60,21 @@ const space = {
   none: 0,
   small: 4,
   medium: 8,
-  large: 16,
+  large: 16
 };
 
-const styles = createAtomicStyles({
+const palette = {
+  blue50: '#eff6ff',
+  blue100: '#dbeafe',
+  blue200: '#bfdbfe',
+  // etc.
+};
+
+const layoutStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' }
   },
   defaultCondition: 'mobile',
   properties: {
@@ -78,11 +89,24 @@ const styles = createAtomicStyles({
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
     paddingX: ['paddingLeft', 'paddingRight'],
-    paddingY: ['paddingTop', 'paddingBottom'],
+    paddingY: ['paddingTop', 'paddingBottom']
   }
 });
 
-export const atoms = createAtomsFn(styles);
+const colorStyles = createAtomicStyles({
+  conditions: {
+    light: {},
+    dark: { '@media': '(prefers-color-scheme: dark)' }
+  },
+  defaultCondition: false,
+  properties: {
+    color: palette,
+    background: palette
+  },
+  // etc.
+});
+
+export const atoms = createAtomsFn(layoutStyles, colorStyles);
 ```
 
 **🎉 That's it! You’re ready to go.**
@@ -103,6 +127,10 @@ export const container = atoms({
     mobile: 'column',
     desktop: 'row',
   },
+  background: {
+    light: 'blue50',
+    dark: 'gray700',
+  }
 });
 ```
 
@@ -118,10 +146,14 @@ export const container = composeStyles(
   atoms({
     display: 'flex',
     paddingX: 'small',
-  }),
+    background: {
+      light: 'blue50',
+      dark: 'gray700',
+    },
+  })
   style({
     ':hover': {
-      background: 'honeydew'
+      outline: '2px solid currentColor'
     }
   })
 );
@@ -167,22 +199,58 @@ Configures your utility classes.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
-  // ...
+const layoutStyles = createAtomicStyles({
+  // etc.
 });
 ```
 
 If you need to scope different [conditions](#conditions) to different properties, you can provide multiple sets of atomic styles to `createAtomsFn`.
 
+For example, you might want color properties to support light mode and dark mode variants.
+
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
+const space = {
+  none: 0,
+  small: 4,
+  medium: 8,
+  large: 16
+};
+
+const palette = {
+  blue50: '#eff6ff',
+  blue100: '#dbeafe',
+  blue200: '#bfdbfe',
+  // etc.
+};
+
 const layoutStyles = createAtomicStyles({
-  // ...
+  conditions: {
+    mobile: {},
+    tablet: { '@media': 'screen and (min-width: 768px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' },
+  },
+  defaultCondition: 'mobile',
+  properties: {
+    display: ['none', 'block', 'flex'],
+    flexDirection: ['row', 'column'],
+    padding: space,
+    // etc.
+  }
 });
 
 const colorStyles = createAtomicStyles({
-  // ...
+  conditions: {
+    light: {},
+    dark: { '@media': '(prefers-color-scheme: dark)' }
+  },
+  defaultCondition: false,
+  properties: {
+    color: palette,
+    background: palette
+  },
+  // etc.
 });
 
 export const atoms = createAtomsFn(
@@ -190,6 +258,8 @@ export const atoms = createAtomsFn(
   colorStyles
 );
 ```
+
+> 💡 If you want a good color palette to work with, you might want to consider importing [`tailwindcss/colors.`](https://tailwindcss.com/docs/customizing-colors#color-palette-reference)
 
 #### `properties`
 
@@ -200,7 +270,7 @@ For simple mappings (i.e. valid CSS values), values can be provided as an array.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   properties: {
     display: ['none', 'block', 'flex'],
     flexDirection: ['row', 'column'],
@@ -216,13 +286,13 @@ For semantic mappings (e.g. space scales, color palettes), values can be provide
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   properties: {
     gap: {
       none: 0,
       small: 4,
       medium: 8,
-      large: 16,
+      large: 16
     },
     // etc.
   }
@@ -235,7 +305,7 @@ For themed atoms, [vanilla-extract themes](https://github.com/seek-oss/vanilla-e
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { themeVars } from './themeVars.css.ts';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   properties: {
     gap: themeVars.space,
     // etc.
@@ -253,17 +323,17 @@ Maps custom shorthand properties to multiple underlying CSS properties. This is 
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { themeVars } from './themeVars.css.ts';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   properties: {
     paddingTop: themeVars.space,
     paddingBottom: themeVars.space,
     paddingLeft: themeVars.space,
-    paddingRight: themeVars.space,
+    paddingRight: themeVars.space
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
     paddingX: ['paddingLeft', 'paddingRight'],
-    paddingY: ['paddingTop', 'paddingBottom'],
+    paddingY: ['paddingTop', 'paddingBottom']
   }
 });
 ```
@@ -275,11 +345,11 @@ Allows you to create atomic classes for a set of media/feature queries.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' }
   },
   defaultCondition: 'mobile',
   // etc.
@@ -291,11 +361,11 @@ Classes can also be scoped to selectors.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   conditions: {
     default: {},
     hover: { selector: '&:hover' },
-    focus: { selector: '&:focus' },
+    focus: { selector: '&:focus' }
   },
   defaultCondition: 'default',
   // etc.
@@ -311,26 +381,26 @@ Defines which condition should be used when a non-conditional value is requested
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' }
   },
   defaultCondition: 'mobile',
   // etc.
 });
 ```
 
-You can set `defaultCondition` to `false` to enforce that values should explicitly provide values for every condition.
+You can also set `defaultCondition` to `false` to enforce that all values should be explicitly bound to a condition.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   conditions: {
     light: { '@media': '(prefers-color-scheme: light)' },
-    dark: { '@media': '(prefers-color-scheme: dark)' },
+    dark: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
   // etc.
@@ -344,11 +414,11 @@ Optionally enables responsive array notation (e.g. `['column', 'row']`) by defin
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-export const atomicStyles = createAtomicStyles({
+const layoutStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' }
   },
   defaultCondition: 'mobile',
   responsiveArray: ['mobile', 'tablet', 'desktop'],
@@ -358,17 +428,17 @@ export const atomicStyles = createAtomicStyles({
 
 ### createAtomsFn
 
-Turns your atomic styles object into a type-safe function for accessing atoms. Multiple sets of atomic styles can be combined into a single function.
+Turns your atomic styles into a type-safe function for accessing atoms.
 
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const layoutStyles = createAtomicStyles({
-  // ...
+  // etc.
 });
 
 const colorStyles = createAtomicStyles({
-  // ...
+  // etc.
 });
 
 export const atoms = createAtomsFn(
