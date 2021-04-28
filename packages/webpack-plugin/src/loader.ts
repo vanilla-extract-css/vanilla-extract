@@ -13,6 +13,10 @@ import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import VanillaExtractError from './VanillaExtractError';
 import { ChildCompiler } from './compiler';
+import crypto from 'crypto';
+
+const hash = (value: string) =>
+  crypto.createHash('md5').update(value).digest('hex');
 
 const stringifyLoaderRequest = (
   loaderConfig: string | Record<string | number, any>,
@@ -182,7 +186,7 @@ async function processSource(
   return serializeVanillaModule(loader, cssRequests, result);
 }
 
-const stringifyExports = (value: any) =>
+const stringifyExports = (recipeImports: Set<string>, value: any): any =>
   stringify(
     value,
     (value, _indent, next) => {
@@ -196,6 +200,37 @@ const stringifyExports = (value: any) =>
         isPlainObject(value)
       ) {
         return next(value);
+      }
+
+      if (valueType === 'function' && value.__recipe__) {
+        const { importPath, importName, args } = value.__recipe__;
+
+        if (
+          typeof importPath !== 'string' ||
+          typeof importName !== 'string' ||
+          !Array.isArray(args)
+        ) {
+          throw new Error('Invalid recipe');
+        }
+
+        try {
+          const hashedImportName = `_${hash(`${importName}${importPath}`).slice(
+            0,
+            5,
+          )}`;
+
+          recipeImports.add(
+            `import { ${importName} as ${hashedImportName} } from '${importPath}';`,
+          );
+
+          return `${hashedImportName}(${args
+            .map((arg) => stringifyExports(recipeImports, arg))
+            .join(',')})`;
+        } catch (err) {
+          console.error(err);
+
+          throw new Error('Invalid recipe.');
+        }
       }
 
       throw new Error(dedent`
@@ -222,17 +257,16 @@ const serializeVanillaModule = (
 
     return `import ${relativeRequest};`;
   });
-  // // Ensure consitent import order for content hashing
-  // // Chunk ordering is fixed by the webpack plugin
-  // const sortedCssImports = sortBy(cssImports);
+
+  const recipeImports = new Set<string>();
 
   const moduleExports = Object.keys(exports).map((key) =>
     key === 'default'
-      ? `export default ${stringifyExports(exports[key])};`
-      : `export var ${key} = ${stringifyExports(exports[key])};`,
+      ? `export default ${stringifyExports(recipeImports, exports[key])};`
+      : `export var ${key} = ${stringifyExports(recipeImports, exports[key])};`,
   );
 
-  const outputCode = [...cssImports, ...moduleExports];
+  const outputCode = [...cssImports, ...recipeImports, ...moduleExports];
 
   return outputCode.join('\n');
 };

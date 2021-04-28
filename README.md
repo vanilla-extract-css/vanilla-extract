@@ -76,6 +76,10 @@ document.write(`
 
 ---
 
+Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+
+---
+
 - [Setup](#setup)
   - [webpack](#webpack)
   - [esbuild](#esbuild)
@@ -115,7 +119,7 @@ There are currently a few integrations to choose from.
 1. Install the dependencies.
 
 ```bash
-$ yarn add --dev @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
+$ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
 ```
 
 2. Add the [Babel](https://babeljs.io) plugin.
@@ -171,7 +175,7 @@ module.exports = {
 1. Install the dependencies.
 
 ```bash
-$ yarn add --dev @vanilla-extract/css @vanilla-extract/esbuild-plugin
+$ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
 2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
@@ -620,7 +624,7 @@ export const green = composeStyles(base, style({
 We also provide a lightweight standalone package to support dynamic runtime theming.
 
 ```bash
-$ yarn add --dev @vanilla-extract/dynamic
+$ npm install @vanilla-extract/dynamic
 ```
 
 ### createInlineTheme
@@ -681,7 +685,7 @@ We also provide a standalone package of optional utility functions to make it ea
 > 💡 This package can be used with any CSS-in-JS library.
 
 ```bash
-$ yarn add --dev @vanilla-extract/css-utils
+$ npm install @vanilla-extract/css-utils
 ```
 
 ### calc

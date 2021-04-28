@@ -1576,6 +1576,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fixtures/sprinkles@workspace:fixtures/sprinkles":
+  version: 0.0.0-use.local
+  resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
+  dependencies:
+    "@vanilla-extract/css": 0.3.2
+    "@vanilla-extract/sprinkles": 0.1.0
+  languageName: unknown
+  linkType: soft
+
 "@fixtures/themed@workspace:fixtures/themed":
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
@@ -2685,7 +2694,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@0.3.2, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@0.3.2, @vanilla-extract/css@^0.3.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
@@ -2729,6 +2738,16 @@ __metadata:
 "@vanilla-extract/private@^0.1.0, @vanilla-extract/private@^0.1.1, @vanilla-extract/private@workspace:packages/private":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/private@workspace:packages/private"
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/sprinkles@0.1.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
+  dependencies:
+    "@vanilla-extract/css": "*"
+  peerDependencies:
+    "@vanilla-extract/css": "*"
   languageName: unknown
   linkType: soft
 
