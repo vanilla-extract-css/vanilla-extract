@@ -13,6 +13,10 @@ import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import VanillaExtractError from './VanillaExtractError';
 import { ChildCompiler } from './compiler';
+import crypto from 'crypto';
+
+const hash = (value: string) =>
+  crypto.createHash('md5').update(value).digest('hex');
 
 const stringifyLoaderRequest = (
   loaderConfig: string | Record<string | number, any>,
@@ -210,16 +214,18 @@ const stringifyExports = (recipeImports: Set<string>, value: any): any =>
         }
 
         try {
-          const guardedImportName = `__${importName}__`;
+          const hashedImportName = `_${hash(`${importName}${importPath}`).slice(
+            0,
+            5,
+          )}`;
 
           recipeImports.add(
-            `import { ${importName} as ${guardedImportName} } from '${importPath}';`,
+            `import { ${importName} as ${hashedImportName} } from '${importPath}';`,
           );
 
-          return `${guardedImportName}(...${stringifyExports(
-            recipeImports,
-            args,
-          )})`;
+          return `${hashedImportName}(${args
+            .map((arg) => stringifyExports(recipeImports, arg))
+            .join(',')})`;
         } catch (err) {
           console.error(err);
 
