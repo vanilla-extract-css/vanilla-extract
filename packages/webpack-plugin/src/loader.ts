@@ -1,12 +1,9 @@
 // @ts-expect-error
-import evalCode from 'eval';
-// @ts-expect-error
 import loaderUtils from 'loader-utils';
+import { processVanillaFile } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
-import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
-import { processVanillaFile } from '@vanilla-extract/integration/src';
 
 interface LoaderOptions {
   outputCss: boolean;
@@ -26,10 +23,6 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
   const { childCompiler, outputCss } = loaderUtils.getOptions(
     this,
   ) as InternalLoaderOptions;
-
-  const log = debug(
-    `vanilla-extract:loader:${formatResourcePath(this.resourcePath)}`,
-  );
 
   const compiler = this._compiler;
 

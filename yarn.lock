@@ -2453,13 +2453,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.168":
-  version: 4.14.168
-  resolution: "@types/lodash@npm:4.14.168"
-  checksum: 9a4e25f89fc035b9f0388f1f7be85e5eff49f9e6db0d93432c9a89fce0916f8a89db4e8290415f7ea02de6b00d3573826378dcb655b7b2d20530a6e8d6dd6fd0
-  languageName: node
-  linkType: hard
-
 "@types/mime@npm:^1":
   version: 1.3.2
   resolution: "@types/mime@npm:1.3.2"
@@ -2684,7 +2677,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.13.10
     "@babel/template": ^7.12.13
-    find-up: ^5.0.0
+    "@vanilla-extract/integration": ^0.1.0
   languageName: unknown
   linkType: soft
 
@@ -2721,16 +2714,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
-    "@types/dedent": ^0.7.0
     "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
-    chalk: ^4.1.0
-    dedent: ^0.7.0
     esbuild: ^0.11.16
-    eval: ^0.1.6
-    find-up: ^5.0.0
-    javascript-stringify: ^2.0.1
-    lodash: ^4.17.21
   peerDependencies:
     esbuild: ">=0.11.1"
   languageName: unknown
@@ -2771,17 +2757,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
-    "@types/dedent": ^0.7.0
     "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/esbuild-plugin": 0.2.0
     "@vanilla-extract/integration": ^0.1.0
-    chalk: ^4.1.0
-    dedent: ^0.7.0
     esbuild: ^0.11.16
-    eval: ^0.1.6
-    find-up: ^5.0.0
-    javascript-stringify: ^2.0.1
-    lodash: ^4.17.21
+    vite: ^2.2.3
+  peerDependencies:
+    vite: ">=2.0.0"
   languageName: unknown
   linkType: soft
 
@@ -2790,15 +2772,9 @@ __metadata:
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@types/debug": ^4.1.5
-    "@types/dedent": ^0.7.0
-    "@types/lodash": ^4.14.168
     "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
-    chalk: ^4.1.0
     debug: ^4.3.1
-    dedent: ^0.7.0
-    eval: ^0.1.6
-    javascript-stringify: ^2.0.1
     loader-utils: ^2.0.0
     lodash: ^4.17.21
     virtual-resource-loader: ^1.0.0

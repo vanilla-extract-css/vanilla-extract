@@ -14,19 +14,16 @@
   },
   "author": "SEEK",
   "license": "MIT",
+  "peerDependencies": {
+    "vite": ">=2.0.0"
+  },
   "dependencies": {
     "@vanilla-extract/css": "^0.4.0",
     "@vanilla-extract/esbuild-plugin": "0.2.0",
     "@vanilla-extract/integration": "^0.1.0",
-    "chalk": "^4.1.0",
-    "dedent": "^0.7.0",
-    "esbuild": "^0.11.16",
-    "eval": "^0.1.6",
-    "find-up": "^5.0.0",
-    "javascript-stringify": "^2.0.1",
-    "lodash": "^4.17.21"
+    "esbuild": "^0.11.16"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0"
+    "vite": "^2.2.3"
   }
 }
