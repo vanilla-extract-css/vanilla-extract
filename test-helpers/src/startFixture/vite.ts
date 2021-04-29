@@ -1,5 +1,6 @@
 import path from 'path';
 import { createServer } from 'vite';
+import vanillaExtractPlugin from '@vanilla-extract/vite-plugin';
 
 import { TestServer } from './types';
 export interface ViteFixtureOptions {
@@ -19,6 +20,7 @@ export const startViteFixture = async (
     configFile: false,
     mode,
     root,
+    plugins: [vanillaExtractPlugin()],
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
     },

@@ -4,6 +4,11 @@ import { promises as fs } from 'fs';
 import type { Adapter, FileScope } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
+import {
+  cssFileFilter,
+  virtualCssFileFilter,
+  getSourceFromVirtualCssFile,
+} from '@vanilla-extract/integration';
 import dedent from 'dedent';
 import findUp from 'find-up';
 import { build as esbuild, Plugin } from 'esbuild';
@@ -18,9 +23,7 @@ const hash = (value: string) =>
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
-const cssFileFilter = /\.css\.(js|jsx|ts|tsx)$/;
-
-const vanillaExtractFilescopePlugin = (): Plugin => ({
+export const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
     const packageJsonPath = findUp.sync('package.json', {
@@ -78,7 +81,7 @@ export function vanillaExtractPlugin({
   return {
     name: 'vanilla-extract',
     setup(build) {
-      build.onResolve({ filter: /vanilla\.css\?source=.*$/ }, (args) => {
+      build.onResolve({ filter: virtualCssFileFilter }, (args) => {
         return {
           path: args.path,
           namespace: vanillaCssNamespace,
@@ -88,14 +91,10 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         ({ path }) => {
-          const [, source] = path.match(/\?source=(.*)$/) ?? [];
-
-          if (!source) {
-            throw new Error('No source in vanilla CSS file');
-          }
+          const contents = getSourceFromVirtualCssFile(path);
 
           return {
-            contents: Buffer.from(source, 'base64').toString('utf-8'),
+            contents,
             loader: 'css',
           };
         },

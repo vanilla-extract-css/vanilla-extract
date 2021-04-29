@@ -11,6 +11,7 @@
     "@types/mini-css-extract-plugin": "^1.2.2",
     "@types/webpack-dev-server": "^3.11.1",
     "@vanilla-extract/esbuild-plugin": "*",
+    "@vanilla-extract/vite-plugin": "*",
     "@vanilla-extract/webpack-plugin": "*",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.1.3",

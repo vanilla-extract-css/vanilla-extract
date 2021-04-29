@@ -2723,15 +2723,31 @@ __metadata:
   dependencies:
     "@types/dedent": ^0.7.0
     "@vanilla-extract/css": ^0.4.0
+    "@vanilla-extract/integration": ^0.1.0
     chalk: ^4.1.0
     dedent: ^0.7.0
-    esbuild: ^0.11.1
+    esbuild: ^0.11.16
     eval: ^0.1.6
     find-up: ^5.0.0
     javascript-stringify: ^2.0.1
     lodash: ^4.17.21
   peerDependencies:
     esbuild: ">=0.11.1"
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/integration@^0.1.0, @vanilla-extract/integration@workspace:packages/integration":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/integration@workspace:packages/integration"
+  dependencies:
+    "@types/dedent": ^0.7.0
+    "@vanilla-extract/css": ^0.4.0
+    chalk: ^4.1.0
+    dedent: ^0.7.0
+    eval: ^0.1.6
+    find-up: ^5.0.0
+    javascript-stringify: ^2.0.1
+    lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
@@ -2751,14 +2767,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/vite-plugin@workspace:packages/vite-plugin":
+"@vanilla-extract/vite-plugin@*, @vanilla-extract/vite-plugin@workspace:packages/vite-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
     "@types/dedent": ^0.7.0
     "@vanilla-extract/css": ^0.4.0
+    "@vanilla-extract/esbuild-plugin": "workspace:packages/esbuild-plugin"
+    "@vanilla-extract/integration": ^0.1.0
     chalk: ^4.1.0
     dedent: ^0.7.0
+    esbuild: ^0.11.16
     eval: ^0.1.6
     find-up: ^5.0.0
     javascript-stringify: ^2.0.1
@@ -5123,12 +5142,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.11.1":
-  version: 0.11.1
-  resolution: "esbuild@npm:0.11.1"
+"esbuild@npm:^0.11.16":
+  version: 0.11.16
+  resolution: "esbuild@npm:0.11.16"
   bin:
     esbuild: bin/esbuild
-  checksum: 76d8993d3e3c6712ec4106bd5d82222bc22a51e17d0fcc1a1c4ca2253ebf6f3bd26c7f70ff2e4baaa03f41a1ff0423966db3180b401dd8330514ac6d2da1f919
+  checksum: ccbdf57069a83714fac7b9c884db8dc38020ebb8530e8f14f209740401b0ae0dd58e0871ef0821b101798b57720f8d139f6f85a4952a065a448ab5142e6eddf7
   languageName: node
   linkType: hard
 
@@ -11233,6 +11252,7 @@ fsevents@^1.2.7:
     "@types/minimist": ^1
     "@types/webpack-dev-server": ^3.11.1
     "@vanilla-extract/esbuild-plugin": "*"
+    "@vanilla-extract/vite-plugin": "*"
     "@vanilla-extract/webpack-plugin": "*"
     babel-loader: ^8.2.2
     css-loader: ^5.1.3
