@@ -64,7 +64,12 @@ export function assignVars<VarContract extends Contract>(
   - validate arrays have the same length as contract
 */
   walkObject(tokens, (value, path) => {
-    varSetters[get(varContract, path)] = String(value);
+    try {
+      varSetters[get(varContract, path)] = String(value);
+    } catch (e) {
+      console.warn(e);
+      console.log(path);
+    };
   });
 
   return varSetters;
