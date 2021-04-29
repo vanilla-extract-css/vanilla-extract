@@ -3,6 +3,7 @@ import loaderUtils from 'loader-utils';
 import { processVanillaFile } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
+import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
 
 interface LoaderOptions {
@@ -23,6 +24,10 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
   const { childCompiler, outputCss } = loaderUtils.getOptions(
     this,
   ) as InternalLoaderOptions;
+
+  const log = debug(
+    `vanilla-extract:loader:${formatResourcePath(this.resourcePath)}`,
+  );
 
   const compiler = this._compiler;
 

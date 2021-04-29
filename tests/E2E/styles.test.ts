@@ -12,6 +12,7 @@ const compileTypes = [
   'style-loader',
   'esbuild',
   'esbuild-runtime',
+  'vite',
 ] as const;
 
 async function getPageStyles(

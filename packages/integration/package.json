@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/css": "^0.4.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "dedent": "^0.7.0",
     "eval": "^0.1.6",
     "find-up": "^5.0.0",
@@ -24,6 +24,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0"
+    "@types/dedent": "^0.7.0",
+    "@types/lodash": "^4.14.168"
   }
 }

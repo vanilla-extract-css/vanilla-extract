@@ -2453,6 +2453,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.168":
+  version: 4.14.168
+  resolution: "@types/lodash@npm:4.14.168"
+  checksum: 9a4e25f89fc035b9f0388f1f7be85e5eff49f9e6db0d93432c9a89fce0916f8a89db4e8290415f7ea02de6b00d3573826378dcb655b7b2d20530a6e8d6dd6fd0
+  languageName: node
+  linkType: hard
+
 "@types/mime@npm:^1":
   version: 1.3.2
   resolution: "@types/mime@npm:1.3.2"
@@ -2727,8 +2734,9 @@ __metadata:
   resolution: "@vanilla-extract/integration@workspace:packages/integration"
   dependencies:
     "@types/dedent": ^0.7.0
+    "@types/lodash": ^4.14.168
     "@vanilla-extract/css": ^0.4.0
-    chalk: ^4.1.0
+    chalk: ^4.1.1
     dedent: ^0.7.0
     eval: ^0.1.6
     find-up: ^5.0.0
@@ -2774,6 +2782,7 @@ __metadata:
     "@types/debug": ^4.1.5
     "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
+    chalk: ^4.1.1
     debug: ^4.3.1
     loader-utils: ^2.0.0
     lodash: ^4.17.21
@@ -3938,6 +3947,16 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: f860285b419f9e925c2db0f45ffa88aa8794c14b80cc5d01ff30930bcfc384996606362706f0829cf557f6d36152a5fb2d227ad63c4bc90e2ec9e9dbed4a3c07
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "chalk@npm:4.1.1"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: 445c12db7aeed0046500a1e4184d31209a77d165654c885a789c41c8598a6a95bd2392180987cac572c967b93a2a730dda778bb7f87fa06ca63fd8592f8cc59f
   languageName: node
   linkType: hard
 
