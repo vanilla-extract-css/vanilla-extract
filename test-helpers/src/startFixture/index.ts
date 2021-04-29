@@ -2,13 +2,15 @@ import portfinder from 'portfinder';
 
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
+import { startViteFixture, ViteFixtureOptions } from './vite';
 
 type BuildType =
   | 'browser'
   | 'mini-css-extract'
   | 'style-loader'
   | 'esbuild'
-  | 'esbuild-runtime';
+  | 'esbuild-runtime'
+  | 'vite';
 
 export interface TestServer {
   type: BuildType;
@@ -21,7 +23,10 @@ type SharedOptions = {
 };
 
 type FixtureOptions = SharedOptions &
-  Omit<EsbuildFixtureOptions | WebpackFixtureOptions, 'port'>;
+  Omit<
+    EsbuildFixtureOptions | WebpackFixtureOptions | ViteFixtureOptions,
+    'port'
+  >;
 export async function startFixture(
   fixtureName: string,
   { type, basePort, ...options }: FixtureOptions,
@@ -41,6 +46,13 @@ export async function startFixture(
 
   if (type === 'esbuild' || type === 'esbuild-runtime') {
     return startEsbuildFixture(fixtureName, {
+      type,
+      port,
+    });
+  }
+
+  if (type === 'vite') {
+    return startViteFixture(fixtureName, {
       type,
       port,
     });

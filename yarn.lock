@@ -2751,6 +2751,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vanilla-extract/vite-plugin@workspace:packages/vite-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
+  dependencies:
+    "@types/dedent": ^0.7.0
+    "@vanilla-extract/css": ^0.4.0
+    chalk: ^4.1.0
+    dedent: ^0.7.0
+    eval: ^0.1.6
+    find-up: ^5.0.0
+    javascript-stringify: ^2.0.1
+    lodash: ^4.17.21
+  languageName: unknown
+  linkType: soft
+
 "@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
@@ -5114,6 +5129,15 @@ __metadata:
   bin:
     esbuild: bin/esbuild
   checksum: 76d8993d3e3c6712ec4106bd5d82222bc22a51e17d0fcc1a1c4ca2253ebf6f3bd26c7f70ff2e4baaa03f41a1ff0423966db3180b401dd8330514ac6d2da1f919
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.9.3":
+  version: 0.9.7
+  resolution: "esbuild@npm:0.9.7"
+  bin:
+    esbuild: bin/esbuild
+  checksum: 78a45e561156d8ecedfdbccddb83486b14f892a2624c100ff4a5150353a416b85a881d298a11da3447d3a2655571237dc9049a011ca10f4fedded2ffaab397c9
   languageName: node
   linkType: hard
 
@@ -8557,7 +8581,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.20":
+"nanoid@npm:^3.1.20, nanoid@npm:^3.1.22":
   version: 3.1.22
   resolution: "nanoid@npm:3.1.22"
   bin:
@@ -9437,6 +9461,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.2.1":
+  version: 8.2.13
+  resolution: "postcss@npm:8.2.13"
+  dependencies:
+    colorette: ^1.2.2
+    nanoid: ^3.1.22
+    source-map: ^0.6.1
+  checksum: df64697cbd6d8e501eac2eaed501dc9a9c848538b4b51c53bfe7ed62a91736e97135d1fe22384b69af11bb2387a6cb483f5eecd14b19ca192ab5497ed5522124
+  languageName: node
+  linkType: hard
+
 "postcss@npm:^8.2.8":
   version: 8.2.8
   resolution: "postcss@npm:8.2.8"
@@ -10079,7 +10114,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1":
+"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0":
   version: 1.20.0
   resolution: "resolve@npm:1.20.0"
   dependencies:
@@ -10089,7 +10124,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#builtin<compat/resolve>":
   version: 1.20.0
   resolution: "resolve@patch:resolve@npm%3A1.20.0#builtin<compat/resolve>::version=1.20.0&hash=3388aa"
   dependencies:
@@ -10171,6 +10206,20 @@ fsevents@^1.2.7:
   bin:
     rollup: dist/bin/rollup
   checksum: eb5d3eda11a72ae50a62632f8f1177e6d99e2351c5da4241c7417bd8bdb6365065c7c8fa36ef6bc34df8e2d856451f830cec131b2af50c483932d28d0415cdb6
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.38.5":
+  version: 2.46.0
+  resolution: "rollup@npm:2.46.0"
+  dependencies:
+    fsevents: ~2.3.1
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: d06dfec49dee3ec6973cab356fb74a2446c08a0d64185826081f9755353a87826a51ae43d1c88f985a756eb4c74eedfbca97c6050a3e39a17cc6d96dd48505f8
   languageName: node
   linkType: hard
 
@@ -11194,6 +11243,7 @@ fsevents@^1.2.7:
     path-browserify: ^1.0.1
     portfinder: ^1.0.28
     style-loader: ^2.0.0
+    vite: ^2.2.3
     webpack: ^5.27.1
     webpack-dev-server: ^3.11.2
     webpack-merge: ^5.7.3
@@ -11773,6 +11823,24 @@ typescript@^4.1.3:
   dependencies:
     loader-utils: ^2.0.0
   checksum: d28b974e1a7fe2172aab9419cf02331980363f1716edbb58e6b33ea9b805e22302f271980e94e1ece47c6857610cc8f10440ea7a0845cef4165a3d4a16605090
+  languageName: node
+  linkType: hard
+
+"vite@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "vite@npm:2.2.3"
+  dependencies:
+    esbuild: ^0.9.3
+    fsevents: ~2.3.1
+    postcss: ^8.2.1
+    resolve: ^1.19.0
+    rollup: ^2.38.5
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: c621b561fe8ddc8b1c417bc140fd48591d483de1b890109e16793f0dbb04d262dd855e0fa5922e7370e9086225492a4202ec7f9f3336b68288618a58721e0988
   languageName: node
   linkType: hard
 
