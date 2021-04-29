@@ -1,5 +1,10 @@
 import { style } from '@vanilla-extract/css';
+import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
 import type * as CSS from 'csstype';
+
+export type CSSVarFunction =
+  | `var(--${string})`
+  | `var(--${string}, ${string | number})`;
 
 import {
   AtomicStyles,
@@ -20,6 +25,7 @@ type CSSProperties = CSS.Properties<(string & {}) | number>;
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
+    | MapLeafNodes<Contract, CSSVarFunction>
     | Record<string, CSSProperties[Property]>
     | Array<CSSProperties[Property]>;
 };
