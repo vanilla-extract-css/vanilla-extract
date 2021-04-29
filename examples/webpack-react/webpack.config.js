@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, './src/index.ts'),
+  entry: path.join(__dirname, './src/index.tsx'),
   mode: 'development',
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx'],
@@ -22,7 +22,7 @@ module.exports = {
               babelrc: false,
               presets: [
                 '@babel/preset-typescript',
-                '@babel/preset-react',
+                ['@babel/preset-react', { runtime: 'automatic' }],
                 [
                   '@babel/preset-env',
                   { targets: { node: 14 }, modules: false },
