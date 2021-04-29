@@ -16,10 +16,12 @@ interface Condition {
 
 type BaseConditions = { [conditionName: string]: Condition };
 
+type CSSProperties = CSS.Properties<(string & {}) | number>;
+
 type AtomicProperties = {
-  [Property in keyof CSS.Properties]?:
-    | Record<string, CSS.Properties[Property]>
-    | Array<CSS.Properties[Property]>;
+  [Property in keyof CSSProperties]?:
+    | Record<string, CSSProperties[Property]>
+    | Array<CSSProperties[Property]>;
 };
 
 type ShorthandOptions<
