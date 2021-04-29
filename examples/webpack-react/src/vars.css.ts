@@ -1,34 +1,18 @@
 import { createGlobalTheme } from '@vanilla-extract/css';
 import colors from 'tailwindcss/colors';
 
-const createScale = (ratio: number, initial: number) => (x: number) =>
-  `${initial + Math.round(Math.pow(ratio, x))}px`;
+const createScale = (ratio: number, start: number) => (x: number) =>
+  `${Math.round(Math.pow(ratio, x + start))}px`;
 
-const ratio = 3 / 2;
-const spaceScale = createScale(ratio, 2);
-const fontSizeScale = createScale(ratio, 16);
-const lineHeightScale = createScale(ratio, 24);
+const spaceRatio = 1.55;
+const spaceScale = createScale(spaceRatio, 2);
 
-type TailwindPalette<Name extends string> = Record<
-  `${Name}-${50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900}`,
-  string
->;
+const typeRatio = 1.3;
+const fontSizeScale = createScale(typeRatio, 10);
+const lineHeightScale = createScale(typeRatio, 11.5);
 
-const tailwindColorPalette = <ColorName extends keyof typeof colors>(
-  colorName: ColorName,
-): TailwindPalette<ColorName> =>
-  ({
-    [`${colorName}-50`]: colors[colorName][50],
-    [`${colorName}-100`]: colors[colorName][100],
-    [`${colorName}-200`]: colors[colorName][200],
-    [`${colorName}-300`]: colors[colorName][300],
-    [`${colorName}-400`]: colors[colorName][400],
-    [`${colorName}-500`]: colors[colorName][500],
-    [`${colorName}-600`]: colors[colorName][600],
-    [`${colorName}-700`]: colors[colorName][700],
-    [`${colorName}-800`]: colors[colorName][800],
-    [`${colorName}-900`]: colors[colorName][900],
-  } as TailwindPalette<ColorName>);
+const borderRadiusRatio = 1.4;
+const borderRadiusScale = createScale(borderRadiusRatio, 4);
 
 export const vars = createGlobalTheme(':root', {
   space: {
@@ -41,14 +25,43 @@ export const vars = createGlobalTheme(':root', {
     '6x': spaceScale(6),
     '7x': spaceScale(7),
     '8x': spaceScale(8),
-    '9x': spaceScale(9),
   },
-  colors: {
-    ...tailwindColorPalette('indigo'),
-    ...tailwindColorPalette('green'),
+  color: {
+    white: '#fff',
+
+    'gray-50': colors.coolGray[50],
+    'gray-100': colors.coolGray[100],
+    'gray-200': colors.coolGray[200],
+    'gray-300': colors.coolGray[300],
+    'gray-400': colors.coolGray[400],
+    'gray-500': colors.coolGray[500],
+    'gray-600': colors.coolGray[600],
+    'gray-700': colors.coolGray[700],
+    'gray-800': colors.coolGray[800],
+    'gray-900': colors.coolGray[900],
+
+    'green-50': colors.emerald[50],
+    'green-100': colors.emerald[100],
+    'green-200': colors.emerald[200],
+    'green-300': colors.emerald[300],
+    'green-400': colors.emerald[400],
+    'green-500': colors.emerald[500],
+    'green-600': colors.emerald[600],
+    'green-700': colors.emerald[700],
+    'green-800': colors.emerald[800],
+    'green-900': colors.emerald[900],
+  },
+  borderRadius: {
+    '1x': borderRadiusScale(1),
+    '2x': borderRadiusScale(2),
+    '3x': borderRadiusScale(3),
+    '4x': borderRadiusScale(4),
+    '5x': borderRadiusScale(5),
+    full: '99999px',
   },
   fontFamily: {
-    body: 'Helvetica, Arial',
+    system:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   },
   fontSize: {
     '1x': fontSizeScale(1),

@@ -2813,7 +2813,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@^0.2.0, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
+"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
@@ -12353,19 +12353,9 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"vanilla-extract-esbuild@workspace:examples/esbuild":
+"vanilla-extract-webpack-react@workspace:examples/webpack-react":
   version: 0.0.0-use.local
-  resolution: "vanilla-extract-esbuild@workspace:examples/esbuild"
-  dependencies:
-    "@vanilla-extract/css": ^0.4.0
-    "@vanilla-extract/esbuild-plugin": ^0.2.0
-    esbuild: ^0.11.16
-  languageName: unknown
-  linkType: soft
-
-"vanilla-extract-webpack@workspace:examples/webpack":
-  version: 0.0.0-use.local
-  resolution: "vanilla-extract-webpack@workspace:examples/webpack"
+  resolution: "vanilla-extract-webpack-react@workspace:examples/webpack-react"
   dependencies:
     "@babel/preset-env": ^7.13.15
     "@babel/preset-react": ^7.13.13

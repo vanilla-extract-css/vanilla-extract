@@ -1,7 +1,7 @@
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 import { vars } from './vars.css';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -18,35 +18,33 @@ const layoutStyles = createAtomicStyles({
     paddingBottom: vars.space,
     paddingLeft: vars.space,
     paddingRight: vars.space,
+    width: ['100vw'],
+    height: ['100vh'],
+    borderRadius: vars.borderRadius,
+    fontFamily: vars.fontFamily,
+    fontSize: vars.fontSize,
+    lineHeight: vars.lineHeight,
+    textAlign: ['center'],
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
     paddingX: ['paddingLeft', 'paddingRight'],
     paddingY: ['paddingTop', 'paddingBottom'],
+    placeItems: ['alignItems', 'justifyContent'],
+    typeSize: ['fontSize', 'lineHeight'],
   },
 });
 
-const colorStyles = createAtomicStyles({
+const colorModeStyles = createAtomicStyles({
   conditions: {
     lightMode: {},
     darkMode: { '@media': '(prefers-color-scheme: dark)' },
   },
   defaultCondition: 'lightMode',
   properties: {
-    color: vars.colors,
-    background: vars.colors,
+    color: vars.color,
+    background: vars.color,
   },
 });
 
-const typeStyles = createAtomicStyles({
-  properties: {
-    fontFamily: vars.fontFamily,
-    fontSize: vars.fontSize,
-    lineHeight: vars.lineHeight,
-  },
-  shorthands: {
-    typeSize: ['fontSize', 'lineHeight'],
-  },
-});
-
-export const atoms = createAtomsFn(layoutStyles, colorStyles, typeStyles);
+export const atoms = createAtomsFn(responsiveStyles, colorModeStyles);
