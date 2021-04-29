@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/css": "^0.4.0",
-    "@vanilla-extract/esbuild-plugin": "workspace:packages/esbuild-plugin",
+    "@vanilla-extract/esbuild-plugin": "0.2.0",
     "@vanilla-extract/integration": "^0.1.0",
     "chalk": "^4.1.0",
     "dedent": "^0.7.0",

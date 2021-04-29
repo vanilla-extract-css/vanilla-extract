@@ -2717,7 +2717,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
+"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@0.2.0, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
@@ -2773,7 +2773,7 @@ __metadata:
   dependencies:
     "@types/dedent": ^0.7.0
     "@vanilla-extract/css": ^0.4.0
-    "@vanilla-extract/esbuild-plugin": "workspace:packages/esbuild-plugin"
+    "@vanilla-extract/esbuild-plugin": 0.2.0
     "@vanilla-extract/integration": ^0.1.0
     chalk: ^4.1.0
     dedent: ^0.7.0
@@ -2793,6 +2793,7 @@ __metadata:
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
     "@vanilla-extract/css": ^0.4.0
+    "@vanilla-extract/integration": ^0.1.0
     chalk: ^4.1.0
     debug: ^4.3.1
     dedent: ^0.7.0

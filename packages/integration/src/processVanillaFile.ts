@@ -29,11 +29,16 @@ interface ProcessVanillaFileOptions {
   source: string;
   filePath: string;
   outputCss?: boolean;
+  serializeVirtualCssPath?: (file: {
+    fileName: string;
+    base64Source: string;
+  }) => string;
 }
 export function processVanillaFile({
   source,
   filePath,
   outputCss = true,
+  serializeVirtualCssPath,
 }: ProcessVanillaFileOptions) {
   type Css = Parameters<Adapter['appendCss']>[0];
   const cssByFileScope = new Map<string, Array<Css>>();
@@ -67,7 +72,7 @@ export function processVanillaFile({
     true,
   );
 
-  const cssRequests = [];
+  const cssImports = [];
 
   for (const [serialisedFileScope, fileScopeCss] of cssByFileScope) {
     const filescope = parseFileScope(serialisedFileScope);
@@ -76,15 +81,21 @@ export function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    const base64Css = Buffer.from(css, 'utf-8').toString('base64');
-    const fileName = filescope.packageName
-      ? `${filescope.packageName}/${filescope.filePath}`
-      : filescope.filePath;
+    const base64Source = Buffer.from(css, 'utf-8').toString('base64');
+    const fileName = `${
+      filescope.packageName
+        ? `${filescope.packageName}/${filescope.filePath}`
+        : filescope.filePath
+    }.vanilla.css`;
 
-    cssRequests.push(`${fileName}.vanilla.css?source=${base64Css}`);
+    const virtualCssFilePath = serializeVirtualCssPath
+      ? serializeVirtualCssPath({ fileName, base64Source })
+      : `import '${fileName}?source=${base64Source}';`;
+
+    cssImports.push(virtualCssFilePath);
   }
 
-  return serializeVanillaModule(cssRequests, evalResult);
+  return serializeVanillaModule(cssImports, evalResult);
 }
 
 function stringifyExports(recipeImports: Set<string>, value: any): any {
@@ -150,13 +161,9 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
 }
 
 function serializeVanillaModule(
-  cssRequests: Array<string>,
+  cssImports: Array<string>,
   exports: Record<string, unknown>,
 ) {
-  const cssImports = cssRequests.map((request) => {
-    return `import '${request}';`;
-  });
-
   const recipeImports = new Set<string>();
 
   const moduleExports = Object.keys(exports).map((key) =>
