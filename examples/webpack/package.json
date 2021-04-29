@@ -1,0 +1,34 @@
+{
+  "name": "vanilla-extract-webpack",
+  "description": "Example project using vanilla-extract compiling with webpack",
+  "keywords": [
+    "vanilla-extract",
+    "css-in-js",
+    "css",
+    "webpack"
+  ],
+  "template": "node",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack"
+  },
+  "private": true,
+  "dependencies": {
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@vanilla-extract/babel-plugin": "^0.4.0",
+    "@vanilla-extract/css": "0.4.0",
+    "@vanilla-extract/webpack-plugin": "^0.3.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.4",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.5.1",
+    "webpack": "^5.36.1",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "vanilla-extract-esbuild",
+  "description": "Example project using vanilla-extract compiling with esbuild",
+  "keywords": [
+    "vanilla-extract",
+    "css-in-js",
+    "css",
+    "esbuild"
+  ],
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./start"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "^0.4.0",
+    "@vanilla-extract/esbuild-plugin": "^0.2.0",
+    "esbuild": "^0.11.16"
+  }
+}
