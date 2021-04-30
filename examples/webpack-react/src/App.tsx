@@ -5,7 +5,7 @@ export const App = () => (
   <div
     className={atoms({
       background: {
-        lightMode: 'green-200',
+        lightMode: 'green-500',
         darkMode: 'gray-900',
       },
       height: '100vh',
@@ -29,12 +29,7 @@ export const App = () => (
       >
         <h1
           className={atoms({
-            display: 'flex',
             fontFamily: 'body',
-            color: {
-              lightMode: 'green-800',
-              darkMode: 'green-50',
-            },
             textAlign: 'center',
             typeSize: {
               mobile: '4x',
@@ -47,10 +42,9 @@ export const App = () => (
         </h1>
         <h2
           className={atoms({
-            display: 'flex',
             fontFamily: 'body',
             color: {
-              lightMode: 'green-800',
+              lightMode: 'green-700',
               darkMode: 'green-50',
             },
             textAlign: 'center',

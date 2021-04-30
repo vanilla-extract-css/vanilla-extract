@@ -4,7 +4,7 @@ import { atoms } from './atoms.css';
 export const card = composeStyles(
   atoms({
     background: {
-      lightMode: 'white',
+      lightMode: 'green-50',
       darkMode: 'gray-800',
     },
     borderRadius: {
