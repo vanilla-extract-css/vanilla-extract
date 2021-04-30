@@ -50,6 +50,7 @@ export const conditionalAtomicStyles = createAtomicStyles({
     display: ['block', 'none', 'flex'],
     paddingTop: spacing,
     paddingBottom: spacing,
+    opacity: [0, 1],
   },
   shorthands: {
     paddingY: ['paddingBottom', 'paddingTop'],
