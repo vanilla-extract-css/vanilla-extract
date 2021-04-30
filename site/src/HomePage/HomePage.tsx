@@ -92,10 +92,7 @@ export const HomePage = () => {
             borderRadius="large"
             background={{ lightMode: 'white', darkMode: 'gray900' }}
             color={{ lightMode: 'gray900', darkMode: 'gray50' }}
-            style={{
-              boxShadow: '0 0 50px -10px #24966180',
-              fontFamily: '"Roboto Mono", Menlo, monospace',
-            }}
+            className={styles.installBlock}
           >
             $ npm install{' '}
             <span style={{ whiteSpace: 'nowrap' }}>--save-dev</span>{' '}
@@ -426,6 +423,8 @@ const Feature = ({
   <Box position="relative" paddingLeft="xlarge">
     <Box
       position="absolute"
+      top={0}
+      left={0}
       className={styles.featureKeyLine}
       background={{ lightMode: 'pink300', darkMode: 'pink600' }}
       paddingLeft="xsmall"

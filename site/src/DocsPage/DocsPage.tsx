@@ -96,7 +96,7 @@ export const DocsPage = () => {
         right={0}
         zIndex={1}
         display={{ desktop: 'none' }}
-        background={{ lightMode: 'green100' }}
+        background={{ lightMode: 'green100', darkMode: 'gray700' }}
         opacity={menuOpen ? undefined : 0}
         pointerEvents={menuOpen ? { desktop: 'none' } : 'none'}
         className={classnames(
@@ -115,7 +115,9 @@ export const DocsPage = () => {
         top={0}
         bottom={0}
         zIndex={menuOpen ? 1 : undefined}
-        pointerEvents={menuOpen ? undefined : 'none'}
+        pointerEvents={
+          menuOpen ? undefined : { mobile: 'none', desktop: 'auto' }
+        }
         opacity={menuOpen ? undefined : { mobile: 0, desktop: 1 }}
         className={classnames(
           styles.sidebar,

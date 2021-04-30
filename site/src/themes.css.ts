@@ -88,47 +88,6 @@ const tailwindPalette = {
   pink900: '#701a75',
 };
 
-const palette = {
-  black: '#000',
-  white: '#fff',
-  // https://hihayk.github.io/scale/#3/3/50/80/0/0/100/29/8991a5/137/145/165/white
-  gray700: '#434855',
-  gray600: '#5A6070',
-  gray500: '#71788B',
-  gray400: '#8991a5',
-  gray300: '#A5ADC0',
-  gray200: '#C4CAD9',
-  gray100: '#E5E8F0',
-
-  // https://hihayk.github.io/scale/#3/3/44/80/0/0/100/29/76C0FF/118/190/255/white
-  // Customised 600 for a11y
-  blue700: '#376C8F',
-  blue600: '#437CA4',
-  blue500: '#5FA4DA',
-  blue400: '#76C0FF',
-  blue300: '#8AD2FF',
-  blue200: '#AAE3FF',
-  blue100: '#D6F4FF',
-
-  // https://hihayk.github.io/scale/#3/3/44/80/0/0/20/44/F090F5/240/144/245/white
-  pink700: '#8F448F',
-  pink600: '#B35BB4',
-  pink500: '#D375D7',
-  pink400: '#F090F5',
-  pink300: '#F6ABFA',
-  pink200: '#FBC8FE',
-  pink100: '#FEE7FF',
-
-  // https://hihayk.github.io/scale/#3/3/44/80/0/0/20/-20/26E08A/38/224/138/white
-  green700: '#20734D',
-  green600: '#249661',
-  green500: '#26BA75',
-  green400: '#26E08A',
-  green300: '#5BEDAA',
-  green200: '#94F6C9',
-  green100: '#D0FDE8',
-};
-
 const calculateTypographyStyles = (
   definition: Record<Breakpoint, { fontSize: number; rows: number }>,
   type: keyof typeof fontMetrics,

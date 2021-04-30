@@ -1,10 +1,28 @@
-import { style } from '@vanilla-extract/css';
+import { createVar, style } from '@vanilla-extract/css';
+import { darkMode, lightMode } from '../system/styles/atoms.css';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
+export const shadowColorVar = createVar();
+
+export const installBlock = style({
+  fontFamily: vars.fonts.code,
+  boxShadow: `0 0 50px -10px ${shadowColorVar}`,
+  selectors: {
+    [`.${lightMode} &`]: {
+      vars: {
+        [shadowColorVar]: vars.palette.green200,
+      },
+    },
+    [`.${darkMode} &`]: {
+      vars: {
+        [shadowColorVar]: vars.palette.gray600,
+      },
+    },
+  },
+});
+
 export const featureKeyLine = style({
-  left: 0,
-  top: 0,
   transform: 'skew(15deg)',
   ...responsiveStyle({
     mobile: { height: vars.text.standard.mobile.lineHeight },
@@ -12,10 +30,7 @@ export const featureKeyLine = style({
   }),
 });
 
-// linear-gradient(transparent, var(--background-green__6cbmls91) 60%),
-// radial-gradient(var(--palette-pink-100__6cbmls106), transparent) 100px 100px / 15px 30px
 export const skewedContainer = style({
-  // background: `linear-gradient(transparent, ${vars.palette.green[100]} 60%)`,
   ':after': {
     content: '""',
     position: 'absolute',

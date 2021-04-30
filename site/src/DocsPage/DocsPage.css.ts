@@ -50,7 +50,6 @@ export const sidebar = style({
 
   ...responsiveStyle({
     desktop: {
-      background: 'none',
       top: headerHeight,
       right: 'initial',
       width: sidebarWidth,

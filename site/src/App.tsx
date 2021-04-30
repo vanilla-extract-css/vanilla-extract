@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 import { Title, Meta } from 'react-head';
 import { HomePage } from './HomePage/HomePage';
 import { DocsPage } from './DocsPage/DocsPage';
-// import { themeClass } from './themes.css';
 import './App.css';
 import { Box } from './system';
 import { lightMode, darkMode } from './system/styles/atoms.css';

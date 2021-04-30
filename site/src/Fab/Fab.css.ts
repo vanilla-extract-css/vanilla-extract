@@ -1,27 +1,29 @@
 import { style } from '@vanilla-extract/css';
-import { responsiveStyle } from '../themeUtils';
+import { darkMode, lightMode } from '../system/styles/atoms.css';
+import { vars } from '../themes.css';
 
 const fabSize = 44;
 export const fab = style({
   cursor: 'pointer',
-  background: '#fff',
+  outline: 'none',
   height: fabSize,
   width: fabSize,
-  borderRadius: fabSize,
   zIndex: 3,
   boxShadow: '0 4px 8px rgba(14, 14, 33, 0.2)',
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
-  ...responsiveStyle({
-    desktop: {
-      display: 'none',
+  selectors: {
+    [`.${lightMode} &:focus`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink500}`,
     },
-  }),
+    [`.${darkMode} &:focus`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink600}`,
+    },
+  },
 });
 
 export const fab_isOpen = style({});
 
 const barHeight = 3;
-
 const barSpace = 4;
 const barPosition = {
   1: fabSize / 2 - Math.floor(barHeight / 2) - barHeight - barSpace,
@@ -32,7 +34,6 @@ export const fab__bar = style({
   left: 12,
   right: 12,
   height: 3,
-  background: '#26232C',
   transition: 'transform .1s ease, opacity .1s ease',
   selectors: {
     '&:nth-child(1)': {

@@ -14,6 +14,10 @@ export default ({ children, inline = true }: InlineCodeProps) => {
       background={
         inline ? { lightMode: 'pink100', darkMode: 'gray700' } : undefined
       }
+      borderRadius="small"
+      padding="small"
+      marginX="xsmall"
+      marginY="-small"
       className={styles.code}
     >
       {children}

@@ -3132,16 +3132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^26.0.21":
-  version: 26.0.23
-  resolution: "@types/jest@npm:26.0.23"
-  dependencies:
-    jest-diff: ^26.0.0
-    pretty-format: ^26.0.0
-  checksum: a015676b78bdc51be6f6315acef10d9106ea8064e3e49143bca3c75b834b61285b45c5f5ccfd049a80107f1e2869a9183cdb5be85816c073ea8dd05852fafdc6
-  languageName: node
-  linkType: hard
-
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.6":
   version: 7.0.7
   resolution: "@types/json-schema@npm:7.0.7"
@@ -3162,13 +3152,6 @@ __metadata:
   version: 4.14.168
   resolution: "@types/lodash@npm:4.14.168"
   checksum: 9a4e25f89fc035b9f0388f1f7be85e5eff49f9e6db0d93432c9a89fce0916f8a89db4e8290415f7ea02de6b00d3573826378dcb655b7b2d20530a6e8d6dd6fd0
-  languageName: node
-  linkType: hard
-
-"@types/lunr@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "@types/lunr@npm:2.3.3"
-  checksum: ae9e99337eb7ba9b6673167f212f5054ff9116daf1d507224b28fa3cbacea126a1101f788160e707d834cb4f9aa285c257f30777f7795241d82660042d958a09
   languageName: node
   linkType: hard
 
@@ -3234,13 +3217,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.35":
-  version: 14.14.43
-  resolution: "@types/node@npm:14.14.43"
-  checksum: b7a9e6df7c2a6f90e783bfe6ef358cc2c3ff4e1dfcea56b83349cd3feefd02a9b6fa54b443983694b4398a06257d871c947abeae03bd0d39fd71981161d61765
-  languageName: node
-  linkType: hard
-
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.0
   resolution: "@types/normalize-package-data@npm:2.4.0"
@@ -3298,15 +3274,6 @@ __metadata:
   dependencies:
     "@types/react": ^16
   checksum: 49745de25f49e3fff8e8dbc5751b3845ab3e5f732d03d89d5818148aa2dda1b002d8ddc7dc8976684c5dd9671cdbff8c270ea9f5c05c1349f65d233aaf135f25
-  languageName: node
-  linkType: hard
-
-"@types/react-highlight-words@npm:^0.16.1":
-  version: 0.16.2
-  resolution: "@types/react-highlight-words@npm:0.16.2"
-  dependencies:
-    "@types/react": "*"
-  checksum: 9f1d809a4e4da0c06c62898a781450833992ef9b5555f4774034d68cad9c371395a4f4341de156773df3f19e72a5f2071a674a6d4314832ae77a868ecd6e0268
   languageName: node
   linkType: hard
 
@@ -7771,13 +7738,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"highlight-words-core@npm:^1.2.0":
-  version: 1.2.2
-  resolution: "highlight-words-core@npm:1.2.2"
-  checksum: 188e629fbccf2aaff831892e75a2af47d3ca294c5c760cc50af23d5546b4b71b76aad8fba8548f7991a3cb2be1970c0951139f811e7dd92be5d83656d567a5d5
-  languageName: node
-  linkType: hard
-
 "highlight.js@npm:^10.4.1, highlight.js@npm:~10.7.0":
   version: 10.7.2
   resolution: "highlight.js@npm:10.7.2"
@@ -9807,13 +9767,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lunr@npm:^2.3.9":
-  version: 2.3.9
-  resolution: "lunr@npm:2.3.9"
-  checksum: a2b66320c2f6632322b91c43621eed9e623c0f1b81e7c2d74c238884a02229698baa4478bd238e9b32d7abf0db5ae9233b311c28e1edbcc481774e1ce83bec6f
-  languageName: node
-  linkType: hard
-
 "lz-string@npm:^1.4.4":
   version: 1.4.4
   resolution: "lz-string@npm:1.4.4"
@@ -10030,13 +9983,6 @@ fsevents@^1.2.7:
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"
   checksum: be1c825782df7f38eebd451d778f6407bb15a59c8807a69e7f2ad74a25440e474536441c6bf583fdf2803ea23b866e91ff68f565cda297211dd89147758c8df3
-  languageName: node
-  linkType: hard
-
-"memoize-one@npm:^4.0.0":
-  version: 4.0.3
-  resolution: "memoize-one@npm:4.0.3"
-  checksum: 944f45aec97579a52f6db7d14ecaa88ebb119abd14ecbc3472a15d780b86073699a70e000f204c910e0bde76adeeac3a39bf47d38b374d8b13038da3847e1f24
   languageName: node
   linkType: hard
 
@@ -11537,7 +11483,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -11763,19 +11709,6 @@ fsevents@^1.2.7:
     react: ">=16.3"
     react-dom: ">=16.3"
   checksum: 7f104b953cbc462fd3a2299ee42ea41a47cbf01461e0db1472a507851a682169800c4ffa66d310e10aa23e5a28b874184cde91f513c908f60c8d184eaf2420f2
-  languageName: node
-  linkType: hard
-
-"react-highlight-words@npm:^0.17.0":
-  version: 0.17.0
-  resolution: "react-highlight-words@npm:0.17.0"
-  dependencies:
-    highlight-words-core: ^1.2.0
-    memoize-one: ^4.0.0
-    prop-types: ^15.5.8
-  peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0
-  checksum: 2fb807c9fd6b8fcd9744728b755a004ede446025995f75f9ccdc75928f41aef085cea4480d2c8d8d8d26a3b452cf5c43d90b40f6cb4f21f9702e61d371900aba
   languageName: node
   linkType: hard
 
@@ -12893,16 +12826,10 @@ fsevents@^1.2.7:
     "@mdx-js/react": ^1.6.22
     "@types/classnames": ^2.2.11
     "@types/dedent": ^0.7.0
-    "@types/jest": ^26.0.21
-    "@types/jest-environment-puppeteer": ^4.4.1
     "@types/lodash": ^4.14.168
-    "@types/lunr": ^2.3.3
     "@types/mdx-js__react": ^1.5.3
-    "@types/node": ^14.14.35
-    "@types/puppeteer": ^5.4.3
     "@types/react": ^16.14.5
     "@types/react-dom": ^16.9.12
-    "@types/react-highlight-words": ^0.16.1
     "@types/react-router-dom": ^5.1.7
     "@types/react-router-hash-link": ^1.2.1
     babel-loader: ^8.2.2
@@ -12917,14 +12844,12 @@ fsevents@^1.2.7:
     gray-matter: ^4.0.2
     html-render-webpack-plugin: ^3.0.1
     lodash: ^4.17.21
-    lunr: ^2.3.9
     mdx-loader: ^3.0.2
     mime-types: ^2.1.29
     mini-css-extract-plugin: ^1.3.9
     react: ^16.14.0
     react-dom: ^16.14.0
     react-head: ^3.4.0
-    react-highlight-words: ^0.17.0
     react-router-dom: ^5.2.0
     react-router-hash-link: ^2.4.0
     react-syntax-highlighter: ^15.4.3

@@ -78,6 +78,8 @@ const SubLink = ({
           bottom={0}
           left={0}
           right={0}
+          zIndex={-1}
+          opacity={active ? undefined : 0}
           className={classnames(
             styles.activeIndicator,
             active ? styles.active : '',

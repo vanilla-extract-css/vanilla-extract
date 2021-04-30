@@ -40,7 +40,7 @@ export const responsiveStyles = createAtomicStyles({
     marginBottom: margins,
     marginLeft: margins,
     marginRight: margins,
-    pointerEvents: ['none'],
+    pointerEvents: ['none', 'auto'],
     opacity: [0, 1],
   },
   shorthands: {
