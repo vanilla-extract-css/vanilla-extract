@@ -1,5 +1,5 @@
 export type Contract = {
-  [key: string]: string | null | Contract;
+  [key: string]: number | string | null | Contract;
 };
 
 export type MapLeafNodes<Obj, LeafType> = {
