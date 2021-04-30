@@ -223,7 +223,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_small__1kw4bre1w sprinkles_paddingBottom_medium__1kw4bre20 sprinkles_paddingLeft_small__1kw4bre1q sprinkles_paddingRight_small__1kw4bre1t"`,
+        `"sprinkles_paddingTop_small__1kw4bre1x sprinkles_paddingBottom_medium__1kw4bre21 sprinkles_paddingLeft_small__1kw4bre1r sprinkles_paddingRight_small__1kw4bre1u"`,
       );
     });
 
@@ -236,7 +236,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_large__1kw4bre1y sprinkles_paddingBottom_large__1kw4bre21 sprinkles_paddingLeft_small__1kw4bre1q sprinkles_paddingRight_small__1kw4bre1t"`,
+        `"sprinkles_paddingTop_large__1kw4bre1z sprinkles_paddingBottom_large__1kw4bre22 sprinkles_paddingLeft_small__1kw4bre1r sprinkles_paddingRight_small__1kw4bre1u"`,
       );
     });
   });
