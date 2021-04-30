@@ -9,6 +9,8 @@ import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 import dedent from 'dedent';
 
+const originalNodeEnv = process.env.NODE_ENV;
+
 const hash = (value: string) =>
   crypto.createHash('md5').update(value).digest('hex');
 
@@ -63,14 +65,23 @@ export function processVanillaFile({
 
   setAdapter(cssAdapter);
 
-  const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__adapter__);${source}`;
+  const currentNodeEnv = process.env.NODE_ENV;
+
+  const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__adapter__);${source};`;
+
+  // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
+  // This can cause CSS to be bound to the wrong instance, resulting in no CSS output
+  // To get around this we set the NODE_ENV back to the original value ONLY during eval
+  process.env.NODE_ENV = originalNodeEnv;
 
   const evalResult = evalCode(
     sourceWithBoundLoaderInstance,
     filePath,
-    { console, __adapter__: cssAdapter },
+    { console, __adapter__: cssAdapter, process },
     true,
   );
+
+  process.env.NODE_ENV = currentNodeEnv;
 
   const cssImports = [];
 

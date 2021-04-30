@@ -48,6 +48,7 @@ export async function startFixture(
     return startEsbuildFixture(fixtureName, {
       type,
       port,
+      mode: options.mode,
     });
   }
 
@@ -55,6 +56,7 @@ export async function startFixture(
     return startViteFixture(fixtureName, {
       type,
       port,
+      mode: options.mode,
     });
   }
 

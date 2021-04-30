@@ -1,8 +1,30 @@
 import path from 'path';
-import { createServer } from 'vite';
+import http from 'http';
+
+import { createServer, build, InlineConfig } from 'vite';
+import handler from 'serve-handler';
 import vanillaExtractPlugin from '@vanilla-extract/vite-plugin';
 
 import { TestServer } from './types';
+
+const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
+  new Promise<() => Promise<void>>((resolve) => {
+    const server = http.createServer((request, response) => {
+      return handler(request, response, {
+        public: dir,
+      });
+    });
+
+    server.listen(port, () => {
+      resolve(
+        () =>
+          new Promise<void>((closeRes) => {
+            server.close(() => closeRes());
+          }),
+      );
+    });
+  });
+
 export interface ViteFixtureOptions {
   type: 'vite';
   mode?: 'development' | 'production';
@@ -15,27 +37,39 @@ export const startViteFixture = async (
   const root = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
-  const server = await createServer({
-    // any valid user config options, plus `mode` and `configFile`
+
+  const config: InlineConfig = {
     configFile: false,
-    mode,
     root,
     plugins: [vanillaExtractPlugin()],
-    define: {
-      'process.env.NODE_ENV': JSON.stringify(mode),
-    },
     server: {
       port,
     },
-  });
+    build: {
+      cssCodeSplit: false,
+    },
+  };
 
-  await server.listen();
+  if (mode === 'development') {
+    const server = await createServer(config);
+
+    await server.listen();
+
+    return {
+      type: 'vite',
+      url: `http://localhost:${port}`,
+      close: () => {
+        return server.close();
+      },
+    };
+  }
+
+  await build(config);
+  const closeServer = await serveAssets({ port, dir: path.join(root, 'dist') });
 
   return {
     type: 'vite',
     url: `http://localhost:${port}`,
-    close: () => {
-      return server.close();
-    },
+    close: closeServer,
   };
 };
