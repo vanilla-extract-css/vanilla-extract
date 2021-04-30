@@ -1,5 +1,4 @@
-import { style } from '@vanilla-extract/css';
-import type * as CSS from 'csstype';
+import { style, CSSProperties } from '@vanilla-extract/css';
 
 import {
   AtomicStyles,
@@ -15,8 +14,6 @@ interface Condition {
 }
 
 type BaseConditions = { [conditionName: string]: Condition };
-
-type CSSProperties = CSS.Properties<(string & {}) | number>;
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
