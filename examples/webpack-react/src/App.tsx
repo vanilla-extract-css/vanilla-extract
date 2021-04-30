@@ -38,7 +38,9 @@ export const App = () => (
             },
           })}
         >
-          👋🧁🍨
+          <span aria-label="Waving hand">👋</span>
+          <span aria-label="vanilla-extract logo">🧁</span>
+          <span aria-label="Sprinkles logo">🍨</span>
         </h1>
         <h2
           className={atoms({
