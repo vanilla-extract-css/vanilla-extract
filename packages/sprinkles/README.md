@@ -67,7 +67,7 @@ document.write(`
 
 ---
 
-[🖥 &nbsp; Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/atoms.css.ts)
+🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/atoms.css.ts)
 
 ---
 
