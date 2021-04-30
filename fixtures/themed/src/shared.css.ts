@@ -1,6 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
-export const shadow = style({
+export const shadow: string = style({
   boxShadow: '0 0 5px red',
 });
 
