@@ -2835,11 +2835,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
-    "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
     esbuild: ^0.11.16
-  peerDependencies:
-    esbuild: ">=0.11.1"
   languageName: unknown
   linkType: soft
 
@@ -2880,11 +2877,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
-    "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
     vite: ^2.2.3
-  peerDependencies:
-    vite: ">=2.0.0"
   languageName: unknown
   linkType: soft
 
