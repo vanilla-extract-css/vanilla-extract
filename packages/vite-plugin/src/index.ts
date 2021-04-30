@@ -11,7 +11,7 @@ export default function vanillaExtractPlugin(): Plugin {
   let config: ResolvedConfig;
 
   return {
-    name: 'vite:vanilla-extract',
+    name: 'vanilla-extract',
     enforce: 'pre',
     configResolved(resolvedConfig) {
       config = resolvedConfig;
