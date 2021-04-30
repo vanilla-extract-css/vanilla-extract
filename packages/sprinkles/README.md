@@ -113,7 +113,7 @@ const layoutStyles = createAtomicStyles({
     paddingBottom: space,
     paddingLeft: space,
     paddingRight: space,
-    // etc...
+    // etc.
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
@@ -130,9 +130,9 @@ const colorStyles = createAtomicStyles({
   defaultCondition: false,
   properties: {
     color: colors,
-    background: colors
-  },
-  // etc.
+    background: colors,
+    // etc.
+  }
 });
 
 export const atoms = createAtomsFn(layoutStyles, colorStyles);
@@ -173,7 +173,7 @@ export const container = composeStyles(
   atoms({
     display: 'flex',
     paddingX: 'small'
-  })
+  }),
   style({
     ':hover': {
       outline: '2px solid currentColor'
@@ -295,7 +295,7 @@ const layoutStyles = createAtomicStyles({
 });
 ```
 
-For semantic mappings (e.g. space scales, color colorss), values can be provided as an object.
+For semantic mappings (e.g. space scales, color palettes), values can be provided as an object.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
