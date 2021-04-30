@@ -14,9 +14,6 @@
   },
   "author": "SEEK",
   "license": "MIT",
-  "peerDependencies": {
-    "esbuild": ">=0.11.1"
-  },
   "dependencies": {
     "@vanilla-extract/css": "^0.4.0",
     "@vanilla-extract/integration": "^0.1.0"

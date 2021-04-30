@@ -1,12 +1,11 @@
 import type { Plugin, ResolvedConfig } from 'vite';
-import { build as esbuild } from 'esbuild';
 import {
   cssFileFilter,
   virtualCssFileFilter,
   processVanillaFile,
   getSourceFromVirtualCssFile,
+  compile,
 } from '@vanilla-extract/integration';
-import { vanillaExtractFilescopePlugin } from '@vanilla-extract/esbuild-plugin';
 
 export default function vanillaExtractPlugin(): Plugin {
   let config: ResolvedConfig;
@@ -24,30 +23,17 @@ export default function vanillaExtractPlugin(): Plugin {
     },
     async load(id, ssr) {
       if (cssFileFilter.test(id)) {
-        const fileScopePlugin = vanillaExtractFilescopePlugin();
-        const result = await esbuild({
-          entryPoints: [id],
-          metafile: true,
-          bundle: true,
-          external: ['@vanilla-extract'],
-          platform: 'node',
-          write: false,
-          plugins: [fileScopePlugin],
-          absWorkingDir: config.root,
+        const { source, watchFiles } = await compile({
+          filePath: id,
+          cwd: config.root,
         });
 
-        const { outputFiles, metafile } = result;
-
-        if (!outputFiles || outputFiles.length !== 1) {
-          throw new Error('Invalid child compilation');
-        }
-
-        for (const file in metafile?.inputs) {
+        for (const file in watchFiles) {
           this.addWatchFile(file);
         }
 
         return processVanillaFile({
-          source: outputFiles[0].text,
+          source,
           filePath: id,
           outputCss: !ssr,
         });

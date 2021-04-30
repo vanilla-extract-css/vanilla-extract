@@ -2831,7 +2831,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@0.2.0, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
+"@vanilla-extract/esbuild-plugin@*, @vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
@@ -2852,6 +2852,7 @@ __metadata:
     "@vanilla-extract/css": ^0.4.0
     chalk: ^4.1.1
     dedent: ^0.7.0
+    esbuild: ^0.11.16
     eval: ^0.1.6
     find-up: ^5.0.0
     javascript-stringify: ^2.0.1
@@ -2880,9 +2881,7 @@ __metadata:
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
     "@vanilla-extract/css": ^0.4.0
-    "@vanilla-extract/esbuild-plugin": 0.2.0
     "@vanilla-extract/integration": ^0.1.0
-    esbuild: ^0.11.16
     vite: ^2.2.3
   peerDependencies:
     vite: ">=2.0.0"
