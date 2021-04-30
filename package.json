@@ -9,6 +9,7 @@
     "build": "preconstruct build",
     "start-fixture": "ts-node --log-error ./test-helpers/src/startFixtureCLI",
     "start": "yarn start-fixture themed",
+    "start-site": "manypkg run site start",
     "postinstall": "yarn dev",
     "test": "jest",
     "format": "prettier --write .",
@@ -20,7 +21,8 @@
   "workspaces": [
     "packages/*",
     "test-helpers",
-    "fixtures/*"
+    "fixtures/*",
+    "site"
   ],
   "preconstruct": {
     "packages": [

@@ -24,6 +24,7 @@
     "packages/**/*",
     "fixtures/*/src/**/*",
     "test-helpers/**/*",
+    "site/**/*",
     "tests/**/*"
   ]
 }

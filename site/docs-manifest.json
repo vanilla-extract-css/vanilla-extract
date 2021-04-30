@@ -1,0 +1,386 @@
+[
+  {
+    "fileName": "introduction.md",
+    "id": "introduction",
+    "route": "/documentation/",
+    "sections": [
+      {
+        "raw": "# Zero-runtime",
+        "level": 1,
+        "name": "Zero-runtime",
+        "breadcrumbs": [
+          "Zero-runtime"
+        ],
+        "content": "Stylesheets-in-TypeScript.  Write your styles in TypeScript (or JavaScript) with locally scoped class names and CSS Variables, then generate static CSS files at build time.  Basically, it’s “CSS Modules-in-TypeScript” but with scoped CSS Variables + heaps more.  > 🚧 &nbsp; Please note, this is an alpha release.  🔥 &nbsp; All styles generated at build time — just like Sass, Less, etc.  ✨ &nbsp; Minimal abstraction over standard CSS.  🦄 &nbsp; Works with any front-end framework — or even without one.  🌳 &nbsp; Locally scoped class names — just like CSS Modules.  🚀 &nbsp; Locally scoped CSS Variables, @keyframes and @font-face rules.  🎨 &nbsp; High-level theme system with support for simultaneous themes. No globals!  🛠 &nbsp; Utils for generating variable-based calc expressions.  💪 &nbsp; Type-safe styles via CSSType.  🏃‍♂️ &nbsp; Optional runtime version for development and testing.  🙈 &nbsp; Optional API for dynamic runtime theming.  ---  Write your styles in .css.ts files.",
+        "page": "Introduction",
+        "hash": "zero-runtime"
+      },
+      {
+        "raw": "## Requirements",
+        "level": 2,
+        "name": "Requirements",
+        "breadcrumbs": [
+          "Zero-runtime",
+          "Requirements"
+        ],
+        "content": "  Your project must be using webpack with the supplied webpack plugin, but that's it.",
+        "page": "Introduction",
+        "hash": "requirements"
+      }
+    ]
+  },
+  {
+    "fileName": "background.md",
+    "id": "background",
+    "route": "/documentation/background",
+    "sections": [
+      {
+        "raw": "# Background",
+        "level": 1,
+        "name": "Background",
+        "breadcrumbs": [
+          "Background"
+        ],
+        "content": "",
+        "page": "Background",
+        "hash": "background"
+      },
+      {
+        "raw": "## TODO - Tradeoffs",
+        "level": 2,
+        "name": "TODO - Tradeoffs",
+        "breadcrumbs": [
+          "Background",
+          "TODO - Tradeoffs"
+        ],
+        "content": "",
+        "page": "Background",
+        "hash": "todo---tradeoffs"
+      },
+      {
+        "raw": "## TODO - Backstory",
+        "level": 2,
+        "name": "TODO - Backstory",
+        "breadcrumbs": [
+          "Background",
+          "TODO - Backstory"
+        ],
+        "content": "",
+        "page": "Background",
+        "hash": "todo---backstory"
+      },
+      {
+        "raw": "## Thanks",
+        "level": 2,
+        "name": "Thanks",
+        "breadcrumbs": [
+          "Background",
+          "Thanks"
+        ],
+        "content": "  Nathan Nam Tran for creating css-in-js-loader, which served as the initial starting point for treat, the precursor to this library. - Stitches for getting us excited about CSS-Variables-in-JS. - SEEK for giving us the space to do interesting work.",
+        "page": "Background",
+        "hash": "thanks"
+      }
+    ]
+  },
+  {
+    "fileName": "setup.md",
+    "id": "setup",
+    "route": "/documentation/setup",
+    "sections": [
+      {
+        "raw": "# Setup",
+        "level": 1,
+        "name": "Setup",
+        "breadcrumbs": [
+          "Setup"
+        ],
+        "content": "  There are currently a few integrations to choose from.",
+        "page": "Setup",
+        "hash": "setup"
+      },
+      {
+        "raw": "## Webpack",
+        "level": 2,
+        "name": "Webpack",
+        "breadcrumbs": [
+          "Setup",
+          "Webpack"
+        ],
+        "content": "  Install the dependencies.",
+        "page": "Setup",
+        "hash": "webpack"
+      },
+      {
+        "raw": "## esbuild",
+        "level": 2,
+        "name": "esbuild",
+        "breadcrumbs": [
+          "Setup",
+          "esbuild"
+        ],
+        "content": "  Install the dependencies.   > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. export const className = style({ ... }, 'className');",
+        "page": "Setup",
+        "hash": "esbuild"
+      },
+      {
+        "raw": "## Gatsby",
+        "level": 2,
+        "name": "Gatsby",
+        "breadcrumbs": [
+          "Setup",
+          "Gatsby"
+        ],
+        "content": "  To add to your Gatsby site, use the gatsby-plugin-vanilla-extract plugin.",
+        "page": "Setup",
+        "hash": "gatsby"
+      }
+    ]
+  },
+  {
+    "fileName": "api.md",
+    "id": "api",
+    "route": "/documentation/api",
+    "sections": [
+      {
+        "raw": "# API",
+        "level": 1,
+        "name": "API",
+        "breadcrumbs": [
+          "API"
+        ],
+        "content": "🍬 If you're a treat user, check out our migration guide.",
+        "page": "API",
+        "hash": "api"
+      },
+      {
+        "raw": "## style",
+        "level": 2,
+        "name": "style",
+        "breadcrumbs": [
+          "API",
+          "style"
+        ],
+        "content": "  Creates styles attached to a locally scoped class name.     > 💡 To improve maintainability, each style block can only target a single element. To enforce this, all selectors must target the & character which is a reference to the current element. For example, '&:hover:not(:active)' is considered valid, while '& > a' and `& ${childClass}] are not. >  >If you want to target another scoped class then it should be defined within the style block of that class instead. For example, [& ${childClass}] is invalid since it targets ${childClass}, so it should instead be defined in the style block for childClass. > >If you want to globally target child nodes within the current element (e.g. '& > a'), you should use [globalStyle` instead.",
+        "page": "API",
+        "hash": "style"
+      },
+      {
+        "raw": "## globalStyle",
+        "level": 2,
+        "name": "globalStyle",
+        "breadcrumbs": [
+          "API",
+          "globalStyle"
+        ],
+        "content": "  Creates styles attached to a global selector.",
+        "page": "API",
+        "hash": "globalstyle"
+      },
+      {
+        "raw": "## mapToStyles",
+        "level": 2,
+        "name": "mapToStyles",
+        "breadcrumbs": [
+          "API",
+          "mapToStyles"
+        ],
+        "content": "  Creates an object that maps style names to hashed class names.  > 💡 This is useful for mapping to component props, e.g. ``    > 💡 All theme variants must provide a value for every variable or it’s a type error.",
+        "page": "API",
+        "hash": "maptostyles"
+      },
+      {
+        "raw": "## createTheme",
+        "level": 2,
+        "name": "createTheme",
+        "breadcrumbs": [
+          "API",
+          "createTheme"
+        ],
+        "content": "createGlobalTheme  Creates a theme attached to a global selector, but with locally scoped variable names.    > 💡 All theme variants must provide a value for every variable or it’s a type error.  ## createTheme",
+        "page": "API",
+        "hash": "createtheme"
+      },
+      {
+        "raw": "## createGlobalTheme",
+        "level": 2,
+        "name": "createGlobalTheme",
+        "breadcrumbs": [
+          "API",
+          "createGlobalTheme"
+        ],
+        "content": "  Creates a theme attached to a global selector, but with locally scoped variable names.    > 💡 All theme variants must provide a value for every variable or it’s a type error.",
+        "page": "API",
+        "hash": "createglobaltheme"
+      },
+      {
+        "raw": "## createThemeVars",
+        "level": 2,
+        "name": "createThemeVars",
+        "breadcrumbs": [
+          "API",
+          "createThemeVars"
+        ],
+        "content": "  Creates a collection of CSS Variables without coupling them to a specific theme variant.  > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.",
+        "page": "API",
+        "hash": "createthemevars"
+      },
+      {
+        "raw": "## assignVars",
+        "level": 2,
+        "name": "assignVars",
+        "breadcrumbs": [
+          "API",
+          "assignVars"
+        ],
+        "content": "  Assigns a collection of CSS Variables anywhere within a style block.  > 💡 This is useful for creating responsive themes since it can be used within @media blocks.    > 💡 All variables passed into this function must be assigned or it’s a type error.",
+        "page": "API",
+        "hash": "assignvars"
+      },
+      {
+        "raw": "## createVar",
+        "level": 2,
+        "name": "createVar",
+        "breadcrumbs": [
+          "API",
+          "createVar"
+        ],
+        "content": "  Creates a single CSS Variable.",
+        "page": "API",
+        "hash": "createvar"
+      },
+      {
+        "raw": "## fallbackVar",
+        "level": 2,
+        "name": "fallbackVar",
+        "breadcrumbs": [
+          "API",
+          "fallbackVar"
+        ],
+        "content": "  Provides fallback values when consuming variables.",
+        "page": "API",
+        "hash": "fallbackvar"
+      },
+      {
+        "raw": "## fontFace",
+        "level": 2,
+        "name": "fontFace",
+        "breadcrumbs": [
+          "API",
+          "fontFace"
+        ],
+        "content": "  Creates a custom font attached to a locally scoped font name.",
+        "page": "API",
+        "hash": "fontface"
+      },
+      {
+        "raw": "## globalFontFace",
+        "level": 2,
+        "name": "globalFontFace",
+        "breadcrumbs": [
+          "API",
+          "globalFontFace"
+        ],
+        "content": "  Creates a globally scoped custom font.",
+        "page": "API",
+        "hash": "globalfontface"
+      },
+      {
+        "raw": "## keyframes",
+        "level": 2,
+        "name": "keyframes",
+        "breadcrumbs": [
+          "API",
+          "keyframes"
+        ],
+        "content": "  Creates a locally scoped set of keyframes.",
+        "page": "API",
+        "hash": "keyframes"
+      },
+      {
+        "raw": "## globalKeyframes",
+        "level": 2,
+        "name": "globalKeyframes",
+        "breadcrumbs": [
+          "API",
+          "globalKeyframes"
+        ],
+        "content": "  Creates a globally scoped set of keyframes.",
+        "page": "API",
+        "hash": "globalkeyframes"
+      }
+    ]
+  },
+  {
+    "fileName": "dynamic-api.md",
+    "id": "dynamic-api",
+    "route": "/documentation/dynamic-api",
+    "sections": [
+      {
+        "raw": "# Dynamic API",
+        "level": 1,
+        "name": "Dynamic API",
+        "breadcrumbs": [
+          "Dynamic API"
+        ],
+        "content": "  We also provide a lightweight standalone package to support dynamic runtime theming.",
+        "page": "Dynamic API",
+        "hash": "dynamic-api"
+      },
+      {
+        "raw": "## createInlineTheme",
+        "level": 2,
+        "name": "createInlineTheme",
+        "breadcrumbs": [
+          "Dynamic API",
+          "createInlineTheme"
+        ],
+        "content": "  Generates a custom theme at runtime as an inline style object.",
+        "page": "Dynamic API",
+        "hash": "createinlinetheme"
+      },
+      {
+        "raw": "## setElementTheme",
+        "level": 2,
+        "name": "setElementTheme",
+        "breadcrumbs": [
+          "Dynamic API",
+          "setElementTheme"
+        ],
+        "content": "  Sets a collection of CSS Variables on an element.    > 💡 All variables passed into this function must be assigned or it’s a type error.",
+        "page": "Dynamic API",
+        "hash": "setelementtheme"
+      },
+      {
+        "raw": "## setElementVar",
+        "level": 2,
+        "name": "setElementVar",
+        "breadcrumbs": [
+          "Dynamic API",
+          "setElementVar"
+        ],
+        "content": "  Sets a single var on an element.",
+        "page": "Dynamic API",
+        "hash": "setelementvar"
+      }
+    ]
+  },
+  {
+    "fileName": "utility-functions.md",
+    "id": "utility-functions",
+    "route": "/documentation/utility-functions",
+    "sections": [
+      {
+        "raw": "## calc",
+        "level": 2,
+        "name": "calc",
+        "breadcrumbs": [
+          "calc"
+        ],
+        "content": "  Streamlines the creation of CSS calc expressions.",
+        "page": "Utility functions",
+        "hash": "calc"
+      }
+    ]
+  }
+]
