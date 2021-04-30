@@ -64,12 +64,20 @@ export const startViteFixture = async (
     };
   }
 
-  await build(config);
+  const result = await build(config);
   const closeServer = await serveAssets({ port, dir: path.join(root, 'dist') });
+
+  if (!('output' in result)) {
+    throw new Error('Unexpected build output');
+  }
+
+  const { fileName: stylesheet } =
+    result.output.find((asset) => asset.name?.endsWith('.css')) || {};
 
   return {
     type: 'vite',
     url: `http://localhost:${port}`,
+    stylesheet,
     close: closeServer,
   };
 };

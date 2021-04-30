@@ -9,4 +9,5 @@ export interface TestServer {
   type: BuildType;
   url: string;
   close: () => Promise<void>;
+  stylesheet?: string;
 }

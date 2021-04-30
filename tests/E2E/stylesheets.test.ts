@@ -55,7 +55,9 @@ describe('Stylesheet', () => {
     });
 
     it('should create valid stylesheet', async () => {
-      expect(await getStylesheet(server.url, 'index.css')).toMatchSnapshot();
+      expect(
+        await getStylesheet(server.url, server.stylesheet),
+      ).toMatchSnapshot();
     });
 
     afterAll(async () => {
