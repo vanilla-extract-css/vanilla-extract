@@ -67,10 +67,6 @@ document.write(`
 
 ---
 
-🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/atoms.css.ts)
-
----
-
 ## Setup
 
 > 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
