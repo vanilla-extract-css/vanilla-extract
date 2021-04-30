@@ -137,7 +137,11 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
       } else if (Array.isArray(propValue)) {
         for (const responsiveIndex in propValue) {
           const responsiveValue = propValue[responsiveIndex];
-          if (responsiveValue) {
+
+          if (
+            typeof responsiveValue === 'string' ||
+            typeof responsiveValue === 'number'
+          ) {
             const conditionName =
               atomicProperty.responsiveArray[responsiveIndex];
             classNames.push(
@@ -150,7 +154,7 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
           // Conditional style
           const value = propValue[conditionName];
 
-          if (value) {
+          if (typeof value === 'string' || typeof value === 'number') {
             classNames.push(
               atomicProperty.values[value].conditions[conditionName],
             );
