@@ -12,12 +12,12 @@ export const atoms = createAtomicStyles({
   conditions: {
     mobile: {},
     desktop: {
-      '@media': 'screen and (min-width: 786px)',
-    },
+      '@media': 'screen and (min-width: 786px)'
+    }
   },
   responsiveArray: ['mobile', 'desktop'],
   properties: {
-    opacity: [0, 1],
-  },
+    opacity: [0, 1]
+  }
 });
 ```
