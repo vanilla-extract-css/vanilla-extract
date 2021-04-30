@@ -1281,6 +1281,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.13.17":
+  version: 7.14.0
+  resolution: "@babel/runtime@npm:7.14.0"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: ab6653f2f8ecdaebf36674894cef458a9d4f881dc007fdcd50a8261f5c6d9731e03fda2c17e32ecf0e6c779d69eb6cf49d68a48c780aaf07d5b572e8b7ef0508
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.12.13, @babel/template@npm:^7.3.3":
   version: 7.12.13
   resolution: "@babel/template@npm:7.12.13"
@@ -9793,6 +9802,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"polished@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "polished@npm:4.1.2"
+  dependencies:
+    "@babel/runtime": ^7.13.17
+  checksum: 98cd991bba0ee0ec9b8926e374bc6701ebdff2ab9ab7258589046afbe90d3d4e7db48e7c9e32d3e36ba7a6d788ededc6ec053f64f448e6e765edabe9ce28d6aa
+  languageName: node
+  linkType: hard
+
 "portfinder@npm:^1.0.26, portfinder@npm:^1.0.28":
   version: 1.0.28
   resolution: "portfinder@npm:1.0.28"
@@ -12371,6 +12389,7 @@ typescript@^4.1.3:
     css-loader: ^5.2.4
     html-webpack-plugin: ^5.3.1
     mini-css-extract-plugin: ^1.5.1
+    polished: ^4.1.2
     react: ^17.0.2
     react-dom: ^17.0.2
     tailwindcss: ^2.1.2

@@ -1,22 +1,19 @@
 import { createGlobalTheme } from '@vanilla-extract/css';
+import { modularScale } from 'polished';
 import colors from 'tailwindcss/colors';
 
-const createScale = (ratio: number, start: number) => (x: number) =>
-  `${Math.round(Math.pow(ratio, x + start))}px`;
+const createScale = (ratio: number, base: number) => (steps: number) =>
+  `${modularScale(steps, base, ratio)}px`;
 
-const spaceRatio = 1.55;
-const spaceScale = createScale(spaceRatio, 2);
-
-const typeRatio = 1.3;
-const fontSizeScale = createScale(typeRatio, 10);
-const lineHeightScale = createScale(typeRatio, 11.5);
-
-const borderRadiusRatio = 1.4;
-const borderRadiusScale = createScale(borderRadiusRatio, 4);
+const spaceScale = createScale(1.4, 4);
+const fontSizeScale = createScale(1.3, 16);
+const lineHeightScale = createScale(1.25, 24);
+const borderRadiusScale = createScale(1.5, 4);
 
 export const vars = createGlobalTheme(':root', {
   space: {
-    '0': '0',
+    none: '0',
+    '0x': spaceScale(0),
     '1x': spaceScale(1),
     '2x': spaceScale(2),
     '3x': spaceScale(3),
@@ -52,6 +49,7 @@ export const vars = createGlobalTheme(':root', {
     'green-900': colors.emerald[900],
   },
   borderRadius: {
+    '0x': borderRadiusScale(0),
     '1x': borderRadiusScale(1),
     '2x': borderRadiusScale(2),
     '3x': borderRadiusScale(3),
@@ -60,10 +58,11 @@ export const vars = createGlobalTheme(':root', {
     full: '99999px',
   },
   fontFamily: {
-    system:
+    body:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   },
   fontSize: {
+    '0x': fontSizeScale(0),
     '1x': fontSizeScale(1),
     '2x': fontSizeScale(2),
     '3x': fontSizeScale(3),
@@ -71,6 +70,7 @@ export const vars = createGlobalTheme(':root', {
     '5x': fontSizeScale(5),
   },
   lineHeight: {
+    '0x': lineHeightScale(0),
     '1x': lineHeightScale(1),
     '2x': lineHeightScale(2),
     '3x': lineHeightScale(3),
