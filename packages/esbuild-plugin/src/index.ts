@@ -53,6 +53,7 @@ const vanillaExtractFilescopePlugin = (): Plugin => ({
 
         return {
           contents,
+          loader: path.match(/\.(ts|tsx)$/i) ? 'ts' : undefined,
           resolveDir: dirname(path),
         };
       }
