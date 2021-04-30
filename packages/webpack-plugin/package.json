@@ -39,6 +39,6 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
-    "webpack": "^5.27.1"
+    "webpack": "^5.36.1"
   }
 }
