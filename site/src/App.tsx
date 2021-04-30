@@ -40,7 +40,7 @@ export default () => {
         }}
         onClick={() => setTheme(theme === lightMode ? darkMode : lightMode)}
       >
-        {theme === lightMode ? `☀️` : `🌙`}
+        {theme === lightMode ? `🌙` : `☀️`}
       </Box>
       <Title>{pageTitle}</Title>
       <Meta property="og:title" content={pageTitle} />

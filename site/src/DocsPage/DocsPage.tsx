@@ -74,7 +74,7 @@ export const DocsPage = () => {
           className={styles.homeLink}
           title="Back to home"
         >
-          <Logo size={40} />
+          <Logo size={48} />
         </ReactRouterLink>
       </Box>
 
