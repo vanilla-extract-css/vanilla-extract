@@ -61,9 +61,13 @@ document.write(`
 
 ✍️ &nbsp; Configure shorthands for common property combinations, e.g. `paddingX` / `paddingY`.
 
-🖥 &nbsp; Conditional atoms to target media/feature queries and selectors.
+🚦 &nbsp; Conditional atoms to target media/feature queries and selectors.
 
 ✨ &nbsp; Scope conditions to individual properties.
+
+---
+
+[🖥 &nbsp; Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/atoms.css.ts)
 
 ---
 
