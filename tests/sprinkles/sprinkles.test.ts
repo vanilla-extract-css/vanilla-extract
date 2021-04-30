@@ -25,6 +25,26 @@ describe('sprinkles', () => {
       );
     });
 
+    it('should handle falsey values on conditional styles', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({ display: 'block', opacity: { mobile: 0, desktop: 1 } }),
+      ).toMatchInlineSnapshot(
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_opacity_0_mobile__1kw4bre1a sprinkles_opacity_1_desktop__1kw4bre1f"`,
+      );
+    });
+
+    it('should handle falsey values from responsive array on conditional styles', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({ display: 'block', opacity: [0, 1] }),
+      ).toMatchInlineSnapshot(
+        `"sprinkles_display_block_mobile__1kw4brej sprinkles_opacity_0_mobile__1kw4bre1a sprinkles_opacity_1_tablet__1kw4bre1e"`,
+      );
+    });
+
     it('should handle conditional styles with different variants', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
@@ -203,7 +223,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_small__1kw4bre1q sprinkles_paddingBottom_medium__1kw4bre1u sprinkles_paddingLeft_small__1kw4bre1k sprinkles_paddingRight_small__1kw4bre1n"`,
+        `"sprinkles_paddingTop_small__1kw4bre1w sprinkles_paddingBottom_medium__1kw4bre20 sprinkles_paddingLeft_small__1kw4bre1q sprinkles_paddingRight_small__1kw4bre1t"`,
       );
     });
 
@@ -216,7 +236,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_large__1kw4bre1s sprinkles_paddingBottom_large__1kw4bre1v sprinkles_paddingLeft_small__1kw4bre1k sprinkles_paddingRight_small__1kw4bre1n"`,
+        `"sprinkles_paddingTop_large__1kw4bre1y sprinkles_paddingBottom_large__1kw4bre21 sprinkles_paddingLeft_small__1kw4bre1q sprinkles_paddingRight_small__1kw4bre1t"`,
       );
     });
   });
@@ -312,6 +332,31 @@ describe('sprinkles', () => {
                 "tablet": "sprinkles_display_none_tablet__1kw4bren",
               },
               "defaultClass": "sprinkles_display_none_mobile__1kw4brem",
+            },
+          },
+        },
+        "opacity": Object {
+          "responsiveArray": Array [
+            "mobile",
+            "tablet",
+            "desktop",
+          ],
+          "values": Object {
+            "0": Object {
+              "conditions": Object {
+                "desktop": "sprinkles_opacity_0_desktop__1kw4bre1c",
+                "mobile": "sprinkles_opacity_0_mobile__1kw4bre1a",
+                "tablet": "sprinkles_opacity_0_tablet__1kw4bre1b",
+              },
+              "defaultClass": "sprinkles_opacity_0_mobile__1kw4bre1a",
+            },
+            "1": Object {
+              "conditions": Object {
+                "desktop": "sprinkles_opacity_1_desktop__1kw4bre1f",
+                "mobile": "sprinkles_opacity_1_mobile__1kw4bre1d",
+                "tablet": "sprinkles_opacity_1_tablet__1kw4bre1e",
+              },
+              "defaultClass": "sprinkles_opacity_1_mobile__1kw4bre1d",
             },
           },
         },
