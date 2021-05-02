@@ -10,7 +10,7 @@
     "strict": true /* Enable all strict type-checking options. */,
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
@@ -22,6 +22,7 @@
   "include": [
     "./jest.setup.ts",
     "packages/**/*",
+    "examples/*/src/**/*",
     "fixtures/*/src/**/*",
     "test-helpers/**/*",
     "tests/**/*"

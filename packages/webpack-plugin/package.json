@@ -43,6 +43,6 @@
     "@types/debug": "^4.1.5",
     "@types/dedent": "^0.7.0",
     "@types/lodash": "^4.14.168",
-    "webpack": "^5.27.1"
+    "webpack": "^5.36.1"
   }
 }

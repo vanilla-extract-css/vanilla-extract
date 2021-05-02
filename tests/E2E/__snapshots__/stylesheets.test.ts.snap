@@ -143,7 +143,37 @@ exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
 `;
 
 exports[`Stylesheet themed - esbuild should create valid stylesheet 1`] = `
-"/* vanilla-extract-css-ns:@fixtures/themed/src/shared.css.ts.vanilla.css?source=LnNoYXJlZF9fNGR0ZmVuMCB7CiAgYm94LXNoYWRvdzogMCAwIDVweCByZWQ7Cn0KYm9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogc2t5Ymx1ZTsKfQ== */
+"/* vanilla-extract-css-ns:@fixtures/themed/src/themes.css.ts.vanilla.css?source=OnJvb3QsIC50aGVtZXNfX2N2dGExNzAgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfX2N2dGExNzE6IGJsdWU7CiAgLS1jb2xvcnMtdGV4dF9fY3Z0YTE3Mjogd2hpdGU7CiAgLS1zcGFjZS0xX19jdnRhMTczOiA0cHg7CiAgLS1zcGFjZS0yX19jdnRhMTc0OiA4cHg7CiAgLS1zcGFjZS0zX19jdnRhMTc1OiAxMnB4Owp9Ci50aGVtZXNfX2N2dGExNzYgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfX2N2dGExNzE6IGdyZWVuOwogIC0tY29sb3JzLXRleHRfX2N2dGExNzI6IHdoaXRlOwogIC0tc3BhY2UtMV9fY3Z0YTE3MzogOHB4OwogIC0tc3BhY2UtMl9fY3Z0YTE3NDogMTJweDsKICAtLXNwYWNlLTNfX2N2dGExNzU6IDE2cHg7Cn0KLnRoZW1lc19fY3Z0YTE3NyB7CiAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fY3Z0YTE3MTogcGluazsKICAtLWNvbG9ycy10ZXh0X19jdnRhMTcyOiBwdXJwbGU7CiAgLS1zcGFjZS0xX19jdnRhMTczOiA2cHg7CiAgLS1zcGFjZS0yX19jdnRhMTc0OiAxMnB4OwogIC0tc3BhY2UtM19fY3Z0YTE3NTogMThweDsKfQpAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkgewogIC50aGVtZXNfX2N2dGExNzcgewogICAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fY3Z0YTE3MTogcHVycGxlOwogICAgLS1jb2xvcnMtdGV4dF9fY3Z0YTE3MjogcGluazsKICB9Cn0= */
+:root,
+.themes__cvta170 {
+  --colors-background-color__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes__cvta176 {
+  --colors-background-color__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes__cvta177 {
+  --colors-background-color__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__cvta177 {
+    --colors-background-color__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}
+
+/* vanilla-extract-css-ns:@fixtures/themed/src/shared.css.ts.vanilla.css?source=LnNoYXJlZF9fNGR0ZmVuMCB7CiAgYm94LXNoYWRvdzogMCAwIDVweCByZWQ7Cn0KYm9keSB7CiAgYmFja2dyb3VuZC1jb2xvcjogc2t5Ymx1ZTsKfQ== */
 .shared__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -205,36 +235,6 @@ body {
   }
   .styles__jteyb13 {
     border-radius: 9999px;
-  }
-}
-
-/* vanilla-extract-css-ns:@fixtures/themed/src/themes.css.ts.vanilla.css?source=OnJvb3QsIC50aGVtZXNfX2N2dGExNzAgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfX2N2dGExNzE6IGJsdWU7CiAgLS1jb2xvcnMtdGV4dF9fY3Z0YTE3Mjogd2hpdGU7CiAgLS1zcGFjZS0xX19jdnRhMTczOiA0cHg7CiAgLS1zcGFjZS0yX19jdnRhMTc0OiA4cHg7CiAgLS1zcGFjZS0zX19jdnRhMTc1OiAxMnB4Owp9Ci50aGVtZXNfX2N2dGExNzYgewogIC0tY29sb3JzLWJhY2tncm91bmQtY29sb3JfX2N2dGExNzE6IGdyZWVuOwogIC0tY29sb3JzLXRleHRfX2N2dGExNzI6IHdoaXRlOwogIC0tc3BhY2UtMV9fY3Z0YTE3MzogOHB4OwogIC0tc3BhY2UtMl9fY3Z0YTE3NDogMTJweDsKICAtLXNwYWNlLTNfX2N2dGExNzU6IDE2cHg7Cn0KLnRoZW1lc19fY3Z0YTE3NyB7CiAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fY3Z0YTE3MTogcGluazsKICAtLWNvbG9ycy10ZXh0X19jdnRhMTcyOiBwdXJwbGU7CiAgLS1zcGFjZS0xX19jdnRhMTczOiA2cHg7CiAgLS1zcGFjZS0yX19jdnRhMTc0OiAxMnB4OwogIC0tc3BhY2UtM19fY3Z0YTE3NTogMThweDsKfQpAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkgewogIC50aGVtZXNfX2N2dGExNzcgewogICAgLS1jb2xvcnMtYmFja2dyb3VuZC1jb2xvcl9fY3Z0YTE3MTogcHVycGxlOwogICAgLS1jb2xvcnMtdGV4dF9fY3Z0YTE3MjogcGluazsKICB9Cn0= */
-:root,
-.themes__cvta170 {
-  --colors-background-color__cvta171: blue;
-  --colors-text__cvta172: white;
-  --space-1__cvta173: 4px;
-  --space-2__cvta174: 8px;
-  --space-3__cvta175: 12px;
-}
-.themes__cvta176 {
-  --colors-background-color__cvta171: green;
-  --colors-text__cvta172: white;
-  --space-1__cvta173: 8px;
-  --space-2__cvta174: 12px;
-  --space-3__cvta175: 16px;
-}
-.themes__cvta177 {
-  --colors-background-color__cvta171: pink;
-  --colors-text__cvta172: purple;
-  --space-1__cvta173: 6px;
-  --space-2__cvta174: 12px;
-  --space-3__cvta175: 18px;
-}
-@media screen and (min-width: 768px) {
-  .themes__cvta177 {
-    --colors-background-color__cvta171: purple;
-    --colors-text__cvta172: pink;
   }
 }
 "
@@ -339,11 +339,6 @@ body {
   background-color: lavender;
 }
 
-/* vanilla-extract-css-ns:@fixtures/unused-modules/src/reset/reset.css.ts.vanilla.css?source=LnJlc2V0X18xajc4enRxMCB7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQ== */
-.reset__1j78ztq0 {
-  box-sizing: border-box;
-}
-
 /* vanilla-extract-css-ns:@fixtures/unused-modules/src/shared/shared.css.ts.vanilla.css?source=Ym9keSB7CiAgYm9yZGVyOiA1cHggc29saWQgYmxhY2s7Cn0KLnNoYXJlZF9fZmJpaGM2MCB7CiAgZGlzcGxheTogZmxleDsKfQ== */
 body {
   border: 5px solid black;
@@ -357,6 +352,11 @@ body {
   height: 100px;
   width: 100px;
   background: green;
+}
+
+/* vanilla-extract-css-ns:@fixtures/unused-modules/src/reset/reset.css.ts.vanilla.css?source=LnJlc2V0X18xajc4enRxMCB7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQ== */
+.reset__1j78ztq0 {
+  box-sizing: border-box;
 }
 "
 `;

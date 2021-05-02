@@ -1,5 +1,11 @@
 # @vanilla-extract/esbuild-plugin
 
+## 0.2.1
+
+### Patch Changes
+
+- [#68](https://github.com/seek-oss/vanilla-extract/pull/68) [`0cfd17d`](https://github.com/seek-oss/vanilla-extract/commit/0cfd17d89b3bb6ad4ae4f5bb05dce9015a33840e) Thanks [@jahredhope](https://github.com/jahredhope)! - Fix errors occurring when using TypeScript in .css.ts files
+
 ## 0.2.0
 
 ### Minor Changes

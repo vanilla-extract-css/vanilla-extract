@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 0.4.1
+
+### Patch Changes
+
+- [#63](https://github.com/seek-oss/vanilla-extract/pull/63) [`2cecc8a`](https://github.com/seek-oss/vanilla-extract/commit/2cecc8af8634b71f217d713c5a9faf989b46e353) Thanks [@fnky](https://github.com/fnky)! - Export CSSProperties type
+
 ## 0.4.0
 
 ### Minor Changes
