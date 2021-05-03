@@ -5,6 +5,7 @@ import {
   atomicWithPaddingShorthandStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
+  conditionalStylesWithoutResponsiveArray,
 } from './index.css';
 
 describe('sprinkles', () => {
@@ -268,7 +269,7 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should handle conditional values to unconditional values', () => {
+    it('should handle conditional objects to unconditional values', () => {
       const atoms = createAtomsFn(atomicStyles);
 
       expect(() =>
@@ -280,6 +281,45 @@ describe('sprinkles', () => {
         }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"SprinklesError: \\"color\\" is not a conditional property"`,
+      );
+    });
+
+    it('should handle missing responsive arrays definitions', () => {
+      const atoms = createAtomsFn(conditionalStylesWithoutResponsiveArray);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          marginTop: ['small'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"marginTop\\" is does not support responsive arrays"`,
+      );
+    });
+
+    it('should handle invalid responsive arrays values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: ['xsmall'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+      );
+    });
+
+    it('should handle responsive arrays with too many values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: ['small', 'medium', 'large', 'small'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingTop\\" only suports upto 3 breakpoints. You passed 4"`,
       );
     });
 
@@ -308,7 +348,9 @@ describe('sprinkles', () => {
             ultraWide: 'large',
           },
         }),
-      ).toThrowErrorMatchingInlineSnapshot();
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
+      );
     });
   });
 

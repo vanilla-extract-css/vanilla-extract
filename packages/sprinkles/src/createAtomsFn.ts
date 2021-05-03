@@ -138,12 +138,20 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
           for (const responsiveIndex in propValue) {
             const responsiveValue = propValue[responsiveIndex];
 
-            if (
-              typeof responsiveValue === 'string' ||
-              typeof responsiveValue === 'number'
-            ) {
+            if (responsiveValue != null) {
               const conditionName =
                 atomicProperty.responsiveArray[responsiveIndex];
+
+              if (process.env.NODE_ENV !== 'production') {
+                if (
+                  !atomicProperty.values[responsiveValue].conditions[
+                    conditionName
+                  ]
+                ) {
+                  throw new Error();
+                }
+              }
+
               classNames.push(
                 atomicProperty.values[responsiveValue].conditions[
                   conditionName
@@ -156,39 +164,51 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             // Conditional style
             const value = propValue[conditionName];
 
-            if (typeof value === 'string' || typeof value === 'number') {
-              classNames.push(
-                atomicProperty.values[value].conditions[conditionName],
-              );
+            if (process.env.NODE_ENV !== 'production') {
+              if (!atomicProperty.values[value].conditions[conditionName]) {
+                throw new Error();
+              }
             }
+            classNames.push(
+              atomicProperty.values[value].conditions[conditionName],
+            );
           }
         }
       } catch (e) {
         if (process.env.NODE_ENV !== 'production') {
+          class SprinklesError extends Error {
+            constructor(message: string) {
+              super(message);
+              this.name = 'SprinklesError';
+            }
+          }
+
           const format = (v: string | number) =>
             typeof v === 'string' ? `"${v}"` : v;
 
-          if (!atomicProperty) {
-            throw new Error(
-              `SprinklesError: "${prop}" is not a valid atom property`,
+          const invalidPropValue = (
+            prop: string,
+            value: string | number,
+            possibleValues: Array<string | number>,
+          ) => {
+            throw new SprinklesError(
+              `"${prop}" has no value ${format(
+                value,
+              )}. Possible values are ${Object.keys(possibleValues)
+                .map(format)
+                .join(', ')}`,
             );
+          };
+
+          if (!atomicProperty) {
+            throw new SprinklesError(`"${prop}" is not a valid atom property`);
           }
 
           if (
             (typeof propValue === 'string' || typeof propValue === 'number') &&
             !(propValue in atomicProperty.values)
           ) {
-            throw new Error(
-              `SprinklesError: "${prop}" has no value ${format(
-                propValue,
-              )}. Possible values are ${Object.keys(atomicProperty.values)
-                .map(format)
-                .join(', ')}`,
-            );
-          }
-
-          if (Array.isArray(propValue)) {
-            throw e;
+            invalidPropValue(prop, propValue, atomicProperty.values);
           }
 
           if (typeof propValue === 'object') {
@@ -198,35 +218,53 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
                 atomicProperty.values[Object.keys(atomicProperty.values)[0]]
               )
             ) {
-              throw new Error(
-                `SprinklesError: "${prop}" is not a conditional property`,
+              throw new SprinklesError(
+                `"${prop}" is not a conditional property`,
               );
             }
 
-            for (const conditionName in propValue) {
-              const value = propValue[conditionName];
-
-              if (!atomicProperty.values[value]) {
-                throw new Error(
-                  `SprinklesError: "${prop}" has no value ${format(
-                    value,
-                  )}. Possible values are ${Object.keys(atomicProperty.values)
-                    .map(format)
-                    .join(', ')}`,
+            if (Array.isArray(propValue)) {
+              if (!('responsiveArray' in atomicProperty)) {
+                throw new SprinklesError(
+                  `"${prop}" is does not support responsive arrays`,
                 );
               }
 
-              // Not throwing 🤔
-              if (!atomicProperty.values[value].conditions[conditionName]) {
-                throw new Error(
-                  `SprinklesError: "${prop}" has no condition names ${format(
-                    conditionName,
-                  )}. Possible values are ${Object.keys(
-                    atomicProperty.values[value].conditions,
-                  )
-                    .map(format)
-                    .join(', ')}`,
+              const breakpointCount = atomicProperty.responsiveArray.length;
+              if (breakpointCount < propValue.length) {
+                throw new SprinklesError(
+                  `"${prop}" only suports upto ${breakpointCount} breakpoints. You passed ${propValue.length}`,
                 );
+              }
+
+              for (const responsiveValue of propValue) {
+                if (!atomicProperty.values[responsiveValue]) {
+                  invalidPropValue(
+                    prop,
+                    responsiveValue,
+                    atomicProperty.values,
+                  );
+                }
+              }
+            } else {
+              for (const conditionName in propValue) {
+                const value = propValue[conditionName];
+
+                if (!atomicProperty.values[value]) {
+                  invalidPropValue(prop, value, atomicProperty.values);
+                }
+
+                if (!atomicProperty.values[value].conditions[conditionName]) {
+                  throw new SprinklesError(
+                    `"${prop}" has no condition named ${format(
+                      conditionName,
+                    )}. Possible values are ${Object.keys(
+                      atomicProperty.values[value].conditions,
+                    )
+                      .map(format)
+                      .join(', ')}`,
+                  );
+                }
               }
             }
           }
