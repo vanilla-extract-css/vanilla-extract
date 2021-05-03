@@ -241,6 +241,77 @@ describe('sprinkles', () => {
     });
   });
 
+  describe('errors', () => {
+    it('should handle invalid properties', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingLefty: 'small',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingLefty\\" is not a valid atom property"`,
+      );
+    });
+
+    it('should handle invalid property values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingLeft: 'xsmall',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingLeft\\" is not a valid atom property"`,
+      );
+    });
+
+    it('should handle conditional values to unconditional values', () => {
+      const atoms = createAtomsFn(atomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          color: {
+            mobile: 'red',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"color\\" is not a conditional property"`,
+      );
+    });
+
+    it('should handle invalid conditional property values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: {
+            mobile: 'xlarge',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"SprinklesError: \\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+      );
+    });
+
+    it('should handle invalid conditions', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          paddingTop: {
+            // @ts-expect-error
+            ultraWide: 'large',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot();
+    });
+  });
+
   it('should create atomic styles', () => {
     expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
       Object {

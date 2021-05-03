@@ -126,38 +126,109 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
     for (const prop in finalProps) {
       const propValue = finalProps[prop];
       const atomicProperty = atomicStyles[prop];
+      try {
+        if (atomicProperty.mappings) {
+          // Skip shorthands
+          continue;
+        }
 
-      if (atomicProperty.mappings) {
-        // Skip shorthands
-        continue;
-      }
+        if (typeof propValue === 'string' || typeof propValue === 'number') {
+          classNames.push(atomicProperty.values[propValue].defaultClass);
+        } else if (Array.isArray(propValue)) {
+          for (const responsiveIndex in propValue) {
+            const responsiveValue = propValue[responsiveIndex];
 
-      if (typeof propValue === 'string' || typeof propValue === 'number') {
-        classNames.push(atomicProperty.values[propValue].defaultClass);
-      } else if (Array.isArray(propValue)) {
-        for (const responsiveIndex in propValue) {
-          const responsiveValue = propValue[responsiveIndex];
+            if (
+              typeof responsiveValue === 'string' ||
+              typeof responsiveValue === 'number'
+            ) {
+              const conditionName =
+                atomicProperty.responsiveArray[responsiveIndex];
+              classNames.push(
+                atomicProperty.values[responsiveValue].conditions[
+                  conditionName
+                ],
+              );
+            }
+          }
+        } else {
+          for (const conditionName in propValue) {
+            // Conditional style
+            const value = propValue[conditionName];
 
-          if (
-            typeof responsiveValue === 'string' ||
-            typeof responsiveValue === 'number'
-          ) {
-            const conditionName =
-              atomicProperty.responsiveArray[responsiveIndex];
-            classNames.push(
-              atomicProperty.values[responsiveValue].conditions[conditionName],
-            );
+            if (typeof value === 'string' || typeof value === 'number') {
+              classNames.push(
+                atomicProperty.values[value].conditions[conditionName],
+              );
+            }
           }
         }
-      } else {
-        for (const conditionName in propValue) {
-          // Conditional style
-          const value = propValue[conditionName];
+      } catch (e) {
+        if (process.env.NODE_ENV !== 'production') {
+          const format = (v: string | number) =>
+            typeof v === 'string' ? `"${v}"` : v;
 
-          if (typeof value === 'string' || typeof value === 'number') {
-            classNames.push(
-              atomicProperty.values[value].conditions[conditionName],
+          if (!atomicProperty) {
+            throw new Error(
+              `SprinklesError: "${prop}" is not a valid atom property`,
             );
+          }
+
+          if (
+            (typeof propValue === 'string' || typeof propValue === 'number') &&
+            !(propValue in atomicProperty.values)
+          ) {
+            throw new Error(
+              `SprinklesError: "${prop}" has no value ${format(
+                propValue,
+              )}. Possible values are ${Object.keys(atomicProperty.values)
+                .map(format)
+                .join(', ')}`,
+            );
+          }
+
+          if (Array.isArray(propValue)) {
+            throw e;
+          }
+
+          if (typeof propValue === 'object') {
+            if (
+              !(
+                'conditions' in
+                atomicProperty.values[Object.keys(atomicProperty.values)[0]]
+              )
+            ) {
+              throw new Error(
+                `SprinklesError: "${prop}" is not a conditional property`,
+              );
+            }
+
+            for (const conditionName in propValue) {
+              const value = propValue[conditionName];
+
+              if (!atomicProperty.values[value]) {
+                throw new Error(
+                  `SprinklesError: "${prop}" has no value ${format(
+                    value,
+                  )}. Possible values are ${Object.keys(atomicProperty.values)
+                    .map(format)
+                    .join(', ')}`,
+                );
+              }
+
+              // Not throwing 🤔
+              if (!atomicProperty.values[value].conditions[conditionName]) {
+                throw new Error(
+                  `SprinklesError: "${prop}" has no condition names ${format(
+                    conditionName,
+                  )}. Possible values are ${Object.keys(
+                    atomicProperty.values[value].conditions,
+                  )
+                    .map(format)
+                    .join(', ')}`,
+                );
+              }
+            }
           }
         }
       }
