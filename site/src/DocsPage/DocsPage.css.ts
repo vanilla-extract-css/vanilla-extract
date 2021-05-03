@@ -7,9 +7,9 @@ const sidebarWidth = '300px';
 
 export const homeLink = style({
   textDecoration: 'none',
-  ':focus': {
+  ':focus-visible': {
     outline: 'none',
-    filter: `drop-shadow(2px 4px 2px ${vars.palette.pink600})`,
+    filter: `drop-shadow(2px 4px 1px ${vars.palette.pink400})`,
   },
 });
 

@@ -5,19 +5,19 @@ import * as styles from './ContentBlock.css';
 
 export const ContentBlock = ({
   children,
-  guttersOnMobile = false,
+  withGutters = false,
   size = 'standard',
 }: {
   children: ReactNode;
-  guttersOnMobile?: boolean;
+  withGutters?: boolean;
   size?: keyof typeof styles.width;
 }) => {
   return (
     <Box
       className={classnames(styles.root, styles.width[size])}
       paddingX={
-        guttersOnMobile
-          ? { mobile: 'large', tablet: 'large', desktop: 'medium' }
+        withGutters
+          ? { mobile: 'large', tablet: 'large', desktop: 'xlarge' }
           : undefined
       }
     >

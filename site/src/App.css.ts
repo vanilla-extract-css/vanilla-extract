@@ -7,11 +7,11 @@ globalStyle('html, body', {
   padding: 0,
 });
 
-globalStyle(`body.${darkMode}`, {
+globalStyle(`.${darkMode}`, {
   background: vars.palette.gray900,
   color: vars.palette.gray50,
 });
-globalStyle(`body.${lightMode}`, {
+globalStyle(`.${lightMode}`, {
   background: vars.palette.white,
   color: vars.palette.gray900,
 });

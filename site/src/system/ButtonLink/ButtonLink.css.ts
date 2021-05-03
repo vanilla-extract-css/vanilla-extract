@@ -18,11 +18,11 @@ export const button = style({
 export const solid = style({
   boxShadow: `0px 0px 12px 0px rgba(0,0,0,0.4)`,
   selectors: {
-    [`.${lightMode} &:focus`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink500}`,
+    [`.${lightMode} &:focus-visible`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink400}`,
     },
-    [`.${darkMode} &:focus`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink600}`,
+    [`.${darkMode} &:focus-visible`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink500}`,
     },
   },
 });
@@ -32,11 +32,11 @@ export const transparent = style({
   selectors: {
     [`.${lightMode} &:hover`]: { background: 'rgba(255,255,255,.5)' },
     [`.${darkMode} &:hover`]: { background: 'rgba(255,255,255,.1)' },
-    [`.${lightMode} &:focus`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink500},0 0 0 2px inset currentColor`,
+    [`.${lightMode} &:focus-visible`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink400},0 0 0 2px inset currentColor`,
     },
-    [`.${darkMode} &:focus`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink600},0 0 0 2px inset currentColor`,
+    [`.${darkMode} &:focus-visible`]: {
+      boxShadow: `0px 0px 0px 5px ${vars.palette.pink500},0 0 0 2px inset currentColor`,
     },
   },
 });

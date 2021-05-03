@@ -10,59 +10,67 @@ import Code from '../Code/Code';
 import InlineCode from '../InlineCode/InlineCode';
 import { Tweet } from '../Tweet/Tweet';
 import docsStore from '../docs-store';
-import * as styles from './HomePage.css';
+import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
+import * as styles from './HomePage.css';
 
 export const HomePage = () => {
   return (
     <>
       <Box
-        paddingY="xxxlarge"
+        paddingTop="xxlarge"
+        paddingBottom="xxxlarge"
         background={{ lightMode: 'green100', darkMode: 'gray700' }}
         className={styles.skewedContainer}
       >
-        <ContentBlock size="large" guttersOnMobile>
-          <Box
-            paddingY={{
-              mobile: 'medium',
-              tablet: 'xlarge',
-              desktop: 'xxlarge',
-            }}
-          >
-            <Columns space="xlarge" collapseOnMobile alignY="center">
-              <Stack space="xxlarge">
-                <Logo size={100} />
-                <Heading level="1" branded>
-                  Zero-runtime
-                  <br />
-                  Stylesheets in
-                  <br />
-                  TypeScript.
-                </Heading>
-                <Text>
-                  Write your styles in TypeScript (or JavaScript) with locally
-                  scoped class names and CSS Variables, then generate static CSS
-                  files at build time.
-                </Text>
-                <Box display="flex" alignItems="center">
-                  <Box paddingRight="xlarge">
+        <ContentBlock size="large" withGutters>
+          <Box position="relative">
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              paddingBottom={{
+                mobile: 'medium',
+                tablet: 'xlarge',
+                desktop: 'xxlarge',
+              }}
+            >
+              <ColorModeToggle />
+            </Box>
+            <Box>
+              <Columns space="xlarge" collapseOnMobile alignY="center">
+                <Stack space="xxlarge">
+                  <Logo size={100} />
+                  <Heading level="1" branded>
+                    Zero-runtime
+                    <br />
+                    Stylesheets in
+                    <br />
+                    TypeScript.
+                  </Heading>
+                  <Text>
+                    Write your styles in TypeScript (or JavaScript) with locally
+                    scoped class names and CSS Variables, then generate static
+                    CSS files at build time.
+                  </Text>
+                  <Box display="flex" alignItems="center">
+                    <Box paddingRight="xlarge">
+                      <ButtonLink
+                        to="/documentation"
+                        icon={<Chevron direction="right" />}
+                      >
+                        Get started
+                      </ButtonLink>
+                    </Box>
                     <ButtonLink
-                      to="/documentation"
-                      icon={<Chevron direction="right" />}
+                      to="https://github.com/seek-oss/vanilla-extract"
+                      variant="transparent"
                     >
-                      Get started
+                      <GitHubStars />
                     </ButtonLink>
                   </Box>
-                  <ButtonLink
-                    to="https://github.com/seek-oss/vanilla-extract"
-                    variant="transparent"
-                  >
-                    <GitHubStars />
-                  </ButtonLink>
-                </Box>
-              </Stack>
-              <Code language="tsx">
-                {dedent`// Set up the theme via CSS Variables
+                </Stack>
+                <Code language="tsx">
+                  {dedent`// Set up the theme via CSS Variables
                   export const vars = createGlobalTheme(':root', {
                     color: {
                       brand: 'blue'
@@ -79,14 +87,15 @@ export const HomePage = () => {
                     color: 'white',
                     padding: '10px'
                   });`}
-              </Code>
-            </Columns>
+                </Code>
+              </Columns>
+            </Box>
           </Box>
         </ContentBlock>
       </Box>
 
       <Stack space="xxxlarge">
-        <ContentBlock guttersOnMobile>
+        <ContentBlock withGutters>
           <Box
             padding={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'xxlarge' }}
             borderRadius="large"
@@ -100,7 +109,7 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
 
-        <ContentBlock guttersOnMobile size="large">
+        <ContentBlock withGutters size="large">
           <Box paddingY="xlarge">
             <Columns space="xxlarge" collapseOnMobile>
               <Feature title="Type-safe preprocessor">
@@ -137,7 +146,7 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
 
-        <ContentBlock guttersOnMobile size="large">
+        <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
               <Heading level="3">Scoped Themed Variables</Heading>
@@ -185,7 +194,7 @@ export const HomePage = () => {
             className={styles.skewedContainerSecondary}
           >
             <Stack space="xxlarge">
-              <ContentBlock size="large" guttersOnMobile>
+              <ContentBlock size="large" withGutters>
                 <Heading level="3">Community vibes</Heading>
               </ContentBlock>
               <Box display="flex" justifyContent="center" style={{ gap: 60 }}>
@@ -249,7 +258,7 @@ export const HomePage = () => {
           </Box>
         </Box>
 
-        <ContentBlock guttersOnMobile size="large">
+        <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
               <Heading level="3">Scoped Themed Variables</Heading>
@@ -288,7 +297,7 @@ export const HomePage = () => {
           </Columns>
         </ContentBlock>
 
-        <ContentBlock guttersOnMobile size="large">
+        <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
               <Heading level="3">Scoped Themed Variables</Heading>
@@ -327,7 +336,7 @@ export const HomePage = () => {
           </Columns>
         </ContentBlock>
 
-        <ContentBlock guttersOnMobile>
+        <ContentBlock withGutters>
           <Box component="footer" paddingY="xxxlarge">
             <Stack space="xxlarge" align="center">
               <Logo size={60} />

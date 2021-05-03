@@ -16,7 +16,10 @@ export const atoms = createAtomsFn({
 
 type AtomProps = Parameters<typeof atoms>[0];
 export interface BoxProps
-  extends Omit<AllHTMLAttributes<HTMLElement>, 'color' | 'width'>,
+  extends Omit<
+      AllHTMLAttributes<HTMLElement>,
+      'content' | 'height' | 'translate' | 'color' | 'width' | 'cursor'
+    >,
     AtomProps {
   component?: ElementType;
 }
@@ -57,6 +60,7 @@ export const Box = ({
   zIndex,
   opacity,
   pointerEvents,
+  cursor,
   ...restProps
 }: BoxProps) => {
   const atomClasses = classnames(
@@ -96,6 +100,7 @@ export const Box = ({
       zIndex,
       opacity,
       pointerEvents,
+      cursor,
     }),
     className,
   );

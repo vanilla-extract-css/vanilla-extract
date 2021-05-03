@@ -4,6 +4,8 @@ import { StaticRouter } from 'react-router-dom';
 import { HeadProvider } from 'react-head';
 import App from './App';
 import { StatsCompilation } from 'webpack';
+import { darkMode, lightMode } from './system/styles/atoms.css';
+import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
 type HeadTags = React.ReactElement<unknown>[];
 
@@ -63,8 +65,18 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
 
   const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
 
-  return `<html>
+  return `<html class="${lightMode}">
     <head>
+      <script>
+      ((c, l, d) => {
+        try {
+          c.remove(l, d);
+          c.add(localStorage.getItem('${themeKey}') || (matchMedia('(prefers-color-scheme: dark)').matches ? d : l));
+        } catch (e) {
+          c.add(l);
+        }
+      })(document.documentElement.classList, '${lightMode}', '${darkMode}');
+      </script>
       <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
       ${cssAssets.join('\n')}

@@ -11,6 +11,11 @@ export const base = style({
   verticalAlign: 'baseline',
 });
 
+export const button = style({
+  background: 0,
+  border: 0,
+});
+
 // HTML5 display-role reset for older browsers
 const block = style({
   display: 'block',
@@ -56,6 +61,7 @@ const select = style({
 export const element = {
   article: block,
   aside: block,
+  button,
   details: block,
   figcaption: block,
   figure: block,

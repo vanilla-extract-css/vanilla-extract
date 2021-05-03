@@ -5,6 +5,7 @@ import docs from '../docs-store';
 import Link from '../Typography/Link';
 import { useTextStyles } from '../Typography/Text';
 import { useActiveHash } from '../useHeadingRoute';
+import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './Navigation.css';
 
 const NavSection = ({
@@ -65,27 +66,20 @@ const SubLink = ({
           : undefined
       }
     >
-      <Box
-        position="relative"
-        paddingLeft="xlarge"
-        paddingY="xsmall"
-        key={hash}
-      >
+      <Box display="flex" alignItems="center" paddingY="xsmall" key={hash}>
         <Box
-          position="absolute"
-          background={{ lightMode: 'green100', darkMode: 'gray700' }}
-          top={0}
-          bottom={0}
-          left={0}
-          right={0}
-          zIndex={-1}
+          background={{ lightMode: 'green200', darkMode: 'gray600' }}
+          borderRadius="full"
+          paddingLeft="xsmall"
+          paddingTop="xlarge"
+          marginLeft="xsmall"
           opacity={active ? undefined : 0}
           className={classnames(
             styles.activeIndicator,
             active ? styles.active : '',
           )}
         />
-        {children}
+        <Box paddingLeft="large">{children}</Box>
       </Box>
     </Link>
   );
@@ -100,40 +94,45 @@ export default ({ onSelect }: { onSelect: () => void }) => {
   };
 
   return (
-    <Stack space="xlarge">
-      {docs.map(({ title, route, sections }) => (
+    <>
+      <Box display={{ desktop: 'none' }} paddingBottom="large">
+        <ColorModeToggle />
+      </Box>
+      <Stack space="xlarge">
+        {docs.map(({ title, route, sections }) => (
+          <NavSection
+            key={route}
+            title={title}
+            href={route}
+            onClick={selectAndScrollToTop}
+          >
+            {sections
+              .filter(({ level }) => level === 2)
+              .map(({ hash, name }) => (
+                <SubLink
+                  key={name}
+                  to={route}
+                  hash={hash}
+                  active={hash === activeHash}
+                  onClick={onSelect}
+                >
+                  {name}
+                </SubLink>
+              ))}
+          </NavSection>
+        ))}
         <NavSection
-          key={route}
-          title={title}
-          href={route}
-          onClick={selectAndScrollToTop}
+          title="Community"
+          href="https://github.com/seek-oss/vanilla-extract"
         >
-          {sections
-            .filter(({ level }) => level === 2)
-            .map(({ hash, name }) => (
-              <SubLink
-                key={name}
-                to={route}
-                hash={hash}
-                active={hash === activeHash}
-                onClick={onSelect}
-              >
-                {name}
-              </SubLink>
-            ))}
+          <SubLink to="https://github.com/seek-oss/vanilla-extract">
+            GitHub
+          </SubLink>
+          <SubLink to="https://github.com/seek-oss/vanilla-extract/discussions">
+            Discussions
+          </SubLink>
         </NavSection>
-      ))}
-      <NavSection
-        title="Community"
-        href="https://github.com/seek-oss/vanilla-extract"
-      >
-        <SubLink to="https://github.com/seek-oss/vanilla-extract">
-          GitHub
-        </SubLink>
-        <SubLink to="https://github.com/seek-oss/vanilla-extract/discussions">
-          Discussions
-        </SubLink>
-      </NavSection>
-    </Stack>
+      </Stack>
+    </>
   );
 };

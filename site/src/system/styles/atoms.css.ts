@@ -80,5 +80,6 @@ export const unresponsiveStyles = createAtomicStyles({
     zIndex: [-1, 0, 1],
     width: { full: '100%' },
     borderRadius: vars.border.radius,
+    cursor: ['pointer'],
   },
 });

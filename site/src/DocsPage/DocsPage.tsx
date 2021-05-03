@@ -11,6 +11,7 @@ import { Fab } from '../Fab/Fab';
 import { Box, ContentBlock } from '../system';
 import docs from '../docs-store';
 import Logo from '../Logo/Logo';
+import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 
 interface DocsRouteProps {
@@ -78,14 +79,13 @@ export const DocsPage = () => {
         </ReactRouterLink>
       </Box>
 
-      <Box
-        display={{ desktop: 'none' }}
-        position="absolute"
-        top={0}
-        right={0}
-        padding="large"
-      >
-        <Fab open={menuOpen} onClick={toggleMenu} />
+      <Box position="absolute" top={0} right={0} padding="large">
+        <Box display={{ mobile: 'none', desktop: 'block' }}>
+          <ColorModeToggle />
+        </Box>
+        <Box display={{ desktop: 'none' }}>
+          <Fab open={menuOpen} onClick={toggleMenu} />
+        </Box>
       </Box>
 
       <Box
@@ -124,7 +124,10 @@ export const DocsPage = () => {
           menuOpen ? styles.sidebarOpen : undefined,
         )}
       >
-        <Box style={{ overflow: 'auto', height: '100%' }}>
+        <Box
+          style={{ overflow: 'auto', height: '100%' }}
+          paddingBottom="xxxlarge"
+        >
           <Navigation onSelect={closeMenu} />
         </Box>
       </Box>

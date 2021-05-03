@@ -99,13 +99,13 @@ export default {
       <Box position="relative" paddingLeft="large">
         <Box
           position="absolute"
+          top={0}
+          left={0}
           paddingLeft="xsmall"
           marginTop="-small"
           borderRadius="medium"
-          background={{ lightMode: 'pink300', darkMode: 'pink600' }}
+          background={{ lightMode: 'pink400', darkMode: 'pink600' }}
           style={{
-            top: 0,
-            left: 0,
             height: 36,
             transform: 'skew(-15deg)',
           }}

@@ -1,37 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  ReactNode,
+} from 'react';
 import { Box } from '../system';
-import { lightMode, darkMode } from '../system/styles/atoms.css';
 
-export default () => {
-  const [theme, setTheme] = useState(darkMode);
+type ColorMode = 'dark' | 'light';
+export const themeKey = 'vanilla-theme-pref';
+
+interface ColorModeContextValues {
+  colorMode: ColorMode | null;
+  setColorMode: (colorMode: ColorMode) => void;
+}
+
+export const ColorModeContext = createContext<ColorModeContextValues>({
+  colorMode: null,
+  setColorMode: () => {},
+});
+
+export function ColorModeProvider({ children }: { children: ReactNode }) {
+  const [colorMode, setColorMode] = useState<ColorMode | null>(null);
 
   useEffect(() => {
-    document.body.classList.add(theme);
+    setColorMode(
+      document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+    );
+  }, []);
 
-    return () => {
-      document.body.classList.remove(theme);
-    };
-  }, [theme]);
+  const setter = (c: ColorMode) => {
+    setColorMode(c);
+
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(c);
+
+    try {
+      localStorage.setItem(themeKey, c);
+    } catch (e) {}
+  };
+
+  return (
+    <ColorModeContext.Provider
+      value={{
+        colorMode,
+        setColorMode: setter,
+      }}
+    >
+      {children}
+    </ColorModeContext.Provider>
+  );
+}
+
+export const ColorModeToggle = () => {
+  const { colorMode, setColorMode } = useContext(ColorModeContext);
 
   return (
     <Box
       component="button"
-      position="fixed"
-      padding="small"
+      padding={{ desktop: 'small' }}
+      cursor="pointer"
       style={{
-        zIndex: 100,
-        top: 100,
-        right: 100,
-        border: 0,
-        background: 'none',
-        cursor: 'pointer',
-        fontSize: 28,
-        filter: `contrast(0) brightness(${theme === lightMode ? '0' : '10'})`,
         outline: 'none',
+        fontSize: 24,
+        filter: `contrast(0) brightness(${colorMode === 'light' ? '0' : '10'})`,
       }}
-      onClick={() => setTheme(theme === lightMode ? darkMode : lightMode)}
+      title="Toggle colour mode"
+      onClick={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
     >
-      {theme === lightMode ? `☀️` : `🌙`}
+      {colorMode === 'light' ? `☀️` : `🌙`}
     </Box>
   );
 };
