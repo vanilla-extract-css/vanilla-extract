@@ -1,3 +1,4 @@
+import { createVar } from '@vanilla-extract/css';
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
 const spacing = {
@@ -93,6 +94,7 @@ export const atomicWithPaddingShorthandStyles = createAtomicStyles({
     paddingRight: spacing,
     paddingTop: spacing,
     paddingBottom: spacing,
+    fontWeight: [createVar()],
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],

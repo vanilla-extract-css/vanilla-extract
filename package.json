@@ -22,7 +22,8 @@
     "packages/*",
     "test-helpers",
     "fixtures/*",
-    "site"
+    "site",
+    "examples/*"
   ],
   "preconstruct": {
     "packages": [
@@ -35,9 +36,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
-    "@babel/preset-typescript": "^7.12.7",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
     "@changesets/changelog-github": "^0.3.0",
     "@changesets/cli": "^2.14.1",
     "@manypkg/cli": "^0.17.0",

@@ -5,7 +5,7 @@ import type {
   CSS,
   CSSStyleBlock,
   CSSKeyframesBlock,
-  CSSProperties,
+  CSSPropertiesWithVars,
   FeatureQueries,
   MediaQueries,
   StyleRule,
@@ -173,7 +173,7 @@ const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 interface CSSRule {
   conditions?: Array<string>;
   selector: string;
-  rule: CSSProperties;
+  rule: CSSPropertiesWithVars;
 }
 
 class Stylesheet {
@@ -238,12 +238,12 @@ class Stylesheet {
     }
   }
 
-  pixelifyProperties(cssRule: CSSProperties) {
+  pixelifyProperties(cssRule: CSSPropertiesWithVars) {
     forEach(cssRule, (value, key) => {
       if (
         typeof value === 'number' &&
         value !== 0 &&
-        !UNITLESS[key as keyof CSSProperties]
+        !UNITLESS[key as keyof CSSPropertiesWithVars]
       ) {
         // @ts-expect-error Any ideas?
         cssRule[key] = `${value}px`;
@@ -253,7 +253,7 @@ class Stylesheet {
     return cssRule;
   }
 
-  transformVars({ vars, ...rest }: CSSProperties) {
+  transformVars({ vars, ...rest }: CSSPropertiesWithVars) {
     if (!vars) {
       return rest;
     }
@@ -384,7 +384,7 @@ class Stylesheet {
         this.addRule({
           conditions,
           selector: `${root.selector}${key}`,
-          rule: rule[key as keyof typeof rule] as CSSProperties,
+          rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
         });
       }
     }
