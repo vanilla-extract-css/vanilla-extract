@@ -107,7 +107,7 @@ const responsiveStyles = createAtomicStyles({
   properties: {
     display: ['none', 'flex', 'block', 'inline'],
     flexDirection: ['row', 'column'],
-    justifyContent: ['stretch', 'flex-start', 'center', 'flex-end'],
+    justifyContent: ['stretch', 'flex-start', 'center', 'flex-end', 'space-around', 'space-between'],
     alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
     paddingTop: space,
     paddingBottom: space,
