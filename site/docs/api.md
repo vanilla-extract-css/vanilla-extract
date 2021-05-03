@@ -10,7 +10,7 @@ title: API
 
 Creates styles attached to a locally scoped class name.
 
-```tsx
+```ts
 import { style } from '@vanilla-extract/css';
 
 export const className = style({
@@ -18,14 +18,16 @@ export const className = style({
 });
 ```
 
-CSS Variables (custom properties), simple pseudos, selectors and media/feature queries are all supported.
+CSS Variables, simple pseudos, selectors and media/feature queries are all supported.
 
-```tsx
+```ts
 import { style } from '@vanilla-extract/css';
+import { vars } from './vars.css.ts';
 
 export const className = style({
   display: 'flex',
   vars: {
+    [vars.localVar]: 'green',
     '--global-variable': 'purple'
   },
   ':hover': {
@@ -51,7 +53,7 @@ export const className = style({
 
 Selectors can also contain references to other scoped class names.
 
-```tsx
+```ts
 import { style } from '@vanilla-extract/css';
 
 export const parentClass = style({});
@@ -65,18 +67,48 @@ export const childClass = style({
 });
 ```
 
-
 > 💡 To improve maintainability, each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element. For example, `'&:hover:not(:active)'` is considered valid, while `'& > a'` and ``[`& ${childClass}`]`` are not.
-> 
+>
 >If you want to target another scoped class then it should be defined within the `style` block of that class instead. For example, ``[`& ${childClass}`]`` is invalid since it targets `${childClass}`, so it should instead be defined in the `style` block for `childClass`.
 >
 >If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
+
+## styleVariants
+
+Creates a collection of named style variants.
+
+```ts
+import { styleVariants } from '@vanilla-extract/css';
+
+export const variant = styleVariants({
+  primary: { background: 'blue' },
+  secondary: { background: 'aqua' },
+});
+```
+
+> 💡 This is useful for mapping component props to styles, e.g. `<button className={styles.variant[props.variant]}>`
+
+You can also transform the values by providing a map function as the second argument.
+
+```ts
+import { styleVariants } from '@vanilla-extract/css';
+
+const spaceScale = {
+  small: 4,
+  medium: 8,
+  large: 16
+};
+
+export const padding = styleVariants(spaceScale, (space) => ({
+  padding: space
+}));
+```
 
 ## globalStyle
 
 Creates styles attached to a global selector.
 
-```tsx
+```ts
 import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
@@ -96,46 +128,15 @@ globalStyle(`${parentClass} > a`, {
 });
 ```
 
-## mapToStyles
-
-Creates an object that maps style names to hashed class names.
-
-> 💡 This is useful for mapping to component props, e.g. `<div className={styles.padding[props.padding]}>`
-
-```ts
-import { mapToStyles } from '@vanilla-extract/css';
-
-export const padding = mapToStyles({
-  small: { padding: 4 },
-  medium: { padding: 8 },
-  large: { padding: 16 }
-});
-```
-
-You can also transform the values by providing a map function as the second argument.
-
-```ts
-import { mapToStyles } from '@vanilla-extract/css';
-
-const spaceScale = {
-  small: 4,
-  medium: 8,
-  large: 16
-};
-
-export const padding = mapToStyles(spaceScale, (space) => ({
-  padding: space
-}));
-```
-
 ## createTheme
 
-Creates a locally scoped theme class and a collection of scoped CSS Variables.
+Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
 
-```tsx
-import { createTheme, style } from '@vanilla-extract/css';
+```ts
+// theme.css.ts
+import { createTheme } from '@vanilla-extract/css';
 
-export const [themeClass, themeVars] = createTheme({
+export const [themeClass, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -145,12 +146,13 @@ export const [themeClass, themeVars] = createTheme({
 });
 ```
 
-You can create theme variants by passing a collection of theme variables as the first argument to `createTheme`.
+You can create theme variants by passing a theme contract as the first argument to `createTheme`.
 
-```tsx
-import { createTheme, style } from '@vanilla-extract/css';
+```ts
+// themes.css.ts
+import { createTheme } from '@vanilla-extract/css';
 
-export const [themeA, themeVars] = createTheme({
+export const [themeA, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -159,7 +161,7 @@ export const [themeA, themeVars] = createTheme({
   }
 });
 
-export const themeB = createTheme(themeVars, {
+export const themeB = createTheme(vars, {
   color: {
     brand: 'pink'
   },
@@ -175,10 +177,11 @@ export const themeB = createTheme(themeVars, {
 
 Creates a theme attached to a global selector, but with locally scoped variable names.
 
-```tsx
+```ts
+// theme.css.ts
 import { createGlobalTheme } from '@vanilla-extract/css';
 
-export const themeVars = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(':root', {
   color: {
     brand: 'blue'
   },
@@ -190,19 +193,22 @@ export const themeVars = createGlobalTheme(':root', {
 
 > 💡 All theme variants must provide a value for every variable or it’s a type error.
 
-## createThemeVars
+## createThemeContract
 
-Creates a collection of CSS Variables without coupling them to a specific theme variant.
+Creates a contract for themes to implement.
+
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between themes.**
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
-```tsx
+```ts
+// themes.css.ts
 import {
-  createThemeVars,
+  createThemeContract,
   createTheme
 } from '@vanilla-extract/css';
 
-export const themeVars = createThemeVars({
+export const vars = createThemeContract({
   color: {
     brand: null
   },
@@ -211,7 +217,7 @@ export const themeVars = createThemeVars({
   }
 });
 
-export const themeA = createTheme(themeVars, {
+export const themeA = createTheme(vars, {
   color: {
     brand: 'blue'
   },
@@ -220,7 +226,7 @@ export const themeA = createTheme(themeVars, {
   }
 });
 
-export const themeB = createTheme(themeVars, {
+export const themeB = createTheme(vars, {
   color: {
     brand: 'pink'
   },
@@ -237,9 +243,9 @@ Assigns a collection of CSS Variables anywhere within a style block.
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
 ```ts
-import { style, createThemeVars, assignVars } from '@vanilla-extract/css';
+import { createThemeContract, style, assignVars } from '@vanilla-extract/css';
 
-export const themeVars = createThemeVars({
+export const vars = createThemeContract({
   space: {
     small: null,
     medium: null,
@@ -248,14 +254,14 @@ export const themeVars = createThemeVars({
 });
 
 export const responsiveSpaceTheme = style({
-  vars: assignVars(themeVars.space, {
+  vars: assignVars(vars.space, {
     small: '4px',
     medium: '8px',
     large: '16px'
   }),
   '@media': {
     'screen and (min-width: 1024px)': {
-      vars: assignVars(themeVars.space, {
+      vars: assignVars(vars.space, {
         small: '8px',
         medium: '16px',
         large: '32px'
@@ -325,7 +331,7 @@ export const exampleStyle = style({
 
 Creates a custom font attached to a locally scoped font name.
 
-```tsx
+```ts
 import { fontFace, style } from '@vanilla-extract/css';
 
 const myFont = fontFace({
@@ -341,7 +347,7 @@ export const text = style({
 
 Creates a globally scoped custom font.
 
-```tsx
+```ts
 import {
   globalFontFace,
   style
@@ -360,7 +366,7 @@ export const text = style({
 
 Creates a locally scoped set of keyframes.
 
-```tsx
+```ts
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
@@ -377,7 +383,7 @@ export const animated = style({
 
 Creates a globally scoped set of keyframes.
 
-```tsx
+```ts
 import { globalKeyframes, style } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
@@ -389,3 +395,25 @@ export const animated = style({
   animation: `3s infinite rotate`;
 });
 ```
+
+## composeStyles
+
+Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
+
+```ts
+import { style, composeStyles } from '@vanilla-extract/css';
+
+const base = style({
+  padding: 12
+});
+
+export const blue = composeStyles(base, style({
+  background: 'blue'
+}));
+
+export const green = composeStyles(base, style({
+  background: 'green'
+}));
+```
+
+> 💡 Styles can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)

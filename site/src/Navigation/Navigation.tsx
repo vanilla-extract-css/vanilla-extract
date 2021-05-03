@@ -68,7 +68,7 @@ const SubLink = ({
     >
       <Box display="flex" alignItems="center" paddingY="xsmall" key={hash}>
         <Box
-          background={{ lightMode: 'green200', darkMode: 'gray600' }}
+          background={{ lightMode: 'green200', darkMode: 'green400' }}
           borderRadius="full"
           paddingLeft="xsmall"
           paddingTop="xlarge"

@@ -9,7 +9,7 @@ We also provide a standalone package of optional utility functions to make it ea
 > 💡 This package can be used with any CSS-in-JS library.
 
 ```bash
-$ yarn add --dev @vanilla-extract/css-utils
+$ npm install @vanilla-extract/css-utils
 ```
 
 ## calc

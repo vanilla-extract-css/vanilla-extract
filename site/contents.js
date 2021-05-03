@@ -1,5 +1,5 @@
 module.exports = [
-  { fileName: 'introduction.md', id: 'introduction', route: '' },
+  { fileName: 'getting-started.md', id: 'getting-started', route: '' },
   { fileName: 'background.md', id: 'background' },
   { fileName: 'setup.md', id: 'setup' },
   { fileName: 'api.md', id: 'api' },

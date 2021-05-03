@@ -7,18 +7,18 @@ title: Dynamic API
 We also provide a lightweight standalone package to support dynamic runtime theming.
 
 ```bash
-$ yarn add --dev @vanilla-extract/dynamic
+$ npm install @vanilla-extract/dynamic
 ```
 
 ## createInlineTheme
 
-Generates a custom theme at runtime as an inline style object.
+Implements a theme contract at runtime as an inline style object.
 
 ```ts
 import { createInlineTheme } from '@vanilla-extract/dynamic';
-import { themeVars, exampleStyle } from './styles.css.ts';
+import { vars, exampleStyle } from './styles.css.ts';
 
-const customTheme = createInlineTheme(themeVars, {
+const customTheme = createInlineTheme(vars, {
   small: '4px',
   medium: '8px',
   large: '16px'
@@ -33,13 +33,14 @@ document.write(`
 
 ## setElementTheme
 
-Sets a collection of CSS Variables on an element.
+Implements a theme contract on an element.
 
 ```ts
 import { setElementTheme } from '@vanilla-extract/dynamic';
-import { themeVars } from './styles.css.ts';
+import { vars } from './styles.css.ts';
+
 const element = document.getElementById('myElement');
-setElementTheme(element, themeVars, {
+setElementTheme(element, vars, {
   small: '4px',
   medium: '8px',
   large: '16px'
@@ -54,7 +55,8 @@ Sets a single var on an element.
 
 ```ts
 import { setElementVar } from '@vanilla-extract/dynamic';
-import { themeVars } from './styles.css.ts';
+import { vars } from './styles.css.ts';
+
 const element = document.getElementById('myElement');
-setElementVar(element, themeVars.color.brand, 'darksalmon');
+setElementVar(element, vars.color.brand, 'darksalmon');
 ```

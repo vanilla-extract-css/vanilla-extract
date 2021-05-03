@@ -29,7 +29,7 @@ const P = (props: Children) => (
   </Box>
 );
 
-const Pre = ({ color: _, ...props }: AllHTMLAttributes<HTMLPreElement>) => (
+const Pre = ({ color, width, ...props }: AllHTMLAttributes<HTMLPreElement>) => (
   <Box component="pre" paddingBottom="large" {...props} />
 );
 
@@ -104,7 +104,7 @@ export default {
           paddingLeft="xsmall"
           marginTop="-small"
           borderRadius="medium"
-          background={{ lightMode: 'pink400', darkMode: 'pink600' }}
+          background={{ lightMode: 'pink400', darkMode: 'pink500' }}
           style={{
             height: 36,
             transform: 'skew(-15deg)',

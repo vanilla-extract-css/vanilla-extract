@@ -1,14 +1,15 @@
 ---
-title: Introduction
+title: Getting Started
 ---
 
-# Zero-runtime<br/>Stylesheets-in-TypeScript.
+# **Zero-runtime<br/>Stylesheets-in-TypeScript.**
 
 Write your styles in TypeScript (or JavaScript) with locally scoped class names and CSS Variables, then generate static CSS files at build time.
 
 Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-in-TypeScript” but with scoped CSS Variables + heaps more.
 
-> 🚧 &nbsp; Please note, this is an alpha release.
+> **🚧 &nbsp; Please note, this is an alpha release.**
+
 
 🔥 &nbsp; All styles generated at build time — just like [Sass](https://sass-lang.com), [Less](http://lesscss.org), etc.
 
@@ -16,7 +17,7 @@ Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-i
 
 🦄 &nbsp; Works with any front-end framework — or even without one.
 
-🌳 &nbsp; Locally scoped class names — just like [CSS Modules.](https://github.com/css-modules/css-modules)
+🌳 &nbsp; Locally scoped class names — just like [CSS Modules](https://github.com/css-modules/css-modules).
 
 🚀 &nbsp; Locally scoped [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), `@keyframes` and `@font-face` rules.
 
@@ -24,21 +25,22 @@ Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-i
 
 🛠 &nbsp; Utils for generating variable-based `calc` expressions.
 
-💪 &nbsp; Type-safe styles via [CSSType.](https://github.com/frenic/csstype)
+💪 &nbsp; Type-safe styles via [CSSType](https://github.com/frenic/csstype).
 
 🏃‍♂️ &nbsp; Optional runtime version for development and testing.
 
 🙈 &nbsp; Optional API for dynamic runtime theming.
 
----
+
+> 🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/App.css.ts)
 
 **Write your styles in `.css.ts` files.**
 
-```tsx
+```ts
 // styles.css.ts
 import { createTheme, style } from '@vanilla-extract/css';
 
-export const [themeClass, themeVars] = createTheme({
+export const [themeClass, vars] = createTheme({
   color: {
     brand: 'blue'
   },
@@ -48,8 +50,8 @@ export const [themeClass, themeVars] = createTheme({
 });
 
 export const exampleStyle = style({
-  backgroundColor: themeVars.color.brand,
-  fontFamily: themeVars.font.body,
+  backgroundColor: vars.color.brand,
+  fontFamily: vars.font.body,
   color: 'white',
   padding: 10
 });
@@ -59,7 +61,7 @@ export const exampleStyle = style({
 
 **Then consume them in your markup.**
 
-```tsx
+```ts
 // app.ts
 import { themeClass, exampleStyle } from './styles.css.ts';
 
@@ -70,6 +72,8 @@ document.write(`
 `);
 ```
 
-## Requirements
+---
 
-Your project must be using [webpack](https://webpack.js.org) with the supplied [webpack plugin](/documentation/webpack-options), but that's it.
+Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+
+---

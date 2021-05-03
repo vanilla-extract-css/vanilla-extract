@@ -63,7 +63,8 @@ export const DocsPage = () => {
         component="header"
         display="flex"
         justifyContent="space-between"
-        padding="large"
+        paddingY="medium"
+        paddingX="large"
         width="full"
         position={{ desktop: 'fixed' }}
         background={{ lightMode: 'green100', darkMode: 'gray700' }}
@@ -75,7 +76,7 @@ export const DocsPage = () => {
           className={styles.homeLink}
           title="Back to home"
         >
-          <Logo size={48} />
+          <Logo size={70} />
         </ReactRouterLink>
       </Box>
 
