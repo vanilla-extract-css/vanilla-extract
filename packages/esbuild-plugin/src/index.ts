@@ -38,10 +38,10 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         ({ path }) => {
-          const contents = getSourceFromVirtualCssFile(path);
+          const { source } = getSourceFromVirtualCssFile(path);
 
           return {
-            contents,
+            contents: source,
             loader: 'css',
           };
         },

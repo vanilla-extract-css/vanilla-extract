@@ -4,6 +4,7 @@ import {
   virtualCssFileFilter,
   processVanillaFile,
   getSourceFromVirtualCssFile,
+  virtualCssFileWithoutSourceFilter,
   compile,
 } from '@vanilla-extract/integration';
 
@@ -18,11 +19,18 @@ export default function vanillaExtractPlugin(): Plugin {
     },
     resolveId(id) {
       if (virtualCssFileFilter.test(id)) {
-        return id;
+        const { fileName, source } = getSourceFromVirtualCssFile(id);
+
+        console.log({ id: fileName, meta: { vanillaExtract: { source } } });
+
+        return { id: fileName, meta: { vanillaExtract: { source } } };
       }
     },
     async load(id, ssr) {
       if (cssFileFilter.test(id)) {
+        const moduleInfo = this.getModuleInfo(id);
+
+        console.log(id, moduleInfo);
         const { source, watchFiles } = await compile({
           filePath: id,
           cwd: config.root,
@@ -39,8 +47,18 @@ export default function vanillaExtractPlugin(): Plugin {
         });
       }
 
-      if (virtualCssFileFilter.test(id)) {
-        return getSourceFromVirtualCssFile(id);
+      if (virtualCssFileWithoutSourceFilter.test(id)) {
+        const moduleInfo = this.getModuleInfo(id);
+
+        console.log(id, moduleInfo);
+
+        if (!moduleInfo?.meta?.vanillaExtract?.source) {
+          throw new Error(
+            `Cound't read source from generated vanilla-extract CSS file: ${id}`,
+          );
+        }
+
+        return moduleInfo.meta.vanillaExtract.source;
       }
 
       return null;
