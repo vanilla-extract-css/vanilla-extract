@@ -3,7 +3,7 @@ import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
 const headerHeight = '100px';
-const sidebarWidth = '300px';
+const sidebarWidth = '230px';
 
 export const homeLink = style({
   textDecoration: 'none',
@@ -15,6 +15,9 @@ export const homeLink = style({
 
 export const header = style({
   height: headerHeight,
+});
+
+export const headerBg = style({
   clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
   backdropFilter: 'blur(4px)',
   opacity: 0.8,
@@ -34,7 +37,7 @@ export const sidebarOpen = style({});
 export const sidebar = style({
   right: 0,
   width: '40vw',
-  minWidth: sidebarWidth,
+  minWidth: '300px',
   transition: 'transform .15s ease, opacity .15s ease',
   ':before': {
     content: '""',
@@ -50,9 +53,15 @@ export const sidebar = style({
 
   ...responsiveStyle({
     desktop: {
-      top: headerHeight,
       right: 'initial',
       width: sidebarWidth,
+      minWidth: sidebarWidth,
+      ':before': {
+        width: '100px',
+        left: 'initial',
+        right: '-70px',
+        transform: 'rotateY(180deg)',
+      },
     },
   }),
 

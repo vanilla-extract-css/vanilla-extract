@@ -66,27 +66,27 @@ export const DocsPage = () => {
         paddingY="medium"
         paddingX="large"
         width="full"
-        position={{ desktop: 'fixed' }}
-        background={{ lightMode: 'green100', darkMode: 'gray700' }}
+        position={{ mobile: 'relative', desktop: 'fixed' }}
         zIndex={1}
         className={styles.header}
       >
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          zIndex={-1}
+          background={{ lightMode: 'green100', darkMode: 'gray700' }}
+          className={styles.headerBg}
+        />
         <ReactRouterLink
           to="/"
           className={styles.homeLink}
           title="Back to home"
         >
-          <Logo size={70} />
+          <Logo size={66} />
         </ReactRouterLink>
-      </Box>
-
-      <Box position="absolute" top={0} right={0} padding="large">
-        <Box display={{ mobile: 'none', desktop: 'block' }}>
-          <ColorModeToggle />
-        </Box>
-        <Box display={{ desktop: 'none' }}>
-          <Fab open={menuOpen} onClick={toggleMenu} />
-        </Box>
       </Box>
 
       <Box
@@ -109,9 +109,12 @@ export const DocsPage = () => {
 
       <Box
         component="aside"
-        paddingTop={{ mobile: 'xlarge', tablet: 'xlarge' }}
+        paddingTop={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'xxxlarge' }}
         paddingX={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'large' }}
-        background={{ lightMode: 'white', darkMode: 'gray900' }}
+        background={{
+          lightMode: menuOpen ? 'white' : 'green50',
+          darkMode: 'gray800',
+        }}
         position="fixed"
         top={0}
         bottom={0}
@@ -127,14 +130,26 @@ export const DocsPage = () => {
       >
         <Box
           style={{ overflow: 'auto', height: '100%' }}
+          marginTop={{ desktop: 'xlarge' }}
           paddingBottom="xxxlarge"
         >
           <Navigation onSelect={closeMenu} />
         </Box>
       </Box>
+
+      <Box zIndex={1} position="absolute" top={0} right={0} padding="large">
+        <Box display={{ mobile: 'none', desktop: 'block' }}>
+          <ColorModeToggle />
+        </Box>
+        <Box display={{ desktop: 'none' }}>
+          <Fab open={menuOpen} onClick={toggleMenu} />
+        </Box>
+      </Box>
+
       <Box
         paddingTop={{ mobile: 'medium', tablet: 'medium' }}
         className={styles.container}
+        zIndex={-1}
       >
         <Box
           component="main"
