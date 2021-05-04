@@ -5,6 +5,7 @@ import {
   atomicWithPaddingShorthandStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
+  conditionalStylesWithoutDefaultCondition,
   conditionalStylesWithoutResponsiveArray,
 } from './index.css';
 
@@ -319,7 +320,7 @@ describe('sprinkles', () => {
           paddingTop: ['small', 'medium', 'large', 'small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingTop\\" only suports upto 3 breakpoints. You passed 4"`,
+        `"\\"paddingTop\\" only supports up to 3 breakpoints. You passed 4"`,
       );
     });
 
@@ -335,6 +336,19 @@ describe('sprinkles', () => {
         }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"\\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+      );
+    });
+
+    it('should handle properties with no default condition', () => {
+      const atoms = createAtomsFn(conditionalStylesWithoutDefaultCondition);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          transform: 'shrink',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"transform\\" is has no default condition. You must specifiy which conditions to target explicitly. Possible options are \\"active\\""`,
       );
     });
 

@@ -133,6 +133,11 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
         }
 
         if (typeof propValue === 'string' || typeof propValue === 'number') {
+          if (process.env.NODE_ENV !== 'production') {
+            if (!atomicProperty.values[propValue].defaultClass) {
+              throw new Error();
+            }
+          }
           classNames.push(atomicProperty.values[propValue].defaultClass);
         } else if (Array.isArray(propValue)) {
           for (const responsiveIndex in propValue) {
@@ -204,11 +209,19 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             throw new SprinklesError(`"${prop}" is not a valid atom property`);
           }
 
-          if (
-            (typeof propValue === 'string' || typeof propValue === 'number') &&
-            !(propValue in atomicProperty.values)
-          ) {
-            invalidPropValue(prop, propValue, atomicProperty.values);
+          if (typeof propValue === 'string' || typeof propValue === 'number') {
+            if (!(propValue in atomicProperty.values)) {
+              invalidPropValue(prop, propValue, atomicProperty.values);
+            }
+            if (!atomicProperty.values[propValue].defaultClass) {
+              throw new SprinklesError(
+                `"${prop}" is has no default condition. You must specifiy which conditions to target explicitly. Possible options are ${Object.keys(
+                  atomicProperty.values[propValue].conditions,
+                )
+                  .map(format)
+                  .join(', ')}`,
+              );
+            }
           }
 
           if (typeof propValue === 'object') {
