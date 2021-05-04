@@ -209,7 +209,7 @@ document.write(`
 
 ---
 
-⚛️ &nbsp; Using React? Turn your atoms into a `<Box>` component with [🍰 Dessert Box.](https://github.com/TheMightyPenguin/dessert-box)
+⚛️ &nbsp; Using React? Turn your atoms into a `<Box>` component with 🍰 [Dessert Box.](https://github.com/TheMightyPenguin/dessert-box)
 
 ---
 
