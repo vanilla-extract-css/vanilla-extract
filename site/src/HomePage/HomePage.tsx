@@ -198,7 +198,14 @@ export const HomePage = () => {
                 <Heading level="3">Community vibes</Heading>
               </ContentBlock>
               <ContentBlock size="large" withGutters>
-                <Box display="flex" style={{ gap: 80, overflow: 'auto' }}>
+                <Box
+                  display="flex"
+                  paddingY="large"
+                  marginY="-large"
+                  paddingX="large"
+                  marginLeft="-large"
+                  style={{ gap: 60, overflow: 'auto' }}
+                >
                   <Tweet
                     handle="@jeresig"
                     name="John Resig"

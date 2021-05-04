@@ -17,7 +17,7 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
     <Box
       padding="xlarge"
       borderRadius="large"
-      background={{ lightMode: 'gray50', darkMode: 'gray900' }}
+      background={{ lightMode: 'white', darkMode: 'gray900' }}
       className={styles.tweet}
     >
       <Stack space="xlarge">
@@ -25,20 +25,27 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
           <Box
             borderRadius="full"
             className={styles.avatar}
-            style={{
-              backgroundImage: `url(${avatar})`,
-            }}
+            background={{ lightMode: 'gray100', darkMode: 'gray800' }}
+            style={
+              {
+                // backgroundImage: `url(${avatar})`,
+              }
+            }
           />
           <Stack space="medium">
             <Text weight="strong" size="small">
-              {name}
+              Full name
             </Text>
             <Text color="secondary" size="small">
-              {handle}
+              @handle
             </Text>
           </Stack>
         </Box>
-        <Text size="small">{children}</Text>
+        <Text size="small">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam.
+        </Text>
       </Stack>
     </Box>
   </Link>
