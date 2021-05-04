@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css';
-import { darkMode, lightMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/atoms.css';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
@@ -8,12 +8,10 @@ export const shadowColorVar = createVar();
 export const installBlock = style({
   fontFamily: vars.fonts.code,
   boxShadow: `0 0 50px -10px ${shadowColorVar}`,
+  vars: {
+    [shadowColorVar]: vars.palette.green200,
+  },
   selectors: {
-    [`.${lightMode} &`]: {
-      vars: {
-        [shadowColorVar]: vars.palette.green200,
-      },
-    },
     [`.${darkMode} &`]: {
       vars: {
         [shadowColorVar]: vars.palette.gray600,

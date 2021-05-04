@@ -58,10 +58,10 @@ export const darkMode = 'dark';
 
 export const colorStyles = createAtomicStyles({
   conditions: {
-    lightMode: { selector: `.${lightMode} &` },
+    lightMode: {},
     darkMode: { selector: `.${darkMode} &` },
   },
-  defaultCondition: false,
+  defaultCondition: 'lightMode',
   properties: {
     background: vars.palette,
     color: vars.palette,

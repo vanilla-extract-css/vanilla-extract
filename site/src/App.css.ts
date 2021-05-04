@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
-import { darkMode, lightMode } from './system/styles/atoms.css';
+import { darkMode } from './system/styles/atoms.css';
 import { vars } from './themes.css';
 
 globalStyle('html, body', {
@@ -11,7 +11,7 @@ globalStyle(`.${darkMode}`, {
   background: vars.palette.gray900,
   color: vars.palette.gray50,
 });
-globalStyle(`.${lightMode}`, {
+globalStyle('html', {
   background: vars.palette.white,
   color: vars.palette.gray900,
 });

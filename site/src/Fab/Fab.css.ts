@@ -1,5 +1,5 @@
 import { style, createVar, fallbackVar } from '@vanilla-extract/css';
-import { darkMode, lightMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/atoms.css';
 import { vars } from '../themes.css';
 
 export const focusColorVar = createVar();
@@ -12,12 +12,12 @@ export const fab = style({
   zIndex: 3,
   boxShadow: `0px 0px 0px 5px ${fallbackVar(focusColorVar, 'transparent')}`,
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
-  selectors: {
-    [`.${lightMode} &:focus-visible`]: {
-      vars: {
-        [focusColorVar]: vars.palette.pink300,
-      },
+  ':focus-visible': {
+    vars: {
+      [focusColorVar]: vars.palette.pink300,
     },
+  },
+  selectors: {
     [`.${darkMode} &:focus-visible`]: {
       vars: {
         [focusColorVar]: vars.palette.pink600,

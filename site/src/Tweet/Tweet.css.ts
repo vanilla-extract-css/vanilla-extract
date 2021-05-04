@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css';
-import { lightMode, darkMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/atoms.css';
 import { vars } from '../themes.css';
 
 export const tweetLink = style({
@@ -16,18 +16,16 @@ export const shadowColorVar = createVar();
 export const tweet = style({
   width: 400,
   boxShadow: `0 0 30px -10px ${shadowColorVar}`,
+  vars: {
+    [shadowColorVar]: vars.palette.blue300,
+  },
   selectors: {
-    [`.${lightMode} &`]: {
-      vars: {
-        [shadowColorVar]: vars.palette.blue300,
-      },
-    },
     [`.${darkMode} &`]: {
       vars: {
         [shadowColorVar]: vars.palette.gray600,
       },
     },
-    [`.${lightMode} ${tweetLink}:focus &`]: {
+    [`${tweetLink}:focus &`]: {
       vars: {
         [shadowColorVar]: vars.palette.pink400,
       },

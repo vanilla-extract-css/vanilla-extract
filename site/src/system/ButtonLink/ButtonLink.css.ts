@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../themes.css';
-import { darkMode, lightMode } from '../styles/atoms.css';
+import { darkMode } from '../styles/atoms.css';
 
 export const button = style({
   textDecoration: 'none',
@@ -17,10 +17,10 @@ export const button = style({
 
 export const solid = style({
   boxShadow: `0px 0px 12px 0px rgba(0,0,0,0.4)`,
+  ':focus-visible': {
+    boxShadow: `0px 0px 0px 5px ${vars.palette.pink400}`,
+  },
   selectors: {
-    [`.${lightMode} &:focus-visible`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink400}`,
-    },
     [`.${darkMode} &:focus-visible`]: {
       boxShadow: `0px 0px 0px 5px ${vars.palette.pink500}`,
     },
@@ -29,12 +29,12 @@ export const solid = style({
 
 export const transparent = style({
   boxShadow: `0 0 0 2px inset currentColor`,
+  ':hover': { background: 'rgba(255,255,255,.5)' },
+  ':focus-visible': {
+    boxShadow: `0px 0px 0px 5px ${vars.palette.pink400},0 0 0 2px inset currentColor`,
+  },
   selectors: {
-    [`.${lightMode} &:hover`]: { background: 'rgba(255,255,255,.5)' },
     [`.${darkMode} &:hover`]: { background: 'rgba(255,255,255,.1)' },
-    [`.${lightMode} &:focus-visible`]: {
-      boxShadow: `0px 0px 0px 5px ${vars.palette.pink400},0 0 0 2px inset currentColor`,
-    },
     [`.${darkMode} &:focus-visible`]: {
       boxShadow: `0px 0px 0px 5px ${vars.palette.pink500},0 0 0 2px inset currentColor`,
     },

@@ -65,17 +65,10 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
 
   const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
 
-  return `<html class="${lightMode}">
+  return `<html>
     <head>
       <script>
-      ((c, l, d) => {
-        try {
-          c.remove(l, d);
-          c.add(localStorage.getItem('${themeKey}') || (matchMedia('(prefers-color-scheme: dark)').matches ? d : l));
-        } catch (e) {
-          c.add(l);
-        }
-      })(document.documentElement.classList, '${lightMode}', '${darkMode}');
+      ((p,d)=>{try{if(p==d||(p!='${lightMode}'&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add(d)}catch(e){}})(localStorage.getItem('${themeKey}'),'${darkMode}')
       </script>
       <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
