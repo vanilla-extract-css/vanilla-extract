@@ -1,5 +1,19 @@
 # @vanilla-extract/sprinkles
 
+## 0.1.2
+
+### Patch Changes
+
+- [#77](https://github.com/seek-oss/vanilla-extract/pull/77) [`63c01ad`](https://github.com/seek-oss/vanilla-extract/commit/63c01ada07dd268c8d3cbe62dcf1baa8842216f2) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve runtime errors
+
+  Sprinkles will now validate your `atoms` calls at runtime for a better developer experience. The validation code should be stripped from production bundles via a `process.env.NODE_ENV` check.
+
+  Example Error
+
+  ```bash
+  SprinklesError: "paddingTop" has no value "xlarge". Possible values are "small", "medium", "large"
+  ```
+
 ## 0.1.1
 
 ### Patch Changes
