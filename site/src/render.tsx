@@ -9,19 +9,21 @@ import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
 type HeadTags = React.ReactElement<unknown>[];
 
-const render = (route: string, headTags: HeadTags, basename: string) =>
+const render = (route: string, headTags: HeadTags) =>
   renderToString(
-    <StaticRouter location={route} basename={basename}>
+    <StaticRouter location={route}>
       <HeadProvider headTags={headTags}>
         <App />
       </HeadProvider>
     </StaticRouter>,
   );
 
-const getBasePath = (publicPath: string) =>
-  publicPath.endsWith('/')
-    ? publicPath.substr(0, publicPath.length - 1)
-    : publicPath;
+const fullyQualifiedUrl = (path: string) =>
+  `${
+    process.env.NODE_ENV === 'production'
+      ? 'https://vanilla-extract-css.netlify.app'
+      : 'http://localhost:8080'
+  }${path}`;
 
 interface RenderParams {
   route: string;
@@ -29,8 +31,6 @@ interface RenderParams {
   entrypoints: NonNullable<StatsCompilation['entrypoints']>;
 }
 export default ({ route, publicPath, entrypoints }: RenderParams) => {
-  const basePath = getBasePath(publicPath);
-
   const assetPath = (filename: string) => `${publicPath}${filename}`;
   const assets = entrypoints.main.assets;
 
@@ -49,14 +49,14 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     .map((asset) => `<script src="${assetPath(asset.name)}"></script>`);
 
   const headTags: HeadTags = [];
-  const html = render(route, headTags, basePath);
+  const html = render(route, headTags);
 
   const favicon = (size?: number) =>
     `<link rel="icon" type="image/png" ${
       size ? `sizes="${size}x${size}" ` : ''
     }href="${assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`)}" />`;
 
-  const shareImageUrl = assetPath('og-image.png');
+  const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
 
   return `<html>
     <head>
@@ -81,7 +81,6 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     </head>
     <body>
         <div id="app">${html}</div>
-        <script>window.BASE_URL = ${JSON.stringify(basePath)};</script>
         ${jsAssets.join('\n')}
     </body>
   </html>`;
