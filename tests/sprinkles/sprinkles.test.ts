@@ -294,7 +294,7 @@ describe('sprinkles', () => {
           marginTop: ['small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"marginTop\\" is does not support responsive arrays"`,
+        `"\\"marginTop\\" does not support responsive arrays"`,
       );
     });
 
@@ -348,7 +348,7 @@ describe('sprinkles', () => {
           transform: 'shrink',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"transform\\" is has no default condition. You must specifiy which conditions to target explicitly. Possible options are \\"active\\""`,
+        `"\\"transform\\" has no default condition. You must specify which conditions to target explicitly. Possible options are \\"active\\""`,
       );
     });
 

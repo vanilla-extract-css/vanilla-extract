@@ -215,7 +215,7 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             }
             if (!atomicProperty.values[propValue].defaultClass) {
               throw new SprinklesError(
-                `"${prop}" is has no default condition. You must specifiy which conditions to target explicitly. Possible options are ${Object.keys(
+                `"${prop}" has no default condition. You must specify which conditions to target explicitly. Possible options are ${Object.keys(
                   atomicProperty.values[propValue].conditions,
                 )
                   .map(format)
@@ -239,7 +239,7 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             if (Array.isArray(propValue)) {
               if (!('responsiveArray' in atomicProperty)) {
                 throw new SprinklesError(
-                  `"${prop}" is does not support responsive arrays`,
+                  `"${prop}" does not support responsive arrays`,
                 );
               }
 
