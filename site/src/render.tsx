@@ -19,11 +19,7 @@ const render = (route: string, headTags: HeadTags) =>
   );
 
 const fullyQualifiedUrl = (path: string) =>
-  `${
-    process.env.NODE_ENV === 'production'
-      ? 'https://vanilla-extract-css.netlify.app'
-      : 'http://localhost:8080'
-  }${path}`;
+  `${process.env.URL || 'http://localhost:8080'}${path}`;
 
 interface RenderParams {
   route: string;
