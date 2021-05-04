@@ -22,7 +22,6 @@ const NavSection = ({
   <>
     <Link
       to={href}
-      exact
       onClick={onClick}
       highlightOnFocus={false}
       underline="hover"

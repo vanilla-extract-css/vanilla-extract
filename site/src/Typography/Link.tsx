@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link, NavLinkProps } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
 import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
 
-interface LinkProps extends NavLinkProps {
+interface Props extends LinkProps {
   baseline?: boolean;
   size?: 'standard' | 'small';
   underline?: 'always' | 'hover';
@@ -22,7 +22,7 @@ export default ({
   highlightOnFocus = true,
   className,
   ...restProps
-}: LinkProps) => {
+}: Props) => {
   const classNames = classnames(
     underline === 'hover' ? styles.underlineOnHover : undefined,
     highlightOnFocus ? styles.highlightOnHover : undefined,

@@ -48,13 +48,15 @@ export const useHeadingRouteUpdates = (headingHashes: Array<string>) => {
 
         const results = headingHashes
           .map((hash) => {
-            const headingElement = document.querySelector(`#${hash}`);
+            if (hash) {
+              const headingElement = document.querySelector(`#${hash}`);
 
-            if (headingElement) {
-              return {
-                pos: headingElement.getBoundingClientRect().top - 160,
-                hash,
-              };
+              if (headingElement) {
+                return {
+                  pos: headingElement.getBoundingClientRect().top - 160,
+                  hash,
+                };
+              }
             }
 
             return {

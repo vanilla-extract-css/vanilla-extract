@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as ReactRouterLink, Route } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';
@@ -57,6 +57,16 @@ export const DocsPage = () => {
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add(styles.bodyLock);
+
+      return () => {
+        document.body.classList.remove(styles.bodyLock);
+      };
+    }
+  }, [menuOpen]);
+
   return (
     <MDXProvider components={mdxComponents}>
       <Box
@@ -109,8 +119,7 @@ export const DocsPage = () => {
 
       <Box
         component="aside"
-        paddingTop={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'xxxlarge' }}
-        paddingX={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'large' }}
+        paddingLeft={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'large' }}
         background={{
           lightMode: menuOpen ? 'white' : 'green50',
           darkMode: 'gray800',
@@ -130,8 +139,13 @@ export const DocsPage = () => {
       >
         <Box
           style={{ overflow: 'auto', height: '100%' }}
-          marginTop={{ desktop: 'xlarge' }}
+          paddingTop={{
+            mobile: 'xlarge',
+            tablet: 'xlarge',
+            desktop: 'xxxlarge',
+          }}
           paddingBottom="xxxlarge"
+          marginTop={{ desktop: 'xlarge' }}
         >
           <Navigation onSelect={closeMenu} />
         </Box>

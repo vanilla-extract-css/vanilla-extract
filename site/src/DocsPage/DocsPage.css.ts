@@ -3,7 +3,12 @@ import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
 const headerHeight = '100px';
-const sidebarWidth = '230px';
+const sidebarWidth = '235px';
+
+export const bodyLock = style({
+  overflow: 'hidden!important',
+  marginRight: 16,
+});
 
 export const homeLink = style({
   textDecoration: 'none',

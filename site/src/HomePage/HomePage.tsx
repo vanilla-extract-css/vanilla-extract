@@ -197,19 +197,20 @@ export const HomePage = () => {
               <ContentBlock size="large" withGutters>
                 <Heading level="3">Community vibes</Heading>
               </ContentBlock>
-              <Box display="flex" justifyContent="center" style={{ gap: 60 }}>
-                <Tweet
-                  handle="@jeresig"
-                  name="John Resig"
-                  avatar="https://pbs.twimg.com/profile_images/1090714620275245056/HS9xcEDk_200x200.jpg"
-                  url="https://twitter.com/jeresig/status/1375609805373575175"
-                >
-                  vanilla-extract is super exciting - it’s scratching an itch
-                  that we have at @khanacademy, as we look to move off of
-                  Aphrodite to something that has better perf characteristics.
-                  We were thinking CSS Modules but this is even more ideal!
-                </Tweet>
-                {/* 
+              <ContentBlock size="large" withGutters>
+                <Box display="flex" style={{ gap: 80, overflow: 'auto' }}>
+                  <Tweet
+                    handle="@jeresig"
+                    name="John Resig"
+                    avatar="https://pbs.twimg.com/profile_images/1090714620275245056/HS9xcEDk_200x200.jpg"
+                    url="https://twitter.com/jeresig/status/1375609805373575175"
+                  >
+                    vanilla-extract is super exciting - it’s scratching an itch
+                    that we have at @khanacademy, as we look to move off of
+                    Aphrodite to something that has better perf characteristics.
+                    We were thinking CSS Modules but this is even more ideal!
+                  </Tweet>
+                  {/* 
                 <Tweet
                   handle="@jevakallio"
                   name="Macbook Miller"
@@ -219,19 +220,19 @@ export const HomePage = () => {
                   You had me at vanilla-extract
                 </Tweet> */}
 
-                <Tweet
-                  handle="@lorvsso"
-                  name="Jack Lo Russo"
-                  avatar="https://pbs.twimg.com/profile_images/1365062529622282240/UqZdoTJL_200x200.jpg"
-                  url="https://twitter.com/lorvsso/status/1375592486182084613"
-                >
-                  I love this ✨ The first time I made a decision at work about
-                  CSS architecture, years ago now, CSS Modules was what I ended
-                  up recommending and implementing. This is CSS Modules for the
-                  new decade ❤️😍
-                </Tweet>
+                  <Tweet
+                    handle="@lorvsso"
+                    name="Jack Lo Russo"
+                    avatar="https://pbs.twimg.com/profile_images/1365062529622282240/UqZdoTJL_200x200.jpg"
+                    url="https://twitter.com/lorvsso/status/1375592486182084613"
+                  >
+                    I love this ✨ The first time I made a decision at work
+                    about CSS architecture, years ago now, CSS Modules was what
+                    I ended up recommending and implementing. This is CSS
+                    Modules for the new decade ❤️😍
+                  </Tweet>
 
-                {/* <Tweet
+                  {/* <Tweet
                   handle="@markdalgleish"
                   name="Mark Dalgleish"
                   avatar="https://pbs.twimg.com/profile_images/754886061872979968/BzaOWhs1_200x200.jpg"
@@ -243,17 +244,18 @@ export const HomePage = () => {
                   CSS-in-JS libraries.
                 </Tweet> */}
 
-                <Tweet
-                  handle="@kbrock84"
-                  name="Kevin Brock"
-                  avatar="https://pbs.twimg.com/profile_images/1127929844241555456/bbEpS1z6_200x200.jpg"
-                  url="https://twitter.com/kbrock84/status/1375457568793845764"
-                >
-                  Whoever thought of the name vanilla extract for a css in js
-                  framework is a fucking genius. Just when you think all the
-                  good js lib names have been taken.
-                </Tweet>
-              </Box>
+                  <Tweet
+                    handle="@kbrock84"
+                    name="Kevin Brock"
+                    avatar="https://pbs.twimg.com/profile_images/1127929844241555456/bbEpS1z6_200x200.jpg"
+                    url="https://twitter.com/kbrock84/status/1375457568793845764"
+                  >
+                    Whoever thought of the name vanilla extract for a css in js
+                    framework is a fucking genius. Just when you think all the
+                    good js lib names have been taken.
+                  </Tweet>
+                </Box>
+              </ContentBlock>
             </Stack>
           </Box>
         </Box>
