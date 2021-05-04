@@ -32,5 +32,5 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
         with:
-          args: deploy --dir=site/dist --site=vanilla-extract
+          args: deploy --dir=site/dist
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
