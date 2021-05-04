@@ -68,7 +68,7 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
   return `<html>
     <head>
       <script>
-      ((p,d)=>{try{if(p==d||(p!='${lightMode}'&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add(d)}catch(e){}})(localStorage.getItem('${themeKey}'),'${darkMode}')
+      ((d)=>{try{var p=localStorage.getItem('${themeKey}');if(p==d||(p!='${lightMode}'&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add(d)}catch(e){}})('${darkMode}')
       </script>
       <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">

@@ -31,7 +31,7 @@ globalStyle(tokenSelector({ tokens: ['keyword', 'selector'] }), {
 globalStyle(tokenSelector({ tokens: ['string'] }), {
   color: vars.palette.green200,
 });
-globalStyle(tokenSelector({ tokens: ['function', 'property'] }), {
+globalStyle(tokenSelector({ tokens: ['function', 'property', 'number'] }), {
   color: vars.palette.pink300,
 });
 globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
@@ -47,9 +47,12 @@ globalStyle(tokenSelector({ darkMode, tokens: ['keyword', 'selector'] }), {
 globalStyle(tokenSelector({ darkMode, tokens: ['string'] }), {
   color: vars.palette.green300,
 });
-globalStyle(tokenSelector({ darkMode, tokens: ['function', 'property'] }), {
-  color: vars.palette.pink400,
-});
+globalStyle(
+  tokenSelector({ darkMode, tokens: ['function', 'property', 'number'] }),
+  {
+    color: vars.palette.pink400,
+  },
+);
 globalStyle(
   tokenSelector({ darkMode: darkMode, tokens: ['punctuation', 'operator'] }),
   {

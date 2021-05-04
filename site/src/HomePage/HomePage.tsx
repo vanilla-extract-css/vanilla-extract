@@ -155,9 +155,9 @@ export const HomePage = () => {
                 your theme structure to <InlineCode>createTheme</InlineCode>.
               </Text>
               <Text>
-                The returned class can be applied to an element, allowing themed
-                CSS variables to be referenced through the provided theme
-                structure.
+                Apply the returned class to an element, then consume the CSS
+                variables in your styles, referencing them via the provided
+                theme structure.
               </Text>
             </Stack>
 
@@ -261,38 +261,45 @@ export const HomePage = () => {
         <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
-              <Heading level="3">Scoped Themed Variables</Heading>
+              <Heading level="3">Full power of CSS & TypeScript</Heading>
               <Text>
-                Easily create themed variables, scoped to a class, by providing
-                your theme structure to <InlineCode>createTheme</InlineCode>.
+                Define strongly-typed styles with the full power of CSS
+                underneath.
               </Text>
               <Text>
-                The returned class can be applied to an element, allowing themed
-                CSS variables to be referenced through the provided theme
-                structure.
+                CSS Variables, simple pseudos (hover, focus, etc.), selectors
+                and media/feature queries are all supported.
               </Text>
             </Stack>
 
             <Code language="tsx">
-              {dedent`export const [themeClass, vars] = createTheme({
-                  color: {
-                    brand: 'aquamarine'
-                  },
-                });
-
-                export const exampleStyle = style({
-                  backgroundColor: vars.color.brand,
-                  padding: 10
-                });
-
-                // app.ts
-                import { themeClass, exampleStyle } from './styles.css.ts';
-
-                document.write(\`
-                  <section class="${'${themeClass}'}">
-                    <h1 class="${'${exampleStyle}'}">Hello world!</h1>
-                  </section>
-                \`);`}
+              {dedent`import { vars } from './vars.css.ts';
+              
+              export const className = style({
+                display: 'flex',
+                vars: {
+                  [vars.color.brand]: 'pink',
+                  '--global-variable': 'purple'
+                },
+                ':hover': {
+                  color: 'red'
+                },
+                selectors: {
+                  '&:nth-child(2n)': {
+                    background: 'aquamarine'
+                  }
+                },
+                '@media': {
+                  'screen and (min-width: 768px)': {
+                    padding: 10
+                  }
+                },
+                '@supports': {
+                  '(display: grid)': {
+                    display: 'grid'
+                  }
+                }
+              });`}
             </Code>
           </Columns>
         </ContentBlock>
@@ -300,38 +307,36 @@ export const HomePage = () => {
         <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
-              <Heading level="3">Scoped Themed Variables</Heading>
+              <Heading level="3">Create variants at build time</Heading>
               <Text>
-                Easily create themed variables, scoped to a class, by providing
-                your theme structure to <InlineCode>createTheme</InlineCode>.
+                Creates a collection of named style variants, useful for mapping
+                component props to styles, e.g.
+                <InlineCode>{`styles.background[props.variant]`}</InlineCode>
               </Text>
               <Text>
-                The returned class can be applied to an element, allowing themed
-                CSS variables to be referenced through the provided theme
-                structure.
+                You can also transform the values by providing a map function as
+                the second argument.
               </Text>
             </Stack>
 
             <Code language="tsx">
-              {dedent`export const [themeClass, vars] = createTheme({
-                color: {
-                  brand: 'aquamarine'
-                },
+              {dedent`import { styleVariants } from '@vanilla-extract/css';
+
+              export const background = styleVariants({
+                primary: { background: 'blue' },
+                secondary: { background: 'aqua' },
               });
-
-              export const exampleStyle = style({
-                backgroundColor: vars.color.brand,
-                padding: 10
-              });
-
-              // app.ts
-              import { themeClass, exampleStyle } from './styles.css.ts';
-
-              document.write(\`
-                <section class="${'${themeClass}'}">
-                  <h1 class="${'${exampleStyle}'}">Hello world!</h1>
-                </section>
-              \`);`}
+              
+              const spaceScale = {
+                small: 4,
+                medium: 8,
+                large: 16
+              };
+              
+              export const padding = styleVariants(
+                spaceScale,
+                (space) => ({ padding: space })
+              );`}
             </Code>
           </Columns>
         </ContentBlock>
