@@ -18,13 +18,6 @@ const render = (route: string, headTags: HeadTags, basename: string) =>
     </StaticRouter>,
   );
 
-const fullyQualifiedUrl = (path: string) =>
-  `${
-    process.env.NODE_ENV === 'production'
-      ? 'https://seek-oss.github.io'
-      : 'http://localhost:8080'
-  }${path}`;
-
 const getBasePath = (publicPath: string) =>
   publicPath.endsWith('/')
     ? publicPath.substr(0, publicPath.length - 1)
@@ -59,11 +52,11 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
   const html = render(route, headTags, basePath);
 
   const favicon = (size?: number) =>
-    `<link rel="icon" type="image/png" sizes="${size}x${size}" href="${fullyQualifiedUrl(
-      assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`),
-    )}" />`;
+    `<link rel="icon" type="image/png" ${
+      size ? `sizes="${size}x${size}" ` : ''
+    }href="${assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`)}" />`;
 
-  const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
+  const shareImageUrl = assetPath('og-image.png');
 
   return `<html>
     <head>
