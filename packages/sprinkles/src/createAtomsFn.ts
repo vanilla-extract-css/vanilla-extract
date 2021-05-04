@@ -233,7 +233,7 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
               const breakpointCount = atomicProperty.responsiveArray.length;
               if (breakpointCount < propValue.length) {
                 throw new SprinklesError(
-                  `"${prop}" only suports upto ${breakpointCount} breakpoints. You passed ${propValue.length}`,
+                  `"${prop}" only supports up to ${breakpointCount} breakpoints. You passed ${propValue.length}`,
                 );
               }
 
