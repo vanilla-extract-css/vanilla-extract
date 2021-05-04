@@ -87,19 +87,20 @@ type AtomProps<Args extends ReadonlyArray<any>> = Args extends [
   ? (L extends AtomicStyles ? ChildAtomProps<L> : never) & AtomProps<R>
   : {};
 
-export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = (
+export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = ((
   props: AtomProps<Args>,
-) => string;
+) => string) & { properties: Set<keyof AtomProps<Args>> };
 
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...args: Args
 ): AtomsFn<Args> {
   const atomicStyles = Object.assign({}, ...args);
-  const shorthandNames = Object.keys(atomicStyles).filter(
+  const atomicKeys = Object.keys(atomicStyles) as Array<keyof AtomProps<Args>>;
+  const shorthandNames = atomicKeys.filter(
     (property) => 'mappings' in atomicStyles[property],
   );
 
-  return (props: any) => {
+  const atomsFn = (props: any) => {
     const classNames = [];
     const shorthands: any = {};
     const nonShorthands: any = { ...props };
@@ -289,4 +290,8 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
 
     return classNames.join(' ');
   };
+
+  return Object.assign(atomsFn, {
+    properties: new Set(atomicKeys),
+  });
 }

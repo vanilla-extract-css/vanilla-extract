@@ -476,6 +476,14 @@ export const atoms = createAtomsFn(
 );
 ```
 
+The atoms function also exposes a static `properties` key that lets you check whether a given property can be handled by the function.
+
+```ts
+atoms.properties.has('paddingX'); // returns true or false
+```
+
+> 💡 This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you’ll need some way to filter atom props from non-atom props.
+
 ---
 
 ## Thanks
