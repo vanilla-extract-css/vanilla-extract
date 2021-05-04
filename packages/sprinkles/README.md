@@ -482,7 +482,7 @@ The atoms function also exposes a static `properties` key that lets you check wh
 atoms.properties.has('paddingX'); // returns true or false
 ```
 
-> 💡 This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you'll need some way to filter atom props from non-atom props.
+> 💡 This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you’ll need some way to filter atom props from non-atom props.
 
 ---
 
