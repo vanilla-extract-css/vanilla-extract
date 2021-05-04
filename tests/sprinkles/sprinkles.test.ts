@@ -5,6 +5,8 @@ import {
   atomicWithPaddingShorthandStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
+  conditionalStylesWithoutDefaultCondition,
+  conditionalStylesWithoutResponsiveArray,
 } from './index.css';
 
 describe('sprinkles', () => {
@@ -260,6 +262,131 @@ describe('sprinkles', () => {
           "opacity",
         }
       `);
+    });
+  });
+
+  describe('errors', () => {
+    it('should handle invalid properties', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingLefty: 'small',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingLefty\\" is not a valid atom property"`,
+      );
+    });
+
+    it('should handle invalid property values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingLeft: 'xsmall',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingLeft\\" is not a valid atom property"`,
+      );
+    });
+
+    it('should handle conditional objects to unconditional values', () => {
+      const atoms = createAtomsFn(atomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          color: {
+            mobile: 'red',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"color\\" is not a conditional property"`,
+      );
+    });
+
+    it('should handle missing responsive arrays definitions', () => {
+      const atoms = createAtomsFn(conditionalStylesWithoutResponsiveArray);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          marginTop: ['small'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"marginTop\\" does not support responsive arrays"`,
+      );
+    });
+
+    it('should handle invalid responsive arrays values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: ['xsmall'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+      );
+    });
+
+    it('should handle responsive arrays with too many values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: ['small', 'medium', 'large', 'small'],
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingTop\\" only supports up to 3 breakpoints. You passed 4"`,
+      );
+    });
+
+    it('should handle invalid conditional property values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          paddingTop: {
+            mobile: 'xlarge',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+      );
+    });
+
+    it('should handle properties with no default condition', () => {
+      const atoms = createAtomsFn(conditionalStylesWithoutDefaultCondition);
+
+      expect(() =>
+        atoms({
+          // @ts-expect-error
+          transform: 'shrink',
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"transform\\" has no default condition. You must specify which conditions to target explicitly. Possible options are \\"active\\""`,
+      );
+    });
+
+    it('should handle invalid conditions', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(() =>
+        atoms({
+          paddingTop: {
+            // @ts-expect-error
+            ultraWide: 'large',
+          },
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"\\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
+      );
     });
   });
 

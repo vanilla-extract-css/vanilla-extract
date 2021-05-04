@@ -90,20 +90,14 @@ Create an `atoms.css.ts` file, then configure and export your `atoms` function.
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const space = {
-  none: 0,
-  small: 4,
-  medium: 8,
-  large: 16
-};
-
-const colors = {
-  blue50: '#eff6ff',
-  blue100: '#dbeafe',
-  blue200: '#bfdbfe',
+  0: '0',
+  4: '4px',
+  8: '8px',
+  12: '12px',
   // etc.
 };
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -111,8 +105,10 @@ const layoutStyles = createAtomicStyles({
   },
   defaultCondition: 'mobile',
   properties: {
-    display: ['none', 'block', 'flex'],
+    display: ['none', 'flex', 'block', 'inline'],
     flexDirection: ['row', 'column'],
+    justifyContent: ['stretch', 'flex-start', 'center', 'flex-end', 'space-around', 'space-between'],
+    alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
     paddingTop: space,
     paddingBottom: space,
     paddingLeft: space,
@@ -122,16 +118,24 @@ const layoutStyles = createAtomicStyles({
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
     paddingX: ['paddingLeft', 'paddingRight'],
-    paddingY: ['paddingTop', 'paddingBottom']
+    paddingY: ['paddingTop', 'paddingBottom'],
+    placeItems: ['justifyContent', 'alignItems'],
   }
 });
 
+const colors = {
+  'blue-50': '#eff6ff',
+  'blue-100': '#dbeafe',
+  'blue-200': '#bfdbfe',
+  // etc.
+};
+
 const colorStyles = createAtomicStyles({
   conditions: {
-    lightMode: { '@media': '(prefers-color-scheme: light)' },
+    lightMode: {},
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
-  defaultCondition: false,
+  defaultCondition: 'lightMode',
   properties: {
     color: colors,
     background: colors,
@@ -139,7 +143,7 @@ const colorStyles = createAtomicStyles({
   }
 });
 
-export const atoms = createAtomsFn(layoutStyles, colorStyles);
+export const atoms = createAtomsFn(responsiveStyles, colorStyles);
 ```
 
 **🎉 That's it — you’re ready to go!**
