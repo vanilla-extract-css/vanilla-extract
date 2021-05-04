@@ -269,6 +269,8 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             }
           }
         }
+
+        throw e;
       }
     }
 
