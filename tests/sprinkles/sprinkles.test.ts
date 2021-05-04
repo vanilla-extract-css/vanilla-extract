@@ -252,7 +252,7 @@ describe('sprinkles', () => {
           paddingLefty: 'small',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingLefty\\" is not a valid atom property"`,
+        `"\\"paddingLefty\\" is not a valid atom property"`,
       );
     });
 
@@ -265,7 +265,7 @@ describe('sprinkles', () => {
           paddingLeft: 'xsmall',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingLeft\\" is not a valid atom property"`,
+        `"\\"paddingLeft\\" is not a valid atom property"`,
       );
     });
 
@@ -280,7 +280,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"color\\" is not a conditional property"`,
+        `"\\"color\\" is not a conditional property"`,
       );
     });
 
@@ -293,7 +293,7 @@ describe('sprinkles', () => {
           marginTop: ['small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"marginTop\\" is does not support responsive arrays"`,
+        `"\\"marginTop\\" is does not support responsive arrays"`,
       );
     });
 
@@ -306,7 +306,7 @@ describe('sprinkles', () => {
           paddingTop: ['xsmall'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+        `"\\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
       );
     });
 
@@ -319,7 +319,7 @@ describe('sprinkles', () => {
           paddingTop: ['small', 'medium', 'large', 'small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingTop\\" only suports upto 3 breakpoints. You passed 4"`,
+        `"\\"paddingTop\\" only suports upto 3 breakpoints. You passed 4"`,
       );
     });
 
@@ -334,7 +334,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+        `"\\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
       );
     });
 
@@ -349,7 +349,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"SprinklesError: \\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
+        `"\\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
       );
     });
   });
