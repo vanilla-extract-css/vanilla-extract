@@ -35,7 +35,7 @@ export function createVar(debugId?: string): CSSVarFunction {
 }
 
 export function fallbackVar(
-  ...values: [...Array<string>, string]
+  ...values: [string, ...Array<string>]
 ): CSSVarFunction {
   let finalValue = '';
 
