@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
@@ -8,11 +6,9 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 import dedent from 'dedent';
+import { hash } from './hash';
 
 const originalNodeEnv = process.env.NODE_ENV;
-
-const hash = (value: string) =>
-  crypto.createHash('md5').update(value).digest('hex');
 
 function stringifyFileScope({ packageName, filePath }: FileScope): string {
   return packageName ? `${filePath}$$$${packageName}` : filePath;

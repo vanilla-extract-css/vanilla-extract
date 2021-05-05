@@ -1,4 +1,4 @@
-import { dirname, relative } from 'path';
+import { dirname, relative, join } from 'path';
 import { promises as fs } from 'fs';
 
 import { build as esbuild, Plugin } from 'esbuild';
@@ -41,7 +41,7 @@ interface CompileOptions {
 }
 export async function compile({
   filePath,
-  cwd,
+  cwd = process.cwd(),
   externals = [],
 }: CompileOptions) {
   const result = await esbuild({
@@ -63,6 +63,8 @@ export async function compile({
 
   return {
     source: outputFiles[0].text,
-    watchFiles: Object.keys(metafile?.inputs || {}),
+    watchFiles: Object.keys(metafile?.inputs || {}).map((filePath) =>
+      join(cwd, filePath),
+    ),
   };
 }

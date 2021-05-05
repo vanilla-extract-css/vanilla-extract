@@ -6,10 +6,12 @@ import {
   getSourceFromVirtualCssFile,
   virtualCssFileWithoutSourceFilter,
   compile,
+  hash,
 } from '@vanilla-extract/integration';
 
 export default function vanillaExtractPlugin(): Plugin {
   let config: ResolvedConfig;
+  const cssMap = new Map<string, string>();
 
   return {
     name: 'vanilla-extract',
@@ -19,18 +21,30 @@ export default function vanillaExtractPlugin(): Plugin {
     },
     resolveId(id) {
       if (virtualCssFileFilter.test(id)) {
+        // console.log('resolveId', id);
         const { fileName, source } = getSourceFromVirtualCssFile(id);
 
-        console.log({ id: fileName, meta: { vanillaExtract: { source } } });
+        // resolveId shouldn't really cause a side-effect however custom module meta isn't currently working
+        // This is a hack work around until https://github.com/vitejs/vite/issues/3240 is resolved
+        const shortHashFileName = `${fileName}?hash=${hash(source)}`;
+        cssMap.set(shortHashFileName, source);
 
-        return { id: fileName, meta: { vanillaExtract: { source } } };
+        return shortHashFileName;
       }
     },
-    async load(id, ssr) {
-      if (cssFileFilter.test(id)) {
-        const moduleInfo = this.getModuleInfo(id);
+    load(id) {
+      if (cssMap.has(id)) {
+        const css = cssMap.get(id);
 
-        console.log(id, moduleInfo);
+        cssMap.delete(id);
+
+        return css;
+      }
+
+      return null;
+    },
+    async transform(_code, id, ssr) {
+      if (cssFileFilter.test(id)) {
         const { source, watchFiles } = await compile({
           filePath: id,
           cwd: config.root,
@@ -45,20 +59,6 @@ export default function vanillaExtractPlugin(): Plugin {
           filePath: id,
           outputCss: !ssr,
         });
-      }
-
-      if (virtualCssFileWithoutSourceFilter.test(id)) {
-        const moduleInfo = this.getModuleInfo(id);
-
-        console.log(id, moduleInfo);
-
-        if (!moduleInfo?.meta?.vanillaExtract?.source) {
-          throw new Error(
-            `Cound't read source from generated vanilla-extract CSS file: ${id}`,
-          );
-        }
-
-        return moduleInfo.meta.vanillaExtract.source;
       }
 
       return null;
