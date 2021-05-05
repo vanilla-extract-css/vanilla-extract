@@ -8,7 +8,7 @@ import {
   hash,
 } from '@vanilla-extract/integration';
 
-export default function vanillaExtractPlugin(): Plugin {
+export function vanillaExtractPlugin(): Plugin {
   let config: ResolvedConfig;
   const cssMap = new Map<string, string>();
 
