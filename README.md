@@ -87,6 +87,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
 - [Setup](#setup)
   - [webpack](#webpack)
   - [esbuild](#esbuild)
+  - [Vite](#vite)
   - [Gatsby](#gatsby)
 - [API](#api)
   - [style](#style)
@@ -198,6 +199,8 @@ require('esbuild').build({
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 
 ### Vite
+
+> Warning: Currently the Vite plugin doesn't rebuild files when dependent files change, e.g. updating `theme.css.ts` should rebuild `styles.css.ts` which imports `theme.css.ts`. This is a limitation in the Vite Plugin API that will hopefully be resolved soon. You can track the Vite issue here. https://github.com/vitejs/vite/issues/3216
 
 1. Install the dependencies.
 
