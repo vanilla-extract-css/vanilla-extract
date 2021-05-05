@@ -3,7 +3,7 @@ import http from 'http';
 
 import { createServer, build, InlineConfig } from 'vite';
 import handler from 'serve-handler';
-import vanillaExtractPlugin from '@vanilla-extract/vite-plugin';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 import { TestServer } from './types';
 
