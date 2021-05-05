@@ -20,7 +20,6 @@ export default function vanillaExtractPlugin(): Plugin {
     },
     resolveId(id) {
       if (virtualCssFileFilter.test(id)) {
-        // console.log('resolveId', id);
         const { fileName, source } = getSourceFromVirtualCssFile(id);
 
         // resolveId shouldn't really cause a side-effect however custom module meta isn't currently working
