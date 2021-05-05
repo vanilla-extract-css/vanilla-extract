@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 0.4.3
+
+### Patch Changes
+
+- [#95](https://github.com/seek-oss/vanilla-extract/pull/95) [`f9ca82b`](https://github.com/seek-oss/vanilla-extract/commit/f9ca82b908b720785df271ed18d7abe048191759) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix fallbackVar type defintion
+
 ## 0.4.2
 
 ### Patch Changes
