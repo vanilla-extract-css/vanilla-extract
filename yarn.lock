@@ -2816,10 +2816,12 @@ __metadata:
     "@types/cssesc": ^3.0.0
     "@types/dedent": ^0.7.0
     "@vanilla-extract/private": ^0.1.1
+    chalk: ^4.1.1
     css-selector-parser: ^1.4.1
     cssesc: ^3.0.0
     csstype: ^3.0.7
     dedent: ^0.7.0
+    deep-object-diff: ^1.1.0
   languageName: unknown
   linkType: soft
 
@@ -2887,7 +2889,6 @@ __metadata:
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@types/debug": ^4.1.5
-    "@vanilla-extract/css": ^0.4.0
     "@vanilla-extract/integration": ^0.1.0
     chalk: ^4.1.1
     debug: ^4.3.1
@@ -4991,6 +4992,13 @@ __metadata:
   version: 0.1.3
   resolution: "deep-is@npm:0.1.3"
   checksum: 3de58f86af4dec86c8be531a5abaf2e6d8ea98fa2f1d81a3a778d0d8df920ee282043a6ef05bfb4eb699c8551df9ac1b808d4dc71d54cc40ab1efa5ce8792943
+  languageName: node
+  linkType: hard
+
+"deep-object-diff@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "deep-object-diff@npm:1.1.0"
+  checksum: 2667c43932d14c908d03f813cd2846a626bda1d320f8f1dee3c7bd00ff8058713bb8f5d995fabd617e09229cf64bf16e53579233e29da870fd27bde23d5f5b20
   languageName: node
   linkType: hard
 
