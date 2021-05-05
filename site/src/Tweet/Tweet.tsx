@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Box, Stack } from '../system';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';

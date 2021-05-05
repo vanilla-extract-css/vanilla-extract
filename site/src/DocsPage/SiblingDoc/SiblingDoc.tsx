@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from '../../Typography/Link';
 import { Chevron } from '../../Chevron/Chevron';
 import { Box } from '../../system';

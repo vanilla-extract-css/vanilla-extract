@@ -1,4 +1,3 @@
-import React from 'react';
 import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './Fab.css';

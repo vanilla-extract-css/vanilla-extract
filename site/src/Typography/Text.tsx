@@ -1,4 +1,4 @@
-import React, { ReactNode, ElementType } from 'react';
+import { ReactNode, ElementType } from 'react';
 import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './typography.css';

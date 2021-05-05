@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import classnames from 'classnames';
 import { Link, NavLinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';

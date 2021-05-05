@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route } from 'react-router-dom';
 import { Title, Meta } from 'react-head';
 import { HomePage } from './HomePage/HomePage';

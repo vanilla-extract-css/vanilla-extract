@@ -1,4 +1,4 @@
-import React, { ElementType, ReactNode } from 'react';
+import { ElementType, ReactNode } from 'react';
 import classnames from 'classnames';
 
 import * as styles from './typography.css';

@@ -1,4 +1,4 @@
-import React, { Children, ReactNode } from 'react';
+import { Children, ReactNode } from 'react';
 import { Box, BoxProps } from '../Box/Box';
 
 type AlignY = 'top' | 'center' | 'bottom';

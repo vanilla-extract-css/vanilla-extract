@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as ReactRouterLink, Route } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';

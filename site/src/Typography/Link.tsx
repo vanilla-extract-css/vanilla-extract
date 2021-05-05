@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';

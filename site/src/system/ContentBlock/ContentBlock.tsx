@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import classnames from 'classnames';
 import { Box } from '../';
 import * as styles from './ContentBlock.css';

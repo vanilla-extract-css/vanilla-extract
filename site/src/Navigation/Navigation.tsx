@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import classnames from 'classnames';
 import { Box, Stack } from '../system';
 import docs from '../docs-store';
