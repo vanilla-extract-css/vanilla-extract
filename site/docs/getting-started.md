@@ -36,7 +36,7 @@ Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-i
 
 **Write your styles in `.css.ts` files.**
 
-```ts
+```tsx
 // styles.css.ts
 import { createTheme, style } from '@vanilla-extract/css';
 
@@ -61,7 +61,7 @@ export const exampleStyle = style({
 
 **Then consume them in your markup.**
 
-```ts
+```tsx
 // app.ts
 import { themeClass, exampleStyle } from './styles.css.ts';
 

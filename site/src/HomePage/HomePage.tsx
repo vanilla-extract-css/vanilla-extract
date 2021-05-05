@@ -17,6 +17,24 @@ import * as styles from './HomePage.css';
 export const HomePage = () => {
   return (
     <>
+      {/* <Box
+        margin="large"
+        paddingY="xxxlarge"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ height: 600, width: 1200, gap: 75 }}
+        background={{ lightMode: 'green100', darkMode: 'gray700' }}
+      >
+        <Box style={{ marginTop: '-60px' }}>
+          <Logo size={280} />
+        </Box>
+        <Heading level="1" branded>
+          <span style={{ fontSize: '2em' }}>vanilla-extract</span>
+        </Heading>
+      </Box> */}
+
       <Box
         paddingTop="xxlarge"
         paddingBottom="xxxlarge"
@@ -55,7 +73,7 @@ export const HomePage = () => {
                   <Box display="flex" alignItems="center">
                     <Box paddingRight="xlarge">
                       <ButtonLink
-                        to="/documentation"
+                        to="/documentation/"
                         icon={<Chevron direction="right" />}
                       >
                         Get started

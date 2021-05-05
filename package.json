@@ -10,6 +10,7 @@
     "start-fixture": "ts-node --log-error ./test-helpers/src/startFixtureCLI",
     "start": "yarn start-fixture themed",
     "start-site": "manypkg run site start",
+    "build-site": "manypkg run site build",
     "postinstall": "yarn dev",
     "test": "jest",
     "format": "prettier --write .",

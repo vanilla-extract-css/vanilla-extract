@@ -26,7 +26,7 @@ const htmlRenderPlugin = new HtmlRenderPlugin({
   },
 });
 
-const publicPath = '/vanilla-extract/';
+const publicPath = '/';
 const mode = isProduction ? 'production' : 'development';
 
 module.exports = [
@@ -35,14 +35,11 @@ module.exports = [
     output: {
       filename: 'client.js',
       path: targetDirectory,
-      publicPath,
+      publicPath: '/',
     },
     entry: require.resolve('./src/client.tsx'),
     devServer: {
       open: !isProduction,
-      openPage: publicPath.startsWith('/')
-        ? publicPath.substr(1, publicPath.length)
-        : publicPath,
     },
     mode,
     resolve: {

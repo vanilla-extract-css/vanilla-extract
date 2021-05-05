@@ -9,9 +9,9 @@ import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
 type HeadTags = React.ReactElement<unknown>[];
 
-const render = (route: string, headTags: HeadTags, basename: string) =>
+const render = (route: string, headTags: HeadTags) =>
   renderToString(
-    <StaticRouter location={route} basename={basename}>
+    <StaticRouter location={route}>
       <HeadProvider headTags={headTags}>
         <App />
       </HeadProvider>
@@ -19,16 +19,7 @@ const render = (route: string, headTags: HeadTags, basename: string) =>
   );
 
 const fullyQualifiedUrl = (path: string) =>
-  `${
-    process.env.NODE_ENV === 'production'
-      ? 'https://seek-oss.github.io'
-      : 'http://localhost:8080'
-  }${path}`;
-
-const getBasePath = (publicPath: string) =>
-  publicPath.endsWith('/')
-    ? publicPath.substr(0, publicPath.length - 1)
-    : publicPath;
+  `${process.env.URL || 'http://localhost:8080'}${path}`;
 
 interface RenderParams {
   route: string;
@@ -36,8 +27,6 @@ interface RenderParams {
   entrypoints: NonNullable<StatsCompilation['entrypoints']>;
 }
 export default ({ route, publicPath, entrypoints }: RenderParams) => {
-  const basePath = getBasePath(publicPath);
-
   const assetPath = (filename: string) => `${publicPath}${filename}`;
   const assets = entrypoints.main.assets;
 
@@ -56,12 +45,12 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     .map((asset) => `<script src="${assetPath(asset.name)}"></script>`);
 
   const headTags: HeadTags = [];
-  const html = render(route, headTags, basePath);
+  const html = render(route, headTags);
 
   const favicon = (size?: number) =>
-    `<link rel="icon" type="image/png" sizes="${size}x${size}" href="${fullyQualifiedUrl(
-      assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`),
-    )}" />`;
+    `<link rel="icon" type="image/png" ${
+      size ? `sizes="${size}x${size}" ` : ''
+    }href="${assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`)}" />`;
 
   const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
 
@@ -75,6 +64,9 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
       ${cssAssets.join('\n')}
       ${renderToString(<Fragment>{headTags}</Fragment>)}
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="theme-color" content="#fff"/>
+      <link rel="manifest" href="${assetPath('site.webmanifest')}"/>
+      <link rel="apple-touch-icon" href="${assetPath('apple-touch-icon.png')}"/>
       ${favicon(16)}
       ${favicon(32)}
       ${favicon()}
@@ -88,7 +80,6 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     </head>
     <body>
         <div id="app">${html}</div>
-        <script>window.BASE_URL = ${JSON.stringify(basePath)};</script>
         ${jsAssets.join('\n')}
     </body>
   </html>`;

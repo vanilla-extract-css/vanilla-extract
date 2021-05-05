@@ -16,7 +16,7 @@ $ npm install @vanilla-extract/css-utils
 
 Streamlines the creation of CSS calc expressions.
 
-```ts
+```tsx
 import { calc } from '@vanilla-extract/css-utils';
 
 const styles = {
@@ -34,7 +34,7 @@ The following functions are available.
 
 The `calc` export is also a function, providing a chainable API for complex calc expressions.
 
-```ts
+```tsx
 import { calc } from '@vanilla-extract/css-utils';
 
 const styles = {
