@@ -1,3 +1,4 @@
+import { cssFileFilter } from '@vanilla-extract/integration';
 import path from 'path';
 import type { Compiler, RuleSetRule } from 'webpack';
 import chalk from 'chalk';
@@ -67,7 +68,7 @@ export class VanillaExtractPlugin {
 
   constructor(options: PluginOptions = {}) {
     const {
-      test = /\.css\.(js|ts|jsx|tsx)$/,
+      test = cssFileFilter,
       outputCss = true,
       externals,
       allowRuntime = false,

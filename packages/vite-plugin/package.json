@@ -1,16 +1,16 @@
 {
-  "name": "@vanilla-extract/esbuild-plugin",
-  "version": "0.2.1",
+  "name": "@vanilla-extract/vite-plugin",
+  "version": "0.1.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
+  "main": "dist/vanilla-extract-vite-plugin.cjs.js",
+  "module": "dist/vanilla-extract-vite-plugin.esm.js",
   "files": [
     "/dist"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/esbuild-plugin"
+    "directory": "packages/vite-plugin"
   },
   "author": "SEEK",
   "license": "MIT",
@@ -18,6 +18,6 @@
     "@vanilla-extract/integration": "^0.1.0"
   },
   "devDependencies": {
-    "esbuild": "^0.11.16"
+    "vite": "^2.2.3"
   }
 }

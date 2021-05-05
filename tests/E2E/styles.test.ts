@@ -7,11 +7,12 @@ import {
 import { Viewport } from 'puppeteer';
 
 const compileTypes = [
-  'browser',
-  'mini-css-extract',
-  'style-loader',
-  'esbuild',
-  'esbuild-runtime',
+  ['browser', 10000],
+  ['mini-css-extract', 10010],
+  ['style-loader', 10020],
+  ['esbuild', 10030],
+  ['esbuild-runtime', 10040],
+  ['vite', 10050],
 ] as const;
 
 async function getPageStyles(
@@ -36,14 +37,14 @@ async function getPageStyles(
 
 describe('Styling and specificity', () => {
   describe(`Themed`, () => {
-    describe.each(compileTypes)('%s', (compileType) => {
+    describe.each(compileTypes)('%s', (compileType, port) => {
       let server: TestServer;
       const testNodes = getTestNodes('themed');
 
       beforeAll(async () => {
         server = await startFixture('themed', {
           type: compileType,
-          basePort: 10000,
+          basePort: port,
         });
       });
 

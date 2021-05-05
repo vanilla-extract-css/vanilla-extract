@@ -1,7 +1,7 @@
-import { relative, dirname } from 'path';
+import { relative } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
-import findUp from 'find-up';
+import { getPackageInfo } from '@vanilla-extract/integration';
 
 const packageIdentifier = '@vanilla-extract/css';
 const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
@@ -128,29 +128,6 @@ type Context = PluginPass & {
 };
 
 export default function (): PluginObj<Context> {
-  let packageInfo: { name: string; dirname: string; path: string } | undefined;
-  let hasResolvedPackageJson = false;
-  function getPackageInfo(cwd?: string | null) {
-    if (hasResolvedPackageJson) {
-      return packageInfo;
-    }
-
-    hasResolvedPackageJson = true;
-    const packageJsonPath = findUp.sync('package.json', {
-      cwd: cwd || undefined,
-    });
-
-    if (packageJsonPath) {
-      const { name } = require(packageJsonPath);
-      packageInfo = {
-        name,
-        path: packageJsonPath,
-        dirname: dirname(packageJsonPath),
-      };
-    }
-    return packageInfo;
-  }
-
   return {
     pre({ opts }) {
       if (!opts.filename) {
@@ -165,12 +142,6 @@ export default function (): PluginObj<Context> {
       this.namespaceImport = '';
 
       const packageInfo = getPackageInfo(opts.cwd);
-
-      if (!packageInfo) {
-        throw new Error(
-          `Couldn't find parent package.json for ${opts.filename}`,
-        );
-      }
 
       if (!packageInfo.name) {
         throw new Error(
