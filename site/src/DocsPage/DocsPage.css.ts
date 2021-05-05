@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
@@ -7,7 +8,7 @@ const sidebarWidth = '235px';
 
 export const bodyLock = style({
   overflow: 'hidden!important',
-  marginRight: 16,
+  marginRight: vars.spacing.medium,
 });
 
 export const homeLink = style({
@@ -28,22 +29,48 @@ export const headerBg = style({
   opacity: 0.8,
 });
 
-export const container = style({
-  minHeight: `calc(100% - ${headerHeight})`,
-  ...responsiveStyle({
+export const container = style(
+  responsiveStyle({
     desktop: {
-      paddingTop: headerHeight,
+      paddingTop: `${calc(headerHeight).add(vars.spacing.medium)}`,
+    },
+  }),
+);
+
+export const sidebar = style({
+  ...responsiveStyle({
+    mobile: {
+      width: `clamp(270px, 40vw, 400px)`,
+      transition: 'transform .15s ease, opacity .15s ease',
+      top: 0,
+      bottom: 0,
+    },
+    desktop: {
+      width: sidebarWidth,
+      top: `${calc(headerHeight).add(vars.spacing.large)}`,
     },
   }),
 });
 
-export const sidebarOpen = style({});
+export const sectionLinkTitle = style({
+  textTransform: 'uppercase',
+});
 
-export const sidebar = style({
-  right: 0,
-  width: '40vw',
-  minWidth: '300px',
-  transition: 'transform .15s ease, opacity .15s ease',
+export const active = style({});
+
+export const activeIndicator = style({
+  transition: 'transform .3s ease, opacity .3s ease',
+  transform: 'skew(15deg)',
+  selectors: {
+    [`&:not(${active})`]: {
+      transform: 'translateX(-80%)',
+    },
+  },
+});
+
+export const primaryNavOpen = style({});
+
+export const primaryNav = style({
   ':before': {
     content: '""',
     position: 'absolute',
@@ -55,23 +82,21 @@ export const sidebar = style({
     background: 'inherit',
     clipPath: 'polygon(100% 0, 100% 100%, 0 100%, 60% 0)',
   },
-
   ...responsiveStyle({
+    mobile: {
+      width: `clamp(270px, 40vw, 400px)`,
+      transition: 'transform .15s ease, opacity .15s ease',
+      top: 0,
+      bottom: 0,
+      right: 0,
+    },
     desktop: {
       right: 'initial',
-      width: sidebarWidth,
-      minWidth: sidebarWidth,
-      ':before': {
-        width: '100px',
-        left: 'initial',
-        right: '-70px',
-        transform: 'rotateY(180deg)',
-      },
+      background: 'initial!important',
     },
   }),
-
   selectors: {
-    [`:not(${sidebarOpen})&`]: {
+    [`:not(${primaryNavOpen})&`]: {
       '@media': {
         'screen and (max-width: 1199px)': {
           transform: 'translateX(12px)',
@@ -81,10 +106,16 @@ export const sidebar = style({
   },
 });
 
+export const scrollContainer = style({
+  overflow: 'auto',
+  height: '100%',
+});
+
 export const main = style(
   responsiveStyle({
     desktop: {
       marginLeft: sidebarWidth,
+      marginRight: sidebarWidth,
     },
   }),
 );

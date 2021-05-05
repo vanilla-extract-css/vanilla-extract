@@ -48,7 +48,7 @@ const A = ({
   ...restProps
 }: AllHTMLAttributes<HTMLAnchorElement>) =>
   href ? (
-    <Link to={href} {...restProps} underline="always" />
+    <Link to={href} {...restProps} inline underline="always" />
   ) : (
     <a {...restProps} />
   );

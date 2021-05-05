@@ -10,7 +10,7 @@ title: API
 
 Creates styles attached to a locally scoped class name.
 
-```ts
+```tsx
 import { style } from '@vanilla-extract/css';
 
 export const className = style({
@@ -20,7 +20,7 @@ export const className = style({
 
 CSS Variables, simple pseudos, selectors and media/feature queries are all supported.
 
-```ts
+```tsx
 import { style } from '@vanilla-extract/css';
 import { vars } from './vars.css.ts';
 
@@ -53,7 +53,7 @@ export const className = style({
 
 Selectors can also contain references to other scoped class names.
 
-```ts
+```tsx
 import { style } from '@vanilla-extract/css';
 
 export const parentClass = style({});
@@ -77,7 +77,7 @@ export const childClass = style({
 
 Creates a collection of named style variants.
 
-```ts
+```tsx
 import { styleVariants } from '@vanilla-extract/css';
 
 export const variant = styleVariants({
@@ -90,7 +90,7 @@ export const variant = styleVariants({
 
 You can also transform the values by providing a map function as the second argument.
 
-```ts
+```tsx
 import { styleVariants } from '@vanilla-extract/css';
 
 const spaceScale = {
@@ -108,7 +108,7 @@ export const padding = styleVariants(spaceScale, (space) => ({
 
 Creates styles attached to a global selector.
 
-```ts
+```tsx
 import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
@@ -118,7 +118,7 @@ globalStyle('html, body', {
 
 Global selectors can also contain references to other scoped class names.
 
-```ts
+```tsx
 import { globalStyle } from '@vanilla-extract/css';
 
 export const parentClass = style({});
@@ -132,7 +132,7 @@ globalStyle(`${parentClass} > a`, {
 
 Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
 
-```ts
+```tsx
 // theme.css.ts
 import { createTheme } from '@vanilla-extract/css';
 
@@ -148,7 +148,7 @@ export const [themeClass, vars] = createTheme({
 
 You can create theme variants by passing a theme contract as the first argument to `createTheme`.
 
-```ts
+```tsx
 // themes.css.ts
 import { createTheme } from '@vanilla-extract/css';
 
@@ -177,7 +177,7 @@ export const themeB = createTheme(vars, {
 
 Creates a theme attached to a global selector, but with locally scoped variable names.
 
-```ts
+```tsx
 // theme.css.ts
 import { createGlobalTheme } from '@vanilla-extract/css';
 
@@ -201,7 +201,7 @@ Creates a contract for themes to implement.
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
-```ts
+```tsx
 // themes.css.ts
 import {
   createThemeContract,
@@ -242,7 +242,7 @@ Assigns a collection of CSS Variables anywhere within a style block.
 
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
-```ts
+```tsx
 import { createThemeContract, style, assignVars } from '@vanilla-extract/css';
 
 export const vars = createThemeContract({
@@ -277,7 +277,7 @@ export const responsiveSpaceTheme = style({
 
 Creates a single CSS Variable.
 
-```ts
+```tsx
 import { createVar, style } from '@vanilla-extract/css';
 
 export const colorVar = createVar();
@@ -289,7 +289,7 @@ export const exampleStyle = style({
 
 Scoped variables can be set via the `vars` property on style objects.
 
-```ts
+```tsx
 import { createVar, style } from '@vanilla-extract/css';
 import { colorVar } from './vars.css.ts';
 
@@ -304,7 +304,7 @@ export const parentStyle = style({
 
 Provides fallback values when consuming variables.
 
-```ts
+```tsx
 import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 
 export const colorVar = createVar();
@@ -316,7 +316,7 @@ export const exampleStyle = style({
 
 Multiple fallbacks are also supported.
 
-```ts
+```tsx
 import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 
 export const primaryColorVar = createVar();
@@ -331,7 +331,7 @@ export const exampleStyle = style({
 
 Creates a custom font attached to a locally scoped font name.
 
-```ts
+```tsx
 import { fontFace, style } from '@vanilla-extract/css';
 
 const myFont = fontFace({
@@ -347,7 +347,7 @@ export const text = style({
 
 Creates a globally scoped custom font.
 
-```ts
+```tsx
 import {
   globalFontFace,
   style
@@ -366,7 +366,7 @@ export const text = style({
 
 Creates a locally scoped set of keyframes.
 
-```ts
+```tsx
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
@@ -383,7 +383,7 @@ export const animated = style({
 
 Creates a globally scoped set of keyframes.
 
-```ts
+```tsx
 import { globalKeyframes, style } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
@@ -400,7 +400,7 @@ export const animated = style({
 
 Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
 
-```ts
+```tsx
 import { style, composeStyles } from '@vanilla-extract/css';
 
 const base = style({

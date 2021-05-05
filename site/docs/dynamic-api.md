@@ -14,7 +14,7 @@ $ npm install @vanilla-extract/dynamic
 
 Implements a theme contract at runtime as an inline style object.
 
-```ts
+```tsx
 import { createInlineTheme } from '@vanilla-extract/dynamic';
 import { vars, exampleStyle } from './styles.css.ts';
 
@@ -35,7 +35,7 @@ document.write(`
 
 Implements a theme contract on an element.
 
-```ts
+```tsx
 import { setElementTheme } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
@@ -53,7 +53,7 @@ setElementTheme(element, vars, {
 
 Sets a single var on an element.
 
-```ts
+```tsx
 import { setElementVar } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
