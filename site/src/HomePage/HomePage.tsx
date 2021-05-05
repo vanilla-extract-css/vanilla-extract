@@ -55,7 +55,7 @@ export const HomePage = () => {
               <ColorModeToggle />
             </Box>
             <Box>
-              <Columns space="xlarge" collapseOnMobile alignY="center">
+              <Columns space="xxlarge" collapseOnMobile alignY="center">
                 <Stack space="xxlarge">
                   <Logo size={100} />
                   <Heading level="1" branded>
@@ -66,9 +66,9 @@ export const HomePage = () => {
                     TypeScript.
                   </Heading>
                   <Text>
-                    Write your styles in TypeScript (or JavaScript) with locally
-                    scoped class names and CSS Variables, then generate static
-                    CSS files at build time.
+                    Write your styles in TypeScript with locally scoped classes
+                    and CSS&nbsp;variables, then generate static CSS files at
+                    build time.
                   </Text>
                   <Box display="flex" alignItems="center">
                     <Box paddingRight="xlarge">
@@ -90,12 +90,8 @@ export const HomePage = () => {
                 <Code language="tsx">
                   {dedent`// Set up the theme via CSS Variables
                   export const vars = createGlobalTheme(':root', {
-                    color: {
-                      brand: 'blue'
-                    },
-                    font: {
-                      body: 'comic sans ms'
-                    }
+                    color: { brand: 'blue' },
+                    font: { body: 'comic sans ms' }
                   });
 
                   // Consume the theme
@@ -143,25 +139,155 @@ export const HomePage = () => {
                 <Link to="https://lesscss.org" size="small" underline="always">
                   LESS
                 </Link>
-                , etc, but with a type-safe contract.
+                , etc, but with the power of TypeScript.
               </Feature>
 
-              <Feature title="Local scoped CSS">
-                The power of deterministic, scoped styles using CSS Modules —
-                extended to CSS variables, keyframes and font-faces.
+              <Feature title="Portable styles">
+                Works with any front-end framework, with integrations for
+                webpack, esbuild and Vite.
               </Feature>
 
-              <Feature title="High-level theming">
-                Supports multiple themes simultaneously via first class scoping
-                of CSS variables. No globals!
+              <Feature title="First-class theming">
+                Create a single global theme or create multiple themes, all with
+                type-safe token contracts.
               </Feature>
 
-              <Feature title="Utilities">
-                Provides type-safe utilities for generating variable-based
-                &ldquo;calc&rdquo; expressions.
+              <Feature title="Build it your way">
+                Use high-level abstractions like{' '}
+                <Link to="#" size="small" underline="always">
+                  Sprinkles
+                </Link>{' '}
+                and{' '}
+                <Link to="#" size="small" underline="always">
+                  Dessert Box
+                </Link>{' '}
+                — or build and share your own!
               </Feature>
             </Columns>
           </Box>
+        </ContentBlock>
+
+        <ContentBlock withGutters size="large">
+          <Columns space="xlarge" collapseOnMobile alignY="center">
+            <Stack space="xxlarge">
+              <Heading level="3">Full power of CSS & TypeScript</Heading>
+              <Text>
+                Define strongly-typed styles with the full power of CSS
+                underneath.
+              </Text>
+              <Text>
+                CSS Variables, pseudo-classes, selectors, and media/feature
+                queries are all supported.
+              </Text>
+            </Stack>
+
+            <Code language="tsx">
+              {dedent`import { style } from '@vanilla-extract/css';
+      import { vars } from './vars.css.ts';
+      
+      export const className = style({
+        display: 'flex',
+        ':hover': {
+          color: 'red'
+        },
+      });`}
+            </Code>
+          </Columns>
+        </ContentBlock>
+
+        <ContentBlock withGutters size="large">
+          <Columns space="xlarge" collapseOnMobile alignY="center">
+            <Stack space="xxlarge">
+              <Heading level="3">Full power of CSS & TypeScript</Heading>
+              <Text>
+                Define strongly-typed styles with the full power of CSS
+                underneath.
+              </Text>
+              <Text>
+                CSS Variables, pseudo-classes, selectors, and media/feature
+                queries are all supported.
+              </Text>
+            </Stack>
+
+            <Code language="tsx">
+              {dedent`import { style } from '@vanilla-extract/css';
+      import { vars } from './vars.css.ts';
+      
+      export const className = style({
+        '@media': {
+          'screen and (min-width: 768px)': {
+            padding: 10
+          }
+        },
+        '@supports': {
+          '(display: grid)': {
+            display: 'grid'
+          }
+        }
+      });`}
+            </Code>
+          </Columns>
+        </ContentBlock>
+
+        <ContentBlock withGutters size="large">
+          <Columns space="xlarge" collapseOnMobile alignY="center">
+            <Stack space="xxlarge">
+              <Heading level="3">Full power of CSS & TypeScript</Heading>
+              <Text>
+                Define strongly-typed styles with the full power of CSS
+                underneath.
+              </Text>
+              <Text>
+                CSS Variables, pseudo-classes, selectors, and media/feature
+                queries are all supported.
+              </Text>
+            </Stack>
+
+            <Code language="tsx">
+              {dedent`import { style } from '@vanilla-extract/css';
+      import { vars } from './vars.css.ts';
+      
+      export const className = style({
+        vars: {
+          [vars.color.brand]: 'pink',
+          '--global-variable': 'purple'
+        },
+        selectors: {
+          '&:nth-child(2n)': {
+            background: 'aquamarine'
+          }
+        },
+      });`}
+            </Code>
+          </Columns>
+        </ContentBlock>
+
+        <ContentBlock withGutters size="large">
+          <Columns space="xlarge" collapseOnMobile alignY="center">
+            <Stack space="xxlarge">
+              <Heading level="3">Full power of CSS & TypeScript</Heading>
+              <Text>
+                Define strongly-typed styles with the full power of CSS
+                underneath.
+              </Text>
+              <Text>
+                CSS Variables, pseudo-classes, selectors, and media/feature
+                queries are all supported.
+              </Text>
+            </Stack>
+
+            <Code language="tsx">
+              {dedent`import { style } from '@vanilla-extract/css';
+
+export const className = style({
+selectors: {
+  '&:nth-child(2n)': {
+    background: 'aquamarine'
+  }
+},
+});`}
+            </Code>
+          </Columns>
         </ContentBlock>
 
         <ContentBlock withGutters size="large">
