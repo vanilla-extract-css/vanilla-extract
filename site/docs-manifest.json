@@ -18,60 +18,6 @@
     ]
   },
   {
-    "fileName": "background.md",
-    "id": "background",
-    "route": "/documentation/background",
-    "sections": [
-      {
-        "raw": "# Background",
-        "level": 1,
-        "name": "Background",
-        "breadcrumbs": [
-          "Background"
-        ],
-        "content": "",
-        "page": "Background",
-        "hash": "background"
-      },
-      {
-        "raw": "## TODO - Tradeoffs",
-        "level": 2,
-        "name": "TODO - Tradeoffs",
-        "breadcrumbs": [
-          "Background",
-          "TODO - Tradeoffs"
-        ],
-        "content": "",
-        "page": "Background",
-        "hash": "todo---tradeoffs"
-      },
-      {
-        "raw": "## TODO - Backstory",
-        "level": 2,
-        "name": "TODO - Backstory",
-        "breadcrumbs": [
-          "Background",
-          "TODO - Backstory"
-        ],
-        "content": "",
-        "page": "Background",
-        "hash": "todo---backstory"
-      },
-      {
-        "raw": "## Thanks",
-        "level": 2,
-        "name": "Thanks",
-        "breadcrumbs": [
-          "Background",
-          "Thanks"
-        ],
-        "content": "  Nathan Nam Tran for creating css-in-js-loader, which served as the initial starting point for treat, the precursor to this library. - Stitches for getting us excited about CSS-Variables-in-JS. - SEEK for giving us the space to do interesting work.",
-        "page": "Background",
-        "hash": "thanks"
-      }
-    ]
-  },
-  {
     "fileName": "setup.md",
     "id": "setup",
     "route": "/documentation/setup",
