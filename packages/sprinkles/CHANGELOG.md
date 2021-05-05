@@ -1,5 +1,29 @@
 # @vanilla-extract/sprinkles
 
+## 0.2.0
+
+### Minor Changes
+
+- [#81](https://github.com/seek-oss/vanilla-extract/pull/81) [`717ad60`](https://github.com/seek-oss/vanilla-extract/commit/717ad60e8f6770246aaaedc1760791bb0e7d19cc) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add static `properties` set to atoms function
+
+  This allows runtime code to detect whether a given property can be handled by the atoms function or not.
+
+  This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you'll need some way to filter atom props from non-atom props.
+
+## 0.1.2
+
+### Patch Changes
+
+- [#77](https://github.com/seek-oss/vanilla-extract/pull/77) [`63c01ad`](https://github.com/seek-oss/vanilla-extract/commit/63c01ada07dd268c8d3cbe62dcf1baa8842216f2) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve runtime errors
+
+  Sprinkles will now validate your `atoms` calls at runtime for a better developer experience. The validation code should be stripped from production bundles via a `process.env.NODE_ENV` check.
+
+  Example Error
+
+  ```bash
+  SprinklesError: "paddingTop" has no value "xlarge". Possible values are "small", "medium", "large"
+  ```
+
 ## 0.1.1
 
 ### Patch Changes
