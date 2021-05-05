@@ -211,7 +211,7 @@ $ npm install @vanilla-extract/css @vanilla-extract/vite-plugin
 2. Add the [Vite](https://vitejs.dev/) plugin to your Vite config.
 
 ```js
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import vanillaExtractPlugin from '@vanilla-extract/vite-plugin';
 
 // vite.config.js
 export default {
