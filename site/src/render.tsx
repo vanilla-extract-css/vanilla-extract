@@ -9,9 +9,9 @@ import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
 type HeadTags = React.ReactElement<unknown>[];
 
-const render = (route: string, headTags: HeadTags) =>
+const render = (route: string, headTags: HeadTags, basename: string) =>
   renderToString(
-    <StaticRouter location={route}>
+    <StaticRouter location={route} basename={basename}>
       <HeadProvider headTags={headTags}>
         <App />
       </HeadProvider>
@@ -45,7 +45,7 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     .map((asset) => `<script src="${assetPath(asset.name)}"></script>`);
 
   const headTags: HeadTags = [];
-  const html = render(route, headTags);
+  const html = render(route, headTags, publicPath);
 
   const favicon = (size?: number) =>
     `<link rel="icon" type="image/png" ${
@@ -80,6 +80,7 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     </head>
     <body>
         <div id="app">${html}</div>
+        <script>window.BASE_URL = ${JSON.stringify(publicPath)};</script>
         ${jsAssets.join('\n')}
     </body>
   </html>`;

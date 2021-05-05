@@ -132,11 +132,17 @@ export const HomePage = () => {
                   to="https://sass-lang.com"
                   size="small"
                   underline="always"
+                  inline
                 >
                   Sass
                 </Link>
                 ,{' '}
-                <Link to="https://lesscss.org" size="small" underline="always">
+                <Link
+                  to="https://lesscss.org"
+                  size="small"
+                  underline="always"
+                  inline
+                >
                   LESS
                 </Link>
                 , etc, but with the power of TypeScript.
