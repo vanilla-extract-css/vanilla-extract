@@ -71,6 +71,7 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
         id={id}
         style={{
           visibility: 'hidden',
+          scrollMarginTop: 120,
         }}
       />
       <a style={{ textDecoration: 'none' }} href={`#${id}`}>
