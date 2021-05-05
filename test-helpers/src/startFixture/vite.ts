@@ -41,6 +41,7 @@ export const startViteFixture = async (
   const config: InlineConfig = {
     configFile: false,
     root,
+    logLevel: 'error',
     plugins: [vanillaExtractPlugin()],
     server: {
       port,

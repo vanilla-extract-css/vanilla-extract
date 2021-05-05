@@ -4,7 +4,6 @@ import {
   virtualCssFileFilter,
   processVanillaFile,
   getSourceFromVirtualCssFile,
-  virtualCssFileWithoutSourceFilter,
   compile,
   hash,
 } from '@vanilla-extract/integration';
