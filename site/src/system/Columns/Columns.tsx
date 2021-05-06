@@ -8,6 +8,7 @@ interface Props {
   children: ReactNode;
   space: Space;
   alignY?: AlignY;
+  reverseX?: boolean;
   collapseOnMobile?: boolean;
   collapseOnTablet?: boolean;
 }
@@ -26,9 +27,11 @@ export const Columns = ({
   space,
   collapseOnMobile = false,
   collapseOnTablet = false,
+  reverseX = false,
   alignY = 'top',
 }: Props) => {
   const columns = Children.toArray(children);
+  const row = reverseX ? 'row-reverse' : 'row';
 
   return (
     <Box
@@ -37,8 +40,8 @@ export const Columns = ({
         collapseOnMobile || collapseOnTablet
           ? {
               mobile: 'column',
-              tablet: collapseOnTablet ? 'column' : 'row',
-              desktop: 'row',
+              tablet: collapseOnTablet ? 'column' : row,
+              desktop: row,
             }
           : undefined
       }
