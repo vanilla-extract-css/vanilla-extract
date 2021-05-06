@@ -197,13 +197,16 @@ export const HomePage = () => {
           <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
-                The full power of CSS &amp; TypeScript
+                Leverage the full power of CSS &amp; TypeScript
               </Heading>
-              <Text align="center">
-                Define strongly-typed styles with the full power of CSS.
-                Variables, selectors, pseudo&#8209;classes, and media/feature
-                queries are all supported.
-              </Text>
+              <Box paddingX="xlarge">
+                <Text align="center">
+                  Write maintainable CSS at scale without sacrificing platform
+                  features. Variables, selectors, pseudo&#8209;classes,
+                  media/feature queries, keyframes, font&#8209;face rules and
+                  global styles are all supported.
+                </Text>
+              </Box>
 
               <Code language="tsx">
                 {dedent`
@@ -212,9 +215,6 @@ export const HomePage = () => {
                 export const className = style({
                   display: 'flex',
                   flexDirection: 'column',
-                  ':hover': {
-                    background: 'peachpuff'
-                  },
                   selectors: {
                     '&:nth-child(2n)': {
                       background: 'aliceblue'
@@ -329,13 +329,13 @@ export const HomePage = () => {
         <Box paddingY="xxxlarge">
           <Box
             position="relative"
-            paddingY="xxlarge"
+            paddingY="xxxlarge"
             background={{ lightMode: 'blue100', darkMode: 'gray800' }}
             className={styles.skewedContainerSecondary}
           >
             <Stack space="xxlarge" align="center">
               <ContentBlock size="large" withGutters>
-                <Columns space="xlarge" collapseOnTablet>
+                <Columns space="xxlarge" collapseOnTablet alignY="center">
                   <Tweet
                     handle="@lorvsso"
                     name="Jack Lo Russo"
