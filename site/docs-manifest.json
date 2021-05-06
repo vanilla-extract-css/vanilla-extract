@@ -20,7 +20,7 @@
   {
     "fileName": "setup.md",
     "id": "setup",
-    "route": "/documentation/setup",
+    "route": "/documentation/setup/",
     "sections": [
       {
         "raw": "# Setup",
@@ -74,7 +74,7 @@
   {
     "fileName": "api.md",
     "id": "api",
-    "route": "/documentation/api",
+    "route": "/documentation/api/",
     "sections": [
       {
         "raw": "# API",
@@ -260,7 +260,7 @@
   {
     "fileName": "dynamic-api.md",
     "id": "dynamic-api",
-    "route": "/documentation/dynamic-api",
+    "route": "/documentation/dynamic-api/",
     "sections": [
       {
         "raw": "# Dynamic API",
@@ -314,7 +314,7 @@
   {
     "fileName": "utility-functions.md",
     "id": "utility-functions",
-    "route": "/documentation/utility-functions",
+    "route": "/documentation/utility-functions/",
     "sections": [
       {
         "raw": "# Utility functions",

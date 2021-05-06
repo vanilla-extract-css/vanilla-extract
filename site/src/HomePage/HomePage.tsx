@@ -73,7 +73,7 @@ export const HomePage = () => {
                   <Box display="flex" alignItems="center">
                     <Box paddingRight="xlarge">
                       <ButtonLink
-                        to="/documentation/"
+                        to="/documentation"
                         icon={<Chevron direction="right" />}
                       >
                         Get started

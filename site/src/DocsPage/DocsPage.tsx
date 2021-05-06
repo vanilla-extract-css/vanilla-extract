@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link as ReactRouterLink, Route } from 'react-router-dom';
+import {
+  Link as ReactRouterLink,
+  Route,
+  RouteChildrenProps,
+} from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';
 import classnames from 'classnames';
-import { useActiveHash, useHeadingRouteUpdates } from '../useHeadingRoute';
+import { useHeadingRouteUpdates } from '../useHeadingRoute';
 import SiblingDoc from './SiblingDoc/SiblingDoc';
 import mdxComponents from '../mdx-components';
 import { Fab } from '../Fab/Fab';
@@ -193,12 +197,30 @@ const PrimaryNav = ({
   );
 };
 
-const headingForRoute = mapKeys(docs, (d) => d.route);
+const headingForRoute = mapKeys(docs, (d) => {
+  return d.route.endsWith('/')
+    ? d.route.slice(0, d.route.lastIndexOf('/'))
+    : d.route;
+});
 
-const SecondaryNav = ({ onClick }: { onClick: () => void }) => {
-  const { location } = useReactRouter();
-  const activeHash = useActiveHash();
-  const { sections, route } = headingForRoute[location.pathname];
+const SecondaryNav = ({
+  pathname,
+  activeHash,
+  onClick,
+}: {
+  pathname: string;
+  activeHash: string;
+  onClick: () => void;
+}) => {
+  const [ready, setReady] = useState(false);
+  const normalisedPath = pathname.endsWith('/')
+    ? pathname.slice(0, pathname.lastIndexOf('/'))
+    : pathname;
+  const { sections, route } = headingForRoute[normalisedPath];
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   return sections.length > 2 ? (
     <Box
@@ -220,7 +242,7 @@ const SecondaryNav = ({ onClick }: { onClick: () => void }) => {
               <Link
                 key={name}
                 to={`${route}${hash ? `#${hash}` : ''}`}
-                color={hash !== activeHash ? 'secondary' : undefined}
+                color={ready && hash !== activeHash ? 'secondary' : undefined}
                 highlightOnFocus={false}
                 size="small"
                 onClick={onClick}
@@ -236,10 +258,10 @@ const SecondaryNav = ({ onClick }: { onClick: () => void }) => {
                     paddingLeft="xsmall"
                     paddingTop="xlarge"
                     marginLeft="xsmall"
-                    opacity={hash === activeHash ? undefined : 0}
+                    opacity={ready && hash === activeHash ? undefined : 0}
                     className={classnames(
                       styles.activeIndicator,
-                      hash === activeHash ? styles.active : '',
+                      ready && hash === activeHash ? styles.active : '',
                     )}
                   />
                   <Box component="span" paddingLeft="large">
@@ -254,7 +276,7 @@ const SecondaryNav = ({ onClick }: { onClick: () => void }) => {
   ) : null;
 };
 
-export const DocsPage = () => {
+export const DocsPage = ({ location }: RouteChildrenProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
@@ -277,7 +299,11 @@ export const DocsPage = () => {
 
       <PrimaryNav open={menuOpen} onClick={closeMenu} />
 
-      <SecondaryNav onClick={closeMenu} />
+      <SecondaryNav
+        onClick={closeMenu}
+        pathname={location.pathname}
+        activeHash={location.hash.replace('#', '')}
+      />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'block' }}>
