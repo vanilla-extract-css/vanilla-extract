@@ -24,14 +24,24 @@ export const HomePage = () => {
         alignItems="center"
         justifyContent="center"
         style={{ height: 600, width: 1200, gap: 75 }}
-        background={{ lightMode: 'green100', darkMode: 'gray700' }}
+        background={{ lightMode: 'teal100', darkMode: 'gray700' }}
       >
         <Box style={{ marginTop: '-60px' }}>
           <Logo size={280} />
         </Box>
-        <Heading level="1" branded>
-          <span style={{ fontSize: '2em' }}>vanilla-extract</span>
-        </Heading>
+        <Stack space="large" align="center">
+          <Heading level="1" branded>
+            <span style={{ fontSize: '2em', opacity: 0.9 }}>
+              vanilla-extract
+            </span>
+          </Heading>
+          <Box paddingTop="medium" />
+          <Heading level="2">
+            <span style={{ fontSize: '1.1em', opacity: 0.6 }}>
+              Zero-runtime Stylesheets in TypeScript.
+            </span>
+          </Heading>
+        </Stack>
       </Box> */}
 
       <Box
