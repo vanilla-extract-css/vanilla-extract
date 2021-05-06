@@ -31,9 +31,12 @@ globalStyle(tokenSelector({ tokens: ['keyword', 'selector'] }), {
 globalStyle(tokenSelector({ tokens: ['string'] }), {
   color: vars.palette.green200,
 });
-globalStyle(tokenSelector({ tokens: ['function', 'property', 'number'] }), {
-  color: vars.palette.pink300,
-});
+globalStyle(
+  tokenSelector({ tokens: ['function', 'property', 'number', 'unit'] }),
+  {
+    color: vars.palette.pink300,
+  },
+);
 globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
   color: vars.palette.coolGray400,
 });
@@ -48,7 +51,10 @@ globalStyle(tokenSelector({ darkMode, tokens: ['string'] }), {
   color: vars.palette.green300,
 });
 globalStyle(
-  tokenSelector({ darkMode, tokens: ['function', 'property', 'number'] }),
+  tokenSelector({
+    darkMode,
+    tokens: ['function', 'property', 'number', 'unit'],
+  }),
   {
     color: vars.palette.pink400,
   },
