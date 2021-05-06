@@ -22,7 +22,7 @@ export const tweet = style({
   selectors: {
     [`.${darkMode} &`]: {
       vars: {
-        [shadowColorVar]: vars.palette.gray600,
+        [shadowColorVar]: vars.palette.gray900,
       },
     },
     [`${tweetLink}:focus &`]: {

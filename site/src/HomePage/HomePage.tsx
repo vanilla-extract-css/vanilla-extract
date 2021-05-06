@@ -37,7 +37,7 @@ export const HomePage = () => {
       <Box
         paddingTop="xxlarge"
         paddingBottom="xxxlarge"
-        background={{ lightMode: 'green100', darkMode: 'gray700' }}
+        background={{ lightMode: 'teal100', darkMode: 'gray900' }}
         className={styles.skewedContainer}
       >
         <ContentBlock size="large" withGutters>
@@ -163,8 +163,8 @@ export const HomePage = () => {
           <Box
             padding={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'xxlarge' }}
             borderRadius="large"
-            background={{ lightMode: 'white', darkMode: 'gray900' }}
-            color={{ lightMode: 'gray900', darkMode: 'gray50' }}
+            background={{ lightMode: 'white', darkMode: 'black' }}
+            color={{ lightMode: 'coolGray900', darkMode: 'gray50' }}
             className={styles.installBlock}
           >
             $ npm install{' '}
@@ -226,7 +226,7 @@ export const HomePage = () => {
         <Box
           position="relative"
           paddingY="xxxlarge"
-          background={{ lightMode: 'blue100', darkMode: 'gray800' }}
+          background={{ lightMode: 'blue100', darkMode: 'gray900' }}
           className={styles.skewedContainerSecondary}
         >
           <ContentBlock withGutters size="standard">
@@ -286,6 +286,7 @@ export const HomePage = () => {
                   language="tsx"
                   errorTokens={['brandd']}
                   title="styles.css.ts"
+                  background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
                 >
                   {dedent`
                     import { createTheme, style } from '@vanilla-extract/css';
@@ -318,7 +319,11 @@ export const HomePage = () => {
                   vanilla-extract.
                 </Text>
               </Stack>
-              <Code language="tsx" title="styles.css.ts">
+              <Code
+                language="tsx"
+                title="styles.css.ts"
+                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
+              >
                 {dedent`import { style, createVar } from '@vanilla-extract/css';
 
       const shadowColor = createVar();
@@ -330,7 +335,7 @@ export const HomePage = () => {
             vars: { [shadowColor]: 'black' }
           },
           '.dark &': {
-            vars: { [shadowColor]: 'gray' }
+            vars: { [shadowColor]: 'coolGray' }
           },
         }
       });`}
@@ -350,7 +355,11 @@ export const HomePage = () => {
                 </Text>
               </Stack>
 
-              <Code language="tsx" title="styles.css.ts">
+              <Code
+                language="tsx"
+                title="styles.css.ts"
+                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
+              >
                 {dedent`
                 import { styleVariants } from '@vanilla-extract/css';
 
@@ -362,7 +371,7 @@ export const HomePage = () => {
 
                 export const color = styleVariants({
                   neutral: { color: 'black' },
-                  secondary: { color: 'gray' },
+                  secondary: { color: 'coolGray' },
                   link: { color: 'blue' },
                 });
               `}
@@ -375,7 +384,7 @@ export const HomePage = () => {
           <Box
             position="relative"
             paddingY="xxxlarge"
-            background={{ lightMode: 'blue100', darkMode: 'gray800' }}
+            background={{ lightMode: 'blue100', darkMode: 'gray900' }}
             className={styles.skewedContainerSecondary}
           >
             <Stack space="xxlarge" align="center">

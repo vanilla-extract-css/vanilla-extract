@@ -22,17 +22,17 @@ export const Fab = ({
     >
       <Box
         position="absolute"
-        background={{ lightMode: 'gray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'gray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'gray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
         className={styles.bar}
       />
       <Box

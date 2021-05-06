@@ -8,16 +8,16 @@ globalStyle('html, body', {
 });
 
 globalStyle(`.${darkMode}`, {
-  background: vars.palette.gray900,
+  background: vars.palette.black,
   color: vars.palette.gray50,
 });
 globalStyle('html', {
   background: vars.palette.white,
-  color: vars.palette.gray900,
+  color: vars.palette.coolGray900,
 });
 
 globalStyle(`*`, {
-  scrollbarColor: `${vars.palette.gray400} ${vars.palette.white}`,
+  scrollbarColor: `${vars.palette.coolGray400} ${vars.palette.white}`,
   scrollbarWidth: 'thin',
 });
 globalStyle(`.${darkMode}, .${darkMode} *`, {
@@ -34,7 +34,7 @@ globalStyle(`*::-webkit-scrollbar-track`, {
   borderRadius: vars.border.radius.small,
 });
 globalStyle(`*::-webkit-scrollbar-thumb`, {
-  backgroundColor: vars.palette.gray400,
+  backgroundColor: vars.palette.coolGray400,
   borderRadius: vars.border.radius.small,
 });
 globalStyle(`.${darkMode} *::-webkit-scrollbar-track`, {

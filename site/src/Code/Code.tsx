@@ -6,17 +6,31 @@ import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
+import { AtomProps } from '../system/Box/Box';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
   title?: string;
+  background?: AtomProps['background'];
   children:
     | string
     | {
         __html: string;
       };
 }
-export default ({ language, title, errorTokens, children }: CodeProps) => {
+
+const defaultBackground = {
+  lightMode: 'coolGray900',
+  darkMode: 'black',
+} as const;
+
+export default ({
+  language,
+  title,
+  background = defaultBackground,
+  errorTokens,
+  children,
+}: CodeProps) => {
   const padding = {
     mobile: 'large',
     tablet: 'large',
@@ -70,7 +84,7 @@ export default ({ language, title, errorTokens, children }: CodeProps) => {
     <div ref={rootRef}>
       <Box
         className={styles.root}
-        background={{ lightMode: 'gray900', darkMode: 'gray800' }}
+        background={background}
         borderRadius="large"
         padding={padding}
       >

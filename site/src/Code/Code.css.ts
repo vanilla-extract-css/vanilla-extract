@@ -23,7 +23,7 @@ globalStyle(`${root} code`, {
 });
 
 globalStyle(tokenSelector({ tokens: ['comment'] }), {
-  color: vars.palette.gray500,
+  color: vars.palette.coolGray500,
 });
 globalStyle(tokenSelector({ tokens: ['keyword', 'selector'] }), {
   color: vars.palette.blue200,
@@ -35,11 +35,11 @@ globalStyle(tokenSelector({ tokens: ['function', 'property', 'number'] }), {
   color: vars.palette.pink300,
 });
 globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
-  color: vars.palette.gray400,
+  color: vars.palette.coolGray400,
 });
 
 globalStyle(tokenSelector({ darkMode, tokens: ['comment'] }), {
-  color: vars.palette.gray500,
+  color: vars.palette.coolGray500,
 });
 globalStyle(tokenSelector({ darkMode, tokens: ['keyword', 'selector'] }), {
   color: vars.palette.blue300,
@@ -56,7 +56,7 @@ globalStyle(
 globalStyle(
   tokenSelector({ darkMode: darkMode, tokens: ['punctuation', 'operator'] }),
   {
-    color: vars.palette.gray400,
+    color: vars.palette.coolGray400,
   },
 );
 

@@ -17,7 +17,7 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
     <Box
       padding="xlarge"
       borderRadius="large"
-      background={{ lightMode: 'white', darkMode: 'gray900' }}
+      background={{ lightMode: 'white', darkMode: 'black' }}
       className={styles.tweet}
     >
       <Stack space="xlarge">
@@ -25,7 +25,7 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
           <Box
             borderRadius="full"
             className={styles.avatar}
-            background={{ lightMode: 'gray100', darkMode: 'gray800' }}
+            background={{ lightMode: 'coolGray100', darkMode: 'black' }}
             style={{
               backgroundImage: `url(${avatar})`,
               backgroundSize: 'cover',

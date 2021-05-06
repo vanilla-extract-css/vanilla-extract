@@ -42,6 +42,7 @@
     "react-router-hash-link": "^2.4.0",
     "react-syntax-highlighter": "^15.4.3",
     "remove-markdown": "^0.3.0",
+    "tailwindcss": "^2.1.2",
     "use-react-router": "^1.0.7",
     "webpack": "^5.27.2",
     "webpack-cli": "^3.3.12",
@@ -49,6 +50,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0"
+    "@types/dedent": "^0.7.0",
+    "@types/tailwindcss": "^2"
   }
 }

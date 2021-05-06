@@ -13205,6 +13205,7 @@ fsevents@^1.2.7:
     "@types/react-dom": ^16.9.12
     "@types/react-router-dom": ^5.1.7
     "@types/react-router-hash-link": ^1.2.1
+    "@types/tailwindcss": ^2
     babel-loader: ^8.2.2
     classnames: ^2.2.6
     copy-webpack-plugin: ^8.1.0
@@ -13227,6 +13228,7 @@ fsevents@^1.2.7:
     react-router-hash-link: ^2.4.0
     react-syntax-highlighter: ^15.4.3
     remove-markdown: ^0.3.0
+    tailwindcss: ^2.1.2
     use-react-router: ^1.0.7
     webpack: ^5.27.2
     webpack-cli: ^3.3.12
