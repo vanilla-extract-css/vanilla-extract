@@ -1,7 +1,7 @@
 /*
     This file is for validating types, it is not designed to be executed
 */
-
+import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -95,4 +95,16 @@ import {
   atoms({
     marginY: { mobile: 'medium' },
   });
+
+  // @ts-expect-error - Property defined with numbers should not allow array methods
+  atoms({ opacity: 'forEach' });
+
+  const atomicConfig = {
+    properties: {
+      flexDirection: ['row', 'column'],
+    },
+  } as const;
+
+  // Valid value - config defined outside the createAtomicStyles function
+  createAtomicStyles(atomicConfig);
 };
