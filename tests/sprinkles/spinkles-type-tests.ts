@@ -79,6 +79,11 @@ import {
     paddingY: ['medium', 'smalll'],
   });
 
+  // Valid value - Accept readonly arrays
+  atoms({
+    paddingY: ['medium', 'small'] as const,
+  });
+
   // Valid value
   atoms({
     transform: {
