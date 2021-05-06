@@ -13,13 +13,17 @@ const colorMap = {
   highlight: { lightMode: 'pink500' },
 } as const;
 
-export interface TextProps {
-  component?: ElementType;
+interface TextStyleProps {
   size?: keyof typeof styles.text;
   color?: keyof typeof colorMap;
   weight?: keyof typeof styles.weight;
   align?: AtomProps['textAlign'];
   baseline?: boolean;
+  type?: Exclude<keyof typeof styles.font, 'brand' | 'heading'>;
+}
+
+export interface TextProps extends TextStyleProps {
+  component?: ElementType;
   children: ReactNode;
 }
 
@@ -27,17 +31,12 @@ export const useTextStyles = ({
   size = 'standard',
   color = 'neutral',
   weight = 'regular',
+  type = 'body',
   align,
-  baseline,
-}: {
-  size?: keyof typeof styles.text;
-  color?: keyof typeof colorMap;
-  weight?: keyof typeof styles.weight;
-  align?: AtomProps['textAlign'];
-  baseline: boolean;
-}) =>
+  baseline = true,
+}: TextStyleProps) =>
   classnames(
-    styles.font.body,
+    styles.font[type],
     styles.text[size].base,
     atoms({ color: colorMap[color], textAlign: align }),
     styles.weight[weight],
@@ -53,13 +52,14 @@ export default ({
   weight,
   align,
   baseline = true,
+  type,
   children,
 }: TextProps) => {
   return (
     <Box
       component={component}
       display="block"
-      className={useTextStyles({ size, color, weight, align, baseline })}
+      className={useTextStyles({ size, color, weight, type, align, baseline })}
     >
       {children}
     </Box>

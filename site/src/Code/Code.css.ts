@@ -69,7 +69,7 @@ export const theme = {
 
 export const errorUnderline = style({
   textDecoration: 'dashed',
-  textDecorationColor: '#F43F5E',
+  textDecorationColor: vars.palette.red,
   textDecorationThickness: '3px',
   textDecorationLine: 'underline',
   textUnderlineOffset: '2px',

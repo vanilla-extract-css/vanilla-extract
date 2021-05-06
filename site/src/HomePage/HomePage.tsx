@@ -70,10 +70,14 @@ export const HomePage = () => {
                     CSS files at build time.
                   </Text>
                   <Box display="flex" alignItems="center">
-                    <Box paddingRight="xlarge">
+                    <Box paddingRight={{ mobile: 'small', tablet: 'xlarge' }}>
                       <ButtonLink
                         to="/documentation"
-                        icon={<Chevron direction="right" />}
+                        icon={
+                          <Box display={{ mobile: 'none', tablet: 'block' }}>
+                            <Chevron direction="right" />
+                          </Box>
+                        }
                       >
                         Get started
                       </ButtonLink>
@@ -86,7 +90,11 @@ export const HomePage = () => {
                     </ButtonLink>
                   </Box>
                 </Stack>
-                <Code language="tsx" errorTokens={['brandd', 'xlarge']}>
+                <Code
+                  language="tsx"
+                  errorTokens={['brandd', 'xlarge']}
+                  title="styles.css.ts"
+                >
                   {dedent`
                   export const vars = createGlobalTheme(':root', {
                     color: {
@@ -317,8 +325,7 @@ export const HomePage = () => {
         <Box paddingY="xxxlarge">
           <Box
             position="relative"
-            paddingTop="xlarge"
-            paddingBottom="xxlarge"
+            paddingY="xxlarge"
             background={{ lightMode: 'blue100', darkMode: 'gray800' }}
             className={styles.skewedContainerSecondary}
           >

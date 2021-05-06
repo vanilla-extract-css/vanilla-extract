@@ -1,7 +1,7 @@
 // @ts-ignore
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-import { Box } from '../system';
+import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
@@ -9,13 +9,14 @@ import { useRef, useEffect } from 'react';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
+  title?: string;
   children:
     | string
     | {
         __html: string;
       };
 }
-export default ({ language, errorTokens, children }: CodeProps) => {
+export default ({ language, title, errorTokens, children }: CodeProps) => {
   const padding = {
     mobile: 'large',
     tablet: 'large',
@@ -58,21 +59,53 @@ export default ({ language, errorTokens, children }: CodeProps) => {
         borderRadius="large"
         padding={padding}
       >
-        <Text size="code" component="div" color="code" baseline={false}>
-          {typeof children === 'string' ? (
-            <SyntaxHighlighter language={language} style={styles.theme}>
-              {children}
-            </SyntaxHighlighter>
-          ) : (
-            <InlineCode inline={false}>
-              <span
-                className={`language-${language}`}
-                data-language={language}
-                dangerouslySetInnerHTML={children}
-              />
-            </InlineCode>
-          )}
-        </Text>
+        <Stack space="large">
+          {title ? (
+            <Box display="flex" alignItems="center">
+              <Box display="flex" paddingRight="medium">
+                <Box
+                  borderRadius="full"
+                  background="red"
+                  paddingTop="medium"
+                  paddingLeft="medium"
+                  marginRight="small"
+                />
+                <Box
+                  borderRadius="full"
+                  background="yellow"
+                  paddingTop="medium"
+                  paddingLeft="medium"
+                  marginRight="small"
+                />
+                <Box
+                  borderRadius="full"
+                  background="green500"
+                  paddingTop="medium"
+                  paddingLeft="medium"
+                  marginRight="small"
+                />
+              </Box>
+              <Text color="secondary" size="xsmall" type="code">
+                {title}
+              </Text>
+            </Box>
+          ) : null}
+          <Text size="code" component="div" color="code" baseline={false}>
+            {typeof children === 'string' ? (
+              <SyntaxHighlighter language={language} style={styles.theme}>
+                {children}
+              </SyntaxHighlighter>
+            ) : (
+              <InlineCode inline={false}>
+                <span
+                  className={`language-${language}`}
+                  data-language={language}
+                  dangerouslySetInnerHTML={children}
+                />
+              </InlineCode>
+            )}
+          </Text>
+        </Stack>
       </Box>
     </div>
   );

@@ -39,6 +39,12 @@ const fontMetrics = {
 const tailwindPalette = {
   white: '#fff',
 
+  // tw-red500
+  red: '#EF4444',
+
+  // tw-yellow300
+  yellow: '#FCD34D',
+
   // tw-coolGray
   gray50: '#f9fafb',
   gray100: '#f3f4f6',
