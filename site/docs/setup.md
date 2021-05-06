@@ -8,19 +8,19 @@ There are currently a few integrations to choose from.
 
 ## Webpack
 
-1. Install the dependencies.
-
+Install the dependencies.
 ```bash
 $ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
 ```
-2. Add the [Babel](https://babeljs.io) plugin.
+
+Add the [Babel](https://babeljs.io) plugin.
 ```json
 {
   "plugins": ["@vanilla-extract/babel-plugin"]
 }
 ```
 
-3. Add the [webpack](https://webpack.js.org) plugin.
+Add the [webpack](https://webpack.js.org) plugin.
 ```js
 // webpack.config.js
 
@@ -63,12 +63,12 @@ module.exports = {
 
 ## esbuild
 
-1. Install the dependencies.
+Install the dependencies.
 ```bash
 $ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
-2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
+Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
 ```js
 // build.js
 

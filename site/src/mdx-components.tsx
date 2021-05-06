@@ -96,7 +96,7 @@ export default {
     </Box>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
-    <Box component="h2" marginTop="xxxlarge" marginBottom="xlarge">
+    <Box component="h2" marginTop="xxxlarge" marginBottom="xxlarge">
       <Box position="relative" paddingLeft="large">
         <Box
           position="absolute"
@@ -167,9 +167,7 @@ export default {
   ),
   li: (props: Children) => (
     <Box component="li" paddingBottom="large">
-      <Text component="span" baseline={false}>
-        {props.children}
-      </Text>
+      {props.children}
     </Box>
   ),
 };
