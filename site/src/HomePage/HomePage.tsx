@@ -388,6 +388,39 @@ export const HomePage = () => {
               </Code>
             </Columns>
           </ContentBlock>
+
+          <ContentBlock withGutters size="large">
+            <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
+              <Stack space="xxlarge">
+                <Heading level="3" align="center">
+                  Generate real style sheets
+                </Heading>
+                <Text align="center" color="secondary">
+                  Best-in-class developer experience without the runtime cost.
+                  Don’t ship a dynamic CSS engine to your users — ship regular
+                  CSS.
+                </Text>
+              </Stack>
+              <Code
+                language="css"
+                title="output.css"
+                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
+              >
+                {dedent`
+                  :root {
+                    --space-none__ya5b7b0: 0;
+                    --space-small__ya5b7b1: 4px;
+                    --space-medium__ya5b7b2: 8px;
+                    --space-large__ya5b7b3: 12px;
+                  }
+
+                  .Hero_container__1ldw6lo0 {
+                    padding: var(--space-medium__ya5b7b2);
+                  }
+                `}
+              </Code>
+            </Columns>
+          </ContentBlock>
         </Stack>
 
         <Box paddingY="xxxlarge">
