@@ -53,6 +53,8 @@ type ConditionalAtomicOptions<
 type Values<Property, Result> = {
   [Value in Property extends ReadonlyArray<any>
     ? Property[number]
+    : Property extends Array<any>
+    ? Property[number]
     : keyof Property]: Result;
 };
 

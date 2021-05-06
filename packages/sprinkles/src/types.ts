@@ -1,11 +1,19 @@
-export type RA1<Value> = [Value];
-export type RA2<Value> = [Value, Value];
-export type RA3<Value> = [Value, Value, Value];
-export type RA4<Value> = [Value, Value, Value, Value];
-export type RA5<Value> = [Value, Value, Value, Value, Value];
-export type RA6<Value> = [Value, Value, Value, Value, Value, Value];
-export type RA7<Value> = [Value, Value, Value, Value, Value, Value, Value];
-export type RA8<Value> = [
+export type RA1<Value> = readonly [Value];
+export type RA2<Value> = readonly [Value, Value];
+export type RA3<Value> = readonly [Value, Value, Value];
+export type RA4<Value> = readonly [Value, Value, Value, Value];
+export type RA5<Value> = readonly [Value, Value, Value, Value, Value];
+export type RA6<Value> = readonly [Value, Value, Value, Value, Value, Value];
+export type RA7<Value> = readonly [
+  Value,
+  Value,
+  Value,
+  Value,
+  Value,
+  Value,
+  Value,
+];
+export type RA8<Value> = readonly [
   Value,
   Value,
   Value,
