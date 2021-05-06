@@ -2,7 +2,7 @@ import { ReactNode, ElementType } from 'react';
 import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './typography.css';
-import { atoms } from '../system/Box/Box';
+import { atoms, AtomProps } from '../system/Box/Box';
 
 const colorMap = {
   neutral: { lightMode: 'gray700', darkMode: 'white' },
@@ -18,6 +18,7 @@ export interface TextProps {
   size?: keyof typeof styles.text;
   color?: keyof typeof colorMap;
   weight?: keyof typeof styles.weight;
+  align?: AtomProps['textAlign'];
   baseline?: boolean;
   children: ReactNode;
 }
@@ -26,17 +27,19 @@ export const useTextStyles = ({
   size = 'standard',
   color = 'neutral',
   weight = 'regular',
+  align,
   baseline,
 }: {
   size?: keyof typeof styles.text;
   color?: keyof typeof colorMap;
   weight?: keyof typeof styles.weight;
+  align?: AtomProps['textAlign'];
   baseline: boolean;
 }) =>
   classnames(
     styles.font.body,
     styles.text[size].base,
-    atoms({ color: colorMap[color] }),
+    atoms({ color: colorMap[color], textAlign: align }),
     styles.weight[weight],
     {
       [styles.text.standard.trims]: baseline,
@@ -48,6 +51,7 @@ export default ({
   size,
   color,
   weight,
+  align,
   baseline = true,
   children,
 }: TextProps) => {
@@ -55,7 +59,7 @@ export default ({
     <Box
       component={component}
       display="block"
-      className={useTextStyles({ size, color, weight, baseline })}
+      className={useTextStyles({ size, color, weight, align, baseline })}
     >
       {children}
     </Box>

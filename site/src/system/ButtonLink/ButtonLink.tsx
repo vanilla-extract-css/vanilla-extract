@@ -20,8 +20,14 @@ export const ButtonLink = ({
     atoms({
       display: 'flex',
       alignItems: 'center',
-      paddingY: 'large',
-      paddingX: 'xlarge',
+      paddingY: {
+        mobile: 'medium',
+        tablet: 'large',
+      },
+      paddingX: {
+        mobile: 'large',
+        tablet: 'xlarge',
+      },
       borderRadius: 'large',
       ...(variant === 'solid'
         ? {

@@ -7,7 +7,6 @@ import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 import Logo from '../Logo/Logo';
 import Code from '../Code/Code';
-import InlineCode from '../InlineCode/InlineCode';
 import { Tweet } from '../Tweet/Tweet';
 import docsStore from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
@@ -55,7 +54,7 @@ export const HomePage = () => {
               <ColorModeToggle />
             </Box>
             <Box>
-              <Columns space="xxlarge" collapseOnMobile alignY="center">
+              <Columns space="xxxlarge" collapseOnTablet alignY="center">
                 <Stack space="xxlarge">
                   <Logo size={100} />
                   <Heading level="1" branded>
@@ -66,9 +65,9 @@ export const HomePage = () => {
                     TypeScript.
                   </Heading>
                   <Text>
-                    Write your styles in TypeScript with locally scoped classes
-                    and CSS&nbsp;variables, then generate static CSS files at
-                    build time.
+                    Use TypeScript as your preprocessor. Write type-safe,
+                    locally scoped classes and variables, then generate static
+                    CSS files at build time.
                   </Text>
                   <Box display="flex" alignItems="center">
                     <Box paddingRight="xlarge">
@@ -87,19 +86,24 @@ export const HomePage = () => {
                     </ButtonLink>
                   </Box>
                 </Stack>
-                <Code language="tsx">
-                  {dedent`// Set up the theme via CSS Variables
+                <Code language="tsx" errorTokens={['brandd', 'xlarge']}>
+                  {dedent`
                   export const vars = createGlobalTheme(':root', {
-                    color: { brand: 'blue' },
-                    font: { body: 'comic sans ms' }
+                    color: {
+                      brand: 'blue',
+                      white: '#fff'
+                    },
+                    space: {
+                      small: '4px',
+                      medium: '8px',
+                      large: '12px'
+                    }
                   });
 
-                  // Consume the theme
-                  export const exampleStyle = style({
-                    backgroundColor: vars.color.brand,
-                    fontFamily: vars.font.body,
-                    color: 'white',
-                    padding: '10px'
+                  export const hero = style({
+                    backgroundColor: vars.color.brandd,
+                    color: vars.color.white,
+                    padding: vars.space.xlarge
                   });`}
                 </Code>
               </Columns>
@@ -124,8 +128,8 @@ export const HomePage = () => {
         </ContentBlock>
 
         <ContentBlock withGutters size="large">
-          <Box paddingY="xlarge">
-            <Columns space="xxlarge" collapseOnMobile>
+          <Box paddingTop="xxlarge" paddingBottom="xxxlarge">
+            <Columns space="xxlarge" collapseOnTablet>
               <Feature title="Type-safe preprocessor">
                 All styles generated at build time — just like{' '}
                 <Link
@@ -148,87 +152,136 @@ export const HomePage = () => {
                 , etc, but with the power of TypeScript.
               </Feature>
 
-              <Feature title="Portable styles">
-                Works with any front-end framework, with integrations for
-                webpack, esbuild and Vite.
-              </Feature>
-
               <Feature title="First-class theming">
                 Create a single global theme or create multiple themes, all with
                 type-safe token contracts.
               </Feature>
 
+              <Feature title="Portable styling">
+                Works with any front-end framework, with integrations for
+                webpack, esbuild and Vite.
+              </Feature>
+
               <Feature title="Build it your way">
                 Use high-level abstractions like{' '}
-                <Link to="#" size="small" underline="always">
+                <Link to="#" size="small" underline="always" inline>
                   Sprinkles
                 </Link>{' '}
                 and{' '}
-                <Link to="#" size="small" underline="always">
+                <Link to="#" size="small" underline="always" inline>
                   Dessert Box
                 </Link>{' '}
-                — or build and share your own!
+                — or create and publish your own!
               </Feature>
             </Columns>
           </Box>
         </ContentBlock>
 
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
+        <Box
+          position="relative"
+          paddingY="xxxlarge"
+          background={{ lightMode: 'blue100', darkMode: 'gray800' }}
+          className={styles.skewedContainerSecondary}
+        >
+          <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
-              <Heading level="3">Full power of CSS & TypeScript</Heading>
-              <Text>
-                Define strongly-typed styles with the full power of CSS
-                underneath.
-              </Text>
-              <Text>
-                CSS Variables, pseudo-classes, selectors, and media/feature
+              <Heading level="3" align="center">
+                The full power of CSS &amp; TypeScript
+              </Heading>
+              <Text align="center">
+                Define strongly-typed styles with the full power of CSS.
+                Variables, selectors, pseudo&#8209;classes, and media/feature
                 queries are all supported.
+              </Text>
+
+              <Code language="tsx">
+                {dedent`
+                import { style } from '@vanilla-extract/css';
+
+                export const className = style({
+                  display: 'flex',
+                  ':hover': {
+                    color: 'red'
+                  },
+                  selectors: {
+                    '&:nth-child(2n)': {
+                      background: '#fafafa'
+                    }
+                  },
+                  '@media': {
+                    'screen and (min-width: 768px)': {
+                      padding: 10
+                    }
+                  },
+                  '@supports': {
+                    '(display: grid)': {
+                      display: 'grid'
+                    }
+                  }
+                });
+              `}
+              </Code>
+            </Stack>
+          </ContentBlock>
+        </Box>
+
+        <Box paddingTop="xxxlarge">
+          <ContentBlock withGutters size="large">
+            <Columns space="xlarge" collapseOnMobile alignY="center">
+              <Stack space="xxlarge">
+                <Heading level="3" align="center">
+                  Type-safe theming
+                </Heading>
+                <Text align="center">
+                  Define themes with deeply nested token contracts, then let
+                  TypeScript do the heavy lifting. Never mess up a variable
+                  again.
+                </Text>
+              </Stack>
+
+              <Code language="tsx" errorTokens={['brandd']}>
+                {dedent`export const vars = createGlobalTheme(':root', {
+          color: {
+            brand: 'aquamarine',
+            accent: 'honeydew',
+          },
+        });
+
+        export const brandedSection = style({
+          backgroundColor: vars.color.brandd,
+        });`}
+              </Code>
+            </Columns>
+          </ContentBlock>
+        </Box>
+
+        <ContentBlock withGutters size="large">
+          <Columns space="xxlarge" collapseOnMobile alignY="center">
+            <Stack space="xxlarge">
+              <Heading level="3" align="center">
+                Variables, the way they were intended
+              </Heading>
+              <Text align="center">
+                Define and consume variables without abstraction. All of your
+                favourite CSS variable patterns can be directly translated to
+                vanilla-extract.
               </Text>
             </Stack>
 
             <Code language="tsx">
-              {dedent`import { style } from '@vanilla-extract/css';
-      import { vars } from './vars.css.ts';
-      
-      export const className = style({
-        display: 'flex',
-        ':hover': {
-          color: 'red'
-        },
-      });`}
-            </Code>
-          </Columns>
-        </ContentBlock>
+              {dedent`import { style, createVar } from '@vanilla-extract/css';
 
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3">Full power of CSS & TypeScript</Heading>
-              <Text>
-                Define strongly-typed styles with the full power of CSS
-                underneath.
-              </Text>
-              <Text>
-                CSS Variables, pseudo-classes, selectors, and media/feature
-                queries are all supported.
-              </Text>
-            </Stack>
+      const shadowColor = createVar();
 
-            <Code language="tsx">
-              {dedent`import { style } from '@vanilla-extract/css';
-      import { vars } from './vars.css.ts';
-      
-      export const className = style({
-        '@media': {
-          'screen and (min-width: 768px)': {
-            padding: 10
-          }
-        },
-        '@supports': {
-          '(display: grid)': {
-            display: 'grid'
-          }
+      export const shadow = style({
+        boxShadow: ${'`0 0 10px ${shadowColor}`'},
+        selectors: {
+          '.light &': {
+            vars: { [shadowColor]: 'black' }
+          },
+          '.dark &': {
+            vars: { [shadowColor]: 'gray' }
+          },
         }
       });`}
             </Code>
@@ -238,99 +291,25 @@ export const HomePage = () => {
         <ContentBlock withGutters size="large">
           <Columns space="xlarge" collapseOnMobile alignY="center">
             <Stack space="xxlarge">
-              <Heading level="3">Full power of CSS & TypeScript</Heading>
-              <Text>
-                Define strongly-typed styles with the full power of CSS
-                underneath.
-              </Text>
-              <Text>
-                CSS Variables, pseudo-classes, selectors, and media/feature
-                queries are all supported.
+              <Heading level="3" align="center">
+                Organise your styles with ease
+              </Heading>
+              <Text align="center">
+                Group multiple style variants into a single collection, then
+                look them up by name. No awkward naming conventions required.
               </Text>
             </Stack>
 
             <Code language="tsx">
-              {dedent`import { style } from '@vanilla-extract/css';
-      import { vars } from './vars.css.ts';
-      
-      export const className = style({
-        vars: {
-          [vars.color.brand]: 'pink',
-          '--global-variable': 'purple'
-        },
-        selectors: {
-          '&:nth-child(2n)': {
-            background: 'aquamarine'
-          }
-        },
-      });`}
-            </Code>
-          </Columns>
-        </ContentBlock>
+              {dedent`
+                import { styleVariants } from '@vanilla-extract/css';
 
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3">Full power of CSS & TypeScript</Heading>
-              <Text>
-                Define strongly-typed styles with the full power of CSS
-                underneath.
-              </Text>
-              <Text>
-                CSS Variables, pseudo-classes, selectors, and media/feature
-                queries are all supported.
-              </Text>
-            </Stack>
-
-            <Code language="tsx">
-              {dedent`import { style } from '@vanilla-extract/css';
-
-export const className = style({
-selectors: {
-  '&:nth-child(2n)': {
-    background: 'aquamarine'
-  }
-},
-});`}
-            </Code>
-          </Columns>
-        </ContentBlock>
-
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3">Scoped Themed Variables</Heading>
-              <Text>
-                Easily create themed variables, scoped to a class, by providing
-                your theme structure to <InlineCode>createTheme</InlineCode>.
-              </Text>
-              <Text>
-                Apply the returned class to an element, then consume the CSS
-                variables in your styles, referencing them via the provided
-                theme structure.
-              </Text>
-            </Stack>
-
-            <Code language="tsx">
-              {dedent`export const [themeClass, vars] = createTheme({
-                  color: {
-                    brand: 'aquamarine'
-                  },
+                export const background = styleVariants({
+                  primary: { background: 'navy' },
+                  secondary: { background: 'blue' },
+                  tertiary: { background: 'aqua' },
                 });
-
-                export const exampleStyle = style({
-                  backgroundColor: vars.color.brand,
-                  padding: 10
-                });
-
-                // app.ts
-                import { themeClass, exampleStyle } from './styles.css.ts';
-
-                document.write(\`
-                  <section class="${'${themeClass}'}">
-                    <h1 class="${'${exampleStyle}'}">Hello world!</h1>
-                  </section>
-                \`);`}
+              `}
             </Code>
           </Columns>
         </ContentBlock>
@@ -343,19 +322,21 @@ selectors: {
             background={{ lightMode: 'blue100', darkMode: 'gray800' }}
             className={styles.skewedContainerSecondary}
           >
-            <Stack space="xxlarge">
+            <Stack space="xxlarge" align="center">
               <ContentBlock size="large" withGutters>
-                <Heading level="3">Community vibes</Heading>
-              </ContentBlock>
-              <ContentBlock size="large" withGutters>
-                <Box
-                  display="flex"
-                  paddingY="large"
-                  marginY="-large"
-                  paddingX="large"
-                  marginLeft="-large"
-                  style={{ gap: 60, overflow: 'auto' }}
-                >
+                <Columns space="xlarge" collapseOnTablet>
+                  <Tweet
+                    handle="@lorvsso"
+                    name="Jack Lo Russo"
+                    avatar="https://pbs.twimg.com/profile_images/1365062529622282240/UqZdoTJL_200x200.jpg"
+                    url="https://twitter.com/lorvsso/status/1375592486182084613"
+                  >
+                    I love this ✨ The first time I made a decision at work
+                    about CSS architecture, years ago now, CSS Modules was what
+                    I ended up recommending and implementing. This is CSS
+                    Modules for the new decade ❤️😍
+                  </Tweet>
+
                   <Tweet
                     handle="@jeresig"
                     name="John Resig"
@@ -376,17 +357,14 @@ selectors: {
                 >
                   You had me at vanilla-extract
                 </Tweet> */}
-
                   <Tweet
-                    handle="@lorvsso"
-                    name="Jack Lo Russo"
-                    avatar="https://pbs.twimg.com/profile_images/1365062529622282240/UqZdoTJL_200x200.jpg"
-                    url="https://twitter.com/lorvsso/status/1375592486182084613"
+                    handle="@okonetchnikov"
+                    name="Andrey Okonetchnikov"
+                    avatar="https://pbs.twimg.com/profile_images/1327698924698804226/io9KdHy__400x400.jpg"
+                    url="https://twitter.com/okonetchnikov/status/1389450586257514505"
                   >
-                    I love this ✨ The first time I made a decision at work
-                    about CSS architecture, years ago now, CSS Modules was what
-                    I ended up recommending and implementing. This is CSS
-                    Modules for the new decade ❤️😍
+                    I really don’t want to rework my whole workshop but this is
+                    looking so good I almost have to 😅🤔
                   </Tweet>
 
                   {/* <Tweet
@@ -400,105 +378,11 @@ selectors: {
                   first-class CSS Variables can be a core feature of modern
                   CSS-in-JS libraries.
                 </Tweet> */}
-
-                  <Tweet
-                    handle="@kbrock84"
-                    name="Kevin Brock"
-                    avatar="https://pbs.twimg.com/profile_images/1127929844241555456/bbEpS1z6_200x200.jpg"
-                    url="https://twitter.com/kbrock84/status/1375457568793845764"
-                  >
-                    Whoever thought of the name vanilla extract for a css in js
-                    framework is a fucking genius. Just when you think all the
-                    good js lib names have been taken.
-                  </Tweet>
-                </Box>
+                </Columns>
               </ContentBlock>
             </Stack>
           </Box>
         </Box>
-
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3">Full power of CSS & TypeScript</Heading>
-              <Text>
-                Define strongly-typed styles with the full power of CSS
-                underneath.
-              </Text>
-              <Text>
-                CSS Variables, simple pseudos (hover, focus, etc.), selectors
-                and media/feature queries are all supported.
-              </Text>
-            </Stack>
-
-            <Code language="tsx">
-              {dedent`import { vars } from './vars.css.ts';
-              
-              export const className = style({
-                display: 'flex',
-                vars: {
-                  [vars.color.brand]: 'pink',
-                  '--global-variable': 'purple'
-                },
-                ':hover': {
-                  color: 'red'
-                },
-                selectors: {
-                  '&:nth-child(2n)': {
-                    background: 'aquamarine'
-                  }
-                },
-                '@media': {
-                  'screen and (min-width: 768px)': {
-                    padding: 10
-                  }
-                },
-                '@supports': {
-                  '(display: grid)': {
-                    display: 'grid'
-                  }
-                }
-              });`}
-            </Code>
-          </Columns>
-        </ContentBlock>
-
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3">Create variants at build time</Heading>
-              <Text>
-                Creates a collection of named style variants, useful for mapping
-                component props to styles, e.g.
-                <InlineCode>{`styles.background[props.variant]`}</InlineCode>
-              </Text>
-              <Text>
-                You can also transform the values by providing a map function as
-                the second argument.
-              </Text>
-            </Stack>
-
-            <Code language="tsx">
-              {dedent`import { styleVariants } from '@vanilla-extract/css';
-
-              export const background = styleVariants({
-                primary: { background: 'blue' },
-                secondary: { background: 'aqua' },
-              });
-              
-              const spaceScale = {
-                small: 4,
-                medium: 8,
-                large: 16
-              };
-              
-              export const padding = styleVariants(
-                spaceScale,
-                (space) => ({ padding: space })
-              );`}
-            </Code>
-          </Columns>
-        </ContentBlock>
 
         <ContentBlock withGutters>
           <Box component="footer" paddingY="xxxlarge">

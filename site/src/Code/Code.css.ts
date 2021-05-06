@@ -66,3 +66,11 @@ export const theme = {
     margin: 0,
   },
 };
+
+export const errorUnderline = style({
+  textDecoration: 'dashed',
+  textDecorationColor: '#F43F5E',
+  textDecorationThickness: '3px',
+  textDecorationLine: 'underline',
+  textUnderlineOffset: '2px',
+});

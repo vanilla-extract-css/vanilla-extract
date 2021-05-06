@@ -26,26 +26,20 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
             borderRadius="full"
             className={styles.avatar}
             background={{ lightMode: 'gray100', darkMode: 'gray800' }}
-            style={
-              {
-                // backgroundImage: `url(${avatar})`,
-              }
-            }
+            style={{
+              backgroundImage: `url(${avatar})`,
+            }}
           />
           <Stack space="medium">
             <Text weight="strong" size="small">
-              Full name
+              {name}
             </Text>
             <Text color="secondary" size="small">
-              @handle
+              {handle}
             </Text>
           </Stack>
         </Box>
-        <Text size="small">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam.
-        </Text>
+        <Text size="small">{children}</Text>
       </Stack>
     </Box>
   </Link>

@@ -153,7 +153,7 @@ export const vars = createGlobalTheme(':root', {
     xxxlarge: px(24 * grid),
   },
   contentWidth: {
-    standard: px(860),
+    standard: px(740),
     large: px(1350),
   },
   heading: {

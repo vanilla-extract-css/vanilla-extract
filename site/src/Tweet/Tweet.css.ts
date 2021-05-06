@@ -14,7 +14,7 @@ export const tweetLink = style({
 export const shadowColorVar = createVar();
 
 export const tweet = style({
-  width: 400,
+  maxWidth: 440,
   boxShadow: `0 0 30px -10px ${shadowColorVar}`,
   vars: {
     [shadowColorVar]: vars.palette.blue300,

@@ -14,7 +14,7 @@ export const atoms = createAtomsFn({
   ...responsiveStyles,
 });
 
-type AtomProps = Parameters<typeof atoms>[0];
+export type AtomProps = Parameters<typeof atoms>[0];
 export interface BoxProps
   extends Omit<
       AllHTMLAttributes<HTMLElement>,
@@ -61,6 +61,7 @@ export const Box = ({
   opacity,
   pointerEvents,
   cursor,
+  textAlign,
   ...restProps
 }: BoxProps) => {
   const atomClasses = classnames(
@@ -101,6 +102,7 @@ export const Box = ({
       opacity,
       pointerEvents,
       cursor,
+      textAlign,
     }),
     className,
   );

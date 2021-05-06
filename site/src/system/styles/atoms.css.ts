@@ -42,6 +42,7 @@ export const responsiveStyles = createAtomicStyles({
     marginRight: margins,
     pointerEvents: ['none', 'auto'],
     opacity: [0, 1],
+    textAlign: ['left', 'center'],
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],

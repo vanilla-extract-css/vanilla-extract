@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import * as styles from './typography.css';
 import { Box } from '../system';
-import { atoms } from '../system/Box/Box';
+import { atoms, AtomProps } from '../system/Box/Box';
 
 export type HeadingLevel = keyof typeof styles.heading;
 
@@ -27,14 +27,22 @@ const getHeadingComponent = (level: HeadingLevel) => {
 export interface HeadingProps {
   children: ReactNode;
   level: HeadingLevel;
+  align?: AtomProps['textAlign'];
   branded?: boolean;
   component?: ElementType;
 }
 
-export const useHeadingStyles = (level: HeadingLevel, branded?: boolean) =>
+export const useHeadingStyles = (
+  level: HeadingLevel,
+  branded?: boolean,
+  align?: AtomProps['textAlign'],
+) =>
   classnames(
     branded ? styles.font.brand : styles.font.heading,
-    atoms({ color: { lightMode: 'gray900', darkMode: 'white' } }),
+    atoms({
+      textAlign: align,
+      color: { lightMode: 'gray900', darkMode: 'white' },
+    }),
     styles.heading[level].base,
     styles.heading[level].trims,
   );
@@ -43,12 +51,13 @@ export const Heading = ({
   level,
   component,
   branded = false,
+  align,
   children,
 }: HeadingProps) => {
   return (
     <Box
       component={component || getHeadingComponent(level)}
-      className={useHeadingStyles(level, branded)}
+      className={useHeadingStyles(level, branded, align)}
     >
       {children}
     </Box>

@@ -8,6 +8,7 @@ interface Props {
   space: BoxProps['padding'];
   alignY?: AlignY;
   collapseOnMobile?: boolean;
+  collapseOnTablet?: boolean;
 }
 
 const resolveAlignY: Record<AlignY, BoxProps['alignItems']> = {
@@ -20,6 +21,7 @@ export const Columns = ({
   children,
   space,
   collapseOnMobile = false,
+  collapseOnTablet = false,
   alignY = 'top',
 }: Props) => {
   const columns = Children.toArray(children);
@@ -28,32 +30,52 @@ export const Columns = ({
     <Box
       display="flex"
       flexDirection={
-        collapseOnMobile
-          ? { mobile: 'column', tablet: 'row', desktop: 'row' }
+        collapseOnMobile || collapseOnTablet
+          ? {
+              mobile: 'column',
+              tablet: collapseOnTablet ? 'column' : 'row',
+              desktop: 'row',
+            }
           : undefined
       }
       alignItems={resolveAlignY[alignY]}
       marginLeft={
-        collapseOnMobile
-          ? { mobile: 'none', tablet: `-${space}`, desktop: `-${space}` }
+        collapseOnMobile || collapseOnTablet
+          ? {
+              mobile: 'none',
+              tablet: collapseOnTablet ? 'none' : `-${space}`,
+              desktop: `-${space}`,
+            }
           : `-${space}`
       }
       marginTop={
-        collapseOnMobile
-          ? { mobile: `-${space}`, tablet: 'none', desktop: 'none' }
+        collapseOnMobile || collapseOnTablet
+          ? {
+              mobile: `-${space}`,
+              tablet: collapseOnTablet ? `-${space}` : 'none',
+              desktop: 'none',
+            }
           : undefined
       }
     >
       {columns.map((c, i) => (
         <Box
           paddingLeft={
-            collapseOnMobile
-              ? { mobile: 'none', tablet: space, desktop: space }
+            collapseOnMobile || collapseOnTablet
+              ? {
+                  mobile: 'none',
+                  tablet: collapseOnTablet ? 'none' : space,
+                  desktop: space,
+                }
               : space
           }
           paddingTop={
-            collapseOnMobile
-              ? { mobile: space, tablet: 'none', desktop: 'none' }
+            collapseOnMobile || collapseOnTablet
+              ? {
+                  mobile: space,
+                  tablet: collapseOnTablet ? space : 'none',
+                  desktop: 'none',
+                }
               : undefined
           }
           style={{ width: '100%', minWidth: 0 }}
