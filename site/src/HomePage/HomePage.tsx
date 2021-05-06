@@ -54,41 +54,45 @@ export const HomePage = () => {
               <ColorModeToggle />
             </Box>
             <Box>
-              <Columns space="xxxlarge" collapseOnTablet alignY="center">
-                <Stack space="xxlarge">
-                  <Logo size={100} />
-                  <Heading level="1" branded>
-                    Zero-runtime
-                    <br />
-                    Stylesheets in
-                    <br />
-                    TypeScript.
-                  </Heading>
-                  <Text>
-                    Use TypeScript as your preprocessor. Write type-safe,
-                    locally scoped classes and variables, then generate static
-                    CSS files at build time.
-                  </Text>
-                  <Box display="flex" alignItems="center">
-                    <Box paddingRight="xlarge">
+              <Columns space="xxlarge" collapseOnTablet alignY="center">
+                <Box marginTop={{ tablet: '-xlarge' }}>
+                  <Stack space="xxlarge">
+                    <Logo size={100} />
+                    <Heading level="1" branded>
+                      Zero-runtime
+                      <br />
+                      Stylesheets in
+                      <br />
+                      TypeScript.
+                    </Heading>
+                    <Text>
+                      Use TypeScript as your preprocessor. Write type-safe,
+                      locally scoped classes and variables, then generate static
+                      CSS files at build time.
+                    </Text>
+                    <Box display="flex" alignItems="center">
+                      <Box paddingRight="xlarge">
+                        <ButtonLink
+                          to="/documentation"
+                          icon={<Chevron direction="right" />}
+                        >
+                          Get started
+                        </ButtonLink>
+                      </Box>
                       <ButtonLink
-                        to="/documentation"
-                        icon={<Chevron direction="right" />}
+                        to="https://github.com/seek-oss/vanilla-extract"
+                        variant="transparent"
                       >
-                        Get started
+                        <GitHubStars />
                       </ButtonLink>
                     </Box>
-                    <ButtonLink
-                      to="https://github.com/seek-oss/vanilla-extract"
-                      variant="transparent"
-                    >
-                      <GitHubStars />
-                    </ButtonLink>
-                  </Box>
-                </Stack>
-                <Code language="tsx" errorTokens={['brandd', 'xlarge']}>
+                  </Stack>
+                </Box>
+                <Code language="tsx" errorTokens={['brandd', 'large']}>
                   {dedent`
-                  export const vars = createGlobalTheme(':root', {
+                  import { createTheme, style } from '@vanilla-extract/css';
+
+                  export const [themeClass, vars] = createTheme({
                     color: {
                       brand: 'blue',
                       white: '#fff'
@@ -96,14 +100,13 @@ export const HomePage = () => {
                     space: {
                       small: '4px',
                       medium: '8px',
-                      large: '12px'
                     }
                   });
 
                   export const hero = style({
                     backgroundColor: vars.color.brandd,
                     color: vars.color.white,
-                    padding: vars.space.xlarge
+                    padding: vars.space.large
                   });`}
                 </Code>
               </Columns>
@@ -200,22 +203,18 @@ export const HomePage = () => {
 
                 export const className = style({
                   display: 'flex',
+                  flexDirection: 'column',
                   ':hover': {
-                    color: 'red'
+                    background: 'peachpuff'
                   },
                   selectors: {
                     '&:nth-child(2n)': {
-                      background: '#fafafa'
+                      background: 'aliceblue'
                     }
                   },
                   '@media': {
                     'screen and (min-width: 768px)': {
-                      padding: 10
-                    }
-                  },
-                  '@supports': {
-                    '(display: grid)': {
-                      display: 'grid'
+                      flexDirection: 'row'
                     }
                   }
                 });
@@ -225,51 +224,45 @@ export const HomePage = () => {
           </ContentBlock>
         </Box>
 
-        <Box paddingTop="xxxlarge">
+        <Stack space="xxxlarge">
+          <Box paddingTop="xxxlarge">
+            <ContentBlock withGutters size="large">
+              <Columns space="xlarge" collapseOnMobile alignY="center">
+                <Stack space="xxlarge">
+                  <Heading level="3" align="center">
+                    Type-safe theming
+                  </Heading>
+                  <Text align="center">
+                    Define themes with deeply nested token contracts, then let
+                    TypeScript do the heavy lifting. Never mess up a variable
+                    again.
+                  </Text>
+                </Stack>
+
+                <Code language="tsx" errorTokens={['brandd']}>
+                  {dedent`
+                    import { createTheme, style } from '@vanilla-extract/css';
+                      
+                    export const [themeClass, vars] = createTheme({
+                      color: {
+                        brand: 'aquamarine',
+                        accent: 'honeydew',
+                      },
+                    });
+
+                    export const brandedSection = style({
+                      backgroundColor: vars.color.brandd,
+                    });
+                  `}
+                </Code>
+              </Columns>
+            </ContentBlock>
+          </Box>
+
           <ContentBlock withGutters size="large">
-            <Columns space="xlarge" collapseOnMobile alignY="center">
-              <Stack space="xxlarge">
-                <Heading level="3" align="center">
-                  Type-safe theming
-                </Heading>
-                <Text align="center">
-                  Define themes with deeply nested token contracts, then let
-                  TypeScript do the heavy lifting. Never mess up a variable
-                  again.
-                </Text>
-              </Stack>
-
-              <Code language="tsx" errorTokens={['brandd']}>
-                {dedent`export const vars = createGlobalTheme(':root', {
-          color: {
-            brand: 'aquamarine',
-            accent: 'honeydew',
-          },
-        });
-
-        export const brandedSection = style({
-          backgroundColor: vars.color.brandd,
-        });`}
-              </Code>
-            </Columns>
-          </ContentBlock>
-        </Box>
-
-        <ContentBlock withGutters size="large">
-          <Columns space="xxlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3" align="center">
-                Variables, the way they were intended
-              </Heading>
-              <Text align="center">
-                Define and consume variables without abstraction. All of your
-                favourite CSS variable patterns can be directly translated to
-                vanilla-extract.
-              </Text>
-            </Stack>
-
-            <Code language="tsx">
-              {dedent`import { style, createVar } from '@vanilla-extract/css';
+            <Columns space="xxlarge" collapseOnMobile alignY="center">
+              <Code language="tsx">
+                {dedent`import { style, createVar } from '@vanilla-extract/css';
 
       const shadowColor = createVar();
 
@@ -284,24 +277,34 @@ export const HomePage = () => {
           },
         }
       });`}
-            </Code>
-          </Columns>
-        </ContentBlock>
+              </Code>
+              <Stack space="xxlarge">
+                <Heading level="3" align="center">
+                  Variables, the way they were intended
+                </Heading>
+                <Text align="center">
+                  Define and consume variables without abstraction. All of your
+                  favourite CSS variable patterns can be directly translated to
+                  vanilla-extract.
+                </Text>
+              </Stack>
+            </Columns>
+          </ContentBlock>
 
-        <ContentBlock withGutters size="large">
-          <Columns space="xlarge" collapseOnMobile alignY="center">
-            <Stack space="xxlarge">
-              <Heading level="3" align="center">
-                Organise your styles with ease
-              </Heading>
-              <Text align="center">
-                Group multiple style variants into a single collection, then
-                look them up by name. No awkward naming conventions required.
-              </Text>
-            </Stack>
+          <ContentBlock withGutters size="large">
+            <Columns space="xlarge" collapseOnMobile alignY="center">
+              <Stack space="xxlarge">
+                <Heading level="3" align="center">
+                  Organise your styles with ease
+                </Heading>
+                <Text align="center">
+                  Group multiple style variants into a single collection, then
+                  look them up by name. No awkward naming conventions required.
+                </Text>
+              </Stack>
 
-            <Code language="tsx">
-              {dedent`
+              <Code language="tsx">
+                {dedent`
                 import { styleVariants } from '@vanilla-extract/css';
 
                 export const background = styleVariants({
@@ -310,9 +313,10 @@ export const HomePage = () => {
                   tertiary: { background: 'aqua' },
                 });
               `}
-            </Code>
-          </Columns>
-        </ContentBlock>
+              </Code>
+            </Columns>
+          </ContentBlock>
+        </Stack>
 
         <Box paddingY="xxxlarge">
           <Box

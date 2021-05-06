@@ -28,6 +28,7 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
             background={{ lightMode: 'gray100', darkMode: 'gray800' }}
             style={{
               backgroundImage: `url(${avatar})`,
+              backgroundSize: 'cover',
             }}
           />
           <Stack space="medium">

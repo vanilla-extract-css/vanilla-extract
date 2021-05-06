@@ -5,6 +5,7 @@ import { breakpoints } from '../../themeUtils';
 import { vars } from '../../themes.css';
 
 const space = vars.spacing;
+export type Space = keyof typeof space;
 
 const negativeSpace = {
   ['-xsmall']: `${calc(space.xsmall).negate()}`,

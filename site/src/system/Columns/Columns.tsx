@@ -1,11 +1,12 @@
 import { Children, ReactNode } from 'react';
 import { Box, BoxProps } from '../Box/Box';
+import { Space } from '../styles/atoms.css';
 
 type AlignY = 'top' | 'center' | 'bottom';
 
 interface Props {
   children: ReactNode;
-  space: BoxProps['padding'];
+  space: Space;
   alignY?: AlignY;
   collapseOnMobile?: boolean;
   collapseOnTablet?: boolean;
@@ -16,6 +17,9 @@ const resolveAlignY: Record<AlignY, BoxProps['alignItems']> = {
   bottom: 'flex-end',
   center: 'center',
 };
+
+const negate = (space: Space) =>
+  space === 'none' ? ('none' as const) : (`-${space}` as const);
 
 export const Columns = ({
   children,
@@ -41,18 +45,18 @@ export const Columns = ({
       alignItems={resolveAlignY[alignY]}
       marginLeft={
         collapseOnMobile || collapseOnTablet
-          ? {
+          ? ({
               mobile: 'none',
-              tablet: collapseOnTablet ? 'none' : `-${space}`,
-              desktop: `-${space}`,
-            }
-          : `-${space}`
+              tablet: collapseOnTablet ? 'none' : negate(space),
+              desktop: negate(space),
+            } as const)
+          : negate(space)
       }
       marginTop={
         collapseOnMobile || collapseOnTablet
           ? {
-              mobile: `-${space}`,
-              tablet: collapseOnTablet ? `-${space}` : 'none',
+              mobile: negate(space),
+              tablet: collapseOnTablet ? negate(space) : 'none',
               desktop: 'none',
             }
           : undefined
