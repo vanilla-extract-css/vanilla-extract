@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.2.2
+
+### Patch Changes
+
+- [#100](https://github.com/seek-oss/vanilla-extract/pull/100) [`9edf2df`](https://github.com/seek-oss/vanilla-extract/commit/9edf2dfc2fa05720d267732b88f07e0d53131ef3) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow readonly arrays for responsive array properties
+
 ## 0.2.1
 
 ### Patch Changes
