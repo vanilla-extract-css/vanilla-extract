@@ -6,7 +6,6 @@ import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
-import { responsiveStyles } from '../system/styles/atoms.css';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;

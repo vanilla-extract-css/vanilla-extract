@@ -54,28 +54,63 @@ export const HomePage = () => {
               <ColorModeToggle />
             </Box>
             <Box>
-              <Columns space="xxxlarge" collapseOnTablet alignY="center">
-                <Box marginTop={{ tablet: '-xlarge' }}>
-                  <Stack space="xxlarge">
-                    <Logo size={100} />
-                    <Heading level="1" branded>
+              <Columns space="none" collapseOnTablet alignY="center">
+                <Box
+                  marginTop={{ tablet: '-xlarge' }}
+                  paddingBottom={{ mobile: 'xlarge', desktop: 'none' }}
+                >
+                  <Stack
+                    space="xxlarge"
+                    align={{ mobile: 'center', desktop: 'flex-start' }}
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent={{
+                        mobile: 'center',
+                        desktop: 'flex-start',
+                      }}
+                    >
+                      <Logo size={100} />
+                    </Box>
+                    <Heading
+                      level="1"
+                      branded
+                      align={{ mobile: 'center', desktop: 'left' }}
+                    >
                       Zero-runtime
                       <br />
                       Stylesheets in
                       <br />
                       TypeScript.
                     </Heading>
-                    <Text>
-                      Use TypeScript as your preprocessor. Write type-safe,
-                      locally scoped classes and variables, then generate static
-                      CSS files at build time.
-                    </Text>
-                    <Box display="flex" alignItems="center">
+                    <Box
+                      display="flex"
+                      justifyContent={{
+                        mobile: 'center',
+                        desktop: 'flex-start',
+                      }}
+                    >
+                      <Box style={{ maxWidth: 480 }}>
+                        <Text align={{ mobile: 'center', desktop: 'left' }}>
+                          Use TypeScript as your preprocessor. Write type-safe,
+                          locally scoped classes and variables, then generate
+                          static CSS files at build time.
+                        </Text>
+                      </Box>
+                    </Box>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent={{
+                        mobile: 'center',
+                        desktop: 'flex-start',
+                      }}
+                    >
                       <Box paddingRight={{ mobile: 'small', tablet: 'xlarge' }}>
                         <ButtonLink
                           to="/documentation"
                           icon={
-                            <Box display={{ mobile: 'none', tablet: 'block' }}>
+                            <Box display={{ mobile: 'none', desktop: 'block' }}>
                               <Chevron direction="right" />
                             </Box>
                           }
@@ -197,24 +232,24 @@ export const HomePage = () => {
           <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
-                The full power of CSS &amp; TypeScript
+                Leverage the full power of CSS &amp; TypeScript
               </Heading>
-              <Text align="center">
-                Define strongly-typed styles with the full power of CSS.
-                Variables, selectors, pseudo&#8209;classes, and media/feature
-                queries are all supported.
-              </Text>
+              <Box paddingX="large">
+                <Text align="center">
+                  Write maintainable CSS at scale without sacrificing platform
+                  features. Variables, selectors, pseudo&#8209;classes,
+                  media/feature queries, keyframes, font&#8209;face rules and
+                  global styles are all supported.
+                </Text>
+              </Box>
 
-              <Code language="tsx">
+              <Code language="tsx" title="styles.css.ts">
                 {dedent`
                 import { style } from '@vanilla-extract/css';
 
                 export const className = style({
                   display: 'flex',
                   flexDirection: 'column',
-                  ':hover': {
-                    background: 'peachpuff'
-                  },
                   selectors: {
                     '&:nth-child(2n)': {
                       background: 'aliceblue'
@@ -235,7 +270,7 @@ export const HomePage = () => {
         <Stack space="xxxlarge">
           <Box paddingTop="xxxlarge">
             <ContentBlock withGutters size="large">
-              <Columns space="xlarge" collapseOnMobile alignY="center">
+              <Columns space="xlarge" collapseOnTablet alignY="center">
                 <Stack space="xxlarge">
                   <Heading level="3" align="center">
                     Type-safe theming
@@ -247,7 +282,11 @@ export const HomePage = () => {
                   </Text>
                 </Stack>
 
-                <Code language="tsx" errorTokens={['brandd']}>
+                <Code
+                  language="tsx"
+                  errorTokens={['brandd']}
+                  title="styles.css.ts"
+                >
                   {dedent`
                     import { createTheme, style } from '@vanilla-extract/css';
                       
@@ -268,8 +307,18 @@ export const HomePage = () => {
           </Box>
 
           <ContentBlock withGutters size="large">
-            <Columns space="xxlarge" collapseOnMobile alignY="center">
-              <Code language="tsx">
+            <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
+              <Stack space="xxlarge">
+                <Heading level="3" align="center">
+                  Variables, the way they were intended
+                </Heading>
+                <Text align="center">
+                  Define and consume variables without abstraction. All of your
+                  favourite CSS variable patterns can be translated to
+                  vanilla-extract.
+                </Text>
+              </Stack>
+              <Code language="tsx" title="styles.css.ts">
                 {dedent`import { style, createVar } from '@vanilla-extract/css';
 
       const shadowColor = createVar();
@@ -286,21 +335,11 @@ export const HomePage = () => {
         }
       });`}
               </Code>
-              <Stack space="xxlarge">
-                <Heading level="3" align="center">
-                  Variables, the way they were intended
-                </Heading>
-                <Text align="center">
-                  Define and consume variables without abstraction. All of your
-                  favourite CSS variable patterns can be directly translated to
-                  vanilla-extract.
-                </Text>
-              </Stack>
             </Columns>
           </ContentBlock>
 
           <ContentBlock withGutters size="large">
-            <Columns space="xlarge" collapseOnMobile alignY="center">
+            <Columns space="xlarge" collapseOnTablet alignY="center">
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
                   Organise your styles with ease
@@ -311,7 +350,7 @@ export const HomePage = () => {
                 </Text>
               </Stack>
 
-              <Code language="tsx">
+              <Code language="tsx" title="styles.css.ts">
                 {dedent`
                 import { styleVariants } from '@vanilla-extract/css';
 
@@ -319,6 +358,12 @@ export const HomePage = () => {
                   primary: { background: 'navy' },
                   secondary: { background: 'blue' },
                   tertiary: { background: 'aqua' },
+                });
+
+                export const color = styleVariants({
+                  neutral: { color: 'black' },
+                  secondary: { color: 'gray' },
+                  link: { color: 'blue' },
                 });
               `}
               </Code>
@@ -329,13 +374,13 @@ export const HomePage = () => {
         <Box paddingY="xxxlarge">
           <Box
             position="relative"
-            paddingY="xxlarge"
+            paddingY="xxxlarge"
             background={{ lightMode: 'blue100', darkMode: 'gray800' }}
             className={styles.skewedContainerSecondary}
           >
             <Stack space="xxlarge" align="center">
               <ContentBlock size="large" withGutters>
-                <Columns space="xlarge" collapseOnTablet>
+                <Columns space="xxlarge" collapseOnTablet alignY="center">
                   <Tweet
                     handle="@lorvsso"
                     name="Jack Lo Russo"

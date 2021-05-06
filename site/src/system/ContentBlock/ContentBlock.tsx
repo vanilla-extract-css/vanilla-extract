@@ -17,7 +17,7 @@ export const ContentBlock = ({
       className={classnames(styles.root, styles.width[size])}
       paddingX={
         withGutters
-          ? { mobile: 'large', tablet: 'large', desktop: 'xlarge' }
+          ? { mobile: 'large', tablet: 'xlarge', desktop: 'xxlarge' }
           : undefined
       }
     >
