@@ -53,7 +53,9 @@ export const useHeadingRouteUpdates = (headingHashes: Array<string>) => {
 
               if (headingElement) {
                 return {
-                  pos: headingElement.getBoundingClientRect().top - 160,
+                  pos:
+                    headingElement.getBoundingClientRect().top -
+                    window.innerHeight / 2,
                   hash,
                 };
               }

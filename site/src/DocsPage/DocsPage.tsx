@@ -7,7 +7,7 @@ import {
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';
 import classnames from 'classnames';
-import { useHeadingRouteUpdates } from '../useHeadingRoute';
+import { useActiveHash, useHeadingRouteUpdates } from '../useHeadingRoute';
 import SiblingDoc from './SiblingDoc/SiblingDoc';
 import mdxComponents from '../mdx-components';
 import { Fab } from '../Fab/Fab';
@@ -205,14 +205,13 @@ const headingForRoute = mapKeys(docs, (d) => {
 
 const SecondaryNav = ({
   pathname,
-  activeHash,
   onClick,
 }: {
   pathname: string;
-  activeHash: string;
   onClick: () => void;
 }) => {
   const [ready, setReady] = useState(false);
+  const activeHash = useActiveHash();
   const normalisedPath = pathname.endsWith('/')
     ? pathname.slice(0, pathname.lastIndexOf('/'))
     : pathname;
@@ -299,11 +298,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
 
       <PrimaryNav open={menuOpen} onClick={closeMenu} />
 
-      <SecondaryNav
-        onClick={closeMenu}
-        pathname={location.pathname}
-        activeHash={location.hash.replace('#', '')}
-      />
+      <SecondaryNav onClick={closeMenu} pathname={location.pathname} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'block' }}>
