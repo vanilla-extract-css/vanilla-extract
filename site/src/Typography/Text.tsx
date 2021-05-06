@@ -5,10 +5,10 @@ import * as styles from './typography.css';
 import { atoms, AtomProps } from '../system/Box/Box';
 
 const colorMap = {
-  neutral: { lightMode: 'coolGray700', darkMode: 'white' },
-  strong: { lightMode: 'coolGray900', darkMode: 'white' },
+  neutral: { lightMode: 'coolGray700', darkMode: 'gray100' },
+  strong: { lightMode: 'coolGray900', darkMode: 'gray100' },
   code: { lightMode: 'white' },
-  link: { lightMode: 'coolGray700', darkMode: 'white' },
+  link: { lightMode: 'coolGray700', darkMode: 'gray100' },
   secondary: { lightMode: 'coolGray500', darkMode: 'gray400' },
   highlight: { lightMode: 'pink500' },
 } as const;

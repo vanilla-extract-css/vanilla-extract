@@ -41,7 +41,7 @@ export const useHeadingStyles = (
     branded ? styles.font.brand : styles.font.heading,
     atoms({
       textAlign: align,
-      color: { lightMode: 'coolGray900', darkMode: 'white' },
+      color: { lightMode: 'coolGray900', darkMode: 'gray100' },
     }),
     styles.heading[level].base,
     styles.heading[level].trims,

@@ -92,9 +92,11 @@ export const HomePage = () => {
                     >
                       <Box style={{ maxWidth: 480 }}>
                         <Text align={{ mobile: 'center', desktop: 'left' }}>
-                          Use TypeScript as your preprocessor. Write type-safe,
-                          locally scoped classes and variables, then generate
-                          static CSS files at build time.
+                          <Box color={{ darkMode: 'gray300' }}>
+                            Use TypeScript as your preprocessor. Write
+                            type-safe, locally scoped classes and variables,
+                            then generate static CSS files at build time.
+                          </Box>
                         </Text>
                       </Box>
                     </Box>
