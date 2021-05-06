@@ -78,7 +78,7 @@ const Header = () => (
       right={0}
       bottom={0}
       zIndex={-1}
-      background={{ lightMode: 'green100', darkMode: 'gray700' }}
+      background={{ lightMode: 'green100', darkMode: 'gray900' }}
       className={styles.headerBg}
     />
     <ReactRouterLink to="/" className={styles.homeLink} title="Back to home">

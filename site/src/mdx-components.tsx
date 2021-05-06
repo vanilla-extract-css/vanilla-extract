@@ -129,7 +129,12 @@ export default {
     dangerouslySetInnerHTML: { __html: string };
   }) => (
     <Box marginBottom={{ mobile: 'small', tablet: 'medium', desktop: 'large' }}>
-      <Code language={language}>{dangerouslySetInnerHTML}</Code>
+      <Code
+        language={language}
+        background={{ lightMode: 'coolGray800', darkMode: 'gray900' }}
+      >
+        {dangerouslySetInnerHTML}
+      </Code>
     </Box>
   ),
   inlineCode: InlineCode,

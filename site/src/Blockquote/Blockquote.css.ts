@@ -12,7 +12,7 @@ export const root = style({
   selectors: {
     [`.${darkMode} &`]: {
       vars: {
-        [borderColorVar]: vars.palette.gray600,
+        [borderColorVar]: vars.palette.gray700,
       },
     },
   },
@@ -24,6 +24,6 @@ globalStyle(`${root} code`, {
 });
 
 globalStyle(`.${darkMode} ${root} code`, {
-  background: vars.palette.gray600,
+  background: vars.palette.gray700,
   color: 'inherit',
 });

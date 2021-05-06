@@ -10,7 +10,7 @@ export default (props: { children: ReactNode }) => {
       paddingTop="xlarge"
       marginBottom="xlarge"
       borderRadius="small"
-      background={{ lightMode: 'blue100', darkMode: 'gray700' }}
+      background={{ lightMode: 'blue100', darkMode: 'gray800' }}
       className={styles.root}
     >
       {props.children}

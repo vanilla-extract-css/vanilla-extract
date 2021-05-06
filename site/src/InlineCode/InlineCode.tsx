@@ -12,7 +12,7 @@ export default ({ children, inline = true }: InlineCodeProps) => {
       component="code"
       color={inline ? { lightMode: 'pink700', darkMode: 'gray200' } : undefined}
       background={
-        inline ? { lightMode: 'pink100', darkMode: 'gray700' } : undefined
+        inline ? { lightMode: 'pink100', darkMode: 'gray800' } : undefined
       }
       borderRadius="small"
       padding="small"
