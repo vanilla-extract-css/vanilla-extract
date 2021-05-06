@@ -355,7 +355,7 @@ export const HomePage = () => {
             vars: { [shadowColor]: 'black' }
           },
           '.dark &': {
-            vars: { [shadowColor]: 'coolGray' }
+            vars: { [shadowColor]: 'white' }
           },
         }
       });`}
@@ -403,7 +403,7 @@ export const HomePage = () => {
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
-                  Generate real style sheets
+                  Generate real stylesheets
                 </Heading>
                 <Text align="center" color="secondary">
                   Best-in-class developer experience without the runtime cost.
