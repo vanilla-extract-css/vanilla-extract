@@ -11,6 +11,8 @@ title: API
 Creates styles attached to a locally scoped class name.
 
 ```tsx
+// styles.css.ts
+
 import { style } from '@vanilla-extract/css';
 
 export const className = style({
@@ -21,6 +23,8 @@ export const className = style({
 CSS Variables, simple pseudos, selectors and media/feature queries are all supported.
 
 ```tsx
+// styles.css.ts
+
 import { style } from '@vanilla-extract/css';
 import { vars } from './vars.css.ts';
 
@@ -54,6 +58,8 @@ export const className = style({
 Selectors can also contain references to other scoped class names.
 
 ```tsx
+// styles.css.ts
+
 import { style } from '@vanilla-extract/css';
 
 export const parentClass = style({});
@@ -78,6 +84,8 @@ export const childClass = style({
 Creates a collection of named style variants.
 
 ```tsx
+// styles.css.ts
+
 import { styleVariants } from '@vanilla-extract/css';
 
 export const variant = styleVariants({
@@ -91,6 +99,8 @@ export const variant = styleVariants({
 You can also transform the values by providing a map function as the second argument.
 
 ```tsx
+// styles.css.ts
+
 import { styleVariants } from '@vanilla-extract/css';
 
 const spaceScale = {
@@ -109,6 +119,8 @@ export const padding = styleVariants(spaceScale, (space) => ({
 Creates styles attached to a global selector.
 
 ```tsx
+// app.css.ts
+
 import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
@@ -119,6 +131,8 @@ globalStyle('html, body', {
 Global selectors can also contain references to other scoped class names.
 
 ```tsx
+// app.css.ts
+
 import { globalStyle } from '@vanilla-extract/css';
 
 export const parentClass = style({});
@@ -134,6 +148,7 @@ Creates a locally scoped theme class and a theme contract which can be consumed 
 
 ```tsx
 // theme.css.ts
+
 import { createTheme } from '@vanilla-extract/css';
 
 export const [themeClass, vars] = createTheme({
@@ -243,6 +258,8 @@ Assigns a collection of CSS Variables anywhere within a style block.
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
 ```tsx
+// theme.css.ts
+
 import { createThemeContract, style, assignVars } from '@vanilla-extract/css';
 
 export const vars = createThemeContract({
@@ -278,6 +295,8 @@ export const responsiveSpaceTheme = style({
 Creates a single CSS Variable.
 
 ```tsx
+// style.css.ts
+
 import { createVar, style } from '@vanilla-extract/css';
 
 export const colorVar = createVar();
@@ -290,6 +309,8 @@ export const exampleStyle = style({
 Scoped variables can be set via the `vars` property on style objects.
 
 ```tsx
+// style.css.ts
+
 import { createVar, style } from '@vanilla-extract/css';
 import { colorVar } from './vars.css.ts';
 
@@ -305,6 +326,8 @@ export const parentStyle = style({
 Provides fallback values when consuming variables.
 
 ```tsx
+// style.css.ts
+
 import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 
 export const colorVar = createVar();
@@ -317,6 +340,8 @@ export const exampleStyle = style({
 Multiple fallbacks are also supported.
 
 ```tsx
+// style.css.ts
+
 import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 
 export const primaryColorVar = createVar();
@@ -332,6 +357,8 @@ export const exampleStyle = style({
 Creates a custom font attached to a locally scoped font name.
 
 ```tsx
+// style.css.ts
+
 import { fontFace, style } from '@vanilla-extract/css';
 
 const myFont = fontFace({
@@ -348,6 +375,8 @@ export const text = style({
 Creates a globally scoped custom font.
 
 ```tsx
+// app.css.ts
+
 import {
   globalFontFace,
   style
@@ -367,6 +396,8 @@ export const text = style({
 Creates a locally scoped set of keyframes.
 
 ```tsx
+// styles.css.ts
+
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
@@ -384,6 +415,8 @@ export const animated = style({
 Creates a globally scoped set of keyframes.
 
 ```tsx
+// app.css.ts
+
 import { globalKeyframes, style } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
@@ -401,6 +434,8 @@ export const animated = style({
 Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
 
 ```tsx
+// styles.css.ts
+
 import { style, composeStyles } from '@vanilla-extract/css';
 
 const base = style({

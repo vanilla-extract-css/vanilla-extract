@@ -22,6 +22,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extrac
 
 3. Add the [webpack](https://webpack.js.org) plugin.
 ```js
+// webpack.config.js
+
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 
 module.exports = {
@@ -34,6 +36,9 @@ module.exports = {
 For example:
 
 ```js
+// webpack.config.js
+
+
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -65,6 +70,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 
 2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
 ```js
+// build.js
+
 const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
 
 require('esbuild').build({

@@ -6,6 +6,7 @@ import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
+import { responsiveStyles } from '../system/styles/atoms.css';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
@@ -51,6 +52,21 @@ export default ({ language, title, errorTokens, children }: CodeProps) => {
     };
   }, [rootRef.current, errorTokens]);
 
+  let resolvedTitle;
+  let resolvedChildren;
+
+  if (children && typeof children !== 'string') {
+    const matches = children.__html.match(
+      /^(?<node>\<span class=\".*\"\>\/\/(?:\s)?(?<title>.*)\<\/span\>)/,
+    );
+
+    if (matches && matches.groups) {
+      resolvedTitle = matches.groups.title;
+      resolvedChildren = {
+        __html: children.__html.replace(`${matches.groups.node}`, '').trim(),
+      };
+    }
+  }
   return (
     <div ref={rootRef}>
       <Box
@@ -60,7 +76,7 @@ export default ({ language, title, errorTokens, children }: CodeProps) => {
         padding={padding}
       >
         <Stack space="large">
-          {title ? (
+          {title || resolvedTitle ? (
             <Box display="flex" alignItems="center">
               <Box display="flex" paddingRight="medium">
                 <Box
@@ -86,7 +102,7 @@ export default ({ language, title, errorTokens, children }: CodeProps) => {
                 />
               </Box>
               <Text color="secondary" size="xsmall" type="code">
-                {title}
+                {title || resolvedTitle}
               </Text>
             </Box>
           ) : null}
@@ -100,7 +116,9 @@ export default ({ language, title, errorTokens, children }: CodeProps) => {
                 <span
                   className={`language-${language}`}
                   data-language={language}
-                  dangerouslySetInnerHTML={children}
+                  dangerouslySetInnerHTML={
+                    resolvedTitle ? resolvedChildren : children
+                  }
                 />
               </InlineCode>
             )}
