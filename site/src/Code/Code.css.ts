@@ -39,7 +39,7 @@ globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
 });
 
 globalStyle(tokenSelector({ darkMode, tokens: ['comment'] }), {
-  color: vars.palette.coolGray500,
+  color: vars.palette.gray500,
 });
 globalStyle(tokenSelector({ darkMode, tokens: ['keyword', 'selector'] }), {
   color: vars.palette.blue300,
@@ -56,7 +56,7 @@ globalStyle(
 globalStyle(
   tokenSelector({ darkMode: darkMode, tokens: ['punctuation', 'operator'] }),
   {
-    color: vars.palette.coolGray400,
+    color: vars.palette.gray400,
   },
 );
 
