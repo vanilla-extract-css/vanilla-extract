@@ -238,7 +238,7 @@ export const HomePage = () => {
               </Heading>
               <Box paddingX="large">
                 <Text align="center" color="neutral">
-                  <Box color={{ lightMode: 'blue800', darkMode: 'gray50' }}>
+                  <Box color={{ lightMode: 'blue800', darkMode: 'gray400' }}>
                     Write maintainable CSS at scale without sacrificing platform
                     features. Variables, selectors, pseudo&#8209;classes,
                     media/feature queries, keyframes, font&#8209;face rules and
