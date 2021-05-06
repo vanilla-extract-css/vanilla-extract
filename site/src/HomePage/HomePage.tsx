@@ -176,7 +176,7 @@ export const HomePage = () => {
         <ContentBlock withGutters size="large">
           <Box paddingTop="xxlarge" paddingBottom="xxxlarge">
             <Columns space="xxlarge" collapseOnTablet>
-              <Feature title="Type-safe preprocessor">
+              <Feature title="Type-safe static CSS">
                 All styles generated at build time — just like{' '}
                 <Link
                   to="https://sass-lang.com"
@@ -232,18 +232,26 @@ export const HomePage = () => {
           <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
-                Leverage the full power of CSS &amp; TypeScript
+                <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>
+                  Leverage the full power of CSS &amp; TypeScript
+                </Box>
               </Heading>
               <Box paddingX="large">
-                <Text align="center">
-                  Write maintainable CSS at scale without sacrificing platform
-                  features. Variables, selectors, pseudo&#8209;classes,
-                  media/feature queries, keyframes, font&#8209;face rules and
-                  global styles are all supported.
+                <Text align="center" color="neutral">
+                  <Box color={{ lightMode: 'blue800', darkMode: 'gray50' }}>
+                    Write maintainable CSS at scale without sacrificing platform
+                    features. Variables, selectors, pseudo&#8209;classes,
+                    media/feature queries, keyframes, font&#8209;face rules and
+                    global styles are all supported.
+                  </Box>
                 </Text>
               </Box>
 
-              <Code language="tsx" title="styles.css.ts">
+              <Code
+                language="tsx"
+                title="styles.css.ts"
+                background={{ lightMode: 'coolGray800', darkMode: 'black' }}
+              >
                 {dedent`
                 import { style } from '@vanilla-extract/css';
 
@@ -275,7 +283,7 @@ export const HomePage = () => {
                   <Heading level="3" align="center">
                     Type-safe theming
                   </Heading>
-                  <Text align="center">
+                  <Text align="center" color="secondary">
                     Define themes with deeply nested token contracts, then let
                     TypeScript do the heavy lifting. Never mess up a variable
                     again.
@@ -313,7 +321,7 @@ export const HomePage = () => {
                 <Heading level="3" align="center">
                   Variables, the way they were intended
                 </Heading>
-                <Text align="center">
+                <Text align="center" color="secondary">
                   Define and consume variables without abstraction. All of your
                   favourite CSS variable patterns can be translated to
                   vanilla-extract.
@@ -349,7 +357,7 @@ export const HomePage = () => {
                 <Heading level="3" align="center">
                   Organise your styles with ease
                 </Heading>
-                <Text align="center">
+                <Text align="center" color="secondary">
                   Group multiple style variants into a single collection, then
                   look them up by name. No awkward naming conventions required.
                 </Text>
@@ -555,7 +563,9 @@ const Feature = ({
     />
     <Stack space="xlarge">
       <Heading level="4">{title}</Heading>
-      <Text size="small">{children}</Text>
+      <Text size="small" color="secondary">
+        {children}
+      </Text>
     </Stack>
   </Box>
 );
