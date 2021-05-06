@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "@vanilla-extract/css": "0.4.3",
-    "@vanilla-extract/sprinkles": "0.2.0"
+    "@vanilla-extract/sprinkles": "0.2.1"
   }
 }
