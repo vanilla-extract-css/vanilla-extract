@@ -17,7 +17,6 @@ import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
-import useReactRouter from 'use-react-router';
 import Text from '../Typography/Text';
 import { mapKeys } from 'lodash';
 
@@ -81,7 +80,12 @@ const Header = () => (
       background={{ lightMode: 'green100', darkMode: 'gray900' }}
       className={styles.headerBg}
     />
-    <ReactRouterLink to="/" className={styles.homeLink} title="Back to home">
+    <ReactRouterLink
+      to="/"
+      className={styles.homeLink}
+      title="Back to home"
+      onClick={() => window.scrollTo(0, 0)}
+    >
       <Logo size={66} />
     </ReactRouterLink>
   </Box>
@@ -115,12 +119,13 @@ const MenuBackdrop = ({
 
 const PrimaryNav = ({
   open,
+  pathname,
   onClick,
 }: {
   open: boolean;
+  pathname: string;
   onClick: () => void;
 }) => {
-  const { location } = useReactRouter();
   const selectAndScrollToTop = () => {
     window.scrollTo(0, 0);
     onClick();
@@ -166,10 +171,10 @@ const PrimaryNav = ({
                 paddingLeft="xsmall"
                 paddingTop="xlarge"
                 marginLeft="xsmall"
-                opacity={route === location.pathname ? undefined : 0}
+                opacity={route === `${pathname}/` ? undefined : 0}
                 className={classnames(
                   styles.activeIndicator,
-                  route === location.pathname ? styles.active : '',
+                  route === `${pathname}/` ? styles.active : '',
                 )}
               />
               <Box component="span" paddingLeft="large">
@@ -212,10 +217,7 @@ const SecondaryNav = ({
 }) => {
   const [ready, setReady] = useState(false);
   const activeHash = useActiveHash();
-  const normalisedPath = pathname.endsWith('/')
-    ? pathname.slice(0, pathname.lastIndexOf('/'))
-    : pathname;
-  const { sections, route } = headingForRoute[normalisedPath];
+  const { sections, route } = headingForRoute[pathname];
 
   useEffect(() => {
     setReady(true);
@@ -279,6 +281,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
+  const normalisedPath = location.pathname.endsWith('/')
+    ? location.pathname.slice(0, location.pathname.lastIndexOf('/'))
+    : location.pathname;
 
   useEffect(() => {
     if (menuOpen) {
@@ -296,9 +301,13 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
 
       <MenuBackdrop open={menuOpen} onClick={closeMenu} />
 
-      <PrimaryNav open={menuOpen} onClick={closeMenu} />
+      <PrimaryNav
+        open={menuOpen}
+        onClick={closeMenu}
+        pathname={normalisedPath}
+      />
 
-      <SecondaryNav onClick={closeMenu} pathname={location.pathname} />
+      <SecondaryNav onClick={closeMenu} pathname={normalisedPath} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'block' }}>
