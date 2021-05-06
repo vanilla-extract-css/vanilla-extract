@@ -1,5 +1,14 @@
 # @vanilla-extract/sprinkles
 
+## 0.2.1
+
+### Patch Changes
+
+- [#98](https://github.com/seek-oss/vanilla-extract/pull/98) [`45a6eef`](https://github.com/seek-oss/vanilla-extract/commit/45a6eeff8548db3841615e38589f57cbd526ea8a) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix some minor type issues
+
+  - Better support passing config to `createAtomicStyles` that was not defined inline
+  - Remove array methods being exposed on properties using number arrays
+
 ## 0.2.0
 
 ### Minor Changes
