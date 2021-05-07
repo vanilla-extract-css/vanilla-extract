@@ -542,7 +542,7 @@ export const HomePage = () => {
         </Box>
 
         <ContentBlock withGutters>
-          <Box component="footer" paddingY="xxxlarge">
+          <Box component="footer" paddingBottom="xxxlarge">
             <Stack space="xxlarge" align="center">
               <Logo size={60} />
               <Columns space="xxxlarge" collapseOnMobile>
