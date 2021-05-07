@@ -254,11 +254,21 @@ export const HomePage = () => {
 
                 <Feature title="Build it your way">
                   Use high-level abstractions like{' '}
-                  <Link to="#" size="small" underline="always" inline>
+                  <Link
+                    to="https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
                     Sprinkles
                   </Link>{' '}
                   and{' '}
-                  <Link to="#" size="small" underline="always" inline>
+                  <Link
+                    to="https://github.com/TheMightyPenguin/dessert-box"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
                     Dessert Box
                   </Link>{' '}
                   — or create and publish your own!
