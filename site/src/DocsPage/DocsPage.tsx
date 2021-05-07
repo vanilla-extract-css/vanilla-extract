@@ -87,10 +87,10 @@ const Header = () => (
     >
       <Box
         paddingLeft={{ mobile: 'none', tablet: 'xsmall', desktop: 'large' }}
-        paddingTop={{ mobile: 'small', desktop: 'medium' }}
+        paddingTop={{ mobile: 'xsmall', tablet: 'small', desktop: 'medium' }}
       >
         <Box paddingLeft={{ desktop: 'xsmall' }}>
-          <Logo size={60} />
+          <Logo size={68} />
         </Box>
       </Box>
     </ReactRouterLink>
@@ -238,51 +238,46 @@ const SecondaryNav = ({
       display={{ mobile: 'none', desktop: 'block' }}
       className={styles.sidebar}
     >
-      <Stack space="large">
-        <Text size="small" weight="strong">
-          Contents
-        </Text>
-        <Stack space="small" key="route">
-          {sections
-            .filter(({ level }) => level === 2)
-            .map(({ hash, name }, index) => {
-              const active = activeHash ? hash === activeHash : index === 0;
+      <Stack space="small">
+        {sections
+          .filter(({ level }) => level === 2)
+          .map(({ hash, name }, index) => {
+            const active = activeHash ? hash === activeHash : index === 0;
 
-              return (
-                <Link
-                  key={name}
-                  to={`${route}${hash ? `#${hash}` : ''}`}
-                  color={!active ? 'secondary' : undefined}
-                  highlightOnFocus={false}
-                  underline="never"
-                  size="small"
-                  onClick={onClick}
-                >
-                  <Box component="span" display="flex" alignItems="center">
-                    <Box
-                      component="span"
-                      background={{
-                        lightMode: 'green300',
-                        darkMode: 'green400',
-                      }}
-                      borderRadius="full"
-                      paddingLeft="xsmall"
-                      paddingTop="xlarge"
-                      marginLeft="xsmall"
-                      opacity={active ? undefined : 0}
-                      className={classnames(
-                        styles.activeIndicator,
-                        active ? styles.active : '',
-                      )}
-                    />
-                    <Box component="span" paddingLeft="large">
-                      {name}
-                    </Box>
+            return (
+              <Link
+                key={name}
+                to={`${route}${hash ? `#${hash}` : ''}`}
+                color={!active ? 'secondary' : undefined}
+                highlightOnFocus={false}
+                underline="never"
+                size="small"
+                onClick={onClick}
+              >
+                <Box component="span" display="flex" alignItems="center">
+                  <Box
+                    component="span"
+                    background={{
+                      lightMode: 'green300',
+                      darkMode: 'green400',
+                    }}
+                    borderRadius="full"
+                    paddingLeft="xsmall"
+                    paddingTop="xlarge"
+                    marginLeft="xsmall"
+                    opacity={active ? undefined : 0}
+                    className={classnames(
+                      styles.activeIndicator,
+                      active ? styles.active : '',
+                    )}
+                  />
+                  <Box component="span" paddingLeft="large">
+                    {name}
                   </Box>
-                </Link>
-              );
-            })}
-        </Stack>
+                </Box>
+              </Link>
+            );
+          })}
       </Stack>
     </Box>
   ) : null;
@@ -333,7 +328,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
         <Box
           component="main"
           paddingRight="large"
-          paddingLeft={{ mobile: 'large', desktop: 'xlarge' }}
+          paddingLeft={{ mobile: 'large', desktop: 'xxlarge' }}
           paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
           className={styles.main}
         >

@@ -21,7 +21,7 @@ export const homeLink = style({
 export const header = style(
   responsiveStyle({
     mobile: {
-      height: '124px',
+      height: '136px',
     },
     desktop: {
       height: headerHeight,
@@ -38,7 +38,7 @@ export const headerBg = style({
     desktop: {
       width: sidebarWidth,
       height: '100vh',
-      clipPath: 'polygon(0 0, 100% 0%, 80% 100%, 0 100%)',
+      clipPath: 'initial',
     },
   }),
 });
