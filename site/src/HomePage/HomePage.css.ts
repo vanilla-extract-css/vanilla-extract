@@ -6,16 +6,9 @@ import { responsiveStyle } from '../themeUtils';
 export const shadowColorVar = createVar();
 
 export const installBlock = style({
-  fontFamily: vars.fonts.code,
-  boxShadow: `0 0 50px -10px ${shadowColorVar}`,
-  vars: {
-    [shadowColorVar]: vars.palette.teal200,
-  },
   selectors: {
-    [`.${darkMode} &`]: {
-      vars: {
-        [shadowColorVar]: vars.palette.gray700,
-      },
+    [`:not(.${darkMode}) &`]: {
+      filter: 'saturate(0.6)',
     },
   },
 });

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import dedent from 'dedent';
 import { Box, Stack, ContentBlock, Columns, ButtonLink } from '../system';
 import { Heading } from '../Typography/Heading';
@@ -12,6 +12,39 @@ import docsStore from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
 import * as styles from './HomePage.css';
+
+const InstallPrompt = () => {
+  return (
+    <Box
+      component="code"
+      position="relative"
+      display="flex"
+      alignItems="center"
+      borderRadius="small"
+      padding="large"
+      cursor="pointer"
+      background={{
+        lightMode: 'teal200',
+        darkMode: 'gray800',
+      }}
+      aria-label="npm install @vanilla-extract/css. Click to copy to clipboard"
+      title="Copy to clipboard"
+      className={styles.installBlock}
+    >
+      <Box display={{ mobile: 'none', tablet: 'block' }}>
+        <Text type="code" size="small" color="secondary">
+          $
+        </Text>
+      </Box>
+      <Text type="code" size="small">
+        <Box component="span" paddingX={{ mobile: 'none', tablet: 'medium' }}>
+          npm install{' '}
+          <span style={{ whiteSpace: 'nowrap' }}>@vanilla-extract/css</span>
+        </Box>
+      </Text>
+    </Box>
+  );
+};
 
 export const HomePage = () => {
   return (
@@ -47,6 +80,7 @@ export const HomePage = () => {
       <Box
         paddingTop="xxlarge"
         paddingBottom="xxxlarge"
+        marginBottom="xxxlarge"
         background={{ lightMode: 'teal100', darkMode: 'gray900' }}
         className={styles.skewedContainer}
       >
@@ -60,7 +94,7 @@ export const HomePage = () => {
               justifyContent="flex-end"
               paddingBottom={{
                 mobile: 'medium',
-                tablet: 'xlarge',
+                tablet: 'none',
                 desktop: 'xxlarge',
               }}
             >
@@ -69,8 +103,8 @@ export const HomePage = () => {
             <Box>
               <Columns space="none" collapseOnTablet alignY="center">
                 <Box
-                  marginTop={{ tablet: '-xlarge' }}
-                  paddingBottom={{ mobile: 'xlarge', desktop: 'none' }}
+                  marginTop={{ desktop: '-xxxlarge' }}
+                  paddingBottom={{ mobile: 'xxlarge', desktop: 'none' }}
                 >
                   <Stack
                     space="xxlarge"
@@ -113,6 +147,7 @@ export const HomePage = () => {
                         </Text>
                       </Box>
                     </Box>
+                    <InstallPrompt />
                     <Box
                       display="flex"
                       alignItems="center"
@@ -174,27 +209,12 @@ export const HomePage = () => {
       </Box>
 
       <Stack space="xxxlarge">
-        <ContentBlock withGutters>
-          <Box
-            padding={{ mobile: 'xlarge', tablet: 'xlarge', desktop: 'xxlarge' }}
-            borderRadius="large"
-            background={{ lightMode: 'white', darkMode: 'black' }}
-            color={{ lightMode: 'coolGray900', darkMode: 'gray50' }}
-            className={styles.installBlock}
-          >
-            $ npm install{' '}
-            <span style={{ whiteSpace: 'nowrap' }}>--save-dev</span>{' '}
-            <span style={{ whiteSpace: 'nowrap' }}>@vanilla-extract/css</span>
-          </Box>
-        </ContentBlock>
-
         <ContentBlock
           withGutters
           size={{ mobile: 'standard', desktop: 'large' }}
         >
           <Box
-            paddingTop="xxlarge"
-            paddingBottom="xxxlarge"
+            paddingY="xxxlarge"
             paddingX={{ mobile: 'medium', tablet: 'none' }}
           >
             <Columns space="xxlarge" collapseOnTablet>
@@ -470,7 +490,7 @@ export const HomePage = () => {
           >
             <ContentBlock size="large" withGutters>
               <Stack space="xxlarge" align="center">
-                <Columns space="xxlarge" collapseOnTablet alignY="center">
+                <Columns space="xxlarge" collapseOnMobile alignY="center">
                   <Tweet
                     handle="@jeresig"
                     name="John Resig"
@@ -492,7 +512,7 @@ export const HomePage = () => {
                     looking so good I almost have to 😅🤔
                   </Tweet>
                 </Columns>
-                <Columns space="xxlarge" collapseOnTablet alignY="center">
+                <Columns space="xxlarge" collapseOnMobile alignY="center">
                   <Tweet
                     handle="@lorvsso"
                     name="Jack Lo Russo"
