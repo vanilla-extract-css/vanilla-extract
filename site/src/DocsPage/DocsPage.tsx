@@ -175,7 +175,10 @@ const PrimaryNav = ({
               <Box component="span" display="flex" alignItems="center">
                 <Box
                   component="span"
-                  background="blue400"
+                  background={{
+                    lightMode: 'blue300',
+                    darkMode: 'blue400',
+                  }}
                   borderRadius="full"
                   paddingLeft="xsmall"
                   paddingTop="xlarge"
@@ -225,13 +228,8 @@ const SecondaryNav = ({
   pathname: string;
   onClick: () => void;
 }) => {
-  const [ready, setReady] = useState(false);
   const activeHash = useActiveHash();
   const { sections, route } = headingForRoute[pathname];
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
 
   return sections.length > 2 ? (
     <Box
@@ -249,38 +247,42 @@ const SecondaryNav = ({
         <Stack space="small" key="route">
           {sections
             .filter(({ level }) => level === 2)
-            .map(({ hash, name }) => (
-              <Link
-                key={name}
-                to={`${route}${hash ? `#${hash}` : ''}`}
-                color={ready && hash !== activeHash ? 'secondary' : undefined}
-                highlightOnFocus={false}
-                size="small"
-                onClick={onClick}
-              >
-                <Box component="span" display="flex" alignItems="center">
-                  <Box
-                    component="span"
-                    background={{
-                      lightMode: 'green200',
-                      darkMode: 'green400',
-                    }}
-                    borderRadius="full"
-                    paddingLeft="xsmall"
-                    paddingTop="xlarge"
-                    marginLeft="xsmall"
-                    opacity={ready && hash === activeHash ? undefined : 0}
-                    className={classnames(
-                      styles.activeIndicator,
-                      ready && hash === activeHash ? styles.active : '',
-                    )}
-                  />
-                  <Box component="span" paddingLeft="large">
-                    {name}
+            .map(({ hash, name }, index) => {
+              const active = activeHash ? hash === activeHash : index === 0;
+
+              return (
+                <Link
+                  key={name}
+                  to={`${route}${hash ? `#${hash}` : ''}`}
+                  color={!active ? 'secondary' : undefined}
+                  highlightOnFocus={false}
+                  size="small"
+                  onClick={onClick}
+                >
+                  <Box component="span" display="flex" alignItems="center">
+                    <Box
+                      component="span"
+                      background={{
+                        lightMode: 'green300',
+                        darkMode: 'green400',
+                      }}
+                      borderRadius="full"
+                      paddingLeft="xsmall"
+                      paddingTop="xlarge"
+                      marginLeft="xsmall"
+                      opacity={active ? undefined : 0}
+                      className={classnames(
+                        styles.activeIndicator,
+                        active ? styles.active : '',
+                      )}
+                    />
+                    <Box component="span" paddingLeft="large">
+                      {name}
+                    </Box>
                   </Box>
-                </Box>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
         </Stack>
       </Stack>
     </Box>
@@ -345,7 +347,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
                   const pageTitle = `vanilla-extract${
                     index ? ` – ${title} ` : ''
                   }`.trim();
-                  const hashes = sections.map(({ hash }) => hash);
+                  const hashes = sections
+                    .filter(({ level }) => level === 2)
+                    .map(({ hash }) => hash);
 
                   return (
                     <Route
