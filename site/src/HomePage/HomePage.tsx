@@ -141,8 +141,8 @@ export const HomePage = () => {
                           <Box color={{ darkMode: 'gray300' }}>
                             Use TypeScript as your preprocessor. Write
                             type&#8209;safe, locally scoped classes, variables
-                            and themes, then generate static CSS files at build
-                            time.
+                            and themes, then generate static
+                            CSS&nbsp;files&nbsp;at&nbsp;build&nbsp;time.
                           </Box>
                         </Text>
                       </Box>
