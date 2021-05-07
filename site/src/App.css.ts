@@ -1,10 +1,11 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { globalStyle, createVar } from '@vanilla-extract/css';
 import { darkMode } from './system/styles/atoms.css';
 import { vars } from './themes.css';
 
 globalStyle('html, body', {
   margin: 0,
   padding: 0,
+  overflow: 'overlay',
 });
 
 globalStyle(`.${darkMode}`, {
@@ -16,30 +17,28 @@ globalStyle('html', {
   color: vars.palette.coolGray900,
 });
 
+const scrollBarColor = createVar();
+const scrollBarTrackColor = createVar();
+
 globalStyle(`*`, {
-  scrollbarColor: `${vars.palette.coolGray400} ${vars.palette.white}`,
+  vars: {
+    [scrollBarColor]: vars.palette.coolGray400,
+    [scrollBarTrackColor]: vars.palette.coolGray50,
+  },
+  scrollbarColor: `${scrollBarColor} ${scrollBarTrackColor}`,
   scrollbarWidth: 'thin',
 });
 globalStyle(`.${darkMode}, .${darkMode} *`, {
-  scrollbarColor: `${vars.palette.gray500} ${vars.palette.gray900}`,
+  vars: {
+    [scrollBarColor]: vars.palette.gray600,
+    [scrollBarTrackColor]: vars.palette.gray900,
+  },
 });
-
 globalStyle(`*::-webkit-scrollbar`, {
-  borderRadius: vars.border.radius.small,
   width: vars.spacing.small,
   height: vars.spacing.small,
 });
-globalStyle(`*::-webkit-scrollbar-track`, {
-  backgroundColor: vars.palette.white,
-  borderRadius: vars.border.radius.small,
-});
 globalStyle(`*::-webkit-scrollbar-thumb`, {
-  backgroundColor: vars.palette.coolGray400,
+  backgroundColor: scrollBarColor,
   borderRadius: vars.border.radius.small,
-});
-globalStyle(`.${darkMode} *::-webkit-scrollbar-track`, {
-  backgroundColor: vars.palette.gray900,
-});
-globalStyle(`.${darkMode} *::-webkit-scrollbar-thumb`, {
-  backgroundColor: vars.palette.gray500,
 });

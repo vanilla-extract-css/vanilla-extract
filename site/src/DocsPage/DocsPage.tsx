@@ -160,38 +160,43 @@ const PrimaryNav = ({
         <ColorModeToggle />
       </Box>
       <Stack space="medium">
-        {docs.map(({ title, route }) => (
-          <Link
-            key={route}
-            to={route}
-            onClick={selectAndScrollToTop}
-            highlightOnFocus={false}
-            underline="hover"
-            size="small"
-          >
-            <Box component="span" display="flex" alignItems="center">
-              <Box
-                component="span"
-                background="blue400"
-                borderRadius="full"
-                paddingLeft="xsmall"
-                paddingTop="xlarge"
-                marginLeft="xsmall"
-                opacity={route === `${pathname}/` ? undefined : 0}
-                className={classnames(
-                  styles.activeIndicator,
-                  route === `${pathname}/` ? styles.active : '',
-                )}
-              />
-              <Box component="span" paddingLeft="large">
-                {title}
+        {docs.map(({ title, route }) => {
+          const active = route === `${pathname}/`;
+          return (
+            <Link
+              key={route}
+              to={route}
+              onClick={selectAndScrollToTop}
+              color={!active ? 'secondary' : undefined}
+              highlightOnFocus={false}
+              underline="hover"
+              size="small"
+            >
+              <Box component="span" display="flex" alignItems="center">
+                <Box
+                  component="span"
+                  background="blue400"
+                  borderRadius="full"
+                  paddingLeft="xsmall"
+                  paddingTop="xlarge"
+                  marginLeft="xsmall"
+                  opacity={active ? undefined : 0}
+                  className={classnames(
+                    styles.activeIndicator,
+                    active ? styles.active : '',
+                  )}
+                />
+                <Box component="span" paddingLeft="large">
+                  {title}
+                </Box>
               </Box>
-            </Box>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
         <Link
           to="https://github.com/seek-oss/vanilla-extract"
           onClick={selectAndScrollToTop}
+          color="secondary"
           highlightOnFocus={false}
           underline="hover"
           size="small"
