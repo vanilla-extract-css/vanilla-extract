@@ -275,10 +275,7 @@ export const HomePage = () => {
           background={{ lightMode: 'blue100', darkMode: 'gray900' }}
           className={styles.skewedContainerSecondary}
         >
-          <ContentBlock
-            withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
-          >
+          <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
                 <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>
