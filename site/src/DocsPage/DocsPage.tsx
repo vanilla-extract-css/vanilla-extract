@@ -17,7 +17,7 @@ import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
-import { mapKeys } from 'lodash';
+import mapKeys from 'lodash/mapKeys';
 
 interface DocsRouteProps {
   component: (props: any) => JSX.Element;
