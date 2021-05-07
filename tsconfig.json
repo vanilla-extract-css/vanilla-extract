@@ -25,6 +25,7 @@
     "examples/*/src/**/*",
     "fixtures/*/src/**/*",
     "test-helpers/**/*",
+    "site/**/*",
     "tests/**/*"
   ]
 }
