@@ -244,7 +244,7 @@
         "level": 2,
         "name": "Webpack",
         "breadcrumbs": ["Setup", "Webpack"],
-        "content": "  Install the dependencies.",
+        "content": "  1/ Install the dependencies.",
         "page": "Setup",
         "hash": "webpack"
       },
@@ -253,7 +253,7 @@
         "level": 2,
         "name": "esbuild",
         "breadcrumbs": ["Setup", "esbuild"],
-        "content": "  Install the dependencies.   > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. export const className = style({ ... }, 'className');",
+        "content": "  1/ Install the dependencies.    > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. export const className = style({ ... }, 'className');",
         "page": "Setup",
         "hash": "esbuild"
       },
@@ -262,7 +262,7 @@
         "level": 2,
         "name": "Vite",
         "breadcrumbs": ["Setup", "Vite"],
-        "content": "Warning: Currently the Vite plugin doesn't rebuild files when dependent files change, e.g. updating theme.css.ts should rebuild styles.css.ts which imports theme.css.ts. This is a limitation in the Vite Plugin API that will hopefully be resolved soon. You can track the Vite issue here: https://github.com/vitejs/vite/issues/3216  1. Install the dependencies.    > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. export const className = style({ ... }, 'className');",
+        "content": "Warning: Currently the Vite plugin doesn't rebuild files when dependent files change, e.g. updating theme.css.ts should rebuild styles.css.ts which imports theme.css.ts. This is a limitation in the Vite Plugin API that will hopefully be resolved soon. You can track the Vite issue here: https://github.com/vitejs/vite/issues/3216  1/ Install the dependencies.    > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. export const className = style({ ... }, 'className');",
         "page": "Setup",
         "hash": "vite"
       },
