@@ -18,6 +18,7 @@ const tokenSelector = ({
     .join(', ');
 
 globalStyle(`${root} code`, {
+  fontFamily: vars.fonts.code,
   padding: 0,
   margin: 0,
 });

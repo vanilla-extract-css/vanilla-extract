@@ -22,7 +22,6 @@ const InstallPrompt = () => {
       alignItems="center"
       borderRadius="small"
       padding="large"
-      cursor="pointer"
       background={{
         lightMode: 'teal200',
         darkMode: 'gray800',
