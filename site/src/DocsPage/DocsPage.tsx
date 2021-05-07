@@ -343,9 +343,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
                 {docs.map(({ route, Component, title, sections }, index) => {
                   const prevDoc = docs[index - 1];
                   const nextDoc = docs[index + 1];
-                  const pageTitle = `vanilla-extract${
-                    index ? ` – ${title} ` : ''
-                  }`.trim();
+                  const pageTitle = `${
+                    title ? `${title} — ` : ''
+                  }vanilla-extract`.trim();
                   const hashes = sections
                     .filter(({ level }) => level === 2)
                     .map(({ hash }) => hash);
