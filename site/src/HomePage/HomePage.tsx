@@ -77,7 +77,7 @@ export const HomePage = () => {
       </Box> */}
 
       <Box
-        paddingTop="xxlarge"
+        paddingTop={{ mobile: 'large', tablet: 'xxlarge' }}
         paddingBottom="xxxlarge"
         marginBottom="xxxlarge"
         background={{ lightMode: 'teal100', darkMode: 'gray900' }}
@@ -92,7 +92,7 @@ export const HomePage = () => {
               display="flex"
               justifyContent="flex-end"
               paddingBottom={{
-                mobile: 'medium',
+                mobile: 'large',
                 tablet: 'none',
                 desktop: 'xxlarge',
               }}
