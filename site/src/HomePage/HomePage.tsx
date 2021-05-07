@@ -192,51 +192,58 @@ export const HomePage = () => {
           withGutters
           size={{ mobile: 'standard', desktop: 'large' }}
         >
-          <Box paddingTop="xxlarge" paddingBottom="xxxlarge">
+          <Box
+            paddingTop="xxlarge"
+            paddingBottom="xxxlarge"
+            paddingX={{ mobile: 'medium', tablet: 'none' }}
+          >
             <Columns space="xxlarge" collapseOnTablet>
-              <Feature title="Type-safe static CSS">
-                All styles generated at build time — just like{' '}
-                <Link
-                  to="https://sass-lang.com"
-                  size="small"
-                  underline="always"
-                  inline
-                >
-                  Sass
-                </Link>
-                ,{' '}
-                <Link
-                  to="https://lesscss.org"
-                  size="small"
-                  underline="always"
-                  inline
-                >
-                  LESS
-                </Link>
-                , etc, but with the power of TypeScript.
-              </Feature>
+              <Columns space="xxlarge" collapseOnMobile>
+                <Feature title="Type-safe static CSS">
+                  All styles generated at build time — just like{' '}
+                  <Link
+                    to="https://sass-lang.com"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
+                    Sass
+                  </Link>
+                  ,{' '}
+                  <Link
+                    to="https://lesscss.org"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
+                    LESS
+                  </Link>
+                  , etc, but with the power of TypeScript.
+                </Feature>
 
-              <Feature title="First-class theming">
-                Create a single global theme or create multiple themes, all with
-                type-safe token contracts.
-              </Feature>
+                <Feature title="First-class theming">
+                  Create a single global theme or create multiple themes, all
+                  with type-safe token contracts.
+                </Feature>
+              </Columns>
+              <Columns space="xxlarge" collapseOnMobile>
+                <Feature title="Portable styling">
+                  Works with any front-end framework, with integrations for
+                  webpack, esbuild and Vite.
+                </Feature>
 
-              <Feature title="Portable styling">
-                Works with any front-end framework, with integrations for
-                webpack, esbuild and Vite.
-              </Feature>
-
-              <Feature title="Build it your way">
-                Use high-level abstractions like{' '}
-                <Link to="#" size="small" underline="always" inline>
-                  Sprinkles
-                </Link>{' '}
-                and{' '}
-                <Link to="#" size="small" underline="always" inline>
-                  Dessert Box
-                </Link>{' '}
-                — or create and publish your own!
-              </Feature>
+                <Feature title="Build it your way">
+                  Use high-level abstractions like{' '}
+                  <Link to="#" size="small" underline="always" inline>
+                    Sprinkles
+                  </Link>{' '}
+                  and{' '}
+                  <Link to="#" size="small" underline="always" inline>
+                    Dessert Box
+                  </Link>{' '}
+                  — or create and publish your own!
+                </Feature>
+              </Columns>
             </Columns>
           </Box>
         </ContentBlock>
@@ -609,22 +616,24 @@ const Feature = ({
   title: string;
   children: ReactNode;
 }) => (
-  <Box position="relative" paddingLeft="xlarge">
-    <Box
-      position="absolute"
-      top={0}
-      left={0}
-      className={styles.featureKeyLine}
-      background={{ lightMode: 'pink300', darkMode: 'pink600' }}
-      paddingLeft="xsmall"
-      marginTop={{ mobile: '-small', tablet: '-medium', desktop: '-medium' }}
-      borderRadius="medium"
-    />
-    <Stack space="xlarge">
-      <Heading level="4">{title}</Heading>
-      <Text size="small" color="secondary">
-        {children}
-      </Text>
-    </Stack>
-  </Box>
+  <ContentBlock size="xsmall">
+    <Box position="relative" paddingLeft="xlarge">
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        className={styles.featureKeyLine}
+        background={{ lightMode: 'pink300', darkMode: 'pink600' }}
+        paddingLeft="xsmall"
+        marginTop={{ mobile: '-small', tablet: '-medium', desktop: '-medium' }}
+        borderRadius="medium"
+      />
+      <Stack space="xlarge">
+        <Heading level="4">{title}</Heading>
+        <Text size="small" color="secondary">
+          {children}
+        </Text>
+      </Stack>
+    </Box>
+  </ContentBlock>
 );
