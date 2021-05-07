@@ -141,8 +141,8 @@ export const HomePage = () => {
                           <Box color={{ darkMode: 'gray300' }}>
                             Use TypeScript as your preprocessor. Write
                             type&#8209;safe, locally scoped classes, variables
-                            and themes, then generate static CSS files at build
-                            time.
+                            and themes, then generate static
+                            CSS&nbsp;files&nbsp;at&nbsp;build&nbsp;time.
                           </Box>
                         </Text>
                       </Box>
@@ -288,7 +288,7 @@ export const HomePage = () => {
             <Stack space="xxlarge">
               <Heading level="3" align="center">
                 <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>
-                  Leverage the full power of CSS &amp; TypeScript
+                  Leverage the full power of CSS&nbsp;&amp;&nbsp;TypeScript
                 </Box>
               </Heading>
               <Box paddingX="large">
@@ -380,7 +380,7 @@ export const HomePage = () => {
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
-                  Variables, the way they were intended
+                  Variables, the way they were&nbsp;intended
                 </Heading>
                 <Text align="center" color="secondary">
                   Define and consume variables without abstraction. All of your
@@ -419,7 +419,7 @@ export const HomePage = () => {
             <Columns space="xlarge" collapseOnTablet alignY="center">
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
-                  Organise your styles with ease
+                  Organise your styles with&nbsp;ease
                 </Heading>
                 <Text align="center" color="secondary">
                   Group style variants into separate collections, then look them
@@ -458,7 +458,7 @@ export const HomePage = () => {
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
-                  Generate real stylesheets
+                  Generate real&nbsp;stylesheets
                 </Heading>
                 <Text align="center" color="secondary">
                   Best-in-class developer experience without the runtime cost.
