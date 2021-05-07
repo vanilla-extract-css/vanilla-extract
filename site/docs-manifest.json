@@ -29,7 +29,7 @@
         "breadcrumbs": [
           "Styling API"
         ],
-        "content": "🍬 If you're a treat user, check out our migration guide.  ## style  Creates styles attached to a locally scoped class name.    > 💡 To improve maintainability, each style block can only target a single element. To enforce this, all selectors must target the & character which is a reference to the current element. For example, '&:hover:not(:active)' is considered valid, while '& > a' and ` & ${childClass}]  are not. > > If you want to target another scoped class then it should be defined within the style block of that class instead. For example,  [& ${childClass}]  is invalid since it targets ${childClass}, so it should instead be defined in the style block for childClass. > > If you want to globally target child nodes within the current element (e.g. '& > a'), you should use [globalStyle` instead.",
+        "content": "style  Creates styles attached to a locally scoped class name.    > 💡 To improve maintainability, each style block can only target a single element. To enforce this, all selectors must target the & character which is a reference to the current element. For example, '&:hover:not(:active)' is considered valid, while '& > a' and ` & ${childClass}]  are not. > > If you want to target another scoped class then it should be defined within the style block of that class instead. For example,  [& ${childClass}]  is invalid since it targets ${childClass}, so it should instead be defined in the style block for childClass. > > If you want to globally target child nodes within the current element (e.g. '& > a'), you should use [globalStyle` instead.",
         "page": "Styling API",
         "hash": "styling-api"
       },
@@ -204,6 +204,36 @@
     ]
   },
   {
+    "fileName": "utility-functions.md",
+    "id": "utility-functions",
+    "route": "/documentation/utility-functions/",
+    "sections": [
+      {
+        "raw": "# Utility Functions",
+        "level": 1,
+        "name": "Utility Functions",
+        "breadcrumbs": [
+          "Utility Functions"
+        ],
+        "content": "  We also provide a standalone package of optional utility functions to make it easier to work with CSS in TypeScript.  > 💡 This package can be used with any CSS-in-JS library.",
+        "page": "Utility Functions",
+        "hash": "utility-functions"
+      },
+      {
+        "raw": "## calc",
+        "level": 2,
+        "name": "calc",
+        "breadcrumbs": [
+          "Utility Functions",
+          "calc"
+        ],
+        "content": "  Streamlines the creation of CSS calc expressions.",
+        "page": "Utility Functions",
+        "hash": "calc"
+      }
+    ]
+  },
+  {
     "fileName": "dynamic-api.md",
     "id": "dynamic-api",
     "route": "/documentation/dynamic-api/",
@@ -254,36 +284,6 @@
         "content": "  Sets a single var on an element.",
         "page": "Dynamic API",
         "hash": "setelementvar"
-      }
-    ]
-  },
-  {
-    "fileName": "utility-functions.md",
-    "id": "utility-functions",
-    "route": "/documentation/utility-functions/",
-    "sections": [
-      {
-        "raw": "# Utility Functions",
-        "level": 1,
-        "name": "Utility Functions",
-        "breadcrumbs": [
-          "Utility Functions"
-        ],
-        "content": "  We also provide a standalone package of optional utility functions to make it easier to work with CSS in TypeScript.  > 💡 This package can be used with any CSS-in-JS library.",
-        "page": "Utility Functions",
-        "hash": "utility-functions"
-      },
-      {
-        "raw": "## calc",
-        "level": 2,
-        "name": "calc",
-        "breadcrumbs": [
-          "Utility Functions",
-          "calc"
-        ],
-        "content": "  Streamlines the creation of CSS calc expressions.",
-        "page": "Utility Functions",
-        "hash": "calc"
       }
     ]
   },
