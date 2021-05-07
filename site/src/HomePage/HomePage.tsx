@@ -141,8 +141,9 @@ export const HomePage = () => {
                         <Text align={{ mobile: 'center', desktop: 'left' }}>
                           <Box color={{ darkMode: 'gray300' }}>
                             Use TypeScript as your preprocessor. Write
-                            type-safe, locally scoped classes and variables,
-                            then generate static CSS files at build time.
+                            type&#8209;safe, locally scoped classes, variables
+                            and themes, then generate static CSS files at build
+                            time.
                           </Box>
                         </Text>
                       </Box>
@@ -274,10 +275,7 @@ export const HomePage = () => {
           background={{ lightMode: 'blue100', darkMode: 'gray900' }}
           className={styles.skewedContainerSecondary}
         >
-          <ContentBlock
-            withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
-          >
+          <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
                 <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>

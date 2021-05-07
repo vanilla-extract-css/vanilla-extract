@@ -16,7 +16,7 @@ export const button = style({
 });
 
 export const solid = style({
-  boxShadow: `0px 0px 12px 0px rgba(0,0,0,0.4)`,
+  boxShadow: `0px 0px 12px 0px rgba(0,0,0,0.2)`,
   ':focus-visible': {
     boxShadow: `0px 0px 0px 5px ${vars.palette.pink400}`,
   },
