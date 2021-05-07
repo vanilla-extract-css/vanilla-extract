@@ -96,7 +96,11 @@ export default {
     </Box>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
-    <Box component="h2" marginTop="xxxlarge" marginBottom="xxlarge">
+    <Box
+      component="h2"
+      marginTop={{ mobile: 'xxlarge', desktop: 'xxxlarge' }}
+      marginBottom="xxlarge"
+    >
       <Box position="relative" paddingLeft="large">
         <Box
           position="absolute"

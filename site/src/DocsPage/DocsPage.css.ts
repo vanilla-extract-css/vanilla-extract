@@ -3,12 +3,11 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
-const headerHeight = '100px';
-const sidebarWidth = '235px';
+const headerHeight = '90px';
+const sidebarWidth = '265px';
 
 export const bodyLock = style({
   overflow: 'hidden!important',
-  marginRight: vars.spacing.medium,
 });
 
 export const homeLink = style({
@@ -19,14 +18,29 @@ export const homeLink = style({
   },
 });
 
-export const header = style({
-  height: headerHeight,
-});
+export const header = style(
+  responsiveStyle({
+    mobile: {
+      height: '124px',
+    },
+    desktop: {
+      height: headerHeight,
+    },
+  }),
+);
 
 export const headerBg = style({
-  clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
-  backdropFilter: 'blur(4px)',
-  opacity: 0.8,
+  ...responsiveStyle({
+    mobile: {
+      width: '100%',
+      clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
+    },
+    desktop: {
+      width: sidebarWidth,
+      height: '100vh',
+      clipPath: 'polygon(0 0, 100% 0%, 80% 100%, 0 100%)',
+    },
+  }),
 });
 
 export const container = style(

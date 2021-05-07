@@ -9,6 +9,13 @@ export const underlineOnHover = style({
   },
 });
 
+export const underlineNever = style({
+  textDecoration: 'none',
+  ':hover': {
+    textDecoration: 'none',
+  },
+});
+
 export const highlightOnHover = style({
   ':hover': {
     color: vars.palette.pink500,

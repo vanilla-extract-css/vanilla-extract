@@ -8,7 +8,7 @@ import { atoms } from '../system/Box/Box';
 interface Props extends LinkProps {
   baseline?: boolean;
   size?: 'standard' | 'small';
-  underline?: 'always' | 'hover';
+  underline?: 'always' | 'hover' | 'never';
   variant?: 'link' | 'button';
   weight?: TextProps['weight'];
   color?: TextProps['color'];
@@ -30,6 +30,7 @@ export default ({
   const classNames = classnames(
     inline ? undefined : atoms({ display: 'block' }),
     underline === 'hover' ? styles.underlineOnHover : undefined,
+    underline === 'never' ? styles.underlineNever : undefined,
     highlightOnFocus ? styles.highlightOnHover : undefined,
     useTextStyles({ size, color, weight, baseline }),
     className,

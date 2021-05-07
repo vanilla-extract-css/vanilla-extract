@@ -63,9 +63,8 @@ const Header = () => (
     component="header"
     display="flex"
     justifyContent="space-between"
-    paddingY="medium"
+    paddingTop="large"
     paddingX="large"
-    width="full"
     position={{ mobile: 'relative', desktop: 'fixed' }}
     zIndex={1}
     className={styles.header}
@@ -91,7 +90,7 @@ const Header = () => (
         paddingTop={{ mobile: 'small', desktop: 'medium' }}
       >
         <Box paddingLeft={{ desktop: 'xsmall' }}>
-          <Logo size={48} />
+          <Logo size={60} />
         </Box>
       </Box>
     </ReactRouterLink>
@@ -113,7 +112,7 @@ const MenuBackdrop = ({
     right={0}
     zIndex={1}
     display={{ desktop: 'none' }}
-    background={{ lightMode: 'teal100', darkMode: 'gray700' }}
+    background={{ lightMode: 'teal100', darkMode: 'black' }}
     opacity={open ? undefined : 0}
     pointerEvents={open ? { desktop: 'none' } : 'none'}
     className={classnames(
@@ -145,7 +144,7 @@ const PrimaryNav = ({
       position="fixed"
       background={{
         lightMode: 'white',
-        darkMode: 'gray800',
+        darkMode: 'gray900',
       }}
       zIndex={1}
       pointerEvents={open ? undefined : { mobile: 'none', desktop: 'auto' }}
@@ -167,9 +166,9 @@ const PrimaryNav = ({
               key={route}
               to={route}
               onClick={selectAndScrollToTop}
-              color={!active ? 'secondary' : undefined}
+              weight={active ? 'strong' : undefined}
               highlightOnFocus={false}
-              underline="hover"
+              underline="never"
               size="small"
             >
               <Box component="span" display="flex" alignItems="center">
@@ -199,9 +198,8 @@ const PrimaryNav = ({
         <Link
           to="https://github.com/seek-oss/vanilla-extract"
           onClick={selectAndScrollToTop}
-          color="secondary"
           highlightOnFocus={false}
-          underline="hover"
+          underline="never"
           size="small"
         >
           <Box component="span" paddingLeft="large">
@@ -256,6 +254,7 @@ const SecondaryNav = ({
                   to={`${route}${hash ? `#${hash}` : ''}`}
                   color={!active ? 'secondary' : undefined}
                   highlightOnFocus={false}
+                  underline="never"
                   size="small"
                   onClick={onClick}
                 >
@@ -335,7 +334,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           component="main"
           paddingRight="large"
           paddingLeft={{ mobile: 'large', desktop: 'xlarge' }}
-          paddingTop={{ mobile: 'xlarge', tablet: 'xlarge' }}
+          paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
           className={styles.main}
         >
           <ContentBlock>
