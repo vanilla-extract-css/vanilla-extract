@@ -50,7 +50,10 @@ export const HomePage = () => {
         background={{ lightMode: 'teal100', darkMode: 'gray900' }}
         className={styles.skewedContainer}
       >
-        <ContentBlock size="large" withGutters>
+        <ContentBlock
+          size={{ mobile: 'standard', desktop: 'large' }}
+          withGutters
+        >
           <Box position="relative">
             <Box
               display="flex"
@@ -185,7 +188,10 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
 
-        <ContentBlock withGutters size="large">
+        <ContentBlock
+          withGutters
+          size={{ mobile: 'standard', desktop: 'large' }}
+        >
           <Box paddingTop="xxlarge" paddingBottom="xxxlarge">
             <Columns space="xxlarge" collapseOnTablet>
               <Feature title="Type-safe static CSS">
@@ -241,7 +247,10 @@ export const HomePage = () => {
           background={{ lightMode: 'blue100', darkMode: 'gray900' }}
           className={styles.skewedContainerSecondary}
         >
-          <ContentBlock withGutters size="standard">
+          <ContentBlock
+            withGutters
+            size={{ mobile: 'standard', desktop: 'large' }}
+          >
             <Stack space="xxlarge">
               <Heading level="3" align="center">
                 <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>
@@ -289,7 +298,10 @@ export const HomePage = () => {
 
         <Stack space="xxxlarge">
           <Box paddingTop="xxxlarge">
-            <ContentBlock withGutters size="large">
+            <ContentBlock
+              withGutters
+              size={{ mobile: 'standard', desktop: 'large' }}
+            >
               <Columns space="xlarge" collapseOnTablet alignY="center">
                 <Stack space="xxlarge">
                   <Heading level="3" align="center">
@@ -327,7 +339,10 @@ export const HomePage = () => {
             </ContentBlock>
           </Box>
 
-          <ContentBlock withGutters size="large">
+          <ContentBlock
+            withGutters
+            size={{ mobile: 'standard', desktop: 'large' }}
+          >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
@@ -363,7 +378,10 @@ export const HomePage = () => {
             </Columns>
           </ContentBlock>
 
-          <ContentBlock withGutters size="large">
+          <ContentBlock
+            withGutters
+            size={{ mobile: 'standard', desktop: 'large' }}
+          >
             <Columns space="xlarge" collapseOnTablet alignY="center">
               <Stack space="xxlarge">
                 <Heading level="3" align="center">
@@ -399,7 +417,10 @@ export const HomePage = () => {
             </Columns>
           </ContentBlock>
 
-          <ContentBlock withGutters size="large">
+          <ContentBlock
+            withGutters
+            size={{ mobile: 'standard', desktop: 'large' }}
+          >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
                 <Heading level="3" align="center">

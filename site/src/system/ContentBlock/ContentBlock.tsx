@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import classnames from 'classnames';
 import { Box } from '../';
 import * as styles from './ContentBlock.css';
+import { BoxProps } from '../Box/Box';
 
 export const ContentBlock = ({
   children,
@@ -10,11 +10,12 @@ export const ContentBlock = ({
 }: {
   children: ReactNode;
   withGutters?: boolean;
-  size?: keyof typeof styles.width;
+  size?: BoxProps['maxWidth'];
 }) => {
   return (
     <Box
-      className={classnames(styles.root, styles.width[size])}
+      maxWidth={size}
+      className={styles.root}
       paddingX={
         withGutters
           ? { mobile: 'large', tablet: 'xlarge', desktop: 'xxlarge' }

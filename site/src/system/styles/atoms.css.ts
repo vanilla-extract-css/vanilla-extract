@@ -44,6 +44,7 @@ export const responsiveStyles = createAtomicStyles({
     pointerEvents: ['none', 'auto'],
     opacity: [0, 1],
     textAlign: ['left', 'center'],
+    maxWidth: vars.contentWidth,
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],

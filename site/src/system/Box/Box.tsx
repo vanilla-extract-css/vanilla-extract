@@ -62,6 +62,7 @@ export const Box = ({
   pointerEvents,
   cursor,
   textAlign,
+  maxWidth,
   ...restProps
 }: BoxProps) => {
   const atomClasses = classnames(
@@ -103,6 +104,7 @@ export const Box = ({
       pointerEvents,
       cursor,
       textAlign,
+      maxWidth,
     }),
     className,
   );
