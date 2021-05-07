@@ -172,7 +172,7 @@ const PrimaryNav = ({
             <Box component="span" display="flex" alignItems="center">
               <Box
                 component="span"
-                background="blue300"
+                background="blue400"
                 borderRadius="full"
                 paddingLeft="xsmall"
                 paddingTop="xlarge"
@@ -257,8 +257,8 @@ const SecondaryNav = ({
                   <Box
                     component="span"
                     background={{
-                      lightMode: 'teal200',
-                      darkMode: 'teal400',
+                      lightMode: 'green200',
+                      darkMode: 'green400',
                     }}
                     borderRadius="full"
                     paddingLeft="xsmall"
