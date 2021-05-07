@@ -9,11 +9,13 @@ There are currently a few integrations to choose from.
 ## Webpack
 
 1/ Install the dependencies.
+
 ```bash
 $ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
 ```
 
 2/ Add the [Babel](https://babeljs.io) plugin.
+
 ```json
 {
   "plugins": ["@vanilla-extract/babel-plugin"]
@@ -21,13 +23,16 @@ $ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extrac
 ```
 
 3/ Add the [webpack](https://webpack.js.org) plugin.
+
 ```js
 // webpack.config.js
 
-const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
+const {
+  VanillaExtractPlugin
+} = require('@vanilla-extract/webpack-plugin');
 
 module.exports = {
-  plugins: [new VanillaExtractPlugin()],
+  plugins: [new VanillaExtractPlugin()]
 };
 ```
 
@@ -38,8 +43,9 @@ For example:
 ```js
 // webpack.config.js
 
-
-const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
+const {
+  VanillaExtractPlugin
+} = require('@vanilla-extract/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -51,35 +57,38 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
-      },
-    ],
-  },
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
+  }
 };
 ```
 
 ## esbuild
 
 1/ Install the dependencies.
+
 ```bash
 $ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
 2/ Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
+
 ```js
 // bundle.js
 
-const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
+const {
+  vanillaExtractPlugin
+} = require('@vanilla-extract/esbuild-plugin');
 
-require('esbuild').build({
-  entryPoints: ['app.ts'],
-  bundle: true,
-  plugins: [vanillaExtractPlugin()],
-  outfile: 'out.js',
-}).catch(() => process.exit(1))
+require('esbuild')
+  .build({
+    entryPoints: ['app.ts'],
+    bundle: true,
+    plugins: [vanillaExtractPlugin()],
+    outfile: 'out.js'
+  })
+  .catch(() => process.exit(1));
 ```
 
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
@@ -103,7 +112,7 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 export default {
   plugins: [vanillaExtractPlugin()]
-}
+};
 ```
 
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
