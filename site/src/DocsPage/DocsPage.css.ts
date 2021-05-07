@@ -52,10 +52,6 @@ export const sidebar = style({
   }),
 });
 
-export const sectionLinkTitle = style({
-  textTransform: 'uppercase',
-});
-
 export const active = style({});
 
 export const activeIndicator = style({

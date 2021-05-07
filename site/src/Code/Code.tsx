@@ -108,7 +108,7 @@ export default ({
                 />
                 <Box
                   borderRadius="full"
-                  background="green500"
+                  background="green"
                   paddingTop="medium"
                   paddingLeft="medium"
                   marginRight="small"

@@ -1,8 +1,8 @@
 ---
-title: Utility functions
+title: Utility Functions
 ---
 
-# Utility functions
+# Utility Functions
 
 We also provide a standalone package of optional utility functions to make it easier to work with CSS in TypeScript.
 

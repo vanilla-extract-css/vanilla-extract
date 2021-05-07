@@ -1,8 +1,8 @@
 ---
-title: API
+title: Styling API
 ---
 
-# API
+# Styling API
 
 > 🍬 If you're a [treat](https://seek-oss.github.io/treat) user, check out our [migration guide.](./docs/treat-migration-guide.md)
 
@@ -69,15 +69,15 @@ export const childClass = style({
     [`${parentClass}:focus &`]: {
       background: '#fafafa'
     }
-  },
+  }
 });
 ```
 
-> 💡 To improve maintainability, each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element. For example, `'&:hover:not(:active)'` is considered valid, while `'& > a'` and ``[`& ${childClass}`]`` are not.
+> 💡 To improve maintainability, each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element. For example, `'&:hover:not(:active)'` is considered valid, while `'& > a'` and `` [`& ${childClass}`] `` are not.
 >
->If you want to target another scoped class then it should be defined within the `style` block of that class instead. For example, ``[`& ${childClass}`]`` is invalid since it targets `${childClass}`, so it should instead be defined in the `style` block for `childClass`.
+> If you want to target another scoped class then it should be defined within the `style` block of that class instead. For example, `` [`& ${childClass}`] `` is invalid since it targets `${childClass}`, so it should instead be defined in the `style` block for `childClass`.
 >
->If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
+> If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
 
 ## styleVariants
 
@@ -90,7 +90,7 @@ import { styleVariants } from '@vanilla-extract/css';
 
 export const variant = styleVariants({
   primary: { background: 'blue' },
-  secondary: { background: 'aqua' },
+  secondary: { background: 'aqua' }
 });
 ```
 
@@ -109,9 +109,12 @@ const spaceScale = {
   large: 16
 };
 
-export const padding = styleVariants(spaceScale, (space) => ({
-  padding: space
-}));
+export const padding = styleVariants(
+  spaceScale,
+  (space) => ({
+    padding: space
+  })
+);
 ```
 
 ## globalStyle
@@ -260,7 +263,11 @@ Assigns a collection of CSS Variables anywhere within a style block.
 ```tsx
 // theme.css.ts
 
-import { createThemeContract, style, assignVars } from '@vanilla-extract/css';
+import {
+  createThemeContract,
+  style,
+  assignVars
+} from '@vanilla-extract/css';
 
 export const vars = createThemeContract({
   space: {
@@ -442,13 +449,19 @@ const base = style({
   padding: 12
 });
 
-export const blue = composeStyles(base, style({
-  background: 'blue'
-}));
+export const blue = composeStyles(
+  base,
+  style({
+    background: 'blue'
+  })
+);
 
-export const green = composeStyles(base, style({
-  background: 'green'
-}));
+export const green = composeStyles(
+  base,
+  style({
+    background: 'green'
+  })
+);
 ```
 
 > 💡 Styles can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)

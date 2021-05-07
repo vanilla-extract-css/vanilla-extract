@@ -88,7 +88,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [webpack](#webpack)
   - [esbuild](#esbuild)
   - [Gatsby](#gatsby)
-- [API](#api)
+- [Styling API](#styling-api)
   - [style](#style)
   - [styleVariants](#styleVariants)
   - [globalStyle](#globalstyle)
@@ -203,7 +203,7 @@ To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-v
 
 ---
 
-## API
+## Styling API
 
 > 🍬 If you're a [treat](https://seek-oss.github.io/treat) user, check out our [migration guide.](./docs/treat-migration-guide.md)
 

@@ -10,7 +10,6 @@ Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-i
 
 > **🚧 &nbsp; Please note, this is an alpha release.**
 
-
 🔥 &nbsp; All styles generated at build time — just like [Sass](https://sass-lang.com), [Less](http://lesscss.org), etc.
 
 ✨ &nbsp; Minimal abstraction over standard CSS.
@@ -30,7 +29,6 @@ Basically, it’s “[CSS Modules](https://github.com/css-modules/css-modules)-i
 🏃‍♂️ &nbsp; Optional runtime version for development and testing.
 
 🙈 &nbsp; Optional API for dynamic runtime theming.
-
 
 > 🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/App.css.ts)
 
@@ -74,6 +72,6 @@ document.write(`
 
 ---
 
-Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+Want to work at a higher level while maximising style re-use? Check out 🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
 
 ---

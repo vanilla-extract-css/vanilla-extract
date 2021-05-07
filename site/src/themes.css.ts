@@ -43,6 +43,7 @@ const tailwindPalette = {
 
   red: colors.red['500'],
   yellow: colors.yellow['300'],
+  green: colors.emerald['500'],
 
   coolGray50: colors.coolGray['50'],
   coolGray100: colors.coolGray['100'],
@@ -76,17 +77,6 @@ const tailwindPalette = {
   teal700: colors.teal['700'],
   teal800: colors.teal['800'],
   teal900: colors.teal['900'],
-
-  green50: colors.emerald['50'],
-  green100: colors.emerald['100'],
-  green200: colors.emerald['200'],
-  green300: colors.emerald['300'],
-  green400: colors.emerald['400'],
-  green500: colors.emerald['500'],
-  green600: colors.emerald['600'],
-  green700: colors.emerald['700'],
-  green800: colors.emerald['800'],
-  green900: colors.emerald['900'],
 
   blue50: colors.lightBlue['50'],
   blue100: colors.lightBlue['100'],

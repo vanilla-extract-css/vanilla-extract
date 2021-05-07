@@ -77,7 +77,7 @@ const Header = () => (
       right={0}
       bottom={0}
       zIndex={-1}
-      background={{ lightMode: 'green100', darkMode: 'gray900' }}
+      background={{ lightMode: 'teal100', darkMode: 'gray900' }}
       className={styles.headerBg}
     />
     <ReactRouterLink
@@ -86,7 +86,14 @@ const Header = () => (
       title="Back to home"
       onClick={() => window.scrollTo(0, 0)}
     >
-      <Logo size={66} />
+      <Box
+        paddingLeft={{ mobile: 'none', tablet: 'xsmall', desktop: 'large' }}
+        paddingTop={{ mobile: 'small', desktop: 'medium' }}
+      >
+        <Box paddingLeft={{ desktop: 'xsmall' }}>
+          <Logo size={48} />
+        </Box>
+      </Box>
     </ReactRouterLink>
   </Box>
 );
@@ -106,7 +113,7 @@ const MenuBackdrop = ({
     right={0}
     zIndex={1}
     display={{ desktop: 'none' }}
-    background={{ lightMode: 'green100', darkMode: 'gray700' }}
+    background={{ lightMode: 'teal100', darkMode: 'gray700' }}
     opacity={open ? undefined : 0}
     pointerEvents={open ? { desktop: 'none' } : 'none'}
     className={classnames(
@@ -161,7 +168,6 @@ const PrimaryNav = ({
             highlightOnFocus={false}
             underline="hover"
             size="small"
-            className={styles.sectionLinkTitle}
           >
             <Box component="span" display="flex" alignItems="center">
               <Box
@@ -189,7 +195,6 @@ const PrimaryNav = ({
           highlightOnFocus={false}
           underline="hover"
           size="small"
-          className={styles.sectionLinkTitle}
         >
           <Box component="span" paddingLeft="large">
             <Box component="span" paddingLeft="xsmall" marginLeft="xsmall">
@@ -252,8 +257,8 @@ const SecondaryNav = ({
                   <Box
                     component="span"
                     background={{
-                      lightMode: 'green200',
-                      darkMode: 'green400',
+                      lightMode: 'teal200',
+                      darkMode: 'teal400',
                     }}
                     borderRadius="full"
                     paddingLeft="xsmall"
