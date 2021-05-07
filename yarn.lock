@@ -1970,7 +1970,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 0.4.1
+    "@vanilla-extract/css": 0.4.3
   languageName: unknown
   linkType: soft
 
@@ -1978,8 +1978,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
-    "@vanilla-extract/css": 0.4.1
-    "@vanilla-extract/sprinkles": 0.1.2
+    "@vanilla-extract/css": 0.4.3
+    "@vanilla-extract/sprinkles": 0.2.2
   languageName: unknown
   linkType: soft
 
@@ -1987,7 +1987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 0.4.1
+    "@vanilla-extract/css": 0.4.3
     "@vanilla-extract/dynamic": 0.1.0
   languageName: unknown
   linkType: soft
@@ -1996,7 +1996,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 0.4.1
+    "@vanilla-extract/css": 0.4.3
   languageName: unknown
   linkType: soft
 
@@ -3174,6 +3174,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/serve-handler@npm:^6":
+  version: 6.1.0
+  resolution: "@types/serve-handler@npm:6.1.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: f62ce46967a126038e32e88fa97bab108b346a76ad5be14725594b34efddf175bbcf596815535f192390d974c2e415641b896aee1becfa0b07961d3faaf85d36
+  languageName: node
+  linkType: hard
+
 "@types/serve-static@npm:*":
   version: 1.13.9
   resolution: "@types/serve-static@npm:1.13.9"
@@ -3306,7 +3315,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.13.10
     "@babel/template": ^7.12.13
-    find-up: ^5.0.0
+    "@vanilla-extract/integration": ^0.1.0
   languageName: unknown
   linkType: soft
 
@@ -3316,18 +3325,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@*, @vanilla-extract/css@0.4.1, @vanilla-extract/css@^0.4.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@0.4.3, @vanilla-extract/css@^0.4.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
     "@emotion/hash": ^0.8.0
     "@types/cssesc": ^3.0.0
     "@types/dedent": ^0.7.0
-    "@vanilla-extract/private": ^0.1.1
+    "@vanilla-extract/private": ^0.1.2
+    chalk: ^4.1.1
     css-selector-parser: ^1.4.1
     cssesc: ^3.0.0
     csstype: ^3.0.7
     dedent: ^0.7.0
+    deep-object-diff: ^1.1.0
   languageName: unknown
   linkType: soft
 
@@ -3343,27 +3354,35 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
+    "@vanilla-extract/integration": ^0.1.0
+    esbuild: ^0.11.16
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/integration@^0.1.0, @vanilla-extract/integration@workspace:packages/integration":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/integration@workspace:packages/integration"
+  dependencies:
     "@types/dedent": ^0.7.0
+    "@types/lodash": ^4.14.168
     "@vanilla-extract/css": ^0.4.0
-    chalk: ^4.1.0
+    chalk: ^4.1.1
     dedent: ^0.7.0
     esbuild: ^0.11.16
     eval: ^0.1.6
     find-up: ^5.0.0
     javascript-stringify: ^2.0.1
     lodash: ^4.17.21
-  peerDependencies:
-    esbuild: ">=0.11.1"
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/private@^0.1.0, @vanilla-extract/private@^0.1.1, @vanilla-extract/private@workspace:packages/private":
+"@vanilla-extract/private@^0.1.0, @vanilla-extract/private@^0.1.2, @vanilla-extract/private@workspace:packages/private":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/private@workspace:packages/private"
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/sprinkles@0.1.2, @vanilla-extract/sprinkles@^0.1.1, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+"@vanilla-extract/sprinkles@0.2.2, @vanilla-extract/sprinkles@^0.2.2, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
   dependencies:
@@ -3373,19 +3392,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vanilla-extract/vite-plugin@*, @vanilla-extract/vite-plugin@workspace:packages/vite-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
+  dependencies:
+    "@vanilla-extract/integration": ^0.1.0
+    vite: ^2.2.3
+  languageName: unknown
+  linkType: soft
+
 "@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@^0.3.0, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@types/debug": ^4.1.5
-    "@types/dedent": ^0.7.0
-    "@types/lodash": ^4.14.168
-    "@vanilla-extract/css": ^0.4.0
-    chalk: ^4.1.0
+    "@vanilla-extract/integration": ^0.1.0
+    chalk: ^4.1.1
     debug: ^4.3.1
-    dedent: ^0.7.0
-    eval: ^0.1.6
-    javascript-stringify: ^2.0.1
     loader-utils: ^2.0.0
     lodash: ^4.17.21
     virtual-resource-loader: ^1.0.0
@@ -4696,6 +4719,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "chalk@npm:4.1.1"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: 445c12db7aeed0046500a1e4184d31209a77d165654c885a789c41c8598a6a95bd2392180987cac572c967b93a2a730dda778bb7f87fa06ca63fd8592f8cc59f
+  languageName: node
+  linkType: hard
+
 "change-case@npm:^3.0.2":
   version: 3.1.0
   resolution: "change-case@npm:3.1.0"
@@ -5175,6 +5208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"content-disposition@npm:0.5.2":
+  version: 0.5.2
+  resolution: "content-disposition@npm:0.5.2"
+  checksum: 5d54ba7c9a6e865d1fea321e43d9e56be091aa20706f4632a236ebe7824ed3cb0eac314b80e76a9db2092d287d69add03efcaf743068ee0be1f71159c14a134c
+  languageName: node
+  linkType: hard
+
 "content-disposition@npm:0.5.3":
   version: 0.5.3
   resolution: "content-disposition@npm:0.5.3"
@@ -5627,6 +5667,13 @@ __metadata:
   version: 0.1.3
   resolution: "deep-is@npm:0.1.3"
   checksum: 3de58f86af4dec86c8be531a5abaf2e6d8ea98fa2f1d81a3a778d0d8df920ee282043a6ef05bfb4eb699c8551df9ac1b808d4dc71d54cc40ab1efa5ce8792943
+  languageName: node
+  linkType: hard
+
+"deep-object-diff@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "deep-object-diff@npm:1.1.0"
+  checksum: 2667c43932d14c908d03f813cd2846a626bda1d320f8f1dee3c7bd00ff8058713bb8f5d995fabd617e09229cf64bf16e53579233e29da870fd27bde23d5f5b20
   languageName: node
   linkType: hard
 
@@ -6179,6 +6226,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esbuild@npm:^0.9.3":
+  version: 0.9.7
+  resolution: "esbuild@npm:0.9.7"
+  bin:
+    esbuild: bin/esbuild
+  checksum: 78a45e561156d8ecedfdbccddb83486b14f892a2624c100ff4a5150353a416b85a881d298a11da3447d3a2655571237dc9049a011ca10f4fedded2ffaab397c9
+  languageName: node
+  linkType: hard
+
 "escalade@npm:^3.1.1":
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
@@ -6652,6 +6708,15 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: a2d03af3088b0397633e007fb3010ecfa4f91cae2116d2385653c59396a1b31467641afa672a79e6f82218518670dc144128378124e711e35dbf90bc82846f22
+  languageName: node
+  linkType: hard
+
+"fast-url-parser@npm:1.1.3":
+  version: 1.1.3
+  resolution: "fast-url-parser@npm:1.1.3"
+  dependencies:
+    punycode: ^1.3.2
+  checksum: 8dbc306b736e32963fe4391a581401c422d826497ce5cacf6e7c60525febfbcea477fbc5b012fe3316f6634a20fa00882168c5ed792ff3ef904c5bc6a11a598d
   languageName: node
   linkType: hard
 
@@ -10048,6 +10113,22 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"mime-db@npm:~1.33.0":
+  version: 1.33.0
+  resolution: "mime-db@npm:1.33.0"
+  checksum: f33acedd5b2bfd57fe987aa01c209abd3c6f762c6746c2a1ffefa77f8c10d39a2af9a591bd44f39f8d42a5ee30e43407cfd8535392773f211c2c7d7b6def90d4
+  languageName: node
+  linkType: hard
+
+"mime-types@npm:2.1.18":
+  version: 2.1.18
+  resolution: "mime-types@npm:2.1.18"
+  dependencies:
+    mime-db: ~1.33.0
+  checksum: f1e2fed4f9d04a0d158c48b42f8ac5f1a655b27399674f7bd9f16e6784221ec4c2d30b20f24174f741ee6aa2556170f63b3ec9f51cb4e99e0a04c56799c8317c
+  languageName: node
+  linkType: hard
+
 "mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:~2.1.17, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24":
   version: 2.1.29
   resolution: "mime-types@npm:2.1.29"
@@ -10149,7 +10230,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^3.0.4":
+"minimatch@npm:3.0.4, minimatch@npm:^3.0.4":
   version: 3.0.4
   resolution: "minimatch@npm:3.0.4"
   dependencies:
@@ -11063,7 +11144,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"path-is-inside@npm:^1.0.2":
+"path-is-inside@npm:1.0.2, path-is-inside@npm:^1.0.2":
   version: 1.0.2
   resolution: "path-is-inside@npm:1.0.2"
   checksum: 9c1841199d18398ee5f6d79f57eaa57f8eb85743353ea97c6d933423f246f044575a10c1847c638c36440b050aef82665b9cb4fc60950866cd239f3d51835ef4
@@ -11095,6 +11176,13 @@ fsevents@^1.2.7:
   version: 0.1.7
   resolution: "path-to-regexp@npm:0.1.7"
   checksum: 342fdb0ca48415d6eccdbe6d4180fd0fa4786ccc96ab3f74fcdf7acfc99e075af25e6077c8086c341dcfb4f5f84401ecd21e6cd7b24e0c3b556fb7ffb2570da7
+  languageName: node
+  linkType: hard
+
+"path-to-regexp@npm:2.2.1":
+  version: 2.2.1
+  resolution: "path-to-regexp@npm:2.2.1"
+  checksum: 1f9be3a4100c23f845892406bcdfcf79d62044ce24c1c50dca28719123ce7d338ac584e98d21d23eef2702754925511812e768523e59916777ec1f444438d9a4
   languageName: node
   linkType: hard
 
@@ -11544,6 +11632,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"punycode@npm:^1.3.2":
+  version: 1.4.1
+  resolution: "punycode@npm:1.4.1"
+  checksum: 5ce1e044cee2b12f1c65ccd523d7e71d6578f2c77f5c21c2e7a9d588535559c9508571d42638c131dab93cbe9a7b37bce1a7475d43fc8236c99dfe1efc36cfa5
+  languageName: node
+  linkType: hard
+
 "punycode@npm:^2.1.0, punycode@npm:^2.1.1":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
@@ -11640,6 +11735,13 @@ fsevents@^1.2.7:
   dependencies:
     safe-buffer: ^5.1.0
   checksum: ede2693af09732ceab1c273dd70db787f34a7b8d95bab13f1aca763483c0113452a78e53d61ff18d393dcea586d388e01f198a5132a4a85cebba31ec54164b75
+  languageName: node
+  linkType: hard
+
+"range-parser@npm:1.2.0":
+  version: 1.2.0
+  resolution: "range-parser@npm:1.2.0"
+  checksum: 8260023192a5def4c6db4ced82e6546306937f1202417b846f2e8b565426e71697086f509a070f66fd23a57e9f96aba108f08d16d4be23d418c8c68a73b539bd
   languageName: node
   linkType: hard
 
@@ -12382,7 +12484,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.9.0":
+"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.9.0":
   version: 1.20.0
   resolution: "resolve@npm:1.20.0"
   dependencies:
@@ -12392,7 +12494,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
   version: 1.20.0
   resolution: "resolve@patch:resolve@npm%3A1.20.0#builtin<compat/resolve>::version=1.20.0&hash=3388aa"
   dependencies:
@@ -12474,6 +12576,20 @@ fsevents@^1.2.7:
   bin:
     rollup: dist/bin/rollup
   checksum: eb5d3eda11a72ae50a62632f8f1177e6d99e2351c5da4241c7417bd8bdb6365065c7c8fa36ef6bc34df8e2d856451f830cec131b2af50c483932d28d0415cdb6
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.38.5":
+  version: 2.46.0
+  resolution: "rollup@npm:2.46.0"
+  dependencies:
+    fsevents: ~2.3.1
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: d06dfec49dee3ec6973cab356fb74a2446c08a0d64185826081f9755353a87826a51ae43d1c88f985a756eb4c74eedfbca97c6050a3e39a17cc6d96dd48505f8
   languageName: node
   linkType: hard
 
@@ -12740,6 +12856,22 @@ fsevents@^1.2.7:
   dependencies:
     randombytes: ^2.1.0
   checksum: 97eef70a33c75e690b0c6aa2ffe622ecdfc888d3f181a5cf129e5778228dcd100febabc0f41ff793199ee79acd14cbbad0c69f1348a3893580fe424c4718889b
+  languageName: node
+  linkType: hard
+
+"serve-handler@npm:^6.1.3":
+  version: 6.1.3
+  resolution: "serve-handler@npm:6.1.3"
+  dependencies:
+    bytes: 3.0.0
+    content-disposition: 0.5.2
+    fast-url-parser: 1.1.3
+    mime-types: 2.1.18
+    minimatch: 3.0.4
+    path-is-inside: 1.0.2
+    path-to-regexp: 2.2.1
+    range-parser: 1.2.0
+  checksum: 493e7556ec53bc6c8616ffc58697d93c5ebc8ddeb38de39b5381140a8467bb720fbbd58fbe91de25ea9ccc98ce8b11131ccd7e160ddf891ca5199e7f1437cc18
   languageName: node
   linkType: hard
 
@@ -13694,8 +13826,10 @@ fsevents@^1.2.7:
     "@babel/core": ^7.13.10
     "@types/mini-css-extract-plugin": ^1.2.2
     "@types/minimist": ^1
+    "@types/serve-handler": ^6
     "@types/webpack-dev-server": ^3.11.1
     "@vanilla-extract/esbuild-plugin": "*"
+    "@vanilla-extract/vite-plugin": "*"
     "@vanilla-extract/webpack-plugin": "*"
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
@@ -13705,7 +13839,9 @@ fsevents@^1.2.7:
     minimist: ^1.2.5
     path-browserify: ^1.0.1
     portfinder: ^1.0.28
+    serve-handler: ^6.1.3
     style-loader: ^2.0.0
+    vite: ^2.2.3
     webpack: ^5.36.1
     webpack-dev-server: ^3.11.2
     webpack-merge: ^5.7.3
@@ -14584,8 +14720,8 @@ typescript@^4.1.3:
     "@types/react-dom": ^17
     "@types/tailwindcss": ^2
     "@vanilla-extract/babel-plugin": ^0.4.0
-    "@vanilla-extract/css": 0.4.1
-    "@vanilla-extract/sprinkles": ^0.1.1
+    "@vanilla-extract/css": 0.4.3
+    "@vanilla-extract/sprinkles": ^0.2.2
     "@vanilla-extract/webpack-plugin": ^0.3.0
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
@@ -14709,6 +14845,24 @@ typescript@^4.1.3:
   dependencies:
     loader-utils: ^2.0.0
   checksum: d28b974e1a7fe2172aab9419cf02331980363f1716edbb58e6b33ea9b805e22302f271980e94e1ece47c6857610cc8f10440ea7a0845cef4165a3d4a16605090
+  languageName: node
+  linkType: hard
+
+"vite@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "vite@npm:2.2.3"
+  dependencies:
+    esbuild: ^0.9.3
+    fsevents: ~2.3.1
+    postcss: ^8.2.1
+    resolve: ^1.19.0
+    rollup: ^2.38.5
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: c621b561fe8ddc8b1c417bc140fd48591d483de1b890109e16793f0dbb04d262dd855e0fa5922e7370e9086225492a4202ec7f9f3336b68288618a58721e0988
   languageName: node
   linkType: hard
 

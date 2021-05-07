@@ -8,6 +8,6 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "0.4.1"
+    "@vanilla-extract/css": "0.4.3"
   }
 }

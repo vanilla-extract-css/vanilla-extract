@@ -1,5 +1,30 @@
 # @vanilla-extract/sprinkles
 
+## 0.2.2
+
+### Patch Changes
+
+- [#100](https://github.com/seek-oss/vanilla-extract/pull/100) [`9edf2df`](https://github.com/seek-oss/vanilla-extract/commit/9edf2dfc2fa05720d267732b88f07e0d53131ef3) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow readonly arrays for responsive array properties
+
+## 0.2.1
+
+### Patch Changes
+
+- [#98](https://github.com/seek-oss/vanilla-extract/pull/98) [`45a6eef`](https://github.com/seek-oss/vanilla-extract/commit/45a6eeff8548db3841615e38589f57cbd526ea8a) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix some minor type issues
+
+  - Better support passing config to `createAtomicStyles` that was not defined inline
+  - Remove array methods being exposed on properties using number arrays
+
+## 0.2.0
+
+### Minor Changes
+
+- [#81](https://github.com/seek-oss/vanilla-extract/pull/81) [`717ad60`](https://github.com/seek-oss/vanilla-extract/commit/717ad60e8f6770246aaaedc1760791bb0e7d19cc) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add static `properties` set to atoms function
+
+  This allows runtime code to detect whether a given property can be handled by the atoms function or not.
+
+  This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you'll need some way to filter atom props from non-atom props.
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @vanilla-extract/css
 
+## 0.4.3
+
+### Patch Changes
+
+- [#95](https://github.com/seek-oss/vanilla-extract/pull/95) [`f9ca82b`](https://github.com/seek-oss/vanilla-extract/commit/f9ca82b908b720785df271ed18d7abe048191759) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix fallbackVar type defintion
+
+## 0.4.2
+
+### Patch Changes
+
+- [#84](https://github.com/seek-oss/vanilla-extract/pull/84) [`0bc4e0a`](https://github.com/seek-oss/vanilla-extract/commit/0bc4e0a164e9167e0356557f8feee42d7889d4b1) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Validate tokens match corresponding theme contracts
+
+- Updated dependencies [[`0bc4e0a`](https://github.com/seek-oss/vanilla-extract/commit/0bc4e0a164e9167e0356557f8feee42d7889d4b1)]:
+  - @vanilla-extract/private@0.1.2
+
 ## 0.4.1
 
 ### Patch Changes

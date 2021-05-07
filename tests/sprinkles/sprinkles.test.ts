@@ -241,6 +241,28 @@ describe('sprinkles', () => {
         `"sprinkles_paddingTop_large__1kw4bre1z sprinkles_paddingBottom_large__1kw4bre22 sprinkles_paddingLeft_small__1kw4bre1r sprinkles_paddingRight_small__1kw4bre1u"`,
       );
     });
+
+    it('should provide a static set of properties on the atoms fn', () => {
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
+
+      expect(atoms.properties).toMatchInlineSnapshot(`
+        Set {
+          "paddingX",
+          "anotherPaddingX",
+          "color",
+          "paddingLeft",
+          "paddingRight",
+          "paddingY",
+          "display",
+          "paddingTop",
+          "paddingBottom",
+          "opacity",
+        }
+      `);
+    });
   });
 
   describe('errors', () => {

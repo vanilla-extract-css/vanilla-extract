@@ -18,7 +18,7 @@ type BaseConditions = { [conditionName: string]: Condition };
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
     | Record<string, CSSProperties[Property]>
-    | Array<CSSProperties[Property]>;
+    | ReadonlyArray<CSSProperties[Property]>;
 };
 
 type ShorthandOptions<
@@ -51,7 +51,9 @@ type ConditionalAtomicOptions<
 };
 
 type Values<Property, Result> = {
-  [Value in Property extends Array<any>
+  [Value in Property extends ReadonlyArray<any>
+    ? Property[number]
+    : Property extends Array<any>
     ? Property[number]
     : keyof Property]: Result;
 };

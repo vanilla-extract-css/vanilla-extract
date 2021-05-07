@@ -9,6 +9,7 @@ import cssesc from 'cssesc';
 
 import { CSSVarFunction, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { validateContract } from './validateContract';
 
 export function createVar(debugId?: string): CSSVarFunction {
   // Convert ref count to base 36 for optimal hash lengths
@@ -34,7 +35,7 @@ export function createVar(debugId?: string): CSSVarFunction {
 }
 
 export function fallbackVar(
-  ...values: [...Array<string>, string]
+  ...values: [string, ...Array<string>]
 ): CSSVarFunction {
   let finalValue = '';
 
@@ -58,11 +59,12 @@ export function assignVars<VarContract extends Contract>(
   tokens: MapLeafNodes<VarContract, string>,
 ): Record<CSSVarFunction, string> {
   const varSetters: { [cssVarName: string]: string } = {};
+  const { valid, diffString } = validateContract(varContract, tokens);
 
-  /* TODO
-  - validate new variables arn't set
-  - validate arrays have the same length as contract
-*/
+  if (!valid) {
+    throw new Error(`Tokens don't match contract.\n${diffString}`);
+  }
+
   walkObject(tokens, (value, path) => {
     varSetters[get(varContract, path)] = String(value);
   });

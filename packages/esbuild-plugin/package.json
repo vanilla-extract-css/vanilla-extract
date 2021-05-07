@@ -14,20 +14,10 @@
   },
   "author": "SEEK",
   "license": "MIT",
-  "peerDependencies": {
-    "esbuild": ">=0.11.1"
-  },
   "dependencies": {
-    "@vanilla-extract/css": "^0.4.0",
-    "chalk": "^4.1.0",
-    "dedent": "^0.7.0",
-    "eval": "^0.1.6",
-    "find-up": "^5.0.0",
-    "javascript-stringify": "^2.0.1",
-    "lodash": "^4.17.21"
+    "@vanilla-extract/integration": "^0.1.0"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0",
     "esbuild": "^0.11.16"
   }
 }
