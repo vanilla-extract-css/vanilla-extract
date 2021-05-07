@@ -17,7 +17,6 @@ import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
-import Text from '../Typography/Text';
 import { mapKeys } from 'lodash';
 
 interface DocsRouteProps {
