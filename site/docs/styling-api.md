@@ -4,8 +4,6 @@ title: Styling API
 
 # Styling API
 
-> 🍬 If you're a [treat](https://seek-oss.github.io/treat) user, check out our [migration guide.](./docs/treat-migration-guide.md)
-
 ## style
 
 Creates styles attached to a locally scoped class name.
