@@ -30,6 +30,7 @@ interface ProcessVanillaFileOptions {
   serializeVirtualCssPath?: (file: {
     fileName: string;
     base64Source: string;
+    fileScope: FileScope;
   }) => string;
 }
 export function processVanillaFile({
@@ -82,7 +83,7 @@ export function processVanillaFile({
   const cssImports = [];
 
   for (const [serialisedFileScope, fileScopeCss] of cssByFileScope) {
-    const filescope = parseFileScope(serialisedFileScope);
+    const fileScope = parseFileScope(serialisedFileScope);
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
       cssObjs: fileScopeCss,
@@ -90,13 +91,13 @@ export function processVanillaFile({
 
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');
     const fileName = `${
-      filescope.packageName
-        ? `${filescope.packageName}/${filescope.filePath}`
-        : filescope.filePath
+      fileScope.packageName
+        ? `${fileScope.packageName}/${fileScope.filePath}`
+        : fileScope.filePath
     }.vanilla.css`;
 
     const virtualCssFilePath = serializeVirtualCssPath
-      ? serializeVirtualCssPath({ fileName, base64Source })
+      ? serializeVirtualCssPath({ fileName, base64Source, fileScope })
       : `import '${fileName}?source=${base64Source}';`;
 
     cssImports.push(virtualCssFilePath);

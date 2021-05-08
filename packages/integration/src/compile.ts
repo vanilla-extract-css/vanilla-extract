@@ -22,7 +22,10 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
 
         const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${filePath}", "${packageInfo.name}");
+        setFileScope("${filePath}", ${
+          packageInfo.name ? `"${packageInfo.name}"` : 'undefined'
+        });
+
         ${originalSource}
         endFileScope()
         `;
