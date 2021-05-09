@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./makeDocsManifest && webpack-dev-server",
-    "build": "NODE_ENV=production webpack"
+    "start": "node ./makeDocsManifest && webpack serve",
+    "build": "node ./makeDocsManifest && NODE_ENV=production webpack"
   },
   "dependencies": {
     "@babel/preset-env": "^7.13.15",
@@ -42,7 +42,6 @@
     "use-react-router": "^1.0.7",
     "webpack": "^5.36.1",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2",
     "webpack-node-externals": "^2.5.2"
   },
   "devDependencies": {
