@@ -59,7 +59,7 @@ export const HomePage = () => {
         background={{ lightMode: 'teal100', darkMode: 'gray700' }}
       >
         <Box style={{ marginTop: '-60px' }}>
-          <Logo size={280} />
+          <Logo height={280} />
         </Box>
         <Stack space="large" align="center">
           <Heading level="1" branded>
@@ -116,7 +116,7 @@ export const HomePage = () => {
                         desktop: 'flex-start',
                       }}
                     >
-                      <Logo size={100} />
+                      <Logo height={100} />
                     </Box>
                     <Heading
                       level="1"
@@ -553,7 +553,7 @@ export const HomePage = () => {
         <ContentBlock withGutters>
           <Box component="footer" paddingBottom="xxxlarge">
             <Stack space="xxlarge" align="center">
-              <Logo size={60} />
+              <Logo height={60} />
               <Columns space="xxxlarge" collapseOnMobile>
                 <Stack space="xlarge" align="center">
                   <Heading level="4">Documentation</Heading>
