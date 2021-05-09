@@ -53,10 +53,8 @@ export default function vanillaExtractPlugin(
         source,
         filePath,
         outputCss: !isSSR,
-        serializeVirtualCssPath({ fileName, base64Source }) {
-          const cssUrl = path
-            .join(cwd, fileName)
-            .replace(/\.vanilla.css$/, '.css');
+        serializeVirtualCssPath({ base64Source, fileScope }) {
+          const cssUrl = `${path.join(cwd, fileScope.filePath)}.css`;
 
           if (cssUrl === `${filePath}.css`) {
             css = getSourceFromVirtualCssFile(`?source=${base64Source}`).source;
