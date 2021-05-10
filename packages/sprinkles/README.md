@@ -90,10 +90,10 @@ Create an `atoms.css.ts` file, then configure and export your `atoms` function.
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const space = {
-  0: '0',
-  4: '4px',
-  8: '8px',
-  12: '12px',
+  'none': 0,
+  'small': '4px',
+  'medium': '8px',
+  'large': '16px',
   // etc.
 };
 
@@ -144,6 +144,9 @@ const colorStyles = createAtomicStyles({
 });
 
 export const atoms = createAtomsFn(responsiveStyles, colorStyles);
+
+// It's a good idea to export the Atoms type too
+export type Atoms = Parameters<typeof atoms>[0];
 ```
 
 **🎉 That's it — you’re ready to go!**
