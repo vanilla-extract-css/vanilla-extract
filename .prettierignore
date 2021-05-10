@@ -7,3 +7,4 @@ CHANGELOG.md
 README.md
 .yarnrc.yml
 .github/ISSUE_TEMPLATE
+site/docs-manifest.json
