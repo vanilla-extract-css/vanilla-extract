@@ -68,7 +68,9 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
       <meta name="theme-color" content="#fff"/>
       <link rel="manifest" href="${assetPath('site.webmanifest')}"/>
       <link rel="apple-touch-icon" href="${assetPath('apple-touch-icon.png')}"/>
-      <link rel="canonical" href="https://vanilla-extract.style${route}" />
+      <link rel="canonical" href="https://vanilla-extract.style${
+        route || '/'
+      }" />
       ${favicon(16)}
       ${favicon(32)}
       ${favicon()}

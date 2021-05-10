@@ -443,7 +443,7 @@ export const HomePage = () => {
 
                 export const color = styleVariants({
                   neutral: { color: 'black' },
-                  secondary: { color: 'coolGray' },
+                  secondary: { color: 'gray' },
                   link: { color: 'blue' },
                 });
               `}
