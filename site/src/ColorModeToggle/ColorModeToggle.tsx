@@ -6,6 +6,7 @@ import {
   ReactNode,
 } from 'react';
 import { Box } from '../system';
+import * as styles from './ColorModeToggle.css';
 
 type ColorMode = 'dark' | 'light';
 export const themeKey = 'vanilla-theme-pref';
@@ -60,15 +61,11 @@ export const ColorModeToggle = () => {
       component="button"
       padding={{ desktop: 'small' }}
       cursor="pointer"
-      style={{
-        outline: 'none',
-        fontSize: 24,
-        filter: `contrast(0) brightness(${colorMode === 'light' ? '0' : '10'})`,
-      }}
+      className={styles.root}
       title="Toggle colour mode"
       onClick={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
     >
-      {colorMode === 'light' ? `☀️` : `🌙`}
+      &nbsp;
     </Box>
   );
 };
