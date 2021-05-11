@@ -29,11 +29,11 @@ const fontMetrics = {
     unitsPerEm: 2048,
   },
   code: {
-    capHeight: 1456,
-    ascent: 2146,
-    descent: -555,
+    capHeight: 700,
+    ascent: 1060,
+    descent: -320,
     lineGap: 0,
-    unitsPerEm: 2048,
+    unitsPerEm: 1000,
   },
 };
 
@@ -155,7 +155,7 @@ export const vars = createGlobalTheme(':root', {
       '"DM Sans", "Helvetica Neue", HelveticaNeue, Helvetica, sans-serif',
     body:
       '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif',
-    code: '"Roboto Mono", Menlo, monospace',
+    code: 'MonoLisa, "Roboto Mono", Menlo, monospace',
   },
   grid: px(grid),
   spacing: {
@@ -265,15 +265,15 @@ export const vars = createGlobalTheme(':root', {
     code: calculateTypographyStyles(
       {
         mobile: {
-          fontSize: 14,
+          fontSize: 13,
           rows: 6,
         },
         tablet: {
-          fontSize: 16,
+          fontSize: 15,
           rows: 8,
         },
         desktop: {
-          fontSize: 16,
+          fontSize: 15,
           rows: 8,
         },
       },
