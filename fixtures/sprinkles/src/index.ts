@@ -1,5 +1,7 @@
-import { atoms } from './styles.css';
+import { atoms, responsiveValue } from './styles.css';
 import testNodes from '../test-nodes.json';
+
+console.log('responsiveValue', responsiveValue.normalize([1, null, 3]));
 
 function render() {
   document.body.innerHTML = `

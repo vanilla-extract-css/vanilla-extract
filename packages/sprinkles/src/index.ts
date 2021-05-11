@@ -1,11 +1,12 @@
 import { style, CSSProperties } from '@vanilla-extract/css';
 
 import {
-  AtomicStyles,
   AtomsFn,
   createAtomsFn as internalCreateAtomsFn,
 } from './createAtomsFn';
-import { ResponsiveArrayConfig } from './types';
+import { AtomicStyles, ResponsiveArrayConfig } from './types';
+
+export { createUtils } from './createUtils';
 
 interface Condition {
   '@media'?: string;
@@ -57,6 +58,8 @@ type Values<Property, Result> = {
     ? Property[number]
     : keyof Property]: Result;
 };
+
+type NestedInStyles<T> = { styles: T };
 
 type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
   [Property in keyof Properties]: {
@@ -123,13 +126,15 @@ export function createAtomicStyles<
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands> &
     ResponsiveArrayOptions<Conditions, ResponsiveLength>,
-): ConditionalWithResponsiveArrayAtomicStyles<
-  Properties,
-  Conditions,
-  ResponsiveLength,
-  DefaultCondition
-> &
-  ShorthandMappings<Shorthands>;
+): NestedInStyles<
+  ConditionalWithResponsiveArrayAtomicStyles<
+    Properties,
+    Conditions,
+    ResponsiveLength,
+    DefaultCondition
+  > &
+    ShorthandMappings<Shorthands>
+>;
 // Conditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -139,8 +144,10 @@ export function createAtomicStyles<
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
-): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
-  ShorthandMappings<Shorthands>;
+): NestedInStyles<
+  ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
+    ShorthandMappings<Shorthands>
+>;
 // Conditional + ResponsiveArray
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -150,11 +157,13 @@ export function createAtomicStyles<
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ResponsiveArrayOptions<Conditions, ResponsiveLength>,
-): ConditionalWithResponsiveArrayAtomicStyles<
-  Properties,
-  Conditions,
-  ResponsiveLength,
-  DefaultCondition
+): NestedInStyles<
+  ConditionalWithResponsiveArrayAtomicStyles<
+    Properties,
+    Conditions,
+    ResponsiveLength,
+    DefaultCondition
+  >
 >;
 // Conditional
 export function createAtomicStyles<
@@ -163,7 +172,9 @@ export function createAtomicStyles<
   DefaultCondition extends keyof Conditions | false
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
-): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
+): NestedInStyles<
+  ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>
+>;
 // Unconditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -171,11 +182,13 @@ export function createAtomicStyles<
 >(
   options: UnconditionalAtomicOptions<Properties> &
     ShorthandOptions<Properties, Shorthands>,
-): UnconditionalAtomicStyles<Properties> & ShorthandMappings<Shorthands>;
+): NestedInStyles<
+  UnconditionalAtomicStyles<Properties> & ShorthandMappings<Shorthands>
+>;
 // Unconditional
 export function createAtomicStyles<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
-): UnconditionalAtomicStyles<Properties>;
+): NestedInStyles<UnconditionalAtomicStyles<Properties>>;
 export function createAtomicStyles(options: any): any {
   let styles: any =
     'shorthands' in options
@@ -270,7 +283,16 @@ export function createAtomicStyles(options: any): any {
     }
   }
 
-  return styles;
+  const conditions =
+    'conditions' in options
+      ? {
+          defaultCondition: options.defaultCondition,
+          conditionNames: Object.keys(options.conditions),
+          responsiveArray: options.responsiveArray,
+        }
+      : undefined;
+
+  return { conditions, styles };
 }
 
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(

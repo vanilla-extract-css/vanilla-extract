@@ -393,56 +393,58 @@ describe('sprinkles', () => {
   it('should create atomic styles', () => {
     expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
       Object {
-        "anotherPaddingX": Object {
-          "mappings": Array [
-            "paddingLeft",
-            "paddingRight",
-          ],
-        },
-        "color": Object {
-          "values": Object {
-            "gray-500": Object {
-              "defaultClass": "sprinkles_color_gray-500__1kw4brea",
-            },
-            "green-300": Object {
-              "defaultClass": "sprinkles_color_green-300__1kw4brec",
-            },
-            "red-500": Object {
-              "defaultClass": "sprinkles_color_red-500__1kw4breb",
+        "styles": Object {
+          "anotherPaddingX": Object {
+            "mappings": Array [
+              "paddingLeft",
+              "paddingRight",
+            ],
+          },
+          "color": Object {
+            "values": Object {
+              "gray-500": Object {
+                "defaultClass": "sprinkles_color_gray-500__1kw4brea",
+              },
+              "green-300": Object {
+                "defaultClass": "sprinkles_color_green-300__1kw4brec",
+              },
+              "red-500": Object {
+                "defaultClass": "sprinkles_color_red-500__1kw4breb",
+              },
             },
           },
-        },
-        "paddingLeft": Object {
-          "values": Object {
-            "large": Object {
-              "defaultClass": "sprinkles_paddingLeft_large__1kw4bref",
-            },
-            "medium": Object {
-              "defaultClass": "sprinkles_paddingLeft_medium__1kw4bree",
-            },
-            "small": Object {
-              "defaultClass": "sprinkles_paddingLeft_small__1kw4bred",
-            },
-          },
-        },
-        "paddingRight": Object {
-          "values": Object {
-            "large": Object {
-              "defaultClass": "sprinkles_paddingRight_large__1kw4brei",
-            },
-            "medium": Object {
-              "defaultClass": "sprinkles_paddingRight_medium__1kw4breh",
-            },
-            "small": Object {
-              "defaultClass": "sprinkles_paddingRight_small__1kw4breg",
+          "paddingLeft": Object {
+            "values": Object {
+              "large": Object {
+                "defaultClass": "sprinkles_paddingLeft_large__1kw4bref",
+              },
+              "medium": Object {
+                "defaultClass": "sprinkles_paddingLeft_medium__1kw4bree",
+              },
+              "small": Object {
+                "defaultClass": "sprinkles_paddingLeft_small__1kw4bred",
+              },
             },
           },
-        },
-        "paddingX": Object {
-          "mappings": Array [
-            "paddingLeft",
-            "paddingRight",
-          ],
+          "paddingRight": Object {
+            "values": Object {
+              "large": Object {
+                "defaultClass": "sprinkles_paddingRight_large__1kw4brei",
+              },
+              "medium": Object {
+                "defaultClass": "sprinkles_paddingRight_medium__1kw4breh",
+              },
+              "small": Object {
+                "defaultClass": "sprinkles_paddingRight_small__1kw4breg",
+              },
+            },
+          },
+          "paddingX": Object {
+            "mappings": Array [
+              "paddingLeft",
+              "paddingRight",
+            ],
+          },
         },
       }
     `);
@@ -451,135 +453,137 @@ describe('sprinkles', () => {
   it('should create conditional atomic styles', () => {
     expect(conditionalAtomicStyles).toMatchInlineSnapshot(`
       Object {
-        "display": Object {
-          "responsiveArray": Array [
-            "mobile",
-            "tablet",
-            "desktop",
-          ],
-          "values": Object {
-            "block": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_display_block_desktop__1kw4brel",
-                "mobile": "sprinkles_display_block_mobile__1kw4brej",
-                "tablet": "sprinkles_display_block_tablet__1kw4brek",
+        "styles": Object {
+          "display": Object {
+            "responsiveArray": Array [
+              "mobile",
+              "tablet",
+              "desktop",
+            ],
+            "values": Object {
+              "block": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_display_block_desktop__1kw4brel",
+                  "mobile": "sprinkles_display_block_mobile__1kw4brej",
+                  "tablet": "sprinkles_display_block_tablet__1kw4brek",
+                },
+                "defaultClass": "sprinkles_display_block_mobile__1kw4brej",
               },
-              "defaultClass": "sprinkles_display_block_mobile__1kw4brej",
-            },
-            "flex": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_display_flex_desktop__1kw4brer",
-                "mobile": "sprinkles_display_flex_mobile__1kw4brep",
-                "tablet": "sprinkles_display_flex_tablet__1kw4breq",
+              "flex": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_display_flex_desktop__1kw4brer",
+                  "mobile": "sprinkles_display_flex_mobile__1kw4brep",
+                  "tablet": "sprinkles_display_flex_tablet__1kw4breq",
+                },
+                "defaultClass": "sprinkles_display_flex_mobile__1kw4brep",
               },
-              "defaultClass": "sprinkles_display_flex_mobile__1kw4brep",
-            },
-            "none": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_display_none_desktop__1kw4breo",
-                "mobile": "sprinkles_display_none_mobile__1kw4brem",
-                "tablet": "sprinkles_display_none_tablet__1kw4bren",
+              "none": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_display_none_desktop__1kw4breo",
+                  "mobile": "sprinkles_display_none_mobile__1kw4brem",
+                  "tablet": "sprinkles_display_none_tablet__1kw4bren",
+                },
+                "defaultClass": "sprinkles_display_none_mobile__1kw4brem",
               },
-              "defaultClass": "sprinkles_display_none_mobile__1kw4brem",
-            },
-          },
-        },
-        "opacity": Object {
-          "responsiveArray": Array [
-            "mobile",
-            "tablet",
-            "desktop",
-          ],
-          "values": Object {
-            "0": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_opacity_0_desktop__1kw4bre1c",
-                "mobile": "sprinkles_opacity_0_mobile__1kw4bre1a",
-                "tablet": "sprinkles_opacity_0_tablet__1kw4bre1b",
-              },
-              "defaultClass": "sprinkles_opacity_0_mobile__1kw4bre1a",
-            },
-            "1": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_opacity_1_desktop__1kw4bre1f",
-                "mobile": "sprinkles_opacity_1_mobile__1kw4bre1d",
-                "tablet": "sprinkles_opacity_1_tablet__1kw4bre1e",
-              },
-              "defaultClass": "sprinkles_opacity_1_mobile__1kw4bre1d",
             },
           },
-        },
-        "paddingBottom": Object {
-          "responsiveArray": Array [
-            "mobile",
-            "tablet",
-            "desktop",
-          ],
-          "values": Object {
-            "large": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingBottom_large_desktop__1kw4bre19",
-                "mobile": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
-                "tablet": "sprinkles_paddingBottom_large_tablet__1kw4bre18",
+          "opacity": Object {
+            "responsiveArray": Array [
+              "mobile",
+              "tablet",
+              "desktop",
+            ],
+            "values": Object {
+              "0": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_opacity_0_desktop__1kw4bre1c",
+                  "mobile": "sprinkles_opacity_0_mobile__1kw4bre1a",
+                  "tablet": "sprinkles_opacity_0_tablet__1kw4bre1b",
+                },
+                "defaultClass": "sprinkles_opacity_0_mobile__1kw4bre1a",
               },
-              "defaultClass": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
-            },
-            "medium": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingBottom_medium_desktop__1kw4bre16",
-                "mobile": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
-                "tablet": "sprinkles_paddingBottom_medium_tablet__1kw4bre15",
+              "1": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_opacity_1_desktop__1kw4bre1f",
+                  "mobile": "sprinkles_opacity_1_mobile__1kw4bre1d",
+                  "tablet": "sprinkles_opacity_1_tablet__1kw4bre1e",
+                },
+                "defaultClass": "sprinkles_opacity_1_mobile__1kw4bre1d",
               },
-              "defaultClass": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
-            },
-            "small": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingBottom_small_desktop__1kw4bre13",
-                "mobile": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
-                "tablet": "sprinkles_paddingBottom_small_tablet__1kw4bre12",
-              },
-              "defaultClass": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
             },
           },
-        },
-        "paddingTop": Object {
-          "responsiveArray": Array [
-            "mobile",
-            "tablet",
-            "desktop",
-          ],
-          "values": Object {
-            "large": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingTop_large_desktop__1kw4bre10",
-                "mobile": "sprinkles_paddingTop_large_mobile__1kw4brey",
-                "tablet": "sprinkles_paddingTop_large_tablet__1kw4brez",
+          "paddingBottom": Object {
+            "responsiveArray": Array [
+              "mobile",
+              "tablet",
+              "desktop",
+            ],
+            "values": Object {
+              "large": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingBottom_large_desktop__1kw4bre19",
+                  "mobile": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
+                  "tablet": "sprinkles_paddingBottom_large_tablet__1kw4bre18",
+                },
+                "defaultClass": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
               },
-              "defaultClass": "sprinkles_paddingTop_large_mobile__1kw4brey",
-            },
-            "medium": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingTop_medium_desktop__1kw4brex",
-                "mobile": "sprinkles_paddingTop_medium_mobile__1kw4brev",
-                "tablet": "sprinkles_paddingTop_medium_tablet__1kw4brew",
+              "medium": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingBottom_medium_desktop__1kw4bre16",
+                  "mobile": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
+                  "tablet": "sprinkles_paddingBottom_medium_tablet__1kw4bre15",
+                },
+                "defaultClass": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
               },
-              "defaultClass": "sprinkles_paddingTop_medium_mobile__1kw4brev",
-            },
-            "small": Object {
-              "conditions": Object {
-                "desktop": "sprinkles_paddingTop_small_desktop__1kw4breu",
-                "mobile": "sprinkles_paddingTop_small_mobile__1kw4bres",
-                "tablet": "sprinkles_paddingTop_small_tablet__1kw4bret",
+              "small": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingBottom_small_desktop__1kw4bre13",
+                  "mobile": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
+                  "tablet": "sprinkles_paddingBottom_small_tablet__1kw4bre12",
+                },
+                "defaultClass": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
               },
-              "defaultClass": "sprinkles_paddingTop_small_mobile__1kw4bres",
             },
           },
-        },
-        "paddingY": Object {
-          "mappings": Array [
-            "paddingBottom",
-            "paddingTop",
-          ],
+          "paddingTop": Object {
+            "responsiveArray": Array [
+              "mobile",
+              "tablet",
+              "desktop",
+            ],
+            "values": Object {
+              "large": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingTop_large_desktop__1kw4bre10",
+                  "mobile": "sprinkles_paddingTop_large_mobile__1kw4brey",
+                  "tablet": "sprinkles_paddingTop_large_tablet__1kw4brez",
+                },
+                "defaultClass": "sprinkles_paddingTop_large_mobile__1kw4brey",
+              },
+              "medium": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingTop_medium_desktop__1kw4brex",
+                  "mobile": "sprinkles_paddingTop_medium_mobile__1kw4brev",
+                  "tablet": "sprinkles_paddingTop_medium_tablet__1kw4brew",
+                },
+                "defaultClass": "sprinkles_paddingTop_medium_mobile__1kw4brev",
+              },
+              "small": Object {
+                "conditions": Object {
+                  "desktop": "sprinkles_paddingTop_small_desktop__1kw4breu",
+                  "mobile": "sprinkles_paddingTop_small_mobile__1kw4bres",
+                  "tablet": "sprinkles_paddingTop_small_tablet__1kw4bret",
+                },
+                "defaultClass": "sprinkles_paddingTop_small_mobile__1kw4bres",
+              },
+            },
+          },
+          "paddingY": Object {
+            "mappings": Array [
+              "paddingBottom",
+              "paddingTop",
+            ],
+          },
         },
       }
     `);

@@ -61,3 +61,54 @@ export type ResponsiveArray<Count extends number, Value> = [
     | RA8<Value>
   ),
 ][Count];
+
+export type ConditionalPropertyValue = {
+  defaultClass: string | undefined;
+  conditions: {
+    [conditionName: string]: string;
+  };
+};
+
+export type ConditionalWithResponsiveArrayProperty = {
+  responsiveArray: Array<string>;
+  values: {
+    [valueName: string]: ConditionalPropertyValue;
+  };
+};
+
+export type ConditionalProperty = {
+  values: {
+    [valueName: string]: ConditionalPropertyValue;
+  };
+};
+
+export type UnconditionalProperty = {
+  values: {
+    [valueName: string]: {
+      defaultClass: string;
+    };
+  };
+};
+
+export type ShorthandProperty = {
+  mappings: Array<string>;
+};
+
+export type ConditionalAtomicStyles = {
+  styles: {
+    [property: string]:
+      | ConditionalWithResponsiveArrayProperty
+      | ConditionalProperty
+      | ShorthandProperty;
+  };
+};
+
+export type AtomicStyles = {
+  styles: {
+    [property: string]:
+      | ConditionalWithResponsiveArrayProperty
+      | ConditionalProperty
+      | ShorthandProperty
+      | UnconditionalProperty;
+  };
+};
