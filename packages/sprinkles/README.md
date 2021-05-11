@@ -162,6 +162,8 @@ import { atoms } from './atoms.css.ts';
 export const container = atoms({
   display: 'flex',
   paddingX: 'small',
+
+  // Conditional atoms:
   flexDirection: {
     mobile: 'column',
     desktop: 'row',
@@ -233,7 +235,7 @@ document.write(`
 
 ### createAtomicStyles
 
-Configures a collection of utility classes with [properties](#properties), [conditions](#conditions) and [shorthands.](#shorthandfs)
+Configures a collection of utility classes with [properties](#properties), [conditions](#conditions) and [shorthands.](#shorthands)
 
 If you need to scope different conditions to different properties (e.g. some properties support breakpoints, some support light mode and dark mode, some are unconditional), you can provide as many collections of atomic styles to [`createAtomsFn`](#createatomsfn) as you like.
 
@@ -242,9 +244,9 @@ import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const space = {
   none: 0,
-  small: 4,
-  medium: 8,
-  large: 16
+  small: '4px',
+  medium: '8px',
+  large: '16px'
 };
 
 const colors = {
