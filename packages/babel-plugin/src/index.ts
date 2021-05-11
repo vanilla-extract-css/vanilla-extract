@@ -220,6 +220,17 @@ export default function (): PluginObj<Context> {
 
         const { node } = path;
 
+        if (
+          t.isIdentifier(node.callee, { name: 'require' }) &&
+          t.isStringLiteral(node.arguments[0], {
+            value: filescopePackageIdentifier,
+          })
+        ) {
+          // If file scope import is found it means the file has already been compiled
+          this.alreadyCompiled = true;
+          return;
+        }
+
         const usedExport = getRelevantCall(
           node,
           this.namespaceImport,

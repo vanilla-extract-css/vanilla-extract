@@ -581,6 +581,37 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should ignore CJS files that already have filescope information', () => {
+    const source = `
+      const { setFileScope, endFileScope } = require('@vanilla-extract/css/fileScope');
+      setFileScope('src/dir/someFileName.css.ts', 'some-package');
+      const { style } = require('@vanilla-extract/css');
+
+      const three = style({
+        zIndex: 2,  
+      });
+      endFileScope();
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "const {
+        setFileScope,
+        endFileScope
+      } = require('@vanilla-extract/css/fileScope');
+
+      setFileScope('src/dir/someFileName.css.ts', 'some-package');
+
+      const {
+        style
+      } = require('@vanilla-extract/css');
+
+      const three = style({
+        zIndex: 2
+      });
+      endFileScope();"
+    `);
+  });
+
   it('should handle renaming imports', () => {
     const source = `
       import { style as specialStyle } from '@vanilla-extract/css';
