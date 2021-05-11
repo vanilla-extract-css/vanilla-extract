@@ -1,8 +1,11 @@
 type Operator = '+' | '-' | '*' | '/';
-type Operand = string | number;
+type Operand = string | number | CalcChain;
 
 const toExpression = (operator: Operator, ...operands: Array<Operand>) =>
-  operands.join(` ${operator} `).replace(/calc/g, '');
+  operands
+    .map((o) => `${o}`)
+    .join(` ${operator} `)
+    .replace(/calc/g, '');
 
 const add = (...operands: Array<Operand>) =>
   `calc(${toExpression('+', ...operands)})`;
