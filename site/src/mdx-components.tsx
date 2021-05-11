@@ -45,6 +45,7 @@ const A = ({
   href,
   size, // Omit
   color, // Omit
+  type, // Omit
   ...restProps
 }: AllHTMLAttributes<HTMLAnchorElement>) =>
   href ? (
