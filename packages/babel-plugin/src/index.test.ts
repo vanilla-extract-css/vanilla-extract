@@ -32,13 +32,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
       const one = style({
         zIndex: 2
       }, \\"one\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -52,15 +55,18 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { styleVariants } from '@vanilla-extract/css';
       const colors = styleVariants({
         red: {
           color: 'red'
         }
       }, \\"colors\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -74,15 +80,18 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { styleVariants } from '@vanilla-extract/css';
       const colors = styleVariants({
         red: 'red'
       }, color => ({
         color
       }), \\"colors\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -96,13 +105,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
       export default style({
         zIndex: 2
       }, \\"default\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -120,8 +132,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
       const test = {
         one: {
@@ -130,7 +144,8 @@ describe('babel plugin', () => {
           }, \\"test_one_two\\")
         }
       };
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -146,8 +161,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
 
       const test = () => {
@@ -156,7 +173,7 @@ describe('babel plugin', () => {
         }, \\"test\\");
       };
 
-      endFileScope()"
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -170,15 +187,17 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
 
       const test = () => style({
         color: 'red'
       }, \\"test\\");
 
-      endFileScope()"
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -194,8 +213,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
 
       function test() {
@@ -204,7 +225,7 @@ describe('babel plugin', () => {
         }, \\"test\\");
       }
 
-      endFileScope()"
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -216,13 +237,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { globalStyle } from '@vanilla-extract/css';
       globalStyle('html, body', {
         margin: 0
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -234,11 +258,14 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { createVar } from '@vanilla-extract/css';
       const myVar = createVar(\\"myVar\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -252,13 +279,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { fontFace } from '@vanilla-extract/css';
       const myFont = fontFace({
         src: 'local(\\"Comic Sans MS\\")'
       }, \\"myFont\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -272,13 +302,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { globalFontFace } from '@vanilla-extract/css';
       globalFontFace('myFont', {
         src: 'local(\\"Comic Sans MS\\")'
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -293,8 +326,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { keyframes } from '@vanilla-extract/css';
       const myAnimation = keyframes({
         from: {
@@ -304,7 +339,8 @@ describe('babel plugin', () => {
           transform: 'rotate(360deg)'
         }
       }, \\"myAnimation\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -319,8 +355,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { globalKeyframes } from '@vanilla-extract/css';
       globalKeyframes('myKeyframes', {
         from: {
@@ -330,7 +368,8 @@ describe('babel plugin', () => {
           transform: 'rotate(360deg)'
         }
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -342,11 +381,14 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { createTheme } from '@vanilla-extract/css';
       const darkTheme = createTheme({}, {}, \\"darkTheme\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -358,11 +400,14 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { createTheme } from '@vanilla-extract/css';
       const [theme, vars] = createTheme({}, {}, \\"theme\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -374,13 +419,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { createGlobalTheme } from '@vanilla-extract/css';
       const vars = createGlobalTheme(':root', {
         foo: 'bar'
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -394,13 +442,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { createThemeContract } from '@vanilla-extract/css';
       const vars = createThemeContract({
         foo: 'bar'
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -420,8 +471,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style, styleVariants } from '@vanilla-extract/css';
       const three = style({
         testStyle: {
@@ -433,7 +486,8 @@ describe('babel plugin', () => {
           color: 'red'
         }
       }, 'myDebugValue', \\"four\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -447,13 +501,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from 'some-other-package';
       const three = style({
         zIndex: 2
       });
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -498,6 +555,32 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should use CJS when it is detected', () => {
+    const source = `
+      const { style } = require('@vanilla-extract/css');
+
+      const three = style({
+        zIndex: 2,  
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "const __vanilla_filescope__ = require('@vanilla-extract/css/fileScope');
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      const {
+        style
+      } = require('@vanilla-extract/css');
+
+      const three = style({
+        zIndex: 2
+      });
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
+
   it('should handle renaming imports', () => {
     const source = `
       import { style as specialStyle } from '@vanilla-extract/css';
@@ -508,13 +591,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style as specialStyle } from '@vanilla-extract/css';
       const four = specialStyle({
         zIndex: 2
       }, \\"four\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -530,13 +616,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
       export const height = [style({
         zIndex: 2
       }, \\"height\\")];
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -552,15 +641,18 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import { style } from '@vanilla-extract/css';
       export const height = {
         full: [style({
           zIndex: 2
         }, \\"height_full\\")]
       };
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 
@@ -574,13 +666,16 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
-      setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
       import * as css from '@vanilla-extract/css';
       const one = css.style({
         zIndex: 2
       }, \\"one\\");
-      endFileScope()"
+
+      __vanilla_filescope__.endFileScope();"
     `);
   });
 });
