@@ -1,4 +1,5 @@
-import { isEqual, omit } from 'lodash';
+import omit from 'lodash/omit';
+import isEqual from 'lodash/isEqual';
 import { StyleRule } from '@vanilla-extract/css';
 import { Properties, SimplePseudos } from 'csstype';
 
