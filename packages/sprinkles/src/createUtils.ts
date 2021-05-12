@@ -1,53 +1,57 @@
-import {
-  AtomicProperties,
-  Condition,
-  ConditionalAtomicStyles,
-  ConditionalWithResponsiveArrayAtomicStyles,
-  ResponsiveArray,
-} from './types';
+import { ResponsiveArray } from './types';
 
-export function createNormalizeConditionalValue<
-  Properties extends AtomicProperties,
-  Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false,
-  Value extends string | number
+type ConditionsLookup<
+  ConditionName extends string,
+  DefaultCondition extends ConditionName | false
+> = {
+  conditions: {
+    defaultCondition: DefaultCondition;
+    conditionNames: Array<ConditionName>;
+  };
+};
+
+type ConditionsLookupWithResponsiveArray<
+  ConditionName extends string,
+  DefaultCondition extends ConditionName | false,
+  ResponsiveLength extends number
+> = ConditionsLookup<ConditionName, DefaultCondition> & {
+  conditions: {
+    responsiveArray: Array<ConditionName> & { length: ResponsiveLength };
+  };
+};
+
+export function createUtils<
+  ConditionName extends string,
+  DefaultCondition extends ConditionName | false
 >(
-  atomicStyles: ConditionalAtomicStyles<
-    Properties,
-    Conditions,
-    DefaultCondition
-  >,
-): (
-  value: Value | { [conditionName in keyof Conditions]?: Value | null },
-) => { [conditionName in keyof Conditions]: Value };
-export function createNormalizeConditionalValue<
-  Properties extends AtomicProperties,
-  Conditions extends { [conditionName: string]: Condition },
+  atomicStyles: ConditionsLookup<ConditionName, DefaultCondition>,
+): {
+  normalize: <Value extends string | number>(
+    value: Value | Partial<Record<ConditionName, Value>>,
+  ) => Record<ConditionName, Value>;
+};
+export function createUtils<
+  ConditionName extends string,
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false,
-  Value extends string | number
+  DefaultCondition extends ConditionName | false
 >(
-  atomicStyles: ConditionalWithResponsiveArrayAtomicStyles<
-    Properties,
-    Conditions,
-    ResponsiveLength,
-    DefaultCondition
+  atomicStyles: ConditionsLookupWithResponsiveArray<
+    ConditionName,
+    DefaultCondition,
+    ResponsiveLength
   >,
-): (
-  value:
-    | Value
-    | ResponsiveArray<ResponsiveLength, Value>
-    | { [conditionName in keyof Conditions]?: Value | null },
-) => { [conditionName in keyof Conditions]: Value };
-export function createNormalizeConditionalValue(
+): {
+  normalize: <Value extends string | number>(
+    value:
+      | Value
+      | ResponsiveArray<ResponsiveLength, Value>
+      | Partial<Record<ConditionName, Value>>,
+  ) => Record<ConditionName, Value>;
+};
+export function createUtils(
   atomicStyles:
-    | ConditionalAtomicStyles<any, { [conditionName: string]: any }, any>
-    | ConditionalWithResponsiveArrayAtomicStyles<
-        any,
-        { [conditionName: string]: any },
-        any,
-        any
-      >,
+    | ConditionsLookup<any, any>
+    | ConditionsLookupWithResponsiveArray<any, any, any>,
 ) {
   const { conditions } = atomicStyles;
 
@@ -85,17 +89,11 @@ export function createNormalizeConditionalValue(
   Object.defineProperty(normalize, '__recipe__', {
     value: {
       importPath: '@vanilla-extract/sprinkles/createUtils',
-      importName: 'createNormalizeConditionalValue',
-      args: [atomicStyles],
+      importName: 'createUtils',
+      args: [{ conditions: atomicStyles.conditions }],
     },
     writable: false,
   });
 
-  return normalize;
-}
-
-export function createUtils(atomicStyles: any) {
-  return {
-    normalize: createNormalizeConditionalValue(atomicStyles),
-  };
+  return { normalize };
 }

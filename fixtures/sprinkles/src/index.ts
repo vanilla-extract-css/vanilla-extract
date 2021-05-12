@@ -1,7 +1,8 @@
 import { atoms, responsiveValue } from './styles.css';
 import testNodes from '../test-nodes.json';
 
-console.log('responsiveValue', responsiveValue.normalize([1, null, 3]));
+const n = responsiveValue.normalize('hello');
+console.log(n);
 
 function render() {
   document.body.innerHTML = `
