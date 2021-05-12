@@ -1,5 +1,13 @@
 # @vanilla-extract/babel-plugin
 
+## 0.4.1
+
+### Patch Changes
+
+- [#123](https://github.com/seek-oss/vanilla-extract/pull/123) [`72f7226`](https://github.com/seek-oss/vanilla-extract/commit/72f722674d49a5128df61045689c7a231b9f9cee) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ignore commonjs files that already have filescope information
+
+* [#123](https://github.com/seek-oss/vanilla-extract/pull/123) [`72f7226`](https://github.com/seek-oss/vanilla-extract/commit/72f722674d49a5128df61045689c7a231b9f9cee) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Use correct import style (ESM or CJS) when adding filescope information
+
 ## 0.4.0
 
 ### Minor Changes
