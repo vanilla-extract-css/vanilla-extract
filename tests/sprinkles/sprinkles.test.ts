@@ -438,6 +438,22 @@ describe('sprinkles', () => {
     });
   });
 
+  describe('createUtils - map', () => {
+    it('should handle unresponsive values', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+      const value = utils.map(
+        'foobar',
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "mobile": "foobar",
+        }
+      `);
+    });
+  });
+
   it('should create atomic styles', () => {
     expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
       Object {

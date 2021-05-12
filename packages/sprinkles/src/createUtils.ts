@@ -38,6 +38,19 @@ export function createUtils<
       | ResponsiveArray<ResponsiveLength, Value>
       | Partial<Record<ConditionName, Value>>,
   ) => Partial<Record<ConditionName, Value>>;
+  map: <
+    InputValue extends string | number,
+    OutputValue extends string | number,
+    Value extends
+      | (DefaultCondition extends false ? never : InputValue)
+      | ResponsiveArray<ResponsiveLength, InputValue>
+      | Partial<Record<ConditionName, InputValue>>
+  >(
+    value: Value,
+    fn: (inputValue: InputValue, key: ConditionName) => OutputValue,
+  ) => Value extends string | number
+    ? OutputValue
+    : Partial<Record<ConditionName, OutputValue>>;
 };
 export function createUtils<
   ConditionName extends string,
@@ -50,6 +63,18 @@ export function createUtils<
       | (DefaultCondition extends false ? never : Value)
       | Partial<Record<ConditionName, Value>>,
   ) => Partial<Record<ConditionName, Value>>;
+  map: <
+    InputValue extends string | number,
+    OutputValue extends string | number,
+    Value extends
+      | (DefaultCondition extends false ? never : InputValue)
+      | Partial<Record<ConditionName, InputValue>>
+  >(
+    value: Value,
+    fn: (inputValue: InputValue, key: ConditionName) => OutputValue,
+  ) => Value extends string | number
+    ? OutputValue
+    : Partial<Record<ConditionName, OutputValue>>;
 };
 export function createUtils(
   atomicStyles:
@@ -63,7 +88,7 @@ export function createUtils(
   }
 
   function normalize(value: any) {
-    if (typeof value === 'string') {
+    if (typeof value === 'string' || typeof value === 'number') {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
       }
@@ -89,7 +114,27 @@ export function createUtils(
     return value;
   }
 
-  const utils = { normalize };
+  function map(value: any, mapFn: any) {
+    if (typeof value === 'string' || typeof value === 'number') {
+      if (!conditions.defaultCondition) {
+        throw new Error('No default condition');
+      }
+
+      return mapFn(value, conditions.defaultCondition);
+    }
+
+    const normalizedObject = normalize(value);
+
+    let mappedObject: Record<string, string> = {};
+
+    for (const key of normalizedObject) {
+      mappedObject[key] = mapFn(normalizedObject[key], key);
+    }
+
+    return mappedObject;
+  }
+
+  const utils = { normalize, map };
 
   return addRecipe(utils, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
