@@ -7,7 +7,7 @@ function getDevPrefix(debugId: string | undefined) {
   const { filePath } = getFileScope();
 
   const matches = filePath.match(
-    /(?<dir>[^\/]*)?\/?(?<file>[^\/]*)\.css\.(ts|js|tsx|jsx)$/,
+    /(?<dir>[^\/\\]*)?[\/\\]?(?<file>[^\/\\]*)\.css\.(ts|js|tsx|jsx)$/,
   );
 
   if (matches && matches.groups) {
