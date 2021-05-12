@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash';
+import mapValues from 'lodash/mapValues';
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';

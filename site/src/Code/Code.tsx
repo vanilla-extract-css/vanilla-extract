@@ -1,5 +1,11 @@
 // @ts-ignore
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+// @ts-ignore
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
+// @ts-ignore
+import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+SyntaxHighlighter.registerLanguage('tsx', tsx);
+SyntaxHighlighter.registerLanguage('ts', ts);
 
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
