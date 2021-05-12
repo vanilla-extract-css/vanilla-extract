@@ -425,6 +425,17 @@ describe('sprinkles', () => {
       `);
     });
 
+    it('should handle responsive arrays with nulls', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+
+      expect(utils.normalize(['one', null, 'three'])).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three",
+          "mobile": "one",
+        }
+      `);
+    });
+
     it('should handle conditional objects', () => {
       const utils = createUtils(conditionalAtomicStyles);
 
@@ -446,9 +457,66 @@ describe('sprinkles', () => {
         (value, key) => `${value}_${key}` as const,
       );
 
+      expect(value).toMatchInlineSnapshot(`"foobar_mobile"`);
+    });
+
+    it('should handle responsive arrays', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+      const value = utils.map(
+        ['one', 'two'],
+        (value, key) => `${value}_${key}` as const,
+      );
+
       expect(value).toMatchInlineSnapshot(`
         Object {
-          "mobile": "foobar",
+          "mobile": "one_mobile",
+          "tablet": "two_tablet",
+        }
+      `);
+    });
+
+    it('should handle responsive arrays', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+      const value = utils.map(
+        ['one', 'two', 'three'],
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three_desktop",
+          "mobile": "one_mobile",
+          "tablet": "two_tablet",
+        }
+      `);
+    });
+
+    it('should handle responsive arrays with nulls', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+      const value = utils.map(
+        ['one', null, 'three'] as const,
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three_desktop",
+          "mobile": "one_mobile",
+        }
+      `);
+    });
+
+    it('should handle conditional objects', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+      const value = utils.map(
+        { mobile: 'one', desktop: 'three' } as const,
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three_desktop",
+          "mobile": "one_mobile",
         }
       `);
     });

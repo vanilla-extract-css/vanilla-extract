@@ -1,6 +1,18 @@
 import { addRecipe } from '@vanilla-extract/css/recipe';
 import { ResponsiveArray } from './types';
 
+type ExtractValue<
+  Value extends
+    | string
+    | number
+    | Partial<Record<string, string | number>>
+    | ResponsiveArray<number, string | number | null>
+> = Value extends ResponsiveArray<number, string | number | null>
+  ? NonNullable<Value[number]>
+  : Value extends Partial<Record<string, string | number>>
+  ? Value[keyof Value]
+  : Value;
+
 type ConditionsLookup<
   ConditionName extends string,
   DefaultCondition extends ConditionName | false
@@ -35,19 +47,18 @@ export function createUtils<
   normalize: <Value extends string | number>(
     value:
       | (DefaultCondition extends false ? never : Value)
-      | ResponsiveArray<ResponsiveLength, Value>
+      | ResponsiveArray<ResponsiveLength, Value | null>
       | Partial<Record<ConditionName, Value>>,
   ) => Partial<Record<ConditionName, Value>>;
   map: <
-    InputValue extends string | number,
     OutputValue extends string | number,
     Value extends
-      | (DefaultCondition extends false ? never : InputValue)
-      | ResponsiveArray<ResponsiveLength, InputValue>
-      | Partial<Record<ConditionName, InputValue>>
+      | (DefaultCondition extends false ? never : string | number)
+      | ResponsiveArray<ResponsiveLength, string | number | null>
+      | Partial<Record<ConditionName, string | number>>
   >(
     value: Value,
-    fn: (inputValue: InputValue, key: ConditionName) => OutputValue,
+    fn: (inputValue: ExtractValue<Value>, key: ConditionName) => OutputValue,
   ) => Value extends string | number
     ? OutputValue
     : Partial<Record<ConditionName, OutputValue>>;
@@ -64,14 +75,13 @@ export function createUtils<
       | Partial<Record<ConditionName, Value>>,
   ) => Partial<Record<ConditionName, Value>>;
   map: <
-    InputValue extends string | number,
     OutputValue extends string | number,
     Value extends
-      | (DefaultCondition extends false ? never : InputValue)
-      | Partial<Record<ConditionName, InputValue>>
+      | (DefaultCondition extends false ? never : string | number)
+      | Partial<Record<ConditionName, string | number>>
   >(
     value: Value,
-    fn: (inputValue: InputValue, key: ConditionName) => OutputValue,
+    fn: (inputValue: ExtractValue<Value>, key: ConditionName) => OutputValue,
   ) => Value extends string | number
     ? OutputValue
     : Partial<Record<ConditionName, OutputValue>>;
@@ -127,7 +137,7 @@ export function createUtils(
 
     let mappedObject: Record<string, string> = {};
 
-    for (const key of normalizedObject) {
+    for (const key in normalizedObject) {
       mappedObject[key] = mapFn(normalizedObject[key], key);
     }
 
