@@ -1,8 +1,10 @@
 import { atoms, responsiveValue } from './styles.css';
 import testNodes from '../test-nodes.json';
 
-const n = responsiveValue.normalize('hello');
-console.log(n);
+console.log('responsiveValue', responsiveValue);
+
+const { mobile, tablet, desktop } = responsiveValue.normalize('hello');
+console.log(mobile, tablet, desktop);
 
 function render() {
   document.body.innerHTML = `

@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
   AtomsFn,
@@ -195,14 +196,9 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
 ): AtomsFn<Args> {
   const atoms = internalCreateAtomsFn(...config);
 
-  Object.defineProperty(atoms, '__recipe__', {
-    value: {
-      importPath: '@vanilla-extract/sprinkles/createAtomsFn',
-      importName: 'createAtomsFn',
-      args: config,
-    },
-    writable: false,
+  return addRecipe(atoms, {
+    importPath: '@vanilla-extract/sprinkles/createAtomsFn',
+    importName: 'createAtomsFn',
+    args: config,
   });
-
-  return atoms;
 }

@@ -1,3 +1,4 @@
+import { addRecipe } from '@vanilla-extract/css/recipe';
 import { ResponsiveArray } from './types';
 
 type ConditionsLookup<
@@ -28,7 +29,7 @@ export function createUtils<
 ): {
   normalize: <Value extends string | number>(
     value: Value | Partial<Record<ConditionName, Value>>,
-  ) => Record<ConditionName, Value>;
+  ) => Partial<Record<ConditionName, Value>>;
 };
 export function createUtils<
   ConditionName extends string,
@@ -46,7 +47,7 @@ export function createUtils<
       | Value
       | ResponsiveArray<ResponsiveLength, Value>
       | Partial<Record<ConditionName, Value>>,
-  ) => Record<ConditionName, Value>;
+  ) => Partial<Record<ConditionName, Value>>;
 };
 export function createUtils(
   atomicStyles:
@@ -86,14 +87,11 @@ export function createUtils(
     return value;
   }
 
-  Object.defineProperty(normalize, '__recipe__', {
-    value: {
-      importPath: '@vanilla-extract/sprinkles/createUtils',
-      importName: 'createUtils',
-      args: [{ conditions: atomicStyles.conditions }],
-    },
-    writable: false,
-  });
+  const utils = { normalize };
 
-  return { normalize };
+  return addRecipe(utils, {
+    importPath: '@vanilla-extract/sprinkles/createUtils',
+    importName: 'createUtils',
+    args: [{ conditions: atomicStyles.conditions }],
+  });
 }

@@ -110,18 +110,11 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
     value,
     (value, _indent, next) => {
       const valueType = typeof value;
-      if (
-        valueType === 'string' ||
-        valueType === 'number' ||
-        valueType === 'undefined' ||
-        value === null ||
-        Array.isArray(value) ||
-        isPlainObject(value)
-      ) {
-        return next(value);
-      }
 
-      if (valueType === 'function' && value.__recipe__) {
+      if (
+        (valueType === 'function' || valueType === 'object') &&
+        value.__recipe__
+      ) {
         const { importPath, importName, args } = value.__recipe__;
 
         if (
@@ -150,6 +143,17 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
 
           throw new Error('Invalid recipe.');
         }
+      }
+
+      if (
+        valueType === 'string' ||
+        valueType === 'number' ||
+        valueType === 'undefined' ||
+        value === null ||
+        Array.isArray(value) ||
+        isPlainObject(value)
+      ) {
+        return next(value);
       }
 
       throw new Error(dedent`
