@@ -53,8 +53,8 @@ export function createUtils<
 };
 export function createUtils(
   atomicStyles:
-    | ConditionsLookup<any, any>
-    | ConditionsLookupWithResponsiveArray<any, any, any>,
+    | ConditionsLookup<string, string>
+    | ConditionsLookupWithResponsiveArray<string, string, number>,
 ) {
   const { conditions } = atomicStyles;
 

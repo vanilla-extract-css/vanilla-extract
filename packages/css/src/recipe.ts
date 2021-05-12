@@ -1,8 +1,10 @@
 type Primitive = string | number | null | undefined;
 
-type Serializable = {
-  [Key in string | number]: Primitive | Serializable;
-};
+type Serializable =
+  | {
+      [Key in string | number]: Primitive | Serializable;
+    }
+  | ReadonlyArray<Primitive | Serializable>;
 
 interface Recipe {
   importPath: string;
