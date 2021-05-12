@@ -121,7 +121,12 @@ export default ({
                 />
               </Box>
               <Text color="secondary" size="xsmall" type="code">
-                {title || resolvedTitle}
+                <Box
+                  component="span"
+                  color={{ lightMode: 'coolGray400', darkMode: 'gray400' }}
+                >
+                  {title || resolvedTitle}
+                </Box>
               </Text>
             </Box>
           ) : null}
