@@ -23,16 +23,6 @@ type ConditionsLookupWithResponsiveArray<
 
 export function createUtils<
   ConditionName extends string,
-  DefaultCondition extends ConditionName | false
->(
-  atomicStyles: ConditionsLookup<ConditionName, DefaultCondition>,
-): {
-  normalize: <Value extends string | number>(
-    value: Value | Partial<Record<ConditionName, Value>>,
-  ) => Partial<Record<ConditionName, Value>>;
-};
-export function createUtils<
-  ConditionName extends string,
   ResponsiveLength extends number,
   DefaultCondition extends ConditionName | false
 >(
@@ -44,8 +34,20 @@ export function createUtils<
 ): {
   normalize: <Value extends string | number>(
     value:
-      | Value
+      | (DefaultCondition extends false ? never : Value)
       | ResponsiveArray<ResponsiveLength, Value>
+      | Partial<Record<ConditionName, Value>>,
+  ) => Partial<Record<ConditionName, Value>>;
+};
+export function createUtils<
+  ConditionName extends string,
+  DefaultCondition extends ConditionName | false
+>(
+  atomicStyles: ConditionsLookup<ConditionName, DefaultCondition>,
+): {
+  normalize: <Value extends string | number>(
+    value:
+      | (DefaultCondition extends false ? never : Value)
       | Partial<Record<ConditionName, Value>>,
   ) => Partial<Record<ConditionName, Value>>;
 };

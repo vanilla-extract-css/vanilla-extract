@@ -1,3 +1,4 @@
+import { createUtils } from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -387,6 +388,53 @@ describe('sprinkles', () => {
       ).toThrowErrorMatchingInlineSnapshot(
         `"\\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
       );
+    });
+  });
+
+  describe('createUtils - normalize', () => {
+    it('should handle unresponsive values', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+
+      expect(utils.normalize('foobar')).toMatchInlineSnapshot(`
+        Object {
+          "mobile": "foobar",
+        }
+      `);
+    });
+
+    it('should handle responsive arrays', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+
+      expect(utils.normalize(['one', 'two'])).toMatchInlineSnapshot(`
+        Object {
+          "mobile": "one",
+          "tablet": "two",
+        }
+      `);
+    });
+
+    it('should handle responsive arrays', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+
+      expect(utils.normalize(['one', 'two', 'three'])).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three",
+          "mobile": "one",
+          "tablet": "two",
+        }
+      `);
+    });
+
+    it('should handle conditional objects', () => {
+      const utils = createUtils(conditionalAtomicStyles);
+
+      expect(utils.normalize({ mobile: 'one', desktop: 'three' }))
+        .toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three",
+          "mobile": "one",
+        }
+      `);
     });
   });
 

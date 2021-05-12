@@ -1,7 +1,7 @@
 /*
     This file is for validating types, it is not designed to be executed
 */
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import { createAtomicStyles, createUtils } from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -112,4 +112,19 @@ import {
 
   // Valid value - config defined outside the createAtomicStyles function
   createAtomicStyles(atomicConfig);
+
+  const utils = createUtils(conditionalAtomicStyles);
+
+  // @ts-expect-error - Too many responsive array options
+  utils.normalize(['one', 'two', 'three', 'four']);
+
+  utils.normalize({
+    // @ts-expect-error - Incorrect conditional keys
+    mobille: '',
+  });
+
+  const noDefaultUtils = createUtils(conditionalStylesWithoutDefaultCondition);
+
+  // @ts-expect-error - Should force conditional value as no default condition
+  noDefaultUtils.normalize('test');
 };
