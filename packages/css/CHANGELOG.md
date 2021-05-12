@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 0.4.4
+
+### Patch Changes
+
+- [#121](https://github.com/seek-oss/vanilla-extract/pull/121) [`823478b`](https://github.com/seek-oss/vanilla-extract/commit/823478b942e91a7b371743651cf1dc35823be98a) Thanks [@Brendan-csel](https://github.com/Brendan-csel)! - Fix development identifiers for Windows paths
+
 ## 0.4.3
 
 ### Patch Changes
