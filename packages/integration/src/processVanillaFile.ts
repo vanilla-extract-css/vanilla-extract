@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
@@ -89,11 +91,13 @@ export function processVanillaFile({
     }).join('\n');
 
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');
-    const fileName = `${
-      filescope.packageName
-        ? `${filescope.packageName}/${filescope.filePath}`
-        : filescope.filePath
-    }.vanilla.css`;
+    const fileName = path.normalize(
+      `${
+        filescope.packageName
+          ? `${filescope.packageName}/${filescope.filePath}`
+          : filescope.filePath
+      }.vanilla.css`,
+    );
 
     const virtualCssFilePath = serializeVirtualCssPath
       ? serializeVirtualCssPath({ fileName, base64Source })
