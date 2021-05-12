@@ -1,26 +1,14 @@
 import { createElement, AllHTMLAttributes, ElementType } from 'react';
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 import classnames from 'classnames';
 import * as resetStyles from '../styles/reset.css';
-import {
-  responsiveStyles,
-  colorStyles,
-  unresponsiveStyles,
-} from '../styles/atoms.css';
+import { atoms, Atoms } from '../styles/atoms.css';
 
-export const atoms = createAtomsFn({
-  ...unresponsiveStyles,
-  ...colorStyles,
-  ...responsiveStyles,
-});
-
-export type AtomProps = Parameters<typeof atoms>[0];
 export interface BoxProps
   extends Omit<
       AllHTMLAttributes<HTMLElement>,
       'content' | 'height' | 'translate' | 'color' | 'width' | 'cursor'
     >,
-    AtomProps {
+    Atoms {
   component?: ElementType;
 }
 
