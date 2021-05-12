@@ -123,8 +123,17 @@ import {
     mobille: '',
   });
 
+  // @ts-expect-error - Strings shouldn't map to objects
+  utils.map(alignProp, () => 'baz').mobile;
+
+  // @ts-expect-error - Numbers shouldn't map to objects
+  utils.map(3, () => 4).mobile;
+
   const noDefaultUtils = createUtils(conditionalStylesWithoutDefaultCondition);
 
   // @ts-expect-error - Should force conditional value as no default condition
   noDefaultUtils.normalize('test');
+
+  // @ts-expect-error - Should force conditional value as no default condition
+  noDefaultUtils.map('test');
 };

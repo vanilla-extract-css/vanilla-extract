@@ -133,7 +133,7 @@ export function createUtils(
       return mapFn(value, conditions.defaultCondition);
     }
 
-    const normalizedObject = normalize(value);
+    const normalizedObject = Array.isArray(value) ? normalize(value) : value;
 
     let mappedObject: Record<string, string> = {};
 
