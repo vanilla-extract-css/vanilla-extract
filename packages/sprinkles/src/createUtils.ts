@@ -1,9 +1,53 @@
-import { ConditionalAtomicStyles, ConditionalProperty } from './types';
+import {
+  AtomicProperties,
+  Condition,
+  ConditionalAtomicStyles,
+  ConditionalWithResponsiveArrayAtomicStyles,
+  ResponsiveArray,
+} from './types';
 
-type ConditionalValue = any;
-
+export function createNormalizeConditionalValue<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition },
+  DefaultCondition extends keyof Conditions | false,
+  Value extends string | number
+>(
+  atomicStyles: ConditionalAtomicStyles<
+    Properties,
+    Conditions,
+    DefaultCondition
+  >,
+): (
+  value: Value | { [conditionName in keyof Conditions]?: Value | null },
+) => { [conditionName in keyof Conditions]: Value };
+export function createNormalizeConditionalValue<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition },
+  ResponsiveLength extends number,
+  DefaultCondition extends keyof Conditions | false,
+  Value extends string | number
+>(
+  atomicStyles: ConditionalWithResponsiveArrayAtomicStyles<
+    Properties,
+    Conditions,
+    ResponsiveLength,
+    DefaultCondition
+  >,
+): (
+  value:
+    | Value
+    | ResponsiveArray<ResponsiveLength, Value>
+    | { [conditionName in keyof Conditions]?: Value | null },
+) => { [conditionName in keyof Conditions]: Value };
 export function createNormalizeConditionalValue(
-  atomicStyles: ConditionalAtomicStyles,
+  atomicStyles:
+    | ConditionalAtomicStyles<any, { [conditionName: string]: any }, any>
+    | ConditionalWithResponsiveArrayAtomicStyles<
+        any,
+        { [conditionName: string]: any },
+        any,
+        any
+      >,
 ) {
   const { conditions } = atomicStyles;
 
@@ -11,7 +55,7 @@ export function createNormalizeConditionalValue(
     throw new Error('Styles have no conditions');
   }
 
-  function normalize(value: ConditionalValue) {
+  function normalize(value: any) {
     if (typeof value === 'string') {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
@@ -21,11 +65,11 @@ export function createNormalizeConditionalValue(
     }
 
     if (Array.isArray(value)) {
-      if (!conditions.responsiveArray) {
+      if (!('responsiveArray' in conditions)) {
         throw new Error('Responsive arrays are not supported');
       }
 
-      let returnValue = {};
+      let returnValue: Record<string, string> = {};
       for (const index in conditions.responsiveArray) {
         if (value[index] != null) {
           returnValue[conditions.responsiveArray[index]] = value[index];
@@ -50,7 +94,7 @@ export function createNormalizeConditionalValue(
   return normalize;
 }
 
-export function createUtils(atomicStyles: ConditionalAtomicStyles) {
+export function createUtils(atomicStyles: any) {
   return {
     normalize: createNormalizeConditionalValue(atomicStyles),
   };

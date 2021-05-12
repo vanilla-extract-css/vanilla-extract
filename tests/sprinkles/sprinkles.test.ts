@@ -393,6 +393,7 @@ describe('sprinkles', () => {
   it('should create atomic styles', () => {
     expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
       Object {
+        "conditions": undefined,
         "styles": Object {
           "anotherPaddingX": Object {
             "mappings": Array [
@@ -453,6 +454,19 @@ describe('sprinkles', () => {
   it('should create conditional atomic styles', () => {
     expect(conditionalAtomicStyles).toMatchInlineSnapshot(`
       Object {
+        "conditions": Object {
+          "conditionNames": Array [
+            "mobile",
+            "tablet",
+            "desktop",
+          ],
+          "defaultCondition": "mobile",
+          "responsiveArray": Array [
+            "mobile",
+            "tablet",
+            "desktop",
+          ],
+        },
         "styles": Object {
           "display": Object {
             "responsiveArray": Array [
