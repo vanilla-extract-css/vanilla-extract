@@ -92,9 +92,13 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: join(__dirname, 'src/assets') }],
       }),
-      new BundleAnalyzerPlugin({
-        openAnalyzer: false,
-      }),
+      ...(process.env.CI !== 'true'
+        ? [
+            new BundleAnalyzerPlugin({
+              openAnalyzer: false,
+            }),
+          ]
+        : []),
     ],
     stats: 'errors-only',
   },
