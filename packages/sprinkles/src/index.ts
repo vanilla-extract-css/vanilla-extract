@@ -20,6 +20,7 @@ import {
 } from './types';
 
 export { createUtils } from './createUtils';
+export type { ConditionalValue } from './createUtils';
 
 // Conditional + Shorthands + ResponsiveArray
 export function createAtomicStyles<

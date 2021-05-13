@@ -1,6 +1,13 @@
 import { Children, ReactNode } from 'react';
 import { Box } from '../';
 import { BoxProps } from '../Box/Box';
+import { responsiveValue, ResponsiveValue } from '../styles/atoms.css';
+
+const alignToAlignItems = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+} as const;
 
 export const Stack = ({
   children,
@@ -9,12 +16,15 @@ export const Stack = ({
 }: {
   children: ReactNode;
   space: BoxProps['paddingBottom'];
-  align?: BoxProps['alignItems'];
+  align?: ResponsiveValue<'left' | 'center' | 'right'>;
 }) => {
   const stackItems = Children.toArray(children);
+  const alignItems = align
+    ? responsiveValue.map(align, (value) => alignToAlignItems[value])
+    : undefined;
 
   return (
-    <Box display="flex" flexDirection="column" alignItems={align}>
+    <Box display="flex" flexDirection="column" alignItems={alignItems}>
       {stackItems.map((item, index) => (
         <Box
           key={index}

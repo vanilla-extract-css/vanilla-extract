@@ -1,4 +1,4 @@
-type Primitive = string | number | null | undefined;
+type Primitive = string | number | boolean | null | undefined;
 
 type Serializable =
   | {

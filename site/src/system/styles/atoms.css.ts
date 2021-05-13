@@ -1,5 +1,10 @@
 import { mapValues } from 'lodash';
-import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
+import {
+  createAtomicStyles,
+  createAtomsFn,
+  createUtils,
+  ConditionalValue,
+} from '@vanilla-extract/sprinkles';
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';
 import { vars } from '../../themes.css';
@@ -27,6 +32,7 @@ const responsiveStyles = createAtomicStyles({
     bp === 0 ? {} : { '@media': `screen and (min-width: ${bp}px)` },
   ),
   defaultCondition: 'mobile',
+  responsiveArray: ['mobile', 'tablet', 'desktop'],
   properties: {
     position: ['absolute', 'relative', 'fixed'],
     display: ['none', 'block', 'inline', 'inline-block', 'flex'],
@@ -55,6 +61,12 @@ const responsiveStyles = createAtomicStyles({
     marginY: ['marginTop', 'marginBottom'],
   },
 });
+
+export const responsiveValue = createUtils(responsiveStyles);
+export type ResponsiveValue<Value> = ConditionalValue<
+  typeof responsiveStyles,
+  Value
+>;
 
 export const lightMode = 'light';
 export const darkMode = 'dark';

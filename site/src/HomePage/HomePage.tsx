@@ -115,7 +115,7 @@ export const HomePage = () => {
                 >
                   <Stack
                     space="xxlarge"
-                    align={{ mobile: 'center', desktop: 'flex-start' }}
+                    align={{ mobile: 'center', desktop: 'left' }}
                   >
                     <Box
                       display="flex"

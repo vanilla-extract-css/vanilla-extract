@@ -10,87 +10,54 @@ type ExtractValue<
 > = Value extends ResponsiveArray<number, string | number | null>
   ? NonNullable<Value[number]>
   : Value extends Partial<Record<string, string | number>>
-  ? Value[keyof Value]
+  ? NonNullable<Value[keyof Value]>
   : Value;
 
-type ConditionsLookup<
-  ConditionName extends string,
-  DefaultCondition extends ConditionName | false
-> = {
+type Conditions<ConditionName extends string> = {
   conditions: {
-    defaultCondition: DefaultCondition;
+    defaultCondition: ConditionName | false;
     conditionNames: Array<ConditionName>;
+    responsiveArray?: Array<ConditionName>;
   };
 };
 
-type ConditionsLookupWithResponsiveArray<
-  ConditionName extends string,
-  DefaultCondition extends ConditionName | false,
-  ResponsiveLength extends number
-> = ConditionsLookup<ConditionName, DefaultCondition> & {
-  conditions: {
-    responsiveArray: Array<ConditionName> & { length: ResponsiveLength };
-  };
-};
+type ExtractDefaultCondition<
+  AtomicStyles extends Conditions<string>
+> = AtomicStyles['conditions']['defaultCondition'];
 
-export function createUtils<
-  ConditionName extends string,
-  ResponsiveLength extends number,
-  DefaultCondition extends ConditionName | false
->(
-  atomicStyles: ConditionsLookupWithResponsiveArray<
-    ConditionName,
-    DefaultCondition,
-    ResponsiveLength
-  >,
+type ExtractConditionNames<
+  AtomicStyles extends Conditions<string>
+> = AtomicStyles['conditions']['conditionNames'][number];
+
+export type ConditionalValue<AtomicStyles extends Conditions<string>, Value> =
+  | (ExtractDefaultCondition<AtomicStyles> extends false ? never : Value)
+  | Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>
+  | (AtomicStyles['conditions']['responsiveArray'] extends { length: number }
+      ? ResponsiveArray<
+          AtomicStyles['conditions']['responsiveArray']['length'],
+          Value | null
+        >
+      : never);
+
+export function createUtils<AtomicStyles extends Conditions<string>>(
+  atomicStyles: AtomicStyles,
 ): {
   normalize: <Value extends string | number>(
-    value:
-      | (DefaultCondition extends false ? never : Value)
-      | ResponsiveArray<ResponsiveLength, Value | null>
-      | Partial<Record<ConditionName, Value>>,
-  ) => Partial<Record<ConditionName, Value>>;
+    value: ConditionalValue<AtomicStyles, Value>,
+  ) => Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>;
   map: <
     OutputValue extends string | number,
-    Value extends
-      | (DefaultCondition extends false ? never : string | number)
-      | ResponsiveArray<ResponsiveLength, string | number | null>
-      | Partial<Record<ConditionName, string | number>>
+    Value extends ConditionalValue<AtomicStyles, string | number>
   >(
     value: Value,
-    fn: (inputValue: ExtractValue<Value>, key: ConditionName) => OutputValue,
+    fn: (
+      inputValue: ExtractValue<Value>,
+      key: ExtractConditionNames<AtomicStyles>,
+    ) => OutputValue,
   ) => Value extends string | number
     ? OutputValue
-    : Partial<Record<ConditionName, OutputValue>>;
-};
-export function createUtils<
-  ConditionName extends string,
-  DefaultCondition extends ConditionName | false
->(
-  atomicStyles: ConditionsLookup<ConditionName, DefaultCondition>,
-): {
-  normalize: <Value extends string | number>(
-    value:
-      | (DefaultCondition extends false ? never : Value)
-      | Partial<Record<ConditionName, Value>>,
-  ) => Partial<Record<ConditionName, Value>>;
-  map: <
-    OutputValue extends string | number,
-    Value extends
-      | (DefaultCondition extends false ? never : string | number)
-      | Partial<Record<ConditionName, string | number>>
-  >(
-    value: Value,
-    fn: (inputValue: ExtractValue<Value>, key: ConditionName) => OutputValue,
-  ) => Value extends string | number
-    ? OutputValue
-    : Partial<Record<ConditionName, OutputValue>>;
-};
-export function createUtils(
-  atomicStyles:
-    | ConditionsLookup<string, string>
-    | ConditionsLookupWithResponsiveArray<string, string, number>,
-) {
+    : Partial<Record<ExtractConditionNames<AtomicStyles>, OutputValue>>;
+} {
   const { conditions } = atomicStyles;
 
   if (!conditions) {
@@ -112,9 +79,10 @@ export function createUtils(
       }
 
       let returnValue: Record<string, string> = {};
-      for (const index in conditions.responsiveArray) {
+      for (const index in conditions.responsiveArray as Array<string>) {
         if (value[index] != null) {
-          returnValue[conditions.responsiveArray[index]] = value[index];
+          returnValue[(conditions.responsiveArray as Array<string>)[index]] =
+            value[index];
         }
       }
 
