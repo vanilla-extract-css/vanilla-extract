@@ -683,7 +683,9 @@ const Feature = ({
         borderRadius="medium"
       />
       <Stack space="xlarge">
-        <Heading level="4">{title}</Heading>
+        <Heading level="4" component="h2">
+          {title}
+        </Heading>
         <Text size="small" color="secondary">
           {children}
         </Text>

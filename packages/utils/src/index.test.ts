@@ -64,6 +64,12 @@ describe('utils', () => {
       expect(`${calc('10px').add('20px')}`).toMatchInlineSnapshot(
         `"calc(10px + 20px)"`,
       );
+      expect(
+        `${calc('10px').add(calc('20px').subtract('4em'))}`,
+      ).toMatchInlineSnapshot(`"calc(10px + (20px - 4em))"`);
+      expect(`${calc('10px').add(calc('20px'))}`).toMatchInlineSnapshot(
+        `"calc(10px + 20px)"`,
+      );
     });
   });
 
