@@ -125,10 +125,6 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
         return next(value);
       }
 
-      if (valueType === 'function') {
-        console.log(value.__recipe__);
-      }
-
       if (valueType === 'function' && value.__recipe__) {
         const { importPath, importName, args } = value.__recipe__;
 
