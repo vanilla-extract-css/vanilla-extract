@@ -1,4 +1,7 @@
-import { createUtils } from '@vanilla-extract/sprinkles';
+import {
+  createMapValueFn,
+  createNormalizeValueFn,
+} from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -391,11 +394,11 @@ describe('sprinkles', () => {
     });
   });
 
-  describe('createUtils - normalize', () => {
+  describe('createNormalizeValueFn', () => {
     it('should handle unresponsive values', () => {
-      const utils = createUtils(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
-      expect(utils.normalize('foobar')).toMatchInlineSnapshot(`
+      expect(normalizeValue('foobar')).toMatchInlineSnapshot(`
         Object {
           "mobile": "foobar",
         }
@@ -403,9 +406,9 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const utils = createUtils(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
-      expect(utils.normalize(['one', 'two'])).toMatchInlineSnapshot(`
+      expect(normalizeValue(['one', 'two'])).toMatchInlineSnapshot(`
         Object {
           "mobile": "one",
           "tablet": "two",
@@ -414,9 +417,9 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const utils = createUtils(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
-      expect(utils.normalize(['one', 'two', 'three'])).toMatchInlineSnapshot(`
+      expect(normalizeValue(['one', 'two', 'three'])).toMatchInlineSnapshot(`
         Object {
           "desktop": "three",
           "mobile": "one",
@@ -426,9 +429,9 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with nulls', () => {
-      const utils = createUtils(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
-      expect(utils.normalize(['one', null, 'three'])).toMatchInlineSnapshot(`
+      expect(normalizeValue(['one', null, 'three'])).toMatchInlineSnapshot(`
         Object {
           "desktop": "three",
           "mobile": "one",
@@ -437,9 +440,9 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects', () => {
-      const utils = createUtils(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
-      expect(utils.normalize({ mobile: 'one', desktop: 'three' }))
+      expect(normalizeValue({ mobile: 'one', desktop: 'three' }))
         .toMatchInlineSnapshot(`
         Object {
           "desktop": "three",
@@ -449,10 +452,10 @@ describe('sprinkles', () => {
     });
   });
 
-  describe('createUtils - map', () => {
+  describe('createMapValueFn', () => {
     it('should handle unresponsive values', () => {
-      const utils = createUtils(conditionalAtomicStyles);
-      const value = utils.map(
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
         'foobar',
         (value, key) => `${value}_${key}` as const,
       );
@@ -461,8 +464,8 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const utils = createUtils(conditionalAtomicStyles);
-      const value = utils.map(
+      const map = createMapValueFn(conditionalAtomicStyles);
+      const value = map(
         ['one', 'two'],
         (value, key) => `${value}_${key}` as const,
       );
@@ -476,8 +479,8 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const utils = createUtils(conditionalAtomicStyles);
-      const value = utils.map(
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
         ['one', 'two', 'three'],
         (value, key) => `${value}_${key}` as const,
       );
@@ -492,8 +495,8 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with nulls', () => {
-      const utils = createUtils(conditionalAtomicStyles);
-      const value = utils.map(
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
         ['one', null, 'three'] as const,
         (value, key) => `${value}_${key}` as const,
       );
@@ -507,8 +510,8 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects', () => {
-      const utils = createUtils(conditionalAtomicStyles);
-      const value = utils.map(
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
         { mobile: 'one', desktop: 'three' } as const,
         (value, key) => `${value}_${key}` as const,
       );

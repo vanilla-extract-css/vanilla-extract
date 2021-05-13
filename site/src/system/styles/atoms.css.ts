@@ -2,7 +2,8 @@ import { mapValues } from 'lodash';
 import {
   createAtomicStyles,
   createAtomsFn,
-  createUtils,
+  createMapValueFn,
+  createNormalizeValueFn,
   ConditionalValue,
 } from '@vanilla-extract/sprinkles';
 import { calc } from '@vanilla-extract/css-utils';
@@ -62,7 +63,11 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-export const responsiveValue = createUtils(responsiveStyles);
+export const mapResponsiveValue = createMapValueFn(responsiveStyles);
+export const normalizeResponsiveValue = createNormalizeValueFn(
+  responsiveStyles,
+);
+
 export type ResponsiveValue<Value> = ConditionalValue<
   typeof responsiveStyles,
   Value

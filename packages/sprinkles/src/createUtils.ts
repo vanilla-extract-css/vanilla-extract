@@ -39,32 +39,18 @@ export type ConditionalValue<AtomicStyles extends Conditions<string>, Value> =
         >
       : never);
 
-export function createUtils<AtomicStyles extends Conditions<string>>(
+export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
   atomicStyles: AtomicStyles,
-): {
-  normalize: <Value extends string | number>(
-    value: ConditionalValue<AtomicStyles, Value>,
-  ) => Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>;
-  map: <
-    OutputValue extends string | number,
-    Value extends ConditionalValue<AtomicStyles, string | number>
-  >(
-    value: Value,
-    fn: (
-      inputValue: ExtractValue<Value>,
-      key: ExtractConditionNames<AtomicStyles>,
-    ) => OutputValue,
-  ) => Value extends string | number
-    ? OutputValue
-    : Partial<Record<ExtractConditionNames<AtomicStyles>, OutputValue>>;
-} {
+): <Value extends string | number>(
+  value: ConditionalValue<AtomicStyles, Value>,
+) => Partial<Record<ExtractConditionNames<AtomicStyles>, Value>> {
   const { conditions } = atomicStyles;
 
   if (!conditions) {
     throw new Error('Styles have no conditions');
   }
 
-  function normalize(value: any) {
+  function normalizeValue(value: any) {
     if (typeof value === 'string' || typeof value === 'number') {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
@@ -92,7 +78,36 @@ export function createUtils<AtomicStyles extends Conditions<string>>(
     return value;
   }
 
-  function map(value: any, mapFn: any) {
+  return addRecipe(normalizeValue, {
+    importPath: '@vanilla-extract/sprinkles/createUtils',
+    importName: 'createNormalizeValueFn',
+    args: [{ conditions: atomicStyles.conditions }],
+  });
+}
+
+export function createMapValueFn<AtomicStyles extends Conditions<string>>(
+  atomicStyles: AtomicStyles,
+): <
+  OutputValue extends string | number,
+  Value extends ConditionalValue<AtomicStyles, string | number>
+>(
+  value: Value,
+  fn: (
+    inputValue: ExtractValue<Value>,
+    key: ExtractConditionNames<AtomicStyles>,
+  ) => OutputValue,
+) => Value extends string | number
+  ? OutputValue
+  : Partial<Record<ExtractConditionNames<AtomicStyles>, OutputValue>> {
+  const { conditions } = atomicStyles;
+
+  if (!conditions) {
+    throw new Error('Styles have no conditions');
+  }
+
+  const normalizeValue = createNormalizeValueFn(atomicStyles);
+
+  function mapValue(value: any, mapFn: any) {
     if (typeof value === 'string' || typeof value === 'number') {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
@@ -101,7 +116,9 @@ export function createUtils<AtomicStyles extends Conditions<string>>(
       return mapFn(value, conditions.defaultCondition);
     }
 
-    const normalizedObject = Array.isArray(value) ? normalize(value) : value;
+    const normalizedObject = Array.isArray(value)
+      ? normalizeValue(value as any)
+      : value;
 
     let mappedObject: Record<string, string> = {};
 
@@ -112,11 +129,9 @@ export function createUtils<AtomicStyles extends Conditions<string>>(
     return mappedObject;
   }
 
-  const utils = { normalize, map };
-
-  return addRecipe(utils, {
+  return addRecipe(mapValue, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
-    importName: 'createUtils',
+    importName: 'createMapValueFn',
     args: [{ conditions: atomicStyles.conditions }],
   });
 }

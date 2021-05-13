@@ -1,7 +1,8 @@
 import {
   createAtomicStyles,
   createAtomsFn,
-  createUtils,
+  createMapValueFn,
+  createNormalizeValueFn,
 } from '@vanilla-extract/sprinkles';
 
 const responsiveStyles = createAtomicStyles({
@@ -30,6 +31,9 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-export const responsiveValue = createUtils(responsiveStyles);
-
 export const atoms = createAtomsFn(responsiveStyles);
+
+export const mapResponsiveValue = createMapValueFn(responsiveStyles);
+export const normalizeResponsiveValue = createNormalizeValueFn(
+  responsiveStyles,
+);

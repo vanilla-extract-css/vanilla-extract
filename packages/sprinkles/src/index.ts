@@ -19,7 +19,7 @@ import {
   UnconditionalAtomicStyles,
 } from './types';
 
-export { createUtils } from './createUtils';
+export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue } from './createUtils';
 
 // Conditional + Shorthands + ResponsiveArray

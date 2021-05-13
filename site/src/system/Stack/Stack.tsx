@@ -1,7 +1,7 @@
 import { Children, ReactNode } from 'react';
 import { Box } from '../';
 import { BoxProps } from '../Box/Box';
-import { responsiveValue, ResponsiveValue } from '../styles/atoms.css';
+import { mapResponsiveValue, ResponsiveValue } from '../styles/atoms.css';
 
 const alignToAlignItems = {
   left: 'flex-start',
@@ -20,7 +20,7 @@ export const Stack = ({
 }) => {
   const stackItems = Children.toArray(children);
   const alignItems = align
-    ? responsiveValue.map(align, (value) => alignToAlignItems[value])
+    ? mapResponsiveValue(align, (value) => alignToAlignItems[value])
     : undefined;
 
   return (

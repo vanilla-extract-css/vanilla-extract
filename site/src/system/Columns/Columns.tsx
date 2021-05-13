@@ -1,6 +1,10 @@
 import { Children, ReactNode } from 'react';
 import { Box } from '../Box/Box';
-import { responsiveValue, ResponsiveValue, Space } from '../styles/atoms.css';
+import {
+  mapResponsiveValue,
+  ResponsiveValue,
+  Space,
+} from '../styles/atoms.css';
 
 type AlignY = 'top' | 'center' | 'bottom';
 
@@ -47,7 +51,7 @@ export const Columns = ({
       }
       alignItems={
         alignY
-          ? responsiveValue.map(alignY, (value) => alignYToFlexAlign[value])
+          ? mapResponsiveValue(alignY, (value) => alignYToFlexAlign[value])
           : undefined
       }
       marginLeft={
