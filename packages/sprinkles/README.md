@@ -226,6 +226,9 @@ document.write(`
     - [`defaultCondition`](#defaultcondition)
     - [`responsiveArray`](#responsivearray)
   - [createAtomsFn](#createatomsfn)
+- [Utilities](#utilities)
+  - [createMapValueFn](#createmapvaluefn)
+  - [createNormalizeValueFn](#createnormalizevaluefn)
 - [Thanks](#thanks)
 - [License](#license)
 
@@ -256,7 +259,7 @@ const colors = {
   // etc.
 };
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -285,7 +288,7 @@ const colorStyles = createAtomicStyles({
 });
 
 export const atoms = createAtomsFn(
-  layoutStyles,
+  responsiveStyles,
   colorStyles
 );
 ```
@@ -301,7 +304,7 @@ For simple mappings (i.e. valid CSS values), values can be provided as an array.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   properties: {
     display: ['none', 'block', 'flex'],
     flexDirection: ['row', 'column'],
@@ -317,7 +320,7 @@ For semantic mappings (e.g. space scales, color palettes), values can be provide
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   properties: {
     gap: {
       none: 0,
@@ -336,7 +339,7 @@ You can also use [vanilla-extract themes](https://github.com/seek-oss/vanilla-ex
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { vars } from './vars.css.ts';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   properties: {
     gap: vars.space,
     // etc.
@@ -354,7 +357,7 @@ Maps custom shorthand properties to multiple underlying CSS properties. This is 
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 import { vars } from './vars.css.ts';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   properties: {
     paddingTop: vars.space,
     paddingBottom: vars.space,
@@ -376,7 +379,7 @@ Allows you to create atomic classes for a set of media/feature queries.
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -412,7 +415,7 @@ Defines which condition should be used when a non-conditional value is requested
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -430,7 +433,7 @@ You can also set `defaultCondition` to `false`. This forces you to be explicit a
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     lightMode: { '@media': '(prefers-color-scheme: light)' },
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
@@ -447,7 +450,7 @@ Optionally enables responsive array notation (e.g. `['column', 'row']`) by defin
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -466,7 +469,7 @@ Turns your [atomic styles](#createatomicstyles) into a type-safe function for ac
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
-const layoutStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   // etc.
 });
 
@@ -474,14 +477,9 @@ const colorStyles = createAtomicStyles({
   // etc.
 });
 
-const typographyStyles = createAtomicStyles({
-  // etc.
-});
-
 export const atoms = createAtomsFn(
-  layoutStyles,
+  responsiveStyles,
   colorStyles,
-  typographyStyles
 );
 ```
 
@@ -492,6 +490,87 @@ atoms.properties.has('paddingX'); // returns true or false
 ```
 
 > 💡 This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you’ll need some way to filter atom props from non-atom props.
+
+
+## Utilities
+
+### createMapValueFn
+
+Creates a function for mapping over conditional values.
+
+This function is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+
+> 💡 You can name the generated function whatever you like, typically based on the name of the conditions.
+
+```ts
+import {
+  createAtomicStyles,
+  createAtomsFn,
+  createMapValueFn
+} from '@vanilla-extract/sprinkles';
+
+const responsiveStyles = createAtomicStyles({ /* ... */ });
+
+export const atoms = createAtomsFn(responsiveStyles);
+export const mapResponsiveValue = createMapValueFn(responsiveStyles);
+```
+
+You can then import the generated function in your runtime code.
+
+> 💡 This is useful for converting high-level prop values to low-level atom values, e.g. converting left/right to flex-start/flex-end.
+
+```ts
+import { mapResponsiveValue } from './atoms.css.ts';
+
+const alignToFlexAlign = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+  stretch: 'stretch'
+} as const;
+
+mapResponsiveValue({
+  mobile: 'center',
+  desktop: 'left'
+} as const, (value) => alignToFlexAlign[value]);
+// -> { mobile: 'center', desktop: 'flex-start' }
+```
+
+### createNormalizeValueFn
+
+Creates a function for normalizing conditional values into a consistent object stucture. Any primitive values or responsive arrays will be converted to conditional objects.
+
+This function is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+
+> 💡 You can name the generated function whatever you like, typically based on the name of the conditions.
+
+```ts
+import {
+  createAtomicStyles,
+  createAtomsFn,
+  createNormalizeValueFn
+} from '@vanilla-extract/sprinkles';
+
+const responsiveStyles = createAtomicStyles({ /* ... */ });
+
+export const atoms = createAtomsFn(responsiveStyles);
+export const normalizeResponsiveValue = createNormalizeValueFn(responsiveStyles);
+```
+
+You can then import the generated function in your runtime code.
+
+```ts
+import { normalizeResponsiveValue } from './atoms.css.ts';
+
+normalizeResponsiveValue('block');
+// -> { mobile: 'block' }
+
+normalizeResponsiveValue(['none', null, 'block' ]);
+// -> { mobile: 'block', desktop: 'block' }
+
+normalizeResponsiveValue({ mobile: 'none', desktop: 'block' });
+// -> { mobile: 'block', desktop: 'block' }
+```
 
 ---
 
