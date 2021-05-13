@@ -45,7 +45,7 @@ const UNITLESS: Record<string, boolean> = {
   order: true,
   orphans: true,
   tabSize: true,
-  webkitLineClamp: true,
+  WebkitLineClamp: true,
   widows: true,
   zIndex: true,
   zoom: true,
