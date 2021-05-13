@@ -517,7 +517,7 @@ export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 
 You can then import the generated function in your runtime code.
 
-> 💡 This is useful for converting high-level prop values to low-level atom values, e.g. converting left/right to flex-start/flex-end.
+> 💡 This is useful for converting high-level prop values to low-level atom values, e.g. converting left/right to flex-start/end.
 
 ```ts
 import { mapResponsiveValue } from './atoms.css.ts';
@@ -529,10 +529,20 @@ const alignToFlexAlign = {
   stretch: 'stretch'
 } as const;
 
+mapResponsiveValue('left', (value) => alignToFlexAlign[value]);
+// -> 'flex-start'
+
 mapResponsiveValue({
   mobile: 'center',
   desktop: 'left'
 } as const, (value) => alignToFlexAlign[value]);
+// -> { mobile: 'center', desktop: 'flex-start' }
+
+mapResponsiveValue([
+  'center',
+  null,
+  'left'
+] as const, (value) => alignToFlexAlign[value]);
 // -> { mobile: 'center', desktop: 'flex-start' }
 ```
 
