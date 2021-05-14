@@ -126,7 +126,9 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
     const mappedObject: Record<string, string> = {};
 
     for (const key in normalizedObject) {
-      mappedObject[key] = mapFn(normalizedObject[key], key);
+      if (normalizedObject[key] != null) {
+        mappedObject[key] = mapFn(normalizedObject[key], key);
+      }
     }
 
     return mappedObject;

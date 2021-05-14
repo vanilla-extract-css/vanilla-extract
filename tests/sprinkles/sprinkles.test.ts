@@ -551,6 +551,21 @@ describe('sprinkles', () => {
         }
       `);
     });
+
+    it('should handle conditional objects with undefined', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
+        { mobile: 'one', tablet: undefined, desktop: 'three' } as const,
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three_desktop",
+          "mobile": "one_mobile",
+        }
+      `);
+    });
   });
 
   it('should create atomic styles', () => {
