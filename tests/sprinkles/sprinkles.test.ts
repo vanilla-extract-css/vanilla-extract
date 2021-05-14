@@ -31,6 +31,17 @@ describe('sprinkles', () => {
       );
     });
 
+    it('should ignore undefined values', () => {
+      const atoms = createAtomsFn(conditionalAtomicStyles);
+
+      expect(
+        atoms({
+          display: 'block',
+          paddingTop: undefined,
+        }),
+      ).toMatchInlineSnapshot(`"sprinkles_display_block_mobile__1kw4brej"`);
+    });
+
     it('should handle falsey values on conditional styles', () => {
       const atoms = createAtomsFn(conditionalAtomicStyles);
 
@@ -82,6 +93,25 @@ describe('sprinkles', () => {
         }),
       ).toMatchInlineSnapshot(
         `"sprinkles_display_block_mobile__1kw4brej sprinkles_display_flex_desktop__1kw4brer sprinkles_color_gray-500__1kw4brea"`,
+      );
+    });
+
+    it('should ignore undefined conditional values', () => {
+      const atoms = createAtomsFn(
+        atomicWithShorthandStyles,
+        conditionalAtomicStyles,
+      );
+
+      expect(
+        atoms({
+          paddingTop: {
+            mobile: 'medium',
+            tablet: undefined,
+            desktop: 'large',
+          },
+        }),
+      ).toMatchInlineSnapshot(
+        `"sprinkles_paddingTop_medium_mobile__1kw4brev sprinkles_paddingTop_large_desktop__1kw4bre10"`,
       );
     });
 
@@ -450,6 +480,20 @@ describe('sprinkles', () => {
         }
       `);
     });
+
+    it('should handle conditional objects with undefined', () => {
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+
+      expect(
+        normalizeValue({ mobile: 'one', tablet: undefined, desktop: 'three' }),
+      ).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three",
+          "mobile": "one",
+          "tablet": undefined,
+        }
+      `);
+    });
   });
 
   describe('createMapValueFn', () => {
@@ -541,6 +585,21 @@ describe('sprinkles', () => {
       const mapValue = createMapValueFn(conditionalAtomicStyles);
       const value = mapValue(
         { mobile: 'one', desktop: 'three' } as const,
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three_desktop",
+          "mobile": "one_mobile",
+        }
+      `);
+    });
+
+    it('should handle conditional objects with undefined', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
+        { mobile: 'one', tablet: undefined, desktop: 'three' } as const,
         (value, key) => `${value}_${key}` as const,
       );
 
