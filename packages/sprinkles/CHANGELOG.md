@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.3.1
+
+### Patch Changes
+
+- [#139](https://github.com/seek-oss/vanilla-extract/pull/139) [`152a1c7`](https://github.com/seek-oss/vanilla-extract/commit/152a1c7e3a29cc074f73c37d81428a75705057b9) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ignore undefined values in conditional objects
+
 ## 0.3.0
 
 ### Minor Changes
