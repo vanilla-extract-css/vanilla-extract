@@ -33,7 +33,6 @@ const responsiveStyles = createAtomicStyles({
     bp === 0 ? {} : { '@media': `screen and (min-width: ${bp}px)` },
   ),
   defaultCondition: 'mobile',
-  responsiveArray: ['mobile', 'tablet', 'desktop'],
   properties: {
     position: ['absolute', 'relative', 'fixed'],
     display: ['none', 'block', 'inline', 'inline-block', 'flex'],
@@ -105,9 +104,9 @@ const unresponsiveStyles = createAtomicStyles({
 });
 
 export const atoms = createAtomsFn(
+  responsiveStyles,
   unresponsiveStyles,
   colorStyles,
-  responsiveStyles,
 );
 
 export type Atoms = Parameters<typeof atoms>[0];

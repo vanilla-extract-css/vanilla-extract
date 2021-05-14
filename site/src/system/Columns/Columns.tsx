@@ -6,12 +6,10 @@ import {
   Space,
 } from '../styles/atoms.css';
 
-type AlignY = 'top' | 'center' | 'bottom';
-
 interface Props {
   children: ReactNode;
   space: Space;
-  alignY?: ResponsiveValue<AlignY>;
+  alignY?: ResponsiveValue<'top' | 'center' | 'bottom'>;
   reverseX?: boolean;
   collapseOnMobile?: boolean;
   collapseOnTablet?: boolean;
