@@ -68,7 +68,7 @@ export const normalizeResponsiveValue = createNormalizeValueFn(
   responsiveStyles,
 );
 
-export type ResponsiveValue<Value> = ConditionalValue<
+export type ResponsiveValue<Value extends string | number> = ConditionalValue<
   typeof responsiveStyles,
   Value
 >;

@@ -601,7 +601,7 @@ import { createAtomicStyles, ConditionalValue } from '@vanilla-extract/sprinkles
 
 const responsiveStyles = createAtomicStyles({ /* ... */ });
 
-export type ResponsiveValue<Value> = ConditionalValue<typeof responsiveStyles, Value>;
+export type ResponsiveValue<Value extends string | number> = ConditionalValue<typeof responsiveStyles, Value>;
 ```
 
 You can then import the generated type in your app code.

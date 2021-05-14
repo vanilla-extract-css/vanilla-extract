@@ -151,7 +151,7 @@ const noop = (...args: Array<any>) => {};
   // @ts-expect-error - Should force conditional value as no default condition
   mapValueWithoutDefaultCondition('test');
 
-  type ResponsiveValue<Value> = ConditionalValue<
+  type ResponsiveValue<Value extends string | number> = ConditionalValue<
     typeof conditionalAtomicStyles,
     Value
   >;
