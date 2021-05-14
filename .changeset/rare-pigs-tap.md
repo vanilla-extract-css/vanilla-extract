@@ -2,4 +2,4 @@
 '@vanilla-extract/sprinkles': minor
 ---
 
-Add utils
+Add `createMapValueFn` and `createNormalizeValueFn` utilities and `ConditionalValue` type.

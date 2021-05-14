@@ -29,7 +29,10 @@ type ExtractConditionNames<
   AtomicStyles extends Conditions<string>
 > = AtomicStyles['conditions']['conditionNames'][number];
 
-export type ConditionalValue<AtomicStyles extends Conditions<string>, Value> =
+export type ConditionalValue<
+  AtomicStyles extends Conditions<string>,
+  Value extends string | number
+> =
   | (ExtractDefaultCondition<AtomicStyles> extends false ? never : Value)
   | Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>
   | (AtomicStyles['conditions']['responsiveArray'] extends { length: number }
@@ -64,7 +67,7 @@ export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
         throw new Error('Responsive arrays are not supported');
       }
 
-      let returnValue: Record<string, string> = {};
+      const returnValue: Record<string, string> = {};
       for (const index in conditions.responsiveArray as Array<string>) {
         if (value[index] != null) {
           returnValue[(conditions.responsiveArray as Array<string>)[index]] =
@@ -120,7 +123,7 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
       ? normalizeValue(value as any)
       : value;
 
-    let mappedObject: Record<string, string> = {};
+    const mappedObject: Record<string, string> = {};
 
     for (const key in normalizedObject) {
       mappedObject[key] = mapFn(normalizedObject[key], key);

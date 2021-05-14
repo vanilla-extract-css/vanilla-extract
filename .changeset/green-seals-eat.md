@@ -2,4 +2,4 @@
 '@vanilla-extract/css': minor
 ---
 
-Add recipe entrypoint
+Introduce `addRecipe` function, exposed via `@vanilla-extract/css/recipe` entrypoint

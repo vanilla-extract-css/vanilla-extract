@@ -471,24 +471,22 @@ Turns your [atomic styles](#createatomicstyles) into a type-safe function for ac
 ```ts
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
-const responsiveStyles = createAtomicStyles({
-  // etc.
-});
-
-const colorStyles = createAtomicStyles({
-  // etc.
-});
+const responsiveStyles = createAtomicStyles({ /* ... */ });
+const colorStyles = createAtomicStyles({ /* ... */ });
+const unconditionalStyles = createAtomicStyles({ /* ... */ });
 
 export const atoms = createAtomsFn(
   responsiveStyles,
   colorStyles,
+  unconditionalStyles
 );
 ```
 
 The atoms function also exposes a static `properties` key that lets you check whether a given property can be handled by the function.
 
 ```ts
-atoms.properties.has('paddingX'); // returns true or false
+atoms.properties.has('paddingX');
+// -> boolean
 ```
 
 > 💡 This is useful when building a Box component with atoms available at the top level (e.g. `<Box padding="small">`) since you’ll need some way to filter atom props from non-atom props.
@@ -500,9 +498,11 @@ atoms.properties.has('paddingX'); // returns true or false
 
 Creates a function for mapping over conditional values.
 
-This function is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+> 💡 This is useful for converting high-level prop values to low-level atoms, e.g. converting left/right to flex-start/end.
 
-> 💡 You can name the generated function whatever you like, typically based on the name of the conditions.
+This function should be created and exported from your `atoms.css.ts` file using the conditions from your atomic styles.
+
+You can name the generated function whatever you like, typically based on the name of your conditions.
 
 ```ts
 import {
@@ -518,8 +518,6 @@ export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 ```
 
 You can then import the generated function in your app code.
-
-> 💡 This is useful for converting high-level prop values to low-level atom values, e.g. converting left/right to flex-start/end.
 
 ```ts
 import { mapResponsiveValue } from './atoms.css.ts';
@@ -548,13 +546,15 @@ mapResponsiveValue([
 // -> { mobile: 'center', desktop: 'flex-start' }
 ```
 
+> 💡 You can generate a custom conditional value type with the [ConditionalValue](#conditionalvalue) type.
+
 ### createNormalizeValueFn
 
 Creates a function for normalizing conditional values into a consistent object stucture. Any primitive values or responsive arrays will be converted to conditional objects.
 
-This function is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+This function should be created and exported from your `atoms.css.ts` file using the conditions from your atomic styles.
 
-> 💡 You can name the generated function whatever you like, typically based on the name of the conditions.
+> 💡 You can name the generated function whatever you like, typically based on the name of your conditions.
 
 ```ts
 import {
@@ -590,9 +590,11 @@ normalizeResponsiveValue({ mobile: 'none', desktop: 'block' });
 
 Creates a custom conditional value type.
 
-This type is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+> 💡 This is useful for typing high-level prop values that are [mapped to low-level atoms,](#createmapvaluefn) e.g. supporting left/right prop values that map to flex-start/end.
 
-> 💡 You can name the generated type whatever you like, typically based on the name of the conditions.
+This type should be created and exported from your `atoms.css.ts` file using the conditions from your atomic styles.
+
+You can name the generated type whatever you like, typically based on the name of your conditions.
 
 ```ts
 import { createAtomicStyles, ConditionalValue } from '@vanilla-extract/sprinkles';
@@ -603,8 +605,6 @@ export type ResponsiveValue<Value> = ConditionalValue<typeof responsiveStyles, V
 ```
 
 You can then import the generated type in your app code.
-
-> 💡 This is useful for creating types that convert high-level prop values to low-level atom values, e.g. converting left/right to flex-start/end.
 
 ```ts
 import { ResponsiveValue } from './atoms.css.ts';
