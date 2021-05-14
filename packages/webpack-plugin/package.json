@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/webpack-plugin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
