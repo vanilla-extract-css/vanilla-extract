@@ -1,5 +1,5 @@
 import { globalStyle, style, createVar } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
 const borderColorVar = createVar();

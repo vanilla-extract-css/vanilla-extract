@@ -2,7 +2,7 @@ import { ReactNode, ElementType } from 'react';
 import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './typography.css';
-import { atoms, Atoms } from '../system/styles/atoms.css';
+import { atoms, Atoms } from '../system/styles/sprinkles.css';
 
 const colorMap = {
   neutral: { lightMode: 'coolGray700', darkMode: 'gray100' },

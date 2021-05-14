@@ -4,7 +4,7 @@ import {
   mapResponsiveValue,
   ResponsiveValue,
   Space,
-} from '../styles/atoms.css';
+} from '../styles/sprinkles.css';
 
 interface Props {
   children: ReactNode;

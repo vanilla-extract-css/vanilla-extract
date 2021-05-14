@@ -1,7 +1,7 @@
 import { Children, ReactNode } from 'react';
 import { Box } from '../';
 import { BoxProps } from '../Box/Box';
-import { mapResponsiveValue, ResponsiveValue } from '../styles/atoms.css';
+import { mapResponsiveValue, ResponsiveValue } from '../styles/sprinkles.css';
 
 const alignToFlexAlign = {
   left: 'flex-start',

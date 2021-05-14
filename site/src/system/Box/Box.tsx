@@ -1,7 +1,7 @@
 import { createElement, AllHTMLAttributes, ElementType } from 'react';
 import classnames from 'classnames';
 import * as resetStyles from '../styles/reset.css';
-import { atoms, Atoms } from '../styles/atoms.css';
+import { atoms, Atoms } from '../styles/sprinkles.css';
 
 export interface BoxProps
   extends Omit<
