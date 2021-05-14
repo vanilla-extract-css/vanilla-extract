@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 0.1.3
+
+### Patch Changes
+
+- [#136](https://github.com/seek-oss/vanilla-extract/pull/136) [`2247cdc`](https://github.com/seek-oss/vanilla-extract/commit/2247cdc55c04cdaa54cce1f69361da9617179a6b) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix serialization of booleans
+
 ## 0.1.2
 
 ### Patch Changes

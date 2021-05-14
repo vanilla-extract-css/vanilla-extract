@@ -141,14 +141,16 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
             // Conditional style
             const value = propValue[conditionName];
 
-            if (process.env.NODE_ENV !== 'production') {
-              if (!atomicProperty.values[value].conditions[conditionName]) {
-                throw new Error();
+            if (value != null) {
+              if (process.env.NODE_ENV !== 'production') {
+                if (!atomicProperty.values[value].conditions[conditionName]) {
+                  throw new Error();
+                }
               }
+              classNames.push(
+                atomicProperty.values[value].conditions[conditionName],
+              );
             }
-            classNames.push(
-              atomicProperty.values[value].conditions[conditionName],
-            );
           }
         }
       } catch (e) {
@@ -235,20 +237,22 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
               for (const conditionName in propValue) {
                 const value = propValue[conditionName];
 
-                if (!atomicProperty.values[value]) {
-                  invalidPropValue(prop, value, atomicProperty.values);
-                }
+                if (value != null) {
+                  if (!atomicProperty.values[value]) {
+                    invalidPropValue(prop, value, atomicProperty.values);
+                  }
 
-                if (!atomicProperty.values[value].conditions[conditionName]) {
-                  throw new SprinklesError(
-                    `"${prop}" has no condition named ${format(
-                      conditionName,
-                    )}. Possible values are ${Object.keys(
-                      atomicProperty.values[value].conditions,
-                    )
-                      .map(format)
-                      .join(', ')}`,
-                  );
+                  if (!atomicProperty.values[value].conditions[conditionName]) {
+                    throw new SprinklesError(
+                      `"${prop}" has no condition named ${format(
+                        conditionName,
+                      )}. Possible values are ${Object.keys(
+                        atomicProperty.values[value].conditions,
+                      )
+                        .map(format)
+                        .join(', ')}`,
+                    );
+                  }
                 }
               }
             }
