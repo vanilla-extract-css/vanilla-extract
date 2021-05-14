@@ -89,7 +89,7 @@ const Header = () => (
         paddingTop={{ mobile: 'xsmall', tablet: 'small', desktop: 'medium' }}
       >
         <Box paddingLeft={{ desktop: 'xsmall' }}>
-          <Logo size={68} />
+          <Logo height={68} />
         </Box>
       </Box>
     </ReactRouterLink>

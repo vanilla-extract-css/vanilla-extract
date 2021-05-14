@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../themes.css';
-import { darkMode } from '../styles/atoms.css';
+import { darkMode } from '../styles/sprinkles.css';
 
 export const button = style({
   textDecoration: 'none',

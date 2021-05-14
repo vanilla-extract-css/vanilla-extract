@@ -24,7 +24,7 @@ jobs:
         run: yarn --immutable
 
       - name: Build
-        run: yarn build
+        run: yarn build && node ./site/makeDocsManifest
 
       - name: Lint
         run: yarn lint

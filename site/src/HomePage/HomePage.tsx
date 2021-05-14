@@ -55,23 +55,31 @@ export const HomePage = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        style={{ height: 600, width: 1200, gap: 75 }}
-        background={{ lightMode: 'teal100', darkMode: 'gray700' }}
+        style={{ height: 600, width: 1200, gap: 70 }}
+        background={{ lightMode: 'teal200', darkMode: 'gray700' }}
       >
-        <Box style={{ marginTop: '-60px' }}>
-          <Logo size={280} />
+        <Box style={{ marginTop: '-45px' }}>
+          <Logo height={280} />
         </Box>
         <Stack space="large" align="center">
           <Heading level="1" branded>
-            <span style={{ fontSize: '2em', opacity: 0.9 }}>
+            <Box
+              component="span"
+              color={{ lightMode: 'black' }}
+              style={{ fontSize: '2em' }}
+            >
               vanilla-extract
-            </span>
+            </Box>
           </Heading>
           <Box paddingTop="medium" />
           <Heading level="2">
-            <span style={{ fontSize: '1.1em', opacity: 0.6 }}>
+            <Box
+              component="span"
+              color={{ lightMode: 'black' }}
+              style={{ fontSize: '1.1em' }}
+            >
               Zero-runtime Stylesheets in TypeScript.
-            </span>
+            </Box>
           </Heading>
         </Stack>
       </Box> */}
@@ -107,7 +115,7 @@ export const HomePage = () => {
                 >
                   <Stack
                     space="xxlarge"
-                    align={{ mobile: 'center', desktop: 'flex-start' }}
+                    align={{ mobile: 'center', desktop: 'left' }}
                   >
                     <Box
                       display="flex"
@@ -116,7 +124,7 @@ export const HomePage = () => {
                         desktop: 'flex-start',
                       }}
                     >
-                      <Logo size={100} />
+                      <Logo height={100} />
                     </Box>
                     <Heading
                       level="1"
@@ -443,7 +451,7 @@ export const HomePage = () => {
 
                 export const color = styleVariants({
                   neutral: { color: 'black' },
-                  secondary: { color: 'coolGray' },
+                  secondary: { color: 'gray' },
                   link: { color: 'blue' },
                 });
               `}
@@ -551,9 +559,28 @@ export const HomePage = () => {
         </Box>
 
         <ContentBlock withGutters>
+          <Box paddingBottom="xlarge">
+            <Text color="secondary" type="code" size="small" align="center">
+              Like the monospace font in our code&nbsp;blocks?
+              <br />
+              Check out{' '}
+              <Link
+                to="https://monolisa.dev/"
+                size="small"
+                inline
+                baseline={false}
+                type="code"
+              >
+                monolisa.dev
+              </Link>
+            </Text>
+          </Box>
+        </ContentBlock>
+
+        <ContentBlock withGutters>
           <Box component="footer" paddingBottom="xxxlarge">
             <Stack space="xxlarge" align="center">
-              <Logo size={60} />
+              <Logo height={60} />
               <Columns space="xxxlarge" collapseOnMobile>
                 <Stack space="xlarge" align="center">
                   <Heading level="4">Documentation</Heading>
@@ -656,7 +683,9 @@ const Feature = ({
         borderRadius="medium"
       />
       <Stack space="xlarge">
-        <Heading level="4">{title}</Heading>
+        <Heading level="4" component="h2">
+          {title}
+        </Heading>
         <Text size="small" color="secondary">
           {children}
         </Text>

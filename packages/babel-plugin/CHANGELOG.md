@@ -1,5 +1,24 @@
 # @vanilla-extract/babel-plugin
 
+## 0.4.2
+
+### Patch Changes
+
+- [#133](https://github.com/seek-oss/vanilla-extract/pull/133) [`a50de75`](https://github.com/seek-oss/vanilla-extract/commit/a50de7505849a317d76713d225514050a38e23e2) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve Windows support
+
+  Normalize all file paths to POSIX format. This fixes incorrect file paths on Windows and ensures consistent hashes across all operating systems.
+
+- Updated dependencies [[`a50de75`](https://github.com/seek-oss/vanilla-extract/commit/a50de7505849a317d76713d225514050a38e23e2)]:
+  - @vanilla-extract/integration@0.1.2
+
+## 0.4.1
+
+### Patch Changes
+
+- [#123](https://github.com/seek-oss/vanilla-extract/pull/123) [`72f7226`](https://github.com/seek-oss/vanilla-extract/commit/72f722674d49a5128df61045689c7a231b9f9cee) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ignore commonjs files that already have filescope information
+
+* [#123](https://github.com/seek-oss/vanilla-extract/pull/123) [`72f7226`](https://github.com/seek-oss/vanilla-extract/commit/72f722674d49a5128df61045689c7a231b9f9cee) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Use correct import style (ESM or CJS) when adding filescope information
+
 ## 0.4.0
 
 ### Minor Changes

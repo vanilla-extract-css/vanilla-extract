@@ -6,7 +6,7 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "0.4.3",
-    "@vanilla-extract/sprinkles": "0.2.2"
+    "@vanilla-extract/css": "0.5.0",
+    "@vanilla-extract/sprinkles": "0.3.1"
   }
 }

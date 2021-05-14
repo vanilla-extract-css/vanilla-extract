@@ -3,7 +3,7 @@ import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
 import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
-import { atoms } from '../system/Box/Box';
+import { atoms } from '../system/styles/sprinkles.css';
 
 interface Props extends LinkProps {
   baseline?: boolean;
@@ -12,6 +12,7 @@ interface Props extends LinkProps {
   variant?: 'link' | 'button';
   weight?: TextProps['weight'];
   color?: TextProps['color'];
+  type?: TextProps['type'];
   inline?: boolean;
   highlightOnFocus?: boolean;
 }
@@ -22,6 +23,7 @@ export default ({
   color = 'link',
   weight = 'regular',
   underline = 'hover',
+  type = 'body',
   highlightOnFocus = true,
   inline = false,
   className,
@@ -32,7 +34,7 @@ export default ({
     underline === 'hover' ? styles.underlineOnHover : undefined,
     underline === 'never' ? styles.underlineNever : undefined,
     highlightOnFocus ? styles.highlightOnHover : undefined,
-    useTextStyles({ size, color, weight, baseline }),
+    useTextStyles({ size, type, color, weight, baseline }),
     className,
   );
 

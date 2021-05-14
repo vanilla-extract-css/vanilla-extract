@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 0.3.1
+
+### Patch Changes
+
+- [#134](https://github.com/seek-oss/vanilla-extract/pull/134) [`b99dd0a`](https://github.com/seek-oss/vanilla-extract/commit/b99dd0a2d6ce171b4776aa11d0ab2c7e1559ddae) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Move shared logic to integration package
+
 ## 0.3.0
 
 ### Minor Changes

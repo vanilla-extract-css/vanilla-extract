@@ -1,17 +1,23 @@
 // @ts-ignore
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+// @ts-ignore
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
+// @ts-ignore
+import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+SyntaxHighlighter.registerLanguage('tsx', tsx);
+SyntaxHighlighter.registerLanguage('ts', ts);
 
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
-import { AtomProps } from '../system/Box/Box';
+import { Atoms } from '../system/styles/sprinkles.css';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
   title?: string;
-  background?: AtomProps['background'];
+  background?: Atoms['background'];
   children:
     | string
     | {
@@ -115,7 +121,12 @@ export default ({
                 />
               </Box>
               <Text color="secondary" size="xsmall" type="code">
-                {title || resolvedTitle}
+                <Box
+                  component="span"
+                  color={{ lightMode: 'coolGray400', darkMode: 'gray400' }}
+                >
+                  {title || resolvedTitle}
+                </Box>
               </Text>
             </Box>
           ) : null}

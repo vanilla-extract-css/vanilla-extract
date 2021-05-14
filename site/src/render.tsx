@@ -4,7 +4,7 @@ import { StaticRouter } from 'react-router-dom';
 import { HeadProvider } from 'react-head';
 import App from './App';
 import { StatsCompilation } from 'webpack';
-import { darkMode, lightMode } from './system/styles/atoms.css';
+import { darkMode, lightMode } from './system/styles/sprinkles.css';
 import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
 type HeadTags = React.ReactElement<unknown>[];
@@ -34,15 +34,8 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     throw new Error('No assets!');
   }
 
-  const cssAssets = assets
-    .filter((asset) => asset.name.endsWith('.css'))
-    .map(
-      (asset) =>
-        `<link rel="stylesheet" href="${assetPath(asset.name)}"></link>`,
-    );
-  const jsAssets = assets
-    .filter((asset) => asset.name.endsWith('.js'))
-    .map((asset) => `<script src="${assetPath(asset.name)}"></script>`);
+  const cssAssets = assets.filter((asset) => asset.name.endsWith('.css'));
+  const jsAssets = assets.filter((asset) => asset.name.endsWith('.js'));
 
   const headTags: HeadTags = [];
   const html = render(route, headTags);
@@ -50,24 +43,37 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
   const favicon = (size?: number) =>
     `<link rel="icon" type="image/png" ${
       size ? `sizes="${size}x${size}" ` : ''
-    }href="${assetPath(`favicon${size ? `-${size}x${size}` : ''}.png`)}" />`;
+    }href="${assetPath(`favicon${size ? `-${size}x${size}.png` : '.ico'}`)}">`;
 
   const shareImageUrl = fullyQualifiedUrl(assetPath('og-image.png'));
 
-  return `<html>
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
     <head>
       <script>
       ((d)=>{try{var p=localStorage.getItem('${themeKey}');if(p==d||(p!='${lightMode}'&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add(d)}catch(e){}})('${darkMode}')
       </script>
       <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-      ${cssAssets.join('\n')}
+      <link href="https://www.monolisa.dev/api/fonts/initial" rel="stylesheet">
+      ${cssAssets
+        .map(({ name }) => `<link rel="stylesheet" href="${assetPath(name)}">`)
+        .join('\n')}
+      ${jsAssets
+        .map(
+          ({ name }) =>
+            `<link rel="preload" as="script" href="${assetPath(name)}">`,
+        )
+        .join('\n')}
       ${renderToString(<Fragment>{headTags}</Fragment>)}
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="theme-color" content="#fff"/>
       <link rel="manifest" href="${assetPath('site.webmanifest')}"/>
       <link rel="apple-touch-icon" href="${assetPath('apple-touch-icon.png')}"/>
+      <link rel="canonical" href="https://vanilla-extract.style${
+        route || '/'
+      }" />
       ${favicon(16)}
       ${favicon(32)}
       ${favicon()}
@@ -81,7 +87,9 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
     </head>
     <body>
         <div id="app">${html}</div>
-        ${jsAssets.join('\n')}
+        ${jsAssets
+          .map(({ name }) => `<script async src="${assetPath(name)}"></script>`)
+          .join('\n')}
     </body>
   </html>`;
 };

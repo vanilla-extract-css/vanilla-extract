@@ -1,23 +1,25 @@
 import { Children, ReactNode } from 'react';
-import { Box, BoxProps } from '../Box/Box';
-import { Space } from '../styles/atoms.css';
-
-type AlignY = 'top' | 'center' | 'bottom';
+import { Box } from '../Box/Box';
+import {
+  mapResponsiveValue,
+  ResponsiveValue,
+  Space,
+} from '../styles/sprinkles.css';
 
 interface Props {
   children: ReactNode;
   space: Space;
-  alignY?: AlignY;
+  alignY?: ResponsiveValue<'top' | 'center' | 'bottom'>;
   reverseX?: boolean;
   collapseOnMobile?: boolean;
   collapseOnTablet?: boolean;
 }
 
-const resolveAlignY: Record<AlignY, BoxProps['alignItems']> = {
+const alignYToFlexAlign = {
   top: 'flex-start',
   bottom: 'flex-end',
   center: 'center',
-};
+} as const;
 
 const negate = (space: Space) =>
   space === 'none' ? ('none' as const) : (`-${space}` as const);
@@ -45,7 +47,11 @@ export const Columns = ({
             }
           : undefined
       }
-      alignItems={resolveAlignY[alignY]}
+      alignItems={
+        alignY
+          ? mapResponsiveValue(alignY, (value) => alignYToFlexAlign[value])
+          : undefined
+      }
       marginLeft={
         collapseOnMobile || collapseOnTablet
           ? ({

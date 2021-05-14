@@ -1,18 +1,20 @@
 {
   "name": "@vanilla-extract/sprinkles",
-  "version": "0.2.2",
+  "version": "0.3.1",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
   "module": "dist/vanilla-extract-sprinkles.esm.js",
   "files": [
     "/dist",
-    "/createAtomsFn"
+    "/createAtomsFn",
+    "/createUtils"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "createAtomsFn.ts"
+      "createAtomsFn.ts",
+      "createUtils.ts"
     ]
   },
   "repository": {

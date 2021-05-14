@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const docs = require('./docs-manifest.json');
 const targetDirectory = join(__dirname, 'dist');
 
@@ -91,6 +92,13 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: join(__dirname, 'src/assets') }],
       }),
+      ...(process.env.CI !== 'true'
+        ? [
+            new BundleAnalyzerPlugin({
+              openAnalyzer: false,
+            }),
+          ]
+        : []),
     ],
     stats: 'errors-only',
   },

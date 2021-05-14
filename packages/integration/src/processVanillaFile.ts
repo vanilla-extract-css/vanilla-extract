@@ -113,6 +113,7 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
       const valueType = typeof value;
       if (
         valueType === 'string' ||
+        valueType === 'boolean' ||
         valueType === 'number' ||
         valueType === 'undefined' ||
         value === null ||

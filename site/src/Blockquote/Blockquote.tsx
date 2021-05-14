@@ -6,7 +6,7 @@ export default (props: { children: ReactNode }) => {
   return (
     <Box
       component="blockquote"
-      paddingX="xlarge"
+      paddingX={{ mobile: 'large', tablet: 'xlarge' }}
       paddingTop="xlarge"
       marginBottom="xlarge"
       borderRadius="small"

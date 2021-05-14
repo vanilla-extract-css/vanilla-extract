@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -12,6 +12,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "recipe.ts",
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts"
@@ -19,6 +20,7 @@
   },
   "files": [
     "/dist",
+    "/recipe",
     "/adapter",
     "/transformCss",
     "/fileScope"
