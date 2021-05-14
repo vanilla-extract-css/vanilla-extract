@@ -1,5 +1,16 @@
 # @vanilla-extract/babel-plugin
 
+## 0.4.2
+
+### Patch Changes
+
+- [#133](https://github.com/seek-oss/vanilla-extract/pull/133) [`a50de75`](https://github.com/seek-oss/vanilla-extract/commit/a50de7505849a317d76713d225514050a38e23e2) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve Windows support
+
+  Normalize all file paths to POSIX format. This fixes incorrect file paths on Windows and ensures consistent hashes across all operating systems.
+
+- Updated dependencies [[`a50de75`](https://github.com/seek-oss/vanilla-extract/commit/a50de7505849a317d76713d225514050a38e23e2)]:
+  - @vanilla-extract/integration@0.1.2
+
 ## 0.4.1
 
 ### Patch Changes
