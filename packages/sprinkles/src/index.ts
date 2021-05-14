@@ -1,11 +1,14 @@
 import { style, CSSProperties } from '@vanilla-extract/css';
+import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
-  AtomicStyles,
   AtomsFn,
   createAtomsFn as internalCreateAtomsFn,
 } from './createAtomsFn';
-import { ResponsiveArrayConfig } from './types';
+import { AtomicStyles, ResponsiveArrayConfig } from './types';
+
+export { createNormalizeValueFn, createMapValueFn } from './createUtils';
+export type { ConditionalValue } from './createUtils';
 
 interface Condition {
   '@media'?: string;
@@ -59,8 +62,11 @@ type Values<Property, Result> = {
 };
 
 type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
-  [Property in keyof Properties]: {
-    values: Values<Properties[Property], { defaultClass: string }>;
+  conditions: never;
+  styles: {
+    [Property in keyof Properties]: {
+      values: Values<Properties[Property], { defaultClass: string }>;
+    };
   };
 };
 
@@ -69,16 +75,22 @@ type ConditionalAtomicStyles<
   Conditions extends { [conditionName: string]: Condition },
   DefaultCondition extends keyof Conditions | false
 > = {
-  [Property in keyof Properties]: {
-    values: Values<
-      Properties[Property],
-      {
-        defaultClass: DefaultCondition extends string ? string : undefined;
-        conditions: {
-          [Rule in keyof Conditions]: string;
-        };
-      }
-    >;
+  conditions: {
+    defaultCondition: DefaultCondition;
+    conditionNames: Array<keyof Conditions>;
+  };
+  styles: {
+    [Property in keyof Properties]: {
+      values: Values<
+        Properties[Property],
+        {
+          defaultClass: DefaultCondition extends string ? string : undefined;
+          conditions: {
+            [Rule in keyof Conditions]: string;
+          };
+        }
+      >;
+    };
   };
 };
 
@@ -88,27 +100,36 @@ type ConditionalWithResponsiveArrayAtomicStyles<
   ResponsiveLength extends number,
   DefaultCondition extends keyof Conditions | false
 > = {
-  [Property in keyof Properties]: {
+  conditions: {
+    defaultCondition: DefaultCondition;
+    conditionNames: Array<keyof Conditions>;
     responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
-    values: Values<
-      Properties[Property],
-      {
-        defaultClass: DefaultCondition extends string ? string : undefined;
-        conditions: {
-          [Rule in keyof Conditions]: string;
-        };
-      }
-    >;
+  };
+  styles: {
+    [Property in keyof Properties]: {
+      responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
+      values: Values<
+        Properties[Property],
+        {
+          defaultClass: DefaultCondition extends string ? string : undefined;
+          conditions: {
+            [Rule in keyof Conditions]: string;
+          };
+        }
+      >;
+    };
   };
 };
 
-type ShorthandMappings<
+type ShorthandAtomicStyles<
   Shorthands extends {
     [shorthandName: string]: Array<string | number | symbol>;
   }
 > = {
-  [Shorthand in keyof Shorthands]: {
-    mappings: Shorthands[Shorthand];
+  styles: {
+    [Shorthand in keyof Shorthands]: {
+      mappings: Shorthands[Shorthand];
+    };
   };
 };
 
@@ -129,7 +150,7 @@ export function createAtomicStyles<
   ResponsiveLength,
   DefaultCondition
 > &
-  ShorthandMappings<Shorthands>;
+  ShorthandAtomicStyles<Shorthands>;
 // Conditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -140,7 +161,7 @@ export function createAtomicStyles<
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
-  ShorthandMappings<Shorthands>;
+  ShorthandAtomicStyles<Shorthands>;
 // Conditional + ResponsiveArray
 export function createAtomicStyles<
   Properties extends AtomicProperties,
@@ -171,7 +192,7 @@ export function createAtomicStyles<
 >(
   options: UnconditionalAtomicOptions<Properties> &
     ShorthandOptions<Properties, Shorthands>,
-): UnconditionalAtomicStyles<Properties> & ShorthandMappings<Shorthands>;
+): UnconditionalAtomicStyles<Properties> & ShorthandAtomicStyles<Shorthands>;
 // Unconditional
 export function createAtomicStyles<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
@@ -270,7 +291,16 @@ export function createAtomicStyles(options: any): any {
     }
   }
 
-  return styles;
+  const conditions =
+    'conditions' in options
+      ? {
+          defaultCondition: options.defaultCondition,
+          conditionNames: Object.keys(options.conditions),
+          responsiveArray: options.responsiveArray,
+        }
+      : undefined;
+
+  return { conditions, styles };
 }
 
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
@@ -278,14 +308,9 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
 ): AtomsFn<Args> {
   const atoms = internalCreateAtomsFn(...config);
 
-  Object.defineProperty(atoms, '__recipe__', {
-    value: {
-      importPath: '@vanilla-extract/sprinkles/createAtomsFn',
-      importName: 'createAtomsFn',
-      args: config,
-    },
-    writable: false,
+  return addRecipe(atoms, {
+    importPath: '@vanilla-extract/sprinkles/createAtomsFn',
+    importName: 'createAtomsFn',
+    args: config,
   });
-
-  return atoms;
 }

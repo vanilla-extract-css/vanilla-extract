@@ -1,7 +1,12 @@
 /*
     This file is for validating types, it is not designed to be executed
 */
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import {
+  createAtomicStyles,
+  createMapValueFn,
+  createNormalizeValueFn,
+  ConditionalValue,
+} from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -10,6 +15,9 @@ import {
   conditionalStylesWithoutDefaultCondition,
   conditionalStylesWithoutResponsiveArray,
 } from './index.css';
+
+// @ts-expect-error Unused args
+const noop = (...args: Array<any>) => {};
 
 () => {
   const atoms = createAtomsFn(
@@ -112,4 +120,94 @@ import {
 
   // Valid value - config defined outside the createAtomicStyles function
   createAtomicStyles(atomicConfig);
+
+  const mapValue = createMapValueFn(conditionalAtomicStyles);
+  const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+
+  // @ts-expect-error - Too many responsive array options
+  normalizeValue(['one', 'two', 'three', 'four']);
+
+  normalizeValue({
+    // @ts-expect-error - Incorrect conditional keys
+    mobille: '',
+  });
+
+  // @ts-expect-error - Strings shouldn't map to objects
+  mapValue(alignProp, () => 'baz').mobile;
+
+  // @ts-expect-error - Numbers shouldn't map to objects
+  mapValue(3, () => 4).mobile;
+
+  const mapValueWithoutDefaultCondition = createMapValueFn(
+    conditionalStylesWithoutDefaultCondition,
+  );
+  const normalizeValueWithoutDefaultCondition = createNormalizeValueFn(
+    conditionalStylesWithoutDefaultCondition,
+  );
+
+  // @ts-expect-error - Should force conditional value as no default condition
+  normalizeValueWithoutDefaultCondition('test');
+
+  // @ts-expect-error - Should force conditional value as no default condition
+  mapValueWithoutDefaultCondition('test');
+
+  type ResponsiveValue<Value extends string | number> = ConditionalValue<
+    typeof conditionalAtomicStyles,
+    Value
+  >;
+
+  let responsiveValue: ResponsiveValue<'row' | 'column'>;
+
+  // Valid values
+  responsiveValue = 'row';
+  responsiveValue = 'column';
+  responsiveValue = [null];
+  responsiveValue = ['row', 'column'];
+  responsiveValue = ['row', null, 'column'];
+  responsiveValue = {};
+  responsiveValue = { mobile: 'row' };
+  responsiveValue = { tablet: 'column' };
+  responsiveValue = { desktop: 'column' };
+  responsiveValue = {
+    mobile: 'row',
+    tablet: 'column',
+  };
+  responsiveValue = {
+    mobile: 'row',
+    tablet: 'column',
+    desktop: 'row',
+  };
+
+  // Invalid values
+  // @ts-expect-error
+  responsiveValue = 'NOPE';
+  // @ts-expect-error
+  responsiveValue = 123;
+  // @ts-expect-error
+  responsiveValue = null;
+  // @ts-expect-error
+  responsiveValue = [];
+  // @ts-expect-error
+  responsiveValue = ['NOPE'];
+  // @ts-expect-error
+  responsiveValue = [123];
+  responsiveValue = [
+    'row',
+    'row',
+    'row',
+    // @ts-expect-error
+    'your',
+    // @ts-expect-error
+    'boat',
+  ];
+  // @ts-expect-error
+  responsiveValue = { mobile: 'nope' };
+  // @ts-expect-error
+  responsiveValue = { mobile: 123 };
+  // @ts-expect-error
+  responsiveValue = { mobile: null };
+  // @ts-expect-error
+  responsiveValue = { NOPE: 123 };
+
+  noop(responsiveValue);
 };

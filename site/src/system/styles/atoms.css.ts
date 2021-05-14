@@ -1,5 +1,11 @@
 import mapValues from 'lodash/mapValues';
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import {
+  createAtomicStyles,
+  createAtomsFn,
+  createMapValueFn,
+  createNormalizeValueFn,
+  ConditionalValue,
+} from '@vanilla-extract/sprinkles';
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';
 import { vars } from '../../themes.css';
@@ -22,7 +28,7 @@ const margins = {
   ...negativeSpace,
 };
 
-export const responsiveStyles = createAtomicStyles({
+const responsiveStyles = createAtomicStyles({
   conditions: mapValues(breakpoints, (bp) =>
     bp === 0 ? {} : { '@media': `screen and (min-width: ${bp}px)` },
   ),
@@ -56,10 +62,20 @@ export const responsiveStyles = createAtomicStyles({
   },
 });
 
+export const mapResponsiveValue = createMapValueFn(responsiveStyles);
+export const normalizeResponsiveValue = createNormalizeValueFn(
+  responsiveStyles,
+);
+
+export type ResponsiveValue<Value extends string | number> = ConditionalValue<
+  typeof responsiveStyles,
+  Value
+>;
+
 export const lightMode = 'light';
 export const darkMode = 'dark';
 
-export const colorStyles = createAtomicStyles({
+const colorStyles = createAtomicStyles({
   conditions: {
     lightMode: {},
     darkMode: { selector: `.${darkMode} &` },
@@ -71,7 +87,7 @@ export const colorStyles = createAtomicStyles({
   },
 });
 
-export const unresponsiveStyles = createAtomicStyles({
+const unresponsiveStyles = createAtomicStyles({
   properties: {
     flexWrap: ['wrap', 'nowrap'],
     top: [0],
@@ -86,3 +102,11 @@ export const unresponsiveStyles = createAtomicStyles({
     cursor: ['pointer'],
   },
 });
+
+export const atoms = createAtomsFn(
+  responsiveStyles,
+  unresponsiveStyles,
+  colorStyles,
+);
+
+export type Atoms = Parameters<typeof atoms>[0];

@@ -1,62 +1,32 @@
-import { ResponsiveArray } from './types';
-
-type ConditionalValue = {
-  defaultClass: string | undefined;
-  conditions: {
-    [conditionName: string]: string;
-  };
-};
-
-type ConditionalWithResponsiveArrayProperty = {
-  responsiveArray: Array<string>;
-  values: {
-    [valueName: string]: ConditionalValue;
-  };
-};
-
-type ConditionalProperty = {
-  values: {
-    [valueName: string]: ConditionalValue;
-  };
-};
-
-type UnconditionalProperty = {
-  values: {
-    [valueName: string]: {
-      defaultClass: string;
-    };
-  };
-};
-
-type ShorthandProperty = {
-  mappings: Array<string>;
-};
-
-export type AtomicStyles = {
-  [property: string]:
-    | ConditionalWithResponsiveArrayProperty
-    | ConditionalProperty
-    | ShorthandProperty
-    | UnconditionalProperty;
-};
+import {
+  ResponsiveArray,
+  ConditionalPropertyValue,
+  AtomicStyles,
+  ConditionalWithResponsiveArrayProperty,
+  ConditionalProperty,
+  ShorthandProperty,
+  UnconditionalProperty,
+} from './types';
 
 type ResponsiveArrayVariant<
   RA extends { length: number },
   Values extends string | number | symbol
 > = ResponsiveArray<RA['length'], Values | null>;
 
-type ConditionalStyle<Values extends { [key: string]: ConditionalValue }> =
+type ConditionalStyle<
+  Values extends { [key: string]: ConditionalPropertyValue }
+> =
   | (Values[keyof Values]['defaultClass'] extends string ? keyof Values : never)
   | {
       [Condition in keyof Values[keyof Values]['conditions']]?: keyof Values;
     };
 
 type ConditionalStyleWithResponsiveArray<
-  Values extends { [key: string]: ConditionalValue },
+  Values extends { [key: string]: ConditionalPropertyValue },
   RA extends { length: number }
 > = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
-type ChildAtomProps<Atoms extends AtomicStyles> = {
+type ChildAtomProps<Atoms extends AtomicStyles['styles']> = {
   [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalWithResponsiveArrayProperty
     ? ConditionalStyleWithResponsiveArray<
         Atoms[Prop]['values'],
@@ -84,7 +54,8 @@ type AtomProps<Args extends ReadonlyArray<any>> = Args extends [
   infer L,
   ...infer R
 ]
-  ? (L extends AtomicStyles ? ChildAtomProps<L> : never) & AtomProps<R>
+  ? (L extends AtomicStyles ? ChildAtomProps<L['styles']> : never) &
+      AtomProps<R>
   : {};
 
 export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = ((
@@ -94,7 +65,7 @@ export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = ((
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...args: Args
 ): AtomsFn<Args> {
-  const atomicStyles = Object.assign({}, ...args);
+  const atomicStyles = Object.assign({}, ...args.map((a) => a.styles));
   const atomicKeys = Object.keys(atomicStyles) as Array<keyof AtomProps<Args>>;
   const shorthandNames = atomicKeys.filter(
     (property) => 'mappings' in atomicStyles[property],
