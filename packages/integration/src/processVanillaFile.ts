@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
