@@ -1,4 +1,4 @@
-import { relative } from 'path';
+import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
 import { getPackageInfo } from '@vanilla-extract/integration';
@@ -158,7 +158,10 @@ export default function (): PluginObj<Context> {
         );
       }
       this.packageName = packageInfo.name;
-      this.filePath = relative(packageInfo.dirname, opts.filename);
+      // Encode windows file paths as posix
+      this.filePath = posix.join(
+        ...relative(packageInfo.dirname, opts.filename).split(sep),
+      );
     },
     visitor: {
       Program: {

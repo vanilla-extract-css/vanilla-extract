@@ -91,13 +91,11 @@ export function processVanillaFile({
     }).join('\n');
 
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');
-    const fileName = path.normalize(
-      `${
-        filescope.packageName
-          ? `${filescope.packageName}/${filescope.filePath}`
-          : filescope.filePath
-      }.vanilla.css`,
-    );
+    const fileName = `${
+      filescope.packageName
+        ? `${filescope.packageName}/${filescope.filePath}`
+        : filescope.filePath
+    }.vanilla.css`;
 
     const virtualCssFilePath = serializeVirtualCssPath
       ? serializeVirtualCssPath({ fileName, base64Source })
