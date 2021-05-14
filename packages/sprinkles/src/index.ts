@@ -1,26 +1,137 @@
-import { style } from '@vanilla-extract/css';
+import { style, CSSProperties } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
   AtomsFn,
   createAtomsFn as internalCreateAtomsFn,
 } from './createAtomsFn';
-import {
-  AtomicStyles,
-  AtomicProperties,
-  BaseConditions,
-  ConditionalAtomicOptions,
-  ShorthandOptions,
-  ResponsiveArrayOptions,
-  ConditionalWithResponsiveArrayAtomicStyles,
-  ShorthandAtomicStyles,
-  ConditionalAtomicStyles,
-  UnconditionalAtomicOptions,
-  UnconditionalAtomicStyles,
-} from './types';
+import { AtomicStyles, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue } from './createUtils';
+
+interface Condition {
+  '@media'?: string;
+  '@supports'?: string;
+  selector?: string;
+}
+
+type BaseConditions = { [conditionName: string]: Condition };
+
+type AtomicProperties = {
+  [Property in keyof CSSProperties]?:
+    | Record<string, CSSProperties[Property]>
+    | ReadonlyArray<CSSProperties[Property]>;
+};
+
+type ShorthandOptions<
+  Properties extends AtomicProperties,
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+> = {
+  shorthands: Shorthands;
+};
+
+type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
+  properties: Properties;
+};
+
+type ResponsiveArrayOptions<
+  Conditions extends { [conditionName: string]: Condition },
+  ResponsiveLength extends number
+> = {
+  responsiveArray: ResponsiveArrayConfig<keyof Conditions> & {
+    length: ResponsiveLength;
+  };
+};
+
+type ConditionalAtomicOptions<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition },
+  DefaultCondition extends keyof Conditions | false
+> = UnconditionalAtomicOptions<Properties> & {
+  conditions: Conditions;
+  defaultCondition: DefaultCondition;
+};
+
+type Values<Property, Result> = {
+  [Value in Property extends ReadonlyArray<any>
+    ? Property[number]
+    : Property extends Array<any>
+    ? Property[number]
+    : keyof Property]: Result;
+};
+
+type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
+  conditions: never;
+  styles: {
+    [Property in keyof Properties]: {
+      values: Values<Properties[Property], { defaultClass: string }>;
+    };
+  };
+};
+
+type ConditionalAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition },
+  DefaultCondition extends keyof Conditions | false
+> = {
+  conditions: {
+    defaultCondition: DefaultCondition;
+    conditionNames: Array<keyof Conditions>;
+  };
+  styles: {
+    [Property in keyof Properties]: {
+      values: Values<
+        Properties[Property],
+        {
+          defaultClass: DefaultCondition extends string ? string : undefined;
+          conditions: {
+            [Rule in keyof Conditions]: string;
+          };
+        }
+      >;
+    };
+  };
+};
+
+type ConditionalWithResponsiveArrayAtomicStyles<
+  Properties extends AtomicProperties,
+  Conditions extends { [conditionName: string]: Condition },
+  ResponsiveLength extends number,
+  DefaultCondition extends keyof Conditions | false
+> = {
+  conditions: {
+    defaultCondition: DefaultCondition;
+    conditionNames: Array<keyof Conditions>;
+    responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
+  };
+  styles: {
+    [Property in keyof Properties]: {
+      responsiveArray: Array<keyof Conditions> & { length: ResponsiveLength };
+      values: Values<
+        Properties[Property],
+        {
+          defaultClass: DefaultCondition extends string ? string : undefined;
+          conditions: {
+            [Rule in keyof Conditions]: string;
+          };
+        }
+      >;
+    };
+  };
+};
+
+type ShorthandAtomicStyles<
+  Shorthands extends {
+    [shorthandName: string]: Array<string | number | symbol>;
+  }
+> = {
+  styles: {
+    [Shorthand in keyof Shorthands]: {
+      mappings: Shorthands[Shorthand];
+    };
+  };
+};
 
 // Conditional + Shorthands + ResponsiveArray
 export function createAtomicStyles<

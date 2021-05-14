@@ -472,13 +472,13 @@ Turns your [atomic styles](#createatomicstyles) into a type-safe function for ac
 import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
 
 const responsiveStyles = createAtomicStyles({ /* ... */ });
+const unresponsiveStyles = createAtomicStyles({ /* ... */ });
 const colorStyles = createAtomicStyles({ /* ... */ });
-const unconditionalStyles = createAtomicStyles({ /* ... */ });
 
 export const atoms = createAtomsFn(
   responsiveStyles,
-  colorStyles,
-  unconditionalStyles
+  unresponsiveStyles,
+  colorStyles
 );
 ```
 
