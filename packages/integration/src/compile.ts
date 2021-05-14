@@ -1,4 +1,4 @@
-import { dirname, relative, join } from 'path';
+import { dirname, relative, join, posix, sep } from 'path';
 import { promises as fs } from 'fs';
 
 import { build as esbuild, Plugin } from 'esbuild';
@@ -15,7 +15,10 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
       const originalSource = await fs.readFile(path, 'utf-8');
 
       if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
-        const filePath = relative(packageInfo.dirname, path);
+        // Encode windows file paths as posix
+        const filePath = posix.join(
+          ...relative(packageInfo.dirname, path).split(sep),
+        );
 
         const contents = `
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
