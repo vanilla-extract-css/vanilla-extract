@@ -480,6 +480,20 @@ describe('sprinkles', () => {
         }
       `);
     });
+
+    it('should handle conditional objects with undefined', () => {
+      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+
+      expect(
+        normalizeValue({ mobile: 'one', tablet: undefined, desktop: 'three' }),
+      ).toMatchInlineSnapshot(`
+        Object {
+          "desktop": "three",
+          "mobile": "one",
+          "tablet": undefined,
+        }
+      `);
+    });
   });
 
   describe('createMapValueFn', () => {
