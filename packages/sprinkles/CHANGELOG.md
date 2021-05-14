@@ -1,5 +1,16 @@
 # @vanilla-extract/sprinkles
 
+## 1.0.0
+
+### Minor Changes
+
+- [#132](https://github.com/seek-oss/vanilla-extract/pull/132) [`4f92126`](https://github.com/seek-oss/vanilla-extract/commit/4f92126c92d853f02e73ffadfed424b594e41166) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `createMapValueFn` and `createNormalizeValueFn` utilities and `ConditionalValue` type.
+
+### Patch Changes
+
+- Updated dependencies [[`ed76e45`](https://github.com/seek-oss/vanilla-extract/commit/ed76e450038cb7cbaf12a511fda9e2a3a6d21b96), [`4f92126`](https://github.com/seek-oss/vanilla-extract/commit/4f92126c92d853f02e73ffadfed424b594e41166)]:
+  - @vanilla-extract/css@0.5.0
+
 ## 0.2.2
 
 ### Patch Changes
