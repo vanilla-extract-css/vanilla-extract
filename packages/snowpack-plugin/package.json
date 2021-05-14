@@ -18,6 +18,6 @@
     "@vanilla-extract/integration": "^0.1.0"
   },
   "devDependencies": {
-    "snowpack": "^3.3.7"
+    "snowpack": "^3.4.0"
   }
 }

@@ -3,7 +3,8 @@ export type BuildType =
   | 'mini-css-extract'
   | 'style-loader'
   | 'esbuild'
-  | 'vite';
+  | 'vite'
+  | 'snowpack';
 
 export interface TestServer {
   type: BuildType;
