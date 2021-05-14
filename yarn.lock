@@ -3244,7 +3244,7 @@ __metadata:
   resolution: "@vanilla-extract/snowpack-plugin@workspace:packages/snowpack-plugin"
   dependencies:
     "@vanilla-extract/integration": ^0.1.0
-    snowpack: ^3.3.7
+    snowpack: ^3.4.0
   languageName: unknown
   linkType: soft
 
@@ -13326,9 +13326,9 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"snowpack@npm:^3.3.7":
-  version: 3.3.7
-  resolution: "snowpack@npm:3.3.7"
+"snowpack@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "snowpack@npm:3.4.0"
   dependencies:
     cli-spinners: ^2.5.0
     default-browser-id: ^2.0.0
@@ -13346,7 +13346,7 @@ fsevents@~2.1.2:
   bin:
     snowpack: index.bin.js
     sp: index.bin.js
-  checksum: f0069b4e319e8f1843ddefa65511595040fe8f9f7c7cf586c345a6a35b9c7b57d34e892e0b8846572fdb1fc438a2285e08f61767cc812ae295e4634da918cc50
+  checksum: 2277449b3d734219dda88ec35b791bd8dc9b8559e93cb9b819ce7dd4f56db64512c15cee363d753e233ee39a691ba5de81b5df651257f731ef158e63c6da856e
   languageName: node
   linkType: hard
 
@@ -14076,6 +14076,7 @@ fsevents@~2.1.2:
     path-browserify: ^1.0.1
     portfinder: ^1.0.28
     serve-handler: ^6.1.3
+    snowpack: ^3.4.0
     style-loader: ^2.0.0
     vite: ^2.2.3
     webpack: ^5.36.1
