@@ -1,5 +1,5 @@
 import { style, composeStyles } from '@vanilla-extract/css';
-import { atoms } from './atoms.css';
+import { atoms } from './sprinkles.css';
 
 export const card = composeStyles(
   atoms({

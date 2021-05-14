@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/sprinkles.css';
 
 const toggleBrightness = createVar();
 const toggleContent = createVar();

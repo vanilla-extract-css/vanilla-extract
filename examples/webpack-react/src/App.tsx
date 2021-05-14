@@ -1,4 +1,4 @@
-import { atoms } from './atoms.css';
+import { atoms } from './sprinkles.css';
 import * as styles from './App.css';
 
 export const App = () => (

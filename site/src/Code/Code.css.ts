@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/atoms.css';
+import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
 export const root = style({

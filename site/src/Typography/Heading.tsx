@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import * as styles from './typography.css';
 import { Box } from '../system';
-import { atoms, Atoms } from '../system/styles/atoms.css';
+import { atoms, Atoms } from '../system/styles/sprinkles.css';
 
 export type HeadingLevel = keyof typeof styles.heading;
 

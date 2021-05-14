@@ -12,7 +12,7 @@ import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
-import { Atoms } from '../system/styles/atoms.css';
+import { Atoms } from '../system/styles/sprinkles.css';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;

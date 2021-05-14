@@ -3,7 +3,7 @@ import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
 import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
-import { atoms } from '../system/styles/atoms.css';
+import { atoms } from '../system/styles/sprinkles.css';
 
 interface Props extends LinkProps {
   baseline?: boolean;
