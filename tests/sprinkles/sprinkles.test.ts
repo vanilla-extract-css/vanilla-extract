@@ -453,7 +453,7 @@ describe('sprinkles', () => {
   });
 
   describe('createMapValueFn', () => {
-    it('should handle unresponsive values', () => {
+    it('should handle strings', () => {
       const mapValue = createMapValueFn(conditionalAtomicStyles);
       const value = mapValue(
         'foobar',
@@ -461,6 +461,24 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`"foobar_mobile"`);
+    });
+
+    it('should handle numbers', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(123, (value, key) => `${value}_${key}` as const);
+
+      expect(value).toMatchInlineSnapshot(`"123_mobile"`);
+    });
+
+    it('should handle responsive arrays', () => {
+      const map = createMapValueFn(conditionalAtomicStyles);
+      const value = map(['one'], (value, key) => `${value}_${key}` as const);
+
+      expect(value).toMatchInlineSnapshot(`
+        Object {
+          "mobile": "one_mobile",
+        }
+      `);
     });
 
     it('should handle responsive arrays', () => {
@@ -507,6 +525,16 @@ describe('sprinkles', () => {
           "mobile": "one_mobile",
         }
       `);
+    });
+
+    it('should handle responsive arrays with only nulls', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
+        [null, null, null] as const,
+        (value, key) => `${value}_${key}` as const,
+      );
+
+      expect(value).toMatchInlineSnapshot(`Object {}`);
     });
 
     it('should handle conditional objects', () => {

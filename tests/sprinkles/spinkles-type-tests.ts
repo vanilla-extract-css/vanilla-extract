@@ -1,7 +1,12 @@
 /*
     This file is for validating types, it is not designed to be executed
 */
-import { createAtomicStyles, createUtils } from '@vanilla-extract/sprinkles';
+import {
+  createAtomicStyles,
+  createMapValueFn,
+  createNormalizeValueFn,
+  ConditionalValue,
+} from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
 import {
@@ -10,6 +15,9 @@ import {
   conditionalStylesWithoutDefaultCondition,
   conditionalStylesWithoutResponsiveArray,
 } from './index.css';
+
+// @ts-expect-error Unused args
+const noop = (...args: Array<any>) => {};
 
 () => {
   const atoms = createAtomsFn(
@@ -113,27 +121,93 @@ import {
   // Valid value - config defined outside the createAtomicStyles function
   createAtomicStyles(atomicConfig);
 
-  const utils = createUtils(conditionalAtomicStyles);
+  const mapValue = createMapValueFn(conditionalAtomicStyles);
+  const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
 
   // @ts-expect-error - Too many responsive array options
-  utils.normalize(['one', 'two', 'three', 'four']);
+  normalizeValue(['one', 'two', 'three', 'four']);
 
-  utils.normalize({
+  normalizeValue({
     // @ts-expect-error - Incorrect conditional keys
     mobille: '',
   });
 
   // @ts-expect-error - Strings shouldn't map to objects
-  utils.map(alignProp, () => 'baz').mobile;
+  mapValue(alignProp, () => 'baz').mobile;
 
   // @ts-expect-error - Numbers shouldn't map to objects
-  utils.map(3, () => 4).mobile;
+  mapValue(3, () => 4).mobile;
 
-  const noDefaultUtils = createUtils(conditionalStylesWithoutDefaultCondition);
+  const mapValueWithoutDefaultCondition = createMapValueFn(
+    conditionalStylesWithoutDefaultCondition,
+  );
+  const normalizeValueWithoutDefaultCondition = createNormalizeValueFn(
+    conditionalStylesWithoutDefaultCondition,
+  );
 
   // @ts-expect-error - Should force conditional value as no default condition
-  noDefaultUtils.normalize('test');
+  normalizeValueWithoutDefaultCondition('test');
 
   // @ts-expect-error - Should force conditional value as no default condition
-  noDefaultUtils.map('test');
+  mapValueWithoutDefaultCondition('test');
+
+  type ResponsiveValue<Value> = ConditionalValue<
+    typeof conditionalAtomicStyles,
+    Value
+  >;
+
+  let responsiveValue: ResponsiveValue<'row' | 'column'>;
+
+  // Valid values
+  responsiveValue = 'row';
+  responsiveValue = 'column';
+  responsiveValue = [null];
+  responsiveValue = ['row', 'column'];
+  responsiveValue = ['row', null, 'column'];
+  responsiveValue = {};
+  responsiveValue = { mobile: 'row' };
+  responsiveValue = { tablet: 'column' };
+  responsiveValue = { desktop: 'column' };
+  responsiveValue = {
+    mobile: 'row',
+    tablet: 'column',
+  };
+  responsiveValue = {
+    mobile: 'row',
+    tablet: 'column',
+    desktop: 'row',
+  };
+
+  // Invalid values
+  // @ts-expect-error
+  responsiveValue = 'NOPE';
+  // @ts-expect-error
+  responsiveValue = 123;
+  // @ts-expect-error
+  responsiveValue = null;
+  // @ts-expect-error
+  responsiveValue = [];
+  // @ts-expect-error
+  responsiveValue = ['NOPE'];
+  // @ts-expect-error
+  responsiveValue = [123];
+  responsiveValue = [
+    'row',
+    'row',
+    'row',
+    // @ts-expect-error
+    'your',
+    // @ts-expect-error
+    'boat',
+  ];
+  // @ts-expect-error
+  responsiveValue = { mobile: 'nope' };
+  // @ts-expect-error
+  responsiveValue = { mobile: 123 };
+  // @ts-expect-error
+  responsiveValue = { mobile: null };
+  // @ts-expect-error
+  responsiveValue = { NOPE: 123 };
+
+  noop(responsiveValue);
 };

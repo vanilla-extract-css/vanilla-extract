@@ -229,6 +229,8 @@ document.write(`
 - [Utilities](#utilities)
   - [createMapValueFn](#createmapvaluefn)
   - [createNormalizeValueFn](#createnormalizevaluefn)
+- [Types](#types)
+  - [ConditionalValue](#conditionalvalue)
 - [Thanks](#thanks)
 - [License](#license)
 
@@ -515,7 +517,7 @@ export const atoms = createAtomsFn(responsiveStyles);
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 ```
 
-You can then import the generated function in your runtime code.
+You can then import the generated function in your app code.
 
 > 💡 This is useful for converting high-level prop values to low-level atom values, e.g. converting left/right to flex-start/end.
 
@@ -567,7 +569,7 @@ export const atoms = createAtomsFn(responsiveStyles);
 export const normalizeResponsiveValue = createNormalizeValueFn(responsiveStyles);
 ```
 
-You can then import the generated function in your runtime code.
+You can then import the generated function in your app code.
 
 ```ts
 import { normalizeResponsiveValue } from './atoms.css.ts';
@@ -580,6 +582,38 @@ normalizeResponsiveValue(['none', null, 'block' ]);
 
 normalizeResponsiveValue({ mobile: 'none', desktop: 'block' });
 // -> { mobile: 'block', desktop: 'block' }
+```
+
+## Types
+
+### ConditionalValue
+
+Creates a custom conditional value type.
+
+This type is created and exported from your `atoms.css.ts` file, using your conditions as defined in your atomic styles config.
+
+> 💡 You can name the generated type whatever you like, typically based on the name of the conditions.
+
+```ts
+import { createAtomicStyles, ConditionalValue } from '@vanilla-extract/sprinkles';
+
+const responsiveStyles = createAtomicStyles({ /* ... */ });
+
+export type ResponsiveValue<Value> = ConditionalValue<typeof responsiveStyles, Value>;
+```
+
+You can then import the generated type in your app code.
+
+> 💡 This is useful for creating types that convert high-level prop values to low-level atom values, e.g. converting left/right to flex-start/end.
+
+```ts
+import { ResponsiveValue } from './atoms.css.ts';
+
+type ResponsiveAlign = ResponsiveValue<'left' | 'center' | 'right'>;
+
+const a: ResponsiveAlign = 'left';
+const b: ResponsiveAlign = { mobile: 'center', desktop: 'left' };
+const c: ResponsiveAlign = ['center', null, 'left'];
 ```
 
 ---
