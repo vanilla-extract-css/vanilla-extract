@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 0.5.1
+
+### Patch Changes
+
+- [#146](https://github.com/seek-oss/vanilla-extract/pull/146) [`bf51ab5`](https://github.com/seek-oss/vanilla-extract/commit/bf51ab56f5b10474476ef61a00edaaf297a10218) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix escaped characters in selectors
+
 ## 0.5.0
 
 ### Minor Changes
