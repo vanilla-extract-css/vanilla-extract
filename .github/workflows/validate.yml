@@ -4,10 +4,13 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Lint & Test
-    runs-on: ubuntu-latest
+    name: Lint & Test / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     env:
       CI: true
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
