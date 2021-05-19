@@ -2,10 +2,7 @@ type Tuple<Length extends number, Value> = ReadonlyArray<Value> & {
   length: Length;
 };
 
-export type ResponsiveArrayConfig<Value> = Tuple<
-  1 | 2 | 3 | 5 | 6 | 7 | 8,
-  Value
->;
+export type ResponsiveArrayConfig<Value> = Tuple<2 | 3 | 5 | 6 | 7 | 8, Value>;
 
 export type ResponsiveArray<Count extends number, Value> = [
   never,
