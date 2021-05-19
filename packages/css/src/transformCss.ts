@@ -1,5 +1,6 @@
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
+import merge from 'lodash/merge';
 
 import type {
   CSS,
@@ -15,6 +16,7 @@ import type {
 } from './types';
 import { validateSelector } from './validateSelector';
 import { forEach, omit, mapKeys, isEqual } from './utils';
+import { ConditionalRuleset, renderRulesetToObj } from './conditionalRulesets';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -178,14 +180,15 @@ interface CSSRule {
 
 class Stylesheet {
   rules: Array<CSSRule>;
-  conditionalRules: Array<CSSRule>;
+  conditionalRulesets: Array<ConditionalRuleset<CSSRule>>;
+  currConditionalRuleset: ConditionalRuleset<CSSRule> | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNameRegex: RegExp | null;
 
   constructor(localClassNames: Array<string>) {
     this.rules = [];
-    this.conditionalRules = [];
+    this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
     this.localClassNameRegex =
@@ -213,10 +216,40 @@ class Stylesheet {
       rule: mainRule,
     });
 
-    this.transformSimplePsuedos(root, root.rule);
+    this.currConditionalRuleset = new ConditionalRuleset();
+
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
+
+    this.transformSimplePsuedos(root, root.rule);
     this.transformSelectors(root, root.rule);
+
+    const activeConditionalRuleset =
+      this.conditionalRulesets[this.conditionalRulesets.length - 1];
+
+    if (activeConditionalRuleset.isCompatible(this.currConditionalRuleset)) {
+      activeConditionalRuleset.merge(this.currConditionalRuleset);
+    } else {
+      this.conditionalRulesets.push(this.currConditionalRuleset);
+    }
+  }
+
+  addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
+    // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
+    const selector = this.transformSelector(cssRule.selector);
+
+    if (!this.currConditionalRuleset) {
+      throw new Error(`Couldn't add conditional rule`);
+    }
+
+    this.currConditionalRuleset.addRule(
+      {
+        selector,
+        rule,
+      },
+      conditions,
+    );
   }
 
   addRule(cssRule: CSSRule) {
@@ -224,18 +257,10 @@ class Stylesheet {
     const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
-    if (cssRule.conditions) {
-      this.conditionalRules.push({
-        selector,
-        rule,
-        conditions: cssRule.conditions.sort(),
-      });
-    } else {
-      this.rules.push({
-        selector,
-        rule,
-      });
-    }
+    this.rules.push({
+      selector,
+      rule,
+    });
   }
 
   pixelifyProperties(cssRule: CSSPropertiesWithVars) {
@@ -295,11 +320,16 @@ class Stylesheet {
       );
       validateSelector(transformedSelector, root.selector);
 
-      this.addRule({
-        conditions,
+      const rule = {
         selector: transformedSelector,
         rule: omit(selectorRule, specialKeys),
-      });
+      };
+
+      if (conditions) {
+        this.addConditionalRule(rule, conditions);
+      } else {
+        this.addRule(rule);
+      }
 
       const selectorRoot: CSSSelectorBlock = {
         type: 'selector',
@@ -324,13 +354,15 @@ class Stylesheet {
     parentConditions: Array<string> = [],
   ) {
     forEach(rules, (mediaRule, query) => {
-      const conditions = [`@media ${query}`, ...parentConditions];
+      const conditions = [...parentConditions, `@media ${query}`];
 
-      this.addRule({
+      this.addConditionalRule(
+        {
+          selector: root.selector,
+          rule: omit(mediaRule, specialKeys),
+        },
         conditions,
-        selector: root.selector,
-        rule: omit(mediaRule, specialKeys),
-      });
+      );
 
       if (root.type === 'local') {
         this.transformSimplePsuedos(root, mediaRule!, conditions);
@@ -349,13 +381,15 @@ class Stylesheet {
     parentConditions: Array<string> = [],
   ) {
     forEach(rules, (supportsRule, query) => {
-      const conditions = [`@supports ${query}`, ...parentConditions];
+      const conditions = [...parentConditions, `@supports ${query}`];
 
-      this.addRule({
+      this.addConditionalRule(
+        {
+          selector: root.selector,
+          rule: omit(supportsRule, specialKeys),
+        },
         conditions,
-        selector: root.selector,
-        rule: omit(supportsRule, specialKeys),
-      });
+      );
 
       if (root.type === 'local') {
         this.transformSimplePsuedos(root, supportsRule!, conditions);
@@ -381,86 +415,79 @@ class Stylesheet {
           );
         }
 
-        this.addRule({
-          conditions,
-          selector: `${root.selector}${key}`,
-          rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
-        });
-      }
-    }
-  }
-
-  toPostcssJs() {
-    const styles: any = {};
-
-    if (this.fontFaceRules.length > 0) {
-      styles['@font-face'] = this.fontFaceRules;
-    }
-
-    this.keyframesRules.forEach((rule) => {
-      styles[`@keyframes ${rule.name}`] = rule.rule;
-    });
-
-    for (const rule of [...this.rules, ...this.conditionalRules]) {
-      if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {
-        // Ignore conditional rules if they are identical to a non-conditional rule
-        continue;
-      }
-
-      if (Object.keys(rule.rule).length === 0) {
-        // Ignore empty rules
-        continue;
-      }
-
-      let styleNode = styles;
-
-      for (const condition of rule.conditions || []) {
-        if (!styleNode[condition]) {
-          styleNode[condition] = {};
+        if (conditions) {
+          this.addConditionalRule(
+            {
+              selector: `${root.selector}${key}`,
+              rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
+            },
+            conditions,
+          );
+        } else {
+          this.addRule({
+            conditions,
+            selector: `${root.selector}${key}`,
+            rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
+          });
         }
-        styleNode = styleNode[condition];
       }
-
-      styleNode[rule.selector] = {
-        ...styleNode[rule.selector],
-        ...rule.rule,
-      };
     }
-
-    return styles;
   }
 
   toCss() {
-    const styles = this.toPostcssJs();
+    const css: Array<string> = [];
 
-    function walkCss(v: any, indent: string = '') {
-      const rules: Array<string> = [];
-
-      for (const key of Object.keys(v)) {
-        const value = v[key];
-
-        if (value && Array.isArray(value)) {
-          rules.push(
-            ...value.map((v) => walkCss({ [key]: v }, indent).join('\n')),
-          );
-        } else if (value && typeof value === 'object') {
-          rules.push(
-            `${indent}${key} {\n${walkCss(value, indent + DOUBLE_SPACE).join(
-              '\n',
-            )}\n${indent}}`,
-          );
-        } else {
-          rules.push(
-            `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
-          );
-        }
-      }
-
-      return rules;
+    // Render font-face rules
+    for (const fontFaceRule of this.fontFaceRules) {
+      css.push(renderCss({ '@font-face': fontFaceRule }));
     }
 
-    return walkCss(styles);
+    // Render keyframes
+    for (const keyframe of this.keyframesRules) {
+      css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
+    }
+
+    // Render unconditional rules
+    for (const rule of this.rules) {
+      css.push(renderCss({ [rule.selector]: rule.rule }));
+    }
+
+    // Render conditional rules
+    for (const conditionalRuleset of this.conditionalRulesets) {
+      css.push(renderCss(renderRulesetToObj(conditionalRuleset.ruleset)));
+    }
+
+    return css.filter(Boolean);
   }
+}
+
+function renderCss(v: any, indent: string = '') {
+  const rules: Array<string> = [];
+
+  for (const key of Object.keys(v)) {
+    const value = v[key];
+
+    if (value && Array.isArray(value)) {
+      rules.push(...value.map((v) => renderCss({ [key]: v }, indent)));
+    } else if (value && typeof value === 'object') {
+      const isEmpty = Object.keys(value).length === 0;
+
+      if (!isEmpty) {
+        rules.push(
+          `${indent}${key} {\n${renderCss(
+            value,
+            indent + DOUBLE_SPACE,
+          )}\n${indent}}`,
+        );
+      }
+    } else {
+      rules.push(
+        `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
+      );
+    }
+  }
+
+  return rules.join('\n');
 }
 
 interface TransformCSSParams {

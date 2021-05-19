@@ -143,32 +143,6 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should remove irrelevant media queries', () => {
-    expect(
-      transformCss({
-        localClassNames: ['testClass'],
-        cssObjs: [
-          {
-            type: 'local',
-            selector: 'testClass',
-            rule: {
-              color: 'red',
-              '@media': {
-                'screen and (min-width: 700px)': {
-                  color: 'red',
-                },
-              },
-            },
-          },
-        ],
-      }).join('\n'),
-    ).toMatchInlineSnapshot(`
-      ".testClass {
-        color: red;
-      }"
-    `);
-  });
-
   it('should combine media queries', () => {
     expect(
       transformCss({
@@ -213,6 +187,84 @@ describe('transformCss', () => {
         }
         .otherClass {
           color: red;
+        }
+      }"
+    `);
+  });
+
+  it('should not combine media queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1000px)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  color: 'yellow',
+                },
+
+                'screen and (min-width: 700px)': {
+                  color: 'purple',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 600px) {
+        .otherOtherClass {
+          color: yellow;
+        }
+      }
+      @media screen and (min-width: 700px) {
+        .otherClass {
+          color: yellow;
+        }
+        .otherOtherClass {
+          color: purple;
+        }
+      }
+      @media screen and (min-width: 1000px) {
+        .testClass {
+          color: red;
+        }
+        .otherClass {
+          color: purple;
+        }
+        .otherOtherClass {
+          color: purple;
         }
       }"
     `);
@@ -532,13 +584,17 @@ describe('transformCss', () => {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
-            display: grid;
           }
         }
       }
       @supports (display: grid) {
         .testClass {
           background-color: yellow;
+        }
+        @media screen and (min-width: 700px) {
+          .testClass {
+            display: grid;
+          }
         }
       }"
     `);

@@ -3115,6 +3115,7 @@ __metadata:
     "@emotion/hash": ^0.8.0
     "@types/cssesc": ^3.0.0
     "@types/dedent": ^0.7.0
+    "@types/lodash": ^4.14.168
     "@vanilla-extract/private": ^0.1.2
     chalk: ^4.1.1
     css-selector-parser: ^1.4.1
@@ -3122,6 +3123,7 @@ __metadata:
     csstype: ^3.0.7
     dedent: ^0.7.0
     deep-object-diff: ^1.1.0
+    lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
