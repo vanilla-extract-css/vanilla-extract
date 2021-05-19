@@ -1,6 +1,7 @@
-type Tuple<Length extends number, Value> = ReadonlyArray<Value> & {
+interface Tuple<Length extends number, Value> extends ReadonlyArray<Value> {
+  0: Value;
   length: Length;
-};
+}
 
 export type ResponsiveArrayConfig<Value> = Tuple<2 | 3 | 5 | 6 | 7 | 8, Value>;
 
