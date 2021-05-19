@@ -100,6 +100,7 @@ export const simplePseudos = [
   '::-webkit-progress-bar',
   '::-webkit-progress-inner-value',
   '::-webkit-progress-value',
+  '::-webkit-scrollbar',
   '::-webkit-slider-runnable-track',
   '::-webkit-slider-thumb',
   '::after',
