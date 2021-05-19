@@ -1,65 +1,22 @@
-export type RA1<Value> = readonly [Value];
-export type RA2<Value> = readonly [Value, Value];
-export type RA3<Value> = readonly [Value, Value, Value];
-export type RA4<Value> = readonly [Value, Value, Value, Value];
-export type RA5<Value> = readonly [Value, Value, Value, Value, Value];
-export type RA6<Value> = readonly [Value, Value, Value, Value, Value, Value];
-export type RA7<Value> = readonly [
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-];
-export type RA8<Value> = readonly [
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-  Value,
-];
+type Tuple<Length extends number, Value> = ReadonlyArray<Value> & {
+  length: Length;
+};
 
-export type ResponsiveArrayConfig<Value> =
-  | RA2<Value>
-  | RA3<Value>
-  | RA4<Value>
-  | RA5<Value>
-  | RA6<Value>
-  | RA7<Value>
-  | RA8<Value>;
+export type ResponsiveArrayConfig<Value> = Tuple<
+  1 | 2 | 3 | 5 | 6 | 7 | 8,
+  Value
+>;
 
 export type ResponsiveArray<Count extends number, Value> = [
   never,
-  RA1<Value>,
-  RA1<Value> | RA2<Value>,
-  RA1<Value> | RA2<Value> | RA3<Value>,
-  RA1<Value> | RA2<Value> | RA3<Value> | RA4<Value>,
-  RA1<Value> | RA2<Value> | RA3<Value> | RA4<Value> | RA5<Value>,
-  RA1<Value> | RA2<Value> | RA3<Value> | RA4<Value> | RA5<Value> | RA6<Value>,
-  (
-    | RA1<Value>
-    | RA2<Value>
-    | RA3<Value>
-    | RA4<Value>
-    | RA5<Value>
-    | RA6<Value>
-    | RA7<Value>
-  ),
-  (
-    | RA1<Value>
-    | RA2<Value>
-    | RA3<Value>
-    | RA4<Value>
-    | RA5<Value>
-    | RA6<Value>
-    | RA7<Value>
-    | RA8<Value>
-  ),
+  Tuple<1, Value>,
+  Tuple<1 | 2, Value>,
+  Tuple<1 | 2 | 3, Value>,
+  Tuple<1 | 2 | 3 | 4, Value>,
+  Tuple<1 | 2 | 3 | 4 | 5, Value>,
+  Tuple<1 | 2 | 3 | 4 | 5 | 6, Value>,
+  Tuple<1 | 2 | 3 | 4 | 5 | 6 | 7, Value>,
+  Tuple<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8, Value>,
 ][Count];
 
 export type ConditionalPropertyValue = {
