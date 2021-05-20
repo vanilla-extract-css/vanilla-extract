@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.3.2
+
+### Patch Changes
+
+- [#150](https://github.com/seek-oss/vanilla-extract/pull/150) [`e59002a`](https://github.com/seek-oss/vanilla-extract/commit/e59002ae75faeaeaa585b71eafca8ee1ebf85849) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Refactor responsive array type to use Tuple generic
+
 ## 0.3.1
 
 ### Patch Changes
