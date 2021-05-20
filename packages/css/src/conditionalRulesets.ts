@@ -1,52 +1,39 @@
-function getRelevantRulesets(a: Ruleset, b: Ruleset) {
-  const aConditions = a.map(({ condition }) => condition);
-  const bConditions = b.map(({ condition }) => condition);
+import dedent from 'dedent';
 
-  const aRelevantConditions = a.filter(({ condition }) =>
-    bConditions.includes(condition),
-  );
-  const bRelevantConditions = b.filter(({ condition }) =>
-    aConditions.includes(condition),
-  );
-
-  return [aRelevantConditions, bRelevantConditions];
+interface Rule {
+  selector: string;
+  rule: any;
 }
 
-export function renderRulesetToObj(ruleset: Ruleset, target: any = {}) {
-  for (const { condition, rules, children } of ruleset) {
-    target[condition] = {};
-
-    for (const rule of rules) {
-      target[condition][rule.selector] = rule.rule;
-    }
-
-    renderRulesetToObj(children.ruleset, target[condition]);
-  }
-
-  return target;
-}
-
-type ConditionInfo<Rule> = {
+type ConditionInfo = {
   condition: string;
   rules: Array<Rule>;
-  children: ConditionalRuleset<Rule>;
+  children: ConditionalRuleset;
 };
 
-export type Ruleset<Rule = any> = Array<ConditionInfo<Rule>>;
+type Ruleset = Array<ConditionInfo>;
 
-export class ConditionalRuleset<Rule> {
-  ruleset: Ruleset<Rule>;
+export class ConditionalRuleset {
+  ruleset: Ruleset;
+  /**
+   * Stores information about where condtions must in relation to other conditions
+   *
+   * e.g. mobile -> tablet, desktop
+   */
+  orderPriorities: Map<string, Set<String>>;
 
   constructor() {
     this.ruleset = [];
+    this.orderPriorities = new Map();
   }
 
-  addRule(rule: Rule, conditions: Array<string>) {
-    let currRuleset = this.ruleset;
-    let targetCondition: ConditionInfo<Rule> | undefined;
+  getRelevantCondition(conditions: Array<string>) {
+    let parentRuleset: ConditionalRuleset = this;
+    let currRuleset: ConditionalRuleset = this;
+    let targetCondition: ConditionInfo | undefined;
 
     for (const condition of conditions) {
-      targetCondition = currRuleset.find(
+      targetCondition = currRuleset.ruleset.find(
         (cond) => cond.condition === condition,
       );
 
@@ -57,11 +44,21 @@ export class ConditionalRuleset<Rule> {
           rules: [],
           children: new ConditionalRuleset(),
         };
-        currRuleset.push(targetCondition);
+        currRuleset.ruleset.push(targetCondition);
       }
 
-      currRuleset = targetCondition.children.ruleset;
+      parentRuleset = currRuleset;
+      currRuleset = targetCondition.children;
     }
+
+    return {
+      ruleset: parentRuleset,
+      targetCondition,
+    };
+  }
+
+  addRule(rule: Rule, conditions: Array<string>) {
+    const { targetCondition } = this.getRelevantCondition(conditions);
 
     if (!targetCondition) {
       throw new Error('Failed to add conditional rule');
@@ -70,43 +67,53 @@ export class ConditionalRuleset<Rule> {
     targetCondition.rules.push(rule);
   }
 
-  isCompatible(altRuleset: ConditionalRuleset<Rule>) {
-    const [aRelevantConditions, bRelevantConditions] = getRelevantRulesets(
-      this.ruleset,
-      altRuleset.ruleset,
-    );
+  addConditionPriorities(
+    parentConditions: Array<string>,
+    conditionOrder: Array<string>,
+  ) {
+    const { ruleset } = this.getRelevantCondition(parentConditions);
 
-    for (let i = 0; i < aRelevantConditions.length; i++) {
-      const aCondition = aRelevantConditions[i];
-      const bCondition = bRelevantConditions[i];
+    for (let i = 0; i < conditionOrder.length; i++) {
+      const condition = conditionOrder[i];
 
-      if (aCondition.condition !== bCondition.condition) {
-        return false;
+      const conditionPriority =
+        ruleset.orderPriorities.get(condition) ?? new Set();
+
+      for (const lowerPriorityCondition of conditionOrder.slice(i + 1)) {
+        conditionPriority.add(lowerPriorityCondition);
       }
 
-      if (!aCondition.children.isCompatible(bCondition.children)) {
-        return false;
+      ruleset.orderPriorities.set(condition, conditionPriority);
+    }
+  }
+
+  isCompatible(altRuleset: ConditionalRuleset) {
+    // console.log(
+    //   'isCompatible\nCurr: ',
+    //   this.orderPriorities,
+    //   '\nIncoming: ',
+    //   altRuleset.orderPriorities,
+    // );
+
+    for (const [condition, orderPriority] of this.orderPriorities.entries()) {
+      for (const lowerPriorityCondition of orderPriority) {
+        if (
+          altRuleset.orderPriorities
+            .get(lowerPriorityCondition as string)
+            ?.has(condition)
+        ) {
+          // console.log(dedent`Ruleset not compatible:
+          // Current ruleset: "${condition}" < "${lowerPriorityCondition}"
+          // Incoming ruleset: "${lowerPriorityCondition}" < "${condition}"`);
+          return false;
+        }
       }
     }
 
     return true;
   }
 
-  populateWeightMap(rs: Ruleset<Rule>, weightMap: Map<string, Set<String>>) {
-    const conditions = rs.map(({ condition }) => condition);
-
-    for (let i = 0; i < conditions.length; i++) {
-      const weights = weightMap.get(conditions[i]) || new Set<string>();
-
-      for (const condition of conditions.splice(i + 1, conditions.length)) {
-        weights.add(condition);
-      }
-
-      weightMap.set(conditions[i], weights);
-    }
-  }
-
-  merge(incomingRuleset: ConditionalRuleset<Rule>) {
+  merge(incomingRuleset: ConditionalRuleset) {
     // Merge rulesets into one array
     for (const { condition, rules, children } of incomingRuleset.ruleset) {
       const matchingCondition = this.ruleset.find(
@@ -122,29 +129,58 @@ export class ConditionalRuleset<Rule> {
       }
     }
 
-    // Sort rulesets according to required rule order
-    // We assume incoming rulesets are compatible/mergeable
-    const weightMap = new Map<string, Set<String>>();
+    // Merge order priorities
+    for (const [
+      condition,
+      orderPriority,
+    ] of incomingRuleset.orderPriorities.entries()) {
+      const orderPrioritySet = this.orderPriorities.get(condition) ?? new Set();
 
-    this.populateWeightMap(this.ruleset, weightMap);
-    this.populateWeightMap(incomingRuleset.ruleset, weightMap);
+      this.orderPriorities.set(
+        condition,
+        new Set([...orderPrioritySet, ...orderPriority]),
+      );
+    }
+  }
 
+  sort() {
     this.ruleset.sort((a, b) => {
-      const aWeights = weightMap.get(a.condition);
+      const aWeights = this.orderPriorities.get(a.condition);
 
       if (aWeights?.has(b.condition)) {
         // A is higher priority
+        // console.log('Sort - A: ', a.condition, ' < ', 'B: ', b.condition);
         return -1;
       }
 
-      const bWeights = weightMap.get(b.condition);
+      const bWeights = this.orderPriorities.get(b.condition);
 
       if (bWeights?.has(a.condition)) {
         // B is higher priority
+        // console.log('Sort - A: ', a.condition, ' > ', 'B: ', b.condition);
         return 1;
       }
 
       return 0;
     });
+  }
+
+  renderToObj() {
+    // Sort rulesets according to required rule order
+    this.sort();
+
+    const target: any = {};
+
+    for (const { condition, rules, children } of this.ruleset) {
+      target[condition] = {};
+
+      for (const rule of rules) {
+        target[condition][rule.selector] = rule.rule;
+      }
+
+      Object.assign(target[condition], children.renderToObj());
+    }
+
+    return target;
   }
 }

@@ -40,12 +40,10 @@
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
     "dedent": "^0.7.0",
-    "deep-object-diff": "^1.1.0",
-    "lodash": "^4.17.21"
+    "deep-object-diff": "^1.1.0"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0",
-    "@types/dedent": "^0.7.0",
-    "@types/lodash": "^4.14.168"
+    "@types/dedent": "^0.7.0"
   }
 }

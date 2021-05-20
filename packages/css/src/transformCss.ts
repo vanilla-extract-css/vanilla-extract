@@ -1,6 +1,5 @@
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-import merge from 'lodash/merge';
 
 import type {
   CSS,
@@ -15,8 +14,8 @@ import type {
   CSSSelectorBlock,
 } from './types';
 import { validateSelector } from './validateSelector';
-import { forEach, omit, mapKeys, isEqual } from './utils';
-import { ConditionalRuleset, renderRulesetToObj } from './conditionalRulesets';
+import { forEach, omit, mapKeys } from './utils';
+import { ConditionalRuleset } from './conditionalRulesets';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -180,8 +179,8 @@ interface CSSRule {
 
 class Stylesheet {
   rules: Array<CSSRule>;
-  conditionalRulesets: Array<ConditionalRuleset<CSSRule>>;
-  currConditionalRuleset: ConditionalRuleset<CSSRule> | undefined;
+  conditionalRulesets: Array<ConditionalRuleset>;
+  currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNameRegex: RegExp | null;
@@ -353,24 +352,31 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    forEach(rules, (mediaRule, query) => {
-      const conditions = [...parentConditions, `@media ${query}`];
-
-      this.addConditionalRule(
-        {
-          selector: root.selector,
-          rule: omit(mediaRule, specialKeys),
-        },
-        conditions,
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPriorities(
+        parentConditions,
+        Object.keys(rules).map((query) => `@media ${query}`),
       );
 
-      if (root.type === 'local') {
-        this.transformSimplePsuedos(root, mediaRule!, conditions);
-        this.transformSelectors(root, mediaRule!, conditions);
-      }
+      forEach(rules, (mediaRule, query) => {
+        const conditions = [...parentConditions, `@media ${query}`];
 
-      this.transformSupports(root, mediaRule!['@supports'], conditions);
-    });
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(mediaRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePsuedos(root, mediaRule!, conditions);
+          this.transformSelectors(root, mediaRule!, conditions);
+        }
+
+        this.transformSupports(root, mediaRule!['@supports'], conditions);
+      });
+    }
   }
 
   transformSupports(
@@ -380,23 +386,30 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    forEach(rules, (supportsRule, query) => {
-      const conditions = [...parentConditions, `@supports ${query}`];
-
-      this.addConditionalRule(
-        {
-          selector: root.selector,
-          rule: omit(supportsRule, specialKeys),
-        },
-        conditions,
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPriorities(
+        parentConditions,
+        Object.keys(rules).map((query) => `@supports ${query}`),
       );
 
-      if (root.type === 'local') {
-        this.transformSimplePsuedos(root, supportsRule!, conditions);
-        this.transformSelectors(root, supportsRule!, conditions);
-      }
-      this.transformMedia(root, supportsRule!['@media'], conditions);
-    });
+      forEach(rules, (supportsRule, query) => {
+        const conditions = [...parentConditions, `@supports ${query}`];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(supportsRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePsuedos(root, supportsRule!, conditions);
+          this.transformSelectors(root, supportsRule!, conditions);
+        }
+        this.transformMedia(root, supportsRule!['@media'], conditions);
+      });
+    }
   }
 
   transformSimplePsuedos(
@@ -454,7 +467,7 @@ class Stylesheet {
 
     // Render conditional rules
     for (const conditionalRuleset of this.conditionalRulesets) {
-      css.push(renderCss(renderRulesetToObj(conditionalRuleset.ruleset)));
+      css.push(renderCss(conditionalRuleset.renderToObj()));
     }
 
     return css.filter(Boolean);
