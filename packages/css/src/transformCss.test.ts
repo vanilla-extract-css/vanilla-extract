@@ -265,6 +265,23 @@ describe('transformCss', () => {
               },
             },
           },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 700px)': {
+                  color: 'purple',
+                },
+                'screen and (min-width: 1700px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
@@ -285,6 +302,9 @@ describe('transformCss', () => {
         .otherOtherClass {
           color: yellow;
         }
+        .otherOtherOtherClass {
+          color: yellow;
+        }
       }
       @media screen and (min-width: 1000px) {
         .otherOtherClass {
@@ -294,6 +314,143 @@ describe('transformCss', () => {
       @media screen and (min-width: 700px) {
         .otherOtherClass {
           color: purple;
+        }
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }
+      @media screen and (min-width: 1700px) {
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }"
+    `);
+  });
+
+  it('should not combine nested media queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 1000px)': {
+                      color: 'red',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 1000px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 1000px)': {
+                      color: 'purple',
+                    },
+                    'screen and (min-width: 700px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 700px)': {
+                      color: 'purple',
+                    },
+                    'screen and (min-width: 1700px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@supports (display: grid) {
+        @media screen and (min-width: 700px) {
+          .otherClass {
+            color: yellow;
+          }
+        }
+        @media screen and (min-width: 1000px) {
+          .testClass {
+            color: red;
+          }
+          .otherClass {
+            color: purple;
+          }
+        }
+      }
+      @supports (display: grid) {
+        @media screen and (min-width: 600px) {
+          .otherOtherClass {
+            color: yellow;
+          }
+          .otherOtherOtherClass {
+            color: yellow;
+          }
+        }
+        @media screen and (min-width: 1000px) {
+          .otherOtherClass {
+            color: purple;
+          }
+        }
+        @media screen and (min-width: 700px) {
+          .otherOtherClass {
+            color: purple;
+          }
+          .otherOtherOtherClass {
+            color: purple;
+          }
+        }
+        @media screen and (min-width: 1700px) {
+          .otherOtherOtherClass {
+            color: purple;
+          }
         }
       }"
     `);

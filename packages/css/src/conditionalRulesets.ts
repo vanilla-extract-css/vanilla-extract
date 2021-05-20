@@ -1,5 +1,3 @@
-import dedent from 'dedent';
-
 interface Rule {
   selector: string;
   rule: any;
@@ -28,7 +26,6 @@ export class ConditionalRuleset {
   }
 
   getRelevantCondition(conditions: Array<string>) {
-    let parentRuleset: ConditionalRuleset = this;
     let currRuleset: ConditionalRuleset = this;
     let targetCondition: ConditionInfo | undefined;
 
@@ -47,18 +44,14 @@ export class ConditionalRuleset {
         currRuleset.ruleset.push(targetCondition);
       }
 
-      parentRuleset = currRuleset;
       currRuleset = targetCondition.children;
     }
 
-    return {
-      ruleset: parentRuleset,
-      targetCondition,
-    };
+    return targetCondition;
   }
 
   addRule(rule: Rule, conditions: Array<string>) {
-    const { targetCondition } = this.getRelevantCondition(conditions);
+    const targetCondition = this.getRelevantCondition(conditions);
 
     if (!targetCondition) {
       throw new Error('Failed to add conditional rule');
@@ -71,7 +64,8 @@ export class ConditionalRuleset {
     parentConditions: Array<string>,
     conditionOrder: Array<string>,
   ) {
-    const { ruleset } = this.getRelevantCondition(parentConditions);
+    const targetCondition = this.getRelevantCondition(parentConditions);
+    const ruleset = targetCondition ? targetCondition.children : this;
 
     for (let i = 0; i < conditionOrder.length; i++) {
       const condition = conditionOrder[i];
@@ -87,26 +81,30 @@ export class ConditionalRuleset {
     }
   }
 
-  isCompatible(altRuleset: ConditionalRuleset) {
-    // console.log(
-    //   'isCompatible\nCurr: ',
-    //   this.orderPriorities,
-    //   '\nIncoming: ',
-    //   altRuleset.orderPriorities,
-    // );
-
+  isCompatible(incomingRuleset: ConditionalRuleset) {
     for (const [condition, orderPriority] of this.orderPriorities.entries()) {
       for (const lowerPriorityCondition of orderPriority) {
         if (
-          altRuleset.orderPriorities
+          incomingRuleset.orderPriorities
             .get(lowerPriorityCondition as string)
             ?.has(condition)
         ) {
-          // console.log(dedent`Ruleset not compatible:
-          // Current ruleset: "${condition}" < "${lowerPriorityCondition}"
-          // Incoming ruleset: "${lowerPriorityCondition}" < "${condition}"`);
           return false;
         }
+      }
+    }
+
+    // Check that children are compatible
+    for (const { condition, children } of incomingRuleset.ruleset) {
+      const matchingCondition = this.ruleset.find(
+        (cond) => cond.condition === condition,
+      );
+
+      if (
+        matchingCondition &&
+        !matchingCondition.children.isCompatible(children)
+      ) {
+        return false;
       }
     }
 
@@ -149,7 +147,6 @@ export class ConditionalRuleset {
 
       if (aWeights?.has(b.condition)) {
         // A is higher priority
-        // console.log('Sort - A: ', a.condition, ' < ', 'B: ', b.condition);
         return -1;
       }
 
@@ -157,7 +154,6 @@ export class ConditionalRuleset {
 
       if (bWeights?.has(a.condition)) {
         // B is higher priority
-        // console.log('Sort - A: ', a.condition, ' > ', 'B: ', b.condition);
         return 1;
       }
 
