@@ -786,10 +786,10 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle merge nested @supports and @media queries', () => {
+  it('should merge nested @supports and @media queries', () => {
     expect(
       transformCss({
-        localClassNames: ['testClass'],
+        localClassNames: ['testClass', 'otherClass'],
         cssObjs: [
           {
             type: 'local',
@@ -829,7 +829,7 @@ describe('transformCss', () => {
           .testClass {
             border-color: blue;
           }
-          otherClass {
+          .otherClass {
             background-color: yellow;
           }
         }
