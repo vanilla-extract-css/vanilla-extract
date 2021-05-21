@@ -1,7 +1,6 @@
+import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
-
-import { setFileScope, endFileScope } from './fileScope';
 
 setFileScope('test');
 

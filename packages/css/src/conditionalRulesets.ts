@@ -111,7 +111,16 @@ export class ConditionalRuleset {
     return true;
   }
 
+  /**
+   * Merge another ConditionalRuleset into this one
+   *
+   * @returns true if successful, false if the ruleset is incompatible
+   */
   merge(incomingRuleset: ConditionalRuleset) {
+    if (!this.isCompatible(incomingRuleset)) {
+      return false;
+    }
+
     // Merge rulesets into one array
     for (const { condition, rules, children } of incomingRuleset.ruleset) {
       const matchingCondition = this.ruleset.find(
@@ -139,6 +148,8 @@ export class ConditionalRuleset {
         new Set([...orderPrioritySet, ...orderPriority]),
       );
     }
+
+    return true;
   }
 
   sort() {

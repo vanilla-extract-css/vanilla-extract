@@ -13,9 +13,10 @@ import type {
   GlobalFontFaceRule,
   CSSSelectorBlock,
 } from './types';
-import { validateSelector } from './validateSelector';
 import { forEach, omit, mapKeys } from './utils';
+import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
+import { simplePseudos, simplePseudoLookup } from './simplePsuedos';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -66,104 +67,6 @@ const UNITLESS: Record<string, boolean> = {
   strokeWidth: true,
 };
 
-export const simplePseudos = [
-  ':-moz-any-link',
-  ':-moz-full-screen',
-  ':-moz-placeholder',
-  ':-moz-read-only',
-  ':-moz-read-write',
-  ':-ms-fullscreen',
-  ':-ms-input-placeholder',
-  ':-webkit-any-link',
-  ':-webkit-full-screen',
-  '::-moz-placeholder',
-  '::-moz-progress-bar',
-  '::-moz-range-progress',
-  '::-moz-range-thumb',
-  '::-moz-range-track',
-  '::-moz-selection',
-  '::-ms-backdrop',
-  '::-ms-browse',
-  '::-ms-check',
-  '::-ms-clear',
-  '::-ms-fill',
-  '::-ms-fill-lower',
-  '::-ms-fill-upper',
-  '::-ms-reveal',
-  '::-ms-thumb',
-  '::-ms-ticks-after',
-  '::-ms-ticks-before',
-  '::-ms-tooltip',
-  '::-ms-track',
-  '::-ms-value',
-  '::-webkit-backdrop',
-  '::-webkit-input-placeholder',
-  '::-webkit-progress-bar',
-  '::-webkit-progress-inner-value',
-  '::-webkit-progress-value',
-  '::-webkit-resizer',
-  '::-webkit-scrollbar-button',
-  '::-webkit-scrollbar-corner',
-  '::-webkit-scrollbar-thumb',
-  '::-webkit-scrollbar-track-piece',
-  '::-webkit-scrollbar-track',
-  '::-webkit-scrollbar',
-  '::-webkit-slider-runnable-track',
-  '::-webkit-slider-thumb',
-  '::after',
-  '::backdrop',
-  '::before',
-  '::cue',
-  '::first-letter',
-  '::first-line',
-  '::grammar-error',
-  '::placeholder',
-  '::selection',
-  '::spelling-error',
-  ':active',
-  ':after',
-  ':any-link',
-  ':before',
-  ':blank',
-  ':checked',
-  ':default',
-  ':defined',
-  ':disabled',
-  ':empty',
-  ':enabled',
-  ':first',
-  ':first-child',
-  ':first-letter',
-  ':first-line',
-  ':first-of-type',
-  ':focus',
-  ':focus-visible',
-  ':focus-within',
-  ':fullscreen',
-  ':hover',
-  ':in-range',
-  ':indeterminate',
-  ':invalid',
-  ':last-child',
-  ':last-of-type',
-  ':left',
-  ':link',
-  ':only-child',
-  ':only-of-type',
-  ':optional',
-  ':out-of-range',
-  ':placeholder-shown',
-  ':read-only',
-  ':read-write',
-  ':required',
-  ':right',
-  ':root',
-  ':scope',
-  ':target',
-  ':valid',
-  ':visited',
-] as const;
-
 function dashify(str: string) {
   return str
     .replace(/([A-Z])/g, '-$1')
@@ -173,9 +76,6 @@ function dashify(str: string) {
 
 const DOUBLE_SPACE = '  ';
 
-export type SimplePseudos = typeof simplePseudos;
-
-const simplePseudoSet = new Set<string>(simplePseudos);
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
 interface CSSRule {
@@ -230,13 +130,11 @@ class Stylesheet {
     this.transformSimplePsuedos(root, root.rule);
     this.transformSelectors(root, root.rule);
 
-    const activeConditionalRuleset = this.conditionalRulesets[
-      this.conditionalRulesets.length - 1
-    ];
+    const activeConditionalRuleset =
+      this.conditionalRulesets[this.conditionalRulesets.length - 1];
 
-    if (activeConditionalRuleset.isCompatible(this.currConditionalRuleset)) {
-      activeConditionalRuleset.merge(this.currConditionalRuleset);
-    } else {
+    if (!activeConditionalRuleset.merge(this.currConditionalRuleset)) {
+      // Ruleset merge failed due to incompatibility. We now deopt by starting a fresh ConditionalRuleset
       this.conditionalRulesets.push(this.currConditionalRuleset);
     }
   }
@@ -427,7 +325,7 @@ class Stylesheet {
   ) {
     for (const key of Object.keys(rule)) {
       // Process simple psuedos
-      if (simplePseudoSet.has(key)) {
+      if (simplePseudoLookup[key]) {
         if (root.type !== 'local') {
           throw new Error(
             `Simple pseudos are not valid in ${
