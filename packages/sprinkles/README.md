@@ -21,8 +21,8 @@ export const className = atoms({
     desktop: 'row'
   },
   background: {
-    lightMode: 'blue50',
-    darkMode: 'gray700'
+    lightMode: 'blue-50',
+    darkMode: 'gray-700'
   }
 });
 ```
@@ -127,6 +127,9 @@ const colors = {
   'blue-50': '#eff6ff',
   'blue-100': '#dbeafe',
   'blue-200': '#bfdbfe',
+  'gray-700': '#374151',
+  'gray-800': '#1f2937',
+  'gray-900': '#111827',
   // etc.
 };
 
@@ -169,8 +172,8 @@ export const container = atoms({
     desktop: 'row',
   },
   background: {
-    lightMode: 'blue50',
-    darkMode: 'gray700',
+    lightMode: 'blue-50',
+    darkMode: 'gray-700',
   }
 });
 ```
@@ -218,21 +221,24 @@ document.write(`
 
 ---
 
-- [API](#api)
-  - [createAtomicStyles](#createatomicstyles)
-    - [`properties`](#properties)
-    - [`shorthands`](#shorthands)
-    - [`conditions`](#conditions)
-    - [`defaultCondition`](#defaultcondition)
-    - [`responsiveArray`](#responsivearray)
-  - [createAtomsFn](#createatomsfn)
-- [Utilities](#utilities)
-  - [createMapValueFn](#createmapvaluefn)
-  - [createNormalizeValueFn](#createnormalizevaluefn)
-- [Types](#types)
-  - [ConditionalValue](#conditionalvalue)
-- [Thanks](#thanks)
-- [License](#license)
+- [🍨 Sprinkles](#-sprinkles)
+  - [Setup](#setup)
+  - [Usage](#usage)
+  - [API](#api)
+    - [createAtomicStyles](#createatomicstyles)
+      - [`properties`](#properties)
+      - [`shorthands`](#shorthands)
+      - [`conditions`](#conditions)
+      - [`defaultCondition`](#defaultcondition)
+      - [`responsiveArray`](#responsivearray)
+    - [createAtomsFn](#createatomsfn)
+  - [Utilities](#utilities)
+    - [createMapValueFn](#createmapvaluefn)
+    - [createNormalizeValueFn](#createnormalizevaluefn)
+  - [Types](#types)
+    - [ConditionalValue](#conditionalvalue)
+  - [Thanks](#thanks)
+  - [License](#license)
 
 ---
 
