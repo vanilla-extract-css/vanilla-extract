@@ -1,5 +1,18 @@
 # @vanilla-extract/sprinkles
 
+## 0.4.0
+
+### Minor Changes
+
+- [#157](https://github.com/seek-oss/vanilla-extract/pull/157) [`ba65efc`](https://github.com/seek-oss/vanilla-extract/commit/ba65efce92c3034d6994c26f0e20eef0f98b94be) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `RequiredConditionalValue` type
+
+### Patch Changes
+
+- [#158](https://github.com/seek-oss/vanilla-extract/pull/158) [`98907f9`](https://github.com/seek-oss/vanilla-extract/commit/98907f9103078b45f862efc7e04b716061e9de93) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Ensure `normalizeConditionalValue` and `mapConditionalValue` return `RequiredConditionalValue` types when a `RequiredConditionalValue` type is provided
+
+- Updated dependencies [[`f5ab957`](https://github.com/seek-oss/vanilla-extract/commit/f5ab957b34586886ef428b58de1f2b55b4ab65e0), [`ae532f5`](https://github.com/seek-oss/vanilla-extract/commit/ae532f5a112c0e89a510fea224b43c6706ce6ac2)]:
+  - @vanilla-extract/css@0.5.2
+
 ## 0.3.2
 
 ### Patch Changes
