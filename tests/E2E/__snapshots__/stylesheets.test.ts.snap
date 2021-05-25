@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stylesheet sprinkles - esbuild should create valid stylesheet 1`] = `
-".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl922{display:flex}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}}
+".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}
 "
 `;
 
-exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl922{display:flex}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}}"`;
+exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}"`;
 
 exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
 ".styles_display_flex_mobile__3nw5tz0 {
@@ -44,6 +44,18 @@ exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
   .styles_display_flex_desktop__3nw5tz2 {
     display: flex;
   }
+  .styles_display_none_desktop__3nw5tz6 {
+    display: none;
+  }
+  .styles_display_block_desktop__3nw5tza {
+    display: block;
+  }
+  .styles_paddingTop_small_desktop__3nw5tze {
+    padding-top: 10px;
+  }
+  .styles_paddingTop_medium_desktop__3nw5tzi {
+    padding-top: 20px;
+  }
   @supports not (display: grid) {
     [data-dark-mode] .styles_display_flex_darkDesktop__3nw5tz3 {
       display: flex;
@@ -60,18 +72,6 @@ exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
     [data-dark-mode] .styles_paddingTop_medium_darkDesktop__3nw5tzj {
       padding-top: 20px;
     }
-  }
-  .styles_display_none_desktop__3nw5tz6 {
-    display: none;
-  }
-  .styles_display_block_desktop__3nw5tza {
-    display: block;
-  }
-  .styles_paddingTop_small_desktop__3nw5tze {
-    padding-top: 10px;
-  }
-  .styles_paddingTop_medium_desktop__3nw5tzi {
-    padding-top: 20px;
   }
 }
 
