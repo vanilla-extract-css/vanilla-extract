@@ -234,6 +234,7 @@ document.write(`
   - [createNormalizeValueFn](#createnormalizevaluefn)
 - [Types](#types)
   - [ConditionalValue](#conditionalvalue)
+  - [RequiredConditionalValue](#requiredconditionalvalue)
 - [Thanks](#thanks)
 - [License](#license)
 
@@ -617,6 +618,37 @@ type ResponsiveAlign = ResponsiveValue<'left' | 'center' | 'right'>;
 const a: ResponsiveAlign = 'left';
 const b: ResponsiveAlign = { mobile: 'center', desktop: 'left' };
 const c: ResponsiveAlign = ['center', null, 'left'];
+```
+
+### RequiredConditionalValue
+
+Same as [ConditionalValue](#conditionalvalue) except the default condition is required. For example, if your default condition was `'mobile'`, then a conditional value of `{ desktop: '...' }` would be a type error.
+
+```ts
+import { createAtomicStyles, RequiredConditionalValue } from '@vanilla-extract/sprinkles';
+
+const responsiveStyles = createAtomicStyles({
+  defaultCondition: 'mobile',
+  // etc.
+});
+
+export type RequiredResponsiveValue<Value extends string | number> = RequiredConditionalValue<typeof responsiveStyles, Value>;
+```
+
+You can then import the generated type in your app code.
+
+```ts
+import { RequiredResponsiveValue } from './sprinkles.css.ts';
+
+type ResponsiveAlign = RequiredResponsiveValue<'left' | 'center' | 'right'>;
+
+const a: ResponsiveAlign = 'left';
+const b: ResponsiveAlign = { mobile: 'center', desktop: 'left' };
+const c: ResponsiveAlign = ['center', null, 'left'];
+
+// Type errors:
+const d: ResponsiveAlign = [null, 'center'];
+const e: ResponsiveAlign = { desktop: 'center' };
 ```
 
 ---

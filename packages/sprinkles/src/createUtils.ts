@@ -1,13 +1,16 @@
 import { addRecipe } from '@vanilla-extract/css/recipe';
-import { ResponsiveArray } from './types';
+import {
+  ResponsiveArrayByMaxLength,
+  RequiredResponsiveArrayByMaxLength,
+} from './types';
 
 type ExtractValue<
   Value extends
     | string
     | number
     | Partial<Record<string, string | number>>
-    | ResponsiveArray<number, string | number | null>
-> = Value extends ResponsiveArray<number, string | number | null>
+    | ResponsiveArrayByMaxLength<number, string | number | null>
+> = Value extends ResponsiveArrayByMaxLength<number, string | number | null>
   ? NonNullable<Value[number]>
   : Value extends Partial<Record<string, string | number>>
   ? NonNullable<Value[keyof Value]>
@@ -36,11 +39,42 @@ export type ConditionalValue<
   | (ExtractDefaultCondition<AtomicStyles> extends false ? never : Value)
   | Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>
   | (AtomicStyles['conditions']['responsiveArray'] extends { length: number }
-      ? ResponsiveArray<
+      ? ResponsiveArrayByMaxLength<
           AtomicStyles['conditions']['responsiveArray']['length'],
-          Value | null
+          Value
         >
       : never);
+
+type RequiredConditionalObject<
+  RequiredConditionName extends string,
+  OptionalConditionNames extends string,
+  Value extends string | number
+> = Record<RequiredConditionName, Value> &
+  Partial<Record<OptionalConditionNames, Value>>;
+
+export type RequiredConditionalValue<
+  AtomicStyles extends Conditions<string>,
+  Value extends string | number
+> = ExtractDefaultCondition<AtomicStyles> extends false
+  ? never
+  :
+      | Value
+      | RequiredConditionalObject<
+          Exclude<ExtractDefaultCondition<AtomicStyles>, false>,
+          Exclude<
+            ExtractConditionNames<AtomicStyles>,
+            ExtractDefaultCondition<AtomicStyles>
+          >,
+          Value
+        >
+      | (AtomicStyles['conditions']['responsiveArray'] extends {
+          length: number;
+        }
+          ? RequiredResponsiveArrayByMaxLength<
+              AtomicStyles['conditions']['responsiveArray']['length'],
+              Value
+            >
+          : never);
 
 export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
   atomicStyles: AtomicStyles,

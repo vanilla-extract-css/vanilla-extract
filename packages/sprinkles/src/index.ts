@@ -8,7 +8,7 @@ import {
 import { AtomicStyles, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
-export type { ConditionalValue } from './createUtils';
+export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 
 interface Condition {
   '@media'?: string;

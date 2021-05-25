@@ -6,6 +6,7 @@ import {
   createMapValueFn,
   createNormalizeValueFn,
   ConditionalValue,
+  RequiredConditionalValue,
 } from '@vanilla-extract/sprinkles';
 import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
 
@@ -210,4 +211,47 @@ const noop = (...args: Array<any>) => {};
   responsiveValue = { NOPE: 123 };
 
   noop(responsiveValue);
+
+  type RequiredResponsiveValue<
+    Value extends string | number
+  > = RequiredConditionalValue<typeof conditionalAtomicStyles, Value>;
+
+  let requiredValue: RequiredResponsiveValue<'row' | 'column'>;
+
+  // Valid values
+  requiredValue = 'row';
+  requiredValue = { mobile: 'row' };
+  requiredValue = { mobile: 'row', desktop: 'column' };
+  requiredValue = ['row'];
+  requiredValue = ['row', null, 'column'];
+
+  // @ts-expect-error
+  requiredValue = [];
+  // @ts-expect-error
+  requiredValue = [null];
+  // @ts-expect-error
+  requiredValue = [null, 'column'];
+  // @ts-expect-error
+  requiredValue = [null, null, 'column'];
+  // @ts-expect-error
+  requiredValue = {};
+  // @ts-expect-error
+  requiredValue = { desktop: 'column' };
+
+  noop(requiredValue);
+
+  // Ensure type is 'never' when default condition is missing
+  type InvalidRequiredResponsiveValue<
+    Value extends string | number
+  > = RequiredConditionalValue<
+    typeof conditionalStylesWithoutDefaultCondition,
+    Value
+  >;
+
+  const invalidRequiredValue: InvalidRequiredResponsiveValue<
+    'row' | 'column'
+    // @ts-expect-error
+  > = ['row'];
+
+  noop(invalidRequiredValue);
 };
