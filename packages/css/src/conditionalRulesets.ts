@@ -14,7 +14,7 @@ type Ruleset = Array<ConditionInfo>;
 export class ConditionalRuleset {
   ruleset: Ruleset;
   /**
-   * Stores information about where condtions must in relation to other conditions
+   * Stores information about where conditions must in relation to other conditions
    *
    * e.g. mobile -> tablet, desktop
    */
