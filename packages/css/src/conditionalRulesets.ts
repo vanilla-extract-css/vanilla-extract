@@ -64,7 +64,7 @@ export class ConditionalRuleset {
     targetCondition.rules.push(rule);
   }
 
-  addConditionPriorities(
+  addConditionPrecedence(
     conditionPath: Array<string>,
     conditionOrder: Array<string>,
   ) {
