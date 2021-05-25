@@ -1,7 +1,6 @@
+import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
-
-import { setFileScope, endFileScope } from './fileScope';
 
 setFileScope('test');
 
@@ -143,32 +142,6 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should remove irrelevant media queries', () => {
-    expect(
-      transformCss({
-        localClassNames: ['testClass'],
-        cssObjs: [
-          {
-            type: 'local',
-            selector: 'testClass',
-            rule: {
-              color: 'red',
-              '@media': {
-                'screen and (min-width: 700px)': {
-                  color: 'red',
-                },
-              },
-            },
-          },
-        ],
-      }).join('\n'),
-    ).toMatchInlineSnapshot(`
-      ".testClass {
-        color: red;
-      }"
-    `);
-  });
-
   it('should combine media queries', () => {
     expect(
       transformCss({
@@ -180,7 +153,7 @@ describe('transformCss', () => {
             rule: {
               color: 'green',
               '@media': {
-                'screen and (min-width: 700px)': {
+                'screen and (min-width: 1000px)': {
                   color: 'red',
                 },
               },
@@ -198,6 +171,21 @@ describe('transformCss', () => {
               },
             },
           },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              color: 'purple',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'green',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'yellow',
+                },
+              },
+            },
+          },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
@@ -207,12 +195,261 @@ describe('transformCss', () => {
       .otherClass {
         color: purple;
       }
+      .otherOtherClass {
+        color: purple;
+      }
       @media screen and (min-width: 700px) {
+        .otherClass {
+          color: red;
+        }
+        .otherOtherClass {
+          color: green;
+        }
+      }
+      @media screen and (min-width: 1000px) {
+        .testClass {
+          color: red;
+        }
+        .otherOtherClass {
+          color: yellow;
+        }
+      }"
+    `);
+  });
+
+  it('should not combine media queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1000px)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 1000px)': {
+                  color: 'purple',
+                },
+                'screen and (min-width: 700px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  color: 'yellow',
+                },
+                'screen and (min-width: 700px)': {
+                  color: 'purple',
+                },
+                'screen and (min-width: 1700px)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 700px) {
+        .otherClass {
+          color: yellow;
+        }
+      }
+      @media screen and (min-width: 1000px) {
         .testClass {
           color: red;
         }
         .otherClass {
-          color: red;
+          color: purple;
+        }
+      }
+      @media screen and (min-width: 600px) {
+        .otherOtherClass {
+          color: yellow;
+        }
+        .otherOtherOtherClass {
+          color: yellow;
+        }
+      }
+      @media screen and (min-width: 1000px) {
+        .otherOtherClass {
+          color: purple;
+        }
+      }
+      @media screen and (min-width: 700px) {
+        .otherOtherClass {
+          color: purple;
+        }
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }
+      @media screen and (min-width: 1700px) {
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }"
+    `);
+  });
+
+  it('should not combine nested media queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 1000px)': {
+                      color: 'red',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 1000px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 1000px)': {
+                      color: 'purple',
+                    },
+                    'screen and (min-width: 700px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'yellow',
+                    },
+                    'screen and (min-width: 700px)': {
+                      color: 'purple',
+                    },
+                    'screen and (min-width: 1700px)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@supports (display: grid) {
+        @media screen and (min-width: 700px) {
+          .otherClass {
+            color: yellow;
+          }
+        }
+        @media screen and (min-width: 1000px) {
+          .testClass {
+            color: red;
+          }
+          .otherClass {
+            color: purple;
+          }
+        }
+      }
+      @supports (display: grid) {
+        @media screen and (min-width: 600px) {
+          .otherOtherClass {
+            color: yellow;
+          }
+          .otherOtherOtherClass {
+            color: yellow;
+          }
+        }
+        @media screen and (min-width: 1000px) {
+          .otherOtherClass {
+            color: purple;
+          }
+        }
+        @media screen and (min-width: 700px) {
+          .otherOtherClass {
+            color: purple;
+          }
+          .otherOtherOtherClass {
+            color: purple;
+          }
+        }
+        @media screen and (min-width: 1700px) {
+          .otherOtherOtherClass {
+            color: purple;
+          }
         }
       }"
     `);
@@ -532,13 +769,68 @@ describe('transformCss', () => {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
-            display: grid;
           }
         }
       }
       @supports (display: grid) {
         .testClass {
           background-color: yellow;
+        }
+        @media screen and (min-width: 700px) {
+          .testClass {
+            display: grid;
+          }
+        }
+      }"
+    `);
+  });
+
+  it('should merge nested @supports and @media queries', () => {
+    expect(
+      transformCss({
+        localClassNames: ['testClass', 'otherClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      backgroundColor: 'yellow',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 700px) {
+        @supports (display: grid) {
+          .testClass {
+            border-color: blue;
+          }
+          .otherClass {
+            background-color: yellow;
+          }
         }
       }"
     `);
