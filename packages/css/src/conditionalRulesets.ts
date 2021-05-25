@@ -3,55 +3,59 @@ interface Rule {
   rule: any;
 }
 
-type ConditionInfo = {
-  condition: string;
+type Condition = {
+  query: string;
   rules: Array<Rule>;
   children: ConditionalRuleset;
 };
 
-type Ruleset = Array<ConditionInfo>;
-
 export class ConditionalRuleset {
-  ruleset: Ruleset;
+  ruleset: Array<Condition>;
   /**
    * Stores information about where conditions must in relation to other conditions
    *
    * e.g. mobile -> tablet, desktop
    */
-  orderPriorities: Map<string, Set<String>>;
+  precedenceLookup: Map<string, Set<String>>;
 
   constructor() {
     this.ruleset = [];
-    this.orderPriorities = new Map();
+    this.precedenceLookup = new Map();
   }
 
-  getRelevantCondition(conditions: Array<string>) {
-    let currRuleset: ConditionalRuleset = this;
-    let targetCondition: ConditionInfo | undefined;
+  findOrCreateCondition(conditionQuery: string) {
+    let targetCondition = this.ruleset.find(
+      (cond) => cond.query === conditionQuery,
+    );
 
-    for (const condition of conditions) {
-      targetCondition = currRuleset.ruleset.find(
-        (cond) => cond.condition === condition,
-      );
-
-      if (!targetCondition) {
-        // No target condition so create one
-        targetCondition = {
-          condition,
-          rules: [],
-          children: new ConditionalRuleset(),
-        };
-        currRuleset.ruleset.push(targetCondition);
-      }
-
-      currRuleset = targetCondition.children;
+    if (!targetCondition) {
+      // No target condition so create one
+      targetCondition = {
+        query: conditionQuery,
+        rules: [],
+        children: new ConditionalRuleset(),
+      };
+      this.ruleset.push(targetCondition);
     }
 
     return targetCondition;
   }
 
-  addRule(rule: Rule, conditions: Array<string>) {
-    const targetCondition = this.getRelevantCondition(conditions);
+  getConditionalRulesetByPath(conditionPath: Array<string>) {
+    let currRuleset: ConditionalRuleset = this;
+
+    for (const query of conditionPath) {
+      const condition = currRuleset.findOrCreateCondition(query);
+
+      currRuleset = condition.children;
+    }
+
+    return currRuleset;
+  }
+
+  addRule(rule: Rule, conditionQuery: string, conditionPath: Array<string>) {
+    const ruleset = this.getConditionalRulesetByPath(conditionPath);
+    const targetCondition = ruleset.findOrCreateCondition(conditionQuery);
 
     if (!targetCondition) {
       throw new Error('Failed to add conditional rule');
@@ -61,31 +65,30 @@ export class ConditionalRuleset {
   }
 
   addConditionPriorities(
-    parentConditions: Array<string>,
+    conditionPath: Array<string>,
     conditionOrder: Array<string>,
   ) {
-    const targetCondition = this.getRelevantCondition(parentConditions);
-    const ruleset = targetCondition ? targetCondition.children : this;
+    const ruleset = this.getConditionalRulesetByPath(conditionPath);
 
     for (let i = 0; i < conditionOrder.length; i++) {
       const condition = conditionOrder[i];
 
       const conditionPriority =
-        ruleset.orderPriorities.get(condition) ?? new Set();
+        ruleset.precedenceLookup.get(condition) ?? new Set();
 
       for (const lowerPriorityCondition of conditionOrder.slice(i + 1)) {
         conditionPriority.add(lowerPriorityCondition);
       }
 
-      ruleset.orderPriorities.set(condition, conditionPriority);
+      ruleset.precedenceLookup.set(condition, conditionPriority);
     }
   }
 
   isCompatible(incomingRuleset: ConditionalRuleset) {
-    for (const [condition, orderPriority] of this.orderPriorities.entries()) {
+    for (const [condition, orderPriority] of this.precedenceLookup.entries()) {
       for (const lowerPriorityCondition of orderPriority) {
         if (
-          incomingRuleset.orderPriorities
+          incomingRuleset.precedenceLookup
             .get(lowerPriorityCondition as string)
             ?.has(condition)
         ) {
@@ -95,9 +98,9 @@ export class ConditionalRuleset {
     }
 
     // Check that children are compatible
-    for (const { condition, children } of incomingRuleset.ruleset) {
+    for (const { query, children } of incomingRuleset.ruleset) {
       const matchingCondition = this.ruleset.find(
-        (cond) => cond.condition === condition,
+        (cond) => cond.query === query,
       );
 
       if (
@@ -111,20 +114,11 @@ export class ConditionalRuleset {
     return true;
   }
 
-  /**
-   * Merge another ConditionalRuleset into this one
-   *
-   * @returns true if successful, false if the ruleset is incompatible
-   */
   merge(incomingRuleset: ConditionalRuleset) {
-    if (!this.isCompatible(incomingRuleset)) {
-      return false;
-    }
-
     // Merge rulesets into one array
-    for (const { condition, rules, children } of incomingRuleset.ruleset) {
+    for (const { query, rules, children } of incomingRuleset.ruleset) {
       const matchingCondition = this.ruleset.find(
-        (cond) => cond.condition === condition,
+        (cond) => cond.query === query,
       );
 
       if (matchingCondition) {
@@ -132,38 +126,52 @@ export class ConditionalRuleset {
 
         matchingCondition.children.merge(children);
       } else {
-        this.ruleset.push({ condition, rules, children });
+        this.ruleset.push({ query, rules, children });
       }
     }
 
     // Merge order priorities
     for (const [
       condition,
-      orderPriority,
-    ] of incomingRuleset.orderPriorities.entries()) {
-      const orderPrioritySet = this.orderPriorities.get(condition) ?? new Set();
+      incomingOrderPriority,
+    ] of incomingRuleset.precedenceLookup.entries()) {
+      const orderPrecendence =
+        this.precedenceLookup.get(condition) ?? new Set();
 
-      this.orderPriorities.set(
+      this.precedenceLookup.set(
         condition,
-        new Set([...orderPrioritySet, ...orderPriority]),
+        new Set([...orderPrecendence, ...incomingOrderPriority]),
       );
     }
+  }
+
+  /**
+   * Merge another ConditionalRuleset into this one if they are compatible
+   *
+   * @returns true if successful, false if the ruleset is incompatible
+   */
+  mergeIfCompatible(incomingRuleset: ConditionalRuleset) {
+    if (!this.isCompatible(incomingRuleset)) {
+      return false;
+    }
+
+    this.merge(incomingRuleset);
 
     return true;
   }
 
   sort() {
     this.ruleset.sort((a, b) => {
-      const aWeights = this.orderPriorities.get(a.condition);
+      const aWeights = this.precedenceLookup.get(a.query);
 
-      if (aWeights?.has(b.condition)) {
+      if (aWeights?.has(b.query)) {
         // A is higher priority
         return -1;
       }
 
-      const bWeights = this.orderPriorities.get(b.condition);
+      const bWeights = this.precedenceLookup.get(b.query);
 
-      if (bWeights?.has(a.condition)) {
+      if (bWeights?.has(a.query)) {
         // B is higher priority
         return 1;
       }
@@ -178,14 +186,14 @@ export class ConditionalRuleset {
 
     const target: any = {};
 
-    for (const { condition, rules, children } of this.ruleset) {
-      target[condition] = {};
+    for (const { query, rules, children } of this.ruleset) {
+      target[query] = {};
 
       for (const rule of rules) {
-        target[condition][rule.selector] = rule.rule;
+        target[query][rule.selector] = rule.rule;
       }
 
-      Object.assign(target[condition], children.renderToObj());
+      Object.assign(target[query], children.renderToObj());
     }
 
     return target;

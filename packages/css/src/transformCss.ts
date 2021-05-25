@@ -134,7 +134,9 @@ class Stylesheet {
       this.conditionalRulesets.length - 1
     ];
 
-    if (!activeConditionalRuleset.merge(this.currConditionalRuleset)) {
+    if (
+      !activeConditionalRuleset.mergeIfCompatible(this.currConditionalRuleset)
+    ) {
       // Ruleset merge failed due to incompatibility. We now deopt by starting a fresh ConditionalRuleset
       this.conditionalRulesets.push(this.currConditionalRuleset);
     }
@@ -149,12 +151,16 @@ class Stylesheet {
       throw new Error(`Couldn't add conditional rule`);
     }
 
+    const conditionQuery = conditions[conditions.length - 1];
+    const parentConditions = conditions.slice(0, conditions.length - 1);
+
     this.currConditionalRuleset.addRule(
       {
         selector,
         rule,
       },
-      conditions,
+      conditionQuery,
+      parentConditions,
     );
   }
 
