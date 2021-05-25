@@ -41,7 +41,7 @@ export type ConditionalValue<
   | (AtomicStyles['conditions']['responsiveArray'] extends { length: number }
       ? ResponsiveArrayByMaxLength<
           AtomicStyles['conditions']['responsiveArray']['length'],
-          Value | null
+          Value
         >
       : never);
 

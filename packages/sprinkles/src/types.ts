@@ -10,9 +10,10 @@ interface RequiredResponsiveArray<Length extends number, Value>
   length: Length;
 }
 
-export type ResponsiveArrayConfig<
-  Value extends string | number
-> = ResponsiveArray<2 | 3 | 5 | 6 | 7 | 8, Value>;
+export type ResponsiveArrayConfig<Value> = ResponsiveArray<
+  2 | 3 | 5 | 6 | 7 | 8,
+  Value
+>;
 
 export type ResponsiveArrayByMaxLength<MaxLength extends number, Value> = [
   never,
