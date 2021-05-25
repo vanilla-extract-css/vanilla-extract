@@ -73,23 +73,26 @@ export class ConditionalRuleset {
     for (let i = 0; i < conditionOrder.length; i++) {
       const condition = conditionOrder[i];
 
-      const conditionPriority =
+      const conditionPrecedence =
         ruleset.precedenceLookup.get(condition) ?? new Set();
 
-      for (const lowerPriorityCondition of conditionOrder.slice(i + 1)) {
-        conditionPriority.add(lowerPriorityCondition);
+      for (const lowerPrecedenceCondition of conditionOrder.slice(i + 1)) {
+        conditionPrecedence.add(lowerPrecedenceCondition);
       }
 
-      ruleset.precedenceLookup.set(condition, conditionPriority);
+      ruleset.precedenceLookup.set(condition, conditionPrecedence);
     }
   }
 
   isCompatible(incomingRuleset: ConditionalRuleset) {
-    for (const [condition, orderPriority] of this.precedenceLookup.entries()) {
-      for (const lowerPriorityCondition of orderPriority) {
+    for (const [
+      condition,
+      orderPrecedence,
+    ] of this.precedenceLookup.entries()) {
+      for (const lowerPrecedenceCondition of orderPrecedence) {
         if (
           incomingRuleset.precedenceLookup
-            .get(lowerPriorityCondition as string)
+            .get(lowerPrecedenceCondition as string)
             ?.has(condition)
         ) {
           return false;
@@ -130,17 +133,17 @@ export class ConditionalRuleset {
       }
     }
 
-    // Merge order priorities
+    // Merge order precendeces
     for (const [
       condition,
-      incomingOrderPriority,
+      incomingOrderPrecedence,
     ] of incomingRuleset.precedenceLookup.entries()) {
       const orderPrecendence =
         this.precedenceLookup.get(condition) ?? new Set();
 
       this.precedenceLookup.set(
         condition,
-        new Set([...orderPrecendence, ...incomingOrderPriority]),
+        new Set([...orderPrecendence, ...incomingOrderPrecedence]),
       );
     }
   }
@@ -165,14 +168,14 @@ export class ConditionalRuleset {
       const aWeights = this.precedenceLookup.get(a.query);
 
       if (aWeights?.has(b.query)) {
-        // A is higher priority
+        // A is higher precedence
         return -1;
       }
 
       const bWeights = this.precedenceLookup.get(b.query);
 
       if (bWeights?.has(a.query)) {
-        // B is higher priority
+        // B is higher precedence
         return 1;
       }
 
