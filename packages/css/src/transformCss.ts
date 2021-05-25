@@ -130,8 +130,9 @@ class Stylesheet {
     this.transformSimplePsuedos(root, root.rule);
     this.transformSelectors(root, root.rule);
 
-    const activeConditionalRuleset =
-      this.conditionalRulesets[this.conditionalRulesets.length - 1];
+    const activeConditionalRuleset = this.conditionalRulesets[
+      this.conditionalRulesets.length - 1
+    ];
 
     if (
       !activeConditionalRuleset.mergeIfCompatible(this.currConditionalRuleset)
@@ -299,7 +300,7 @@ class Stylesheet {
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
-      this.currConditionalRuleset?.addConditionPriorities(
+      this.currConditionalRuleset?.addConditionPrecedence(
         parentConditions,
         Object.keys(rules).map((query) => `@supports ${query}`),
       );
