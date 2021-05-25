@@ -78,9 +78,20 @@ export type RequiredConditionalValue<
 
 export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
   atomicStyles: AtomicStyles,
-): <Value extends string | number>(
-  value: ConditionalValue<AtomicStyles, Value>,
-) => Partial<Record<ExtractConditionNames<AtomicStyles>, Value>> {
+): <Value extends ConditionalValue<AtomicStyles, string | number>>(
+  value: Value,
+) => Value extends RequiredConditionalValue<AtomicStyles, infer PrimitiveValue>
+  ? RequiredConditionalObject<
+      Exclude<ExtractDefaultCondition<AtomicStyles>, false>,
+      Exclude<
+        ExtractConditionNames<AtomicStyles>,
+        Exclude<ExtractDefaultCondition<AtomicStyles>, false>
+      >,
+      PrimitiveValue
+    >
+  : Value extends ConditionalValue<AtomicStyles, infer PrimitiveValue>
+  ? Partial<Record<ExtractConditionNames<AtomicStyles>, PrimitiveValue>>
+  : never {
   const { conditions } = atomicStyles;
 
   if (!conditions) {
@@ -135,6 +146,15 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
   ) => OutputValue,
 ) => Value extends string | number
   ? OutputValue
+  : Value extends RequiredConditionalValue<AtomicStyles, string | number>
+  ? RequiredConditionalObject<
+      Exclude<ExtractDefaultCondition<AtomicStyles>, false>,
+      Exclude<
+        ExtractConditionNames<AtomicStyles>,
+        Exclude<ExtractDefaultCondition<AtomicStyles>, false>
+      >,
+      OutputValue
+    >
   : Partial<Record<ExtractConditionNames<AtomicStyles>, OutputValue>> {
   const { conditions } = atomicStyles;
 
