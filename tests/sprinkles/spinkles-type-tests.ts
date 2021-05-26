@@ -20,12 +20,6 @@ import {
 // @ts-expect-error Unused args
 const noop = (...args: Array<any>) => {};
 
-// @ts-expect-error Unused args
-const isString = (arg: string) => {};
-
-// @ts-expect-error Unused args
-const isNumber = (arg: number) => {};
-
 () => {
   const atoms = createAtomsFn(
     atomicWithShorthandStyles,
@@ -134,49 +128,25 @@ const isNumber = (arg: number) => {};
   // @ts-expect-error - Too many responsive array options
   normalizeValue(['one', 'two', 'three', 'four']);
 
-  // Valid value - default condition is provided
-  isString(normalizeValue({ mobile: 'hello' }).mobile);
-
-  // Valid value - default condition is provided
-  isString(normalizeValue({ mobile: 'hello', tablet: 'world' }).mobile);
-
-  // @ts-expect-error - condition is potentially undefined when not default condition
-  isString(normalizeValue({ tablet: 'hello' }).tablet);
-
-  // @ts-expect-error - condition is potentially undefined when not default condition
-  isString(normalizeValue({ mobile: 'hello', tablet: 'world' }).tablet);
-
   normalizeValue({
     // @ts-expect-error - Incorrect conditional keys
     mobille: '',
   });
+
+  function testGenericNormalizeValue<Key extends string | number>(
+    value: ResponsiveValue<Key>,
+  ): Key | undefined {
+    const normalizedValue = normalizeValue(value);
+    // Should return the Key type for each condition when normalizing
+    return normalizedValue.mobile;
+  }
+  testGenericNormalizeValue('');
 
   // @ts-expect-error - Strings shouldn't map to objects
   mapValue(alignProp, () => 'baz').mobile;
 
   // @ts-expect-error - Numbers shouldn't map to objects
   mapValue(3, () => 4).mobile;
-
-  isString(mapValue({ mobile: 123 }, () => 'abc').mobile);
-  isNumber(mapValue({ mobile: 'abc' }, () => 123).mobile);
-
-  // @ts-expect-error - Mobile should be potentially undefined since it wasn't provided
-  isString(mapValue({ tablet: 123 }, () => 'abc').mobile);
-
-  // @ts-expect-error - Tablet should be potentially undefined since it's not the default condition
-  isString(mapValue({ tablet: 123 }, () => 'abc').tablet);
-
-  // @ts-expect-error - Tablet should be potentially undefined since it's not the default condition
-  isString(mapValue({ mobile: 123, tablet: 456 }, () => 'abc').tablet);
-
-  // @ts-expect-error - Mobile should be potentially undefined since it wasn't provided
-  isNumber(mapValue({ tablet: 'abc' }, () => 123).mobile);
-
-  // @ts-expect-error - Tablet should be potentially undefined since it's not the default condition
-  isNumber(mapValue({ tablet: 'abc' }, () => 123).tablet);
-
-  // @ts-expect-error - Tablet should be potentially undefined since it's not the default condition
-  isNumber(mapValue({ mobile: 'abc', tablet: 'def' }, () => 123).tablet);
 
   const mapValueWithoutDefaultCondition = createMapValueFn(
     conditionalStylesWithoutDefaultCondition,
@@ -187,9 +157,6 @@ const isNumber = (arg: number) => {};
 
   // @ts-expect-error - Should force conditional value as no default condition
   normalizeValueWithoutDefaultCondition('test');
-
-  // @ts-expect-error - Should potentially be undefined
-  isString(normalizeValueWithoutDefaultCondition({ active: 'yo' }).active);
 
   // @ts-expect-error - Should force conditional value as no default condition
   mapValueWithoutDefaultCondition('test');
