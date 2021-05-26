@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.4.1
+
+### Patch Changes
+
+- [#159](https://github.com/seek-oss/vanilla-extract/pull/159) [`ef22274`](https://github.com/seek-oss/vanilla-extract/commit/ef22274cc83955072d4008fd3c79359844e666e9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Always return `ConditionalValue` type from `normalizeValue` and `mapValue` functions
+
 ## 0.4.0
 
 ### Minor Changes
