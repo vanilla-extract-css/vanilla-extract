@@ -13,6 +13,7 @@ const compileTypes = [
   ['esbuild', 10030],
   ['esbuild-runtime', 10040],
   ['vite', 10050],
+  ['snowpack', 10060],
 ] as const;
 
 async function getPageStyles(
