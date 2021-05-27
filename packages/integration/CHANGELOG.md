@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 0.1.4
+
+### Patch Changes
+
+- [#110](https://github.com/seek-oss/vanilla-extract/pull/110) [`e41529e`](https://github.com/seek-oss/vanilla-extract/commit/e41529e50efe22e1429e3b60f6df83e299dea6c0) Thanks [@mxmul](https://github.com/mxmul)! - Add `fileScope` to `serializeVirtualCssPath` option
+
 ## 0.1.3
 
 ### Patch Changes
