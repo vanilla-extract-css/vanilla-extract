@@ -3216,7 +3216,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/integration@^0.1.0, @vanilla-extract/integration@^0.1.2, @vanilla-extract/integration@workspace:packages/integration":
+"@vanilla-extract/integration@^0.1.0, @vanilla-extract/integration@^0.1.2, @vanilla-extract/integration@^0.1.4, @vanilla-extract/integration@workspace:packages/integration":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/integration@workspace:packages/integration"
   dependencies:
@@ -3243,7 +3243,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/snowpack-plugin@workspace:packages/snowpack-plugin"
   dependencies:
-    "@vanilla-extract/integration": ^0.1.0
+    "@vanilla-extract/integration": ^0.1.4
     snowpack: ^3.5.1
   languageName: unknown
   linkType: soft

@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^0.1.0"
+    "@vanilla-extract/integration": "^0.1.4"
   },
   "devDependencies": {
     "snowpack": "^3.5.1"
