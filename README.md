@@ -88,6 +88,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [webpack](#webpack)
   - [esbuild](#esbuild)
   - [Vite](#vite)
+  - [Snowpack](#snowpack)
   - [Gatsby](#gatsby)
 - [Styling API](#styling-api)
   - [style](#style)
