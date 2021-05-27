@@ -23,16 +23,6 @@ export const validateSelector = (selector: string, targetClassName: string) => {
   };
 
   return selector.split(',').map((selectorPart) => {
-    if (selectorPart.indexOf(targetClassName) === -1) {
-      throw new Error(
-        dedent`
-          Invalid selector: ${replaceTarget()}
-      
-          Selectors must target the ampersand character ('&'), which refers to the generated class name, e.g. '&:nth-child(2n)'
-        `,
-      );
-    }
-
     let currentRule;
 
     try {
@@ -63,7 +53,7 @@ export const validateSelector = (selector: string, targetClassName: string) => {
         dedent`
           Invalid selector: ${replaceTarget()}
       
-          Style selectors must end with the '&' character (along with any modifiers), e.g. ${'`${parent} &`'} or ${'`${parent} &:hover`'}.
+          Style selectors must target the '&' character (along with any modifiers), e.g. ${'`${parent} &`'} or ${'`${parent} &:hover`'}.
           
           This is to ensure that each style block only affects the styling of a single class.
           

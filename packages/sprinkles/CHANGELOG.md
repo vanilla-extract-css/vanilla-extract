@@ -1,5 +1,30 @@
 # @vanilla-extract/sprinkles
 
+## 0.4.1
+
+### Patch Changes
+
+- [#159](https://github.com/seek-oss/vanilla-extract/pull/159) [`ef22274`](https://github.com/seek-oss/vanilla-extract/commit/ef22274cc83955072d4008fd3c79359844e666e9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Always return `ConditionalValue` type from `normalizeValue` and `mapValue` functions
+
+## 0.4.0
+
+### Minor Changes
+
+- [#157](https://github.com/seek-oss/vanilla-extract/pull/157) [`ba65efc`](https://github.com/seek-oss/vanilla-extract/commit/ba65efce92c3034d6994c26f0e20eef0f98b94be) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `RequiredConditionalValue` type
+
+### Patch Changes
+
+- [#158](https://github.com/seek-oss/vanilla-extract/pull/158) [`98907f9`](https://github.com/seek-oss/vanilla-extract/commit/98907f9103078b45f862efc7e04b716061e9de93) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Ensure `normalizeConditionalValue` and `mapConditionalValue` return `RequiredConditionalValue` types when a `RequiredConditionalValue` type is provided
+
+- Updated dependencies [[`f5ab957`](https://github.com/seek-oss/vanilla-extract/commit/f5ab957b34586886ef428b58de1f2b55b4ab65e0), [`ae532f5`](https://github.com/seek-oss/vanilla-extract/commit/ae532f5a112c0e89a510fea224b43c6706ce6ac2)]:
+  - @vanilla-extract/css@0.5.2
+
+## 0.3.2
+
+### Patch Changes
+
+- [#150](https://github.com/seek-oss/vanilla-extract/pull/150) [`e59002a`](https://github.com/seek-oss/vanilla-extract/commit/e59002ae75faeaeaa585b71eafca8ee1ebf85849) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Refactor responsive array type to use Tuple generic
+
 ## 0.3.1
 
 ### Patch Changes

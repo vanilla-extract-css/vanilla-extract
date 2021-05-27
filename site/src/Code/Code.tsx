@@ -58,7 +58,7 @@ export default ({
 
     const errorNodes: Array<Element> = [];
     for (const span of Array.from(spans)) {
-      if (span.innerHTML && errorTokens.includes(span.innerHTML)) {
+      if (span.innerHTML && errorTokens.includes(span.innerHTML.trim())) {
         span.classList.add(styles.errorUnderline);
         errorNodes.push(span);
       }

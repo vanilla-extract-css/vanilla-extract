@@ -1,5 +1,29 @@
 # @vanilla-extract/css
 
+## 0.5.2
+
+### Patch Changes
+
+- [#154](https://github.com/seek-oss/vanilla-extract/pull/154) [`f5ab957`](https://github.com/seek-oss/vanilla-extract/commit/f5ab957b34586886ef428b58de1f2b55b4ab65e0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improved conditional CSS rendering
+
+  Previously all conditional CSS (@media and @supports) in a `.css.ts` file would merge together. This meant each unique query (e.g. `@media screen and (min-width: 700px)`) would only be rendered once. This output is ideal for file size but can lead to the conditions being rendered in the wrong order. The new strategy will still merge conditions together but only if it is considered safe to do so.
+
+* [#152](https://github.com/seek-oss/vanilla-extract/pull/152) [`ae532f5`](https://github.com/seek-oss/vanilla-extract/commit/ae532f5a112c0e89a510fea224b43c6706ce6ac2) Thanks [@Saartje87](https://github.com/Saartje87)! - Added support for the following simple pseudo selectors
+
+  - `::-webkit-resizer`
+  - `::-webkit-scrollbar-button`
+  - `::-webkit-scrollbar-corner`
+  - `::-webkit-scrollbar-thumb`
+  - `::-webkit-scrollbar-track-piece`
+  - `::-webkit-scrollbar-track`
+  - `::-webkit-scrollbar`
+
+## 0.5.1
+
+### Patch Changes
+
+- [#146](https://github.com/seek-oss/vanilla-extract/pull/146) [`bf51ab5`](https://github.com/seek-oss/vanilla-extract/commit/bf51ab56f5b10474476ef61a00edaaf297a10218) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix escaped characters in selectors
+
 ## 0.5.0
 
 ### Minor Changes

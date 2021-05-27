@@ -1,7 +1,7 @@
 import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
 import type { PropertiesFallback, AtRule, Properties } from 'csstype';
 
-import type { SimplePseudos } from './transformCss';
+import type { SimplePseudos } from './simplePsuedos';
 
 export type CSSVarFunction =
   | `var(--${string})`
@@ -27,7 +27,7 @@ export type CSSPropertiesWithVars = CSSProperties & {
 };
 
 type PseudoProperties = {
-  [key in SimplePseudos[number]]?: CSSPropertiesWithVars;
+  [key in SimplePseudos]?: CSSPropertiesWithVars;
 };
 
 type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;

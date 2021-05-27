@@ -21,8 +21,8 @@ export const className = atoms({
     desktop: 'row'
   },
   background: {
-    lightMode: 'blue50',
-    darkMode: 'gray700'
+    lightMode: 'blue-50',
+    darkMode: 'gray-700'
   }
 });
 ```
@@ -127,6 +127,9 @@ const colors = {
   'blue-50': '#eff6ff',
   'blue-100': '#dbeafe',
   'blue-200': '#bfdbfe',
+  'gray-700': '#374151',
+  'gray-800': '#1f2937',
+  'gray-900': '#111827',
   // etc.
 };
 
@@ -169,8 +172,8 @@ export const container = atoms({
     desktop: 'row',
   },
   background: {
-    lightMode: 'blue50',
-    darkMode: 'gray700',
+    lightMode: 'blue-50',
+    darkMode: 'gray-700',
   }
 });
 ```
@@ -231,6 +234,7 @@ document.write(`
   - [createNormalizeValueFn](#createnormalizevaluefn)
 - [Types](#types)
   - [ConditionalValue](#conditionalvalue)
+  - [RequiredConditionalValue](#requiredconditionalvalue)
 - [Thanks](#thanks)
 - [License](#license)
 
@@ -614,6 +618,37 @@ type ResponsiveAlign = ResponsiveValue<'left' | 'center' | 'right'>;
 const a: ResponsiveAlign = 'left';
 const b: ResponsiveAlign = { mobile: 'center', desktop: 'left' };
 const c: ResponsiveAlign = ['center', null, 'left'];
+```
+
+### RequiredConditionalValue
+
+Same as [ConditionalValue](#conditionalvalue) except the default condition is required. For example, if your default condition was `'mobile'`, then a conditional value of `{ desktop: '...' }` would be a type error.
+
+```ts
+import { createAtomicStyles, RequiredConditionalValue } from '@vanilla-extract/sprinkles';
+
+const responsiveStyles = createAtomicStyles({
+  defaultCondition: 'mobile',
+  // etc.
+});
+
+export type RequiredResponsiveValue<Value extends string | number> = RequiredConditionalValue<typeof responsiveStyles, Value>;
+```
+
+You can then import the generated type in your app code.
+
+```ts
+import { RequiredResponsiveValue } from './sprinkles.css.ts';
+
+type ResponsiveAlign = RequiredResponsiveValue<'left' | 'center' | 'right'>;
+
+const a: ResponsiveAlign = 'left';
+const b: ResponsiveAlign = { mobile: 'center', desktop: 'left' };
+const c: ResponsiveAlign = ['center', null, 'left'];
+
+// Type errors:
+const d: ResponsiveAlign = [null, 'center'];
+const e: ResponsiveAlign = { desktop: 'center' };
 ```
 
 ---

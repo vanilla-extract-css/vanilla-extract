@@ -13,8 +13,10 @@ import type {
   GlobalFontFaceRule,
   CSSSelectorBlock,
 } from './types';
+import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
-import { forEach, omit, mapKeys, isEqual } from './utils';
+import { ConditionalRuleset } from './conditionalRulesets';
+import { simplePseudos, simplePseudoLookup } from './simplePsuedos';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -65,97 +67,6 @@ const UNITLESS: Record<string, boolean> = {
   strokeWidth: true,
 };
 
-export const simplePseudos = [
-  ':-moz-any-link',
-  ':-moz-full-screen',
-  ':-moz-placeholder',
-  ':-moz-read-only',
-  ':-moz-read-write',
-  ':-ms-fullscreen',
-  ':-ms-input-placeholder',
-  ':-webkit-any-link',
-  ':-webkit-full-screen',
-  '::-moz-placeholder',
-  '::-moz-progress-bar',
-  '::-moz-range-progress',
-  '::-moz-range-thumb',
-  '::-moz-range-track',
-  '::-moz-selection',
-  '::-ms-backdrop',
-  '::-ms-browse',
-  '::-ms-check',
-  '::-ms-clear',
-  '::-ms-fill',
-  '::-ms-fill-lower',
-  '::-ms-fill-upper',
-  '::-ms-reveal',
-  '::-ms-thumb',
-  '::-ms-ticks-after',
-  '::-ms-ticks-before',
-  '::-ms-tooltip',
-  '::-ms-track',
-  '::-ms-value',
-  '::-webkit-backdrop',
-  '::-webkit-input-placeholder',
-  '::-webkit-progress-bar',
-  '::-webkit-progress-inner-value',
-  '::-webkit-progress-value',
-  '::-webkit-slider-runnable-track',
-  '::-webkit-slider-thumb',
-  '::after',
-  '::backdrop',
-  '::before',
-  '::cue',
-  '::first-letter',
-  '::first-line',
-  '::grammar-error',
-  '::placeholder',
-  '::selection',
-  '::spelling-error',
-  ':active',
-  ':after',
-  ':any-link',
-  ':before',
-  ':blank',
-  ':checked',
-  ':default',
-  ':defined',
-  ':disabled',
-  ':empty',
-  ':enabled',
-  ':first',
-  ':first-child',
-  ':first-letter',
-  ':first-line',
-  ':first-of-type',
-  ':focus',
-  ':focus-visible',
-  ':focus-within',
-  ':fullscreen',
-  ':hover',
-  ':in-range',
-  ':indeterminate',
-  ':invalid',
-  ':last-child',
-  ':last-of-type',
-  ':left',
-  ':link',
-  ':only-child',
-  ':only-of-type',
-  ':optional',
-  ':out-of-range',
-  ':placeholder-shown',
-  ':read-only',
-  ':read-write',
-  ':required',
-  ':right',
-  ':root',
-  ':scope',
-  ':target',
-  ':valid',
-  ':visited',
-] as const;
-
 function dashify(str: string) {
   return str
     .replace(/([A-Z])/g, '-$1')
@@ -165,9 +76,6 @@ function dashify(str: string) {
 
 const DOUBLE_SPACE = '  ';
 
-export type SimplePseudos = typeof simplePseudos;
-
-const simplePseudoSet = new Set<string>(simplePseudos);
 const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
 
 interface CSSRule {
@@ -178,14 +86,15 @@ interface CSSRule {
 
 class Stylesheet {
   rules: Array<CSSRule>;
-  conditionalRules: Array<CSSRule>;
+  conditionalRulesets: Array<ConditionalRuleset>;
+  currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNameRegex: RegExp | null;
 
   constructor(localClassNames: Array<string>) {
     this.rules = [];
-    this.conditionalRules = [];
+    this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
     this.localClassNameRegex =
@@ -213,10 +122,46 @@ class Stylesheet {
       rule: mainRule,
     });
 
-    this.transformSimplePsuedos(root, root.rule);
+    this.currConditionalRuleset = new ConditionalRuleset();
+
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
+
+    this.transformSimplePsuedos(root, root.rule);
     this.transformSelectors(root, root.rule);
+
+    const activeConditionalRuleset = this.conditionalRulesets[
+      this.conditionalRulesets.length - 1
+    ];
+
+    if (
+      !activeConditionalRuleset.mergeIfCompatible(this.currConditionalRuleset)
+    ) {
+      // Ruleset merge failed due to incompatibility. We now deopt by starting a fresh ConditionalRuleset
+      this.conditionalRulesets.push(this.currConditionalRuleset);
+    }
+  }
+
+  addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
+    // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
+    const selector = this.transformSelector(cssRule.selector);
+
+    if (!this.currConditionalRuleset) {
+      throw new Error(`Couldn't add conditional rule`);
+    }
+
+    const conditionQuery = conditions[conditions.length - 1];
+    const parentConditions = conditions.slice(0, conditions.length - 1);
+
+    this.currConditionalRuleset.addRule(
+      {
+        selector,
+        rule,
+      },
+      conditionQuery,
+      parentConditions,
+    );
   }
 
   addRule(cssRule: CSSRule) {
@@ -224,18 +169,10 @@ class Stylesheet {
     const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
-    if (cssRule.conditions) {
-      this.conditionalRules.push({
-        selector,
-        rule,
-        conditions: cssRule.conditions.sort(),
-      });
-    } else {
-      this.rules.push({
-        selector,
-        rule,
-      });
-    }
+    this.rules.push({
+      selector,
+      rule,
+    });
   }
 
   pixelifyProperties(cssRule: CSSPropertiesWithVars) {
@@ -295,11 +232,16 @@ class Stylesheet {
       );
       validateSelector(transformedSelector, root.selector);
 
-      this.addRule({
-        conditions,
+      const rule = {
         selector: transformedSelector,
         rule: omit(selectorRule, specialKeys),
-      });
+      };
+
+      if (conditions) {
+        this.addConditionalRule(rule, conditions);
+      } else {
+        this.addRule(rule);
+      }
 
       const selectorRoot: CSSSelectorBlock = {
         type: 'selector',
@@ -323,22 +265,31 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    forEach(rules, (mediaRule, query) => {
-      const conditions = [`@media ${query}`, ...parentConditions];
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((query) => `@media ${query}`),
+      );
 
-      this.addRule({
-        conditions,
-        selector: root.selector,
-        rule: omit(mediaRule, specialKeys),
+      forEach(rules, (mediaRule, query) => {
+        const conditions = [...parentConditions, `@media ${query}`];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(mediaRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePsuedos(root, mediaRule!, conditions);
+          this.transformSelectors(root, mediaRule!, conditions);
+        }
+
+        this.transformSupports(root, mediaRule!['@supports'], conditions);
       });
-
-      if (root.type === 'local') {
-        this.transformSimplePsuedos(root, mediaRule!, conditions);
-        this.transformSelectors(root, mediaRule!, conditions);
-      }
-
-      this.transformSupports(root, mediaRule!['@supports'], conditions);
-    });
+    }
   }
 
   transformSupports(
@@ -348,21 +299,30 @@ class Stylesheet {
       | undefined,
     parentConditions: Array<string> = [],
   ) {
-    forEach(rules, (supportsRule, query) => {
-      const conditions = [`@supports ${query}`, ...parentConditions];
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((query) => `@supports ${query}`),
+      );
 
-      this.addRule({
-        conditions,
-        selector: root.selector,
-        rule: omit(supportsRule, specialKeys),
+      forEach(rules, (supportsRule, query) => {
+        const conditions = [...parentConditions, `@supports ${query}`];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(supportsRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePsuedos(root, supportsRule!, conditions);
+          this.transformSelectors(root, supportsRule!, conditions);
+        }
+        this.transformMedia(root, supportsRule!['@media'], conditions);
       });
-
-      if (root.type === 'local') {
-        this.transformSimplePsuedos(root, supportsRule!, conditions);
-        this.transformSelectors(root, supportsRule!, conditions);
-      }
-      this.transformMedia(root, supportsRule!['@media'], conditions);
-    });
+    }
   }
 
   transformSimplePsuedos(
@@ -372,7 +332,7 @@ class Stylesheet {
   ) {
     for (const key of Object.keys(rule)) {
       // Process simple psuedos
-      if (simplePseudoSet.has(key)) {
+      if (simplePseudoLookup[key]) {
         if (root.type !== 'local') {
           throw new Error(
             `Simple pseudos are not valid in ${
@@ -381,86 +341,79 @@ class Stylesheet {
           );
         }
 
-        this.addRule({
-          conditions,
-          selector: `${root.selector}${key}`,
-          rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
-        });
-      }
-    }
-  }
-
-  toPostcssJs() {
-    const styles: any = {};
-
-    if (this.fontFaceRules.length > 0) {
-      styles['@font-face'] = this.fontFaceRules;
-    }
-
-    this.keyframesRules.forEach((rule) => {
-      styles[`@keyframes ${rule.name}`] = rule.rule;
-    });
-
-    for (const rule of [...this.rules, ...this.conditionalRules]) {
-      if (rule.conditions && isEqual(styles[rule.selector], rule.rule)) {
-        // Ignore conditional rules if they are identical to a non-conditional rule
-        continue;
-      }
-
-      if (Object.keys(rule.rule).length === 0) {
-        // Ignore empty rules
-        continue;
-      }
-
-      let styleNode = styles;
-
-      for (const condition of rule.conditions || []) {
-        if (!styleNode[condition]) {
-          styleNode[condition] = {};
+        if (conditions) {
+          this.addConditionalRule(
+            {
+              selector: `${root.selector}${key}`,
+              rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
+            },
+            conditions,
+          );
+        } else {
+          this.addRule({
+            conditions,
+            selector: `${root.selector}${key}`,
+            rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
+          });
         }
-        styleNode = styleNode[condition];
       }
-
-      styleNode[rule.selector] = {
-        ...styleNode[rule.selector],
-        ...rule.rule,
-      };
     }
-
-    return styles;
   }
 
   toCss() {
-    const styles = this.toPostcssJs();
+    const css: Array<string> = [];
 
-    function walkCss(v: any, indent: string = '') {
-      const rules: Array<string> = [];
-
-      for (const key of Object.keys(v)) {
-        const value = v[key];
-
-        if (value && Array.isArray(value)) {
-          rules.push(
-            ...value.map((v) => walkCss({ [key]: v }, indent).join('\n')),
-          );
-        } else if (value && typeof value === 'object') {
-          rules.push(
-            `${indent}${key} {\n${walkCss(value, indent + DOUBLE_SPACE).join(
-              '\n',
-            )}\n${indent}}`,
-          );
-        } else {
-          rules.push(
-            `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
-          );
-        }
-      }
-
-      return rules;
+    // Render font-face rules
+    for (const fontFaceRule of this.fontFaceRules) {
+      css.push(renderCss({ '@font-face': fontFaceRule }));
     }
 
-    return walkCss(styles);
+    // Render keyframes
+    for (const keyframe of this.keyframesRules) {
+      css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
+    }
+
+    // Render unconditional rules
+    for (const rule of this.rules) {
+      css.push(renderCss({ [rule.selector]: rule.rule }));
+    }
+
+    // Render conditional rules
+    for (const conditionalRuleset of this.conditionalRulesets) {
+      css.push(renderCss(conditionalRuleset.renderToObj()));
+    }
+
+    return css.filter(Boolean);
   }
+}
+
+function renderCss(v: any, indent: string = '') {
+  const rules: Array<string> = [];
+
+  for (const key of Object.keys(v)) {
+    const value = v[key];
+
+    if (value && Array.isArray(value)) {
+      rules.push(...value.map((v) => renderCss({ [key]: v }, indent)));
+    } else if (value && typeof value === 'object') {
+      const isEmpty = Object.keys(value).length === 0;
+
+      if (!isEmpty) {
+        rules.push(
+          `${indent}${key} {\n${renderCss(
+            value,
+            indent + DOUBLE_SPACE,
+          )}\n${indent}}`,
+        );
+      }
+    } else {
+      rules.push(
+        `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
+      );
+    }
+  }
+
+  return rules.join('\n');
 }
 
 interface TransformCSSParams {

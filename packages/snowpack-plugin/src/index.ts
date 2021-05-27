@@ -30,8 +30,8 @@ export default function vanillaExtractPlugin(
       if (importedByMap.has(filePath)) {
         const importedBy = importedByMap.get(filePath);
         importedByMap.delete(filePath);
-        for (const importerFilePath of importedBy) {
-          this.markChanged?.(importerFilePath);
+        for (const dependentFilePath of importedBy) {
+          this.markChanged?.(dependentFilePath);
         }
       }
     },

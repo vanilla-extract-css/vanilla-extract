@@ -1,5 +1,5 @@
 import {
-  ResponsiveArray,
+  ResponsiveArrayByMaxLength,
   ConditionalPropertyValue,
   AtomicStyles,
   ConditionalWithResponsiveArrayProperty,
@@ -11,7 +11,7 @@ import {
 type ResponsiveArrayVariant<
   RA extends { length: number },
   Values extends string | number | symbol
-> = ResponsiveArray<RA['length'], Values | null>;
+> = ResponsiveArrayByMaxLength<RA['length'], Values | null>;
 
 type ConditionalStyle<
   Values extends { [key: string]: ConditionalPropertyValue }

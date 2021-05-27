@@ -82,5 +82,7 @@ export const opacity = styleVariants(
     '1/2': fallbackVar(undefinedVar1, '0.5'),
     '1/4': fallbackVar(undefinedVar1, undefinedVar2, '0.25'),
   },
-  (value) => ({ opacity: value }),
+  (value) => ({
+    selectors: { 'html &': { opacity: value } },
+  }),
 );
