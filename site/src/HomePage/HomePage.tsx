@@ -256,8 +256,8 @@ export const HomePage = () => {
               </Columns>
               <Columns space="xxlarge" collapseOnMobile>
                 <Feature title="Portable styling">
-                  Works with any front-end framework, with integrations for
-                  webpack, esbuild and Vite.
+                  Write framework agnostic styles with integrations for webpack,
+                  esbuild, Vite and Snowpack.
                 </Feature>
 
                 <Feature title="Build it your way">
