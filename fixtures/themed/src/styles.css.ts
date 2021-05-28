@@ -74,13 +74,13 @@ export const button = [
   shadow,
 ];
 
-const undefinedVar1 = createVar();
-const undefinedVar2 = createVar();
+const blankVar1 = createVar();
+const blankVar2 = createVar();
 
 export const opacity = styleVariants(
   {
-    '1/2': fallbackVar(undefinedVar1, '0.5'),
-    '1/4': fallbackVar(undefinedVar1, undefinedVar2, '0.25'),
+    '1/2': fallbackVar(blankVar1, '0.5'),
+    '1/4': fallbackVar(blankVar1, blankVar2, '0.25'),
   },
   (value) => ({
     selectors: { 'html &': { opacity: value } },

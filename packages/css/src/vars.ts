@@ -23,13 +23,9 @@ export function createVar(debugId?: string): CSSVarFunction {
       ? `${debugId}__${fileScopeHash}${refCount}`
       : `${fileScopeHash}${refCount}`;
 
-  // Dashify CSS var names to replicate postcss-js behaviour
-  // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
   const cssVarName = cssesc(varName.match(/^[0-9]/) ? `_${varName}` : varName, {
     isIdentifier: true,
-  })
-    .replace(/([A-Z])/g, '-$1')
-    .toLowerCase();
+  });
 
   return `var(--${cssVarName})` as const;
 }
