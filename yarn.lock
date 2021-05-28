@@ -1764,7 +1764,7 @@ __metadata:
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
     "@vanilla-extract/css": 1.0.0
-    "@vanilla-extract/sprinkles": 1.0.0
+    "@vanilla-extract/sprinkles": 0.4.2
   languageName: unknown
   linkType: soft
 
@@ -3248,7 +3248,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/sprinkles@1.0.0, @vanilla-extract/sprinkles@^1.0.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+"@vanilla-extract/sprinkles@0.4.2, @vanilla-extract/sprinkles@^0.4.2, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
   dependencies:
@@ -14992,7 +14992,7 @@ typescript@^4.1.3:
     "@types/tailwindcss": ^2
     "@vanilla-extract/babel-plugin": ^1.0.0
     "@vanilla-extract/css": 1.0.0
-    "@vanilla-extract/sprinkles": ^1.0.0
+    "@vanilla-extract/sprinkles": ^0.4.2
     "@vanilla-extract/webpack-plugin": ^1.0.0
     babel-loader: ^8.2.2
     css-loader: ^5.2.4

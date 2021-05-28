@@ -1,6 +1,6 @@
 # @vanilla-extract/sprinkles
 
-## 1.0.0
+## 0.4.2
 
 ### Patch Changes
 
