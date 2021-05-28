@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 0.5.3
+
+### Patch Changes
+
+- [#166](https://github.com/seek-oss/vanilla-extract/pull/166) [`156e585`](https://github.com/seek-oss/vanilla-extract/commit/156e585cb6e3fdaed9e02d6b443a3b67c2210c37) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve missing filescope error
+
+* [#168](https://github.com/seek-oss/vanilla-extract/pull/168) [`962d64f`](https://github.com/seek-oss/vanilla-extract/commit/962d64f82cb5afe154eeaef51689bb03baa0a7e3) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow camel-case CSS var names instead of converting to snake-case
+
 ## 0.5.2
 
 ### Patch Changes
