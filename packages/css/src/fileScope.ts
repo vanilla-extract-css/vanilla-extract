@@ -1,3 +1,4 @@
+import dedent from 'dedent';
 import { onEndFileScope } from './adapter';
 import type { FileScope } from './types';
 
@@ -22,7 +23,12 @@ export function endFileScope() {
 export function getFileScope(): FileScope {
   if (fileScopes.length === 0) {
     throw new Error(
-      'New styles cannot be registered dynamically after initial boot. This is to ensure that styles are statically extractible.',
+      dedent`
+        Styles were unable to be assigned to a file. This is generally caused by one of the following:
+
+        - You may have created styles outside of a '.css.ts' context
+        - You may have incorrect configuration. See https://vanilla-extract.style/documentation/setup
+      `,
     );
   }
 
