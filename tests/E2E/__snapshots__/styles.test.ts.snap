@@ -36,7 +36,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -76,7 +76,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -117,7 +117,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -157,7 +157,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -197,7 +197,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -236,7 +236,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
 }
 `;
@@ -482,7 +482,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -522,7 +522,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -563,7 +563,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -603,7 +603,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -643,7 +643,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -682,7 +682,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
 }
 `;
@@ -928,7 +928,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -968,7 +968,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1009,7 +1009,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1049,7 +1049,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1089,7 +1089,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1128,7 +1128,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
 }
 `;
@@ -1374,7 +1374,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1414,7 +1414,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1455,7 +1455,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1495,7 +1495,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1535,7 +1535,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1574,7 +1574,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
 }
 `;
@@ -1820,7 +1820,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "dynamicVarsButton": Map {
     "animation" => "3s infinite alternate styles__jteyb11 ease-in-out",
@@ -1860,7 +1860,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "inlineThemeButton": Map {
     "animation" => "3s infinite alternate styles__jteyb11 ease-in-out",
@@ -1901,7 +1901,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "nestedRootButton": Map {
     "animation" => "3s infinite alternate styles__jteyb11 ease-in-out",
@@ -1941,7 +1941,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "responsiveThemeButton": Map {
     "animation" => "3s infinite alternate styles__jteyb11 ease-in-out",
@@ -1981,7 +1981,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2020,7 +2020,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
 }
 `;
@@ -2266,7 +2266,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2306,7 +2306,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2347,7 +2347,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2387,7 +2387,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2427,7 +2427,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2466,7 +2466,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cdwe0v1)",
+    "border" => "1px solid var(--colors-backgroundColor__cdwe0v1)",
   },
 }
 `;
@@ -2712,7 +2712,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "dynamicVarsButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2752,7 +2752,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "inlineThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2793,7 +2793,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "nestedRootButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2833,7 +2833,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "responsiveThemeButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2873,7 +2873,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
   "root": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2912,7 +2912,7 @@ Object {
     "animation-fill-mode" => "none",
     "animation-play-state" => "running",
     "animation-name" => "globalSlide",
-    "border" => "1px solid var(--colors-background-color__cvta171)",
+    "border" => "1px solid var(--colors-backgroundColor__cvta171)",
   },
 }
 `;
