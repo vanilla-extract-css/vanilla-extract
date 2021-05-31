@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 1.0.1
+
+### Patch Changes
+
+- [#176](https://github.com/seek-oss/vanilla-extract/pull/176) [`cbfe0de`](https://github.com/seek-oss/vanilla-extract/commit/cbfe0def098dcf820fb710388cdc82b48436bdca) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Continue searching for package.json if one is found with no name
+
 ## 1.0.0
 
 ### Major Changes
