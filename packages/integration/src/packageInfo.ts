@@ -8,6 +8,22 @@ interface PackageInfo {
   dirname: string;
 }
 
+function getClosestPackageInfo(directory: string) {
+  const packageJsonPath = findUp.sync('package.json', {
+    cwd: directory,
+  });
+
+  if (packageJsonPath) {
+    const { name } = require(packageJsonPath);
+
+    return {
+      name,
+      path: packageJsonPath,
+      dirname: path.dirname(packageJsonPath),
+    };
+  }
+}
+
 const packageInfoCache = new Map<string, PackageInfo>();
 
 export function getPackageInfo(cwd?: string | null): PackageInfo {
@@ -18,21 +34,19 @@ export function getPackageInfo(cwd?: string | null): PackageInfo {
     return cachedValue;
   }
 
-  const packageJsonPath = findUp.sync('package.json', {
-    cwd: resolvedCwd,
-  });
+  let packageInfo = getClosestPackageInfo(resolvedCwd);
 
-  if (!packageJsonPath) {
-    throw new Error(`Can't find package.json`);
+  while (packageInfo && !packageInfo.name) {
+    packageInfo = getClosestPackageInfo(
+      path.resolve(packageInfo.dirname, '..'),
+    );
   }
 
-  const { name } = require(packageJsonPath);
-
-  const packageInfo = {
-    name,
-    path: packageJsonPath,
-    dirname: path.dirname(packageJsonPath),
-  };
+  if (!packageInfo || !packageInfo.name) {
+    throw new Error(
+      `Couldn't find parent package.json with a name field from '${resolvedCwd}'`,
+    );
+  }
 
   packageInfoCache.set(resolvedCwd, packageInfo);
 
