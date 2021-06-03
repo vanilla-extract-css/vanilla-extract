@@ -19,7 +19,7 @@ export default function (this: LoaderContext, source: string) {
   return source;
 }
 
-export async function pitch(this: LoaderContext, remainingRequest: string) {
+export function pitch(this: LoaderContext) {
   this.cacheable(true);
   const { childCompiler, outputCss } = loaderUtils.getOptions(
     this,
@@ -33,49 +33,44 @@ export async function pitch(this: LoaderContext, remainingRequest: string) {
 
   const isChildCompiler = childCompiler.isChildCompiler(compiler.name);
 
-  if (
-    isChildCompiler &&
-    compiler.options.output.filename === this.resourcePath
-  ) {
+  if (isChildCompiler) {
     log(
-      'Skip vanilla-extract loader as we are already within a child compiler for this file',
+      'Skip vanilla-extract loader as we are already within a child compiler for %s',
+      compiler.options.output.filename,
     );
     return;
   }
 
+  log('Loading file');
+
   const callback = this.async();
 
-  try {
-    const { source } = await childCompiler.getCompiledSource(
-      this,
-      remainingRequest,
-    );
+  childCompiler
+    .getCompiledSource(this)
+    .then(({ source }) => {
+      const result = processVanillaFile({
+        source,
+        outputCss,
+        filePath: this.resourcePath,
+        serializeVirtualCssPath: ({ fileName, base64Source }) => {
+          const virtualResourceLoader = `${require.resolve(
+            'virtual-resource-loader',
+          )}?${JSON.stringify({ source: base64Source })}`;
 
-    if (isChildCompiler) {
-      // If within a vanilla-extract child compiler then only compile source, don't eval and assign CSS
-      return callback(null, source);
-    }
+          const request = loaderUtils.stringifyRequest(
+            this,
+            `${fileName}!=!${virtualResourceLoader}!@vanilla-extract/webpack-plugin/extracted`,
+          );
 
-    const result = processVanillaFile({
-      source,
-      outputCss,
-      filePath: this.resourcePath,
-      serializeVirtualCssPath: ({ fileName, base64Source }) => {
-        const virtualResourceLoader = `${require.resolve(
-          'virtual-resource-loader',
-        )}?${JSON.stringify({ source: base64Source })}`;
+          return `import ${request}`;
+        },
+      });
 
-        const request = loaderUtils.stringifyRequest(
-          this,
-          `${fileName}!=!${virtualResourceLoader}!@vanilla-extract/webpack-plugin/extracted`,
-        );
+      log('Completed successfully');
 
-        return `import ${request}`;
-      },
+      callback(null, result);
+    })
+    .catch((e) => {
+      callback(e);
     });
-
-    callback(null, result);
-  } catch (e) {
-    callback(e);
-  }
 }
