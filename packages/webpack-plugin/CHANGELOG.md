@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 1.0.1
+
+### Patch Changes
+
+- [#181](https://github.com/seek-oss/vanilla-extract/pull/181) [`7a63af8`](https://github.com/seek-oss/vanilla-extract/commit/7a63af8212edfb842261db4d1cca88cce8612764) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue where CSS can be duplicated in some scenarios
+
 ## 1.0.0
 
 ### Major Changes
