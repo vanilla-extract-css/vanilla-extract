@@ -14,11 +14,13 @@ interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   externals?: Array<string>;
   runtime?: boolean;
+  processCss?: (css: string) => Promise<string>;
 }
 export function vanillaExtractPlugin({
   outputCss,
   externals = [],
   runtime = false,
+  processCss
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
@@ -37,8 +39,12 @@ export function vanillaExtractPlugin({
 
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
-        ({ path }) => {
-          const { source } = getSourceFromVirtualCssFile(path);
+        async ({ path }) => {
+          let { source } = getSourceFromVirtualCssFile(path);
+
+          if (typeof processCss === 'function') {
+            source = await processCss(source);
+          }
 
           return {
             contents: source,
