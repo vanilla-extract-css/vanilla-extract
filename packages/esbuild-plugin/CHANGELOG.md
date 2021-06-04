@@ -1,5 +1,40 @@
 # @vanilla-extract/esbuild-plugin
 
+## 1.1.0
+
+### Minor Changes
+
+- [#183](https://github.com/seek-oss/vanilla-extract/pull/183) [`6721228`](https://github.com/seek-oss/vanilla-extract/commit/672122828f763193c9086706ba969caa6c564761) Thanks [@Brendan-csel](https://github.com/Brendan-csel)! - Add `processCss` plugin option to allow further processing of CSS while bundling.
+
+  **Example for postcss with autoprefixer:**
+
+  ```js
+  const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
+  const postcss = require('postcss');
+  const autoprefixer = require('autoprefixer');
+
+  async function processCss(css) {
+    const result = await postcss([autoprefixer]).process(css, {
+      from: undefined /* suppress source map warning */,
+    });
+
+    return result.css;
+  }
+
+  require('esbuild')
+    .build({
+      entryPoints: ['app.ts'],
+      bundle: true,
+      plugins: [
+        vanillaExtractPlugin({
+          processCss,
+        }),
+      ],
+      outfile: 'out.js',
+    })
+    .catch(() => process.exit(1));
+  ```
+
 ## 1.0.0
 
 ### Major Changes
