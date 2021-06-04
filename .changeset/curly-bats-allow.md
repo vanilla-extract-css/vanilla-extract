@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/esbuild-plugin': patch
+'@vanilla-extract/esbuild-plugin': minor
 ---
 
 Add `processCss` plugin option to allow further processing of css while bundling.
