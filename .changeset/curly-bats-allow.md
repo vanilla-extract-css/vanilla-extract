@@ -7,22 +7,28 @@ Add `processCss` plugin option to allow further processing of CSS while bundling
 **Example for postcss with autoprefixer:**
 
 ```js
-const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
-const postcss = require('postcss');
-const autoprefixer = require('autoprefixer');
+const { vanillaExtractPlugin } = require("@vanilla-extract/esbuild-plugin");
+const postcss = require("postcss");
+const autoprefixer = require("autoprefixer");
 
-require('esbuild').build({
-  entryPoints: ['app.ts'],
-  bundle: true,
-  plugins: [vanillaExtractPlugin({
+async function processCss(css) {
+  const result = await postcss([autoprefixer]).process(css, {
+      from: undefined /* suppress source map warning */,
+  });
 
-    processCss: async (css) => {
-      return (await postcss([autoprefixer])
-        .process(css, { from: undefined /* suppress source map warning */ })
-      ).css
-    }
+  return result.css;
+}
 
-  })],
-  outfile: 'out.js',
-}).catch(() => process.exit(1))
+require("esbuild")
+  .build({
+    entryPoints: ["app.ts"],
+    bundle: true,
+    plugins: [
+      vanillaExtractPlugin({
+        processCss,
+      }),
+    ],
+    outfile: "out.js",
+  })
+  .catch(() => process.exit(1));
 ```
