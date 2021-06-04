@@ -12,11 +12,11 @@ const postcss = require("postcss");
 const autoprefixer = require("autoprefixer");
 
 async function processCss(css) {
-    const result = await postcss([autoprefixer]).process(css, {
-        from: undefined /* suppress source map warning */,
-    });
-    
-    return result.css;
+  const result = await postcss([autoprefixer]).process(css, {
+      from: undefined /* suppress source map warning */,
+  });
+
+  return result.css;
 }
 
 require("esbuild")
