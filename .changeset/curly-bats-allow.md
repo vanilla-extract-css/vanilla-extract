@@ -2,7 +2,7 @@
 '@vanilla-extract/esbuild-plugin': minor
 ---
 
-Add `processCss` plugin option to allow further processing of css while bundling.
+Add `processCss` plugin option to allow further processing of CSS while bundling.
 
 **Example for postcss with autoprefixer:**
 
