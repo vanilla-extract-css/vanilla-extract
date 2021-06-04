@@ -100,6 +100,8 @@ As [esbuild](https://esbuild.github.io/) currently doesn't have a way to process
 For example, to run autoprefixer over the generated CSS.
 
 ```js
+// bundle.js
+
 const {
   vanillaExtractPlugin
 } = require('@vanilla-extract/esbuild-plugin');
