@@ -256,13 +256,13 @@ export default {
 
 ### Snowpack
 
-1/ Install the dependencies.
+1. Install the dependencies.
 
 ```bash
 $ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
-2/ Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
+2. Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
 
 ```js
 // snowpack.config.json
