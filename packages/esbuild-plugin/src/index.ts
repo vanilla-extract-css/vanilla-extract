@@ -20,7 +20,7 @@ export function vanillaExtractPlugin({
   outputCss,
   externals = [],
   runtime = false,
-  processCss
+  processCss,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
