@@ -16,7 +16,7 @@ import type {
 import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
-import { simplePseudos, simplePseudoLookup } from './simplePsuedos';
+import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -127,7 +127,7 @@ class Stylesheet {
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
 
-    this.transformSimplePsuedos(root, root.rule);
+    this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
 
     const activeConditionalRuleset = this.conditionalRulesets[
@@ -283,7 +283,7 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePsuedos(root, mediaRule!, conditions);
+          this.transformSimplePseudos(root, mediaRule!, conditions);
           this.transformSelectors(root, mediaRule!, conditions);
         }
 
@@ -317,7 +317,7 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePsuedos(root, supportsRule!, conditions);
+          this.transformSimplePseudos(root, supportsRule!, conditions);
           this.transformSelectors(root, supportsRule!, conditions);
         }
         this.transformMedia(root, supportsRule!['@media'], conditions);
@@ -325,13 +325,13 @@ class Stylesheet {
     }
   }
 
-  transformSimplePsuedos(
+  transformSimplePseudos(
     root: CSSStyleBlock | CSSSelectorBlock,
     rule: StyleRule,
     conditions?: Array<string>,
   ) {
     for (const key of Object.keys(rule)) {
-      // Process simple psuedos
+      // Process simple pseudos
       if (simplePseudoLookup[key]) {
         if (root.type !== 'local') {
           throw new Error(
