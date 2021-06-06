@@ -55,7 +55,7 @@ export class ChildCompiler {
       contextDependencies,
     } = await compilationPromise;
 
-    // Set loader dependencies to dependecies of the child compiler
+    // Set loader dependencies to dependencies of the child compiler
     fileDependencies.forEach((dep) => {
       loader.addDependency(dep);
     });
