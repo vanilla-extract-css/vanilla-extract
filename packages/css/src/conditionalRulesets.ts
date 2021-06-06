@@ -138,12 +138,11 @@ export class ConditionalRuleset {
       condition,
       incomingOrderPrecedence,
     ] of incomingRuleset.precedenceLookup.entries()) {
-      const orderPrecendence =
-        this.precedenceLookup.get(condition) ?? new Set();
+      const orderPrecedence = this.precedenceLookup.get(condition) ?? new Set();
 
       this.precedenceLookup.set(
         condition,
-        new Set([...orderPrecendence, ...incomingOrderPrecedence]),
+        new Set([...orderPrecedence, ...incomingOrderPrecedence]),
       );
     }
   }
