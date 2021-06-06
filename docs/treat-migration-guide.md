@@ -34,7 +34,7 @@ Note that this also means you have a lot more control over the handling of gener
 
 In treat, we set css-loader's [`url` option](https://webpack.js.org/loaders/css-loader/#url) to `false`. This was to ensure that JavaScript import statements were always used for assets (e.g. `import logoUrl from './logo.png'`) rather than allowing the CSS to create implicit imports (e.g. `background: "url('./logo.png')"`).
 
-If you want to reinstate treat's approach to asset imports without affecting other CSS files, you can configure css-loader seprately for `*.vanilla.css` files. For example:
+If you want to reinstate treat's approach to asset imports without affecting other CSS files, you can configure css-loader separately for `*.vanilla.css` files. For example:
 
 ```ts
 module.exports = {
