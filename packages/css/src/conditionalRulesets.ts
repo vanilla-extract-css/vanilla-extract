@@ -133,7 +133,7 @@ export class ConditionalRuleset {
       }
     }
 
-    // Merge order precendeces
+    // Merge order precedences
     for (const [
       condition,
       incomingOrderPrecedence,
