@@ -161,11 +161,16 @@ module.exports = {
           test: /\.css$/i,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
-          ],
-        },
-      ],
-    },
+            {
+              loader: require.resolve('css-loader'),
+              options: {
+                url: false // Required as image imports should be handled via JS/TS import statements
+              }
+            }
+          ]
+        }
+      ]
+    }
   };
   ```
 </details>

@@ -57,7 +57,15 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              url: false // Required as image imports should be handled via JS/TS import statements
+            }
+          }
+        ]
       }
     ]
   }
