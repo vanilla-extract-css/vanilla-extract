@@ -77,12 +77,17 @@ export const startWebpackFixture = (
       module: {
         rules: [
           {
-            test: /\.css$/i,
+            test: /\.vanilla\.css$/i,
             use: [
               type === 'mini-css-extract'
                 ? MiniCssExtractPlugin.loader
                 : 'style-loader',
-              'css-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  url: false,
+                },
+              },
             ],
           },
         ],
