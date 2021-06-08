@@ -133,17 +133,16 @@ export class ConditionalRuleset {
       }
     }
 
-    // Merge order precendeces
+    // Merge order precedences
     for (const [
       condition,
       incomingOrderPrecedence,
     ] of incomingRuleset.precedenceLookup.entries()) {
-      const orderPrecendence =
-        this.precedenceLookup.get(condition) ?? new Set();
+      const orderPrecedence = this.precedenceLookup.get(condition) ?? new Set();
 
       this.precedenceLookup.set(
         condition,
-        new Set([...orderPrecendence, ...incomingOrderPrecedence]),
+        new Set([...orderPrecedence, ...incomingOrderPrecedence]),
       );
     }
   }

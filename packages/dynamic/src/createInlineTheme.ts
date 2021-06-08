@@ -12,7 +12,7 @@ export function createInlineTheme<ThemeContract extends Contract>(
   const styles: { [cssVarName: string]: string } = {};
 
   /* TODO 
-    - validate new variables arn't set
+    - validate new variables aren't set
     - validate arrays have the same length as contract
   */
   walkObject(tokens, (value, path) => {

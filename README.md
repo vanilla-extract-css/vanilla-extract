@@ -684,7 +684,7 @@ export const animated = style({
 
 ### composeStyles
 
-Combines mutliple styles into a single class string, while also deduplicating and removing unnecessary spaces.
+Combines multiple styles into a single class string, while also deduplicating and removing unnecessary spaces.
 
 ```ts
 import { style, composeStyles } from '@vanilla-extract/css';

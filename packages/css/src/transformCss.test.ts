@@ -1162,7 +1162,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should not allow simple psuedos on global styles', () => {
+  it('should not allow simple pseudos on global styles', () => {
     expect(() =>
       transformCss({
         localClassNames: [],
