@@ -144,7 +144,8 @@ globalStyle(`${parentClass} > a`, {
   color: 'pink'
 });
 ```
-> Please note: In this example parentClass must be a single class name - as is returned by `style()`.  Functions that may return multiple class names, such as `composeStyles()` and Sprinkle's `atoms()`, are not compatible with `globalStyle()`. 
+
+> Please note: In this example parentClass must be a single class name - as is returned by `style()`. Functions that may return multiple class names, such as `composeStyles()` and Sprinkle's `atoms()`, are not compatible with `globalStyle()`.
 
 ## createTheme
 
