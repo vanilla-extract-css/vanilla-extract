@@ -1,3 +1,4 @@
+import path from 'path';
 // @ts-expect-error
 import loaderUtils from 'loader-utils';
 import { processVanillaFile } from '@vanilla-extract/integration';
@@ -5,6 +6,15 @@ import { processVanillaFile } from '@vanilla-extract/integration';
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
+
+const emptyCssExtractionFile = require.resolve(
+  path.join(
+    path.dirname(
+      require.resolve('@vanilla-extract/webpack-plugin/package.json'),
+    ),
+    'extracted',
+  ),
+);
 
 interface LoaderOptions {
   outputCss: boolean;
@@ -59,7 +69,7 @@ export function pitch(this: LoaderContext) {
 
           const request = loaderUtils.stringifyRequest(
             this,
-            `${fileName}!=!${virtualResourceLoader}!@vanilla-extract/webpack-plugin/extracted`,
+            `${fileName}!=!${virtualResourceLoader}!${emptyCssExtractionFile}`,
           );
 
           return `import ${request}`;
