@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 1.0.2
+
+### Patch Changes
+
+- [#195](https://github.com/seek-oss/vanilla-extract/pull/195) [`1099b34`](https://github.com/seek-oss/vanilla-extract/commit/1099b34437757522799c26bec7471df209ef9b36) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue when @vanilla-extract/webpack-plugin is nested within a separate node_modules folder
+
 ## 1.0.1
 
 ### Patch Changes

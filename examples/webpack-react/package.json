@@ -25,7 +25,7 @@
     "@vanilla-extract/babel-plugin": "^1.0.0",
     "@vanilla-extract/css": "1.0.0",
     "@vanilla-extract/sprinkles": "^0.4.2",
-    "@vanilla-extract/webpack-plugin": "^1.0.1",
+    "@vanilla-extract/webpack-plugin": "^1.0.2",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",
