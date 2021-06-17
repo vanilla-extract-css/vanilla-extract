@@ -175,6 +175,29 @@ module.exports = {
   ```
 </details>
 
+<details>
+  <summary>If you extract vendor chunk using cacheGroups, make sure you exclude virtual-resource-loader and @vanilla-extract.</summary>
+
+  <br/>
+  For example:
+  
+  ```js
+  module.exports = {
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            name: 'vendor',
+            chunks: 'initial',
+            test: /node_modules\/(?!(virtual-resource-loader|@vanilla-extract))/,
+          }
+        }
+      }
+    }
+  };
+  ```
+</details>
+
 ### esbuild
 
 1. Install the dependencies.
