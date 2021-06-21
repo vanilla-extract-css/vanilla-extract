@@ -9,9 +9,8 @@ import { getPackageInfo } from './packageInfo';
 export const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
-    const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
-
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
+      const packageInfo = getPackageInfo(path);
       const originalSource = await fs.readFile(path, 'utf-8');
 
       if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
