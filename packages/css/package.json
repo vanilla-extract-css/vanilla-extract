@@ -36,7 +36,7 @@
     "@emotion/hash": "^0.8.0",
     "@vanilla-extract/private": "^1.0.0",
     "chalk": "^4.1.1",
-    "css-selector-parser": "^1.4.1",
+    "css-what": "^5.0.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
     "dedent": "^0.7.0",
