@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.0.1
+
+### Patch Changes
+
+- [#204](https://github.com/seek-oss/vanilla-extract/pull/204) [`16f77ef`](https://github.com/seek-oss/vanilla-extract/commit/16f77efba69a11fb37a43c83af8e39c1534dffea) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Ensure `:where`/`:is` selectors are supported when validating scoped selectors
+
 ## 1.0.0
 
 ### Major Changes
