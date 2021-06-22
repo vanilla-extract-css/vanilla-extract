@@ -15,7 +15,8 @@
       "recipe.ts",
       "adapter.ts",
       "transformCss.ts",
-      "fileScope.ts"
+      "fileScope.ts",
+      "disableRuntimeStyles.ts"
     ]
   },
   "files": [
@@ -23,7 +24,8 @@
     "/recipe",
     "/adapter",
     "/transformCss",
-    "/fileScope"
+    "/fileScope",
+    "/disableRuntimeStyles"
   ],
   "repository": {
     "type": "git",
