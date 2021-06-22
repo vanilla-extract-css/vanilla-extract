@@ -1,12 +1,5 @@
 # @vanilla-extract/sprinkles
 
-## 1.0.0
-
-### Patch Changes
-
-- Updated dependencies [[`64c18f9`](https://github.com/seek-oss/vanilla-extract/commit/64c18f976bdada1f99022e88065a8277d56b5592)]:
-  - @vanilla-extract/css@1.1.0
-
 ## 0.4.2
 
 ### Patch Changes
