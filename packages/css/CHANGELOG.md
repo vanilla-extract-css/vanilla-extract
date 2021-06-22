@@ -1,5 +1,18 @@
 # @vanilla-extract/css
 
+## 1.1.0
+
+### Minor Changes
+
+- [#206](https://github.com/seek-oss/vanilla-extract/pull/206) [`64c18f9`](https://github.com/seek-oss/vanilla-extract/commit/64c18f976bdada1f99022e88065a8277d56b5592) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `disableRuntimeStyles` entrypoint
+
+  In testing environments (like `jsdom`) vanilla-extract will create and insert styles. While this is often desirable, it can be a major slowdown in your tests. If your tests don't require styles to be available, the `disableRuntimeStyles` import will disable all style creation.
+
+  ```ts
+  // setupTests.ts
+  import '@vanilla-extract/css/disableRuntimeStyles';
+  ```
+
 ## 1.0.1
 
 ### Patch Changes
