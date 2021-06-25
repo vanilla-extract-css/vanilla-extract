@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.4.3
+
+### Patch Changes
+
+- [#210](https://github.com/seek-oss/vanilla-extract/pull/210) [`500eaad`](https://github.com/seek-oss/vanilla-extract/commit/500eaade897abd800163d2d8db3c679bc3776cf7) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix bug where `responsiveArray` with a length of 4 was considered invalid
+
 ## 0.4.2
 
 ### Patch Changes
