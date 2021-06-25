@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 1.0.3
+
+### Patch Changes
+
+- [#208](https://github.com/seek-oss/vanilla-extract/pull/208) [`a1c79fc`](https://github.com/seek-oss/vanilla-extract/commit/a1c79fc10c5cf7f30dce0269f9183dfd4f2456e9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Deprecate redundant `allowRuntime` option
+
 ## 1.0.2
 
 ### Patch Changes
