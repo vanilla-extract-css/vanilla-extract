@@ -1,0 +1,31 @@
+{
+  "name": "@vanilla-extract/typescript-transformer",
+  "version": "0.1.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "main": "dist/vanilla-extract-typescript-transformer.cjs.js",
+  "module": "dist/vanilla-extract-typescript-transformer.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/typescript-transformer"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@vanilla-extract/integration": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.1.3"
+  }
+}
