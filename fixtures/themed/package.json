@@ -6,7 +6,7 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.1.0",
+    "@vanilla-extract/css": "1.1.1",
     "@vanilla-extract/dynamic": "1.0.0"
   }
 }
