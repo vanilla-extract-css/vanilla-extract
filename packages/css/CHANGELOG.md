@@ -1,5 +1,14 @@
 # @vanilla-extract/css
 
+## 1.1.1
+
+### Patch Changes
+
+- [#235](https://github.com/seek-oss/vanilla-extract/pull/235) [`1e49dfc`](https://github.com/seek-oss/vanilla-extract/commit/1e49dfc4fc21ccb53870e297e5e4664b098cc22e) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix `createGlobalTheme` types when accepting an existing contract
+
+- Updated dependencies [[`1e49dfc`](https://github.com/seek-oss/vanilla-extract/commit/1e49dfc4fc21ccb53870e297e5e4664b098cc22e)]:
+  - @vanilla-extract/private@1.0.1
+
 ## 1.1.0
 
 ### Minor Changes
