@@ -1,5 +1,9 @@
+export type CSSVarFunction =
+  | `var(--${string})`
+  | `var(--${string}, ${string | number})`;
+
 export type Contract = {
-  [key: string]: string | null | Contract;
+  [key: string]: CSSVarFunction | null | Contract;
 };
 
 export type MapLeafNodes<Obj, LeafType> = {
