@@ -8,7 +8,7 @@ import {
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { NullableTokens, ThemeVars, Tokens } from './types';
+import { NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
 
