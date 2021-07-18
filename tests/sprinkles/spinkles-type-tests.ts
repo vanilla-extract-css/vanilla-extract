@@ -221,9 +221,8 @@ const noop = (...args: Array<any>) => {};
 
   noop(responsiveValue);
 
-  type RequiredResponsiveValue<
-    Value extends string | number
-  > = RequiredConditionalValue<typeof conditionalAtomicStyles, Value>;
+  type RequiredResponsiveValue<Value extends string | number> =
+    RequiredConditionalValue<typeof conditionalAtomicStyles, Value>;
 
   let requiredValue: RequiredResponsiveValue<'row' | 'column'>;
 
@@ -250,12 +249,11 @@ const noop = (...args: Array<any>) => {};
   noop(requiredValue);
 
   // Ensure type is 'never' when default condition is missing
-  type InvalidRequiredResponsiveValue<
-    Value extends string | number
-  > = RequiredConditionalValue<
-    typeof conditionalStylesWithoutDefaultCondition,
-    Value
-  >;
+  type InvalidRequiredResponsiveValue<Value extends string | number> =
+    RequiredConditionalValue<
+      typeof conditionalStylesWithoutDefaultCondition,
+      Value
+    >;
 
   const invalidRequiredValue: InvalidRequiredResponsiveValue<
     'row' | 'column'

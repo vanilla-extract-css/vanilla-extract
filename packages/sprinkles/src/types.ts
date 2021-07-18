@@ -29,7 +29,7 @@ export type ResponsiveArrayByMaxLength<MaxLength extends number, Value> = [
 
 export type RequiredResponsiveArrayByMaxLength<
   MaxLength extends number,
-  Value
+  Value,
 > = [
   never,
   RequiredResponsiveArray<1, Value | null>,

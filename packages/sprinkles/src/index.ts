@@ -26,7 +26,7 @@ type AtomicProperties = {
 
 type ShorthandOptions<
   Properties extends AtomicProperties,
-  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
 > = {
   shorthands: Shorthands;
 };
@@ -37,7 +37,7 @@ type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
 
 type ResponsiveArrayOptions<
   Conditions extends { [conditionName: string]: Condition },
-  ResponsiveLength extends number
+  ResponsiveLength extends number,
 > = {
   responsiveArray: ResponsiveArrayConfig<keyof Conditions> & {
     length: ResponsiveLength;
@@ -47,7 +47,7 @@ type ResponsiveArrayOptions<
 type ConditionalAtomicOptions<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 > = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: DefaultCondition;
@@ -73,7 +73,7 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 type ConditionalAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -98,7 +98,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -124,7 +124,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
 type ShorthandAtomicStyles<
   Shorthands extends {
     [shorthandName: string]: Array<string | number | symbol>;
-  }
+  },
 > = {
   styles: {
     [Shorthand in keyof Shorthands]: {
@@ -139,7 +139,7 @@ export function createAtomicStyles<
   ResponsiveLength extends number,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands> &
@@ -156,7 +156,7 @@ export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
@@ -167,7 +167,7 @@ export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ResponsiveArrayOptions<Conditions, ResponsiveLength>,
@@ -181,14 +181,14 @@ export function createAtomicStyles<
 export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
-  DefaultCondition extends keyof Conditions | false
+  DefaultCondition extends keyof Conditions | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
 // Unconditional + Shorthands
 export function createAtomicStyles<
   Properties extends AtomicProperties,
-  Shorthands extends { [shorthandName: string]: Array<keyof Properties> }
+  Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
 >(
   options: UnconditionalAtomicOptions<Properties> &
     ShorthandOptions<Properties, Shorthands>,
