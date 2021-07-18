@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.1.2
+
+### Patch Changes
+
+- [#238](https://github.com/seek-oss/vanilla-extract/pull/238) [`1ee9ba2`](https://github.com/seek-oss/vanilla-extract/commit/1ee9ba2c5e6598450b8bac10d244b7e375e71617) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow passing of null contract tokens in `createThemeContract`
+
 ## 1.1.1
 
 ### Patch Changes
