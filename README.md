@@ -688,7 +688,7 @@ const rotate = keyframes({
 });
 
 export const animated = style({
-  animation: `3s infinite ${rotate}`;
+  animation: `3s infinite ${rotate}`,
 });
 ```
 
@@ -705,7 +705,7 @@ globalKeyframes('rotate', {
 });
 
 export const animated = style({
-  animation: `3s infinite rotate`;
+  animation: `3s infinite rotate`,
 });
 ```
 
