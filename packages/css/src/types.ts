@@ -104,11 +104,15 @@ export interface Adapter {
   onEndFileScope: (fileScope: FileScope) => void;
 }
 
+export type NullableTokens = {
+  [key: string]: string | Tokens | null;
+};
+
 export type Tokens = {
   [key: string]: string | Tokens;
 };
 
-export type ThemeVars<ThemeContract extends Tokens> = MapLeafNodes<
+export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
   ThemeContract,
   CSSVarFunction
 >;

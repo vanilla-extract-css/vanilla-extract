@@ -8,7 +8,7 @@ import {
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { ThemeVars, Tokens } from './types';
+import { NullableTokens, ThemeVars, Tokens } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
 
@@ -69,7 +69,7 @@ export function assignVars<VarContract extends Contract>(
   return varSetters;
 }
 
-export function createThemeContract<ThemeTokens extends Tokens>(
+export function createThemeContract<ThemeTokens extends NullableTokens>(
   tokens: ThemeTokens,
 ): ThemeVars<ThemeTokens> {
   return walkObject(tokens, (_value, path) => {
