@@ -409,11 +409,11 @@ import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
   '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '100%': { rotate: '360deg' }
 });
 
 export const animated = style({
-  animation: `3s infinite ${rotate}`,
+  animation: `3s infinite ${rotate}`
 });
 ```
 
@@ -424,15 +424,18 @@ Creates a globally scoped set of keyframes.
 ```tsx
 // app.css.ts
 
-import { globalKeyframes, style } from '@vanilla-extract/css';
+import {
+  globalKeyframes,
+  style
+} from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
   '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '100%': { rotate: '360deg' }
 });
 
 export const animated = style({
-  animation: `3s infinite rotate`,
+  animation: `3s infinite rotate`
 });
 ```
 
