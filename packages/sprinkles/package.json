@@ -1,0 +1,33 @@
+{
+  "name": "@vanilla-extract/sprinkles",
+  "version": "0.4.3",
+  "description": "Zero-runtime atomic CSS framework for vanilla-extract",
+  "sideEffects": false,
+  "main": "dist/vanilla-extract-sprinkles.cjs.js",
+  "module": "dist/vanilla-extract-sprinkles.esm.js",
+  "files": [
+    "/dist",
+    "/createAtomsFn",
+    "/createUtils"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "createAtomsFn.ts",
+      "createUtils.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/sprinkles"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "peerDependencies": {
+    "@vanilla-extract/css": "*"
+  },
+  "devDependencies": {
+    "@vanilla-extract/css": "*"
+  }
+}

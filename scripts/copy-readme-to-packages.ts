@@ -7,6 +7,7 @@ import glob from 'fast-glob';
   const packages = await glob('packages/*', {
     onlyDirectories: true,
     absolute: true,
+    ignore: ['packages/sprinkles', 'packages/integration'],
   });
 
   for (const packageDir of packages) {

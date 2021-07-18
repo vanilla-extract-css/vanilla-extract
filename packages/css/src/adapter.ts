@@ -1,12 +1,23 @@
 import type { Adapter } from './types';
 
-let adapter: Adapter = {
+export const mockAdapter: Adapter = {
   appendCss: () => {},
   registerClassName: () => {},
   onEndFileScope: () => {},
 };
 
+let adapter: Adapter = mockAdapter;
+
+let hasConfiguredAdapter = false;
+
+export const setAdapterIfNotSet = (newAdapter: Adapter) => {
+  if (!hasConfiguredAdapter) {
+    setAdapter(newAdapter);
+  }
+};
+
 export const setAdapter = (newAdapter: Adapter) => {
+  hasConfiguredAdapter = true;
   adapter = newAdapter;
 };
 

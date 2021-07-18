@@ -68,15 +68,15 @@ export function globalKeyframes(name: string, rule: CSSKeyframes) {
   appendCss({ type: 'keyframes', name, rule }, getFileScope());
 }
 
-export function mapToStyles<
+export function styleVariants<
   StyleMap extends Record<string | number, StyleRule>
 >(styleMap: StyleMap, debugId?: string): Record<keyof StyleMap, string>;
-export function mapToStyles<Data extends Record<string | number, unknown>>(
+export function styleVariants<Data extends Record<string | number, unknown>>(
   data: Data,
   mapData: <Key extends keyof Data>(value: Data[Key], key: Key) => StyleRule,
   debugId?: string,
 ): Record<keyof Data, string>;
-export function mapToStyles(...args: any[]) {
+export function styleVariants(...args: any[]) {
   if (typeof args[1] === 'function') {
     const data = args[0];
     const mapData = args[1];

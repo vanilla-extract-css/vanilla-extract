@@ -1,5 +1,58 @@
 # @vanilla-extract/webpack-plugin
 
+## 1.0.3
+
+### Patch Changes
+
+- [#208](https://github.com/seek-oss/vanilla-extract/pull/208) [`a1c79fc`](https://github.com/seek-oss/vanilla-extract/commit/a1c79fc10c5cf7f30dce0269f9183dfd4f2456e9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Deprecate redundant `allowRuntime` option
+
+## 1.0.2
+
+### Patch Changes
+
+- [#195](https://github.com/seek-oss/vanilla-extract/pull/195) [`1099b34`](https://github.com/seek-oss/vanilla-extract/commit/1099b34437757522799c26bec7471df209ef9b36) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue when @vanilla-extract/webpack-plugin is nested within a separate node_modules folder
+
+## 1.0.1
+
+### Patch Changes
+
+- [#181](https://github.com/seek-oss/vanilla-extract/pull/181) [`7a63af8`](https://github.com/seek-oss/vanilla-extract/commit/7a63af8212edfb842261db4d1cca88cce8612764) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue where CSS can be duplicated in some scenarios
+
+## 1.0.0
+
+### Major Changes
+
+- [#171](https://github.com/seek-oss/vanilla-extract/pull/171) [`84a8611`](https://github.com/seek-oss/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Release v1
+
+### Patch Changes
+
+- Updated dependencies [[`84a8611`](https://github.com/seek-oss/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869)]:
+  - @vanilla-extract/integration@1.0.0
+
+## 0.3.1
+
+### Patch Changes
+
+- [#134](https://github.com/seek-oss/vanilla-extract/pull/134) [`b99dd0a`](https://github.com/seek-oss/vanilla-extract/commit/b99dd0a2d6ce171b4776aa11d0ab2c7e1559ddae) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Move shared logic to integration package
+
+## 0.3.0
+
+### Minor Changes
+
+- [#53](https://github.com/seek-oss/vanilla-extract/pull/53) [`58e4f8a`](https://github.com/seek-oss/vanilla-extract/commit/58e4f8aa6a2c56c5f26408539756529705a598b8) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Support exporting functions from `.css.ts` files via recipes
+
+### Patch Changes
+
+- Updated dependencies [[`48c4a78`](https://github.com/seek-oss/vanilla-extract/commit/48c4a7866a8361de712b89b06abb380bf4709656), [`2d98bcc`](https://github.com/seek-oss/vanilla-extract/commit/2d98bccb40603585cf9eab70ff0afc52c33f803d)]:
+  - @vanilla-extract/css@0.4.0
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`156b491`](https://github.com/seek-oss/vanilla-extract/commit/156b49182367bf233564eae7fd3ea9d3f50fd68a), [`ae9864c`](https://github.com/seek-oss/vanilla-extract/commit/ae9864c727c2edd0d415b77f738a3c959c98fca6), [`756d9b0`](https://github.com/seek-oss/vanilla-extract/commit/756d9b0d0305e8b8a63f0ca1ebe635ab320a5f5b)]:
+  - @vanilla-extract/css@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

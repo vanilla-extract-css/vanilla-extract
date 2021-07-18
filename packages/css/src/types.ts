@@ -1,28 +1,39 @@
-import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
-import type { PropertiesFallback, AtRule } from 'csstype';
+import type { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
+import type { PropertiesFallback, AtRule, Properties } from 'csstype';
 
-import type { SimplePseudos } from './transformCss';
+import type { SimplePseudos } from './simplePseudos';
 
-type BasicCSSProperties = PropertiesFallback<string | number>;
+type CSSTypeProperties = PropertiesFallback<number | (string & {})>;
+
+export type CSSProperties = {
+  [Property in keyof CSSTypeProperties]:
+    | CSSTypeProperties[Property]
+    | CSSVarFunction
+    | Array<CSSVarFunction | Properties[Property]>;
+};
 
 export interface CSSKeyframes {
-  [time: string]: BasicCSSProperties;
+  [time: string]: CSSProperties;
 }
 
-export type CSSProperties = BasicCSSProperties & {
+export type CSSPropertiesWithVars = CSSProperties & {
   vars?: {
     [key: string]: string;
   };
 };
 
-type PseudoProperties = { [key in SimplePseudos[number]]?: CSSProperties };
+type PseudoProperties = {
+  [key in SimplePseudos]?: CSSPropertiesWithVars;
+};
 
-type CSSPropertiesAndPseudos = CSSProperties & PseudoProperties;
+type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
 interface SelectorMap {
-  [selector: string]: CSSProperties &
-    MediaQueries<CSSProperties & FeatureQueries<CSSProperties>> &
-    FeatureQueries<CSSProperties & MediaQueries<CSSProperties>>;
+  [selector: string]: CSSPropertiesWithVars &
+    MediaQueries<
+      CSSPropertiesWithVars & FeatureQueries<CSSPropertiesWithVars>
+    > &
+    FeatureQueries<CSSPropertiesWithVars & MediaQueries<CSSPropertiesWithVars>>;
 }
 
 export interface MediaQueries<StyleType> {
@@ -45,9 +56,9 @@ export type StyleRule = StyleWithSelectors &
   MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>> &
   FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>;
 
-export type GlobalStyleRule = CSSProperties &
-  MediaQueries<CSSProperties & FeatureQueries<CSSProperties>> &
-  FeatureQueries<CSSProperties & MediaQueries<CSSProperties>>;
+export type GlobalStyleRule = CSSPropertiesWithVars &
+  MediaQueries<CSSPropertiesWithVars & FeatureQueries<CSSPropertiesWithVars>> &
+  FeatureQueries<CSSPropertiesWithVars & MediaQueries<CSSPropertiesWithVars>>;
 
 export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
   Required<Pick<AtRule.FontFaceFallback, 'src'>>;
@@ -93,11 +104,15 @@ export interface Adapter {
   onEndFileScope: (fileScope: FileScope) => void;
 }
 
+export type NullableTokens = {
+  [key: string]: string | Tokens | null;
+};
+
 export type Tokens = {
   [key: string]: string | Tokens;
 };
 
-export type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
+export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
   ThemeContract,
-  string
+  CSSVarFunction
 >;

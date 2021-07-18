@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/esbuild-plugin",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
@@ -14,20 +14,10 @@
   },
   "author": "SEEK",
   "license": "MIT",
-  "peerDependencies": {
-    "esbuild": ">=0.11.1"
-  },
   "dependencies": {
-    "@vanilla-extract/css": "^0.2.0",
-    "chalk": "^4.1.0",
-    "dedent": "^0.7.0",
-    "eval": "^0.1.6",
-    "find-up": "^5.0.0",
-    "javascript-stringify": "^2.0.1",
-    "lodash": "^4.17.21"
+    "@vanilla-extract/integration": "^1.0.0"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0",
-    "esbuild": "^0.11.1"
+    "esbuild": "^0.11.16"
   }
 }

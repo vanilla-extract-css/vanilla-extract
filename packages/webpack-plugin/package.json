@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/webpack-plugin",
-  "version": "0.2.0",
+  "version": "1.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
@@ -29,20 +29,15 @@
     "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
-    "@vanilla-extract/css": "^0.2.0",
-    "chalk": "^4.1.0",
+    "@vanilla-extract/integration": "^1.0.0",
+    "chalk": "^4.1.1",
     "debug": "^4.3.1",
-    "dedent": "^0.7.0",
-    "eval": "^0.1.6",
-    "javascript-stringify": "^2.0.1",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "virtual-resource-loader": "^1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
-    "@types/dedent": "^0.7.0",
-    "@types/lodash": "^4.14.168",
-    "webpack": "^5.27.1"
+    "webpack": "^5.36.1"
   }
 }

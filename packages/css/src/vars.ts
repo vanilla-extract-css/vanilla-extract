@@ -3,19 +3,18 @@ import {
   walkObject,
   Contract,
   MapLeafNodes,
+  CSSVarFunction,
 } from '@vanilla-extract/private';
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
+import { NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { validateContract } from './validateContract';
 
-type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
-  ThemeContract,
-  string
->;
-
-export function createVar(debugId?: string) {
-  const refCount = getAndIncrementRefCounter();
+export function createVar(debugId?: string): CSSVarFunction {
+  // Convert ref count to base 36 for optimal hash lengths
+  const refCount = getAndIncrementRefCounter().toString(36);
   const { filePath, packageName } = getFileScope();
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,
@@ -25,18 +24,16 @@ export function createVar(debugId?: string) {
       ? `${debugId}__${fileScopeHash}${refCount}`
       : `${fileScopeHash}${refCount}`;
 
-  // Dashify CSS var names to replicate postcss-js behaviour
-  // See https://github.com/postcss/postcss-js/blob/d5127d4278c133f333f1c66f990f3552a907128e/parser.js#L30
   const cssVarName = cssesc(varName.match(/^[0-9]/) ? `_${varName}` : varName, {
     isIdentifier: true,
-  })
-    .replace(/([A-Z])/g, '-$1')
-    .toLowerCase();
+  });
 
-  return `var(--${cssVarName})`;
+  return `var(--${cssVarName})` as const;
 }
 
-export function fallbackVar(...values: [...Array<string>, string]) {
+export function fallbackVar(
+  ...values: [string, ...Array<string>]
+): CSSVarFunction {
   let finalValue = '';
 
   values.reverse().forEach((value) => {
@@ -51,19 +48,20 @@ export function fallbackVar(...values: [...Array<string>, string]) {
     }
   });
 
-  return finalValue;
+  return finalValue as CSSVarFunction;
 }
 
 export function assignVars<VarContract extends Contract>(
   varContract: VarContract,
   tokens: MapLeafNodes<VarContract, string>,
-): Record<string, string> {
+): Record<CSSVarFunction, string> {
   const varSetters: { [cssVarName: string]: string } = {};
+  const { valid, diffString } = validateContract(varContract, tokens);
 
-  /* TODO
-  - validate new variables arn't set
-  - validate arrays have the same length as contract
-*/
+  if (!valid) {
+    throw new Error(`Tokens don't match contract.\n${diffString}`);
+  }
+
   walkObject(tokens, (value, path) => {
     varSetters[get(varContract, path)] = String(value);
   });
@@ -71,10 +69,10 @@ export function assignVars<VarContract extends Contract>(
   return varSetters;
 }
 
-export function createThemeVars<ThemeContract extends Contract>(
-  themeContract: ThemeContract,
-): ThemeVars<ThemeContract> {
-  return walkObject(themeContract, (_value, path) => {
+export function createThemeContract<ThemeTokens extends NullableTokens>(
+  tokens: ThemeTokens,
+): ThemeVars<ThemeTokens> {
+  return walkObject(tokens, (_value, path) => {
     return createVar(path.join('-'));
   });
 }

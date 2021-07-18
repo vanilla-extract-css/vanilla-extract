@@ -1,6 +1,6 @@
 name: Validate
 
-on: push
+on: [push, pull_request]
 
 jobs:
   test:
@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
-        with:
-          # This makes Actions fetch all Git history so that chromatic can diff against previous commits
-          fetch-depth: 0
 
       - name: Setup Node.js 14.x
         uses: actions/setup-node@main
@@ -24,7 +21,7 @@ jobs:
         run: yarn --immutable
 
       - name: Build
-        run: yarn build
+        run: yarn build && node ./site/makeDocsManifest
 
       - name: Lint
         run: yarn lint

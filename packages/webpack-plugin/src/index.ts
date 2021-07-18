@@ -1,3 +1,4 @@
+import { cssFileFilter } from '@vanilla-extract/integration';
 import path from 'path';
 import type { Compiler, RuleSetRule } from 'webpack';
 import chalk from 'chalk';
@@ -57,6 +58,7 @@ interface PluginOptions {
   test?: RuleSetRule['test'];
   outputCss?: boolean;
   externals?: any;
+  /** @deprecated */
   allowRuntime?: boolean;
 }
 export class VanillaExtractPlugin {
@@ -67,15 +69,19 @@ export class VanillaExtractPlugin {
 
   constructor(options: PluginOptions = {}) {
     const {
-      test = /\.css\.(js|ts|jsx|tsx)$/,
+      test = cssFileFilter,
       outputCss = true,
       externals,
-      allowRuntime = false,
+      allowRuntime,
     } = options;
+
+    if (allowRuntime !== undefined) {
+      console.warn('The "allowRuntime" option is deprecated.');
+    }
 
     this.test = test;
     this.outputCss = outputCss;
-    this.allowRuntime = allowRuntime;
+    this.allowRuntime = allowRuntime ?? false;
     this.childCompiler = new ChildCompiler(externals);
   }
 
@@ -112,7 +118,7 @@ export class VanillaExtractPlugin {
               }
 
               let errorMessage = chalk.red(
-                `VanillaExtractPlugin: Styles detected outside of '.css.(ts/js)' files. You probably don't want this as these styles can't be statically extracted. If this is the desired behaviour, set 'allowRuntime: true'.`,
+                `VanillaExtractPlugin: Styles detected outside of '.css.(ts/js)' files. These styles cannot be statically extracted.`,
               );
 
               if (dependentResources.size > 0) {

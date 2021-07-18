@@ -64,6 +64,12 @@ describe('utils', () => {
       expect(`${calc('10px').add('20px')}`).toMatchInlineSnapshot(
         `"calc(10px + 20px)"`,
       );
+      expect(
+        `${calc('10px').add(calc('20px').subtract('4em'))}`,
+      ).toMatchInlineSnapshot(`"calc(10px + (20px - 4em))"`);
+      expect(`${calc('10px').add(calc('20px'))}`).toMatchInlineSnapshot(
+        `"calc(10px + 20px)"`,
+      );
     });
   });
 
@@ -100,7 +106,7 @@ describe('utils', () => {
     ).toMatchInlineSnapshot(`"calc(10px - 2em - (2 + 6rem))"`);
   });
 
-  it('muliply', () => {
+  it('multiply', () => {
     expect(calc.multiply(1, 2)).toMatchInlineSnapshot(`"calc(1 * 2)"`);
     expect(calc.multiply(1, 2, 3)).toMatchInlineSnapshot(`"calc(1 * 2 * 3)"`);
     expect(calc.multiply('1', 2, 3 - 4)).toMatchInlineSnapshot(

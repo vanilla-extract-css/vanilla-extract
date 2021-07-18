@@ -9,5 +9,5 @@
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": ["@fixtures/*", "test-helpers"]
+  "ignore": ["@fixtures/*", "test-helpers", "vanilla-extract-webpack-react"]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/private",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
   "main": "dist/vanilla-extract-private.cjs.js",

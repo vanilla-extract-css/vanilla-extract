@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "0.2.0",
+  "version": "1.1.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -12,16 +12,20 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "recipe.ts",
       "adapter.ts",
       "transformCss.ts",
-      "fileScope.ts"
+      "fileScope.ts",
+      "disableRuntimeStyles.ts"
     ]
   },
   "files": [
     "/dist",
+    "/recipe",
     "/adapter",
     "/transformCss",
-    "/fileScope"
+    "/fileScope",
+    "/disableRuntimeStyles"
   ],
   "repository": {
     "type": "git",
@@ -32,11 +36,13 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
-    "@vanilla-extract/private": "^0.1.0",
-    "css-selector-parser": "^1.4.1",
+    "@vanilla-extract/private": "^1.0.1",
+    "chalk": "^4.1.1",
+    "css-what": "^5.0.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
-    "dedent": "^0.7.0"
+    "dedent": "^0.7.0",
+    "deep-object-diff": "^1.1.0"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0",

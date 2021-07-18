@@ -34,7 +34,7 @@ Note that this also means you have a lot more control over the handling of gener
 
 In treat, we set css-loader's [`url` option](https://webpack.js.org/loaders/css-loader/#url) to `false`. This was to ensure that JavaScript import statements were always used for assets (e.g. `import logoUrl from './logo.png'`) rather than allowing the CSS to create implicit imports (e.g. `background: "url('./logo.png')"`).
 
-If you want to reinstate treat's approach to asset imports without affecting other CSS files, you can configure css-loader seprately for `*.vanilla.css` files. For example:
+If you want to reinstate treat's approach to asset imports without affecting other CSS files, you can configure css-loader separately for `*.vanilla.css` files. For example:
 
 ```ts
 module.exports = {
@@ -72,11 +72,11 @@ module.exports = {
 If you only have a single theme, you can keep things simple by using `createGlobalTheme` and targeting `:root`. If you do this, your variables will just work without having to wire anything up to the document.
 
 ```ts
-// themeVars.css.ts
+// vars.css.ts
 
 import { createGlobalTheme } from '@vanilla-extract/css';
 
-export const themeVars = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(':root', {
   ...tokens
 });
 ```
@@ -84,20 +84,20 @@ export const themeVars = createGlobalTheme(':root', {
 If you have multiple themes, or if you want to avoid the global scope, use the [`createTheme`](https://github.com/seek-oss/vanilla-extract#createtheme) function instead.
 
 ```ts
-// themeVars.css.ts
+// vars.css.ts
 
 import { createTheme } from '@vanilla-extract/css';
 
-export const [themeA, themeVars] = createTheme({
+export const [themeA, vars] = createTheme({
   ...tokens
 });
 
-export const themeB = createTheme(themeVars, {
+export const themeB = createTheme(vars, {
   ...tokens
 });
 ```
 
-If you're bundle-splitting your themes, you'll probably want the [`createThemeVars`](https://github.com/seek-oss/vanilla-extract#createthemevars) function.
+If you're bundle-splitting your themes, you'll probably want the [`createThemeContract`](https://github.com/seek-oss/vanilla-extract#createthemecontract) function.
 
 ## `TreatProvider`
 
@@ -234,10 +234,10 @@ To get access to variables, we now import theme variables from the `.css.ts` fil
 -}))
 
 +import { style } from '@vanilla-extract/css';
-+import { themeVars } from '../themeVars.css';
++import { vars } from '../vars.css';
 +
 +export const className = style({
-+  paddingTop: themeVars.space.small
++  paddingTop: vars.space.small
 +});
 ```
 
@@ -262,10 +262,10 @@ Simple calculations (addition, subtraction, multiplication, division) are covere
 
 +import { style } from '@vanilla-extract/css';
 +import { calc } from '@vanilla-extract/css-utils';
-+import { themeVars } from '../themeVars.css';
++import { vars } from '../vars.css';
 +
 +const className = style({
-+  marginTop: calc.negate(themeVars.space.small)
++  marginTop: calc.negate(vars.space.small)
 +});
 ```
 
@@ -285,14 +285,14 @@ export const className = style((theme) => ({
 Since this calculation is not yet supported natively in CSS, this lighter background would need to become part of your theme definition. In this case, we'll introduce a new `color` variable called `brandLight`. Notice that in this context we're able to execute arbitrary JavaScript code.
 
 ```ts
-// themeVars.css.ts
+// vars.css.ts
 
 import { createGlobalTheme } from '@vanilla-extract/css';
 import { lighten } from 'polished';
 
 const brandColor = 'blue';
 
-export const themeVars = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(':root', {
   color: {
     brand: brandColor,
     brandLight: lighten(0.2, brandColor)
@@ -306,19 +306,19 @@ You would then update your styles to use this new CSS Variable instead.
 -import { style } from 'treat';
 -import { lighten } from 'polished';
 +import { style } from '@vanilla-extract/css';
-+import { themeVars } from '../themeVars.css';
++import { vars } from '../vars.css';
 
 -export const className = style(theme => ({
 -  background: lighten(0.2, theme.color.brand)
 -}));
 +export const className = style({
-+  background: themeVars.color.brandLight
++  background: vars.color.brandLight
 +});
 ```
 
 ## `styleMap`
 
-You can use [`mapToStyles`](https://github.com/seek-oss/vanilla-extract#maptostyles) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
+You can use [`styleVariants`](https://github.com/seek-oss/vanilla-extract#stylevariants) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
 
 ## `styleTree`
 

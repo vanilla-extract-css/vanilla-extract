@@ -1,14 +1,22 @@
-import { relative, dirname } from 'path';
+import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
-import findUp from 'find-up';
+import { getPackageInfo } from '@vanilla-extract/integration';
 
 const packageIdentifier = '@vanilla-extract/css';
+const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
 
-const buildSetFileScope = template(`
-  import { setFileScope, endFileScope } from %%packageIdentifier%%
-  setFileScope(%%filePath%%, %%packageName%%)
+const buildSetFileScopeESM = template(`
+  import * as __vanilla_filescope__ from '${filescopePackageIdentifier}'
+  __vanilla_filescope__.setFileScope(%%filePath%%, %%packageName%%)
 `);
+
+const buildSetFileScopeCJS = template(`
+  const __vanilla_filescope__ = require('${filescopePackageIdentifier}');
+  __vanilla_filescope__.setFileScope(%%filePath%%, %%packageName%%)
+`);
+
+const buildEndFileScope = template(`__vanilla_filescope__.endFileScope()`);
 
 const debuggableFunctionConfig = {
   style: {
@@ -17,7 +25,7 @@ const debuggableFunctionConfig = {
   createTheme: {
     maxParams: 3,
   },
-  mapToStyles: {
+  styleVariants: {
     maxParams: 3,
   },
   fontFace: {
@@ -37,7 +45,7 @@ const styleFunctions = [
   >),
   'globalStyle',
   'createGlobalTheme',
-  'createThemeVars',
+  'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
 ];
@@ -122,49 +130,27 @@ type Context = PluginPass & {
   packageIdentifier: string;
   filePath: string;
   packageName: string;
+  isCssFile: boolean;
+  alreadyCompiled: boolean;
+  isESM: boolean;
 };
 
 export default function (): PluginObj<Context> {
-  let packageInfo: { name: string; dirname: string; path: string } | undefined;
-  let hasResolvedPackageJson = false;
-  function getPackageInfo(cwd?: string | null) {
-    if (hasResolvedPackageJson) {
-      return packageInfo;
-    }
-
-    hasResolvedPackageJson = true;
-    const packageJsonPath = findUp.sync('package.json', {
-      cwd: cwd || undefined,
-    });
-
-    if (packageJsonPath) {
-      const { name } = require(packageJsonPath);
-      packageInfo = {
-        name,
-        path: packageJsonPath,
-        dirname: dirname(packageJsonPath),
-      };
-    }
-    return packageInfo;
-  }
-
   return {
     pre({ opts }) {
-      this.importIdentifiers = new Map();
-      this.namespaceImport = '';
-
       if (!opts.filename) {
         // TODO Make error better
         throw new Error('Filename must be available');
       }
 
-      const packageInfo = getPackageInfo(opts.cwd);
+      this.isESM = false;
+      this.isCssFile = /\.css\.(js|ts|jsx|tsx)$/.test(opts.filename);
+      this.alreadyCompiled = false;
 
-      if (!packageInfo) {
-        throw new Error(
-          `Couldn't find parent package.json for ${opts.filename}`,
-        );
-      }
+      this.importIdentifiers = new Map();
+      this.namespaceImport = '';
+
+      const packageInfo = getPackageInfo(opts.cwd);
 
       if (!packageInfo.name) {
         throw new Error(
@@ -172,33 +158,43 @@ export default function (): PluginObj<Context> {
         );
       }
       this.packageName = packageInfo.name;
-      this.filePath = relative(packageInfo.dirname, opts.filename);
+      // Encode windows file paths as posix
+      this.filePath = posix.join(
+        ...relative(packageInfo.dirname, opts.filename).split(sep),
+      );
     },
     visitor: {
       Program: {
         exit(path) {
-          if (this.importIdentifiers.size > 0 || this.namespaceImport) {
+          if (this.isCssFile && !this.alreadyCompiled) {
             // Wrap module with file scope calls
+            const buildSetFileScope = this.isESM
+              ? buildSetFileScopeESM
+              : buildSetFileScopeCJS;
             path.unshiftContainer(
               'body',
               buildSetFileScope({
-                packageIdentifier: t.stringLiteral(
-                  `${packageIdentifier}/fileScope`,
-                ),
                 filePath: t.stringLiteral(this.filePath),
                 packageName: t.stringLiteral(this.packageName),
               }),
             );
 
-            path.pushContainer(
-              'body',
-              t.callExpression(t.identifier('endFileScope'), []),
-            );
+            path.pushContainer('body', buildEndFileScope());
           }
         },
       },
       ImportDeclaration(path) {
-        if (path.node.source.value === packageIdentifier) {
+        this.isESM = true;
+        if (!this.isCssFile || this.alreadyCompiled) {
+          // Bail early if file isn't a .css.ts file or the file has already been compiled
+          return;
+        }
+
+        if (path.node.source.value === filescopePackageIdentifier) {
+          // If file scope import is found it means the file has already been compiled
+          this.alreadyCompiled = true;
+          return;
+        } else if (path.node.source.value === packageIdentifier) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;
@@ -216,8 +212,27 @@ export default function (): PluginObj<Context> {
           });
         }
       },
+      ExportDeclaration() {
+        this.isESM = true;
+      },
       CallExpression(path) {
+        if (!this.isCssFile || this.alreadyCompiled) {
+          // Bail early if file isn't a .css.ts file or the file has already been compiled
+          return;
+        }
+
         const { node } = path;
+
+        if (
+          t.isIdentifier(node.callee, { name: 'require' }) &&
+          t.isStringLiteral(node.arguments[0], {
+            value: filescopePackageIdentifier,
+          })
+        ) {
+          // If file scope import is found it means the file has already been compiled
+          this.alreadyCompiled = true;
+          return;
+        }
 
         const usedExport = getRelevantCall(
           node,

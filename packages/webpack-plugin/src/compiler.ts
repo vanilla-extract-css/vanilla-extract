@@ -36,17 +36,13 @@ export class ChildCompiler {
     );
   }
 
-  async getCompiledSource(loader: LoaderContext, request: string) {
+  async getCompiledSource(loader: LoaderContext) {
     const cacheId = loader.resourcePath;
     let compilationPromise = this.cache.get(cacheId);
 
     if (!compilationPromise) {
       log('No cached compilation. Compiling: %s', cacheId);
-      compilationPromise = compileVanillaSource(
-        loader,
-        request,
-        this.externals,
-      );
+      compilationPromise = compileVanillaSource(loader, this.externals);
 
       this.cache.set(cacheId, compilationPromise);
     } else {
@@ -59,7 +55,7 @@ export class ChildCompiler {
       contextDependencies,
     } = await compilationPromise;
 
-    // Set loader dependencies to dependecies of the child compiler
+    // Set loader dependencies to dependencies of the child compiler
     fileDependencies.forEach((dep) => {
       loader.addDependency(dep);
     });
@@ -86,7 +82,6 @@ function getRootCompilation(loader: LoaderContext) {
 
 function compileVanillaSource(
   loader: LoaderContext,
-  request: string,
   externals: Externals | undefined,
 ): Promise<CompilationResult> {
   return new Promise((resolve, reject) => {
@@ -127,7 +122,7 @@ function compileVanillaSource(
           library: {
             type: 'commonjs2',
           },
-          import: [`!!${request}`],
+          import: [loader.resourcePath],
         },
       });
     } else {
@@ -135,7 +130,7 @@ function compileVanillaSource(
       const { LibraryTemplatePlugin, SingleEntryPlugin } = require('webpack');
 
       new LibraryTemplatePlugin(null, 'commonjs2').apply(childCompiler);
-      new SingleEntryPlugin(loader.context, `!!${request}`).apply(
+      new SingleEntryPlugin(loader.context, loader.resourcePath).apply(
         childCompiler,
       );
     }

@@ -3,6 +3,9 @@ dist
 tsconfig.tsbuildinfo
 yarn-error.log
 packages/**/README.md
+!packages/sprinkles/README.md
+!packages/integration/README.md
+
 
 .yarn/*
 !.yarn/patches
