@@ -114,9 +114,9 @@ const getRelevantCall = (
       t.isIdentifier(callee.property, { name: exportName }),
     );
   } else {
-    const importInfo = Array.from(
-      importIdentifiers.entries(),
-    ).find(([identifier]) => t.isIdentifier(callee, { name: identifier }));
+    const importInfo = Array.from(importIdentifiers.entries()).find(
+      ([identifier]) => t.isIdentifier(callee, { name: identifier }),
+    );
 
     if (importInfo) {
       return importInfo[1];
@@ -201,9 +201,9 @@ export default function (): PluginObj<Context> {
             } else if (t.isImportSpecifier(specifier)) {
               const { imported, local } = specifier;
 
-              const importName = (t.isIdentifier(imported)
-                ? imported.name
-                : imported.value) as StyleFunction;
+              const importName = (
+                t.isIdentifier(imported) ? imported.name : imported.value
+              ) as StyleFunction;
 
               if (styleFunctions.includes(importName)) {
                 this.importIdentifiers.set(local.name, importName);

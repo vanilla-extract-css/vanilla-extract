@@ -130,9 +130,8 @@ class Stylesheet {
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
 
-    const activeConditionalRuleset = this.conditionalRulesets[
-      this.conditionalRulesets.length - 1
-    ];
+    const activeConditionalRuleset =
+      this.conditionalRulesets[this.conditionalRulesets.length - 1];
 
     if (
       !activeConditionalRuleset.mergeIfCompatible(this.currConditionalRuleset)

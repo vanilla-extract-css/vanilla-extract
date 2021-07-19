@@ -11,14 +11,14 @@ export const breakpoints = {
 
 export type Breakpoint = keyof typeof breakpoints;
 
-const makeMediaQuery = (breakpoint: keyof typeof breakpoints) => (
-  styles: Properties<string | number>,
-) =>
-  !styles || Object.keys(styles).length === 0
-    ? {}
-    : {
-        [`screen and (min-width: ${breakpoints[breakpoint]}px)`]: styles,
-      };
+const makeMediaQuery =
+  (breakpoint: keyof typeof breakpoints) =>
+  (styles: Properties<string | number>) =>
+    !styles || Object.keys(styles).length === 0
+      ? {}
+      : {
+          [`screen and (min-width: ${breakpoints[breakpoint]}px)`]: styles,
+        };
 
 const mediaQuery = {
   tablet: makeMediaQuery('tablet'),
@@ -62,13 +62,15 @@ export const responsiveStyle = ({
   };
 };
 
-export const mapToProperty = <
-  Property extends keyof Properties<string | number>
->(
-  property: Property,
-  breakpoint?: Breakpoint,
-) => (value: string | number) => {
-  const styleRule = { [property]: value };
+export const mapToProperty =
+  <Property extends keyof Properties<string | number>>(
+    property: Property,
+    breakpoint?: Breakpoint,
+  ) =>
+  (value: string | number) => {
+    const styleRule = { [property]: value };
 
-  return breakpoint ? responsiveStyle({ [breakpoint]: styleRule }) : styleRule;
-};
+    return breakpoint
+      ? responsiveStyle({ [breakpoint]: styleRule })
+      : styleRule;
+  };

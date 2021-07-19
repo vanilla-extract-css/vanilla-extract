@@ -10,11 +10,11 @@ import {
 
 type ResponsiveArrayVariant<
   RA extends { length: number },
-  Values extends string | number | symbol
+  Values extends string | number | symbol,
 > = ResponsiveArrayByMaxLength<RA['length'], Values | null>;
 
 type ConditionalStyle<
-  Values extends { [key: string]: ConditionalPropertyValue }
+  Values extends { [key: string]: ConditionalPropertyValue },
 > =
   | (Values[keyof Values]['defaultClass'] extends string ? keyof Values : never)
   | {
@@ -23,7 +23,7 @@ type ConditionalStyle<
 
 type ConditionalStyleWithResponsiveArray<
   Values extends { [key: string]: ConditionalPropertyValue },
-  RA extends { length: number }
+  RA extends { length: number },
 > = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
 type ChildAtomProps<Atoms extends AtomicStyles['styles']> = {
