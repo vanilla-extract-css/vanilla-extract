@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@vanilla-extract/babel-plugin": "^1.0.0",
+    "@vanilla-extract/babel-plugin": "^1.0.1",
     "@vanilla-extract/css": "1.1.2",
     "@vanilla-extract/sprinkles": "^0.4.3",
     "@vanilla-extract/webpack-plugin": "^1.0.3",
