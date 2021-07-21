@@ -72,19 +72,27 @@ const extractName = (node: t.Node) => {
 };
 
 const getDebugId = (path: NodePath<t.CallExpression>) => {
-  const { parent } = path;
+  const firstRelevantParentPath = path.findParent(
+    ({ node }) => !(t.isCallExpression(node) || t.isSequenceExpression(node)),
+  );
+
+  if (!firstRelevantParentPath) {
+    return;
+  }
+
+  const relevantParent = firstRelevantParentPath.node;
 
   if (
-    t.isObjectProperty(parent) ||
-    t.isReturnStatement(parent) ||
-    t.isArrowFunctionExpression(parent) ||
-    t.isArrayExpression(parent) ||
-    t.isSpreadElement(parent)
+    t.isObjectProperty(relevantParent) ||
+    t.isReturnStatement(relevantParent) ||
+    t.isArrowFunctionExpression(relevantParent) ||
+    t.isArrayExpression(relevantParent) ||
+    t.isSpreadElement(relevantParent)
   ) {
     const names: Array<string> = [];
 
-    path.findParent(({ node: parentNode }) => {
-      const name = extractName(parentNode);
+    path.findParent(({ node }) => {
+      const name = extractName(node);
       if (name) {
         names.unshift(name);
       }
@@ -94,7 +102,7 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
 
     return names.join('_');
   } else {
-    return extractName(parent);
+    return extractName(relevantParent);
   }
 };
 

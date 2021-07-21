@@ -709,4 +709,64 @@ describe('babel plugin', () => {
       __vanilla_filescope__.endFileScope();"
     `);
   });
+
+  it('should handle nested call expressions', () => {
+    const source = `
+      import { style } from '@vanilla-extract/css';
+
+      const one = instrument(style({
+        zIndex: 1,
+      }));
+
+      const two = instrument(instrument(style({
+        zIndex: 2,
+      })));
+
+      const three = instrument(instrument(instrument(style({
+        zIndex: 3,
+      }))));
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      import { style } from '@vanilla-extract/css';
+      const one = instrument(style({
+        zIndex: 1
+      }, \\"one\\"));
+      const two = instrument(instrument(style({
+        zIndex: 2
+      }, \\"two\\")));
+      const three = instrument(instrument(instrument(style({
+        zIndex: 3
+      }, \\"three\\"))));
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
+
+  it('should handle instrumentation via sequence expresions', () => {
+    const source = `
+      import { style } from '@vanilla-extract/css';
+
+      const one = (something++, style({
+        zIndex: 1,
+      }));
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      import { style } from '@vanilla-extract/css';
+      const one = (something++, style({
+        zIndex: 1
+      }, \\"one\\"));
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
 });
