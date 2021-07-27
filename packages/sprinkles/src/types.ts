@@ -1,10 +1,10 @@
-interface ResponsiveArray<Length extends number, Value>
+export interface ResponsiveArray<Length extends number, Value>
   extends ReadonlyArray<Value> {
   0: Value;
   length: Length;
 }
 
-interface RequiredResponsiveArray<Length extends number, Value>
+export interface RequiredResponsiveArray<Length extends number, Value>
   extends ReadonlyArray<Value> {
   0: Exclude<Value, null>;
   length: Length;
