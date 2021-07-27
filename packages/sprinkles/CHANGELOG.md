@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 0.4.4
+
+### Patch Changes
+
+- [#252](https://github.com/seek-oss/vanilla-extract/pull/252) [`b9b3451`](https://github.com/seek-oss/vanilla-extract/commit/b9b3451d9bab49a712fae95c22b2ee9d8af5f2c5) Thanks [@graup](https://github.com/graup)! - Fix `Exported variable 'Box' has or is using name 'ResponsiveArray' from external module` error ([#250](https://github.com/seek-oss/vanilla-extract/issues/250))
+
 ## 0.4.3
 
 ### Patch Changes
