@@ -9,7 +9,7 @@ type ExtractValue<
     | string
     | number
     | Partial<Record<string, string | number>>
-    | ResponsiveArrayByMaxLength<number, string | number | null>
+    | ResponsiveArrayByMaxLength<number, string | number | null>,
 > = Value extends ResponsiveArrayByMaxLength<number, string | number | null>
   ? NonNullable<Value[number]>
   : Value extends Partial<Record<string, string | number>>
@@ -24,17 +24,15 @@ type Conditions<ConditionName extends string> = {
   };
 };
 
-type ExtractDefaultCondition<
-  AtomicStyles extends Conditions<string>
-> = AtomicStyles['conditions']['defaultCondition'];
+type ExtractDefaultCondition<AtomicStyles extends Conditions<string>> =
+  AtomicStyles['conditions']['defaultCondition'];
 
-type ExtractConditionNames<
-  AtomicStyles extends Conditions<string>
-> = AtomicStyles['conditions']['conditionNames'][number];
+type ExtractConditionNames<AtomicStyles extends Conditions<string>> =
+  AtomicStyles['conditions']['conditionNames'][number];
 
 export type ConditionalValue<
   AtomicStyles extends Conditions<string>,
-  Value extends string | number
+  Value extends string | number,
 > =
   | (ExtractDefaultCondition<AtomicStyles> extends false ? never : Value)
   | Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>
@@ -48,13 +46,13 @@ export type ConditionalValue<
 type RequiredConditionalObject<
   RequiredConditionName extends string,
   OptionalConditionNames extends string,
-  Value extends string | number
+  Value extends string | number,
 > = Record<RequiredConditionName, Value> &
   Partial<Record<OptionalConditionNames, Value>>;
 
 export type RequiredConditionalValue<
   AtomicStyles extends Conditions<string>,
-  Value extends string | number
+  Value extends string | number,
 > = ExtractDefaultCondition<AtomicStyles> extends false
   ? never
   :
@@ -126,7 +124,7 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
   atomicStyles: AtomicStyles,
 ): <
   OutputValue extends string | number,
-  Value extends ConditionalValue<AtomicStyles, string | number>
+  Value extends ConditionalValue<AtomicStyles, string | number>,
 >(
   value: Value,
   fn: (

@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin
 
+## 1.0.1
+
+### Patch Changes
+
+- [#243](https://github.com/seek-oss/vanilla-extract/pull/243) [`93b40df`](https://github.com/seek-oss/vanilla-extract/commit/93b40df5d5c738e2ad3051857cfb6b452d0ac274) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Correctly insert debugId within nested call expressions and sequence expressions
+
 ## 1.0.0
 
 ### Major Changes

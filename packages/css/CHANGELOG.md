@@ -1,5 +1,39 @@
 # @vanilla-extract/css
 
+## 1.1.2
+
+### Patch Changes
+
+- [#238](https://github.com/seek-oss/vanilla-extract/pull/238) [`1ee9ba2`](https://github.com/seek-oss/vanilla-extract/commit/1ee9ba2c5e6598450b8bac10d244b7e375e71617) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Allow passing of null contract tokens in `createThemeContract`
+
+## 1.1.1
+
+### Patch Changes
+
+- [#235](https://github.com/seek-oss/vanilla-extract/pull/235) [`1e49dfc`](https://github.com/seek-oss/vanilla-extract/commit/1e49dfc4fc21ccb53870e297e5e4664b098cc22e) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix `createGlobalTheme` types when accepting an existing contract
+
+- Updated dependencies [[`1e49dfc`](https://github.com/seek-oss/vanilla-extract/commit/1e49dfc4fc21ccb53870e297e5e4664b098cc22e)]:
+  - @vanilla-extract/private@1.0.1
+
+## 1.1.0
+
+### Minor Changes
+
+- [#206](https://github.com/seek-oss/vanilla-extract/pull/206) [`64c18f9`](https://github.com/seek-oss/vanilla-extract/commit/64c18f976bdada1f99022e88065a8277d56b5592) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `disableRuntimeStyles` entrypoint
+
+  In testing environments (like `jsdom`) vanilla-extract will create and insert styles. While this is often desirable, it can be a major slowdown in your tests. If your tests don't require styles to be available, the `disableRuntimeStyles` import will disable all style creation.
+
+  ```ts
+  // setupTests.ts
+  import '@vanilla-extract/css/disableRuntimeStyles';
+  ```
+
+## 1.0.1
+
+### Patch Changes
+
+- [#204](https://github.com/seek-oss/vanilla-extract/pull/204) [`16f77ef`](https://github.com/seek-oss/vanilla-extract/commit/16f77efba69a11fb37a43c83af8e39c1534dffea) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Ensure `:where`/`:is` selectors are supported when validating scoped selectors
+
 ## 1.0.0
 
 ### Major Changes

@@ -34,6 +34,5 @@ const responsiveStyles = createAtomicStyles({
 export const atoms = createAtomsFn(responsiveStyles);
 
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
-export const normalizeResponsiveValue = createNormalizeValueFn(
-  responsiveStyles,
-);
+export const normalizeResponsiveValue =
+  createNormalizeValueFn(responsiveStyles);

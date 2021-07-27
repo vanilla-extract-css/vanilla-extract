@@ -72,19 +72,27 @@ const extractName = (node: t.Node) => {
 };
 
 const getDebugId = (path: NodePath<t.CallExpression>) => {
-  const { parent } = path;
+  const firstRelevantParentPath = path.findParent(
+    ({ node }) => !(t.isCallExpression(node) || t.isSequenceExpression(node)),
+  );
+
+  if (!firstRelevantParentPath) {
+    return;
+  }
+
+  const relevantParent = firstRelevantParentPath.node;
 
   if (
-    t.isObjectProperty(parent) ||
-    t.isReturnStatement(parent) ||
-    t.isArrowFunctionExpression(parent) ||
-    t.isArrayExpression(parent) ||
-    t.isSpreadElement(parent)
+    t.isObjectProperty(relevantParent) ||
+    t.isReturnStatement(relevantParent) ||
+    t.isArrowFunctionExpression(relevantParent) ||
+    t.isArrayExpression(relevantParent) ||
+    t.isSpreadElement(relevantParent)
   ) {
     const names: Array<string> = [];
 
-    path.findParent(({ node: parentNode }) => {
-      const name = extractName(parentNode);
+    path.findParent(({ node }) => {
+      const name = extractName(node);
       if (name) {
         names.unshift(name);
       }
@@ -94,7 +102,7 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
 
     return names.join('_');
   } else {
-    return extractName(parent);
+    return extractName(relevantParent);
   }
 };
 
@@ -114,9 +122,9 @@ const getRelevantCall = (
       t.isIdentifier(callee.property, { name: exportName }),
     );
   } else {
-    const importInfo = Array.from(
-      importIdentifiers.entries(),
-    ).find(([identifier]) => t.isIdentifier(callee, { name: identifier }));
+    const importInfo = Array.from(importIdentifiers.entries()).find(
+      ([identifier]) => t.isIdentifier(callee, { name: identifier }),
+    );
 
     if (importInfo) {
       return importInfo[1];
@@ -201,9 +209,9 @@ export default function (): PluginObj<Context> {
             } else if (t.isImportSpecifier(specifier)) {
               const { imported, local } = specifier;
 
-              const importName = (t.isIdentifier(imported)
-                ? imported.name
-                : imported.value) as StyleFunction;
+              const importName = (
+                t.isIdentifier(imported) ? imported.name : imported.value
+              ) as StyleFunction;
 
               if (styleFunctions.includes(importName)) {
                 this.importIdentifiers.set(local.name, importName);

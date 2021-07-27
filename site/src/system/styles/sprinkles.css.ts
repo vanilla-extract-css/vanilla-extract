@@ -63,9 +63,8 @@ const responsiveStyles = createAtomicStyles({
 });
 
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
-export const normalizeResponsiveValue = createNormalizeValueFn(
-  responsiveStyles,
-);
+export const normalizeResponsiveValue =
+  createNormalizeValueFn(responsiveStyles);
 
 export type ResponsiveValue<Value extends string | number> = ConditionalValue<
   typeof responsiveStyles,

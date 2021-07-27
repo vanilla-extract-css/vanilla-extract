@@ -1,11 +1,7 @@
-import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
+import type { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
 import type { PropertiesFallback, AtRule, Properties } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
-
-export type CSSVarFunction =
-  | `var(--${string})`
-  | `var(--${string}, ${string | number})`;
 
 type CSSTypeProperties = PropertiesFallback<number | (string & {})>;
 
@@ -108,11 +104,15 @@ export interface Adapter {
   onEndFileScope: (fileScope: FileScope) => void;
 }
 
+export type NullableTokens = {
+  [key: string]: string | Tokens | null;
+};
+
 export type Tokens = {
   [key: string]: string | Tokens;
 };
 
-export type ThemeVars<ThemeContract extends Contract> = MapLeafNodes<
+export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
   ThemeContract,
   CSSVarFunction
 >;

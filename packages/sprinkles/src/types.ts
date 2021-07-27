@@ -11,7 +11,7 @@ interface RequiredResponsiveArray<Length extends number, Value>
 }
 
 export type ResponsiveArrayConfig<Value> = ResponsiveArray<
-  2 | 3 | 5 | 6 | 7 | 8,
+  2 | 3 | 4 | 5 | 6 | 7 | 8,
   Value
 >;
 
@@ -29,7 +29,7 @@ export type ResponsiveArrayByMaxLength<MaxLength extends number, Value> = [
 
 export type RequiredResponsiveArrayByMaxLength<
   MaxLength extends number,
-  Value
+  Value,
 > = [
   never,
   RequiredResponsiveArray<1, Value | null>,

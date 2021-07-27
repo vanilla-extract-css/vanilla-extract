@@ -69,7 +69,7 @@ export function globalKeyframes(name: string, rule: CSSKeyframes) {
 }
 
 export function styleVariants<
-  StyleMap extends Record<string | number, StyleRule>
+  StyleMap extends Record<string | number, StyleRule>,
 >(styleMap: StyleMap, debugId?: string): Record<keyof StyleMap, string>;
 export function styleVariants<Data extends Record<string | number, unknown>>(
   data: Data,

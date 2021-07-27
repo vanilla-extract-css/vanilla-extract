@@ -1,6 +1,6 @@
 import type { Adapter, CSS, FileScope } from './types';
 import { transformCss } from './transformCss';
-import { setAdapter } from './adapter';
+import { setAdapterIfNotSet } from './adapter';
 
 const stylesheets: Record<string, CSSStyleSheet> = {};
 
@@ -64,5 +64,5 @@ const browserRuntimeAdapter: Adapter = {
 };
 
 if (typeof window !== 'undefined') {
-  setAdapter(browserRuntimeAdapter);
+  setAdapterIfNotSet(browserRuntimeAdapter);
 }

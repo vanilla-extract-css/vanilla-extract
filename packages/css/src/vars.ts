@@ -3,11 +3,12 @@ import {
   walkObject,
   Contract,
   MapLeafNodes,
+  CSSVarFunction,
 } from '@vanilla-extract/private';
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { CSSVarFunction, ThemeVars } from './types';
+import { NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
 
@@ -68,10 +69,10 @@ export function assignVars<VarContract extends Contract>(
   return varSetters;
 }
 
-export function createThemeContract<ThemeContract extends Contract>(
-  themeContract: ThemeContract,
-): ThemeVars<ThemeContract> {
-  return walkObject(themeContract, (_value, path) => {
+export function createThemeContract<ThemeTokens extends NullableTokens>(
+  tokens: ThemeTokens,
+): ThemeVars<ThemeTokens> {
+  return walkObject(tokens, (_value, path) => {
     return createVar(path.join('-'));
   });
 }
