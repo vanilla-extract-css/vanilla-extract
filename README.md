@@ -120,7 +120,7 @@ There are currently a few integrations to choose from.
 1. Install the dependencies.
 
 ```bash
-$ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
 ```
 
 2. Add the [Babel](https://babeljs.io) plugin.
@@ -181,7 +181,7 @@ module.exports = {
 1. Install the dependencies.
 
 ```bash
-$ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
+npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
 2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
@@ -244,7 +244,7 @@ require('esbuild')
 1. Install the dependencies.
 
 ```bash
-$ npm install @vanilla-extract/css @vanilla-extract/vite-plugin
+npm install @vanilla-extract/css @vanilla-extract/vite-plugin
 ```
 
 2. Add the [Vite](https://vitejs.dev/) plugin to your Vite config.
@@ -265,7 +265,7 @@ export default {
 1. Install the dependencies.
 
 ```bash
-$ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
+npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
 2. Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
@@ -736,7 +736,7 @@ export const green = composeStyles(base, style({
 We also provide a lightweight standalone package to support dynamic runtime theming.
 
 ```bash
-$ npm install @vanilla-extract/dynamic
+npm install @vanilla-extract/dynamic
 ```
 
 ### createInlineTheme
@@ -797,7 +797,7 @@ We also provide a standalone package of optional utility functions to make it ea
 > 💡 This package can be used with any CSS-in-JS library.
 
 ```bash
-$ npm install @vanilla-extract/css-utils
+npm install @vanilla-extract/css-utils
 ```
 
 ### calc
