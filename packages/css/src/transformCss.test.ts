@@ -1236,19 +1236,19 @@ describe('transformCss', () => {
   });
 
   it('should map composed class lists into single identifiers', () => {
-    const composedStyle1 = 'myId pd-sm dblock border-red';
-    const composedStyle2 = `myOtherId background-red ${composedStyle1}`;
+    const composedStyle1 = 'composedStyle1 pd-sm dblock border-red';
+    const composedStyle2 = `composedStyle2 background-red ${composedStyle1}`;
 
     expect(
       transformCss({
         composedClassLists: [
-          { identifier: 'myId', classList: composedStyle1 },
+          { identifier: 'composedStyle1', classList: composedStyle1 },
           {
-            identifier: 'myOtherId',
+            identifier: 'composedStyle2',
             classList: composedStyle2,
           },
         ],
-        localClassNames: ['myId', 'myOtherId'],
+        localClassNames: ['composedStyle1', 'composedStyle2'],
         cssObjs: [
           {
             type: 'local',
@@ -1260,7 +1260,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".myId button, body > .myOtherId {
+      ".composedStyle1 button, body > .composedStyle2 {
         display: block;
       }"
     `);

@@ -108,6 +108,7 @@ export interface Adapter {
   registerClassComposition: (
     classListComposition: ClassListComposition,
   ) => void;
+  markCompositionUsed: (identifier: string) => void;
   onEndFileScope: (fileScope: FileScope) => void;
 }
 

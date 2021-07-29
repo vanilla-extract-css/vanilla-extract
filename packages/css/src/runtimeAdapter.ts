@@ -34,6 +34,7 @@ const browserRuntimeAdapter: Adapter = {
   registerClassComposition: (classListComposition) => {
     composedClassLists.push(classListComposition);
   },
+  markCompositionUsed: () => {},
   onEndFileScope: (fileScope) => {
     const css = transformCss({
       localClassNames: Array.from(localClassNames),

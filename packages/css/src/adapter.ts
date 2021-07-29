@@ -5,6 +5,7 @@ export const mockAdapter: Adapter = {
   registerClassName: () => {},
   onEndFileScope: () => {},
   registerClassComposition: () => {},
+  markCompositionUsed: () => {},
 };
 
 let adapter: Adapter = mockAdapter;
@@ -34,6 +35,12 @@ export const registerClassComposition: Adapter['registerClassComposition'] = (
   ...props
 ) => {
   return adapter.registerClassComposition(...props);
+};
+
+export const markCompositionUsed: Adapter['markCompositionUsed'] = (
+  ...props
+) => {
+  return adapter.markCompositionUsed(...props);
 };
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {

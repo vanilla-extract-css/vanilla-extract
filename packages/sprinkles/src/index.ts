@@ -1,4 +1,4 @@
-import { style, CSSProperties } from '@vanilla-extract/css';
+import { style, CSSProperties, composeStyles } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
@@ -306,10 +306,10 @@ export function createAtomicStyles(options: any): any {
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...config: Args
 ): AtomsFn<Args> {
-  const atoms = internalCreateAtomsFn(...config);
+  const atoms = internalCreateAtomsFn(composeStyles)(...config);
 
   return addRecipe(atoms, {
-    importPath: '@vanilla-extract/sprinkles/createAtomsFn',
+    importPath: '@vanilla-extract/sprinkles/createRuntimeAtomsFn',
     importName: 'createAtomsFn',
     args: config,
   });

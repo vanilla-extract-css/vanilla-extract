@@ -26,51 +26,27 @@ function render() {
   <div id="${testNodes.root}" class="${shadow}"> 
     Root theme
     <div id="${testNodes.rootContainer}" class="${container}">
-      <button id="${testNodes.rootButton}" class="${button.join(
-    ' ',
-  )}">Main theme button</button>
+      <button id="${testNodes.rootButton}" class="${button}">Main theme button</button>
       <div class="${altTheme}"> 
         Alt theme
         <div id="${testNodes.altContainer}" class="${container}">
-          <button id="${testNodes.altButton}" class="${button.join(
-    ' ',
-  )}">Alt theme button</button>
+          <button id="${testNodes.altButton}" class="${button}">Alt theme button</button>
           <div class="${theme}"> 
             Back to root theme
             <div id="${testNodes.nestedRootContainer}" class="${container}">
-              <button id="${testNodes.nestedRootButton}" class="${button.join(
-    ' ',
-  )}">Main theme button</button>
+              <button id="${testNodes.nestedRootButton}" class="${button}">Main theme button</button>
             <div style="${inlineTheme}">
               Inline theme
-                <div id="${
-                  testNodes.inlineThemeContainer
-                }" class="${container}">
-                  <button id="${
-                    testNodes.inlineThemeButton
-                  }" class="${button.join(' ')} ${
-    opacity['1/2']
-  }">Inline theme button</button>
+                <div id="${testNodes.inlineThemeContainer}" class="${container}">
+                  <button id="${testNodes.inlineThemeButton}" class="${button} ${opacity['1/2']}">Inline theme button</button>
                   <div>
                   Dynamic vars
-                    <div id="${
-                      testNodes.dynamicVarsContainer
-                    }" class="${container}">
-                      <button id="${
-                        testNodes.dynamicVarsButton
-                      }" class="${button.join(
-    ' ',
-  )}">Dynamic vars button</button>
+                    <div id="${testNodes.dynamicVarsContainer}" class="${container}">
+                      <button id="${testNodes.dynamicVarsButton}" class="${button}">Dynamic vars button</button>
                   <div class="${responsiveTheme}">
               Responsive theme
-                <div id="${
-                  testNodes.responsiveThemeContainer
-                }" class="${container}">
-                  <button id="${
-                    testNodes.responsiveThemeButton
-                  }" class="${button.join(
-    ' ',
-  )}">Responsive theme button</button>
+                <div id="${testNodes.responsiveThemeContainer}" class="${container}">
+                  <button id="${testNodes.responsiveThemeButton}" class="${button}">Responsive theme button</button>
                             </div>
                           </div>
                         </div>

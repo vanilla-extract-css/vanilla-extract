@@ -47,6 +47,7 @@ export function processVanillaFile({
   const cssByFileScope = new Map<string, Array<Css>>();
   const localClassNames = new Set<string>();
   const composedClassLists: Array<ClassListComposition> = [];
+  const usedCompositions = new Set<string>();
 
   const cssAdapter: Adapter = {
     appendCss: (css, fileScope) => {
@@ -64,6 +65,9 @@ export function processVanillaFile({
     },
     registerClassComposition: (composedClassList) => {
       composedClassLists.push(composedClassList);
+    },
+    markCompositionUsed: (identifier) => {
+      usedCompositions.add(identifier);
     },
     onEndFileScope: () => {},
   };
@@ -112,16 +116,28 @@ export function processVanillaFile({
     cssImports.push(virtualCssFilePath);
   }
 
-  return serializeVanillaModule(cssImports, evalResult);
+  const unusedCompositions = composedClassLists
+    .filter(({ identifier }) => !usedCompositions.has(identifier))
+    .map(({ identifier }) => identifier);
+
+  const unusedCompositionRegex =
+    unusedCompositions.length > 0
+      ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
+      : null;
+
+  return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
 }
 
-function stringifyExports(recipeImports: Set<string>, value: any): any {
+function stringifyExports(
+  recipeImports: Set<string>,
+  value: any,
+  unusedCompositionRegex: RegExp | null,
+): any {
   return stringify(
     value,
     (value, _indent, next) => {
       const valueType = typeof value;
       if (
-        valueType === 'string' ||
         valueType === 'boolean' ||
         valueType === 'number' ||
         valueType === 'undefined' ||
@@ -130,6 +146,14 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
         isPlainObject(value)
       ) {
         return next(value);
+      }
+
+      if (valueType === 'string') {
+        return next(
+          unusedCompositionRegex
+            ? value.replace(unusedCompositionRegex, '')
+            : value,
+        );
       }
 
       if (valueType === 'function' && value.__recipe__) {
@@ -154,7 +178,9 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
           );
 
           return `${hashedImportName}(${args
-            .map((arg) => stringifyExports(recipeImports, arg))
+            .map((arg) =>
+              stringifyExports(recipeImports, arg, unusedCompositionRegex),
+            )
             .join(',')})`;
         } catch (err) {
           console.error(err);
@@ -181,13 +207,22 @@ function stringifyExports(recipeImports: Set<string>, value: any): any {
 function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
+  unusedCompositionRegex: RegExp | null,
 ) {
   const recipeImports = new Set<string>();
 
   const moduleExports = Object.keys(exports).map((key) =>
     key === 'default'
-      ? `export default ${stringifyExports(recipeImports, exports[key])};`
-      : `export var ${key} = ${stringifyExports(recipeImports, exports[key])};`,
+      ? `export default ${stringifyExports(
+          recipeImports,
+          exports[key],
+          unusedCompositionRegex,
+        )};`
+      : `export var ${key} = ${stringifyExports(
+          recipeImports,
+          exports[key],
+          unusedCompositionRegex,
+        )};`,
   );
 
   const outputCode = [...cssImports, ...recipeImports, ...moduleExports];

@@ -43,6 +43,11 @@ export const preComposedAtoms = atoms({
   paddingTop: 'small',
 });
 
-globalStyle(`body > ${preComposedAtoms}`, {
+export const preComposedAtomsUsedInSelector = atoms({
+  display: 'flex',
+  paddingTop: 'medium',
+});
+
+globalStyle(`body > ${preComposedAtomsUsedInSelector}`, {
   background: 'red',
 });

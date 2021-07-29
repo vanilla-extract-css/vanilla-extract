@@ -14,6 +14,7 @@ import type {
   CSSSelectorBlock,
   ClassListComposition,
 } from './types';
+import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
@@ -218,7 +219,11 @@ class Stylesheet {
     // Map class list compositions to single identifiers
     let transformedSelector = selector;
     for (const { identifier, regex } of this.composedClassLists) {
-      transformedSelector = transformedSelector.replace(regex, identifier);
+      transformedSelector = transformedSelector.replace(regex, () => {
+        markCompositionUsed(identifier);
+
+        return identifier;
+      });
     }
 
     return this.localClassNameRegex
