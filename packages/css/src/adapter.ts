@@ -4,6 +4,7 @@ export const mockAdapter: Adapter = {
   appendCss: () => {},
   registerClassName: () => {},
   onEndFileScope: () => {},
+  registerClassComposition: () => {},
 };
 
 let adapter: Adapter = mockAdapter;
@@ -27,6 +28,12 @@ export const appendCss: Adapter['appendCss'] = (...props) => {
 
 export const registerClassName: Adapter['registerClassName'] = (...props) => {
   return adapter.registerClassName(...props);
+};
+
+export const registerClassComposition: Adapter['registerClassComposition'] = (
+  ...props
+) => {
+  return adapter.registerClassComposition(...props);
 };
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {

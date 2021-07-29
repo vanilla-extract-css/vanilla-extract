@@ -2,6 +2,7 @@ import {
   atoms,
   mapResponsiveValue,
   normalizeResponsiveValue,
+  preComposedAtoms,
 } from './styles.css';
 import testNodes from '../test-nodes.json';
 
@@ -19,6 +20,7 @@ function render() {
   })}"> 
     Sprinkles
   </div>
+  <div class="${preComposedAtoms}">Precomposed atoms</div>
 `;
 }
 

@@ -136,6 +136,7 @@ function compileVanillaSource(
     new ExternalsPlugin('commonjs', [
       '@vanilla-extract/css',
       '@vanilla-extract/css/fileScope',
+      '@vanilla-extract/css/createClassComposition',
       externals,
     ]).apply(childCompiler);
 

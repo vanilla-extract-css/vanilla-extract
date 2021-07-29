@@ -12,6 +12,7 @@ import type {
   StyleWithSelectors,
   GlobalFontFaceRule,
   CSSSelectorBlock,
+  ClassListComposition,
 } from './types';
 import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
@@ -91,8 +92,12 @@ class Stylesheet {
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNameRegex: RegExp | null;
+  composedClassLists: Array<{ identifier: string; regex: RegExp }>;
 
-  constructor(localClassNames: Array<string>) {
+  constructor(
+    localClassNames: Array<string>,
+    composedClassLists: Array<ClassListComposition>,
+  ) {
     this.rules = [];
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
@@ -101,6 +106,15 @@ class Stylesheet {
       localClassNames.length > 0
         ? RegExp(`(${localClassNames.join('|')})`, 'g')
         : null;
+
+    // Class list compositions should be priortized by Newer > Older
+    // Therefore we reverse the array as they are added in sequence
+    this.composedClassLists = composedClassLists
+      .map(({ identifier, classList }) => ({
+        identifier,
+        regex: RegExp(`(${classList})`, 'g'),
+      }))
+      .reverse();
   }
 
   processCssObj(root: CSS) {
@@ -201,15 +215,24 @@ class Stylesheet {
   }
 
   transformSelector(selector: string) {
-    return this.localClassNameRegex
-      ? selector.replace(this.localClassNameRegex, (_, className, index) => {
-          if (index > 0 && selector[index - 1] === '.') {
-            return className;
-          }
+    // Map class list compositions to single identifiers
+    let transformedSelector = selector;
+    for (const { identifier, regex } of this.composedClassLists) {
+      transformedSelector = transformedSelector.replace(regex, identifier);
+    }
 
-          return `.${cssesc(className, { isIdentifier: true })}`;
-        })
-      : selector;
+    return this.localClassNameRegex
+      ? transformedSelector.replace(
+          this.localClassNameRegex,
+          (_, className, index) => {
+            if (index > 0 && transformedSelector[index - 1] === '.') {
+              return className;
+            }
+
+            return `.${cssesc(className, { isIdentifier: true })}`;
+          },
+        )
+      : transformedSelector;
   }
 
   transformSelectors(
@@ -417,10 +440,15 @@ function renderCss(v: any, indent: string = '') {
 
 interface TransformCSSParams {
   localClassNames: Array<string>;
+  composedClassLists: Array<ClassListComposition>;
   cssObjs: Array<CSS>;
 }
-export function transformCss({ localClassNames, cssObjs }: TransformCSSParams) {
-  const stylesheet = new Stylesheet(localClassNames);
+export function transformCss({
+  localClassNames,
+  cssObjs,
+  composedClassLists,
+}: TransformCSSParams) {
+  const stylesheet = new Stylesheet(localClassNames, composedClassLists);
 
   for (const root of cssObjs) {
     stylesheet.processCssObj(root);

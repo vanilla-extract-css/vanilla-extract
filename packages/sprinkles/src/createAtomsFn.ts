@@ -1,3 +1,4 @@
+import { createClassComposition } from '@vanilla-extract/css/createClassComposition';
 import {
   ResponsiveArrayByMaxLength,
   ConditionalPropertyValue,
@@ -263,7 +264,7 @@ export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
       }
     }
 
-    return classNames.join(' ');
+    return createClassComposition(classNames.join(' '));
   };
 
   return Object.assign(atomsFn, {

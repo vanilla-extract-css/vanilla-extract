@@ -1,0 +1,8 @@
+{
+  "main": "dist/vanilla-extract-css-createClassComposition.cjs.js",
+  "module": "dist/vanilla-extract-css-createClassComposition.esm.js",
+  "browser": {
+    "./dist/vanilla-extract-css-createClassComposition.cjs.js": "./dist/vanilla-extract-css-createClassComposition.browser.cjs.js",
+    "./dist/vanilla-extract-css-createClassComposition.esm.js": "./dist/vanilla-extract-css-createClassComposition.browser.esm.js"
+  }
+}

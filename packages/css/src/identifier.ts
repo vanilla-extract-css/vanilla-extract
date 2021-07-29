@@ -22,6 +22,7 @@ export function generateIdentifier(debugId: string | undefined) {
   // Convert ref count to base 36 for optimal hash lengths
   const refCount = getAndIncrementRefCounter().toString(36);
   const { filePath, packageName } = getFileScope();
+
   const fileScopeHash = hash(
     packageName ? `${packageName}${filePath}` : filePath,
   );

@@ -62,7 +62,7 @@ export interface WebpackFixtureOptions {
 export const startWebpackFixture = (
   fixtureName: string,
   {
-    type,
+    type = 'mini-css-extract',
     hot = false,
     mode = 'development',
     port,

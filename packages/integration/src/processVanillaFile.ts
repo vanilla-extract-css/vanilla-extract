@@ -40,8 +40,13 @@ export function processVanillaFile({
   serializeVirtualCssPath,
 }: ProcessVanillaFileOptions) {
   type Css = Parameters<Adapter['appendCss']>[0];
+  type ClassListComposition = Parameters<
+    Adapter['registerClassComposition']
+  >[0];
+
   const cssByFileScope = new Map<string, Array<Css>>();
   const localClassNames = new Set<string>();
+  const composedClassLists: Array<ClassListComposition> = [];
 
   const cssAdapter: Adapter = {
     appendCss: (css, fileScope) => {
@@ -56,6 +61,9 @@ export function processVanillaFile({
     },
     registerClassName: (className) => {
       localClassNames.add(className);
+    },
+    registerClassComposition: (composedClassList) => {
+      composedClassLists.push(composedClassList);
     },
     onEndFileScope: () => {},
   };
@@ -86,6 +94,7 @@ export function processVanillaFile({
     const fileScope = parseFileScope(serialisedFileScope);
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
+      composedClassLists,
       cssObjs: fileScopeCss,
     }).join('\n');
 

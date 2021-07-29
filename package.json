@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "preconstruct dev",
     "build": "preconstruct build",
+    "watch": "preconstruct watch",
     "start-fixture": "ts-node --log-error ./test-helpers/src/startFixtureCLI",
     "start": "yarn start-fixture themed",
     "start-site": "manypkg run site start",

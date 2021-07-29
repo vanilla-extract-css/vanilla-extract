@@ -1,3 +1,4 @@
+import { globalStyle } from '@vanilla-extract/css';
 import {
   createAtomicStyles,
   createAtomsFn,
@@ -36,3 +37,12 @@ export const atoms = createAtomsFn(responsiveStyles);
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 export const normalizeResponsiveValue =
   createNormalizeValueFn(responsiveStyles);
+
+export const preComposedAtoms = atoms({
+  display: 'block',
+  paddingTop: 'small',
+});
+
+globalStyle(`body > ${preComposedAtoms}`, {
+  background: 'red',
+});

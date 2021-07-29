@@ -1,3 +1,5 @@
+import { createClassComposition } from './createClassComposition';
+
 type ClassNames = string | Array<ClassNames>;
 
 function composeStylesIntoSet(
@@ -26,5 +28,5 @@ export function composeStyles(...classNames: Array<ClassNames>) {
 
   composeStylesIntoSet(set, ...classNames);
 
-  return Array.from(set).join(' ');
+  return createClassComposition(Array.from(set).join(' '));
 }

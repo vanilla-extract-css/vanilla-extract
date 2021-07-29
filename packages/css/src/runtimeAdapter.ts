@@ -1,10 +1,11 @@
-import type { Adapter, CSS, FileScope } from './types';
+import type { Adapter, ClassListComposition, CSS, FileScope } from './types';
 import { transformCss } from './transformCss';
 import { setAdapterIfNotSet } from './adapter';
 
 const stylesheets: Record<string, CSSStyleSheet> = {};
 
 const localClassNames = new Set<string>();
+const composedClassLists: Array<ClassListComposition> = [];
 let bufferedCSSObjs: Array<CSS> = [];
 
 function getStylesheet({ packageName, filePath }: FileScope) {
@@ -30,9 +31,13 @@ const browserRuntimeAdapter: Adapter = {
   registerClassName: (className) => {
     localClassNames.add(className);
   },
+  registerClassComposition: (classListComposition) => {
+    composedClassLists.push(classListComposition);
+  },
   onEndFileScope: (fileScope) => {
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
+      composedClassLists,
       cssObjs: bufferedCSSObjs,
     });
     const stylesheet = getStylesheet(fileScope);
