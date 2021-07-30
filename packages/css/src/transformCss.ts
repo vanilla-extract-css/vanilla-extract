@@ -12,7 +12,7 @@ import type {
   StyleWithSelectors,
   GlobalFontFaceRule,
   CSSSelectorBlock,
-  ClassListComposition,
+  Composition,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
@@ -97,7 +97,7 @@ class Stylesheet {
 
   constructor(
     localClassNames: Array<string>,
-    composedClassLists: Array<ClassListComposition>,
+    composedClassLists: Array<Composition>,
   ) {
     this.rules = [];
     this.conditionalRulesets = [new ConditionalRuleset()];
@@ -145,8 +145,9 @@ class Stylesheet {
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
 
-    const activeConditionalRuleset =
-      this.conditionalRulesets[this.conditionalRulesets.length - 1];
+    const activeConditionalRuleset = this.conditionalRulesets[
+      this.conditionalRulesets.length - 1
+    ];
 
     if (
       !activeConditionalRuleset.mergeIfCompatible(this.currConditionalRuleset)
@@ -445,7 +446,7 @@ function renderCss(v: any, indent: string = '') {
 
 interface TransformCSSParams {
   localClassNames: Array<string>;
-  composedClassLists: Array<ClassListComposition>;
+  composedClassLists: Array<Composition>;
   cssObjs: Array<CSS>;
 }
 export function transformCss({

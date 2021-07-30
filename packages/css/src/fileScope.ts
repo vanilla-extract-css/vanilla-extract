@@ -20,10 +20,6 @@ export function endFileScope() {
   fileScopes.splice(0, 1);
 }
 
-export function hasFileScope() {
-  return fileScopes.length > 0;
-}
-
 export function getFileScope(): FileScope {
   if (fileScopes.length === 0) {
     throw new Error(

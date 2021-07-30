@@ -178,7 +178,24 @@ export const container = atoms({
 });
 ```
 
-Combine with any custom styles using vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function.
+If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
+
+```tsx
+// app.ts
+import { atoms } from './sprinkles.css.ts';
+
+const flexDirection = Math.random() > 0.5 ? 'column' : 'row';
+
+document.write(`
+  <section class="${atoms({ display: 'flex', flexDirection })}">
+    ...
+  </section>
+`);
+```
+
+> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
+
+Within `.css.ts` files, combine with any custom styles using vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function.
 
 ```ts
 // styles.css.ts
@@ -198,22 +215,21 @@ export const container = composeStyles(
 );
 ```
 
-If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
+Sprinkles uses vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function internally, which means that atomic styles can be treated as if they were a single class within vanilla-extract selectors.
 
-```tsx
-// app.ts
+```ts
+// styles.css.ts
+import { globalStyle } from '@vanilla-extract/css';
 import { atoms } from './sprinkles.css.ts';
 
-const flexDirection = Math.random() > 0.5 ? 'column' : 'row';
+export const container = atoms({
+  paddingX: 'small',
+});
 
-document.write(`
-  <section class="${atoms({ display: 'flex', flexDirection })}">
-    ...
-  </section>
-`);
+globalStyle(`${container} *`, {
+  boxSizing: 'border-box'
+});
 ```
-
-> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
 
 ---
 

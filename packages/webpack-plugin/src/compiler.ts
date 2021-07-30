@@ -49,8 +49,11 @@ export class ChildCompiler {
       log('Using cached compilation: %s', cacheId);
     }
 
-    const { source, fileDependencies, contextDependencies } =
-      await compilationPromise;
+    const {
+      source,
+      fileDependencies,
+      contextDependencies,
+    } = await compilationPromise;
 
     // Set loader dependencies to dependencies of the child compiler
     fileDependencies.forEach((dep) => {
@@ -136,7 +139,6 @@ function compileVanillaSource(
     new ExternalsPlugin('commonjs', [
       '@vanilla-extract/css',
       '@vanilla-extract/css/fileScope',
-      '@vanilla-extract/css/createClassComposition',
       externals,
     ]).apply(childCompiler);
 

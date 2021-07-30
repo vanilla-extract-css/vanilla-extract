@@ -4,7 +4,7 @@ export const mockAdapter: Adapter = {
   appendCss: () => {},
   registerClassName: () => {},
   onEndFileScope: () => {},
-  registerClassComposition: () => {},
+  registerComposition: () => {},
   markCompositionUsed: () => {},
 };
 
@@ -31,10 +31,10 @@ export const registerClassName: Adapter['registerClassName'] = (...props) => {
   return adapter.registerClassName(...props);
 };
 
-export const registerClassComposition: Adapter['registerClassComposition'] = (
+export const registerComposition: Adapter['registerComposition'] = (
   ...props
 ) => {
-  return adapter.registerClassComposition(...props);
+  return adapter.registerComposition(...props);
 };
 
 export const markCompositionUsed: Adapter['markCompositionUsed'] = (

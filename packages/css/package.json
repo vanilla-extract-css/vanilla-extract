@@ -16,8 +16,7 @@
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts",
-      "disableRuntimeStyles.ts",
-      "createClassComposition.ts"
+      "disableRuntimeStyles.ts"
     ]
   },
   "files": [
@@ -26,8 +25,7 @@
     "/adapter",
     "/transformCss",
     "/fileScope",
-    "/disableRuntimeStyles",
-    "/createClassComposition"
+    "/disableRuntimeStyles"
   ],
   "repository": {
     "type": "git",
