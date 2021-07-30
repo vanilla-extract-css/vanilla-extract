@@ -34,10 +34,14 @@ function createComposition(classList: string) {
   return compositionClassList;
 }
 
-export function composeStyles(...classNames: Array<ClassNames>) {
+export function dudupeAndJoinClassList(classNames: Array<ClassNames>) {
   const set: Set<string> = new Set();
 
   composeStylesIntoSet(set, ...classNames);
 
-  return createComposition(Array.from(set).join(' '));
+  return Array.from(set).join(' ');
+}
+
+export function composeStyles(...classNames: Array<ClassNames>) {
+  return createComposition(dudupeAndJoinClassList(classNames));
 }
