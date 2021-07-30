@@ -1,5 +1,36 @@
 # @vanilla-extract/sprinkles
 
+## 1.0.0
+
+### Major Changes
+
+- [#261](https://github.com/seek-oss/vanilla-extract/pull/261) [`3db8c11`](https://github.com/seek-oss/vanilla-extract/commit/3db8c115ebf17885113de9eae6f794710c217a9c) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Release Sprinkles v1
+
+### Minor Changes
+
+- [#259](https://github.com/seek-oss/vanilla-extract/pull/259) [`b8a6441`](https://github.com/seek-oss/vanilla-extract/commit/b8a6441e3400be388a520e3acf94f3bb6519cf0a) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Allow the result of calling `atoms` to be used in selectors
+
+  Sprinkles now uses vanilla-extract’s updated [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function internally, which means that atomic styles can be treated as if they were a single class within vanilla-extract selectors.
+
+  ```ts
+  // styles.css.ts
+  import { globalStyle } from '@vanilla-extract/css';
+  import { atoms } from './sprinkles.css.ts';
+
+  export const container = atoms({
+    padding: 'small',
+  });
+
+  globalStyle(`${container} *`, {
+    boxSizing: 'border-box',
+  });
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`b8a6441`](https://github.com/seek-oss/vanilla-extract/commit/b8a6441e3400be388a520e3acf94f3bb6519cf0a)]:
+  - @vanilla-extract/css@1.2.0
+
 ## 0.4.4
 
 ### Patch Changes

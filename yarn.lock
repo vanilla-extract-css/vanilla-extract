@@ -1755,7 +1755,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 1.1.2
+    "@vanilla-extract/css": 1.2.0
   languageName: unknown
   linkType: soft
 
@@ -1763,8 +1763,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
-    "@vanilla-extract/css": 1.1.2
-    "@vanilla-extract/sprinkles": 0.4.4
+    "@vanilla-extract/css": 1.2.0
+    "@vanilla-extract/sprinkles": 1.0.0
   languageName: unknown
   linkType: soft
 
@@ -1772,7 +1772,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 1.1.2
+    "@vanilla-extract/css": 1.2.0
     "@vanilla-extract/dynamic": 1.0.0
   languageName: unknown
   linkType: soft
@@ -1781,7 +1781,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 1.1.2
+    "@vanilla-extract/css": 1.2.0
   languageName: unknown
   linkType: soft
 
@@ -3182,7 +3182,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@*, @vanilla-extract/css@1.1.2, @vanilla-extract/css@^1.0.0, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@1.2.0, @vanilla-extract/css@^1.2.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
@@ -3211,18 +3211,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/esbuild-plugin@workspace:packages/esbuild-plugin"
   dependencies:
-    "@vanilla-extract/integration": ^1.0.0
+    "@vanilla-extract/integration": ^1.1.0
     esbuild: ^0.11.16
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/integration@^1.0.0, @vanilla-extract/integration@workspace:packages/integration":
+"@vanilla-extract/integration@^1.0.0, @vanilla-extract/integration@^1.1.0, @vanilla-extract/integration@workspace:packages/integration":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/integration@workspace:packages/integration"
   dependencies:
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
-    "@vanilla-extract/css": ^1.0.0
+    "@vanilla-extract/css": ^1.2.0
     chalk: ^4.1.1
     dedent: ^0.7.0
     esbuild: ^0.11.16
@@ -3243,12 +3243,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/snowpack-plugin@workspace:packages/snowpack-plugin"
   dependencies:
-    "@vanilla-extract/integration": ^1.0.0
+    "@vanilla-extract/integration": ^1.1.0
     snowpack: ^3.5.1
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/sprinkles@0.4.4, @vanilla-extract/sprinkles@^0.4.4, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+"@vanilla-extract/sprinkles@1.0.0, @vanilla-extract/sprinkles@^1.0.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
   dependencies:
@@ -3262,17 +3262,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
-    "@vanilla-extract/integration": ^1.0.0
+    "@vanilla-extract/integration": ^1.1.0
     vite: ^2.2.3
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@^1.0.3, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
+"@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@^1.1.0, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@types/debug": ^4.1.5
-    "@vanilla-extract/integration": ^1.0.0
+    "@vanilla-extract/integration": ^1.1.0
     chalk: ^4.1.1
     debug: ^4.3.1
     loader-utils: ^2.0.0
@@ -14991,9 +14991,9 @@ typescript@^4.1.3:
     "@types/react-dom": ^17
     "@types/tailwindcss": ^2
     "@vanilla-extract/babel-plugin": ^1.0.1
-    "@vanilla-extract/css": 1.1.2
-    "@vanilla-extract/sprinkles": ^0.4.4
-    "@vanilla-extract/webpack-plugin": ^1.0.3
+    "@vanilla-extract/css": 1.2.0
+    "@vanilla-extract/sprinkles": ^1.0.0
+    "@vanilla-extract/webpack-plugin": ^1.1.0
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
     html-webpack-plugin: ^5.3.1
