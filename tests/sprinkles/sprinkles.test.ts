@@ -1,8 +1,8 @@
 import {
   createMapValueFn,
   createNormalizeValueFn,
+  createAtomsFn,
 } from '@vanilla-extract/sprinkles';
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createRuntimeAtomsFn';
 
 import {
   atomicStyles,
