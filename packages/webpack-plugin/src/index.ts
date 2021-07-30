@@ -90,10 +90,6 @@ export class VanillaExtractPlugin {
       Boolean(compiler.webpack && compiler.webpack.version),
     );
 
-    compiler.hooks.watchRun.tap(pluginName, () => {
-      this.childCompiler.clearCache();
-    });
-
     if (!compiler.parentCompilation && !this.allowRuntime) {
       compiler.hooks.compilation.tap(pluginName, (compilation) => {
         compilation.hooks.afterOptimizeModules.tap(pluginName, (modules) => {
