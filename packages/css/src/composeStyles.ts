@@ -1,3 +1,6 @@
+import { generateIdentifier } from './identifier';
+import { registerComposition, registerClassName } from './adapter';
+
 type ClassNames = string | Array<ClassNames>;
 
 function composeStylesIntoSet(
@@ -21,10 +24,24 @@ function composeStylesIntoSet(
   }
 }
 
-export function composeStyles(...classNames: Array<ClassNames>) {
+function createComposition(classList: string) {
+  const identifier = generateIdentifier(undefined);
+  const compositionClassList = `${identifier} ${classList}`;
+
+  registerClassName(identifier);
+  registerComposition({ identifier, classList: compositionClassList });
+
+  return compositionClassList;
+}
+
+export function dudupeAndJoinClassList(classNames: Array<ClassNames>) {
   const set: Set<string> = new Set();
 
   composeStylesIntoSet(set, ...classNames);
 
   return Array.from(set).join(' ');
+}
+
+export function composeStyles(...classNames: Array<ClassNames>) {
+  return createComposition(dudupeAndJoinClassList(classNames));
 }
