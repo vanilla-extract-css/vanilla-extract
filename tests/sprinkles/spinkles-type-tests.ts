@@ -8,7 +8,7 @@ import {
   ConditionalValue,
   RequiredConditionalValue,
 } from '@vanilla-extract/sprinkles';
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createAtomsFn';
+import { createAtomsFn } from '@vanilla-extract/sprinkles';
 
 import {
   atomicWithShorthandStyles,
