@@ -45,10 +45,6 @@ document.write(`
 
 ---
 
-**🚧 &nbsp; Please note, this is an alpha release.**
-
----
-
 🔥 &nbsp; Zero-runtime CSS-in-TypeScript with all styles generated at build time via [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
 
 🛠 &nbsp; Create your own custom set of atomic classes with declarative config.
