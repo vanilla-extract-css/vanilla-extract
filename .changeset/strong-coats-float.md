@@ -2,4 +2,4 @@
 '@vanilla-extract/webpack-plugin': patch
 ---
 
-Remove compiler cache
+Remove unused compiler cache
