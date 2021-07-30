@@ -205,7 +205,7 @@ import { atoms } from './sprinkles.css.ts';
 export const container = composeStyles(
   atoms({
     display: 'flex',
-    paddingX: 'small'
+    padding: 'small'
   }),
   style({
     ':hover': {
@@ -223,7 +223,7 @@ import { globalStyle } from '@vanilla-extract/css';
 import { atoms } from './sprinkles.css.ts';
 
 export const container = atoms({
-  paddingX: 'small',
+  padding: 'small',
 });
 
 globalStyle(`${container} *`, {
