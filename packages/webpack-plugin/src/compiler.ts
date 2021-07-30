@@ -1,8 +1,5 @@
 import type { LoaderContext } from './types';
 import createCompat from './compat';
-import { debug } from './logger';
-
-const log = debug('vanilla-extract:compiler');
 
 // Should be "ExternalsItem" but webpack doesn't expose it
 type Externals = any;
@@ -18,16 +15,9 @@ const getCompilerName = (resource: string) =>
 
 export class ChildCompiler {
   externals: Externals | undefined;
-  cache: Map<string, Promise<CompilationResult>>;
 
   constructor(externals: Externals) {
-    this.cache = new Map();
     this.externals = externals;
-  }
-
-  clearCache() {
-    log('Clearing child compiler cache');
-    this.cache.clear();
   }
 
   isChildCompiler(name: string | undefined) {
@@ -37,20 +27,8 @@ export class ChildCompiler {
   }
 
   async getCompiledSource(loader: LoaderContext) {
-    const cacheId = loader.resourcePath;
-    let compilationPromise = this.cache.get(cacheId);
-
-    if (!compilationPromise) {
-      log('No cached compilation. Compiling: %s', cacheId);
-      compilationPromise = compileVanillaSource(loader, this.externals);
-
-      this.cache.set(cacheId, compilationPromise);
-    } else {
-      log('Using cached compilation: %s', cacheId);
-    }
-
     const { source, fileDependencies, contextDependencies } =
-      await compilationPromise;
+      await compileVanillaSource(loader, this.externals);
 
     // Set loader dependencies to dependencies of the child compiler
     fileDependencies.forEach((dep) => {
