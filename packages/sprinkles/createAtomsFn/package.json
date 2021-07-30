@@ -1,4 +1,0 @@
-{
-  "main": "dist/vanilla-extract-sprinkles-createAtomsFn.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles-createAtomsFn.esm.js"
-}

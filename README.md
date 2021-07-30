@@ -89,6 +89,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [style](#style)
   - [styleVariants](#styleVariants)
   - [globalStyle](#globalstyle)
+  - [composeStyles](#composestyles)
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
   - [createThemeContract](#createthemecontract)
@@ -99,7 +100,6 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
-  - [composeStyles](#composestyles)
 - [Dynamic API](#dynamic-api)
   - [createInlineTheme](#createinlinetheme)
   - [setElementTheme](#setelementtheme)
@@ -437,6 +437,50 @@ globalStyle(`${parentClass} > a`, {
 });
 ```
 
+### composeStyles
+
+Combines multiple styles into a single class string, while also deduplicating and removing unnecessary spaces.
+
+```ts
+import { style, composeStyles } from '@vanilla-extract/css';
+
+const button = style({
+  padding: 12,
+  borderRadius: 8
+});
+
+export const primaryButton = composeStyles(
+  button,
+  style({ background: 'coral' })
+);
+
+export const secondaryButton = composeStyles(
+  button,
+  style({ background: 'peachpuff' })
+);
+```
+
+> 💡 Styles can also be provided in shallow and deeply nested arrays, similar to [classnames.](https://github.com/JedWatson/classnames)
+
+When style compositions are used in selectors, they are assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
+
+```ts
+import {
+  style,
+  globalStyle,
+  composeStyles
+} from '@vanilla-extract/css';
+
+const background = style({ background: 'mintcream' });
+const padding = style({ padding: 12 });
+
+export const container = composeStyles(background, padding);
+
+globalStyle(`${container} *`, {
+  boxSizing: 'border-box'
+});
+```
+
 ### createTheme
 
 Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
@@ -708,28 +752,6 @@ export const animated = style({
   animation: `3s infinite rotate`,
 });
 ```
-
-### composeStyles
-
-Combines multiple styles into a single class string, while also deduplicating and removing unnecessary spaces.
-
-```ts
-import { style, composeStyles } from '@vanilla-extract/css';
-
-const base = style({
-  padding: 12
-});
-
-export const blue = composeStyles(base, style({
-  background: 'blue'
-}));
-
-export const green = composeStyles(base, style({
-  background: 'green'
-}));
-```
-
-> 💡 Styles can also be provided in shallow and deeply nested arrays. Think of it as a static version of [classnames.](https://github.com/JedWatson/classnames)
 
 ## Dynamic API
 

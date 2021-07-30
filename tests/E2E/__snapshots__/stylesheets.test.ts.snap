@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stylesheet sprinkles - esbuild should create valid stylesheet 1`] = `
-".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}
+".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}body>.styles__1j5zl92l{background:red}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}
 "
 `;
 
-exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}"`;
+exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl920{display:flex}.styles_display_none_mobile__1j5zl924{display:none}.styles_display_block_mobile__1j5zl928{display:block}.styles_paddingTop_small_mobile__1j5zl92c{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92g{padding-top:20px}body>.styles__1j5zl92l{background:red}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl921{display:flex}.styles_display_none_tablet__1j5zl925{display:none}.styles_display_block_tablet__1j5zl929{display:block}.styles_paddingTop_small_tablet__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92h{padding-top:20px}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl922{display:flex}.styles_display_none_desktop__1j5zl926{display:none}.styles_display_block_desktop__1j5zl92a{display:block}.styles_paddingTop_small_desktop__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92i{padding-top:20px}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl923{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl927{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92b{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92f{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92j{padding-top:20px}}}"`;
 
 exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
 ".styles_display_flex_mobile__3nw5tz0 {
@@ -22,6 +22,9 @@ exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
 }
 .styles_paddingTop_medium_mobile__3nw5tzg {
   padding-top: 20px;
+}
+body > .styles__3nw5tzl {
+  background: red;
 }
 @media screen and (min-width: 768px) {
   .styles_display_flex_tablet__3nw5tz1 {
@@ -79,11 +82,11 @@ exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
 `;
 
 exports[`Stylesheet themed - esbuild should create valid stylesheet 1`] = `
-":root,.themes__cvta170{--colors-backgroundColor__cvta171: blue;--colors-text__cvta172: white;--space-1__cvta173: 4px;--space-2__cvta174: 8px;--space-3__cvta175: 12px}.themes__cvta176{--colors-backgroundColor__cvta171: green;--colors-text__cvta172: white;--space-1__cvta173: 8px;--space-2__cvta174: 12px;--space-3__cvta175: 16px}.themes__cvta177{--colors-backgroundColor__cvta171: pink;--colors-text__cvta172: purple;--space-1__cvta173: 6px;--space-2__cvta174: 12px;--space-3__cvta175: 18px}@media screen and (min-width: 768px){.themes__cvta177{--colors-backgroundColor__cvta171: purple;--colors-text__cvta172: pink}}.shared__4dtfen0{box-shadow:0 0 5px red}body{background-color:#87ceeb}@font-face{src:local(\\"Impact\\");font-family:\\"styles__jteyb10\\"}@font-face{src:local(\\"Comic Sans MS\\");font-family:MyGlobalComicSans}@keyframes styles__jteyb11{0%{transform:translateY(-4px)}to{transform:translateY(4px)}}@keyframes globalSlide{0%{transform:translateY(-4px)}to{transform:translateY(4px)}}.styles__jteyb12{animation:3s infinite alternate globalSlide ease-in-out;display:flex;flex-direction:column;gap:var(--space-2__cvta174);padding:var(--space-3__cvta175)}.styles__jteyb13{animation:3s infinite alternate styles__jteyb11 ease-in-out;font-family:\\"styles__jteyb10\\";background-color:var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");color:var(--colors-text__cvta172)}.themes__cvta176 .themes__cvta170 .styles__jteyb12 .styles__jteyb13{font-family:MyGlobalComicSans;outline:5px solid red}html .styles_1\\\\/2__jteyb16{opacity:var(--jteyb14, .5)}html .styles_1\\\\/4__jteyb17{opacity:var(--jteyb14, var(--jteyb15, .25))}@media only screen and (min-width: 500px){.styles__jteyb12{border:1px solid var(--colors-backgroundColor__cvta171)}.styles__jteyb13{border-radius:9999px}}
+":root,.themes__cvta170{--colors-backgroundColor__cvta171: blue;--colors-text__cvta172: white;--space-1__cvta173: 4px;--space-2__cvta174: 8px;--space-3__cvta175: 12px}.themes__cvta176{--colors-backgroundColor__cvta171: green;--colors-text__cvta172: white;--space-1__cvta173: 8px;--space-2__cvta174: 12px;--space-3__cvta175: 16px}.themes__cvta177{--colors-backgroundColor__cvta171: pink;--colors-text__cvta172: purple;--space-1__cvta173: 6px;--space-2__cvta174: 12px;--space-3__cvta175: 18px}@media screen and (min-width: 768px){.themes__cvta177{--colors-backgroundColor__cvta171: purple;--colors-text__cvta172: pink}}.shared__4dtfen0{box-shadow:0 0 5px red}body{background-color:#87ceeb}@font-face{src:local(\\"Impact\\");font-family:\\"styles__jteyb10\\"}@font-face{src:local(\\"Comic Sans MS\\");font-family:MyGlobalComicSans}@keyframes styles__jteyb11{0%{transform:translateY(-4px)}to{transform:translateY(4px)}}@keyframes globalSlide{0%{transform:translateY(-4px)}to{transform:translateY(4px)}}.styles__jteyb12{animation:3s infinite alternate globalSlide ease-in-out;display:flex;flex-direction:column;gap:var(--space-2__cvta174);padding:var(--space-3__cvta175)}.styles__jteyb13{z-index:1}.styles__jteyb14{position:relative}.styles__jteyb16{font-family:\\"styles__jteyb10\\";background-color:var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");color:var(--colors-text__cvta172)}.themes__cvta176 .themes__cvta170 .styles__jteyb12 .styles__jteyb16{font-family:MyGlobalComicSans;outline:5px solid red}body .styles__jteyb15{animation:3s infinite alternate styles__jteyb11 ease-in-out}html .styles_1\\\\/2__jteyb1a{opacity:var(--jteyb18, .5)}html .styles_1\\\\/4__jteyb1b{opacity:var(--jteyb18, var(--jteyb19, .25))}@media only screen and (min-width: 500px){.styles__jteyb12{border:1px solid var(--colors-backgroundColor__cvta171)}.styles__jteyb16{border-radius:9999px}}
 "
 `;
 
-exports[`Stylesheet themed - vite should create valid stylesheet 1`] = `".themes__cvta170,:root{--colors-backgroundColor__cvta171:blue;--colors-text__cvta172:white;--space-1__cvta173:4px;--space-2__cvta174:8px;--space-3__cvta175:12px}.themes__cvta176{--colors-backgroundColor__cvta171:green;--colors-text__cvta172:white;--space-1__cvta173:8px;--space-2__cvta174:12px;--space-3__cvta175:16px}.themes__cvta177{--colors-backgroundColor__cvta171:pink;--colors-text__cvta172:purple;--space-1__cvta173:6px;--space-2__cvta174:12px;--space-3__cvta175:18px}@media screen and (min-width:768px){.themes__cvta177{--colors-backgroundColor__cvta171:purple;--colors-text__cvta172:pink}}.shared__4dtfen0{box-shadow:0 0 5px red}body{background-color:#87ceeb}@font-face{src:local(\\"Impact\\");font-family:styles__jteyb10}@font-face{src:local(\\"Comic Sans MS\\");font-family:MyGlobalComicSans}@keyframes styles__jteyb11{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}@keyframes globalSlide{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}.styles__jteyb12{animation:3s infinite alternate globalSlide ease-in-out;display:flex;flex-direction:column;gap:var(--space-2__cvta174);padding:var(--space-3__cvta175)}.styles__jteyb13{animation:3s infinite alternate styles__jteyb11 ease-in-out;font-family:styles__jteyb10;background-color:var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");color:var(--colors-text__cvta172)}.themes__cvta176 .themes__cvta170 .styles__jteyb12 .styles__jteyb13{font-family:MyGlobalComicSans;outline:5px solid red}html .styles_1\\\\/2__jteyb16{opacity:var(--jteyb14,.5)}html .styles_1\\\\/4__jteyb17{opacity:var(--jteyb14,var(--jteyb15,.25))}@media only screen and (min-width:500px){.styles__jteyb12{border:1px solid var(--colors-backgroundColor__cvta171)}.styles__jteyb13{border-radius:9999px}}"`;
+exports[`Stylesheet themed - vite should create valid stylesheet 1`] = `".themes__cvta170,:root{--colors-backgroundColor__cvta171:blue;--colors-text__cvta172:white;--space-1__cvta173:4px;--space-2__cvta174:8px;--space-3__cvta175:12px}.themes__cvta176{--colors-backgroundColor__cvta171:green;--colors-text__cvta172:white;--space-1__cvta173:8px;--space-2__cvta174:12px;--space-3__cvta175:16px}.themes__cvta177{--colors-backgroundColor__cvta171:pink;--colors-text__cvta172:purple;--space-1__cvta173:6px;--space-2__cvta174:12px;--space-3__cvta175:18px}@media screen and (min-width:768px){.themes__cvta177{--colors-backgroundColor__cvta171:purple;--colors-text__cvta172:pink}}.shared__4dtfen0{box-shadow:0 0 5px red}body{background-color:#87ceeb}@font-face{src:local(\\"Impact\\");font-family:styles__jteyb10}@font-face{src:local(\\"Comic Sans MS\\");font-family:MyGlobalComicSans}@keyframes styles__jteyb11{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}@keyframes globalSlide{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}.styles__jteyb12{animation:3s infinite alternate globalSlide ease-in-out;display:flex;flex-direction:column;gap:var(--space-2__cvta174);padding:var(--space-3__cvta175)}.styles__jteyb13{z-index:1}.styles__jteyb14{position:relative}.styles__jteyb16{font-family:styles__jteyb10;background-color:var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");color:var(--colors-text__cvta172)}.themes__cvta176 .themes__cvta170 .styles__jteyb12 .styles__jteyb16{font-family:MyGlobalComicSans;outline:5px solid red}body .styles__jteyb15{animation:3s infinite alternate styles__jteyb11 ease-in-out}html .styles_1\\\\/2__jteyb1a{opacity:var(--jteyb18,.5)}html .styles_1\\\\/4__jteyb1b{opacity:var(--jteyb18,var(--jteyb19,.25))}@media only screen and (min-width:500px){.styles__jteyb12{border:1px solid var(--colors-backgroundColor__cvta171)}.styles__jteyb16{border-radius:9999px}}"`;
 
 exports[`Stylesheet themed - webpack should create valid stylesheet 1`] = `
 ":root, .themes_theme__cdwe0v0 {
@@ -150,27 +153,35 @@ body {
   gap: var(--space-2__cdwe0v4);
   padding: var(--space-3__cdwe0v5);
 }
-.styles_button__blj6yb3 {
-  animation: 3s infinite alternate styles_slide__blj6yb1 ease-in-out;
+.styles_iDunno__blj6yb3 {
+  z-index: 1;
+}
+.styles_iDunno__blj6yb4 {
+  position: relative;
+}
+.styles_button__blj6yb6 {
   font-family: \\"styles_impact__blj6yb0\\";
   background-color: var(--colors-backgroundColor__cdwe0v1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
   color: var(--colors-text__cdwe0v2);
 }
-.themes_altTheme__cdwe0v6 .themes_theme__cdwe0v0 .styles_container__blj6yb2 .styles_button__blj6yb3 {
+.themes_altTheme__cdwe0v6 .themes_theme__cdwe0v0 .styles_container__blj6yb2 .styles_button__blj6yb6 {
   font-family: MyGlobalComicSans;
   outline: 5px solid red;
 }
-html .styles_opacity_1\\\\/2__blj6yb6 {
-  opacity: var(--blankVar1__blj6yb4, 0.5);
+body .styles__blj6yb5 {
+  animation: 3s infinite alternate styles_slide__blj6yb1 ease-in-out;
 }
-html .styles_opacity_1\\\\/4__blj6yb7 {
-  opacity: var(--blankVar1__blj6yb4, var(--blankVar2__blj6yb5, 0.25));
+html .styles_opacity_1\\\\/2__blj6yba {
+  opacity: var(--blankVar1__blj6yb8, 0.5);
+}
+html .styles_opacity_1\\\\/4__blj6ybb {
+  opacity: var(--blankVar1__blj6yb8, var(--blankVar2__blj6yb9, 0.25));
 }
 @media only screen and (min-width: 500px) {
   .styles_container__blj6yb2 {
     border: 1px solid var(--colors-backgroundColor__cdwe0v1);
   }
-  .styles_button__blj6yb3 {
+  .styles_button__blj6yb6 {
     border-radius: 9999px;
   }
 }

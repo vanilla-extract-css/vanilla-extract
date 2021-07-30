@@ -98,9 +98,15 @@ export type FileScope = {
   filePath: string;
 };
 
+export interface Composition {
+  identifier: string;
+  classList: string;
+}
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string) => void;
+  registerComposition: (composition: Composition) => void;
+  markCompositionUsed: (identifier: string) => void;
   onEndFileScope: (fileScope: FileScope) => void;
 }
 

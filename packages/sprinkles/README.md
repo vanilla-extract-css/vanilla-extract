@@ -178,26 +178,6 @@ export const container = atoms({
 });
 ```
 
-Combine with any custom styles using vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function.
-
-```ts
-// styles.css.ts
-import { style, composeStyles } from '@vanilla-extract/css';
-import { atoms } from './sprinkles.css.ts';
-
-export const container = composeStyles(
-  atoms({
-    display: 'flex',
-    paddingX: 'small'
-  }),
-  style({
-    ':hover': {
-      outline: '2px solid currentColor'
-    }
-  })
-);
-```
-
 If you want, you can even use your `atoms` function at runtime! 🏃‍♂️
 
 ```tsx
@@ -214,6 +194,42 @@ document.write(`
 ```
 
 > 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
+
+Within `.css.ts` files, combine with any custom styles using vanilla-extract’s [`composeStyles`](https://vanilla-extract.style/documentation/styling-api/#composestyles) function.
+
+```ts
+// styles.css.ts
+import { style, composeStyles } from '@vanilla-extract/css';
+import { atoms } from './sprinkles.css.ts';
+
+export const container = composeStyles(
+  atoms({
+    display: 'flex',
+    padding: 'small'
+  }),
+  style({
+    ':hover': {
+      outline: '2px solid currentColor'
+    }
+  })
+);
+```
+
+Sprinkles uses vanilla-extract’s [`composeStyles`](https://vanilla-extract.style/documentation/styling-api/#composestyles) function internally, which means that atomic styles can be treated as if they were a single class within vanilla-extract selectors.
+
+```ts
+// styles.css.ts
+import { globalStyle } from '@vanilla-extract/css';
+import { atoms } from './sprinkles.css.ts';
+
+export const container = atoms({
+  padding: 'small',
+});
+
+globalStyle(`${container} *`, {
+  boxSizing: 'border-box'
+});
+```
 
 ---
 
