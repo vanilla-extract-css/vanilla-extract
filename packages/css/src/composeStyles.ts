@@ -1,5 +1,6 @@
 import { generateIdentifier } from './identifier';
 import { registerComposition, registerClassName } from './adapter';
+import { hasFileScope } from './fileScope';
 
 type ClassNames = string | Array<ClassNames>;
 
@@ -43,5 +44,14 @@ export function dudupeAndJoinClassList(classNames: Array<ClassNames>) {
 }
 
 export function composeStyles(...classNames: Array<ClassNames>) {
-  return createComposition(dudupeAndJoinClassList(classNames));
+  const classList = dudupeAndJoinClassList(classNames);
+
+  // When using Sprinkles with the runtime (e.g. within a jest test)
+  // `composeStyles` can be called outside of a fileScope. Checking
+  // the fileScope is bit of a hack but will solve the issue for now
+  if (!hasFileScope()) {
+    return classList;
+  }
+
+  return createComposition(classList);
 }

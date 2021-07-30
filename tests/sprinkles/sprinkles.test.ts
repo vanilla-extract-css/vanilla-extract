@@ -2,7 +2,7 @@ import {
   createMapValueFn,
   createNormalizeValueFn,
 } from '@vanilla-extract/sprinkles';
-import { createAtomsFn } from '@vanilla-extract/sprinkles/createRuntimeAtomsFn';
+import { createAtomsFn } from '@vanilla-extract/sprinkles';
 
 import {
   atomicStyles,
