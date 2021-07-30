@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/snowpack-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-snowpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-snowpack-plugin.esm.js",
@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^1.0.0"
+    "@vanilla-extract/integration": "^1.1.0"
   },
   "devDependencies": {
     "snowpack": "^3.5.1"
