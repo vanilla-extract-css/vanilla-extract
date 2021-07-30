@@ -195,7 +195,7 @@ document.write(`
 
 > 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
 
-Within `.css.ts` files, combine with any custom styles using vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function.
+Within `.css.ts` files, combine with any custom styles using vanilla-extract’s [`composeStyles`](https://vanilla-extract.style/documentation/styling-api/#composestyles) function.
 
 ```ts
 // styles.css.ts
@@ -215,7 +215,7 @@ export const container = composeStyles(
 );
 ```
 
-Sprinkles uses vanilla-extract’s [`composeStyles`](https://github.com/seek-oss/vanilla-extract#composestyles) function internally, which means that atomic styles can be treated as if they were a single class within vanilla-extract selectors.
+Sprinkles uses vanilla-extract’s [`composeStyles`](https://vanilla-extract.style/documentation/styling-api/#composestyles) function internally, which means that atomic styles can be treated as if they were a single class within vanilla-extract selectors.
 
 ```ts
 // styles.css.ts
