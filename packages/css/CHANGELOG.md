@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.2.1
+
+### Patch Changes
+
+- [#265](https://github.com/seek-oss/vanilla-extract/pull/265) [`385155f`](https://github.com/seek-oss/vanilla-extract/commit/385155faff4eeab0bba5137383fe948999c04b2c) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix fileScope error if `composeStyles` is called at runtime
+
 ## 1.2.0
 
 ### Minor Changes
