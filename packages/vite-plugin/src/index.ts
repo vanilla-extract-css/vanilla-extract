@@ -48,7 +48,7 @@ export function vanillaExtractPlugin(): Plugin {
           cwd: config.root,
         });
 
-        for (const file in watchFiles) {
+        for (const file of watchFiles) {
           this.addWatchFile(file);
         }
 
