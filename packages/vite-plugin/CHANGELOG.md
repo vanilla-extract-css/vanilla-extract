@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 1.1.1
+
+### Patch Changes
+
+- [#270](https://github.com/seek-oss/vanilla-extract/pull/270) [`fe19158`](https://github.com/seek-oss/vanilla-extract/commit/fe1915808b374a1bbf8f67eca85c0253153e2cb9) Thanks [@yyx990803](https://github.com/yyx990803)! - Fix watching of modules imported by `.css.ts` files
+
 ## 1.1.0
 
 ### Minor Changes
