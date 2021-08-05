@@ -111,7 +111,7 @@ export interface Adapter {
 }
 
 export type NullableTokens = {
-  [key: string]: string | Tokens | null;
+  [key: string]: string | NullableTokens | null;
 };
 
 export type Tokens = {
