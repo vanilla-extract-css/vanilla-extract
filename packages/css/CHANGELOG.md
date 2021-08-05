@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.2.2
+
+### Patch Changes
+
+- [#274](https://github.com/seek-oss/vanilla-extract/pull/274) [`21e2197`](https://github.com/seek-oss/vanilla-extract/commit/21e2197363fdfbf4ba2cec54ab630cd343281816) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix type errors with nested null values in theme contracts
+
 ## 1.2.1
 
 ### Patch Changes
