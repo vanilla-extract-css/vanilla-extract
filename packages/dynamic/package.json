@@ -17,5 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/private": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vanilla-extract/css": "*"
   }
 }

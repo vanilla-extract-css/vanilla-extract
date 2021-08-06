@@ -3203,6 +3203,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/dynamic@workspace:packages/dynamic"
   dependencies:
+    "@vanilla-extract/css": "*"
     "@vanilla-extract/private": ^1.0.0
   languageName: unknown
   linkType: soft

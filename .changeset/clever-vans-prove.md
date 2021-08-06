@@ -1,16 +1,10 @@
 ---
-title: Dynamic API
+'@vanilla-extract/dynamic': major
 ---
 
-# Dynamic API
+Add `assignInlineVars` and `setElementVars` functions
 
-We also provide a lightweight standalone package to support dynamic runtime theming.
-
-```bash
-$ npm install @vanilla-extract/dynamic
-```
-
-## assignInlineVars
+**assignInlineVars**
 
 Assigns CSS Variables as inline styles. This function returns an object of inline styles, but its `toString` method also returns a valid `style` attribute value so that it can be used directly in string templates.
 
@@ -48,7 +42,7 @@ document.write(`
 `);
 ```
 
-## setElementVars
+**setElementVars**
 
 Sets CSS Variables on an element.
 
@@ -78,4 +72,31 @@ setElementVars(element, vars.colors, {
   brand: 'pink',
   accent: 'green'
 });
+```
+
+**BREAKING CHANGE**
+
+These functions replace `createInlineTheme`, `setElementTheme` and `setElementVar`.
+
+`assignInlineVars` works as a drop-in replacement for `createInlineTheme`.
+
+```diff
+-createInlineTheme(vars, { brandColor: 'red' });
++assignInlineVars(vars, { brandColor: 'red' });
+```
+
+`setElementVars` works as a drop-in replacement for `setElementTheme`.
+
+```diff
+-setElementTheme(el, vars, { brandColor: 'red' });
++setElementVars(el, vars, { brandColor: 'red' });
+```
+
+You can replicate the functionality of `setElementVar` by passing an object with dynamic keys to `setElementVars`. This now makes it easy to support setting multiple vars at once.
+
+```diff
+-setElementVar(el, vars.brandColor, 'red');
++setElementVars(el, {
++  [vars.brandColor]: 'red'
++});
 ```
