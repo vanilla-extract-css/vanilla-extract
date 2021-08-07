@@ -22,7 +22,7 @@ export function assignInlineVars(varsOrContract: any, tokens?: any) {
     walkObject(tokens, (value, path) => {
       const varName = get(contract, path);
 
-      styles[varName.substring(4, varName.length - 1)] = String(value);
+      styles[getVarName(varName)] = String(value);
     });
   } else {
     const vars = varsOrContract;
