@@ -14,7 +14,7 @@ export function assignInlineVars<ThemeContract extends Contract>(
   tokens: MapLeafNodes<ThemeContract, string>,
 ): Styles;
 export function assignInlineVars(varsOrContract: any, tokens?: any) {
-  const styles: { [cssVarName: string]: string } = {};
+  const styles: Styles = {};
 
   if (typeof tokens === 'object') {
     const contract = varsOrContract;
