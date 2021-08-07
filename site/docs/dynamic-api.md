@@ -65,7 +65,7 @@ setElementVars(element, {
 });
 ```
 
-You can also set collections of variables by passing a theme contract as the first argument. All variables must be assigned or it’s a type error.
+You can also set collections of variables by passing a theme contract as the second argument. All variables must be assigned or it’s a type error.
 
 ```tsx
 // app.ts
