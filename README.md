@@ -764,38 +764,58 @@ npm install @vanilla-extract/dynamic
 
 Assigns CSS Variables as inline styles.
 
-This function returns an object of inline styles, but its `toString` method also returns a valid `style` attribute value so that it can be used directly in string templates.
+```tsx
+// app.tsx
+
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from './vars.css.ts';
+
+const MyComponent = () => (
+  <section
+    style={assignInlineVars({
+      [vars.colors.brand]: 'pink',
+      [vars.colors.accent]: 'green'
+    })}
+  >
+    ...
+  </section>
+);
+```
+
+You can also assign collections of variables by passing a theme contract as the first argument. All variables must be assigned or it’s a type error.
+
+```tsx
+// app.tsx
+
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from './vars.css.ts';
+
+const MyComponent = () => (
+  <section
+    style={assignInlineVars(vars.colors, {
+      brand: 'pink',
+      accent: 'green'
+    })}
+  >
+    ...
+  </section>
+);
+```
+
+Even though this function returns an object of inline styles, its `toString` method returns a valid `style` attribute value so that it can be used in string templates.
 
 ```tsx
 // app.ts
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { vars, exampleStyle } from './styles.css.ts';
+import { vars } from './vars.css.ts';
 
 document.write(`
   <section style="${assignInlineVars({
     [vars.colors.brand]: 'pink',
     [vars.colors.accent]: 'green'
   })}">
-    <h1 class="${exampleStyle}">Hello world!</h1>
-  </section>
-`);
-```
-
-You can also assign collections of variables by passing a theme contract as the first argument. All variables must be assigned or it’s a type error.
-
-```tsx
-// app.ts
-
-import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { vars, exampleStyle } from './styles.css.ts';
-
-document.write(`
-  <section style="${assignInlineVars(vars.colors, {
-    brand: 'pink',
-    accent: 'green'
-  })}">
-    <h1 class="${exampleStyle}">Hello world!</h1>
+    ...
   </section>
 `);
 ```
@@ -818,7 +838,7 @@ setElementVars(el, {
 });
 ```
 
-You can also set collections of variables by passing a theme contract as the second argument. All variables must be assigned or it’s a type error.
+You can also set collections of variables by passing a theme contract as the second argument. All variables must be set or it’s a type error.
 
 ```tsx
 // app.ts
