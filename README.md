@@ -762,7 +762,9 @@ npm install @vanilla-extract/dynamic
 
 ### assignInlineVars
 
-Assigns CSS Variables as inline styles. This function returns an object of inline styles, but its `toString` method also returns a valid `style` attribute value so that it can be used directly in string templates.
+Assigns CSS Variables as inline styles.
+
+This function returns an object of inline styles, but its `toString` method also returns a valid `style` attribute value so that it can be used directly in string templates.
 
 ```tsx
 // app.ts
@@ -800,7 +802,7 @@ document.write(`
 
 ### setElementVars
 
-Sets CSS Variables on an element.
+Sets CSS Variables on a DOM element.
 
 ```tsx
 // app.ts
@@ -808,8 +810,9 @@ Sets CSS Variables on an element.
 import { setElementVars } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
-const element = document.getElementById('myElement');
-setElementVars(element, {
+const el = document.getElementById('myElement');
+
+setElementVars(el, {
   [vars.colors.brand]: 'pink',
   [vars.colors.accent]: 'green'
 });
@@ -823,8 +826,9 @@ You can also set collections of variables by passing a theme contract as the sec
 import { setElementVars } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
-const element = document.getElementById('myElement');
-setElementVars(element, vars.colors, {
+const el = document.getElementById('myElement');
+
+setElementVars(el, vars.colors, {
   brand: 'pink',
   accent: 'green'
 });
