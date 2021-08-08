@@ -101,9 +101,8 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
 - [Dynamic API](#dynamic-api)
-  - [createInlineTheme](#createinlinetheme)
-  - [setElementTheme](#setelementtheme)
-  - [setElementVar](#setelementvar)
+  - [assignInlineVars](#assigninlinevars)
+  - [setElementVars](#setelementvars)
 - [Utility functions](#utility-functions)
   - [calc](#calc)
 - [Thanks](#thanks)
@@ -761,55 +760,98 @@ We also provide a lightweight standalone package to support dynamic runtime them
 npm install @vanilla-extract/dynamic
 ```
 
-### createInlineTheme
+### assignInlineVars
 
-Implements a theme contract at runtime as an inline style object.
+Assigns CSS Variables as inline styles.
 
-```ts
-import { createInlineTheme } from '@vanilla-extract/dynamic';
-import { vars, exampleStyle } from './styles.css.ts';
+```tsx
+// app.tsx
 
-const customTheme = createInlineTheme(vars, {
-  small: '4px',
-  medium: '8px',
-  large: '16px'
-});
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from './vars.css.ts';
+
+const MyComponent = () => (
+  <section
+    style={assignInlineVars({
+      [vars.colors.brand]: 'pink',
+      [vars.colors.accent]: 'green'
+    })}
+  >
+    ...
+  </section>
+);
+```
+
+You can also assign collections of variables by passing a theme contract as the first argument. All variables must be assigned or it’s a type error.
+
+```tsx
+// app.tsx
+
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from './vars.css.ts';
+
+const MyComponent = () => (
+  <section
+    style={assignInlineVars(vars.colors, {
+      brand: 'pink',
+      accent: 'green'
+    })}
+  >
+    ...
+  </section>
+);
+```
+
+Even though this function returns an object of inline styles, its `toString` method returns a valid `style` attribute value so that it can be used in string templates.
+
+```tsx
+// app.ts
+
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from './vars.css.ts';
 
 document.write(`
-  <section style="${customTheme}">
-    <h1 class="${exampleStyle}">Hello world!</h1>
+  <section style="${assignInlineVars({
+    [vars.colors.brand]: 'pink',
+    [vars.colors.accent]: 'green'
+  })}">
+    ...
   </section>
 `);
 ```
 
-### setElementTheme
+### setElementVars
 
-Implements a theme contract on an element.
+Sets CSS Variables on a DOM element.
 
-```ts
-import { setElementTheme } from '@vanilla-extract/dynamic';
+```tsx
+// app.ts
+
+import { setElementVars } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
-const element = document.getElementById('myElement');
-setElementTheme(element, vars, {
-  small: '4px',
-  medium: '8px',
-  large: '16px'
+const el = document.getElementById('myElement');
+
+setElementVars(el, {
+  [vars.colors.brand]: 'pink',
+  [vars.colors.accent]: 'green'
 });
 ```
 
-> 💡 All variables passed into this function must be assigned or it’s a type error.
+You can also set collections of variables by passing a theme contract as the second argument. All variables must be set or it’s a type error.
 
-### setElementVar
+```tsx
+// app.ts
 
-Sets a single var on an element.
-
-```ts
-import { setElementVar } from '@vanilla-extract/dynamic';
+import { setElementVars } from '@vanilla-extract/dynamic';
 import { vars } from './styles.css.ts';
 
-const element = document.getElementById('myElement');
-setElementVar(element, vars.color.brand, 'darksalmon');
+const el = document.getElementById('myElement');
+
+setElementVars(el, vars.colors, {
+  brand: 'pink',
+  accent: 'green'
+});
 ```
 
 ## Utility functions

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { screen } from '@testing-library/dom';
-import { createInlineTheme } from '@vanilla-extract/dynamic';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 import { hide, padding, twentyTheme, blackBg, vars } from './jest-dom.css';
 
@@ -25,7 +25,7 @@ describe('jest-dom', () => {
     document.body.innerHTML = `
       <div data-testid="10" class="${padding}">10 padding top</div>
       <div data-testid="20" class="${twentyTheme} ${padding}">20 padding top</div>
-      <div data-testid="30" style="${createInlineTheme(vars, {
+      <div data-testid="30" style="${assignInlineVars(vars, {
         space: '30px',
       })}" class="${padding}">20 padding top</div>
     `;

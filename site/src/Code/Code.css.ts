@@ -38,6 +38,12 @@ globalStyle(
     color: vars.palette.pink300,
   },
 );
+globalStyle(tokenSelector({ tokens: ['tag'] }), {
+  color: vars.palette.pink200,
+});
+globalStyle(tokenSelector({ tokens: ['attr-name'] }), {
+  color: vars.palette.pink100,
+});
 globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
   color: vars.palette.coolGray400,
 });

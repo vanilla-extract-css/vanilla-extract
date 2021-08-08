@@ -1,15 +1,11 @@
-import {
-  createInlineTheme,
-  setElementTheme,
-  setElementVar,
-} from '@vanilla-extract/dynamic';
+import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';
 import { shadow } from './shared.css';
 import testNodes from '../test-nodes.json';
 
-const inlineTheme = createInlineTheme(vars, {
+const inlineTheme = assignInlineVars(vars, {
   colors: {
     backgroundColor: 'orange',
     text: 'black',
@@ -71,7 +67,7 @@ function render() {
     throw new Error('Dynamic vars container not found.');
   }
 
-  setElementTheme(dynamicVarsContainer, vars, {
+  setElementVars(dynamicVarsContainer, vars, {
     colors: {
       backgroundColor: 'transparent',
       text: 'papayawhip',
@@ -83,11 +79,9 @@ function render() {
     },
   });
 
-  setElementVar(
-    dynamicVarsContainer,
-    vars.colors.backgroundColor,
-    'darksalmon',
-  );
+  setElementVars(dynamicVarsContainer, {
+    [vars.colors.backgroundColor]: 'darksalmon',
+  });
 }
 
 render();
