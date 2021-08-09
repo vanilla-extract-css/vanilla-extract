@@ -1773,7 +1773,7 @@ __metadata:
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
     "@vanilla-extract/css": 1.2.2
-    "@vanilla-extract/dynamic": 1.0.0
+    "@vanilla-extract/dynamic": 2.0.0
   languageName: unknown
   linkType: soft
 
@@ -3199,7 +3199,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/dynamic@1.0.0, @vanilla-extract/dynamic@workspace:packages/dynamic":
+"@vanilla-extract/dynamic@2.0.0, @vanilla-extract/dynamic@workspace:packages/dynamic":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/dynamic@workspace:packages/dynamic"
   dependencies:
