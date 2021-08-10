@@ -65,9 +65,13 @@ export const button = composeStyles(
       '"THIS FALLBACK VALUE SHOULD NEVER BE USED"',
     ),
     color: vars.colors.text,
+    borderRadius: '9999px',
     '@media': {
       'only screen and (min-width: 500px)': {
-        borderRadius: '9999px',
+        padding: vars.space[1],
+      },
+      'only screen and (min-width: 1000px)': {
+        padding: vars.space[2],
       },
     },
     selectors: {
