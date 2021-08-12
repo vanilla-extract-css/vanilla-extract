@@ -23,7 +23,7 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@vanilla-extract/babel-plugin": "^1.0.1",
-    "@vanilla-extract/css": "1.2.2",
+    "@vanilla-extract/css": "1.2.3",
     "@vanilla-extract/sprinkles": "^1.0.0",
     "@vanilla-extract/webpack-plugin": "^1.1.0",
     "babel-loader": "^8.2.2",

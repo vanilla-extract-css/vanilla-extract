@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.2.3
+
+### Patch Changes
+
+- [#284](https://github.com/seek-oss/vanilla-extract/pull/284) [`e65c029`](https://github.com/seek-oss/vanilla-extract/commit/e65c0297a557f141cf84ca0836ee8ab4060c9d78) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix multiple top-level conditional styles in runtime version
+
 ## 1.2.2
 
 ### Patch Changes
