@@ -407,7 +407,9 @@ class Stylesheet {
 
     // Render conditional rules
     for (const conditionalRuleset of this.conditionalRulesets) {
-      css.push(renderCss(conditionalRuleset.renderToObj()));
+      for (const conditionalRule of conditionalRuleset.renderToArray()) {
+        css.push(renderCss(conditionalRule));
+      }
     }
 
     return css.filter(Boolean);

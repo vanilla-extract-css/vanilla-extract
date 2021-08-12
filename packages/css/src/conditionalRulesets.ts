@@ -182,22 +182,24 @@ export class ConditionalRuleset {
     });
   }
 
-  renderToObj() {
+  renderToArray() {
     // Sort rulesets according to required rule order
     this.sort();
 
-    const target: any = {};
+    const arr: any = [];
 
     for (const { query, rules, children } of this.ruleset) {
-      target[query] = {};
+      const selectors: any = {};
 
       for (const rule of rules) {
-        target[query][rule.selector] = rule.rule;
+        selectors[rule.selector] = rule.rule;
       }
 
-      Object.assign(target[query], children.renderToObj());
+      Object.assign(selectors, ...children.renderToArray());
+
+      arr.push({ [query]: selectors });
     }
 
-    return target;
+    return arr;
   }
 }
