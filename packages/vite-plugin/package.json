@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "vite": "^2.2.3"
+  },
+  "peerDependencies": {
+    "vite": "^2.2.3"
   }
 }

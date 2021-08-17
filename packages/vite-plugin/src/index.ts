@@ -1,4 +1,5 @@
 import type { Plugin, ResolvedConfig } from 'vite';
+import { normalizePath } from 'vite';
 import {
   cssFileFilter,
   virtualCssFileFilter,
@@ -24,7 +25,9 @@ export function vanillaExtractPlugin(): Plugin {
 
         // resolveId shouldn't really cause a side-effect however custom module meta isn't currently working
         // This is a hack work around until https://github.com/vitejs/vite/issues/3240 is resolved
-        const shortHashFileName = `${fileName}?hash=${hash(source)}`;
+        const shortHashFileName = normalizePath(
+          `${fileName}?hash=${hash(source)}`,
+        );
         cssMap.set(shortHashFileName, source);
 
         return shortHashFileName;

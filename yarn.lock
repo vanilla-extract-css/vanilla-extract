@@ -3265,6 +3265,8 @@ __metadata:
   dependencies:
     "@vanilla-extract/integration": ^1.1.0
     vite: ^2.2.3
+  peerDependencies:
+    vite: ^2.2.3
   languageName: unknown
   linkType: soft
 
