@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 1.1.2
+
+### Patch Changes
+
+- [#290](https://github.com/seek-oss/vanilla-extract/pull/290) [`adc1d64`](https://github.com/seek-oss/vanilla-extract/commit/adc1d644635a1197edd36f522f78658a641027d4) Thanks [@ygj6](https://github.com/ygj6)! - Normalize path of generated CSS files
+
 ## 1.1.1
 
 ### Patch Changes
