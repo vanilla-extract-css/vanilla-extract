@@ -143,8 +143,6 @@ require('esbuild')
 
 ## Vite
 
-> Warning: Currently the Vite plugin doesn't rebuild files when dependent files change, e.g. updating `theme.css.ts` should rebuild `styles.css.ts` which imports `theme.css.ts`. This is a [limitation in the Vite Plugin API](https://github.com/vitejs/vite/issues/3216) that will hopefully be resolved soon.
-
 1/ Install the dependencies.
 
 ```bash

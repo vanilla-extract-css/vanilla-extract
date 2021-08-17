@@ -87,7 +87,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [Test environments](#test-environments)
 - [Styling API](#styling-api)
   - [style](#style)
-  - [styleVariants](#styleVariants)
+  - [styleVariants](#stylevariants)
   - [globalStyle](#globalstyle)
   - [composeStyles](#composestyles)
   - [createTheme](#createtheme)
@@ -237,8 +237,6 @@ require('esbuild')
 ```
 
 ### Vite
-
-> Warning: Currently the Vite plugin doesn't rebuild files when dependent files change, e.g. updating `theme.css.ts` should rebuild `styles.css.ts` which imports `theme.css.ts`. This is a limitation in the Vite Plugin API that will hopefully be resolved soon. You can track the Vite issue here: https://github.com/vitejs/vite/issues/3216
 
 1. Install the dependencies.
 
