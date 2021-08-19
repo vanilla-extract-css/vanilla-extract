@@ -70,32 +70,3 @@ export const preComposedAtomsUsedInSelector = atoms({
 globalStyle(`body > ${preComposedAtomsUsedInSelector}`, {
   background: 'red',
 });
-
-/**
- * Desired API Result
- * 
- * .randomClassHash_bgOpacity {
- *    --alpha: 0.5
- * }
- * 
- * .randomClassHash_background {
- *    background: rgba(var(--brandPrimary), var(--alpha))
- * }
- * 
- * Desired API
- * 
- * properties: {
- *  custom: {
- *  }
- *    bgOpacity: {
- *      
- *    }
- * }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */
