@@ -25,9 +25,8 @@ type BaseConditions = { [conditionName: string]: Condition };
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
-    | Record<string, CSSProperties[Property]>
-    | ReadonlyArray<CSSProperties[Property]>
-    | Record<string, StyleRule>;
+    | Record<string, CSSProperties[Property] | StyleRule>
+    | ReadonlyArray<CSSProperties[Property]>;
 };
 
 type ShorthandOptions<

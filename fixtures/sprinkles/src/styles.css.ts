@@ -1,4 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
+
 import {
   createAtomicStyles,
   createAtomsFn,
@@ -29,20 +30,25 @@ const responsiveStyles = createAtomicStyles({
       small: '10px',
       medium: '20px',
     },
+    background: {
+      red: {
+        vars: {
+          '--alpha': '1',
+        },
+        background: `rgb(255, 0, 0, var(--alpha, 1))`,
+      },
+    },
     bgOpacity: {
       none: {
         vars: {
-          '--alpha': 0,
+          '--alpha': '1',
         },
       },
       '10': {
         vars: {
-          '--alpha': 0.1,
+          '--alpha': '0.1',
         },
       },
-    },
-    background: {
-      red: `rgb(255, 0, 0, var(--alpha, 1))`,
     },
   },
 });
@@ -56,10 +62,8 @@ export const normalizeResponsiveValue =
 export const preComposedAtoms = atoms({
   display: 'block',
   paddingTop: 'small',
-  bgOpacity: {
-    mobile: 'none',
-    tablet: '10',
-  },
+  bgOpacity: '10',
+  background: 'red',
 });
 
 export const preComposedAtomsUsedInSelector = atoms({
