@@ -27,7 +27,7 @@ jobs:
         run: yarn --immutable
 
       - name: Create release PR or publish to npm
-        uses: changesets/action@b3300fad33b6ab794313da28d27424c0e2f78991
+        uses: changesets/action@c2918239208f2162b9d27a87f491375c51592434
         with:
           version: yarn run version
           publish: yarn release
