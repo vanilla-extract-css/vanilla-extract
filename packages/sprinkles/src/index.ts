@@ -1,4 +1,9 @@
-import { style, CSSProperties, composeStyles, StyleRule } from '@vanilla-extract/css';
+import {
+  style,
+  CSSProperties,
+  composeStyles,
+  StyleRule,
+} from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
@@ -234,13 +239,13 @@ export function createAtomicStyles(options: any): any {
               conditionName as keyof typeof options.conditions
             ];
 
-            let styleValue: any = {};
+          let styleValue: any = {};
 
-            if (typeof value === "object") {
-              styleValue = value;
-            } else {
-              styleValue[key] = value;
-            }
+          if (typeof value === 'object') {
+            styleValue = value;
+          } else {
+            styleValue[key] = value;
+          }
 
           if (condition['@supports']) {
             styleValue = {

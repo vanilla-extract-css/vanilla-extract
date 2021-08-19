@@ -32,18 +32,18 @@ const responsiveStyles = createAtomicStyles({
     bgOpacity: {
       none: {
         vars: {
-          '--alpha': 0
-        }
+          '--alpha': 0,
+        },
       },
       '10': {
         vars: {
-          '--alpha': 0.1
-        }
-      }
+          '--alpha': 0.1,
+        },
+      },
     },
     background: {
-      red: `rgb(255, 0, 0, var(--alpha, 1))`
-    }
+      red: `rgb(255, 0, 0, var(--alpha, 1))`,
+    },
   },
 });
 
@@ -58,13 +58,13 @@ export const preComposedAtoms = atoms({
   paddingTop: 'small',
   bgOpacity: {
     mobile: 'none',
-    tablet: '10'
-  }
+    tablet: '10',
+  },
 });
 
 export const preComposedAtomsUsedInSelector = atoms({
   display: 'flex',
-  paddingTop: 'medium'
+  paddingTop: 'medium',
 });
 
 globalStyle(`body > ${preComposedAtomsUsedInSelector}`, {
