@@ -531,7 +531,7 @@ export const HomePage = () => {
                   <Tweet
                     handle="@lorvsso"
                     name="Jack Lo Russo"
-                    avatar="https://pbs.twimg.com/profile_images/1365062529622282240/UqZdoTJL_200x200.jpg"
+                    avatar="https://pbs.twimg.com/profile_images/1407676210419683335/8A9Om8_p_400x400.jpg"
                     url="https://twitter.com/lorvsso/status/1375592486182084613"
                   >
                     I love this ✨ The first time I made a decision at work
