@@ -231,7 +231,6 @@ export function createAtomicStyles(options: any): any {
       valueName: keyof typeof property,
       value: string | number | StyleRule,
     ) => {
-
       let styleValue: any = {};
 
       if (typeof value === 'object') {
