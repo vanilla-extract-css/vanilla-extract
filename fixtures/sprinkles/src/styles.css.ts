@@ -7,6 +7,7 @@ import {
 } from '@vanilla-extract/sprinkles';
 
 const alpha = createVar();
+const textAlpha = createVar();
 
 const responsiveStyles = createAtomicStyles({
   defaultCondition: 'mobile',
@@ -51,10 +52,16 @@ const styleWithNoConditions = createAtomicStyles({
     color: {
       red: {
         vars: {
-          [alpha]: '1'
+          [textAlpha]: '1'
         },
-        color: `rgba(255, 0, 0, ${alpha})`
+        color: `rgba(255, 0, 0, ${textAlpha})`
       }
+    },
+    textOpacity: {
+      1: { vars: { [textAlpha]: '1' } },
+      0.1: { vars: { [textAlpha]: '0.1' } },
+      0.2: { vars: { [textAlpha]: '0.2' } },
+      0.3: { vars: { [textAlpha]: '0.3' } },
     }
   }
 });
