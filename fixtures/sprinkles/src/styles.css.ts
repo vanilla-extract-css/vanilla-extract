@@ -1,11 +1,12 @@
-import { globalStyle } from '@vanilla-extract/css';
-
+import { globalStyle, createVar, fallbackVar } from '@vanilla-extract/css';
 import {
   createAtomicStyles,
   createAtomsFn,
   createMapValueFn,
   createNormalizeValueFn,
 } from '@vanilla-extract/sprinkles';
+
+const alpha = createVar();
 
 const responsiveStyles = createAtomicStyles({
   defaultCondition: 'mobile',
@@ -32,23 +33,15 @@ const responsiveStyles = createAtomicStyles({
     },
     background: {
       red: {
-        vars: {
-          '--alpha': '1',
-        },
-        background: `rgb(255, 0, 0, var(--alpha, 1))`,
+        vars: { [alpha]: '1' },
+        background: `rgb(255, 0, 0, ${fallbackVar(alpha, '1')})`,
       },
     },
-    bgOpacity: {
-      none: {
-        vars: {
-          '--alpha': '1',
-        },
-      },
-      '10': {
-        vars: {
-          '--alpha': '0.1',
-        },
-      },
+    backgroundOpacity: {
+      1: { vars: { [alpha]: '1' } },
+      0.1: { vars: { [alpha]: '0.1' } },
+      0.2: { vars: { [alpha]: '0.2' } },
+      0.3: { vars: { [alpha]: '0.3' } },
     },
   },
 });
@@ -62,8 +55,8 @@ export const normalizeResponsiveValue =
 export const preComposedAtoms = atoms({
   display: 'block',
   paddingTop: 'small',
-  bgOpacity: '10',
   background: 'red',
+  backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
 });
 
 export const preComposedAtomsUsedInSelector = atoms({
