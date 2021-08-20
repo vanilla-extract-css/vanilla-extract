@@ -315,7 +315,7 @@ export const atoms = createAtomsFn(
 
 #### `properties`
 
-Configures which properties and values should be available. Properties must be valid CSS properties.
+Configures which properties and values should be available.
 
 For simple mappings (i.e. valid CSS values), values can be provided as an array.
 
