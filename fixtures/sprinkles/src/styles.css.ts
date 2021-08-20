@@ -46,7 +46,20 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-export const atoms = createAtomsFn(responsiveStyles);
+const styleWithNoConditions = createAtomicStyles({
+  properties: {
+    color: {
+      red: {
+        vars: {
+          [alpha]: '1'
+        },
+        color: `rgba(255, 0, 0, ${alpha})`
+      }
+    }
+  }
+});
+
+export const atoms = createAtomsFn(responsiveStyles, styleWithNoConditions);
 
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 export const normalizeResponsiveValue =
@@ -57,6 +70,7 @@ export const preComposedAtoms = atoms({
   paddingTop: 'small',
   background: 'red',
   backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
+  color: 'red'
 });
 
 export const preComposedAtomsUsedInSelector = atoms({
