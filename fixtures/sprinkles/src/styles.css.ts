@@ -59,9 +59,7 @@ const styleWithNoConditions = createAtomicStyles({
     },
     textOpacity: {
       1: { vars: { [textAlpha]: '1' } },
-      0.1: { vars: { [textAlpha]: '0.1' } },
-      0.2: { vars: { [textAlpha]: '0.2' } },
-      0.3: { vars: { [textAlpha]: '0.3' } },
+      0.8: { vars: { [textAlpha]: '0.8' } },
     },
   },
 });
@@ -78,6 +76,7 @@ export const preComposedAtoms = atoms({
   background: 'red',
   backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
   color: 'red',
+  textOpacity: 0.8,
 });
 
 export const preComposedAtomsUsedInSelector = atoms({
