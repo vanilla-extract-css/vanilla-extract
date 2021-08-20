@@ -25,7 +25,11 @@ type BaseConditions = { [conditionName: string]: Condition };
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
-    | Record<string, CSSProperties[Property] | Omit<StyleRule, 'selectors' | "@media" | "@supports">>
+    | Record<
+        string,
+        | CSSProperties[Property]
+        | Omit<StyleRule, 'selectors' | '@media' | '@supports'>
+      >
     | ReadonlyArray<CSSProperties[Property]>;
 };
 
