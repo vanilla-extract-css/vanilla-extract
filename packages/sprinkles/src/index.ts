@@ -1,4 +1,9 @@
-import { style, CSSProperties, composeStyles } from '@vanilla-extract/css';
+import {
+  style,
+  CSSProperties,
+  composeStyles,
+  StyleRule,
+} from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 
 import {
@@ -20,7 +25,11 @@ type BaseConditions = { [conditionName: string]: Condition };
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
-    | Record<string, CSSProperties[Property]>
+    | Record<
+        string,
+        | CSSProperties[Property]
+        | Omit<StyleRule, 'selectors' | '@media' | '@supports'>
+      >
     | ReadonlyArray<CSSProperties[Property]>;
 };
 
@@ -220,7 +229,7 @@ export function createAtomicStyles(options: any): any {
 
     const processValue = (
       valueName: keyof typeof property,
-      value: string | number,
+      value: string | number | StyleRule,
     ) => {
       if ('conditions' in options) {
         styles[key].values[valueName] = {
@@ -233,9 +242,13 @@ export function createAtomicStyles(options: any): any {
               conditionName as keyof typeof options.conditions
             ];
 
-          let styleValue = {
-            [key]: value,
-          } as any;
+          let styleValue: any = {};
+
+          if (typeof value === 'object') {
+            styleValue = value;
+          } else {
+            styleValue[key] = value;
+          }
 
           if (condition['@supports']) {
             styleValue = {

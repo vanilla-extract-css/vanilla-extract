@@ -365,11 +365,38 @@ const responsiveStyles = createAtomicStyles({
 });
 ```
 
+For more complicated styles, values can even be entire style objects. This works especially well when combined with CSS Variables.
+
+> 💡 Styles are created in the order that they were defined in your config. Properties that are less specific should be higher in the list.
+
+```ts
+import { createVar } from '@vanilla-extract/css';
+import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+
+const alpha = createVar();
+
+const responsiveStyles = createAtomicStyles({
+  properties: {
+    background: {
+      red: {
+        vars: { [alpha]: '1' },
+        background: `rgba(255, 0, 0, ${alpha})`
+      },
+    },
+    backgroundOpacity: {
+      1: { vars: { [alpha]: '1' } },
+      0.1: { vars: { [alpha]: '0.1' } },
+    },
+    // etc.
+  }
+});
+```
+
 #### `shorthands`
 
 Maps custom shorthand properties to multiple underlying CSS properties. This is useful for mapping values like `padding`/`paddingX`/`paddingY` to their underlying longhand values.
 
-**Note that shorthands are evaluated in the order that they were defined in your config.** Shorthands that are less specific should be higher in the list, e.g. `padding` should come before `paddingX`/`paddingY`.
+> 💡 Shorthands are evaluated in the order that they were defined in your config. Shorthands that are less specific should be higher in the list, e.g. `padding` should come before `paddingX`/`paddingY`.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
