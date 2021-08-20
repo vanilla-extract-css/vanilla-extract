@@ -378,7 +378,7 @@ const responsiveStyles = createAtomicStyles({
     background: {
       red: {
         vars: { [alpha]: '1' },
-        background: `rgba(255, 0, 0, ${fallbackVar(alpha, '1')})`
+        background: `rgba(255, 0, 0, ${alpha})`
       },
     },
     backgroundOpacity: {
