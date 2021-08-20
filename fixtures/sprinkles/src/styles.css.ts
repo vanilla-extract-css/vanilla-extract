@@ -1,4 +1,4 @@
-import { globalStyle, createVar, fallbackVar } from '@vanilla-extract/css';
+import { globalStyle, createVar } from '@vanilla-extract/css';
 import {
   createAtomicStyles,
   createAtomsFn,
@@ -34,7 +34,7 @@ const responsiveStyles = createAtomicStyles({
     background: {
       red: {
         vars: { [alpha]: '1' },
-        background: `rgb(255, 0, 0, ${fallbackVar(alpha, '1')})`,
+        background: `rgba(255, 0, 0, ${alpha})`,
       },
     },
     backgroundOpacity: {
