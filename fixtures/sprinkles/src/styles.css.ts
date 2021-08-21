@@ -7,6 +7,7 @@ import {
 } from '@vanilla-extract/sprinkles';
 
 const alpha = createVar();
+const textAlpha = createVar();
 
 const responsiveStyles = createAtomicStyles({
   defaultCondition: 'mobile',
@@ -46,7 +47,24 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-export const atoms = createAtomsFn(responsiveStyles);
+const styleWithNoConditions = createAtomicStyles({
+  properties: {
+    color: {
+      red: {
+        vars: {
+          [textAlpha]: '1',
+        },
+        color: `rgba(255, 0, 0, ${textAlpha})`,
+      },
+    },
+    textOpacity: {
+      1: { vars: { [textAlpha]: '1' } },
+      0.8: { vars: { [textAlpha]: '0.8' } },
+    },
+  },
+});
+
+export const atoms = createAtomsFn(responsiveStyles, styleWithNoConditions);
 
 export const mapResponsiveValue = createMapValueFn(responsiveStyles);
 export const normalizeResponsiveValue =
@@ -57,6 +75,8 @@ export const preComposedAtoms = atoms({
   paddingTop: 'small',
   background: 'red',
   backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
+  color: 'red',
+  textOpacity: 0.8,
 });
 
 export const preComposedAtomsUsedInSelector = atoms({

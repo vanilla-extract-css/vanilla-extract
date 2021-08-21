@@ -237,18 +237,13 @@ export function createAtomicStyles(options: any): any {
         };
 
         for (const conditionName in options.conditions) {
+          let styleValue: StyleRule =
+            typeof value === 'object' ? value : { [key]: value };
+
           const condition =
             options.conditions[
               conditionName as keyof typeof options.conditions
             ];
-
-          let styleValue: any = {};
-
-          if (typeof value === 'object') {
-            styleValue = value;
-          } else {
-            styleValue[key] = value;
-          }
 
           if (condition['@supports']) {
             styleValue = {
@@ -286,8 +281,11 @@ export function createAtomicStyles(options: any): any {
           }
         }
       } else {
+        const styleValue: StyleRule =
+          typeof value === 'object' ? value : { [key]: value };
+
         styles[key].values[valueName] = {
-          defaultClass: style({ [key]: value }, `${key}_${String(valueName)}`),
+          defaultClass: style(styleValue, `${key}_${String(valueName)}`),
         };
       }
     };

@@ -1,142 +1,152 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stylesheet sprinkles - esbuild should create valid stylesheet 1`] = `
-".styles_display_flex_mobile__1j5zl921{display:flex}.styles_display_none_mobile__1j5zl925{display:none}.styles_display_block_mobile__1j5zl929{display:block}.styles_paddingTop_small_mobile__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92h{padding-top:20px}.styles_background_red_mobile__1j5zl92l{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_mobile__1j5zl92p{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_mobile__1j5zl92t{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_mobile__1j5zl92x{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_mobile__1j5zl9211{--_1j5zl920: .3}body>.styles__1j5zl9216{background:red}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl922{display:flex}.styles_display_none_tablet__1j5zl926{display:none}.styles_display_block_tablet__1j5zl92a{display:block}.styles_paddingTop_small_tablet__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92i{padding-top:20px}.styles_background_red_tablet__1j5zl92m{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_tablet__1j5zl92q{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_tablet__1j5zl92u{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_tablet__1j5zl92y{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_tablet__1j5zl9212{--_1j5zl920: .3}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl923{display:flex}.styles_display_none_desktop__1j5zl927{display:none}.styles_display_block_desktop__1j5zl92b{display:block}.styles_paddingTop_small_desktop__1j5zl92f{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92j{padding-top:20px}.styles_background_red_desktop__1j5zl92n{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_desktop__1j5zl92r{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_desktop__1j5zl92v{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_desktop__1j5zl92z{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_desktop__1j5zl9213{--_1j5zl920: .3}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl924{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl928{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92c{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92g{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92k{padding-top:20px}[data-dark-mode] .styles_background_red_darkDesktop__1j5zl92o{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}[data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__1j5zl92s{--_1j5zl920: 1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__1j5zl92w{--_1j5zl920: .1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__1j5zl9210{--_1j5zl920: .2}[data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__1j5zl9214{--_1j5zl920: .3}}}
+".styles_display_flex_mobile__1j5zl922{display:flex}.styles_display_none_mobile__1j5zl926{display:none}.styles_display_block_mobile__1j5zl92a{display:block}.styles_paddingTop_small_mobile__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92i{padding-top:20px}.styles_background_red_mobile__1j5zl92m{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_mobile__1j5zl92q{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_mobile__1j5zl92u{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_mobile__1j5zl92y{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_mobile__1j5zl9212{--_1j5zl920: .3}.styles_color_red__1j5zl9216{--_1j5zl921: 1;color:rgba(255,0,0,var(--_1j5zl921))}.styles_textOpacity_1__1j5zl9217{--_1j5zl921: 1}.styles_textOpacity_0\\\\.8__1j5zl9218{--_1j5zl921: .8}body>.styles__1j5zl921a{background:red}@media screen and (min-width: 768px){.styles_display_flex_tablet__1j5zl923{display:flex}.styles_display_none_tablet__1j5zl927{display:none}.styles_display_block_tablet__1j5zl92b{display:block}.styles_paddingTop_small_tablet__1j5zl92f{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92j{padding-top:20px}.styles_background_red_tablet__1j5zl92n{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_tablet__1j5zl92r{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_tablet__1j5zl92v{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_tablet__1j5zl92z{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_tablet__1j5zl9213{--_1j5zl920: .3}}@media screen and (min-width: 1024px){.styles_display_flex_desktop__1j5zl924{display:flex}.styles_display_none_desktop__1j5zl928{display:none}.styles_display_block_desktop__1j5zl92c{display:block}.styles_paddingTop_small_desktop__1j5zl92g{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92k{padding-top:20px}.styles_background_red_desktop__1j5zl92o{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_desktop__1j5zl92s{--_1j5zl920: 1}.styles_backgroundOpacity_0\\\\.1_desktop__1j5zl92w{--_1j5zl920: .1}.styles_backgroundOpacity_0\\\\.2_desktop__1j5zl9210{--_1j5zl920: .2}.styles_backgroundOpacity_0\\\\.3_desktop__1j5zl9214{--_1j5zl920: .3}@supports not (display: grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl925{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl929{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92d{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92h{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92l{padding-top:20px}[data-dark-mode] .styles_background_red_darkDesktop__1j5zl92p{--_1j5zl920: 1;background:rgba(255,0,0,var(--_1j5zl920))}[data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__1j5zl92t{--_1j5zl920: 1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__1j5zl92x{--_1j5zl920: .1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__1j5zl9211{--_1j5zl920: .2}[data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__1j5zl9215{--_1j5zl920: .3}}}
 "
 `;
 
-exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl921{display:flex}.styles_display_none_mobile__1j5zl925{display:none}.styles_display_block_mobile__1j5zl929{display:block}.styles_paddingTop_small_mobile__1j5zl92d{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92h{padding-top:20px}.styles_background_red_mobile__1j5zl92l{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_mobile__1j5zl92p{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_mobile__1j5zl92t{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_mobile__1j5zl92x{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_mobile__1j5zl9211{--_1j5zl920:0.3}body>.styles__1j5zl9216{background:red}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl922{display:flex}.styles_display_none_tablet__1j5zl926{display:none}.styles_display_block_tablet__1j5zl92a{display:block}.styles_paddingTop_small_tablet__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92i{padding-top:20px}.styles_background_red_tablet__1j5zl92m{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_tablet__1j5zl92q{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_tablet__1j5zl92u{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_tablet__1j5zl92y{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_tablet__1j5zl9212{--_1j5zl920:0.3}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl923{display:flex}.styles_display_none_desktop__1j5zl927{display:none}.styles_display_block_desktop__1j5zl92b{display:block}.styles_paddingTop_small_desktop__1j5zl92f{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92j{padding-top:20px}.styles_background_red_desktop__1j5zl92n{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_desktop__1j5zl92r{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_desktop__1j5zl92v{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_desktop__1j5zl92z{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_desktop__1j5zl9213{--_1j5zl920:0.3}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl924{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl928{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92c{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92g{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92k{padding-top:20px}[data-dark-mode] .styles_background_red_darkDesktop__1j5zl92o{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}[data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__1j5zl92s{--_1j5zl920:1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__1j5zl92w{--_1j5zl920:0.1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__1j5zl9210{--_1j5zl920:0.2}[data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__1j5zl9214{--_1j5zl920:0.3}}}"`;
+exports[`Stylesheet sprinkles - vite should create valid stylesheet 1`] = `".styles_display_flex_mobile__1j5zl922{display:flex}.styles_display_none_mobile__1j5zl926{display:none}.styles_display_block_mobile__1j5zl92a{display:block}.styles_paddingTop_small_mobile__1j5zl92e{padding-top:10px}.styles_paddingTop_medium_mobile__1j5zl92i{padding-top:20px}.styles_background_red_mobile__1j5zl92m{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_mobile__1j5zl92q{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_mobile__1j5zl92u{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_mobile__1j5zl92y{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_mobile__1j5zl9212{--_1j5zl920:0.3}.styles_color_red__1j5zl9216{--_1j5zl921:1;color:rgba(255,0,0,var(--_1j5zl921))}.styles_textOpacity_1__1j5zl9217{--_1j5zl921:1}.styles_textOpacity_0\\\\.8__1j5zl9218{--_1j5zl921:0.8}body>.styles__1j5zl921a{background:red}@media screen and (min-width:768px){.styles_display_flex_tablet__1j5zl923{display:flex}.styles_display_none_tablet__1j5zl927{display:none}.styles_display_block_tablet__1j5zl92b{display:block}.styles_paddingTop_small_tablet__1j5zl92f{padding-top:10px}.styles_paddingTop_medium_tablet__1j5zl92j{padding-top:20px}.styles_background_red_tablet__1j5zl92n{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_tablet__1j5zl92r{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_tablet__1j5zl92v{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_tablet__1j5zl92z{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_tablet__1j5zl9213{--_1j5zl920:0.3}}@media screen and (min-width:1024px){.styles_display_flex_desktop__1j5zl924{display:flex}.styles_display_none_desktop__1j5zl928{display:none}.styles_display_block_desktop__1j5zl92c{display:block}.styles_paddingTop_small_desktop__1j5zl92g{padding-top:10px}.styles_paddingTop_medium_desktop__1j5zl92k{padding-top:20px}.styles_background_red_desktop__1j5zl92o{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}.styles_backgroundOpacity_1_desktop__1j5zl92s{--_1j5zl920:1}.styles_backgroundOpacity_0\\\\.1_desktop__1j5zl92w{--_1j5zl920:0.1}.styles_backgroundOpacity_0\\\\.2_desktop__1j5zl9210{--_1j5zl920:0.2}.styles_backgroundOpacity_0\\\\.3_desktop__1j5zl9214{--_1j5zl920:0.3}@supports not (display:grid){[data-dark-mode] .styles_display_flex_darkDesktop__1j5zl925{display:flex}[data-dark-mode] .styles_display_none_darkDesktop__1j5zl929{display:none}[data-dark-mode] .styles_display_block_darkDesktop__1j5zl92d{display:block}[data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92h{padding-top:10px}[data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92l{padding-top:20px}[data-dark-mode] .styles_background_red_darkDesktop__1j5zl92p{--_1j5zl920:1;background:rgba(255,0,0,var(--_1j5zl920))}[data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__1j5zl92t{--_1j5zl920:1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__1j5zl92x{--_1j5zl920:0.1}[data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__1j5zl9211{--_1j5zl920:0.2}[data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__1j5zl9215{--_1j5zl920:0.3}}}"`;
 
 exports[`Stylesheet sprinkles - webpack should create valid stylesheet 1`] = `
-".styles_display_flex_mobile__3nw5tz1 {
+".styles_display_flex_mobile__3nw5tz2 {
   display: flex;
 }
-.styles_display_none_mobile__3nw5tz5 {
+.styles_display_none_mobile__3nw5tz6 {
   display: none;
 }
-.styles_display_block_mobile__3nw5tz9 {
+.styles_display_block_mobile__3nw5tza {
   display: block;
 }
-.styles_paddingTop_small_mobile__3nw5tzd {
+.styles_paddingTop_small_mobile__3nw5tze {
   padding-top: 10px;
 }
-.styles_paddingTop_medium_mobile__3nw5tzh {
+.styles_paddingTop_medium_mobile__3nw5tzi {
   padding-top: 20px;
 }
-.styles_background_red_mobile__3nw5tzl {
+.styles_background_red_mobile__3nw5tzm {
   --alpha__3nw5tz0: 1;
   background: rgba(255, 0, 0, var(--alpha__3nw5tz0));
 }
-.styles_backgroundOpacity_1_mobile__3nw5tzp {
+.styles_backgroundOpacity_1_mobile__3nw5tzq {
   --alpha__3nw5tz0: 1;
 }
-.styles_backgroundOpacity_0\\\\.1_mobile__3nw5tzt {
+.styles_backgroundOpacity_0\\\\.1_mobile__3nw5tzu {
   --alpha__3nw5tz0: 0.1;
 }
-.styles_backgroundOpacity_0\\\\.2_mobile__3nw5tzx {
+.styles_backgroundOpacity_0\\\\.2_mobile__3nw5tzy {
   --alpha__3nw5tz0: 0.2;
 }
-.styles_backgroundOpacity_0\\\\.3_mobile__3nw5tz11 {
+.styles_backgroundOpacity_0\\\\.3_mobile__3nw5tz12 {
   --alpha__3nw5tz0: 0.3;
 }
-body > .styles__3nw5tz16 {
+.styles_color_red__3nw5tz16 {
+  --textAlpha__3nw5tz1: 1;
+  color: rgba(255, 0, 0, var(--textAlpha__3nw5tz1));
+}
+.styles_textOpacity_1__3nw5tz17 {
+  --textAlpha__3nw5tz1: 1;
+}
+.styles_textOpacity_0\\\\.8__3nw5tz18 {
+  --textAlpha__3nw5tz1: 0.8;
+}
+body > .styles__3nw5tz1a {
   background: red;
 }
 @media screen and (min-width: 768px) {
-  .styles_display_flex_tablet__3nw5tz2 {
+  .styles_display_flex_tablet__3nw5tz3 {
     display: flex;
   }
-  .styles_display_none_tablet__3nw5tz6 {
+  .styles_display_none_tablet__3nw5tz7 {
     display: none;
   }
-  .styles_display_block_tablet__3nw5tza {
+  .styles_display_block_tablet__3nw5tzb {
     display: block;
   }
-  .styles_paddingTop_small_tablet__3nw5tze {
+  .styles_paddingTop_small_tablet__3nw5tzf {
     padding-top: 10px;
   }
-  .styles_paddingTop_medium_tablet__3nw5tzi {
+  .styles_paddingTop_medium_tablet__3nw5tzj {
     padding-top: 20px;
   }
-  .styles_background_red_tablet__3nw5tzm {
+  .styles_background_red_tablet__3nw5tzn {
     --alpha__3nw5tz0: 1;
     background: rgba(255, 0, 0, var(--alpha__3nw5tz0));
   }
-  .styles_backgroundOpacity_1_tablet__3nw5tzq {
+  .styles_backgroundOpacity_1_tablet__3nw5tzr {
     --alpha__3nw5tz0: 1;
   }
-  .styles_backgroundOpacity_0\\\\.1_tablet__3nw5tzu {
+  .styles_backgroundOpacity_0\\\\.1_tablet__3nw5tzv {
     --alpha__3nw5tz0: 0.1;
   }
-  .styles_backgroundOpacity_0\\\\.2_tablet__3nw5tzy {
+  .styles_backgroundOpacity_0\\\\.2_tablet__3nw5tzz {
     --alpha__3nw5tz0: 0.2;
   }
-  .styles_backgroundOpacity_0\\\\.3_tablet__3nw5tz12 {
+  .styles_backgroundOpacity_0\\\\.3_tablet__3nw5tz13 {
     --alpha__3nw5tz0: 0.3;
   }
 }
 @media screen and (min-width: 1024px) {
-  .styles_display_flex_desktop__3nw5tz3 {
+  .styles_display_flex_desktop__3nw5tz4 {
     display: flex;
   }
-  .styles_display_none_desktop__3nw5tz7 {
+  .styles_display_none_desktop__3nw5tz8 {
     display: none;
   }
-  .styles_display_block_desktop__3nw5tzb {
+  .styles_display_block_desktop__3nw5tzc {
     display: block;
   }
-  .styles_paddingTop_small_desktop__3nw5tzf {
+  .styles_paddingTop_small_desktop__3nw5tzg {
     padding-top: 10px;
   }
-  .styles_paddingTop_medium_desktop__3nw5tzj {
+  .styles_paddingTop_medium_desktop__3nw5tzk {
     padding-top: 20px;
   }
-  .styles_background_red_desktop__3nw5tzn {
+  .styles_background_red_desktop__3nw5tzo {
     --alpha__3nw5tz0: 1;
     background: rgba(255, 0, 0, var(--alpha__3nw5tz0));
   }
-  .styles_backgroundOpacity_1_desktop__3nw5tzr {
+  .styles_backgroundOpacity_1_desktop__3nw5tzs {
     --alpha__3nw5tz0: 1;
   }
-  .styles_backgroundOpacity_0\\\\.1_desktop__3nw5tzv {
+  .styles_backgroundOpacity_0\\\\.1_desktop__3nw5tzw {
     --alpha__3nw5tz0: 0.1;
   }
-  .styles_backgroundOpacity_0\\\\.2_desktop__3nw5tzz {
+  .styles_backgroundOpacity_0\\\\.2_desktop__3nw5tz10 {
     --alpha__3nw5tz0: 0.2;
   }
-  .styles_backgroundOpacity_0\\\\.3_desktop__3nw5tz13 {
+  .styles_backgroundOpacity_0\\\\.3_desktop__3nw5tz14 {
     --alpha__3nw5tz0: 0.3;
   }
   @supports not (display: grid) {
-    [data-dark-mode] .styles_display_flex_darkDesktop__3nw5tz4 {
+    [data-dark-mode] .styles_display_flex_darkDesktop__3nw5tz5 {
       display: flex;
     }
-    [data-dark-mode] .styles_display_none_darkDesktop__3nw5tz8 {
+    [data-dark-mode] .styles_display_none_darkDesktop__3nw5tz9 {
       display: none;
     }
-    [data-dark-mode] .styles_display_block_darkDesktop__3nw5tzc {
+    [data-dark-mode] .styles_display_block_darkDesktop__3nw5tzd {
       display: block;
     }
-    [data-dark-mode] .styles_paddingTop_small_darkDesktop__3nw5tzg {
+    [data-dark-mode] .styles_paddingTop_small_darkDesktop__3nw5tzh {
       padding-top: 10px;
     }
-    [data-dark-mode] .styles_paddingTop_medium_darkDesktop__3nw5tzk {
+    [data-dark-mode] .styles_paddingTop_medium_darkDesktop__3nw5tzl {
       padding-top: 20px;
     }
-    [data-dark-mode] .styles_background_red_darkDesktop__3nw5tzo {
+    [data-dark-mode] .styles_background_red_darkDesktop__3nw5tzp {
       --alpha__3nw5tz0: 1;
       background: rgba(255, 0, 0, var(--alpha__3nw5tz0));
     }
-    [data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__3nw5tzs {
+    [data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__3nw5tzt {
       --alpha__3nw5tz0: 1;
     }
-    [data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__3nw5tzw {
+    [data-dark-mode] .styles_backgroundOpacity_0\\\\.1_darkDesktop__3nw5tzx {
       --alpha__3nw5tz0: 0.1;
     }
-    [data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__3nw5tz10 {
+    [data-dark-mode] .styles_backgroundOpacity_0\\\\.2_darkDesktop__3nw5tz11 {
       --alpha__3nw5tz0: 0.2;
     }
-    [data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__3nw5tz14 {
+    [data-dark-mode] .styles_backgroundOpacity_0\\\\.3_darkDesktop__3nw5tz15 {
       --alpha__3nw5tz0: 0.3;
     }
   }
