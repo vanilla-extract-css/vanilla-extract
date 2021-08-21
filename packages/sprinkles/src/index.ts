@@ -231,20 +231,15 @@ export function createAtomicStyles(options: any): any {
       valueName: keyof typeof property,
       value: string | number | StyleRule,
     ) => {
-      let styleValue: any = {};
-
-      if (typeof value === 'object') {
-        styleValue = value;
-      } else {
-        styleValue[key] = value;
-      }
-
       if ('conditions' in options) {
         styles[key].values[valueName] = {
           conditions: {},
         };
 
         for (const conditionName in options.conditions) {
+          let styleValue: StyleRule =
+            typeof value === 'object' ? value : { [key]: value };
+
           const condition =
             options.conditions[
               conditionName as keyof typeof options.conditions
@@ -286,6 +281,9 @@ export function createAtomicStyles(options: any): any {
           }
         }
       } else {
+        const styleValue: StyleRule =
+          typeof value === 'object' ? value : { [key]: value };
+
         styles[key].values[valueName] = {
           defaultClass: style(styleValue, `${key}_${String(valueName)}`),
         };
