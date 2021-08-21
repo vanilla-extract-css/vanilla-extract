@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.1.1
+
+### Patch Changes
+
+- [#307](https://github.com/seek-oss/vanilla-extract/pull/307) [`a8f181d`](https://github.com/seek-oss/vanilla-extract/commit/a8f181daa12ced5958c57bac61370726e751e1e2) Thanks [@rtkaaho](https://github.com/rtkaaho)! - Allow style objects to be passed when no conditions are present
+
 ## 1.1.0
 
 ### Minor Changes
