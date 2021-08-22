@@ -1,0 +1,18 @@
+{
+  "name": "vanilla-extract-astro",
+  "description": "Example Astro project using vanilla-extract",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "astro dev",
+    "build": "astro build"
+  },
+  "devDependencies": {
+    "@vanilla-extract/snowpack-plugin": "^1.1.1",
+    "@vanilla-extract/css": "^1.2.3",
+    "@vanilla-extract/sprinkles": "^1.1.1",
+    "astro": "^0.19.1",
+    "polished": "^4.1.3",
+    "tailwindcss": "^2.2.7"
+  }
+}
