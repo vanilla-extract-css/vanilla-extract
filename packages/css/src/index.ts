@@ -6,6 +6,8 @@ export type {
   Adapter,
   FileScope,
   CSSProperties,
+  NullableTokens,
+  ThemeVars,
 } from './types';
 export * from './identifier';
 export * from './theme';
