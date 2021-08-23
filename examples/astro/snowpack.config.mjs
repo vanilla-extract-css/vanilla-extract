@@ -1,3 +1,4 @@
 export default {
-  plugins: ['@kossnocorp/vanilla-extract-snowpack-plugin'],
+  plugins: ['@vanilla-extract/snowpack-plugin'],
+  workspaceRoot: '../../',
 };
