@@ -1,5 +1,13 @@
 # @vanilla-extract/vite-plugin
 
+## 1.2.0
+
+### Minor Changes
+
+- [#311](https://github.com/seek-oss/vanilla-extract/pull/311) [`416eb9a`](https://github.com/seek-oss/vanilla-extract/commit/416eb9ae99661597a8443594f4376aacf4d295cc) Thanks [@mattcompiles](https://github.com/mattcompiles)! - In SSR mode, move to runtime evaluation of vanilla-extract files
+
+  This unlocks the potential for CSS extraction on the server.
+
 ## 1.1.2
 
 ### Patch Changes
