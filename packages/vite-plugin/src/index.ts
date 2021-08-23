@@ -1,3 +1,4 @@
+import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { normalizePath } from 'vite';
 import {
@@ -7,10 +8,12 @@ import {
   getSourceFromVirtualCssFile,
   compile,
   hash,
+  getPackageInfo,
 } from '@vanilla-extract/integration';
 
 export function vanillaExtractPlugin(): Plugin {
   let config: ResolvedConfig;
+  let packageInfo: ReturnType<typeof getPackageInfo>;
   const cssMap = new Map<string, string>();
 
   return {
@@ -18,6 +21,8 @@ export function vanillaExtractPlugin(): Plugin {
     enforce: 'pre',
     configResolved(resolvedConfig) {
       config = resolvedConfig;
+
+      packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
       if (virtualCssFileFilter.test(id)) {
@@ -44,25 +49,41 @@ export function vanillaExtractPlugin(): Plugin {
 
       return null;
     },
-    async transform(_code, id, ssr) {
-      if (cssFileFilter.test(id)) {
-        const { source, watchFiles } = await compile({
-          filePath: id,
-          cwd: config.root,
-        });
-
-        for (const file of watchFiles) {
-          this.addWatchFile(file);
-        }
-
-        return processVanillaFile({
-          source,
-          filePath: id,
-          outputCss: !ssr,
-        });
+    async transform(code, id, ssr) {
+      if (!cssFileFilter.test(id)) {
+        return null;
       }
 
-      return null;
+      if (ssr && code.indexOf('@vanilla-extract/css/fileScope') === -1) {
+        const filePath = normalizePath(path.relative(packageInfo.dirname, id));
+
+        const packageName = packageInfo.name
+          ? `"${packageInfo.name}"`
+          : 'undefined';
+
+        return `
+          import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+          setFileScope("${filePath}", ${packageName});
+  
+          ${code}
+          endFileScope();
+        `;
+      }
+
+      const { source, watchFiles } = await compile({
+        filePath: id,
+        cwd: config.root,
+      });
+
+      for (const file of watchFiles) {
+        this.addWatchFile(file);
+      }
+
+      return processVanillaFile({
+        source,
+        filePath: id,
+        outputCss: !ssr,
+      });
     },
   };
 }
