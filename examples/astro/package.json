@@ -8,7 +8,7 @@
     "build": "astro build"
   },
   "devDependencies": {
-    "@vanilla-extract/snowpack-plugin": "^1.1.1",
+    "@vanilla-extract/snowpack-plugin": "^1.1.0",
     "@vanilla-extract/css": "^1.2.3",
     "@vanilla-extract/sprinkles": "^1.1.1",
     "astro": "^0.19.1",
