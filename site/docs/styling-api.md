@@ -197,6 +197,8 @@ globalStyle(`${parentClass} > a`, {
 
 Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
 
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
+
 ```tsx
 // theme.css.ts
 
@@ -243,6 +245,8 @@ export const themeB = createTheme(vars, {
 
 Creates a theme attached to a global selector, but with locally scoped variable names.
 
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
+
 ```tsx
 // theme.css.ts
 import { createGlobalTheme } from '@vanilla-extract/css';
@@ -259,11 +263,39 @@ export const vars = createGlobalTheme(':root', {
 
 > 💡 All theme variants must provide a value for every variable or it’s a type error.
 
+If you want to implement an existing theme contract, you can pass it as the second argument.
+
+```ts
+// theme.css.ts
+import {
+  createThemeContract,
+  createGlobalTheme
+} from '@vanilla-extract/css';
+
+export const vars = createThemeContract({
+  color: {
+    brand: null
+  },
+  font: {
+    body: null
+  }
+});
+
+createGlobalTheme(':root', vars, {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
+});
+```
+
 ## createThemeContract
 
 Creates a contract for themes to implement.
 
-**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between themes.**
+**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
