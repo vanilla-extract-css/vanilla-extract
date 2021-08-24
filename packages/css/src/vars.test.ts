@@ -1,4 +1,4 @@
-import { fallbackVar } from './vars';
+import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
@@ -65,5 +65,187 @@ describe('fallbackVar', () => {
     expect(() => {
       fallbackVar('INVALID', 'var(--foo-bar)', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+  });
+});
+
+describe('createGlobalThemeContract', () => {
+  it('handles explicit vars', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          green: 'color-green',
+          blue: 'color-blue',
+        },
+        space: {
+          small: 'space-small',
+          large: 'space-large',
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+        "space": Object {
+          "large": "var(--space-large)",
+          "small": "var(--space-small)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading hyphens on explicit vars', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: '--color-red',
+          green: '--color-green',
+          blue: '--color-blue',
+        },
+        space: {
+          small: '--space-small',
+          large: '--space-large',
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+        "space": Object {
+          "large": "var(--space-large)",
+          "small": "var(--space-small)",
+        },
+      }
+    `);
+  });
+
+  it('supports prefixing via the map function', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            green: 'color-green',
+            blue: 'color-blue',
+          },
+          space: {
+            small: 'space-small',
+            large: 'space-large',
+          },
+        },
+        (value) => `prefix-${value}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+        "space": Object {
+          "large": "var(--prefix-space-large)",
+          "small": "var(--prefix-space-small)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading hyphens when prefixing via the map function', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            green: 'color-green',
+            blue: 'color-blue',
+          },
+          space: {
+            small: 'space-small',
+            large: 'space-large',
+          },
+        },
+        (value) => `--prefix-${value}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+        "space": Object {
+          "large": "var(--prefix-space-large)",
+          "small": "var(--prefix-space-small)",
+        },
+      }
+    `);
+  });
+
+  it('supports path-based values via the map function', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: null,
+            green: null,
+            blue: null,
+          },
+          space: {
+            small: null,
+            large: null,
+          },
+        },
+        (_, path) => path.join('-'),
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+        "space": Object {
+          "large": "var(--space-large)",
+          "small": "var(--space-small)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading hyphens with path-based values via the map function', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: null,
+            green: null,
+            blue: null,
+          },
+          space: {
+            small: null,
+            large: null,
+          },
+        },
+        (_, path) => `--prefix-${path.join('-')}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+        "space": Object {
+          "large": "var(--prefix-space-large)",
+          "small": "var(--prefix-space-small)",
+        },
+      }
+    `);
   });
 });

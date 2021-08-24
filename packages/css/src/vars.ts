@@ -8,7 +8,7 @@ import {
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { NullableTokens, ThemeVars } from './types';
+import { Tokens, NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
 
@@ -74,5 +74,28 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
 ): ThemeVars<ThemeTokens> {
   return walkObject(tokens, (_value, path) => {
     return createVar(path.join('-'));
+  });
+}
+
+export function createGlobalThemeContract<ThemeTokens extends Tokens>(
+  tokens: ThemeTokens,
+): MapLeafNodes<ThemeTokens, CSSVarFunction>;
+export function createGlobalThemeContract<ThemeTokens extends NullableTokens>(
+  tokens: ThemeTokens,
+  mapFn: (value: string | null, path: Array<string>) => string,
+): ThemeVars<ThemeTokens>;
+export function createGlobalThemeContract(
+  tokens: Tokens | NullableTokens,
+  mapFn?: (value: string | null, path: Array<string>) => string,
+) {
+  return walkObject(tokens, (value, path) => {
+    const resolvedValue =
+      typeof mapFn === 'function'
+        ? mapFn(value as string | null, path)
+        : (value as string);
+
+    return `var(${
+      resolvedValue.indexOf('--') === 0 ? '' : '--'
+    }${resolvedValue})`;
   });
 }
