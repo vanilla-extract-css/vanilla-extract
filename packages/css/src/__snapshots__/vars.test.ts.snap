@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createGlobalThemeContract supports adding a prefix 1`] = `
+Object {
+  "color": Object {
+    "blue": "var(--prefix-color-blue)",
+    "green": "var(--prefix-color-green)",
+    "red": "var(--prefix-color-red)",
+  },
+}
+`;
+
+exports[`createGlobalThemeContract supports defining css vars via object properties 1`] = `
+Object {
+  "color": Object {
+    "blue": "var(--color-blue)",
+    "green": "var(--color-green)",
+    "red": "var(--color-red)",
+  },
+}
+`;
+
+exports[`createGlobalThemeContract supports path based names 1`] = `
+Object {
+  "color": Object {
+    "blue": "var(--prefix-color-blue)",
+    "green": "var(--prefix-color-green)",
+    "red": "var(--prefix-color-red)",
+  },
+}
+`;

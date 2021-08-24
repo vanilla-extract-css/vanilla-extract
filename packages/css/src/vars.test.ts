@@ -1,4 +1,4 @@
-import { fallbackVar } from './vars';
+import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
@@ -65,5 +65,73 @@ describe('fallbackVar', () => {
     expect(() => {
       fallbackVar('INVALID', 'var(--foo-bar)', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+  });
+});
+
+describe('createGlobalThemeContract', () => {
+  it('supports defining css vars via object properties', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: 'color-blue',
+          green: 'color-green',
+        },
+      }),
+    ).toMatchSnapshot();
+  });
+  it('supports adding a prefix', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        (value) => `prefix-${value}`,
+      ),
+    ).toMatchSnapshot();
+  });
+  it('supports path based names', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: null,
+            blue: null,
+            green: null,
+          },
+        },
+        (_, path) => `prefix-${path.join('-')}`,
+      ),
+    ).toMatchSnapshot();
+  });
+  it('errors when invalid property value', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          red: null,
+          blue: null,
+          green: null,
+        },
+      }),
+    ).toThrow();
+  });
+  it('errors when invalid map value', () => {
+    expect(() =>
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        // @ts-expect-error
+        () => null,
+      ),
+    ).toThrow();
   });
 });

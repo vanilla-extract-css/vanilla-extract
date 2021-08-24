@@ -76,3 +76,39 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
     return createVar(path.join('-'));
   });
 }
+
+export type MapValue = string | null | undefined;
+export type Mapper = (value: MapValue, path: Array<string>) => string;
+const defaultMapper: Mapper = (value, path) => {
+  if (typeof value !== 'string') {
+    throw new Error(
+      `To use the default map function with "createGlobalThemeContract", each property value must be a string. Property "${path.join(
+        '.',
+      )}"'s value is "${value}".`,
+    );
+  }
+  return value;
+};
+
+export function createGlobalThemeContract<
+  ThemeTokens extends NullableTokens,
+>(
+  tokens: ThemeTokens,
+  map: Mapper = defaultMapper,
+): ThemeVars<ThemeTokens> {
+  return walkObject(tokens, (value, path) => {
+    const varName = map(value as MapValue, path);
+    if (typeof varName !== 'string') {
+      throw new Error(
+        `The map function used by "createGlobalThemeContract" must return a string and instead returned "${value}".`,
+      );
+    }
+    const cssVarName = cssesc(
+      varName.match(/^[0-9]/) ? `_${varName}` : varName,
+      {
+        isIdentifier: true,
+      },
+    );
+    return `var(--${cssVarName})` as const;
+  });
+}
