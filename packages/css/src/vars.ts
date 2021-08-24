@@ -4,6 +4,7 @@ import {
   Contract,
   MapLeafNodes,
   CSSVarFunction,
+  Primitive,
 } from '@vanilla-extract/private';
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
@@ -77,8 +78,7 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
   });
 }
 
-export type MapValue = string | null | undefined;
-export type Mapper = (value: MapValue, path: Array<string>) => string;
+export type Mapper = (value: Primitive, path: Array<string>) => string;
 const defaultMapper: Mapper = (value, path) => {
   if (typeof value !== 'string') {
     throw new Error(
@@ -90,14 +90,12 @@ const defaultMapper: Mapper = (value, path) => {
   return value;
 };
 
-export function createGlobalThemeContract<
-  ThemeTokens extends NullableTokens,
->(
+export function createGlobalThemeContract<ThemeTokens extends NullableTokens>(
   tokens: ThemeTokens,
   map: Mapper = defaultMapper,
 ): ThemeVars<ThemeTokens> {
   return walkObject(tokens, (value, path) => {
-    const varName = map(value as MapValue, path);
+    const varName = map(value, path);
     if (typeof varName !== 'string') {
       throw new Error(
         `The map function used by "createGlobalThemeContract" must return a string and instead returned "${value}".`,
