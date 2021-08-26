@@ -1,6 +1,6 @@
 import { getStylesheet, startFixture, TestServer } from 'test-helpers';
 
-const fixtures = ['unused-modules', 'themed', 'sprinkles'];
+const fixtures = ['unused-modules', 'themed', 'sprinkles', 'features'];
 
 describe('Stylesheet', () => {
   describe.each(fixtures)('%s - webpack', (fixture) => {

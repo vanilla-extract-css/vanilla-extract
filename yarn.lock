@@ -1751,6 +1751,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fixtures/features@workspace:fixtures/features":
+  version: 0.0.0-use.local
+  resolution: "@fixtures/features@workspace:fixtures/features"
+  dependencies:
+    "@vanilla-extract/css": 1.2.3
+    "@vanilla-extract/dynamic": 2.0.0
+  languageName: unknown
+  linkType: soft
+
 "@fixtures/low-level@workspace:fixtures/low-level":
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
@@ -3196,6 +3205,7 @@ __metadata:
     csstype: ^3.0.7
     dedent: ^0.7.0
     deep-object-diff: ^1.1.0
+    deepmerge: ^4.2.2
   languageName: unknown
   linkType: soft
 

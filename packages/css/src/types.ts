@@ -122,3 +122,5 @@ export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
   ThemeContract,
   CSSVarFunction
 >;
+
+export type ClassNames = string | Array<ClassNames>;

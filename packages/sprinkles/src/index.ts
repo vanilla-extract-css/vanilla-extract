@@ -5,6 +5,7 @@ import {
   StyleRule,
 } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
+import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
   AtomsFn,
@@ -314,10 +315,14 @@ export function createAtomicStyles(options: any): any {
   return { conditions, styles };
 }
 
+const mockComposeStyles = (classList: string) => classList;
+
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...config: Args
 ): AtomsFn<Args> {
-  const atoms = internalCreateAtomsFn(composeStyles)(...config);
+  const atoms = internalCreateAtomsFn(
+    hasFileScope() ? composeStyles : mockComposeStyles,
+  )(...config);
 
   return addRecipe(atoms, {
     importPath: '@vanilla-extract/sprinkles/createRuntimeAtomsFn',
