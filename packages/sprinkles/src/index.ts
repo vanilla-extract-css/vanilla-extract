@@ -1,7 +1,7 @@
 import {
   style,
-  CSSProperties,
   composeStyles,
+  CSSProperties,
   StyleRule,
 } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
@@ -320,6 +320,10 @@ const mockComposeStyles = (classList: string) => classList;
 export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
   ...config: Args
 ): AtomsFn<Args> {
+  // When using Sprinkles with the runtime (e.g. within a jest test)
+  // `style` can be called (only for composition) outside of a fileScope.
+  // Checking we're within a fileScope ensures this doesn't blow up and is
+  // safe as compositions don't make sense at runtime
   const atoms = internalCreateAtomsFn(
     hasFileScope() ? composeStyles : mockComposeStyles,
   )(...config);

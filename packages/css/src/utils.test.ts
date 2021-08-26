@@ -34,6 +34,7 @@ describe('dudupeAndJoinClassList', () => {
     },
     { args: ['1 2 3', '2 3 4', '1 5'], output: '1 2 3 4 5' },
     { args: [' 1  2  3  2 ', ' 2  3  4 2 ', ' 1  5  1 '], output: '1 2 3 4 5' },
+    { args: ['1', '', '2'], output: '1 2' },
   ])('composeStyles', ({ args, output }) => {
     expect(dudupeAndJoinClassList(args)).toBe(output);
   });

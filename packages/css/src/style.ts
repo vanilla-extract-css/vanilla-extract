@@ -15,7 +15,7 @@ import {
   registerComposition,
   markCompositionUsed,
 } from './adapter';
-import { getFileScope, hasFileScope } from './fileScope';
+import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
 
@@ -41,20 +41,15 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   if (classList.length > 0) {
     result = `${className} ${dudupeAndJoinClassList(classList)}`;
 
-    // When using Sprinkles with the runtime (e.g. within a jest test)
-    // `style` can be called (only for composition) outside of a fileScope. Checking
-    // the fileScope is bit of a hack but will solve the issue for now
-    if (hasFileScope()) {
-      registerComposition({
-        identifier: className,
-        classList: result,
-      });
+    registerComposition({
+      identifier: className,
+      classList: result,
+    });
 
-      if (styleRules.length > 0) {
-        // If there are styles attached to this composition then it is
-        // always used and should never be removed
-        markCompositionUsed(className);
-      }
+    if (styleRules.length > 0) {
+      // If there are styles attached to this composition then it is
+      // always used and should never be removed
+      markCompositionUsed(className);
     }
   }
 
@@ -84,6 +79,7 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
 }
 
 /**
+ * @deprecated Use style with array syntax
  * Backwards compatible alias for style. Will be deprecated soon.
  */
 export function composeStyles(...classNames: Array<ClassNames>) {
