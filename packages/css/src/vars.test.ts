@@ -78,7 +78,15 @@ describe('createGlobalThemeContract', () => {
           green: 'color-green',
         },
       }),
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+      }
+    `);
   });
   it('supports adding a prefix', () => {
     expect(
@@ -92,7 +100,15 @@ describe('createGlobalThemeContract', () => {
         },
         (value) => `prefix-${value}`,
       ),
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
   });
   it('supports path based names', () => {
     expect(
@@ -106,7 +122,15 @@ describe('createGlobalThemeContract', () => {
         },
         (_, path) => `prefix-${path.join('-')}`,
       ),
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
   });
   it('errors when invalid property value', () => {
     expect(() =>
