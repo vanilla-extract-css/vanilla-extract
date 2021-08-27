@@ -9,9 +9,13 @@ import {
   compile,
   hash,
   getPackageInfo,
+  IdentifierType,
 } from '@vanilla-extract/integration';
 
-export function vanillaExtractPlugin(): Plugin {
+interface Options {
+  identifiers?: IdentifierType;
+}
+export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
   const cssMap = new Map<string, string>();
@@ -83,6 +87,8 @@ export function vanillaExtractPlugin(): Plugin {
         source,
         filePath: id,
         outputCss: !ssr,
+        identType:
+          identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
       });
     },
   };

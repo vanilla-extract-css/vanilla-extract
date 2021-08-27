@@ -102,12 +102,15 @@ export interface Composition {
   identifier: string;
   classList: string;
 }
+
+type IdentType = 'short' | 'debug';
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string) => void;
   registerComposition: (composition: Composition) => void;
   markCompositionUsed: (identifier: string) => void;
   onEndFileScope: (fileScope: FileScope) => void;
+  getIdentType: () => IdentType;
 }
 
 export type NullableTokens = {

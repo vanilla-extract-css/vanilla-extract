@@ -67,6 +67,8 @@ const browserRuntimeAdapter: Adapter = {
 
     bufferedCSSObjs = [];
   },
+  getIdentType: () =>
+    process.env.NODE_ENV === 'production' ? 'short' : 'debug',
 };
 
 if (typeof window !== 'undefined') {

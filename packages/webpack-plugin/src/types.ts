@@ -14,4 +14,5 @@ export interface LoaderContext {
   emitError: (error: Error) => void;
   _compiler: Compiler;
   _compilation: Compilation;
+  mode: 'production' | 'development' | 'none';
 }

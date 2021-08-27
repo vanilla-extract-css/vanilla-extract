@@ -6,6 +6,7 @@ export const mockAdapter: Adapter = {
   onEndFileScope: () => {},
   registerComposition: () => {},
   markCompositionUsed: () => {},
+  getIdentType: () => 'debug',
 };
 
 let adapter: Adapter = mockAdapter;
@@ -45,4 +46,8 @@ export const markCompositionUsed: Adapter['markCompositionUsed'] = (
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
   return adapter.onEndFileScope(...props);
+};
+
+export const getIdentType: Adapter['getIdentType'] = (...props) => {
+  return adapter.getIdentType(...props);
 };
