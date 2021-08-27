@@ -1,4 +1,4 @@
-import { fallbackVar } from './vars';
+import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
@@ -65,5 +65,177 @@ describe('fallbackVar', () => {
     expect(() => {
       fallbackVar('INVALID', 'var(--foo-bar)', '10px');
     }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+  });
+});
+
+describe('createGlobalThemeContract', () => {
+  it('supports defining css vars via object properties', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: 'color-blue',
+          green: 'color-green',
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading double hyphen', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: '--color-red',
+          blue: '--color-blue',
+          green: '--color-green',
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+      }
+    `);
+  });
+
+  it('supports adding a prefix', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        (value) => `prefix-${value}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading double hyphen when adding a prefix', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        (value) => `--prefix-${value}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
+  });
+
+  it('supports path based names', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: null,
+            blue: null,
+            green: null,
+          },
+        },
+        (_, path) => `prefix-${path.join('-')}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
+  });
+
+  it('errors when invalid property value', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          // @ts-expect-error
+          red: null,
+          blue: 'color-blue',
+          green: 'color-green',
+        },
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.red\\": null"`,
+    );
+  });
+
+  it('errors when escaped property value', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: "color'blue",
+          green: 'color-green',
+        },
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.blue\\": color'blue"`,
+    );
+  });
+
+  it('errors when property value starts with a number', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: 'color-blue',
+          green: '123-color-green',
+        },
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.green\\": 123-color-green"`,
+    );
+  });
+
+  it('errors when invalid map value', () => {
+    expect(() =>
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        // @ts-expect-error
+        () => null,
+      ),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.red\\": null"`,
+    );
   });
 });
