@@ -1,5 +1,89 @@
 # @vanilla-extract/css
 
+## 1.3.0
+
+### Minor Changes
+
+- [#319](https://github.com/seek-oss/vanilla-extract/pull/319) [`26832f1`](https://github.com/seek-oss/vanilla-extract/commit/26832f162e75b72f83dba0c230295a5dfed683aa) Thanks [@nicksrandall](https://github.com/nicksrandall)! - Add `createGlobalThemeContract` function
+
+  Creates a contract of globally scoped variable names for themes to implement.
+
+  > 💡 This is useful if you want to make your theme contract available to non-JavaScript environments.
+
+  ```ts
+  // themes.css.ts
+  import {
+    createGlobalThemeContract,
+    createGlobalTheme,
+  } from '@vanilla-extract/css';
+
+  export const vars = createGlobalThemeContract({
+    color: {
+      brand: 'color-brand',
+    },
+    font: {
+      body: 'font-body',
+    },
+  });
+
+  createGlobalTheme(':root', vars, {
+    color: {
+      brand: 'blue',
+    },
+    font: {
+      body: 'arial',
+    },
+  });
+  ```
+
+  You can also provide a map function as the second argument which has access to the value and the object path.
+
+  For example, you can automatically prefix all variable names.
+
+  ```ts
+  // themes.css.ts
+  import {
+    createGlobalThemeContract,
+    createGlobalTheme,
+  } from '@vanilla-extract/css';
+
+  export const vars = createGlobalThemeContract(
+    {
+      color: {
+        brand: 'color-brand',
+      },
+      font: {
+        body: 'font-body',
+      },
+    },
+    value => `prefix-${value}`,
+  );
+  ```
+
+  You can also use the map function to automatically generate names from the object path, joining keys with a hyphen.
+
+  ```ts
+  // themes.css.ts
+  import {
+    createGlobalThemeContract,
+    createGlobalTheme,
+  } from '@vanilla-extract/css';
+
+  export const vars = createGlobalThemeContract(
+    {
+      color: {
+        brand: null,
+      },
+      font: {
+        body: null,
+      },
+    },
+    (_value, path) => `prefix-${path.join('-')}`,
+  );
+  ```
+
+* [#323](https://github.com/seek-oss/vanilla-extract/pull/323) [`1e7d647`](https://github.com/seek-oss/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Support configurable identifier types
+
 ## 1.2.3
 
 ### Patch Changes

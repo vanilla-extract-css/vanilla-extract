@@ -85,6 +85,8 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [Snowpack](#snowpack)
   - [Gatsby](#gatsby)
   - [Test environments](#test-environments)
+  - [Configuration](#configuration)
+    - [identifiers](#identifiers)
 - [Styling API](#styling-api)
   - [style](#style)
   - [styleVariants](#stylevariants)
@@ -131,6 +133,8 @@ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/
 ```
 
 3. Add the [webpack](https://webpack.js.org) plugin.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
 
 ```js
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
@@ -184,6 +188,8 @@ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
 2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
 
 ```js
 const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
@@ -246,6 +252,8 @@ npm install @vanilla-extract/css @vanilla-extract/vite-plugin
 
 2. Add the [Vite](https://vitejs.dev/) plugin to your Vite config.
 
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
 ```js
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
@@ -266,6 +274,8 @@ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
 2. Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
 
 ```js
 // snowpack.config.json
@@ -305,6 +315,16 @@ In testing environments (like `jsdom`) vanilla-extract will create and insert st
 import '@vanilla-extract/css/disableRuntimeStyles';
 ```
 
+### Configuration
+
+#### identifiers
+
+Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can be configured by selecting from the following options:
+
+- `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
+- `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
+
+Each integration will set a default value based on the configuration options passed to the bundler.
 
 ---
 
@@ -581,7 +601,7 @@ createGlobalTheme(':root', vars, {
 
 ### createThemeContract
 
-Creates a contract for themes to implement.
+Creates a contract of locally scoped variable names for themes to implement.
 
 **Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
 
@@ -621,6 +641,81 @@ export const themeB = createTheme(vars, {
     body: 'comic sans ms'
   }
 });
+```
+
+### createGlobalThemeContract
+
+Creates a contract of globally scoped variable names for themes to implement.
+
+> 💡 This is useful if you want to make your theme contract available to non-JavaScript environments.
+
+```ts
+// themes.css.ts
+
+import {
+  createGlobalThemeContract,
+  createGlobalTheme
+} from '@vanilla-extract/css';
+
+export const vars = createGlobalThemeContract({
+  color: {
+    brand: 'color-brand'
+  },
+  font: {
+    body: 'font-body'
+  }
+});
+
+createGlobalTheme(':root', vars, {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
+});
+```
+
+You can also provide a map function as the second argument which has access to the value and the object path.
+
+For example, you can automatically prefix all variable names.
+
+```ts
+// themes.css.ts
+
+import {
+  createGlobalThemeContract,
+  createGlobalTheme
+} from '@vanilla-extract/css';
+
+export const vars = createGlobalThemeContract({
+  color: {
+    brand: 'color-brand'
+  },
+  font: {
+    body: 'font-body'
+  }
+}, (value) => `prefix-${value}`);
+```
+
+You can also use the map function to automatically generate names from the object path, joining keys with a hyphen.
+
+```ts
+// themes.css.ts
+
+import {
+  createGlobalThemeContract,
+  createGlobalTheme
+} from '@vanilla-extract/css';
+
+export const vars = createGlobalThemeContract({
+  color: {
+    brand: null
+  },
+  font: {
+    body: null
+  }
+}, (_value, path) => `prefix-${path.join('-')}`);
 ```
 
 ### assignVars

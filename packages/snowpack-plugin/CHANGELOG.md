@@ -1,5 +1,31 @@
 # @vanilla-extract/snowpack-plugin
 
+## 2.0.0
+
+### Major Changes
+
+- [#323](https://github.com/seek-oss/vanilla-extract/pull/323) [`1e7d647`](https://github.com/seek-oss/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can now be configured via the `identifiers` option which accepts either `short` or `debug`.
+
+  - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
+  - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `somefile_mystyle_hnw5tz3`
+
+  ```js
+  import { vanillaExtractPlugin } from '@vanilla-extract/snowpack-plugin';
+
+  const snowpackConfig = {
+    plugins: [['@vanilla-extract/snowpack-plugin', { identifiers: 'short' }]],
+  };
+  ```
+
+  BREAKING CHANGE
+
+  Previously identifiers were formatted as `short` when `process.env.NODE_ENV` was set to "production". By default, they will now be formatted according to Snowpacks's [mode config](https://www.snowpack.dev/reference/configuration#mode).
+
+### Patch Changes
+
+- Updated dependencies [[`1e7d647`](https://github.com/seek-oss/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275)]:
+  - @vanilla-extract/integration@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes

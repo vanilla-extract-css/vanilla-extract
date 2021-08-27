@@ -8,9 +8,10 @@ import {
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { NullableTokens, ThemeVars } from './types';
+import { Tokens, NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
+import { getIdentOption } from './adapter';
 
 export function createVar(debugId?: string): CSSVarFunction {
   // Convert ref count to base 36 for optimal hash lengths
@@ -20,7 +21,7 @@ export function createVar(debugId?: string): CSSVarFunction {
     packageName ? `${packageName}${filePath}` : filePath,
   );
   const varName =
-    process.env.NODE_ENV !== 'production' && debugId
+    getIdentOption() === 'debug' && debugId
       ? `${debugId}__${fileScopeHash}${refCount}`
       : `${fileScopeHash}${refCount}`;
 
@@ -74,5 +75,38 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
 ): ThemeVars<ThemeTokens> {
   return walkObject(tokens, (_value, path) => {
     return createVar(path.join('-'));
+  });
+}
+
+export function createGlobalThemeContract<ThemeTokens extends Tokens>(
+  tokens: ThemeTokens,
+): ThemeVars<ThemeTokens>;
+export function createGlobalThemeContract<ThemeTokens extends NullableTokens>(
+  tokens: ThemeTokens,
+  mapFn: (value: string | null, path: Array<string>) => string,
+): ThemeVars<ThemeTokens>;
+export function createGlobalThemeContract(
+  tokens: Tokens | NullableTokens,
+  mapFn?: (value: string | null, path: Array<string>) => string,
+) {
+  return walkObject(tokens, (value, path) => {
+    const rawVarName =
+      typeof mapFn === 'function'
+        ? mapFn(value as string | null, path)
+        : (value as string);
+
+    const varName =
+      typeof rawVarName === 'string' ? rawVarName.replace(/^\-\-/, '') : null;
+
+    if (
+      typeof varName !== 'string' ||
+      varName !== cssesc(varName, { isIdentifier: true })
+    ) {
+      throw new Error(
+        `Invalid variable name for "${path.join('.')}": ${varName}`,
+      );
+    }
+
+    return `var(--${varName})`;
   });
 }
