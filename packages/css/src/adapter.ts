@@ -49,5 +49,10 @@ export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
 };
 
 export const getIdentType: Adapter['getIdentType'] = (...props) => {
+  // Backwards compatibility with old versions of the integration package
+  if (!('getIdentType' in adapter)) {
+    return process.env.NODE_ENV === 'production' ? 'short' : 'debug';
+  }
+
   return adapter.getIdentType(...props);
 };
