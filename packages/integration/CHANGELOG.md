@@ -1,5 +1,16 @@
 # @vanilla-extract/integration
 
+## 1.2.0
+
+### Minor Changes
+
+- [#323](https://github.com/seek-oss/vanilla-extract/pull/323) [`1e7d647`](https://github.com/seek-oss/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Support configurable identifier types
+
+### Patch Changes
+
+- Updated dependencies [[`26832f1`](https://github.com/seek-oss/vanilla-extract/commit/26832f162e75b72f83dba0c230295a5dfed683aa), [`1e7d647`](https://github.com/seek-oss/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275)]:
+  - @vanilla-extract/css@1.3.0
+
 ## 1.1.0
 
 ### Minor Changes
