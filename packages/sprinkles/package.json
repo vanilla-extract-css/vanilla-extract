@@ -25,9 +25,9 @@
   "author": "SEEK",
   "license": "MIT",
   "peerDependencies": {
-    "@vanilla-extract/css": "^1.0.0"
+    "@vanilla-extract/css": "*"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "^1.0.0"
+    "@vanilla-extract/css": "*"
   }
 }
