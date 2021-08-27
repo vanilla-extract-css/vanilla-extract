@@ -89,6 +89,26 @@ describe('createGlobalThemeContract', () => {
     `);
   });
 
+  it('ignores leading double hyphen', () => {
+    expect(
+      createGlobalThemeContract({
+        color: {
+          red: '--color-red',
+          blue: '--color-blue',
+          green: '--color-green',
+        },
+      }),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--color-blue)",
+          "green": "var(--color-green)",
+          "red": "var(--color-red)",
+        },
+      }
+    `);
+  });
+
   it('supports adding a prefix', () => {
     expect(
       createGlobalThemeContract(
@@ -100,6 +120,29 @@ describe('createGlobalThemeContract', () => {
           },
         },
         (value) => `prefix-${value}`,
+      ),
+    ).toMatchInlineSnapshot(`
+      Object {
+        "color": Object {
+          "blue": "var(--prefix-color-blue)",
+          "green": "var(--prefix-color-green)",
+          "red": "var(--prefix-color-red)",
+        },
+      }
+    `);
+  });
+
+  it('ignores leading double hyphen when adding a prefix', () => {
+    expect(
+      createGlobalThemeContract(
+        {
+          color: {
+            red: 'color-red',
+            blue: 'color-blue',
+            green: 'color-green',
+          },
+        },
+        (value) => `--prefix-${value}`,
       ),
     ).toMatchInlineSnapshot(`
       Object {

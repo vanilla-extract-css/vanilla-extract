@@ -89,10 +89,13 @@ export function createGlobalThemeContract(
   mapFn?: (value: string | null, path: Array<string>) => string,
 ) {
   return walkObject(tokens, (value, path) => {
-    const varName =
+    const rawVarName =
       typeof mapFn === 'function'
         ? mapFn(value as string | null, path)
         : (value as string);
+
+    const varName =
+      typeof rawVarName === 'string' ? rawVarName.replace(/^\-\-/, '') : null;
 
     if (
       typeof varName !== 'string' ||
