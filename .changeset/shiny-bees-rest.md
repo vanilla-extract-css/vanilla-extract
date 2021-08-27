@@ -17,10 +17,10 @@ import {
 
 export const vars = createGlobalThemeContract({
   color: {
-    brand: 'ui-color-brand'
+    brand: 'color-brand'
   },
   font: {
-    body: 'ui-font-body'
+    body: 'font-body'
   }
 });
 
@@ -54,7 +54,7 @@ export const vars = createGlobalThemeContract(
       body: 'font-body'
     }
   },
-  (value) => `ui-${value}`
+  (value) => `prefix-${value}`
 );
 ```
 
@@ -76,6 +76,6 @@ export const vars = createGlobalThemeContract(
       body: null
     }
   },
-  (_value, path) => path.join('-')
+  (_value, path) => `prefix-${path.join('-')}`
 );
 ```

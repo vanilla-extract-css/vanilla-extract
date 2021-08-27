@@ -639,10 +639,10 @@ import {
 
 export const vars = createGlobalThemeContract({
   color: {
-    brand: 'ui-color-brand'
+    brand: 'color-brand'
   },
   font: {
-    body: 'ui-font-body'
+    body: 'font-body'
   }
 });
 
@@ -675,7 +675,7 @@ export const vars = createGlobalThemeContract({
   font: {
     body: 'font-body'
   }
-}, (value) => `ui-${value}`);
+}, (value) => `prefix-${value}`);
 ```
 
 You can also use the map function to automatically generate names from the object path, joining keys with a hyphen.
@@ -695,7 +695,7 @@ export const vars = createGlobalThemeContract({
   font: {
     body: null
   }
-}, (_value, path) => path.join('-'));
+}, (_value, path) => `prefix-${path.join('-')}`);
 ```
 
 ### assignVars
