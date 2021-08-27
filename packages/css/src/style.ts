@@ -15,7 +15,7 @@ import {
   registerComposition,
   markCompositionUsed,
 } from './adapter';
-import { getFileScope } from './fileScope';
+import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
 
@@ -82,7 +82,9 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
  * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
  */
 export function composeStyles(...classNames: Array<ClassNames>) {
-  return composedStyle(classNames);
+  const compose = hasFileScope() ? composedStyle : dudupeAndJoinClassList;
+
+  return compose(classNames);
 }
 
 export function globalStyle(selector: string, rule: GlobalStyleRule) {
