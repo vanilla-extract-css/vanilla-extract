@@ -79,8 +79,7 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
 }
 
 /**
- * @deprecated Use style with array syntax
- * Backwards compatible alias for style. Will be deprecated soon.
+ * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
  */
 export function composeStyles(...classNames: Array<ClassNames>) {
   return composedStyle(classNames);
