@@ -15,5 +15,5 @@ vanillaExtractPlugin({ identifiers: 'short' })
 
 BREAKING CHANGE
 
-Previously identifiers were formatted as `short` when `process.env.NODE_ENV` was set to "production". By default, they will now be formatted according to Webpack's [mode config](https://webpack.js.org/configuration/mode/).
+Previously identifiers were formatted as `short` when `process.env.NODE_ENV` was set to "production". By default, they will now be formatted according to webpack's [mode config](https://webpack.js.org/configuration/mode/).
 
