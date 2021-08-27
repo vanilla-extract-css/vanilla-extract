@@ -23,13 +23,13 @@ function parseFileScope(serialisedFileScope: string): FileScope {
   };
 }
 
-export type IdentifierType = ReturnType<Adapter['getIdentOption']>;
+export type IdentifierOption = ReturnType<Adapter['getIdentOption']>;
 
 interface ProcessVanillaFileOptions {
   source: string;
   filePath: string;
   outputCss?: boolean;
-  identType?: IdentifierType;
+  identOption?: IdentifierOption;
   serializeVirtualCssPath?: (file: {
     fileName: string;
     base64Source: string;
@@ -40,7 +40,7 @@ export function processVanillaFile({
   source,
   filePath,
   outputCss = true,
-  identType = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
+  identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
 }: ProcessVanillaFileOptions) {
   type Css = Parameters<Adapter['appendCss']>[0];
@@ -72,7 +72,7 @@ export function processVanillaFile({
       usedCompositions.add(identifier);
     },
     onEndFileScope: () => {},
-    getIdentOption: () => identType,
+    getIdentOption: () => identOption,
   };
 
   setAdapter(cssAdapter);

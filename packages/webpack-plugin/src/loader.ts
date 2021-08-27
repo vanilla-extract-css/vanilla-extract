@@ -2,7 +2,7 @@ import path from 'path';
 // @ts-expect-error
 import loaderUtils from 'loader-utils';
 import {
-  IdentifierType,
+  IdentifierOption,
   processVanillaFile,
 } from '@vanilla-extract/integration';
 
@@ -21,7 +21,7 @@ const emptyCssExtractionFile = require.resolve(
 
 interface LoaderOptions {
   outputCss: boolean;
-  identifiers?: IdentifierType;
+  identifiers?: IdentifierOption;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {
@@ -66,7 +66,7 @@ export function pitch(this: LoaderContext) {
         source,
         outputCss,
         filePath: this.resourcePath,
-        identType:
+        identOption:
           identifiers ?? (this.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileName, base64Source }) => {
           const virtualResourceLoader = `${require.resolve(

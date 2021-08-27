@@ -1,4 +1,4 @@
-import { cssFileFilter, IdentifierType } from '@vanilla-extract/integration';
+import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
 import path from 'path';
 import type { Compiler, RuleSetRule } from 'webpack';
 import chalk from 'chalk';
@@ -56,7 +56,7 @@ function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
 
 interface PluginOptions {
   test?: RuleSetRule['test'];
-  identifiers?: IdentifierType;
+  identifiers?: IdentifierOption;
   outputCss?: boolean;
   externals?: any;
   /** @deprecated */
@@ -67,7 +67,7 @@ export class VanillaExtractPlugin {
   outputCss: boolean;
   allowRuntime: boolean;
   childCompiler: ChildCompiler;
-  identifiers?: IdentifierType;
+  identifiers?: IdentifierOption;
 
   constructor(options: PluginOptions = {}) {
     const {

@@ -9,11 +9,11 @@ import {
   compile,
   hash,
   getPackageInfo,
-  IdentifierType,
+  IdentifierOption,
 } from '@vanilla-extract/integration';
 
 interface Options {
-  identifiers?: IdentifierType;
+  identifiers?: IdentifierOption;
 }
 export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -87,7 +87,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         source,
         filePath: id,
         outputCss: !ssr,
-        identType:
+        identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
       });
     },

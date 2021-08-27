@@ -5,7 +5,7 @@ import {
   getSourceFromVirtualCssFile,
   compile,
   vanillaExtractFilescopePlugin,
-  IdentifierType,
+  IdentifierOption,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
@@ -16,7 +16,7 @@ interface VanillaExtractPluginOptions {
   externals?: Array<string>;
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
-  identifiers?: IdentifierType;
+  identifiers?: IdentifierOption;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -67,7 +67,7 @@ export function vanillaExtractPlugin({
           source,
           filePath: path,
           outputCss,
-          identType:
+          identOption:
             identifiers ?? (build.initialOptions.minify ? 'short' : 'debug'),
         });
 

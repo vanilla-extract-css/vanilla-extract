@@ -5,4 +5,4 @@ export { compile, vanillaExtractFilescopePlugin } from './compile';
 export { hash } from './hash';
 export * from './filters';
 
-export type { IdentifierType } from './processVanillaFile';
+export type { IdentifierOption } from './processVanillaFile';
