@@ -4,12 +4,11 @@ import {
   Contract,
   MapLeafNodes,
   CSSVarFunction,
-  Primitive,
 } from '@vanilla-extract/private';
 import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
-import { NullableTokens, ThemeVars } from './types';
+import { Tokens, NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
 
@@ -78,35 +77,32 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
   });
 }
 
-export type Mapper = (value: Primitive, path: Array<string>) => string;
-const defaultMapper: Mapper = (value, path) => {
-  if (typeof value !== 'string') {
-    throw new Error(
-      `To use the default map function with "createGlobalThemeContract", each property value must be a string. Property "${path.join(
-        '.',
-      )}"'s value is "${value}".`,
-    );
-  }
-  return value;
-};
-
+export function createGlobalThemeContract<ThemeTokens extends Tokens>(
+  tokens: ThemeTokens,
+): ThemeVars<ThemeTokens>;
 export function createGlobalThemeContract<ThemeTokens extends NullableTokens>(
   tokens: ThemeTokens,
-  map: Mapper = defaultMapper,
-): ThemeVars<ThemeTokens> {
+  mapFn: (value: string | null, path: Array<string>) => string,
+): ThemeVars<ThemeTokens>;
+export function createGlobalThemeContract(
+  tokens: Tokens | NullableTokens,
+  mapFn?: (value: string | null, path: Array<string>) => string,
+) {
   return walkObject(tokens, (value, path) => {
-    const varName = map(value, path);
-    if (typeof varName !== 'string') {
+    const varName =
+      typeof mapFn === 'function'
+        ? mapFn(value as string | null, path)
+        : (value as string);
+
+    if (
+      typeof varName !== 'string' ||
+      varName !== cssesc(varName, { isIdentifier: true })
+    ) {
       throw new Error(
-        `The map function used by "createGlobalThemeContract" must return a string and instead returned "${value}".`,
+        `Invalid variable name for "${path.join('.')}": ${varName}`,
       );
     }
-    const cssVarName = cssesc(
-      varName.match(/^[0-9]/) ? `_${varName}` : varName,
-      {
-        isIdentifier: true,
-      },
-    );
-    return `var(--${cssVarName})` as const;
+
+    return `var(--${varName})`;
   });
 }

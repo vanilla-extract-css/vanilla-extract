@@ -88,6 +88,7 @@ describe('createGlobalThemeContract', () => {
       }
     `);
   });
+
   it('supports adding a prefix', () => {
     expect(
       createGlobalThemeContract(
@@ -110,6 +111,7 @@ describe('createGlobalThemeContract', () => {
       }
     `);
   });
+
   it('supports path based names', () => {
     expect(
       createGlobalThemeContract(
@@ -132,17 +134,50 @@ describe('createGlobalThemeContract', () => {
       }
     `);
   });
+
   it('errors when invalid property value', () => {
     expect(() =>
       createGlobalThemeContract({
         color: {
+          // @ts-expect-error
           red: null,
-          blue: null,
-          green: null,
+          blue: 'color-blue',
+          green: 'color-green',
         },
       }),
-    ).toThrow();
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.red\\": null"`,
+    );
   });
+
+  it('errors when escaped property value', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: "color'blue",
+          green: 'color-green',
+        },
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.blue\\": color'blue"`,
+    );
+  });
+
+  it('errors when property value starts with a number', () => {
+    expect(() =>
+      createGlobalThemeContract({
+        color: {
+          red: 'color-red',
+          blue: 'color-blue',
+          green: '123-color-green',
+        },
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.green\\": 123-color-green"`,
+    );
+  });
+
   it('errors when invalid map value', () => {
     expect(() =>
       createGlobalThemeContract(
@@ -156,6 +191,8 @@ describe('createGlobalThemeContract', () => {
         // @ts-expect-error
         () => null,
       ),
-    ).toThrow();
+    ).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid variable name for \\"color.red\\": null"`,
+    );
   });
 });

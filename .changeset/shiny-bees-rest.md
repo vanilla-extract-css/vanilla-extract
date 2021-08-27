@@ -14,6 +14,7 @@ import {
   createGlobalThemeContract,
   createGlobalTheme
 } from '@vanilla-extract/css';
+
 export const vars = createGlobalThemeContract({
   color: {
     brand: 'ui-color-brand'
@@ -22,6 +23,7 @@ export const vars = createGlobalThemeContract({
     body: 'ui-font-body'
   }
 });
+
 createGlobalTheme(':root', vars, {
   color: {
     brand: 'blue'
@@ -42,6 +44,7 @@ import {
   createGlobalThemeContract,
   createGlobalTheme
 } from '@vanilla-extract/css';
+
 export const vars = createGlobalThemeContract(
   {
     color: {
@@ -63,6 +66,7 @@ import {
   createGlobalThemeContract,
   createGlobalTheme
 } from '@vanilla-extract/css';
+
 export const vars = createGlobalThemeContract(
   {
     color: {

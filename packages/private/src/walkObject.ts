@@ -1,6 +1,6 @@
 import { MapLeafNodes } from './types';
 
-export type Primitive = string | number | null | undefined;
+type Primitive = string | number | null | undefined;
 
 type Walkable = {
   [Key in string | number]: Primitive | Walkable;
