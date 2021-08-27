@@ -4,7 +4,7 @@ import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
 const headerHeight = '90px';
-const sidebarWidth = '265px';
+const sidebarWidth = '300px';
 
 export const bodyLock = style({
   overflow: 'hidden!important',
