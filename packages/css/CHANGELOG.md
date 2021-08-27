@@ -42,10 +42,7 @@
 
   ```ts
   // themes.css.ts
-  import {
-    createGlobalThemeContract,
-    createGlobalTheme,
-  } from '@vanilla-extract/css';
+  import { createGlobalThemeContract } from '@vanilla-extract/css';
 
   export const vars = createGlobalThemeContract(
     {
@@ -64,10 +61,7 @@
 
   ```ts
   // themes.css.ts
-  import {
-    createGlobalThemeContract,
-    createGlobalTheme,
-  } from '@vanilla-extract/css';
+  import { createGlobalThemeContract } from '@vanilla-extract/css';
 
   export const vars = createGlobalThemeContract(
     {
