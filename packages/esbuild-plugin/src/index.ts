@@ -5,6 +5,7 @@ import {
   getSourceFromVirtualCssFile,
   compile,
   vanillaExtractFilescopePlugin,
+  IdentifierOption,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
@@ -15,12 +16,14 @@ interface VanillaExtractPluginOptions {
   externals?: Array<string>;
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
+  identifiers?: IdentifierOption;
 }
 export function vanillaExtractPlugin({
   outputCss,
   externals = [],
   runtime = false,
   processCss,
+  identifiers,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
@@ -64,6 +67,8 @@ export function vanillaExtractPlugin({
           source,
           filePath: path,
           outputCss,
+          identOption:
+            identifiers ?? (build.initialOptions.minify ? 'short' : 'debug'),
         });
 
         return {

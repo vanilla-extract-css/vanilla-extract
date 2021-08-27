@@ -6,6 +6,7 @@ export const mockAdapter: Adapter = {
   onEndFileScope: () => {},
   registerComposition: () => {},
   markCompositionUsed: () => {},
+  getIdentOption: () => 'debug',
 };
 
 let adapter: Adapter = mockAdapter;
@@ -45,4 +46,13 @@ export const markCompositionUsed: Adapter['markCompositionUsed'] = (
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
   return adapter.onEndFileScope(...props);
+};
+
+export const getIdentOption: Adapter['getIdentOption'] = (...props) => {
+  // Backwards compatibility with old versions of the integration package
+  if (!('getIdentOption' in adapter)) {
+    return process.env.NODE_ENV === 'production' ? 'short' : 'debug';
+  }
+
+  return adapter.getIdentOption(...props);
 };

@@ -24,6 +24,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extrac
 
 3/ Add the [webpack](https://webpack.js.org) plugin.
 
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
 ```js
 // webpack.config.js
 
@@ -81,6 +83,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
 ```
 
 2/ Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
 
 ```js
 // bundle.js
@@ -151,6 +155,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/vite-plugin
 
 2/ Add the [Vite](https://vitejs.dev/) plugin to your Vite config.
 
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
 ```js
 // vite.config.js
 
@@ -172,6 +178,8 @@ $ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
 2/ Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
 
 ```js
 // snowpack.config.json
@@ -210,3 +218,14 @@ In testing environments (like `jsdom`) vanilla-extract will create and insert st
 // setupTests.ts
 import '@vanilla-extract/css/disableRuntimeStyles';
 ```
+
+## Configuration
+
+### identifiers
+
+Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can be configured by selecting from the following options:
+
+- `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
+- `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
+
+Each integration will set a default value based on the configuration options passed to the bundler.

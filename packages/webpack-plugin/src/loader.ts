@@ -1,7 +1,10 @@
 import path from 'path';
 // @ts-expect-error
 import loaderUtils from 'loader-utils';
-import { processVanillaFile } from '@vanilla-extract/integration';
+import {
+  IdentifierOption,
+  processVanillaFile,
+} from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
@@ -18,6 +21,7 @@ const emptyCssExtractionFile = require.resolve(
 
 interface LoaderOptions {
   outputCss: boolean;
+  identifiers?: IdentifierOption;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {
@@ -31,7 +35,7 @@ export default function (this: LoaderContext, source: string) {
 
 export function pitch(this: LoaderContext) {
   this.cacheable(true);
-  const { childCompiler, outputCss } = loaderUtils.getOptions(
+  const { childCompiler, outputCss, identifiers } = loaderUtils.getOptions(
     this,
   ) as InternalLoaderOptions;
 
@@ -62,6 +66,8 @@ export function pitch(this: LoaderContext) {
         source,
         outputCss,
         filePath: this.resourcePath,
+        identOption:
+          identifiers ?? (this.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileName, base64Source }) => {
           const virtualResourceLoader = `${require.resolve(
             'virtual-resource-loader',

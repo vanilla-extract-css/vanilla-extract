@@ -42,9 +42,6 @@ export const startEsbuildFixture = async (
       ],
       absWorkingDir,
       outdir,
-      define: {
-        'process.env.NODE_ENV': JSON.stringify(mode),
-      },
     },
   );
 

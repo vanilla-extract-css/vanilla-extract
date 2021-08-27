@@ -1,5 +1,6 @@
 import hash from '@emotion/hash';
 
+import { getIdentOption } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
 function getDevPrefix(debugId: string | undefined) {
@@ -29,7 +30,7 @@ export function generateIdentifier(debugId: string | undefined) {
 
   let identifier = `${fileScopeHash}${refCount}`;
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (getIdentOption() === 'debug') {
     const devPrefix = getDevPrefix(debugId);
 
     if (devPrefix) {

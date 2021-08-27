@@ -4,10 +4,15 @@ import {
   processVanillaFile,
   compile,
   getSourceFromVirtualCssFile,
+  IdentifierOption,
 } from '@vanilla-extract/integration';
 
+interface Options {
+  identifiers?: IdentifierOption;
+}
 export default function vanillaExtractPlugin(
   snowpackConfig: SnowpackConfig,
+  { identifiers }: Options = {},
 ): SnowpackPlugin {
   const importedByMap = new Map();
 
@@ -53,6 +58,9 @@ export default function vanillaExtractPlugin(
         source,
         filePath,
         outputCss: !isSSR,
+        identOption:
+          identifiers ??
+          (snowpackConfig.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath({ base64Source, fileScope }) {
           const cssUrl = `${path.join(cwd, fileScope.filePath)}.css`;
 
