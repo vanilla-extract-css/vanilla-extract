@@ -11,7 +11,7 @@ import cssesc from 'cssesc';
 import { NullableTokens, ThemeVars } from './types';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
-import { getIdentType } from './adapter';
+import { getIdentOption } from './adapter';
 
 export function createVar(debugId?: string): CSSVarFunction {
   // Convert ref count to base 36 for optimal hash lengths
@@ -21,7 +21,7 @@ export function createVar(debugId?: string): CSSVarFunction {
     packageName ? `${packageName}${filePath}` : filePath,
   );
   const varName =
-    getIdentType() === 'debug' && debugId
+    getIdentOption() === 'debug' && debugId
       ? `${debugId}__${fileScopeHash}${refCount}`
       : `${fileScopeHash}${refCount}`;
 

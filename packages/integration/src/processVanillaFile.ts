@@ -23,7 +23,7 @@ function parseFileScope(serialisedFileScope: string): FileScope {
   };
 }
 
-export type IdentifierType = ReturnType<Adapter['getIdentType']>;
+export type IdentifierType = ReturnType<Adapter['getIdentOption']>;
 
 interface ProcessVanillaFileOptions {
   source: string;
@@ -72,7 +72,7 @@ export function processVanillaFile({
       usedCompositions.add(identifier);
     },
     onEndFileScope: () => {},
-    getIdentType: () => identType,
+    getIdentOption: () => identType,
   };
 
   setAdapter(cssAdapter);

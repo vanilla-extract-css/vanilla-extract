@@ -4,4 +4,5 @@ module.exports = [
   { fileName: 'utility-functions.md', id: 'utility-functions' },
   { fileName: 'dynamic-api.md', id: 'dynamic-api' },
   { fileName: 'setup.md', id: 'setup' },
+  { fileName: 'configuration.md', id: 'configuration' },
 ];

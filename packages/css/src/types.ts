@@ -110,7 +110,7 @@ export interface Adapter {
   registerComposition: (composition: Composition) => void;
   markCompositionUsed: (identifier: string) => void;
   onEndFileScope: (fileScope: FileScope) => void;
-  getIdentType: () => IdentType;
+  getIdentOption: () => IdentType;
 }
 
 export type NullableTokens = {
