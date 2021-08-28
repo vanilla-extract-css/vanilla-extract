@@ -694,10 +694,7 @@ For example, you can automatically prefix all variable names.
 ```ts
 // themes.css.ts
 
-import {
-  createGlobalThemeContract,
-  createGlobalTheme
-} from '@vanilla-extract/css';
+import { createGlobalThemeContract } from '@vanilla-extract/css';
 
 export const vars = createGlobalThemeContract({
   color: {
@@ -714,10 +711,7 @@ You can also use the map function to automatically generate names from the objec
 ```ts
 // themes.css.ts
 
-import {
-  createGlobalThemeContract,
-  createGlobalTheme
-} from '@vanilla-extract/css';
+import { createGlobalThemeContract } from '@vanilla-extract/css';
 
 export const vars = createGlobalThemeContract({
   color: {
