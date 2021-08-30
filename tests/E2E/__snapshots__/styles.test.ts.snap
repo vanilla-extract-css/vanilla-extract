@@ -2,11 +2,6 @@
 
 exports[`Styling and specificity features browser on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -14,6 +9,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -26,17 +41,30 @@ Object {
 
 exports[`Styling and specificity features browser on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -47,11 +75,6 @@ Object {
 
 exports[`Styling and specificity features esbuild on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -59,6 +82,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -71,17 +114,30 @@ Object {
 
 exports[`Styling and specificity features esbuild on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -92,11 +148,6 @@ Object {
 
 exports[`Styling and specificity features esbuild-runtime on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -104,6 +155,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -116,17 +187,30 @@ Object {
 
 exports[`Styling and specificity features esbuild-runtime on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -137,11 +221,6 @@ Object {
 
 exports[`Styling and specificity features mini-css-extract on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -149,6 +228,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -161,17 +260,30 @@ Object {
 
 exports[`Styling and specificity features mini-css-extract on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -182,11 +294,6 @@ Object {
 
 exports[`Styling and specificity features snowpack on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -194,6 +301,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -206,17 +333,30 @@ Object {
 
 exports[`Styling and specificity features snowpack on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -227,11 +367,6 @@ Object {
 
 exports[`Styling and specificity features style-loader on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -239,6 +374,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -251,17 +406,30 @@ Object {
 
 exports[`Styling and specificity features style-loader on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",
@@ -272,11 +440,6 @@ Object {
 
 exports[`Styling and specificity features vite on desktop all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
@@ -284,6 +447,26 @@ Object {
   },
   "mergedStyle": Map {
     "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
     "color" => "rgb(221, 160, 221)",
   },
   "styleWithComposition": Map {
@@ -296,17 +479,30 @@ Object {
 
 exports[`Styling and specificity features vite on mobile all builds should match 1`] = `
 Object {
-  "compositionInSelector": Map {
-    "color" => "rgb(255, 255, 255)",
-    "background-color" => "rgb(0, 0, 0)",
-    "font-size" => "24px",
-  },
   "compositionOnly": Map {
     "height" => "50px",
     "background-color" => "rgb(176, 224, 230)",
   },
   "mergedStyle": Map {
     "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
   },
   "styleWithComposition": Map {
     "height" => "50px",

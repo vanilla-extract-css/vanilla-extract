@@ -1,40 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stylesheet features - esbuild should create valid stylesheet 1`] = `
-"._16ipzok0{height:50px}._16ipzok0:after{display:block;content:\\"Below 700px\\"}._16ipzok1{background-color:#b0e0e6}._16ipzok1:hover{background-color:#708090}._16ipzok3{color:#fff}._16ipzok4{background-color:#000}body ._16ipzok5{font-size:24px}@media screen and (min-width: 700px){._16ipzok0{color:plum}._16ipzok0:after{content:\\"Above 700px\\"}}
+"._1o6ek500{height:50px}._1o6ek500:after{display:block;content:\\"Below 700px\\"}._1o6ek501{background-color:#b0e0e6}._1o6ek501:hover{background-color:#708090}._1o6ek502{background-color:#b0e0e6}._1o6ek502:hover{background-color:#708090}._1o6ek503{background-color:#b0e0e6}._1o6ek503:hover{background-color:#708090}._1o6ek505{color:#fff}._1o6ek506{background-color:#000}body ._1o6ek507{font-size:24px}._1o6ek508{color:#fff}._1o6ek509{background-color:#000}body ._1o6ek50a{font-size:24px}@media screen and (min-width: 700px){._1o6ek500{color:plum}._1o6ek500:after{content:\\"Above 700px\\"}}
 "
 `;
 
-exports[`Stylesheet features - vite should create valid stylesheet 1`] = `"._16ipzok0{height:50px}._16ipzok0:after{display:block;content:\\"Below 700px\\"}._16ipzok1{background-color:#b0e0e6}._16ipzok1:hover{background-color:#708090}._16ipzok3{color:#fff}._16ipzok4{background-color:#000}body ._16ipzok5{font-size:24px}@media screen and (min-width:700px){._16ipzok0{color:plum}._16ipzok0:after{content:\\"Above 700px\\"}}"`;
+exports[`Stylesheet features - vite should create valid stylesheet 1`] = `"._1o6ek500{height:50px}._1o6ek500:after{display:block;content:\\"Below 700px\\"}._1o6ek501{background-color:#b0e0e6}._1o6ek501:hover{background-color:#708090}._1o6ek502{background-color:#b0e0e6}._1o6ek502:hover{background-color:#708090}._1o6ek503{background-color:#b0e0e6}._1o6ek503:hover{background-color:#708090}._1o6ek505{color:#fff}._1o6ek506{background-color:#000}body ._1o6ek507{font-size:24px}._1o6ek508{color:#fff}._1o6ek509{background-color:#000}body ._1o6ek50a{font-size:24px}@media screen and (min-width:700px){._1o6ek500{color:plum}._1o6ek500:after{content:\\"Above 700px\\"}}"`;
 
 exports[`Stylesheet features - webpack should create valid stylesheet 1`] = `
-"._15o1k0 {
+"._87f2ru0 {
   height: 50px;
 }
-._15o1k0:after {
+._87f2ru0:after {
   display: block;
   content: \\"Below 700px\\";
 }
-._15o1k1 {
+._87f2ru1 {
   background-color: powderblue;
 }
-._15o1k1:hover {
+._87f2ru1:hover {
   background-color: slategray;
 }
-._15o1k3 {
+._87f2ru2 {
+  background-color: powderblue;
+}
+._87f2ru2:hover {
+  background-color: slategray;
+}
+._87f2ru3 {
+  background-color: powderblue;
+}
+._87f2ru3:hover {
+  background-color: slategray;
+}
+._87f2ru5 {
   color: white;
 }
-._15o1k4 {
+._87f2ru6 {
   background-color: black;
 }
-body ._15o1k5 {
+body ._87f2ru7 {
+  font-size: 24px;
+}
+._87f2ru8 {
+  color: white;
+}
+._87f2ru9 {
+  background-color: black;
+}
+body ._87f2rua {
   font-size: 24px;
 }
 @media screen and (min-width: 700px) {
-  ._15o1k0 {
+  ._87f2ru0 {
     color: plum;
   }
-  ._15o1k0:after {
+  ._87f2ru0:after {
     content: \\"Above 700px\\";
   }
 }
