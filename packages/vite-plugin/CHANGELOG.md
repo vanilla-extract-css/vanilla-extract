@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 2.0.1
+
+### Patch Changes
+
+- [#327](https://github.com/seek-oss/vanilla-extract/pull/327) [`73b55f8`](https://github.com/seek-oss/vanilla-extract/commit/73b55f8e7e205701abdb1cbb029c3f2f5080b6fd) Thanks [@benjervis](https://github.com/benjervis)! - Fix bug where precompiled .css.ts files (.css.js) were treated differently in SSR mode.
+
 ## 2.0.0
 
 ### Major Changes
