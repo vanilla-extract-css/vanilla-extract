@@ -58,7 +58,12 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return null;
       }
 
-      if (ssr && code.indexOf('@vanilla-extract/css/fileScope') === -1) {
+      if (ssr) {
+        // If file already has a scope (has already run through babel plugin)
+        if (code.indexOf('@vanilla-extract/css/fileScope') > -1) {
+          return code;
+        }
+
         const filePath = normalizePath(path.relative(packageInfo.dirname, id));
 
         const packageName = packageInfo.name
@@ -68,7 +73,6 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return `
           import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
           setFileScope("${filePath}", ${packageName});
-  
           ${code}
           endFileScope();
         `;
