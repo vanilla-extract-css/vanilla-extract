@@ -1,6 +1,517 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Styling and specificity Themed browser on desktop all builds should match 1`] = `
+exports[`Styling and specificity features browser on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features browser on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features esbuild on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features esbuild on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features esbuild-runtime on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features esbuild-runtime on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features mini-css-extract on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features mini-css-extract on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features snowpack on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features snowpack on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features style-loader on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features style-loader on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity features vite on desktop all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+    "color" => "rgb(221, 160, 221)",
+  },
+}
+`;
+
+exports[`Styling and specificity features vite on mobile all builds should match 1`] = `
+Object {
+  "compositionOnly": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "mergedStyle": Map {
+    "height" => "50px",
+  },
+  "styleCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsCompositionInSelector": Map {
+    "color" => "rgb(255, 255, 255)",
+    "background-color" => "rgb(0, 0, 0)",
+    "font-size" => "24px",
+  },
+  "styleVariantsWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleVariantsWithMappedComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+  "styleWithComposition": Map {
+    "height" => "50px",
+    "background-color" => "rgb(176, 224, 230)",
+  },
+}
+`;
+
+exports[`Styling and specificity themed browser on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -259,7 +770,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed browser on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed browser on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -506,7 +1017,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed esbuild on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed esbuild on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -765,7 +1276,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed esbuild on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed esbuild on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1012,7 +1523,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed esbuild-runtime on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed esbuild-runtime on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1271,7 +1782,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed esbuild-runtime on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed esbuild-runtime on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1518,7 +2029,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed mini-css-extract on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed mini-css-extract on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -1777,7 +2288,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed mini-css-extract on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed mini-css-extract on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2024,7 +2535,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed snowpack on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed snowpack on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "z-index" => "1",
@@ -2283,7 +2794,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed snowpack on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed snowpack on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "z-index" => "1",
@@ -2530,7 +3041,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed style-loader on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed style-loader on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -2789,7 +3300,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed style-loader on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed style-loader on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -3036,7 +3547,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed vite on desktop all builds should match 1`] = `
+exports[`Styling and specificity themed vite on desktop all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",
@@ -3295,7 +3806,7 @@ Object {
 }
 `;
 
-exports[`Styling and specificity Themed vite on mobile all builds should match 1`] = `
+exports[`Styling and specificity themed vite on mobile all builds should match 1`] = `
 Object {
   "altButton": Map {
     "box-shadow" => "rgb(255, 0, 0) 0px 0px 5px 0px",

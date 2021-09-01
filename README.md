@@ -393,11 +393,51 @@ export const childClass = style({
 });
 ```
 
-> 💡 To improve maintainability, each `style` block can only target a single element. To enforce this, all selectors must target the `&` character which is a reference to the current element. For example, `'&:hover:not(:active)'` is considered valid, while `'& > a'` and ``[`& ${childClass}`]`` are not.
+> 💡 To improve maintainability, each style block can only target a single element. To enforce this, all selectors must target the “&” character which is a reference to the current element.
 >
->If you want to target another scoped class then it should be defined within the `style` block of that class instead. For example, ``[`& ${childClass}`]`` is invalid since it targets `${childClass}`, so it should instead be defined in the `style` block for `childClass`.
+> For example, `'&:hover:not(:active)'` and `` [`${parentClass} &`] `` are considered valid, while `'& a[href]'` and `` [`& ${childClass}`] `` are not.
 >
->If you want to globally target child nodes within the current element (e.g. `'& > a'`), you should use [`globalStyle`](#globalstyle) instead.
+> If you want to target another scoped class then it should be defined within the style block of that class instead.
+>
+> For example, `` [`& ${childClass}`] `` is invalid since it doesn’t target “&”, so it should instead be defined in the style block for `childClass`.
+>
+> If you want to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [`globalStyle`](#globalstyle) instead.
+
+Multiple styles can be composed into a single rule by providing an array of styles.
+
+```ts
+import { style } from '@vanilla-extract/css';
+
+const base = style({ padding: 12 });
+
+export const primary = style([
+  base,
+  { background: 'blue' }
+]);
+
+export const secondary = style([
+  base,
+  { background: 'aqua' }
+]);
+```
+
+When composed styles are used in selectors, they are assigned an additional class if required so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
+
+```ts
+import {
+  style,
+  globalStyle,
+} from '@vanilla-extract/css';
+
+const background = style({ background: 'mintcream' });
+const padding = style({ padding: 12 });
+
+export const container = style([background, padding]);
+
+globalStyle(`${container} *`, {
+  boxSizing: 'border-box'
+});
+```
 
 ### styleVariants
 
@@ -414,20 +454,35 @@ export const variant = styleVariants({
 
 > 💡 This is useful for mapping component props to styles, e.g. `<button className={styles.variant[props.variant]}>`
 
+Multiple styles can be composed into a single rule by providing an array of styles.
+
+```ts
+import { styleVariants } from '@vanilla-extract/css';
+
+const base = style({ padding: 12 });
+
+export const variant = styleVariants({
+  primary: [base, { background: 'blue' }],
+  secondary: [base, { background: 'aqua' }],
+});
+```
+
 You can also transform the values by providing a map function as the second argument.
 
 ```ts
 import { styleVariants } from '@vanilla-extract/css';
 
-const spaceScale = {
-  small: 4,
-  medium: 8,
-  large: 16
-};
+const base = style({ padding: 12 });
 
-export const padding = styleVariants(spaceScale, (space) => ({
-  padding: space
-}));
+const backgrounds = {
+  primary: 'blue',
+  secondary: 'aqua'
+} as const;
+
+export const variant = styleVariants(
+  backgrounds,
+  (background) => [base, { background }]
+);
 ```
 
 ### globalStyle
@@ -451,50 +506,6 @@ export const parentClass = style({});
 
 globalStyle(`${parentClass} > a`, {
   color: 'pink'
-});
-```
-
-### composeStyles
-
-Combines multiple styles into a single class string, while also deduplicating and removing unnecessary spaces.
-
-```ts
-import { style, composeStyles } from '@vanilla-extract/css';
-
-const button = style({
-  padding: 12,
-  borderRadius: 8
-});
-
-export const primaryButton = composeStyles(
-  button,
-  style({ background: 'coral' })
-);
-
-export const secondaryButton = composeStyles(
-  button,
-  style({ background: 'peachpuff' })
-);
-```
-
-> 💡 Styles can also be provided in shallow and deeply nested arrays, similar to [classnames.](https://github.com/JedWatson/classnames)
-
-When style compositions are used in selectors, they are assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
-
-```ts
-import {
-  style,
-  globalStyle,
-  composeStyles
-} from '@vanilla-extract/css';
-
-const background = style({ background: 'mintcream' });
-const padding = style({ padding: 12 });
-
-export const container = composeStyles(background, padding);
-
-globalStyle(`${container} *`, {
-  boxSizing: 'border-box'
 });
 ```
 

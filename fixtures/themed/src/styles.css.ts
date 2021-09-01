@@ -7,7 +7,6 @@ import {
   globalFontFace,
   keyframes,
   globalKeyframes,
-  composeStyles,
   globalStyle,
 } from '@vanilla-extract/css';
 import { shadow } from './shared.css';
@@ -52,13 +51,10 @@ export const container = style({
   },
 });
 
-const iDunno = composeStyles(
-  style({ zIndex: 1 }),
-  style({ position: 'relative' }),
-);
+const iDunno = style([{ zIndex: 1 }, { position: 'relative' }]);
 
-export const button = composeStyles(
-  style({
+export const button = style([
+  {
     fontFamily: impact,
     backgroundColor: fallbackVar(
       vars.colors.backgroundColor,
@@ -80,10 +76,10 @@ export const button = composeStyles(
         outline: '5px solid red',
       },
     },
-  }),
+  },
   shadow,
   iDunno,
-);
+]);
 
 globalStyle(`body ${iDunno}`, {
   animation: `3s infinite alternate ${slide} ease-in-out`,

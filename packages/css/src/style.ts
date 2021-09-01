@@ -1,23 +1,90 @@
 import cssesc from 'cssesc';
 import dedent from 'dedent';
+import deepmerge from 'deepmerge';
 
 import type {
   FontFaceRule,
   CSSKeyframes,
   StyleRule,
   GlobalStyleRule,
+  ClassNames,
 } from './types';
-import { registerClassName, appendCss } from './adapter';
-import { getFileScope } from './fileScope';
+import {
+  registerClassName,
+  appendCss,
+  registerComposition,
+  markCompositionUsed,
+} from './adapter';
+import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
+import { dudupeAndJoinClassList } from './utils';
 
-export function style(rule: StyleRule, debugId?: string) {
+type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
+
+function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
+  const className = generateIdentifier(debugId);
+  registerClassName(className);
+
+  const classList = [];
+  const styleRules = [];
+
+  for (const rule of rules) {
+    if (typeof rule === 'string') {
+      classList.push(rule);
+    } else {
+      styleRules.push(rule);
+    }
+  }
+
+  let result = className;
+
+  if (classList.length > 0) {
+    result = `${className} ${dudupeAndJoinClassList(classList)}`;
+
+    registerComposition({
+      identifier: className,
+      classList: result,
+    });
+
+    if (styleRules.length > 0) {
+      // If there are styles attached to this composition then it is
+      // always used and should never be removed
+      markCompositionUsed(className);
+    }
+  }
+
+  if (styleRules.length > 0) {
+    const rule = deepmerge.all(styleRules, {
+      // Replace arrays rather than merging
+      arrayMerge: (_, sourceArray) => sourceArray,
+    });
+
+    appendCss({ type: 'local', selector: className, rule }, getFileScope());
+  }
+
+  return result;
+}
+
+export function style(rule: ComplexStyleRule, debugId?: string) {
+  if (Array.isArray(rule)) {
+    return composedStyle(rule, debugId);
+  }
+
   const className = generateIdentifier(debugId);
 
   registerClassName(className);
   appendCss({ type: 'local', selector: className, rule }, getFileScope());
 
   return className;
+}
+
+/**
+ * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
+ */
+export function composeStyles(...classNames: Array<ClassNames>) {
+  const compose = hasFileScope() ? composedStyle : dudupeAndJoinClassList;
+
+  return compose(classNames);
 }
 
 export function globalStyle(selector: string, rule: GlobalStyleRule) {
@@ -69,11 +136,14 @@ export function globalKeyframes(name: string, rule: CSSKeyframes) {
 }
 
 export function styleVariants<
-  StyleMap extends Record<string | number, StyleRule>,
+  StyleMap extends Record<string | number, ComplexStyleRule>,
 >(styleMap: StyleMap, debugId?: string): Record<keyof StyleMap, string>;
 export function styleVariants<Data extends Record<string | number, unknown>>(
   data: Data,
-  mapData: <Key extends keyof Data>(value: Data[Key], key: Key) => StyleRule,
+  mapData: <Key extends keyof Data>(
+    value: Data[Key],
+    key: Key,
+  ) => ComplexStyleRule,
   debugId?: string,
 ): Record<keyof Data, string>;
 export function styleVariants(...args: any[]) {

@@ -42,7 +42,8 @@
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
     "dedent": "^0.7.0",
-    "deep-object-diff": "^1.1.0"
+    "deep-object-diff": "^1.1.0",
+    "deepmerge": "^4.2.2"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0",
