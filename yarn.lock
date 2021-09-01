@@ -1760,6 +1760,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fixtures/frosted@workspace:fixtures/frosted":
+  version: 0.0.0-use.local
+  resolution: "@fixtures/frosted@workspace:fixtures/frosted"
+  dependencies:
+    "@vanilla-extract/css": 1.3.0
+    "@vanilla-extract/frosted": 0.0.1
+  languageName: unknown
+  linkType: soft
+
 "@fixtures/low-level@workspace:fixtures/low-level":
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
@@ -3209,6 +3218,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vanilla-extract/css@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@vanilla-extract/css@npm:1.3.0"
+  dependencies:
+    "@emotion/hash": ^0.8.0
+    "@vanilla-extract/private": ^1.0.1
+    chalk: ^4.1.1
+    css-what: ^5.0.1
+    cssesc: ^3.0.0
+    csstype: ^3.0.7
+    dedent: ^0.7.0
+    deep-object-diff: ^1.1.0
+  checksum: c6f6cee2a5012c539c698e96f507c1baec54d3119a7a9a573441512c04aec565a1c9e361a3d29d0418ccad423622fcbd3df2c7e6b466822de496be592714fd96
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/dynamic@2.0.0, @vanilla-extract/dynamic@workspace:packages/dynamic":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/dynamic@workspace:packages/dynamic"
@@ -3224,6 +3249,16 @@ __metadata:
   dependencies:
     "@vanilla-extract/integration": ^1.2.0
     esbuild: ^0.11.16
+  languageName: unknown
+  linkType: soft
+
+"@vanilla-extract/frosted@0.0.1, @vanilla-extract/frosted@workspace:packages/frosted":
+  version: 0.0.0-use.local
+  resolution: "@vanilla-extract/frosted@workspace:packages/frosted"
+  dependencies:
+    "@vanilla-extract/css": "*"
+  peerDependencies:
+    "@vanilla-extract/css": "*"
   languageName: unknown
   linkType: soft
 

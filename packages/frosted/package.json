@@ -1,0 +1,31 @@
+{
+  "name": "@vanilla-extract/frosted",
+  "version": "0.0.1",
+  "description": "INSERT DESCRIPTION",
+  "sideEffects": false,
+  "main": "dist/vanilla-extract-frosted.cjs.js",
+  "module": "dist/vanilla-extract-frosted.esm.js",
+  "files": [
+    "/dist",
+    "/createRuntimeFn"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "createRuntimeFn.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/frosted"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "peerDependencies": {
+    "@vanilla-extract/css": "*"
+  },
+  "devDependencies": {
+    "@vanilla-extract/css": "*"
+  }
+}
