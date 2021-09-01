@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.1.2
+
+### Patch Changes
+
+- [#326](https://github.com/seek-oss/vanilla-extract/pull/326) [`2d9b4c3`](https://github.com/seek-oss/vanilla-extract/commit/2d9b4c3e711310e55dbefe4b3430a771d95d62fd) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Avoid calling `composeStyles` when using the atoms function at runtime
+
 ## 1.1.1
 
 ### Patch Changes
