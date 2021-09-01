@@ -91,7 +91,6 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [style](#style)
   - [styleVariants](#stylevariants)
   - [globalStyle](#globalstyle)
-  - [composeStyles](#composestyles)
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
   - [createThemeContract](#createthemecontract)
