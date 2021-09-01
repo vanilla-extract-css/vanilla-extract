@@ -59,6 +59,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       }
 
       if (ssr) {
+        // If file already has a scope (has already run through babel plugin)
         if (code.indexOf('@vanilla-extract/css/fileScope') > -1) {
           return code;
         }
