@@ -455,7 +455,7 @@ const styles = createAtomicStyles({
 
 Defines which condition(s) should be used when a non-conditional value is requested, e.g. `atoms({ display: 'flex' })`.
 
-> 💡 When using mobile-first responsive conditions, this should be your lowest breakpoint.
+If you're using mobile-first responsive conditions, this should be your lowest breakpoint.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
@@ -471,7 +471,7 @@ const responsiveStyles = createAtomicStyles({
 });
 ```
 
-If your conditions are mutually exclusive, you can provide an array of default conditions that non-conditional values should be applied to. For example, the following configuration would automatically expand `atoms({ background: 'white' })` to the equivalent of `atoms({ background: { lightMode: 'white', darkMode: 'white' }})`.
+If your conditions are mutually exclusive (e.g. light mode and dark mode), you can provide an array of default conditions. For example, the following configuration would automatically expand `atoms({ background: 'white' })` to the equivalent of `atoms({ background: { lightMode: 'white', darkMode: 'white' }})`.
 
 ```ts
 import { createAtomicStyles } from '@vanilla-extract/sprinkles';
