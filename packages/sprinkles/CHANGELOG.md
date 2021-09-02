@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.1.3
+
+### Patch Changes
+
+- [#331](https://github.com/seek-oss/vanilla-extract/pull/331) [`30f3ba3`](https://github.com/seek-oss/vanilla-extract/commit/30f3ba3f702b8a9eab8bee3bbfe0e571ccd65bd8) Thanks [@markdalgleish](https://github.com/markdalgleish)! - `createMapValueFn`: Support mapping values to `boolean`, `null` and `undefined`
+
 ## 1.1.2
 
 ### Patch Changes
