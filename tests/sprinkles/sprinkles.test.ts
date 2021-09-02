@@ -514,6 +514,59 @@ describe('sprinkles', () => {
       expect(value).toMatchInlineSnapshot(`"123_mobile"`);
     });
 
+    it('should handle booleans', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(123, () => false);
+
+      expect(value).toBe(false);
+    });
+
+    it('should handle conditional booleans', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(
+        { mobile: 1, tablet: 2, desktop: 3 },
+        (value) => value === 2,
+      );
+
+      expect(value).toStrictEqual({
+        mobile: false,
+        tablet: true,
+        desktop: false,
+      });
+    });
+
+    it('should handle nulls', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(123, () => null);
+
+      expect(value).toBe(null);
+    });
+
+    it('should handle conditional nulls', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
+        value === 2 ? null : value,
+      );
+
+      expect(value).toStrictEqual({ mobile: 1, tablet: null, desktop: 3 });
+    });
+
+    it('should handle undefined', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue(123, () => undefined);
+
+      expect(value).toBe(undefined);
+    });
+
+    it('should handle conditional undefined', () => {
+      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
+        value === 2 ? undefined : value,
+      );
+
+      expect(value).toStrictEqual({ mobile: 1, tablet: undefined, desktop: 3 });
+    });
+
     it('should handle responsive arrays', () => {
       const map = createMapValueFn(conditionalAtomicStyles);
       const value = map(['one'], (value, key) => `${value}_${key}` as const);

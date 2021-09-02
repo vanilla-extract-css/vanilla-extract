@@ -123,7 +123,7 @@ export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
 export function createMapValueFn<AtomicStyles extends Conditions<string>>(
   atomicStyles: AtomicStyles,
 ): <
-  OutputValue extends string | number,
+  OutputValue extends string | number | boolean | null | undefined,
   Value extends ConditionalValue<AtomicStyles, string | number>,
 >(
   value: Value,
