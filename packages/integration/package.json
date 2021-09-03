@@ -3,7 +3,6 @@
   "version": "1.2.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-integration.cjs.js",
-  "module": "dist/vanilla-extract-integration.esm.js",
   "files": [
     "/dist"
   ],

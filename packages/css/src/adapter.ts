@@ -9,7 +9,15 @@ export const mockAdapter: Adapter = {
   getIdentOption: () => 'debug',
 };
 
-let adapter: Adapter = mockAdapter;
+const adapterStack: Array<Adapter> = [mockAdapter];
+
+const currentAdapter = () => {
+  if (adapterStack.length < 1) {
+    throw new Error('No adapter configured');
+  }
+
+  return adapterStack[adapterStack.length - 1];
+};
 
 let hasConfiguredAdapter = false;
 
@@ -20,35 +28,45 @@ export const setAdapterIfNotSet = (newAdapter: Adapter) => {
 };
 
 export const setAdapter = (newAdapter: Adapter) => {
+  console.log('setAdapter', id);
   hasConfiguredAdapter = true;
-  adapter = newAdapter;
+
+  adapterStack.push(newAdapter);
+};
+
+export const removeAdapter = () => {
+  adapterStack.pop();
 };
 
 export const appendCss: Adapter['appendCss'] = (...props) => {
-  return adapter.appendCss(...props);
+  console.log('appendCss', id);
+
+  return currentAdapter().appendCss(...props);
 };
 
 export const registerClassName: Adapter['registerClassName'] = (...props) => {
-  return adapter.registerClassName(...props);
+  return currentAdapter().registerClassName(...props);
 };
 
 export const registerComposition: Adapter['registerComposition'] = (
   ...props
 ) => {
-  return adapter.registerComposition(...props);
+  return currentAdapter().registerComposition(...props);
 };
 
 export const markCompositionUsed: Adapter['markCompositionUsed'] = (
   ...props
 ) => {
-  return adapter.markCompositionUsed(...props);
+  return currentAdapter().markCompositionUsed(...props);
 };
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
-  return adapter.onEndFileScope(...props);
+  return currentAdapter().onEndFileScope(...props);
 };
 
 export const getIdentOption: Adapter['getIdentOption'] = (...props) => {
+  const adapter = currentAdapter();
+
   // Backwards compatibility with old versions of the integration package
   if (!('getIdentOption' in adapter)) {
     return process.env.NODE_ENV === 'production' ? 'short' : 'debug';

@@ -1,5 +1,5 @@
 import { FileScope, Adapter } from '@vanilla-extract/css';
-import { setAdapter } from '@vanilla-extract/css/adapter';
+import * as adapter from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 // @ts-expect-error
 import evalCode from 'eval';
@@ -7,8 +7,6 @@ import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 import dedent from 'dedent';
 import { hash } from './hash';
-
-const originalNodeEnv = process.env.NODE_ENV;
 
 function stringifyFileScope({ packageName, filePath }: FileScope): string {
   return packageName ? `${filePath}$$$${packageName}` : filePath;
@@ -52,6 +50,7 @@ export function processVanillaFile({
   const usedCompositions = new Set<string>();
 
   const cssAdapter: Adapter = {
+    id: 'YO',
     appendCss: (css, fileScope) => {
       if (outputCss) {
         const serialisedFileScope = stringifyFileScope(fileScope);
@@ -75,25 +74,9 @@ export function processVanillaFile({
     getIdentOption: () => identOption,
   };
 
-  setAdapter(cssAdapter);
+  adapter.setAdapter(cssAdapter);
 
-  const currentNodeEnv = process.env.NODE_ENV;
-
-  const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__adapter__);${source};`;
-
-  // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
-  // This can cause CSS to be bound to the wrong instance, resulting in no CSS output
-  // To get around this we set the NODE_ENV back to the original value ONLY during eval
-  process.env.NODE_ENV = originalNodeEnv;
-
-  const evalResult = evalCode(
-    sourceWithBoundLoaderInstance,
-    filePath,
-    { console, __adapter__: cssAdapter, process },
-    true,
-  );
-
-  process.env.NODE_ENV = currentNodeEnv;
+  const evalResult = evalCode(source, filePath, { console, process }, true);
 
   const cssImports = [];
 
@@ -119,9 +102,16 @@ export function processVanillaFile({
     cssImports.push(virtualCssFilePath);
   }
 
+  // Backwards compat with older versions of @vanilla-extract/css
+  if ('removeAdapter' in adapter) {
+    adapter.removeAdapter();
+  }
+
   const unusedCompositions = composedClassLists
     .filter(({ identifier }) => !usedCompositions.has(identifier))
     .map(({ identifier }) => identifier);
+
+  console.log({ unusedCompositions });
 
   const unusedCompositionRegex =
     unusedCompositions.length > 0

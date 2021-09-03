@@ -4,10 +4,8 @@
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
-  "module": "dist/vanilla-extract-css.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
-    "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
+    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js"
   },
   "preconstruct": {
     "entrypoints": [

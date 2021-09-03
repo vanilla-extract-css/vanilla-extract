@@ -10,20 +10,20 @@ let startingPort = 10000;
 const getNextPort = () => (startingPort += 5);
 
 const tests = [
-  ['themed', 'browser'],
-  ['themed', 'mini-css-extract'],
-  ['themed', 'style-loader'],
-  ['themed', 'esbuild'],
-  ['themed', 'esbuild-runtime'],
-  ['themed', 'vite'],
-  ['themed', 'snowpack'],
-  ['features', 'browser'],
-  ['features', 'mini-css-extract'],
-  ['features', 'style-loader'],
-  ['features', 'esbuild'],
-  ['features', 'esbuild-runtime'],
+  // ['themed', 'browser'],
+  // ['themed', 'mini-css-extract'],
+  // ['themed', 'style-loader'],
+  // ['themed', 'esbuild'],
+  // ['themed', 'esbuild-runtime'],
+  // ['themed', 'vite'],
+  // ['themed', 'snowpack'],
+  // ['features', 'browser'],
+  // ['features', 'mini-css-extract'],
+  // ['features', 'style-loader'],
+  // ['features', 'esbuild'],
+  // ['features', 'esbuild-runtime'],
   ['features', 'vite'],
-  ['features', 'snowpack'],
+  // ['features', 'snowpack'],
 ] as const;
 
 async function getPageStyles(
