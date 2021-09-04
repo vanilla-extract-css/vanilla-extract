@@ -14,3 +14,4 @@ packages/**/README.md
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.next

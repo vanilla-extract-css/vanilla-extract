@@ -1,0 +1,28 @@
+{
+  "name": "vanilla-extract-example-next",
+  "description": "Example project using vanilla-extract, compiling with Next.js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^11.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17",
+    "@vanilla-extract/babel-plugin": "^1.0.1",
+    "@vanilla-extract/css": "^1.4.0",
+    "@vanilla-extract/next-plugin": "^1.0.0"
+  },
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ]
+}
