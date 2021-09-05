@@ -5,6 +5,11 @@ const config: PlaywrightTestConfig = {
   testMatch: '**/*.spec.ts',
 
   updateSnapshots: 'none',
+  expect: {
+    toMatchSnapshot: {
+      threshold: 0.1,
+    },
+  },
 
   projects: [
     {
