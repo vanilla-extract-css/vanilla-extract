@@ -7,7 +7,7 @@ const config: PlaywrightTestConfig = {
   updateSnapshots: 'none',
   expect: {
     toMatchSnapshot: {
-      threshold: 0.5,
+      threshold: 0.1,
     },
   },
 
