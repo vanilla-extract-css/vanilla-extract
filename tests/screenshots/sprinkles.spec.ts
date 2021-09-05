@@ -27,7 +27,7 @@ buildTypes.forEach((buildType) => {
     test('sprinkles', async ({ page }) => {
       await page.goto(server.url);
 
-      expect(await page.screenshot()).toMatchSnapshot('sprinkles');
+      expect(await page.screenshot()).toMatchSnapshot('sprinkles.png');
     });
 
     test.afterAll(async () => {

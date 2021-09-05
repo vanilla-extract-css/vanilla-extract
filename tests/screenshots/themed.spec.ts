@@ -27,7 +27,7 @@ buildTypes.forEach((buildType) => {
     test('themed', async ({ page }) => {
       await page.goto(server.url);
 
-      expect(await page.screenshot()).toMatchSnapshot('themed');
+      expect(await page.screenshot()).toMatchSnapshot('themed.png');
     });
 
     test.afterAll(async () => {
