@@ -23,5 +23,8 @@ jobs:
       - name: Install Browsers
         run: yarn playwright install chromium
 
+      - name: Build packages
+        run: yarn build
+
       - name: Screenshot tests
         run: yarn test:playwright
