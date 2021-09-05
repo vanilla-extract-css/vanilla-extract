@@ -24,7 +24,7 @@ buildTypes.forEach((buildType) => {
       });
     });
 
-    test('screenshot diff', async ({ page }) => {
+    test('features', async ({ page }) => {
       await page.goto(server.url);
 
       expect(await page.screenshot()).toMatchSnapshot('features');
