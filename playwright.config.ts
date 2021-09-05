@@ -4,9 +4,11 @@ const config: PlaywrightTestConfig = {
   // Look for test files in the "tests" directory, relative to this configuration file
   testMatch: '**/*.spec.ts',
 
+  updateSnapshots: 'none',
+
   projects: [
     {
-      name: 'Desktop - Chrome',
+      name: 'Desktop - Chromium',
       use: {
         browserName: 'chromium',
         channel: 'chrome',
@@ -17,7 +19,7 @@ const config: PlaywrightTestConfig = {
       },
     },
     {
-      name: 'Mobile - Chrome',
+      name: 'Mobile - Chromium',
       use: {
         browserName: 'chromium',
         channel: 'chrome',

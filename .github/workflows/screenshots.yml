@@ -30,6 +30,7 @@ jobs:
         run: yarn test:playwright
 
       - uses: actions/upload-artifact@v2
+        if: failure()
         with:
           name: test-results
-          path: test-results
+          path: test-results/
