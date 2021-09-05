@@ -190,7 +190,7 @@ $ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
 
-### Next.js
+## Next.js
 
 1/ Install the dependencies.
 
