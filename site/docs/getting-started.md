@@ -53,7 +53,7 @@ export const exampleStyle = style({
 });
 ```
 
-> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
+> 💡 Once you've [configured your build tooling,](/documentation/setup) these `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
 
 **Then consume them in your markup.**
 

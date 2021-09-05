@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-extract-webpack-react",
+  "name": "vanilla-extract-example-webpack-react",
   "description": "Example React project using vanilla-extract and Sprinkles, compiling with webpack",
   "keywords": [
     "vanilla-extract",
