@@ -1,11 +1,11 @@
-name: Validate
+name: Screenshots
 
 on: [push, pull_request]
 
 jobs:
   test:
     name: Lint & Test
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       CI: true
     steps:
@@ -20,11 +20,8 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
-      - name: Build
-        run: yarn build && node ./site/makeDocsManifest
+      - name: Install Browsers
+        run: yarn playwright install chromium
 
-      - name: Lint
-        run: yarn lint
-
-      - name: Test
-        run: yarn test:jest
+      - name: Screenshot tests
+        run: yarn test:playwright
