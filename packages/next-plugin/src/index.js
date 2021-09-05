@@ -8,17 +8,16 @@ export const createVanillaExtractPlugin =
       webpack(config, options) {
         const { dev, isServer } = options;
 
-        const cssRules = config.module.rules.find((rule) => {
-          return (
+        const cssRules = config.module.rules.find(
+          (rule) =>
             Array.isArray(rule.oneOf) &&
             rule.oneOf.some(
               ({ test }) =>
                 typeof test === 'object' &&
                 typeof test.test === 'function' &&
                 test.test('filename.css'),
-            )
-          );
-        }).oneOf;
+            ),
+        ).oneOf;
 
         cssRules.unshift({
           test: /\.vanilla\.css$/i,
