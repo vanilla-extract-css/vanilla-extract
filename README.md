@@ -56,7 +56,7 @@ export const exampleStyle = style({
 });
 ```
 
-> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
+> 💡 Once you've [configured your build tooling,](#setup) these `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
 
 **Then consume them in your markup.**
 
@@ -83,6 +83,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [esbuild](#esbuild)
   - [Vite](#vite)
   - [Snowpack](#snowpack)
+  - [Next.js](#nextjs)
   - [Gatsby](#gatsby)
   - [Test environments](#test-environments)
   - [Configuration](#configuration)
@@ -284,6 +285,55 @@ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
+
+### Next.js
+
+1. Install the dependencies.
+
+```bash
+npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/next-plugin
+```
+
+2. If you don't have a `.babelrc` file in the root of your project, create one. Add the [Babel](https://babeljs.io) plugin to your `.babelrc` file, ensuring that you're also including `"next/babel"` in your `presets` array.
+
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": ["@vanilla-extract/babel-plugin"]
+}
+```
+
+3. If you don't have a `next.config.js` file in the root of your project, create one. Add the [Next.js](https://nextjs.org) plugin to your `next.config.js` file.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
+```js
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+const nextConfig = {};
+
+module.exports = withVanillaExtract(nextConfig);
+```
+
+If required, this plugin can be composed with other plugins.
+
+```js
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx$/
+});
+
+const nextConfig = {};
+
+module.exports = withVanillaExtract(withMDX(nextConfig));
+```
 
 ### Gatsby
 
