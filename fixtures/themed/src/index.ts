@@ -42,7 +42,7 @@ function render() {
                   <div class="${responsiveTheme}">
               Responsive theme
                 <div id="${testNodes.responsiveThemeContainer}" class="${container}">
-                  <button id="${testNodes.responsiveThemeButton}" class="${button}">Responsive theme button n stuff</button>
+                  <button id="${testNodes.responsiveThemeButton}" class="${button}">Responsive theme button</button>
                             </div>
                           </div>
                         </div>
