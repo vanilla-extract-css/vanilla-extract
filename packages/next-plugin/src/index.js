@@ -8,7 +8,19 @@ export const createVanillaExtractPlugin =
       webpack(config, options) {
         const { dev, isServer } = options;
 
-        config.module.rules[config.module.rules.length - 1].oneOf.unshift({
+        const cssRules = config.module.rules.find((rule) => {
+          return (
+            Array.isArray(rule.oneOf) &&
+            rule.oneOf.some(
+              ({ test }) =>
+                typeof test === 'object' &&
+                typeof test.test === 'function' &&
+                test.test('filename.css'),
+            )
+          );
+        }).oneOf;
+
+        cssRules.unshift({
           test: /\.vanilla\.css$/i,
           sideEffects: true,
           use: getGlobalCssLoader(
