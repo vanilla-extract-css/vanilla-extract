@@ -10,6 +10,7 @@ import {
   hash,
   getPackageInfo,
   IdentifierOption,
+  addFileScope,
 } from '@vanilla-extract/integration';
 
 interface Options {
@@ -59,23 +60,11 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       }
 
       if (ssr) {
-        // If file already has a scope (has already run through babel plugin)
-        if (code.indexOf('@vanilla-extract/css/fileScope') > -1) {
-          return code;
-        }
-
-        const filePath = normalizePath(path.relative(packageInfo.dirname, id));
-
-        const packageName = packageInfo.name
-          ? `"${packageInfo.name}"`
-          : 'undefined';
-
-        return `
-          import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-          setFileScope("${filePath}", ${packageName});
-          ${code}
-          endFileScope();
-        `;
+        return addFileScope({
+          source: code,
+          filePath: normalizePath(path.relative(packageInfo.dirname, id)),
+          packageInfo,
+        }).source;
       }
 
       const { source, watchFiles } = await compile({
