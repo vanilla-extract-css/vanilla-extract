@@ -110,6 +110,7 @@ export const startWebpackFixture = (
               }),
             ),
           type,
+          stylesheet: 'main.css',
         });
       },
     });

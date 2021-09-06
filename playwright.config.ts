@@ -23,6 +23,8 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: 'Mobile - Chromium',
+      // Ignore stylesheets tests running over multiple viewports
+      testIgnore: /tests\/stylesheets/,
       use: {
         browserName: 'chromium',
         channel: 'chrome',

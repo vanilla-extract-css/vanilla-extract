@@ -8,6 +8,8 @@ import isPlainObject from 'lodash/isPlainObject';
 import dedent from 'dedent';
 import { hash } from './hash';
 
+const originalNodeEnv = process.env.NODE_ENV;
+
 function stringifyFileScope({ packageName, filePath }: FileScope): string {
   return packageName ? `${filePath}$$$${packageName}` : filePath;
 }
@@ -75,7 +77,16 @@ export function processVanillaFile({
 
   adapter.setAdapter(cssAdapter);
 
+  const currentNodeEnv = process.env.NODE_ENV;
+
+  // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
+  // This can cause CSS to be bound to the wrong instance, resulting in no CSS output
+  // To get around this we set the NODE_ENV back to the original value ONLY during eval
+  process.env.NODE_ENV = originalNodeEnv;
+
   const evalResult = evalCode(source, filePath, { console, process }, true);
+
+  process.env.NODE_ENV = currentNodeEnv;
 
   const cssImports = [];
 
