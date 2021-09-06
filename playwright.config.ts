@@ -1,7 +1,7 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-  testMatch: '**/*.spec.ts',
+  testMatch: '**/*.playwright.ts',
   updateSnapshots: 'none',
   expect: {
     toMatchSnapshot: {
