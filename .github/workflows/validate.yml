@@ -28,3 +28,34 @@ jobs:
 
       - name: Test
         run: yarn test:jest
+  playwright:
+    name: Playwright tests
+    runs-on: macos-latest
+    env:
+      CI: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@main
+        with:
+          node-version: 14.x
+
+      - name: Install Dependencies
+        run: yarn --immutable
+
+      - name: Install Browsers
+        run: yarn playwright install chromium
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Screenshot tests
+        run: yarn test:playwright
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results
+          path: test-results/
