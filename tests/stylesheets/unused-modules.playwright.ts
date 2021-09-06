@@ -19,7 +19,7 @@ buildTypes.forEach((buildType) => {
     test('should create valid stylesheet', async () => {
       expect(
         await getStylesheet(server.url, server.stylesheet),
-      ).toMatchSnapshot(`unused-modules.css`);
+      ).toMatchSnapshot(`unused-modules.css.txt`);
     });
 
     test.afterAll(async () => {

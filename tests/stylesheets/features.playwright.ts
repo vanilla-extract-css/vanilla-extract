@@ -19,7 +19,7 @@ buildTypes.forEach((buildType) => {
     test('should create valid stylesheet', async () => {
       expect(
         await getStylesheet(server.url, server.stylesheet),
-      ).toMatchSnapshot(`features.css`);
+      ).toMatchSnapshot(`features.css.txt`);
     });
 
     test.afterAll(async () => {
