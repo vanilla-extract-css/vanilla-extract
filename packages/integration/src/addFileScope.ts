@@ -26,7 +26,7 @@ export function addFileScope({
     import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
     setFileScope("${normalizedPath}", ${packageName});
     ${source}
-    endFileScope()
+    endFileScope();
   `;
 
   return { source: contents, updated: true };
