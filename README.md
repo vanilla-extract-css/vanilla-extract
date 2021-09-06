@@ -121,18 +121,10 @@ There are currently a few integrations to choose from.
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/css @vanilla-extract/webpack-plugin
 ```
 
-2. Add the [Babel](https://babeljs.io) plugin.
-
-```json
-{
-  "plugins": ["@vanilla-extract/babel-plugin"]
-}
-```
-
-3. Add the [webpack](https://webpack.js.org) plugin.
+2. Add the [webpack](https://webpack.js.org) plugin.
 
 > 💡 This plugin accepts an optional [configuration object](#configuration).
 
@@ -178,6 +170,18 @@ module.exports = {
   };
   ```
 </details>
+
+3. If you'd like automatic debuggable identifiers, you can add the [Babel](https://babeljs.io) plugin.
+   
+```bash
+$ npm install @vanilla-extract/babel-plugin
+```
+
+```json
+{
+  "plugins": ["@vanilla-extract/babel-plugin"]
+}
+```
 
 ### esbuild
 
