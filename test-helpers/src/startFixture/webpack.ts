@@ -19,30 +19,6 @@ const defaultWebpackConfig: Configuration = {
   optimization: {
     minimize: false,
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|ts|tsx)$/,
-        exclude: [/node_modules/],
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              presets: [
-                '@babel/preset-typescript',
-                '@babel/preset-react',
-                [
-                  '@babel/preset-env',
-                  { targets: { node: 14 }, modules: false },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -85,6 +61,31 @@ export const startWebpackFixture = (
                 loader: 'css-loader',
                 options: {
                   url: false,
+                },
+              },
+            ],
+          },
+          {
+            test: /\.(js|ts|tsx)$/,
+            exclude: [/node_modules/],
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  babelrc: false,
+                  presets: [
+                    '@babel/preset-typescript',
+                    '@babel/preset-react',
+                    [
+                      '@babel/preset-env',
+                      { targets: { node: 14 }, modules: false },
+                    ],
+                  ],
+                  plugins: [
+                    type !== 'mini-css-extract'
+                      ? '@vanilla-extract/babel-plugin'
+                      : null,
+                  ].filter(Boolean),
                 },
               },
             ],
