@@ -9,6 +9,7 @@ import {
   atomicWithPaddingShorthandStyles,
   atomicWithShorthandStyles,
   conditionalAtomicStyles,
+  conditionalAtomicStylesWithMultipleDefaultConditions,
   conditionalStylesWithoutDefaultCondition,
   conditionalStylesWithoutResponsiveArray,
 } from './index.css';
@@ -259,7 +260,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_small__1kw4bre1x sprinkles_paddingBottom_medium__1kw4bre21 sprinkles_paddingLeft_small__1kw4bre1r sprinkles_paddingRight_small__1kw4bre1u"`,
+        `"sprinkles_paddingTop_small__1kw4bre23 sprinkles_paddingBottom_medium__1kw4bre27 sprinkles_paddingLeft_small__1kw4bre1x sprinkles_paddingRight_small__1kw4bre20"`,
       );
     });
 
@@ -272,7 +273,7 @@ describe('sprinkles', () => {
           padding: 'large',
         }),
       ).toMatchInlineSnapshot(
-        `"sprinkles_paddingTop_large__1kw4bre1z sprinkles_paddingBottom_large__1kw4bre22 sprinkles_paddingLeft_small__1kw4bre1r sprinkles_paddingRight_small__1kw4bre1u"`,
+        `"sprinkles_paddingTop_large__1kw4bre25 sprinkles_paddingBottom_large__1kw4bre28 sprinkles_paddingLeft_small__1kw4bre1x sprinkles_paddingRight_small__1kw4bre20"`,
       );
     });
 
@@ -872,6 +873,52 @@ describe('sprinkles', () => {
               "paddingBottom",
               "paddingTop",
             ],
+          },
+        },
+      }
+    `);
+  });
+
+  it('should create conditional atomic styles with multiple default condition classes in "defaultClass"', () => {
+    expect(conditionalAtomicStylesWithMultipleDefaultConditions)
+      .toMatchInlineSnapshot(`
+      Object {
+        "conditions": Object {
+          "conditionNames": Array [
+            "lightMode",
+            "darkMode",
+          ],
+          "defaultCondition": Array [
+            "lightMode",
+            "darkMode",
+          ],
+          "responsiveArray": undefined,
+        },
+        "styles": Object {
+          "background": Object {
+            "values": Object {
+              "blue": Object {
+                "conditions": Object {
+                  "darkMode": "sprinkles_background_blue_darkMode__1kw4bre1l",
+                  "lightMode": "sprinkles_background_blue_lightMode__1kw4bre1k",
+                },
+                "defaultClass": "sprinkles_background_blue_lightMode__1kw4bre1k sprinkles_background_blue_darkMode__1kw4bre1l",
+              },
+              "green": Object {
+                "conditions": Object {
+                  "darkMode": "sprinkles_background_green_darkMode__1kw4bre1j",
+                  "lightMode": "sprinkles_background_green_lightMode__1kw4bre1i",
+                },
+                "defaultClass": "sprinkles_background_green_lightMode__1kw4bre1i sprinkles_background_green_darkMode__1kw4bre1j",
+              },
+              "red": Object {
+                "conditions": Object {
+                  "darkMode": "sprinkles_background_red_darkMode__1kw4bre1h",
+                  "lightMode": "sprinkles_background_red_lightMode__1kw4bre1g",
+                },
+                "defaultClass": "sprinkles_background_red_lightMode__1kw4bre1g sprinkles_background_red_darkMode__1kw4bre1h",
+              },
+            },
           },
         },
       }
