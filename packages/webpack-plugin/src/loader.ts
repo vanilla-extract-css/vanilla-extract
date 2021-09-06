@@ -4,6 +4,8 @@ import loaderUtils from 'loader-utils';
 import {
   IdentifierOption,
   processVanillaFile,
+  addFileScope,
+  PackageInfo,
 } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
@@ -22,6 +24,7 @@ const emptyCssExtractionFile = require.resolve(
 interface LoaderOptions {
   outputCss: boolean;
   identifiers?: IdentifierOption;
+  packageInfo: PackageInfo;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {
@@ -30,7 +33,13 @@ interface InternalLoaderOptions extends LoaderOptions {
 
 export default function (this: LoaderContext, source: string) {
   this.cacheable(true);
-  return source;
+  const { packageInfo } = loaderUtils.getOptions(this) as InternalLoaderOptions;
+
+  return addFileScope({
+    source,
+    filePath: this.resourcePath,
+    packageInfo,
+  }).source;
 }
 
 export function pitch(this: LoaderContext) {

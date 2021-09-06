@@ -2,7 +2,7 @@ import path from 'path';
 
 import findUp from 'find-up';
 
-interface PackageInfo {
+export interface PackageInfo {
   name: string;
   path: string;
   dirname: string;
