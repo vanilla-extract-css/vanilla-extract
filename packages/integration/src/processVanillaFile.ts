@@ -50,7 +50,6 @@ export function processVanillaFile({
   const usedCompositions = new Set<string>();
 
   const cssAdapter: Adapter = {
-    id: 'YO',
     appendCss: (css, fileScope) => {
       if (outputCss) {
         const serialisedFileScope = stringifyFileScope(fileScope);
@@ -110,8 +109,6 @@ export function processVanillaFile({
   const unusedCompositions = composedClassLists
     .filter(({ identifier }) => !usedCompositions.has(identifier))
     .map(({ identifier }) => identifier);
-
-  console.log({ unusedCompositions });
 
   const unusedCompositionRegex =
     unusedCompositions.length > 0

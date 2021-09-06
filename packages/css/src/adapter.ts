@@ -28,7 +28,6 @@ export const setAdapterIfNotSet = (newAdapter: Adapter) => {
 };
 
 export const setAdapter = (newAdapter: Adapter) => {
-  console.log('setAdapter', id);
   hasConfiguredAdapter = true;
 
   adapterStack.push(newAdapter);
@@ -39,8 +38,6 @@ export const removeAdapter = () => {
 };
 
 export const appendCss: Adapter['appendCss'] = (...props) => {
-  console.log('appendCss', id);
-
   return currentAdapter().appendCss(...props);
 };
 
