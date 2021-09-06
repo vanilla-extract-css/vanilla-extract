@@ -12,5 +12,10 @@
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
-  "ignore": ["@fixtures/*", "test-helpers", "vanilla-extract-webpack-react"]
+  "ignore": [
+    "@fixtures/*",
+    "test-helpers",
+    "vanilla-extract-example-next",
+    "vanilla-extract-example-webpack-react"
+  ]
 }
