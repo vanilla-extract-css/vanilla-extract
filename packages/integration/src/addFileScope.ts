@@ -20,11 +20,11 @@ export function addFileScope({
     ...relative(packageInfo.dirname, filePath).split(sep),
   );
 
+  const packageName = packageInfo.name ? `"${packageInfo.name}"` : 'undefined';
+
   const contents = `
     import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-    setFileScope("${normalizedPath}", ${
-    packageInfo.name ? `"${packageInfo.name}"` : 'undefined'
-  });
+    setFileScope("${normalizedPath}", ${packageName});
     ${source}
     endFileScope()
   `;
