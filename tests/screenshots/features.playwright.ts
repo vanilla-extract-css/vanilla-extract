@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { startFixture, TestServer } from 'test-helpers';
 
-import test from '../fixture';
+import test from './fixture';
 
 const buildTypes = [
   'browser',

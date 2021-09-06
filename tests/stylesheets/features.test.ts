@@ -1,28 +1,31 @@
-import { expect } from '@playwright/test';
-import test from '../fixture';
 import { getStylesheet, startFixture, TestServer } from 'test-helpers';
+
+const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
+let testCounter = 0;
 
 const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
 
 buildTypes.forEach((buildType) => {
-  test.describe(`features - ${buildType}`, () => {
+  describe(`features - ${buildType}`, () => {
     let server: TestServer;
 
-    test.beforeAll(async ({ port }) => {
-      server = await startFixture('unused-modules', {
+    beforeAll(async () => {
+      const portRange = 100 * workerIndex;
+
+      server = await startFixture('features', {
         type: buildType,
         mode: 'production',
-        basePort: port,
+        basePort: 12000 + portRange + testCounter++,
       });
     });
 
     test('should create valid stylesheet', async () => {
       expect(
         await getStylesheet(server.url, server.stylesheet),
-      ).toMatchSnapshot(`unused-modules.css.txt`);
+      ).toMatchSnapshot();
     });
 
-    test.afterAll(async () => {
+    afterAll(async () => {
       await server.close();
     });
   });

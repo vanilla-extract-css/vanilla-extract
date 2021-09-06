@@ -1,5 +1,4 @@
 import { FileScope, Adapter } from '@vanilla-extract/css';
-import * as adapter from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 // @ts-expect-error
 import evalCode from 'eval';
@@ -75,8 +74,6 @@ export function processVanillaFile({
     getIdentOption: () => identOption,
   };
 
-  adapter.setAdapter(cssAdapter);
-
   const currentNodeEnv = process.env.NODE_ENV;
 
   // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
@@ -84,7 +81,17 @@ export function processVanillaFile({
   // To get around this we set the NODE_ENV back to the original value ONLY during eval
   process.env.NODE_ENV = originalNodeEnv;
 
-  const evalResult = evalCode(source, filePath, { console, process }, true);
+  const adapterBoundSource = `
+    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+    ${source}
+  `;
+
+  const evalResult = evalCode(
+    adapterBoundSource,
+    filePath,
+    { console, process, __adapter__: cssAdapter },
+    true,
+  );
 
   process.env.NODE_ENV = currentNodeEnv;
 
@@ -112,10 +119,19 @@ export function processVanillaFile({
     cssImports.push(virtualCssFilePath);
   }
 
-  // Backwards compat with older versions of @vanilla-extract/css
-  if ('removeAdapter' in adapter) {
-    adapter.removeAdapter();
-  }
+  // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
+  // for requires executed within the eval and all CSS can be lost.
+  evalCode(
+    `const { removeAdapter } = require('@vanilla-extract/css/adapter');
+    // Backwards compat with older versions of @vanilla-extract/css
+    if (removeAdapter) {
+      removeAdapter();
+    }
+  `,
+    filePath,
+    { console, process },
+    true,
+  );
 
   const unusedCompositions = composedClassLists
     .filter(({ identifier }) => !usedCompositions.has(identifier))
