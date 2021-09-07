@@ -1,5 +1,26 @@
 # @vanilla-extract/sprinkles
 
+## 1.2.0
+
+### Minor Changes
+
+- [#334](https://github.com/seek-oss/vanilla-extract/pull/334) [`0d8efe2`](https://github.com/seek-oss/vanilla-extract/commit/0d8efe2e782bfc8d02485a19b9e3be4fa5bf7302) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support multiple default conditions
+
+  If your conditions are mutually exclusive (e.g. light mode and dark mode), you can now provide an array of default conditions. For example, the following configuration would automatically expand `atoms({ background: 'white' })` to the equivalent of `atoms({ background: { lightMode: 'white', darkMode: 'white' }})`.
+
+  ```ts
+  import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+
+  const responsiveStyles = createAtomicStyles({
+    conditions: {
+      lightMode: { '@media': '(prefers-color-scheme: light)' },
+      darkMode: { '@media': '(prefers-color-scheme: dark)' },
+    },
+    defaultCondition: ['lightMode', 'darkMode'],
+    // etc.
+  });
+  ```
+
 ## 1.1.3
 
 ### Patch Changes
