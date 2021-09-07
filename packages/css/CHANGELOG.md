@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.4.1
+
+### Patch Changes
+
+- [#343](https://github.com/seek-oss/vanilla-extract/pull/343) [`50bae14`](https://github.com/seek-oss/vanilla-extract/commit/50bae14bf38c8a971ad1727cb8e827c86da06772) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Cleanup adapter after processing styles
+
 ## 1.4.0
 
 ### Minor Changes
