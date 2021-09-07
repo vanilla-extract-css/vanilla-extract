@@ -65,6 +65,7 @@ export const startEsbuildFixture = async (
   return {
     type: 'esbuild',
     url: `http://localhost:${port}`,
+    stylesheet: 'index.css',
     close: () => {
       server.stop();
 
