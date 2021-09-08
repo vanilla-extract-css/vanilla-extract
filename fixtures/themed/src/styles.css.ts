@@ -5,8 +5,6 @@ import {
   fallbackVar,
   fontFace,
   globalFontFace,
-  keyframes,
-  globalKeyframes,
   globalStyle,
 } from '@vanilla-extract/css';
 import { shadow } from './shared.css';
@@ -20,26 +18,7 @@ globalFontFace('MyGlobalComicSans', {
   src: 'local("Comic Sans MS")',
 });
 
-const slide = keyframes({
-  '0%': {
-    transform: 'translateY(-4px)',
-  },
-  '100%': {
-    transform: 'translateY(4px)',
-  },
-});
-
-globalKeyframes('globalSlide', {
-  '0%': {
-    transform: 'translateY(-4px)',
-  },
-  '100%': {
-    transform: 'translateY(4px)',
-  },
-});
-
 export const container = style({
-  animation: `3s infinite alternate globalSlide ease-in-out`,
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space[2],
@@ -81,8 +60,8 @@ export const button = style([
   iDunno,
 ]);
 
-globalStyle(`body ${iDunno}`, {
-  animation: `3s infinite alternate ${slide} ease-in-out`,
+globalStyle(`body ${iDunno}:after`, {
+  content: "'I am content'",
 });
 
 const blankVar1 = createVar();

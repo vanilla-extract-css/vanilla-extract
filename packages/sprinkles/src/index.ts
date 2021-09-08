@@ -57,7 +57,7 @@ type ResponsiveArrayOptions<
 type ConditionalAtomicOptions<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: DefaultCondition;
@@ -83,7 +83,7 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 type ConditionalAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -94,7 +94,7 @@ type ConditionalAtomicStyles<
       values: Values<
         Properties[Property],
         {
-          defaultClass: DefaultCondition extends string ? string : undefined;
+          defaultClass: DefaultCondition extends false ? undefined : string;
           conditions: {
             [Rule in keyof Conditions]: string;
           };
@@ -108,7 +108,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -121,7 +121,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
       values: Values<
         Properties[Property],
         {
-          defaultClass: DefaultCondition extends string ? string : undefined;
+          defaultClass: DefaultCondition extends false ? undefined : string;
           conditions: {
             [Rule in keyof Conditions]: string;
           };
@@ -149,7 +149,7 @@ export function createAtomicStyles<
   ResponsiveLength extends number,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands> &
@@ -166,7 +166,7 @@ export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
@@ -177,7 +177,7 @@ export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ResponsiveArrayOptions<Conditions, ResponsiveLength>,
@@ -191,7 +191,7 @@ export function createAtomicStyles<
 export function createAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
@@ -237,6 +237,14 @@ export function createAtomicStyles(options: any): any {
           conditions: {},
         };
 
+        const defaultConditions = options.defaultCondition
+          ? Array.isArray(options.defaultCondition)
+            ? options.defaultCondition
+            : [options.defaultCondition]
+          : [];
+
+        const defaultClasses = [];
+
         for (const conditionName in options.conditions) {
           let styleValue: StyleRule =
             typeof value === 'object' ? value : { [key]: value };
@@ -277,9 +285,13 @@ export function createAtomicStyles(options: any): any {
 
           styles[key].values[valueName].conditions[conditionName] = className;
 
-          if (conditionName === options.defaultCondition) {
-            styles[key].values[valueName].defaultClass = className;
+          if (defaultConditions.indexOf(conditionName) > -1) {
+            defaultClasses.push(className);
           }
+        }
+
+        if (defaultClasses.length > 0) {
+          styles[key].values[valueName].defaultClass = defaultClasses.join(' ');
         }
       } else {
         const styleValue: StyleRule =

@@ -57,6 +57,18 @@ export const conditionalAtomicStyles = createAtomicStyles({
   },
 });
 
+export const conditionalAtomicStylesWithMultipleDefaultConditions =
+  createAtomicStyles({
+    defaultCondition: ['lightMode', 'darkMode'],
+    conditions: {
+      lightMode: { '@media': '(prefers-color-scheme: light)' },
+      darkMode: { '@media': '(prefers-color-scheme: dark)' },
+    },
+    properties: {
+      background: ['red', 'green', 'blue'],
+    },
+  });
+
 export const conditionalStylesWithoutDefaultCondition = createAtomicStyles({
   defaultCondition: false,
   conditions: {
