@@ -7,6 +7,7 @@ import type {
   PatternResult,
   RuntimeFn,
   VariantGroups,
+  VariantSelection,
 } from './types';
 
 function mapValues<Input extends Record<string, any>, OutputValue>(
@@ -26,7 +27,12 @@ export function createPattern<Variants extends VariantGroups>(
   options: PatternOptions<Variants>,
   debugId?: string,
 ): RuntimeFn<Variants> {
-  const { variants = {}, defaultVariants, base = '' } = options;
+  const {
+    variants = {},
+    defaultVariants,
+    compoundVariants = [],
+    base = '',
+  } = options;
 
   const defaultClassName =
     typeof base === 'string' ? base : style(base, debugId);
@@ -42,10 +48,20 @@ export function createPattern<Variants extends VariantGroups>(
       ),
     );
 
+  const compounds: Array<[VariantSelection<Variants>, string]> = [];
+
+  for (const { style: theStyle, ...checks } of compoundVariants) {
+    compounds.push(
+      // @ts-expect-error
+      [checks, typeof theStyle === 'string' ? theStyle : style(theStyle)],
+    );
+  }
+
   const config: PatternResult<Variants> = {
     defaultClassName,
     variantClassNames,
     defaultVariants,
+    compoundVariants: compounds,
   };
 
   return addRecipe(createRuntimeFn(config), {

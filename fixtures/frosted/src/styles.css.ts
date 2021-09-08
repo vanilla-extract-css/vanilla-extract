@@ -64,6 +64,16 @@ export const button = createPattern(
       size: 'standard',
       tone: 'calm',
     },
+
+    compoundVariants: [
+      {
+        size: 'small',
+        tone: 'calm',
+        style: {
+          border: '2px green solid',
+        },
+      },
+    ],
   },
   'button',
 );
