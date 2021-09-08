@@ -24,19 +24,22 @@ function mapValues<Input extends Record<string, any>, OutputValue>(
 
 export function createPattern<Variants extends VariantGroups>(
   options: PatternOptions<Variants>,
+  debugId?: string,
 ): RuntimeFn<Variants> {
-  const { variants = {}, defaultVariants, composes = [], ...rest } = options;
+  const { variants = {}, defaultVariants, base = '' } = options;
 
-  const defaultClassName = style([rest, ...composes]);
+  const defaultClassName =
+    typeof base === 'string' ? base : style(base, debugId);
 
   // @ts-expect-error
   const variantClassNames: PatternResult<Variants>['variantClassNames'] =
     mapValues(variants, (variantGroup) =>
-      // @ts-expect-error
-      styleVariants(variantGroup, ({ composes = [], ...rest }) => [
-        rest,
-        ...composes,
-      ]),
+      styleVariants(
+        variantGroup,
+        (styleRule) =>
+          typeof styleRule === 'string' ? [styleRule] : styleRule,
+        debugId,
+      ),
     );
 
   const config: PatternResult<Variants> = {

@@ -8,6 +8,7 @@ import type {
   StyleRule,
   GlobalStyleRule,
   ClassNames,
+  ComplexStyleRule,
 } from './types';
 import {
   registerClassName,
@@ -18,8 +19,6 @@ import {
 import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
-
-type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);

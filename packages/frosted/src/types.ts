@@ -1,10 +1,8 @@
-import type { StyleRule } from '@vanilla-extract/css';
+import type { StyleRule, ComplexStyleRule } from '@vanilla-extract/css';
 
-type ComposableStyleRule = StyleRule & {
-  composes?: Array<string>;
-};
+type FrostingStyleRule = ComplexStyleRule | string;
 
-export type EnumVariant = Record<string, ComposableStyleRule>;
+export type EnumVariant = Record<string, FrostingStyleRule>;
 export type VariantTypes = EnumVariant;
 
 export type VariantGroups = Record<string, VariantTypes>;
@@ -25,11 +23,11 @@ export type CompoundVariant<Variants extends VariantGroups> =
     css: StyleRule;
   };
 
-export type PatternOptions<Variants extends VariantGroups> =
-  ComposableStyleRule & {
-    variants?: Variants;
-    defaultVariants?: VariantSelection<Variants>;
-  };
+export type PatternOptions<Variants extends VariantGroups> = {
+  base?: FrostingStyleRule;
+  variants?: Variants;
+  defaultVariants?: VariantSelection<Variants>;
+};
 
 export type RuntimeFn<Variants extends VariantGroups> = (
   options?: VariantSelection<Variants>,
