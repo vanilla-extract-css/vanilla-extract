@@ -77,3 +77,23 @@ export const button = createPattern(
   },
   'button',
 );
+
+export const stack = createPattern({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+
+  variants: {
+    space: {
+      medium: {
+        gap: 20,
+      },
+    },
+  },
+
+  defaultVariants: {
+    space: 'medium',
+  },
+});

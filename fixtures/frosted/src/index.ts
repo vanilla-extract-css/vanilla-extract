@@ -1,22 +1,24 @@
-import { button } from './styles.css';
+import { button, stack } from './styles.css';
 
 function render() {
   document.body.innerHTML = `
-  <button class="${button()}"> 
-    Standard calm button
-  </button>
-  <button class="${button({ size: 'small' })}"> 
-    Small calm button
-  </button>
-  <button class="${button({ tone: 'angry' })}"> 
-    Standard angry button
-  </button>
-  <button class="${button({
-    size: 'small',
-    tone: 'angry',
-  })}"> 
-    Small angry button
-  </button>
+  <div class="${stack()}">
+    <button class="${button()}"> 
+      Standard calm button
+    </button>
+    <button class="${button({ size: 'small' })}"> 
+      Small calm button
+    </button>
+    <button class="${button({ tone: 'angry' })}"> 
+      Standard angry button
+    </button>
+    <button class="${button({
+      size: 'small',
+      tone: 'angry',
+    })}"> 
+      Small angry button
+    </button>
+  </div>
 `;
 }
 
