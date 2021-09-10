@@ -1,5 +1,16 @@
 # @vanilla-extract/babel-plugin
 
+## 1.1.0
+
+### Minor Changes
+
+- [#348](https://github.com/seek-oss/vanilla-extract/pull/348) [`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add debug IDs to `recipe` function
+
+### Patch Changes
+
+- Updated dependencies [[`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42)]:
+  - @vanilla-extract/integration@1.4.0
+
 ## 1.0.1
 
 ### Patch Changes
