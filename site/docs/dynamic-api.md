@@ -4,7 +4,7 @@ title: Dynamic API
 
 # Dynamic API
 
-We also provide a lightweight standalone package to support dynamic runtime theming.
+Dynamically update theme variables at runtime.
 
 ```bash
 $ npm install @vanilla-extract/dynamic

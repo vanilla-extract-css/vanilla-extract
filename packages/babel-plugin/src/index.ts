@@ -3,7 +3,10 @@ import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
 import { getPackageInfo } from '@vanilla-extract/integration';
 
-const packageIdentifier = '@vanilla-extract/css';
+const packageIdentifiers = new Set([
+  '@vanilla-extract/css',
+  '@vanilla-extract/recipes',
+]);
 const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
 
 const buildSetFileScopeESM = template(`
@@ -37,6 +40,9 @@ const debuggableFunctionConfig = {
   createVar: {
     maxParams: 1,
   },
+  recipe: {
+    maxParams: 2,
+  },
 };
 
 const styleFunctions = [
@@ -48,6 +54,7 @@ const styleFunctions = [
   'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
+  'recipe',
 ];
 
 type StyleFunction = typeof styleFunctions[number];
@@ -135,7 +142,7 @@ const getRelevantCall = (
 type Context = PluginPass & {
   namespaceImport: string;
   importIdentifiers: Map<string, StyleFunction>;
-  packageIdentifier: string;
+  packageIdentifiers: Set<string>;
   filePath: string;
   packageName: string;
   isCssFile: boolean;
@@ -202,7 +209,7 @@ export default function (): PluginObj<Context> {
           // If file scope import is found it means the file has already been compiled
           this.alreadyCompiled = true;
           return;
-        } else if (path.node.source.value === packageIdentifier) {
+        } else if (packageIdentifiers.has(path.node.source.value)) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;

@@ -173,8 +173,12 @@ function stringifyExports(
         );
       }
 
-      if (valueType === 'function' && value.__recipe__) {
-        const { importPath, importName, args } = value.__recipe__;
+      if (
+        valueType === 'function' &&
+        (value.__function_serializer__ || value.__recipe__)
+      ) {
+        const { importPath, importName, args } =
+          value.__function_serializer__ || value.__recipe__;
 
         if (
           typeof importPath !== 'string' ||
