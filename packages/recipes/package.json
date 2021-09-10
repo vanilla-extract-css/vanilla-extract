@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract/recipes",
-  "version": "1.0.0",
-  "description": "INSERT DESCRIPTION",
+  "version": "0.1.0",
+  "description": "Create type-safe style collections, heavily inspired by https://stitches.dev",
   "sideEffects": false,
   "main": "dist/vanilla-extract-recipes.cjs.js",
   "module": "dist/vanilla-extract-recipes.esm.js",
