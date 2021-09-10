@@ -997,14 +997,14 @@ export const button = recipe({
 With this recipe configured, you can now use it in your templates.
 
 ```ts
-import { button } from './Button.css.ts';
+import { button } from './button.css.ts';
 
 document.write(`
-  <button class={${button({
+  <button class="${button({
     color: 'accent',
     size: 'large',
     rounded: true
-  })}}>
+  })}">
     Hello world
   </button>
 `);
