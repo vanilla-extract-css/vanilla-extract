@@ -455,6 +455,25 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle recipe assigned to const', () => {
+    const source = `
+      import { recipe } from '@vanilla-extract/recipes';
+
+      const button = recipe({});
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      import { recipe } from '@vanilla-extract/recipes';
+      const button = recipe({}, \\"button\\");
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
+
   it('should ignore functions that already supply a debug name', () => {
     const source = `
       import { style, styleVariants } from '@vanilla-extract/css';
