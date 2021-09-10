@@ -1,25 +1,6 @@
-type Primitive = string | number | boolean | null | undefined;
+import { addFunctionSerializer } from './functionSerializer';
 
-type Serializable =
-  | {
-      [Key in string | number]: Primitive | Serializable;
-    }
-  | ReadonlyArray<Primitive | Serializable>;
-
-interface Recipe {
-  importPath: string;
-  importName: string;
-  args: ReadonlyArray<Serializable>;
-}
-
-export function addRecipe<Target extends object>(
-  target: Target,
-  recipe: Recipe,
-) {
-  Object.defineProperty(target, '__recipe__', {
-    value: recipe,
-    writable: false,
-  });
-
-  return target;
-}
+/**
+ * @deprecated Use 'addFunctionSerializer' from '@vanilla-extract/css/functionSerializer'
+ */
+export const addRecipe = addFunctionSerializer;

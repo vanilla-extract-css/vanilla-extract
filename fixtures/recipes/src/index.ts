@@ -15,6 +15,7 @@ function render() {
     <button class="${button({
       size: 'small',
       tone: 'angry',
+      bold: true,
     })}"> 
       Small angry button
     </button>

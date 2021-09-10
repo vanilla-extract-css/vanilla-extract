@@ -13,6 +13,7 @@
     "entrypoints": [
       "index.ts",
       "recipe.ts",
+      "functionSerializer.ts",
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts",
@@ -22,6 +23,7 @@
   "files": [
     "/dist",
     "/recipe",
+    "/functionSerializer",
     "/adapter",
     "/transformCss",
     "/fileScope",

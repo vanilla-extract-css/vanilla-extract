@@ -1,4 +1,0 @@
-{
-  "main": "dist/vanilla-extract-frosted-createRuntimeFn.cjs.js",
-  "module": "dist/vanilla-extract-frosted-createRuntimeFn.esm.js"
-}

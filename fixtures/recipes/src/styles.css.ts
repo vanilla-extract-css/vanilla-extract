@@ -1,5 +1,5 @@
 import { style, createThemeContract, createTheme } from '@vanilla-extract/css';
-import { createPattern } from '@vanilla-extract/frosted';
+import { recipe } from '@vanilla-extract/recipes';
 
 const vars = createThemeContract({
   bg: null,
@@ -20,7 +20,7 @@ export const reset = style({
   border: 0,
 });
 
-export const button = createPattern(
+export const button = recipe(
   {
     base: [
       reset,
@@ -40,11 +40,11 @@ export const button = createPattern(
       size: {
         small: {
           fontSize: '16px',
-          height: '24px',
+          lineHeight: '24px',
         },
         standard: {
           fontSize: '24px',
-          height: '40px',
+          lineHeight: '40px',
         },
       },
       tone: {
@@ -57,6 +57,11 @@ export const button = createPattern(
             },
           },
         ],
+      },
+      bold: {
+        true: {
+          fontWeight: 'bold',
+        },
       },
     },
 
@@ -78,7 +83,7 @@ export const button = createPattern(
   'button',
 );
 
-export const stack = createPattern({
+export const stack = recipe({
   base: {
     display: 'flex',
     flexDirection: 'column',

@@ -1,10 +1,10 @@
 {
-  "name": "@vanilla-extract/frosted",
-  "version": "0.0.1",
+  "name": "@vanilla-extract/recipes",
+  "version": "1.0.0",
   "description": "INSERT DESCRIPTION",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-frosted.cjs.js",
-  "module": "dist/vanilla-extract-frosted.esm.js",
+  "main": "dist/vanilla-extract-recipes.cjs.js",
+  "module": "dist/vanilla-extract-recipes.esm.js",
   "files": [
     "/dist",
     "/createRuntimeFn"
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/frosted"
+    "directory": "packages/recipes"
   },
   "author": "SEEK",
   "license": "MIT",

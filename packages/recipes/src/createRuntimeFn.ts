@@ -34,8 +34,12 @@ export const createRuntimeFn =
       const variantSelection = selections[variantName];
 
       if (variantSelection) {
-        // @ts-expect-error
-        className += ` ${config.variantClassNames[variantName][variantSelection]}`;
+        className += ` ${
+          // @ts-expect-error
+          config.variantClassNames[variantName][
+            variantSelection === true ? 'true' : variantSelection
+          ]
+        }`;
       }
     }
 

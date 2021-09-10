@@ -2,12 +2,13 @@ import type { ComplexStyleRule } from '@vanilla-extract/css';
 
 type FrostingStyleRule = ComplexStyleRule | string;
 
-export type EnumVariant = Record<string, FrostingStyleRule>;
-export type VariantTypes = EnumVariant;
+export type VariantDefinitions = Record<string, FrostingStyleRule>;
 
-export type VariantGroups = Record<string, VariantTypes>;
+type BooleanMap<T> = T extends 'true' ? true : T;
+
+export type VariantGroups = Record<string, VariantDefinitions>;
 export type VariantSelection<Variants extends VariantGroups> = {
-  [VariantGroup in keyof Variants]?: keyof Variants[VariantGroup];
+  [VariantGroup in keyof Variants]?: BooleanMap<keyof Variants[VariantGroup]>;
 };
 
 export interface PatternResult<Variants extends VariantGroups> {

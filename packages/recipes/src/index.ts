@@ -23,7 +23,7 @@ function mapValues<Input extends Record<string, any>, OutputValue>(
   return result;
 }
 
-export function createPattern<Variants extends VariantGroups>(
+export function recipe<Variants extends VariantGroups>(
   options: PatternOptions<Variants>,
   debugId?: string,
 ): RuntimeFn<Variants> {
@@ -65,7 +65,7 @@ export function createPattern<Variants extends VariantGroups>(
   };
 
   return addRecipe(createRuntimeFn(config), {
-    importPath: '@vanilla-extract/frosted/createRuntimeFn',
+    importPath: '@vanilla-extract/recipes/createRuntimeFn',
     importName: 'createRuntimeFn',
     // @ts-expect-error
     args: [config],
