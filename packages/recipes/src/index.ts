@@ -54,7 +54,9 @@ export function recipe<Variants extends VariantGroups>(
   for (const { style: theStyle, variants } of compoundVariants) {
     compounds.push([
       variants,
-      typeof theStyle === 'string' ? theStyle : style(theStyle),
+      typeof theStyle === 'string'
+        ? theStyle
+        : style(theStyle, `${debugId}_compound_${compounds.length}`),
     ]);
   }
 
