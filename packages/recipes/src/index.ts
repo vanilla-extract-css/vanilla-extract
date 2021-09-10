@@ -24,7 +24,8 @@ function mapValues<Input extends Record<string, any>, OutputValue>(
 }
 
 export function recipe<Variants extends VariantGroups>(
-  options: PatternOptions<Variants>,
+  options: PatternOptions<Variants> &
+    (keyof Variants extends 'style' ? never : {}),
   debugId?: string,
 ): RuntimeFn<Variants> {
   const {
@@ -50,11 +51,11 @@ export function recipe<Variants extends VariantGroups>(
 
   const compounds: Array<[VariantSelection<Variants>, string]> = [];
 
-  for (const { style: theStyle, ...checks } of compoundVariants) {
-    compounds.push(
-      // @ts-expect-error
-      [checks, typeof theStyle === 'string' ? theStyle : style(theStyle)],
-    );
+  for (const { style: theStyle, variants } of compoundVariants) {
+    compounds.push([
+      variants,
+      typeof theStyle === 'string' ? theStyle : style(theStyle),
+    ]);
   }
 
   const config: PatternResult<Variants> = {

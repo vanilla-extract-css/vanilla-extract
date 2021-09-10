@@ -72,10 +72,16 @@ export const button = recipe(
 
     compoundVariants: [
       {
-        size: 'small',
-        tone: 'calm',
+        variants: {
+          size: 'small',
+          bold: true,
+        },
         style: {
-          border: '2px green solid',
+          '@media': {
+            'only screen and (min-width: 600px)': {
+              border: '2px green solid',
+            },
+          },
         },
       },
     ],
@@ -94,6 +100,11 @@ export const stack = recipe({
     space: {
       medium: {
         gap: 20,
+        '@media': {
+          'only screen and (min-width: 600px)': {
+            gap: 30,
+          },
+        },
       },
     },
   },
