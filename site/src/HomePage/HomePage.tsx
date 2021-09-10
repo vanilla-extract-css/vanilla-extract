@@ -260,8 +260,8 @@ export const HomePage = () => {
                   Snowpack and Next.js.
                 </Feature>
 
-                <Feature title="Build it your way">
-                  Use high-level abstractions like{' '}
+                <Feature title="Built for extension">
+                  Use libraries like{' '}
                   <Link
                     to="https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles"
                     size="small"
@@ -269,6 +269,15 @@ export const HomePage = () => {
                     inline
                   >
                     Sprinkles
+                  </Link>
+                  ,{' '}
+                  <Link
+                    to="/documentation/recipes-api"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
+                    Recipes
                   </Link>{' '}
                   and{' '}
                   <Link
@@ -277,9 +286,9 @@ export const HomePage = () => {
                     underline="always"
                     inline
                   >
-                    Dessert Box
+                    Dessert&nbsp;Box
                   </Link>{' '}
-                  — or create and publish your own!
+                  — or create your own!
                 </Feature>
               </Columns>
             </Columns>
