@@ -24,8 +24,7 @@ function mapValues<Input extends Record<string, any>, OutputValue>(
 }
 
 export function recipe<Variants extends VariantGroups>(
-  options: PatternOptions<Variants> &
-    (keyof Variants extends 'style' ? never : {}),
+  options: PatternOptions<Variants>,
   debugId?: string,
 ): RuntimeFn<Variants> {
   const {
