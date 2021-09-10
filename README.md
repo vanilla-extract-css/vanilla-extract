@@ -103,7 +103,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
 - [Recipes API](#recipes-api)
-  - [recipes](#recipes)
+  - [recipe](#recipe)
 - [Dynamic API](#dynamic-api)
   - [assignInlineVars](#assigninlinevars)
   - [setElementVars](#setelementvars)
