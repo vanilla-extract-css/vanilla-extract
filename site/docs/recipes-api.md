@@ -20,7 +20,7 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const button = recipe({
   base: {
-    borderRadius: 999
+    borderRadius: 6
   },
 
   variants: {
@@ -33,6 +33,9 @@ export const button = recipe({
       small: { padding: 12 },
       medium: { padding: 16 },
       large: { padding: 24 }
+    },
+    rounded: {
+      true: { borderRadius: 999 }
     }
   },
 
@@ -65,7 +68,8 @@ import { button } from './button.css.ts';
 document.write(`
   <button class={${button({
     color: 'accent',
-    size: 'large'
+    size: 'large',
+    rounded: true
   })}}>
     Hello world
   </button>
@@ -83,10 +87,7 @@ import { reset } from './reset.css.ts';
 import { atoms } from './sprinkles.css.ts';
 
 export const button = recipe({
-  base: [
-    reset,
-    { borderRadius: atoms({ borderRadius: 'round' }) }
-  ],
+  base: [reset, atoms({ borderRadius: 'round' })],
 
   variants: {
     color: {
