@@ -189,7 +189,7 @@ Global selectors can also contain references to other scoped class names.
 ```tsx
 // app.css.ts
 
-import { globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle } from '@vanilla-extract/css';
 
 export const parentClass = style({});
 
