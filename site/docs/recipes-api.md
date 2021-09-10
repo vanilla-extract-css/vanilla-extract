@@ -4,7 +4,9 @@ title: Recipes API
 
 # Recipes API
 
-Create multi-variant style collections, heavily inspired by [Stitches.](https://stitches.dev)
+Create multi-variant styles with a type-safe runtime API, heavily inspired by [Stitches.](https://stitches.dev)
+
+As with the rest of vanilla-extract, all styles are generated at build time.
 
 ```bash
 $ npm install @vanilla-extract/recipes
@@ -12,7 +14,9 @@ $ npm install @vanilla-extract/recipes
 
 ## recipe
 
-Creates a recipe function. Accepts an optional set of `base` styles, `variants`, `compoundVariants` and `defaultVariants`.
+Creates a multi-variant style function that can be used at runtime or statically in `.css.ts` files.
+
+Accepts an optional set of `base` styles, `variants`, `compoundVariants` and `defaultVariants`.
 
 ```ts
 // button.css.ts
