@@ -54,7 +54,7 @@ const styleFunctions = [
   'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
-  'recipes',
+  'recipe',
 ];
 
 type StyleFunction = typeof styleFunctions[number];
