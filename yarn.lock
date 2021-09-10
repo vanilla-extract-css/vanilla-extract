@@ -2275,7 +2275,7 @@ __metadata:
   resolution: "@fixtures/recipes@workspace:fixtures/recipes"
   dependencies:
     "@vanilla-extract/css": 1.5.0
-    "@vanilla-extract/recipes": 0.1.1
+    "@vanilla-extract/recipes": 0.1.0
   languageName: unknown
   linkType: soft
 
@@ -2284,7 +2284,7 @@ __metadata:
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
     "@vanilla-extract/css": 1.5.0
-    "@vanilla-extract/sprinkles": 1.2.1
+    "@vanilla-extract/sprinkles": 1.2.0
   languageName: unknown
   linkType: soft
 
@@ -3891,7 +3891,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/recipes@0.1.1, @vanilla-extract/recipes@workspace:packages/recipes":
+"@vanilla-extract/recipes@0.1.0, @vanilla-extract/recipes@workspace:packages/recipes":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/recipes@workspace:packages/recipes"
   dependencies:
@@ -3910,7 +3910,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/sprinkles@1.2.1, @vanilla-extract/sprinkles@^1.2.1, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
+"@vanilla-extract/sprinkles@1.2.0, @vanilla-extract/sprinkles@^1.2.0, @vanilla-extract/sprinkles@workspace:packages/sprinkles":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/sprinkles@workspace:packages/sprinkles"
   dependencies:
@@ -17309,7 +17309,7 @@ typescript@^4.1.3:
     "@types/tailwindcss": ^2
     "@vanilla-extract/babel-plugin": ^1.1.0
     "@vanilla-extract/css": 1.5.0
-    "@vanilla-extract/sprinkles": ^1.2.1
+    "@vanilla-extract/sprinkles": ^1.2.0
     "@vanilla-extract/webpack-plugin": ^2.1.0
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
