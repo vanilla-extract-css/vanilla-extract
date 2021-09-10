@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",

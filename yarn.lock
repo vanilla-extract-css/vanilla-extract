@@ -2257,7 +2257,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/features@workspace:fixtures/features"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
     "@vanilla-extract/dynamic": 2.0.0
   languageName: unknown
   linkType: soft
@@ -2266,7 +2266,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/low-level@workspace:fixtures/low-level"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
   languageName: unknown
   linkType: soft
 
@@ -2274,7 +2274,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/recipes@workspace:fixtures/recipes"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
     "@vanilla-extract/recipes": 0.1.0
   languageName: unknown
   linkType: soft
@@ -2283,7 +2283,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/sprinkles@workspace:fixtures/sprinkles"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
     "@vanilla-extract/sprinkles": 1.2.0
   languageName: unknown
   linkType: soft
@@ -2292,7 +2292,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/themed@workspace:fixtures/themed"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
     "@vanilla-extract/dynamic": 2.0.0
   languageName: unknown
   linkType: soft
@@ -2301,7 +2301,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fixtures/unused-modules@workspace:fixtures/unused-modules"
   dependencies:
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/css": 1.5.0
   languageName: unknown
   linkType: soft
 
@@ -3805,13 +3805,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/babel-plugin@^1.0.1, @vanilla-extract/babel-plugin@workspace:packages/babel-plugin":
+"@vanilla-extract/babel-plugin@^1.1.0, @vanilla-extract/babel-plugin@workspace:packages/babel-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/babel-plugin@workspace:packages/babel-plugin"
   dependencies:
     "@babel/core": ^7.13.10
     "@babel/template": ^7.12.13
-    "@vanilla-extract/integration": ^1.0.0
+    "@vanilla-extract/integration": ^1.4.0
   languageName: unknown
   linkType: soft
 
@@ -3821,7 +3821,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/css@*, @vanilla-extract/css@1.4.1, @vanilla-extract/css@^1.4.1, @vanilla-extract/css@workspace:packages/css":
+"@vanilla-extract/css@*, @vanilla-extract/css@1.5.0, @vanilla-extract/css@^1.5.0, @vanilla-extract/css@workspace:packages/css":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/css@workspace:packages/css"
   dependencies:
@@ -3857,13 +3857,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/integration@^1.0.0, @vanilla-extract/integration@^1.2.0, @vanilla-extract/integration@^1.3.0, @vanilla-extract/integration@workspace:packages/integration":
+"@vanilla-extract/integration@^1.2.0, @vanilla-extract/integration@^1.3.0, @vanilla-extract/integration@^1.4.0, @vanilla-extract/integration@workspace:packages/integration":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/integration@workspace:packages/integration"
   dependencies:
     "@types/dedent": ^0.7.0
     "@types/lodash": ^4.14.168
-    "@vanilla-extract/css": ^1.4.1
+    "@vanilla-extract/css": ^1.5.0
     chalk: ^4.1.1
     dedent: ^0.7.0
     esbuild: ^0.11.16
@@ -17288,8 +17288,8 @@ typescript@^4.1.3:
   resolution: "vanilla-extract-example-next@workspace:examples/next"
   dependencies:
     "@types/react": ^17
-    "@vanilla-extract/babel-plugin": ^1.0.1
-    "@vanilla-extract/css": ^1.4.1
+    "@vanilla-extract/babel-plugin": ^1.1.0
+    "@vanilla-extract/css": ^1.5.0
     "@vanilla-extract/next-plugin": ^1.0.0
     next: ^11.0.0
     react: ^17.0.2
@@ -17307,8 +17307,8 @@ typescript@^4.1.3:
     "@types/react": ^17
     "@types/react-dom": ^17
     "@types/tailwindcss": ^2
-    "@vanilla-extract/babel-plugin": ^1.0.1
-    "@vanilla-extract/css": 1.4.1
+    "@vanilla-extract/babel-plugin": ^1.1.0
+    "@vanilla-extract/css": 1.5.0
     "@vanilla-extract/sprinkles": ^1.2.0
     "@vanilla-extract/webpack-plugin": ^2.1.0
     babel-loader: ^8.2.2
