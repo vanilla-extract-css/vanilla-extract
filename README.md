@@ -940,7 +940,7 @@ export const animated = style({
 
 ## Recipes API
 
-Create type-safe style collections, heavily inspired by [Stitches.](https://stitches.dev)
+Create multi-variant style collections, heavily inspired by [Stitches.](https://stitches.dev)
 
 ```bash
 $ npm install @vanilla-extract/recipes
