@@ -74,7 +74,7 @@ document.write(`
 
 ---
 
-Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://vanilla-extract.style/documentation/sprinkles-api), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
 
 ---
 
@@ -1016,7 +1016,7 @@ document.write(`
 
 Your recipe configuration can also make use of existing variables, classes and styles.
 
-For example, you can use your `atoms` function from [Sprinkles.](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles)
+For example, you can use your `atoms` function from [Sprinkles.](https://vanilla-extract.style/documentation/sprinkles-api)
 
 ```ts
 import { recipe } from '@vanilla-extract/recipes';

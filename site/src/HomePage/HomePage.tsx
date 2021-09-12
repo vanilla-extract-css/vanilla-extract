@@ -263,7 +263,7 @@ export const HomePage = () => {
                 <Feature title="Built for extension">
                   Use libraries like{' '}
                   <Link
-                    to="https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles"
+                    to="/documentation/sprinkles-api"
                     size="small"
                     underline="always"
                     inline

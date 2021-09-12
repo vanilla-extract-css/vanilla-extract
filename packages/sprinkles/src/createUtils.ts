@@ -1,4 +1,4 @@
-import { addRecipe } from '@vanilla-extract/css/recipe';
+import { addFunctionSerializer } from '@vanilla-extract/css/functionSerializer';
 import {
   ResponsiveArrayByMaxLength,
   RequiredResponsiveArrayByMaxLength,
@@ -113,7 +113,7 @@ export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
     return value;
   }
 
-  return addRecipe(normalizeValue, {
+  return addFunctionSerializer(normalizeValue, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
     importName: 'createNormalizeValueFn',
     args: [{ conditions: atomicStyles.conditions }],
@@ -166,7 +166,7 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
     return mappedObject;
   }
 
-  return addRecipe(mapValue, {
+  return addFunctionSerializer(mapValue, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
     importName: 'createMapValueFn',
     args: [{ conditions: atomicStyles.conditions }],

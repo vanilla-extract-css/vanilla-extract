@@ -4,14 +4,14 @@ import {
   CSSProperties,
   StyleRule,
 } from '@vanilla-extract/css';
-import { addRecipe } from '@vanilla-extract/css/recipe';
 import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
-  AtomsFn,
-  createAtomsFn as internalCreateAtomsFn,
-} from './createAtomsFn';
-import { AtomicStyles, ResponsiveArrayConfig } from './types';
+  SprinklesFn,
+  createSprinkles as internalCreateSprinkles,
+} from './createSprinkles';
+import { SprinklesStyles, ResponsiveArrayConfig } from './types';
+import { addFunctionSerializer } from '@vanilla-extract/css/functionSerializer';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
@@ -144,7 +144,7 @@ type ShorthandAtomicStyles<
 };
 
 // Conditional + Shorthands + ResponsiveArray
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   ResponsiveLength extends number,
   Conditions extends BaseConditions,
@@ -162,7 +162,7 @@ export function createAtomicStyles<
 > &
   ShorthandAtomicStyles<Shorthands>;
 // Conditional + Shorthands
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
@@ -173,7 +173,7 @@ export function createAtomicStyles<
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
   ShorthandAtomicStyles<Shorthands>;
 // Conditional + ResponsiveArray
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   ResponsiveLength extends number,
@@ -188,7 +188,7 @@ export function createAtomicStyles<
   DefaultCondition
 >;
 // Conditional
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
@@ -196,7 +196,7 @@ export function createAtomicStyles<
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
 // Unconditional + Shorthands
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
 >(
@@ -204,10 +204,10 @@ export function createAtomicStyles<
     ShorthandOptions<Properties, Shorthands>,
 ): UnconditionalAtomicStyles<Properties> & ShorthandAtomicStyles<Shorthands>;
 // Unconditional
-export function createAtomicStyles<Properties extends AtomicProperties>(
+export function defineProperties<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
 ): UnconditionalAtomicStyles<Properties>;
-export function createAtomicStyles(options: any): any {
+export function defineProperties(options: any): any {
   let styles: any =
     'shorthands' in options
       ? Object.fromEntries(
@@ -329,20 +329,26 @@ export function createAtomicStyles(options: any): any {
 
 const mockComposeStyles = (classList: string) => classList;
 
-export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
+export function createSprinkles<Args extends ReadonlyArray<SprinklesStyles>>(
   ...config: Args
-): AtomsFn<Args> {
+): SprinklesFn<Args> {
   // When using Sprinkles with the runtime (e.g. within a jest test)
   // `style` can be called (only for composition) outside of a fileScope.
   // Checking we're within a fileScope ensures this doesn't blow up and is
   // safe as compositions don't make sense at runtime
-  const atoms = internalCreateAtomsFn(
+  const atoms = internalCreateSprinkles(
     hasFileScope() ? composeStyles : mockComposeStyles,
   )(...config);
 
-  return addRecipe(atoms, {
-    importPath: '@vanilla-extract/sprinkles/createRuntimeAtomsFn',
+  return addFunctionSerializer(atoms, {
+    importPath: '@vanilla-extract/sprinkles/createRuntimeSprinkles',
     importName: 'createAtomsFn',
     args: config,
   });
 }
+
+/** @deprecated - Use `defineProperties` */
+export const createAtomicStyles = defineProperties;
+
+/** @deprecated - Use `createSprinkles` */
+export const createAtomsFn = createSprinkles;

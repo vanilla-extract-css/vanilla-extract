@@ -82,7 +82,7 @@ document.write(`
 
 Your recipe configuration can also make use of existing variables, classes and styles.
 
-For example, you can use your `atoms` function from [Sprinkles.](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles)
+For example, you can use your `atoms` function from [Sprinkles.](/documentation/sprinkles-api)
 
 ```ts
 // button.css.ts

@@ -310,7 +310,7 @@ describe('sprinkles', () => {
           paddingLefty: 'small',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLefty\\" is not a valid atom property"`,
+        `"\\"paddingLefty\\" is not a valid sprinkle"`,
       );
     });
 
@@ -323,7 +323,7 @@ describe('sprinkles', () => {
           paddingLeft: 'xsmall',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLeft\\" is not a valid atom property"`,
+        `"\\"paddingLeft\\" is not a valid sprinkle"`,
       );
     });
 

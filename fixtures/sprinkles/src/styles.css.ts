@@ -1,7 +1,7 @@
 import { globalStyle, createVar } from '@vanilla-extract/css';
 import {
-  createAtomicStyles,
-  createAtomsFn,
+  defineProperties,
+  createSprinkles,
   createMapValueFn,
   createNormalizeValueFn,
 } from '@vanilla-extract/sprinkles';
@@ -9,7 +9,7 @@ import {
 const alpha = createVar();
 const textAlpha = createVar();
 
-const responsiveStyles = createAtomicStyles({
+const responsiveProperties = defineProperties({
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},
@@ -47,7 +47,7 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-const styleWithNoConditions = createAtomicStyles({
+const unconditionalProperties = defineProperties({
   properties: {
     color: {
       red: {
@@ -64,13 +64,16 @@ const styleWithNoConditions = createAtomicStyles({
   },
 });
 
-export const atoms = createAtomsFn(responsiveStyles, styleWithNoConditions);
+export const sprinkles = createSprinkles(
+  responsiveProperties,
+  unconditionalProperties,
+);
 
-export const mapResponsiveValue = createMapValueFn(responsiveStyles);
+export const mapResponsiveValue = createMapValueFn(responsiveProperties);
 export const normalizeResponsiveValue =
-  createNormalizeValueFn(responsiveStyles);
+  createNormalizeValueFn(responsiveProperties);
 
-export const preComposedAtoms = atoms({
+export const preComposedSprinkles = sprinkles({
   display: 'block',
   paddingTop: 'small',
   background: 'red',
@@ -79,11 +82,11 @@ export const preComposedAtoms = atoms({
   textOpacity: 0.8,
 });
 
-export const preComposedAtomsUsedInSelector = atoms({
+export const preComposedSprinklesUsedInSelector = sprinkles({
   display: 'flex',
   paddingTop: 'medium',
 });
 
-globalStyle(`body > ${preComposedAtomsUsedInSelector}`, {
+globalStyle(`body > ${preComposedSprinklesUsedInSelector}`, {
   background: 'red',
 });
