@@ -912,8 +912,8 @@ Creates a locally scoped set of keyframes.
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({
@@ -929,8 +929,8 @@ Creates a globally scoped set of keyframes.
 import { globalKeyframes, style } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({
