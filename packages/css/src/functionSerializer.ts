@@ -16,7 +16,9 @@ export function addFunctionSerializer<Target extends object>(
   target: Target,
   recipe: SerializerConfig,
 ) {
-  Object.defineProperty(target, '__function_serializer__', {
+  // TODO: Update to "__function_serializer__" in future.
+  // __recipe__ is the backwards compatible name
+  Object.defineProperty(target, '__recipe__', {
     value: recipe,
     writable: false,
   });
