@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.5.1
+
+### Patch Changes
+
+- [#354](https://github.com/seek-oss/vanilla-extract/pull/354) [`cdad52d`](https://github.com/seek-oss/vanilla-extract/commit/cdad52d6e95422f4ce53b74456fd510880a4a32a) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix function serialization with older versions of the `@vanilla-extract/integration` package
+
 ## 1.5.0
 
 ### Minor Changes
