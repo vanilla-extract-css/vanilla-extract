@@ -1016,7 +1016,7 @@ document.write(`
 
 Your recipe configuration can also make use of existing variables, classes and styles.
 
-For example, you can pass in the result of your [sprinkles](https://vanilla-extract.style/documentation/sprinkles-api) function directly.
+For example, you can pass in the result of your [`sprinkles`](https://vanilla-extract.style/documentation/sprinkles-api) function directly.
 
 ```ts
 import { recipe } from '@vanilla-extract/recipes';
