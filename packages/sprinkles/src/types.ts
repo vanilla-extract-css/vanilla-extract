@@ -84,5 +84,5 @@ export type SprinklesProperties = {
   };
 };
 
-/** @deprecated - Use `SprinklesStyles` */
+/** @deprecated - Use `SprinklesProperties` */
 export type AtomicStyles = SprinklesProperties;

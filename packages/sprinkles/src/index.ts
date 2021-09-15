@@ -4,6 +4,7 @@ import {
   CSSProperties,
   StyleRule,
 } from '@vanilla-extract/css';
+import { addRecipe } from '@vanilla-extract/css/recipe';
 import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
@@ -11,7 +12,6 @@ import {
   createSprinkles as internalCreateSprinkles,
 } from './createSprinkles';
 import { SprinklesProperties, ResponsiveArrayConfig } from './types';
-import { addRecipe } from '@vanilla-extract/css/recipe';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
