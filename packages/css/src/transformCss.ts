@@ -233,7 +233,7 @@ class Stylesheet {
         value &&
         (value.includes('"') ||
           value.includes("'") ||
-          /^([A-Za-z]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)[\s$]/.test(
+          /^([A-Za-z]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)(\s|$)/.test(
             value,
           ))
           ? value

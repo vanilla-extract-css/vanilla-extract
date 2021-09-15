@@ -696,10 +696,10 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: \\"normal\\";
+        content: normal;
       }
       ._01 .testClass {
-        content: \\"none\\";
+        content: none;
       }
       ._02 .testClass {
         content: url(\\"http://www.example.com/test.png\\");
@@ -717,7 +717,7 @@ describe('transformCss', () => {
         content: \\"prefix\\";
       }
       ._07 .testClass {
-        content: \\"counter(chapter_counter)\\";
+        content: counter(chapter_counter);
       }
       ._08 .testClass {
         content: counter(chapter_counter, upper-roman);
@@ -732,31 +732,31 @@ describe('transformCss', () => {
         content: attr(value string);
       }
       ._12 .testClass {
-        content: \\"open-quote\\";
+        content: open-quote;
       }
       ._13 .testClass {
-        content: \\"close-quote\\";
+        content: close-quote;
       }
       ._14 .testClass {
-        content: \\"no-open-quote\\";
+        content: no-open-quote;
       }
       ._15 .testClass {
-        content: \\"no-close-quote\\";
+        content: no-close-quote;
       }
       ._16 .testClass {
         content: open-quote counter(chapter_counter);
       }
       ._17 .testClass {
-        content: \\"inherit\\";
+        content: inherit;
       }
       ._18 .testClass {
-        content: \\"initial\\";
+        content: initial;
       }
       ._19 .testClass {
-        content: \\"revert\\";
+        content: revert;
       }
       ._20 .testClass {
-        content: \\"unset\\";
+        content: unset;
       }"
     `);
   });
