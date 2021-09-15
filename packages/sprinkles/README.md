@@ -297,9 +297,7 @@ const responsiveProperties = defineProperties({
 
 const colorProperties = defineProperties({
   conditions: {
-    lightMode: {
-      '@media': '(prefers-color-scheme: light)'
-    },
+    lightMode: { '@media': '(prefers-color-scheme: light)' },
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: false,
@@ -498,9 +496,7 @@ import { defineProperties } from '@vanilla-extract/sprinkles';
 
 const responsiveProperties = defineProperties({
   conditions: {
-    lightMode: {
-      '@media': '(prefers-color-scheme: light)'
-    },
+    lightMode: { '@media': '(prefers-color-scheme: light)' },
     darkMode: { '@media': '(prefers-color-scheme: dark)' }
   },
   defaultCondition: ['lightMode', 'darkMode']
