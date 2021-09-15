@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.6.0
+
+### Minor Changes
+
+- [#361](https://github.com/seek-oss/vanilla-extract/pull/361) [`531044b`](https://github.com/seek-oss/vanilla-extract/commit/531044b8c5c2d13c465ed77641d3cc6a11903ced) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Automatically add quotes to `content` values when necessary
+
+  For example `{ content: '' }` will now return CSS of `{ content: "" }`
+
 ## 1.5.1
 
 ### Patch Changes
