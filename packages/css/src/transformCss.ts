@@ -158,7 +158,9 @@ class Stylesheet {
 
   addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
     // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
-    const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
+    const rule = this.transformVars(
+      this.transformContent(this.pixelifyProperties(cssRule.rule)),
+    );
     const selector = this.transformSelector(cssRule.selector);
 
     if (!this.currConditionalRuleset) {
@@ -180,7 +182,9 @@ class Stylesheet {
 
   addRule(cssRule: CSSRule) {
     // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
-    const rule = this.transformVars(this.pixelifyProperties(cssRule.rule));
+    const rule = this.transformVars(
+      this.transformContent(this.pixelifyProperties(cssRule.rule)),
+    );
     const selector = this.transformSelector(cssRule.selector);
 
     this.rules.push({
@@ -211,6 +215,30 @@ class Stylesheet {
 
     return {
       ...mapKeys(vars, (_value, key) => getVarName(key)),
+      ...rest,
+    };
+  }
+
+  transformContent({ content, ...rest }: CSSPropertiesWithVars) {
+    if (typeof content === 'undefined') {
+      return rest;
+    }
+
+    // Handle fallback arrays:
+    const contentArray = Array.isArray(content) ? content : [content];
+
+    return {
+      content: contentArray.map((value) =>
+        // This logic was adapted from Stitches :)
+        value &&
+        (value.includes('"') ||
+          value.includes("'") ||
+          /^([A-Za-z]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)[\s$]/.test(
+            value,
+          ))
+          ? value
+          : `"${value}"`,
+      ),
       ...rest,
     };
   }
