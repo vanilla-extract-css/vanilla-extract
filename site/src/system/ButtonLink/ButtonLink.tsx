@@ -4,7 +4,7 @@ import { Link, NavLinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { Box } from '..';
 import * as styles from './ButtonLink.css';
-import { atoms } from '../styles/sprinkles.css';
+import { sprinkles } from '../styles/sprinkles.css';
 
 interface ButtonLinkProps extends NavLinkProps {
   variant?: 'solid' | 'transparent';
@@ -17,7 +17,7 @@ export const ButtonLink = ({
   children,
 }: ButtonLinkProps) => {
   const classNames = classnames(
-    atoms({
+    sprinkles({
       display: 'flex',
       alignItems: 'center',
       paddingY: {

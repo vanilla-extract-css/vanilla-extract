@@ -2,128 +2,128 @@
     This file is for validating types, it is not designed to be executed
 */
 import {
-  createAtomicStyles,
+  defineProperties,
   createMapValueFn,
   createNormalizeValueFn,
   ConditionalValue,
   RequiredConditionalValue,
 } from '@vanilla-extract/sprinkles';
-import { createAtomsFn } from '@vanilla-extract/sprinkles';
+import { createSprinkles } from '@vanilla-extract/sprinkles';
 
 import {
-  atomicWithShorthandStyles,
-  conditionalAtomicStyles,
-  conditionalStylesWithoutDefaultCondition,
-  conditionalStylesWithoutResponsiveArray,
+  propertiesWithShorthands,
+  conditionalProperties,
+  conditionalPropertiesWithoutDefaultCondition,
+  conditionalPropertiesWithoutResponsiveArray,
 } from './index.css';
 
 // @ts-expect-error Unused args
 const noop = (...args: Array<any>) => {};
 
 () => {
-  const atoms = createAtomsFn(
-    atomicWithShorthandStyles,
-    conditionalAtomicStyles,
-    conditionalStylesWithoutDefaultCondition,
-    conditionalStylesWithoutResponsiveArray,
+  const sprinkles = createSprinkles(
+    propertiesWithShorthands,
+    conditionalProperties,
+    conditionalPropertiesWithoutDefaultCondition,
+    conditionalPropertiesWithoutResponsiveArray,
   );
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Invalid value
     paddingTop: 'mediumm',
   });
 
-  atoms({
+  sprinkles({
     paddingTop: {
       // @ts-expect-error Invalid condition name
       mobie: 'medium',
     },
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error No responsive array defintion
     paddingLeft: ['medium'],
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Invalid responsive array value
     paddingTop: ['medium', 'smalll'],
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Shorthand with invalid value
     paddingY: 'mediumm',
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Shorthand with invalid conditional value
     paddingTop: {
       mobile: 'mediumm',
     },
   });
 
-  atoms({
+  sprinkles({
     paddingY: {
       // @ts-expect-error Shorthand with invalid condition name
       mobie: 'medium',
     },
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Shorthand with invalid conditional value
     paddingY: {
       mobile: 'mediumm',
     },
   });
 
-  atoms({
+  sprinkles({
     paddingY: {
       // @ts-expect-error Shorthand with invalid condition name
       mobie: 'medium',
     },
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error Shorthand with invalid responsive array value
     paddingY: ['medium', 'smalll'],
   });
 
   // Valid value - Accept readonly arrays
-  atoms({
+  sprinkles({
     paddingY: ['medium', 'small'] as const,
   });
 
   // Valid value
-  atoms({
+  sprinkles({
     transform: {
       active: 'shrink',
     },
   });
 
-  atoms({
+  sprinkles({
     // @ts-expect-error No default class allowed
     transform: 'shrink',
   });
 
   // Valid value - shorthand conditional without responsive array
-  atoms({
+  sprinkles({
     marginY: { mobile: 'medium' },
   });
 
   // @ts-expect-error - Property defined with numbers should not allow array methods
-  atoms({ opacity: 'forEach' });
+  sprinkles({ opacity: 'forEach' });
 
-  const atomicConfig = {
+  const atomicProperties = {
     properties: {
       flexDirection: ['row', 'column'],
     },
   } as const;
 
-  // Valid value - config defined outside the createAtomicStyles function
-  createAtomicStyles(atomicConfig);
+  // Valid value - config defined outside the defineProperties function
+  defineProperties(atomicProperties);
 
-  const mapValue = createMapValueFn(conditionalAtomicStyles);
-  const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+  const mapValue = createMapValueFn(conditionalProperties);
+  const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
   // @ts-expect-error - Too many responsive array options
   normalizeValue(['one', 'two', 'three', 'four']);
@@ -149,10 +149,10 @@ const noop = (...args: Array<any>) => {};
   mapValue(3, () => 4).mobile;
 
   const mapValueWithoutDefaultCondition = createMapValueFn(
-    conditionalStylesWithoutDefaultCondition,
+    conditionalPropertiesWithoutDefaultCondition,
   );
   const normalizeValueWithoutDefaultCondition = createNormalizeValueFn(
-    conditionalStylesWithoutDefaultCondition,
+    conditionalPropertiesWithoutDefaultCondition,
   );
 
   // @ts-expect-error - Should force conditional value as no default condition
@@ -162,7 +162,7 @@ const noop = (...args: Array<any>) => {};
   mapValueWithoutDefaultCondition('test');
 
   type ResponsiveValue<Value extends string | number> = ConditionalValue<
-    typeof conditionalAtomicStyles,
+    typeof conditionalProperties,
     Value
   >;
 
@@ -222,7 +222,7 @@ const noop = (...args: Array<any>) => {};
   noop(responsiveValue);
 
   type RequiredResponsiveValue<Value extends string | number> =
-    RequiredConditionalValue<typeof conditionalAtomicStyles, Value>;
+    RequiredConditionalValue<typeof conditionalProperties, Value>;
 
   let requiredValue: RequiredResponsiveValue<'row' | 'column'>;
 
@@ -251,7 +251,7 @@ const noop = (...args: Array<any>) => {};
   // Ensure type is 'never' when default condition is missing
   type InvalidRequiredResponsiveValue<Value extends string | number> =
     RequiredConditionalValue<
-      typeof conditionalStylesWithoutDefaultCondition,
+      typeof conditionalPropertiesWithoutDefaultCondition,
       Value
     >;
 

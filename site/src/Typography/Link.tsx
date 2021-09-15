@@ -3,7 +3,7 @@ import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
 import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
-import { atoms } from '../system/styles/sprinkles.css';
+import { sprinkles } from '../system/styles/sprinkles.css';
 
 interface Props extends LinkProps {
   baseline?: boolean;
@@ -30,7 +30,7 @@ export default ({
   ...restProps
 }: Props) => {
   const classNames = classnames(
-    inline ? undefined : atoms({ display: 'block' }),
+    inline ? undefined : sprinkles({ display: 'block' }),
     underline === 'hover' ? styles.underlineOnHover : undefined,
     underline === 'never' ? styles.underlineNever : undefined,
     highlightOnFocus ? styles.highlightOnHover : undefined,

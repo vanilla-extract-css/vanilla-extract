@@ -1016,26 +1016,26 @@ document.write(`
 
 Your recipe configuration can also make use of existing variables, classes and styles.
 
-For example, you can use your `atoms` function from [Sprinkles.](https://vanilla-extract.style/documentation/sprinkles-api)
+For example, you can pass in the result of your [sprinkles](https://vanilla-extract.style/documentation/sprinkles-api) function directly.
 
 ```ts
 import { recipe } from '@vanilla-extract/recipes';
 import { reset } from './reset.css.ts';
-import { atoms } from './sprinkles.css.ts';
+import { sprinkles } from './sprinkles.css.ts';
 
 export const button = recipe({
-  base: [reset, atoms({ borderRadius: 'round' })],
+  base: [reset, sprinkles({ borderRadius: 'round' })],
 
   variants: {
     color: {
-      neutral: atoms({ background: 'neutral' }),
-      brand: atoms({ background: 'brand' }),
-      accent: atoms({ background: 'accent' })
+      neutral: sprinkles({ background: 'neutral' }),
+      brand: sprinkles({ background: 'brand' }),
+      accent: sprinkles({ background: 'accent' })
     },
     size: {
-      small: atoms({ padding: 'small' }),
-      medium: atoms({ padding: 'medium' }),
-      large: atoms({ padding: 'large' })
+      small: sprinkles({ padding: 'small' }),
+      medium: sprinkles({ padding: 'medium' }),
+      large: sprinkles({ padding: 'large' })
     }
   },
 

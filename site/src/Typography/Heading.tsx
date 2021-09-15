@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import * as styles from './typography.css';
 import { Box } from '../system';
-import { atoms, Atoms } from '../system/styles/sprinkles.css';
+import { sprinkles, Sprinkles } from '../system/styles/sprinkles.css';
 
 export type HeadingLevel = keyof typeof styles.heading;
 
@@ -27,7 +27,7 @@ const getHeadingComponent = (level: HeadingLevel) => {
 export interface HeadingProps {
   children: ReactNode;
   level: HeadingLevel;
-  align?: Atoms['textAlign'];
+  align?: Sprinkles['textAlign'];
   branded?: boolean;
   component?: ElementType;
 }
@@ -35,11 +35,11 @@ export interface HeadingProps {
 export const useHeadingStyles = (
   level: HeadingLevel,
   branded?: boolean,
-  align?: Atoms['textAlign'],
+  align?: Sprinkles['textAlign'],
 ) =>
   classnames(
     branded ? styles.font.brand : styles.font.heading,
-    atoms({
+    sprinkles({
       textAlign: align,
       color: { lightMode: 'coolGray900', darkMode: 'gray100' },
     }),

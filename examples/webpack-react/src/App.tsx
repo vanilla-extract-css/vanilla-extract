@@ -1,9 +1,9 @@
-import { atoms } from './sprinkles.css';
+import { sprinkles } from './sprinkles.css';
 import * as styles from './App.css';
 
 export const App = () => (
   <div
-    className={atoms({
+    className={sprinkles({
       background: {
         lightMode: 'green-500',
         darkMode: 'gray-900',
@@ -17,7 +17,7 @@ export const App = () => (
   >
     <div className={styles.card}>
       <div
-        className={atoms({
+        className={sprinkles({
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
@@ -28,7 +28,7 @@ export const App = () => (
         })}
       >
         <h1
-          className={atoms({
+          className={sprinkles({
             fontFamily: 'body',
             textAlign: 'center',
             typeSize: {
@@ -49,7 +49,7 @@ export const App = () => (
           </span>
         </h1>
         <h2
-          className={atoms({
+          className={sprinkles({
             fontFamily: 'body',
             color: {
               lightMode: 'green-700',

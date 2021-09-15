@@ -2,7 +2,7 @@ import { ReactNode, ElementType } from 'react';
 import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './typography.css';
-import { atoms, Atoms } from '../system/styles/sprinkles.css';
+import { sprinkles, Sprinkles } from '../system/styles/sprinkles.css';
 
 const colorMap = {
   neutral: { lightMode: 'coolGray700', darkMode: 'gray100' },
@@ -17,7 +17,7 @@ interface TextStyleProps {
   size?: keyof typeof styles.text;
   color?: keyof typeof colorMap;
   weight?: keyof typeof styles.weight;
-  align?: Atoms['textAlign'];
+  align?: Sprinkles['textAlign'];
   baseline?: boolean;
   type?: Exclude<keyof typeof styles.font, 'brand' | 'heading'>;
 }
@@ -38,7 +38,7 @@ export const useTextStyles = ({
   classnames(
     styles.font[type],
     styles.text[size].base,
-    atoms({ color: colorMap[color], textAlign: align }),
+    sprinkles({ color: colorMap[color], textAlign: align }),
     styles.weight[weight],
     {
       [styles.text.standard.trims]: baseline,
