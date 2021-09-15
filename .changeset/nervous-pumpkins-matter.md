@@ -7,7 +7,7 @@ Clean up public API, deprecating old API names. Also adding sprinkles to the doc
 API changes include:
 - Rename `createAtomicStyles` to `defineProperties`, `createAtomicStyles` is now deprecated
 - Rename `createAtomsFn` to `createSprinkles`, `createAtomsFn` is now deprecated
-- Rename `AtomicStyles` type to `SprinklesStyles`, `AtomicStyles` is now deprecated
+- Rename `AtomicStyles` type to `SprinklesProperties`, `AtomicStyles` is now deprecated
 
 ### Migration Guide
 

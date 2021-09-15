@@ -74,7 +74,7 @@ export type ShorthandProperty = {
   mappings: Array<string>;
 };
 
-export type SprinklesStyles = {
+export type SprinklesProperties = {
   styles: {
     [property: string]:
       | ConditionalWithResponsiveArrayProperty
@@ -85,4 +85,4 @@ export type SprinklesStyles = {
 };
 
 /** @deprecated - Use `SprinklesStyles` */
-export type AtomicStyles = SprinklesStyles;
+export type AtomicStyles = SprinklesProperties;

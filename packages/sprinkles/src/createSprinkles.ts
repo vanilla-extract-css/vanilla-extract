@@ -1,7 +1,7 @@
 import {
   ResponsiveArrayByMaxLength,
   ConditionalPropertyValue,
-  SprinklesStyles,
+  SprinklesProperties,
   ConditionalWithResponsiveArrayProperty,
   ConditionalProperty,
   ShorthandProperty,
@@ -26,7 +26,7 @@ type ConditionalStyleWithResponsiveArray<
   RA extends { length: number },
 > = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
-type ChildSprinkleProps<Sprinkles extends SprinklesStyles['styles']> = {
+type ChildSprinkleProps<Sprinkles extends SprinklesProperties['styles']> = {
   [Prop in keyof Sprinkles]?: Sprinkles[Prop] extends ConditionalWithResponsiveArrayProperty
     ? ConditionalStyleWithResponsiveArray<
         Sprinkles[Prop]['values'],
@@ -56,16 +56,16 @@ type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
   infer L,
   ...infer R
 ]
-  ? (L extends SprinklesStyles ? ChildSprinkleProps<L['styles']> : never) &
+  ? (L extends SprinklesProperties ? ChildSprinkleProps<L['styles']> : never) &
       SprinkleProps<R>
   : {};
 
-export type SprinklesFn<Args extends ReadonlyArray<SprinklesStyles>> = ((
+export type SprinklesFn<Args extends ReadonlyArray<SprinklesProperties>> = ((
   props: SprinkleProps<Args>,
 ) => string) & { properties: Set<keyof SprinkleProps<Args>> };
 
 export const createSprinkles =
-  <Args extends ReadonlyArray<SprinklesStyles>>(
+  <Args extends ReadonlyArray<SprinklesProperties>>(
     composeStyles: (classList: string) => string,
   ) =>
   (...args: Args): SprinklesFn<Args> => {

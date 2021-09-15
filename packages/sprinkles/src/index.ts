@@ -10,8 +10,8 @@ import {
   SprinklesFn,
   createSprinkles as internalCreateSprinkles,
 } from './createSprinkles';
-import { SprinklesStyles, ResponsiveArrayConfig } from './types';
-import { addFunctionSerializer } from '@vanilla-extract/css/functionSerializer';
+import { SprinklesProperties, ResponsiveArrayConfig } from './types';
+import { addRecipe } from '@vanilla-extract/css/recipe';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
@@ -329,9 +329,9 @@ export function defineProperties(options: any): any {
 
 const mockComposeStyles = (classList: string) => classList;
 
-export function createSprinkles<Args extends ReadonlyArray<SprinklesStyles>>(
-  ...config: Args
-): SprinklesFn<Args> {
+export function createSprinkles<
+  Args extends ReadonlyArray<SprinklesProperties>,
+>(...config: Args): SprinklesFn<Args> {
   // When using Sprinkles with the runtime (e.g. within a jest test)
   // `style` can be called (only for composition) outside of a fileScope.
   // Checking we're within a fileScope ensures this doesn't blow up and is
@@ -340,7 +340,7 @@ export function createSprinkles<Args extends ReadonlyArray<SprinklesStyles>>(
     hasFileScope() ? composeStyles : mockComposeStyles,
   )(...config);
 
-  return addFunctionSerializer(sprinkles, {
+  return addRecipe(sprinkles, {
     importPath: '@vanilla-extract/sprinkles/createRuntimeSprinkles',
     importName: 'createSprinkles',
     args: config,
