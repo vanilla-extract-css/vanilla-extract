@@ -336,13 +336,13 @@ export function createSprinkles<Args extends ReadonlyArray<SprinklesStyles>>(
   // `style` can be called (only for composition) outside of a fileScope.
   // Checking we're within a fileScope ensures this doesn't blow up and is
   // safe as compositions don't make sense at runtime
-  const atoms = internalCreateSprinkles(
+  const sprinkles = internalCreateSprinkles(
     hasFileScope() ? composeStyles : mockComposeStyles,
   )(...config);
 
-  return addFunctionSerializer(atoms, {
+  return addFunctionSerializer(sprinkles, {
     importPath: '@vanilla-extract/sprinkles/createRuntimeSprinkles',
-    importName: 'createAtomsFn',
+    importName: 'createSprinkles',
     args: config,
   });
 }
