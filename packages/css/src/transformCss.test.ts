@@ -705,7 +705,7 @@ describe('transformCss', () => {
         content: url(\\"http://www.example.com/test.png\\");
       }
       ._03 .testClass {
-        content: \\"linear-gradient(#e66465, #9198e5)\\";
+        content: linear-gradient(#e66465, #9198e5);
       }
       ._04 .testClass {
         content: image-set(\\"image1x.png\\" 1x, \\"image2x.png\\" 2x);
