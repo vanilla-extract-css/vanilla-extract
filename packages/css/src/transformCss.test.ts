@@ -598,7 +598,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle content with fallacks', () => {
+  it('should handle content with fallbacks', () => {
     expect(
       transformCss({
         composedClassLists: [],
