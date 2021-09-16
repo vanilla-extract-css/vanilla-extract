@@ -18,12 +18,12 @@ export const root = style({
   },
 });
 
-globalStyle(`${root} code`, {
+globalStyle(`${root} code, ${root} a`, {
   background: vars.palette.blue200,
   color: 'inherit',
 });
 
-globalStyle(`.${darkMode} ${root} code`, {
+globalStyle(`.${darkMode} ${root} code, .${darkMode} ${root} a`, {
   background: vars.palette.gray700,
   color: 'inherit',
 });

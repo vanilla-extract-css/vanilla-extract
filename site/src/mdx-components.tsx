@@ -3,6 +3,7 @@ import {
   AllHTMLAttributes,
   ElementType,
   createElement,
+  Children,
 } from 'react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
@@ -12,6 +13,7 @@ import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
+import { sprinkles } from './system/styles/sprinkles.css';
 
 interface Children {
   children: ReactNode;
@@ -47,12 +49,39 @@ const A = ({
   color, // Omit
   type, // Omit
   ...restProps
-}: AllHTMLAttributes<HTMLAnchorElement>) =>
-  href ? (
-    <Link to={href} {...restProps} inline underline="always" />
+}: AllHTMLAttributes<HTMLAnchorElement>) => {
+  let isInlineCodeLink = false;
+
+  if (
+    restProps.children &&
+    Children.count(restProps.children) === 1 &&
+    typeof restProps.children === 'object'
+  ) {
+    const child = Children.only(restProps.children);
+    if (child && typeof child === 'object' && 'props' in child) {
+      isInlineCodeLink =
+        child.props.parentName === 'a' &&
+        child.props.originalType === 'inlineCode';
+    }
+  }
+
+  return href ? (
+    <Link
+      to={href}
+      {...restProps}
+      inline
+      underline="always"
+      highlightOnFocus={!isInlineCodeLink}
+      className={
+        isInlineCodeLink
+          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'gray200' } })
+          : undefined
+      }
+    />
   ) : (
     <a {...restProps} />
   );
+};
 
 const Heading = ({ level, component, children, id }: HeadingProps) => {
   const headingElement = createElement(
