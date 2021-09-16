@@ -1,73 +1,73 @@
 import {
   createMapValueFn,
   createNormalizeValueFn,
-  createAtomsFn,
+  createSprinkles,
 } from '@vanilla-extract/sprinkles';
 
 import {
-  atomicStyles,
-  atomicWithPaddingShorthandStyles,
-  atomicWithShorthandStyles,
-  conditionalAtomicStyles,
-  conditionalAtomicStylesWithMultipleDefaultConditions,
-  conditionalStylesWithoutDefaultCondition,
-  conditionalStylesWithoutResponsiveArray,
+  basicProperties,
+  propertiesWithPaddingShorthands,
+  propertiesWithShorthands,
+  conditionalProperties,
+  conditionalPropertiesWithMultipleDefaultConditions,
+  conditionalPropertiesWithoutDefaultCondition,
+  conditionalPropertiesWithoutResponsiveArray,
 } from './index.css';
 
 describe('sprinkles', () => {
-  describe('createAtomsFn', () => {
-    it('should handle unconditional styles', () => {
-      const atoms = createAtomsFn(atomicStyles);
+  describe('createSprinkles', () => {
+    it('should handle unconditional properties', () => {
+      const sprinkles = createSprinkles(basicProperties);
 
-      expect(atoms({ top: 0, color: 'green-300' })).toMatchInlineSnapshot(
+      expect(sprinkles({ top: 0, color: 'green-300' })).toMatchInlineSnapshot(
         `"sprinkles_top_0__1kw4bre3 sprinkles_color_green-300__1kw4bre2"`,
       );
     });
 
-    it('should handle default classes on conditional styles', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+    it('should handle default classes on conditional properties', () => {
+      const sprinkles = createSprinkles(conditionalProperties);
 
-      expect(atoms({ display: 'block' })).toMatchInlineSnapshot(
+      expect(sprinkles({ display: 'block' })).toMatchInlineSnapshot(
         `"sprinkles_display_block_mobile__1kw4brej"`,
       );
     });
 
-    it('should ignore undefined values', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+    it('should ignore undefined property values', () => {
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({
+        sprinkles({
           display: 'block',
           paddingTop: undefined,
         }),
       ).toMatchInlineSnapshot(`"sprinkles_display_block_mobile__1kw4brej"`);
     });
 
-    it('should handle falsey values on conditional styles', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+    it('should handle falsey values on conditional properties', () => {
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({ display: 'block', opacity: { mobile: 0, desktop: 1 } }),
+        sprinkles({ display: 'block', opacity: { mobile: 0, desktop: 1 } }),
       ).toMatchInlineSnapshot(
         `"sprinkles_display_block_mobile__1kw4brej sprinkles_opacity_0_mobile__1kw4bre1a sprinkles_opacity_1_desktop__1kw4bre1f"`,
       );
     });
 
-    it('should handle falsey values from responsive array on conditional styles', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+    it('should handle falsey values from responsive array on conditional properties', () => {
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({ display: 'block', opacity: [0, 1] }),
+        sprinkles({ display: 'block', opacity: [0, 1] }),
       ).toMatchInlineSnapshot(
         `"sprinkles_display_block_mobile__1kw4brej sprinkles_opacity_0_mobile__1kw4bre1a sprinkles_opacity_1_tablet__1kw4bre1e"`,
       );
     });
 
-    it('should handle conditional styles with different variants', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+    it('should handle conditional properties with different variants', () => {
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({
+        sprinkles({
           display: {
             mobile: 'block',
             desktop: 'flex',
@@ -78,14 +78,14 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should handle a mix of unconditional and conditional styles', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+    it('should handle a mix of unconditional and conditional properties', () => {
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           display: {
             mobile: 'block',
             desktop: 'flex',
@@ -98,13 +98,13 @@ describe('sprinkles', () => {
     });
 
     it('should ignore undefined conditional values', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           paddingTop: {
             mobile: 'medium',
             tablet: undefined,
@@ -117,13 +117,13 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           display: ['block', 'flex', 'block'],
         }),
       ).toMatchInlineSnapshot(
@@ -132,13 +132,13 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with null values', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           display: ['block', null, 'flex'],
         }),
       ).toMatchInlineSnapshot(
@@ -147,10 +147,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays that end early', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({
+        sprinkles({
           display: ['block', 'flex'],
         }),
       ).toMatchInlineSnapshot(
@@ -159,10 +159,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle shorthand properties with a default condition', () => {
-      const atoms = createAtomsFn(atomicWithShorthandStyles);
+      const sprinkles = createSprinkles(propertiesWithShorthands);
 
       expect(
-        atoms({
+        sprinkles({
           paddingX: 'large',
         }),
       ).toMatchInlineSnapshot(
@@ -171,10 +171,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle shorthand properties with a conditional value', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({
+        sprinkles({
           paddingY: {
             mobile: 'medium',
             tablet: 'large',
@@ -186,10 +186,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle shorthand properties with a responsive array', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(
-        atoms({
+        sprinkles({
           paddingY: ['small', 'medium', 'large'],
         }),
       ).toMatchInlineSnapshot(
@@ -198,13 +198,13 @@ describe('sprinkles', () => {
     });
 
     it('should merge shorthand styles with non-shorthands', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           paddingX: 'small',
           paddingY: {
             mobile: 'medium',
@@ -218,13 +218,13 @@ describe('sprinkles', () => {
     });
 
     it('should ignore undefined longhand values when resolving shorthands', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           paddingY: 'small',
           paddingTop: undefined,
         }),
@@ -234,13 +234,13 @@ describe('sprinkles', () => {
     });
 
     it('should ignore undefined shorthand values when resolving shorthands', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
       expect(
-        atoms({
+        sprinkles({
           paddingX: 'small',
           anotherPaddingX: undefined,
         }),
@@ -250,10 +250,10 @@ describe('sprinkles', () => {
     });
 
     it('should preserve config order of shorthands', () => {
-      const atoms = createAtomsFn(atomicWithPaddingShorthandStyles);
+      const sprinkles = createSprinkles(propertiesWithPaddingShorthands);
 
       expect(
-        atoms({
+        sprinkles({
           paddingTop: 'small',
           paddingX: 'small',
           paddingY: 'medium',
@@ -265,10 +265,10 @@ describe('sprinkles', () => {
     });
 
     it('should preserve config order of shorthands', () => {
-      const atoms = createAtomsFn(atomicWithPaddingShorthandStyles);
+      const sprinkles = createSprinkles(propertiesWithPaddingShorthands);
 
       expect(
-        atoms({
+        sprinkles({
           paddingX: 'small',
           padding: 'large',
         }),
@@ -277,13 +277,13 @@ describe('sprinkles', () => {
       );
     });
 
-    it('should provide a static set of properties on the atoms fn', () => {
-      const atoms = createAtomsFn(
-        atomicWithShorthandStyles,
-        conditionalAtomicStyles,
+    it('should provide a static set of properties on the sprinkles function', () => {
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
       );
 
-      expect(atoms.properties).toMatchInlineSnapshot(`
+      expect(sprinkles.properties).toMatchInlineSnapshot(`
         Set {
           "paddingX",
           "anotherPaddingX",
@@ -302,36 +302,36 @@ describe('sprinkles', () => {
 
   describe('errors', () => {
     it('should handle invalid properties', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           paddingLefty: 'small',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLefty\\" is not a valid atom property"`,
+        `"\\"paddingLefty\\" is not a valid sprinkle"`,
       );
     });
 
     it('should handle invalid property values', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           paddingLeft: 'xsmall',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLeft\\" is not a valid atom property"`,
+        `"\\"paddingLeft\\" is not a valid sprinkle"`,
       );
     });
 
     it('should handle conditional objects to unconditional values', () => {
-      const atoms = createAtomsFn(atomicStyles);
+      const sprinkles = createSprinkles(basicProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           color: {
             mobile: 'red',
@@ -343,10 +343,12 @@ describe('sprinkles', () => {
     });
 
     it('should handle missing responsive arrays definitions', () => {
-      const atoms = createAtomsFn(conditionalStylesWithoutResponsiveArray);
+      const sprinkles = createSprinkles(
+        conditionalPropertiesWithoutResponsiveArray,
+      );
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           marginTop: ['small'],
         }),
@@ -356,10 +358,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle invalid responsive arrays values', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           paddingTop: ['xsmall'],
         }),
@@ -369,10 +371,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with too many values', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           paddingTop: ['small', 'medium', 'large', 'small'],
         }),
@@ -382,10 +384,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle invalid conditional property values', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           paddingTop: {
             mobile: 'xlarge',
@@ -397,10 +399,12 @@ describe('sprinkles', () => {
     });
 
     it('should handle properties with no default condition', () => {
-      const atoms = createAtomsFn(conditionalStylesWithoutDefaultCondition);
+      const sprinkles = createSprinkles(
+        conditionalPropertiesWithoutDefaultCondition,
+      );
 
       expect(() =>
-        atoms({
+        sprinkles({
           // @ts-expect-error
           transform: 'shrink',
         }),
@@ -410,10 +414,10 @@ describe('sprinkles', () => {
     });
 
     it('should handle invalid conditions', () => {
-      const atoms = createAtomsFn(conditionalAtomicStyles);
+      const sprinkles = createSprinkles(conditionalProperties);
 
       expect(() =>
-        atoms({
+        sprinkles({
           paddingTop: {
             // @ts-expect-error
             ultraWide: 'large',
@@ -427,7 +431,7 @@ describe('sprinkles', () => {
 
   describe('createNormalizeValueFn', () => {
     it('should handle unresponsive values', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue('foobar')).toMatchInlineSnapshot(`
         Object {
@@ -437,7 +441,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(['one', 'two'])).toMatchInlineSnapshot(`
         Object {
@@ -448,7 +452,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(['one', 'two', 'three'])).toMatchInlineSnapshot(`
         Object {
@@ -460,7 +464,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with nulls', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(['one', null, 'three'])).toMatchInlineSnapshot(`
         Object {
@@ -471,7 +475,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue({ mobile: 'one', desktop: 'three' }))
         .toMatchInlineSnapshot(`
@@ -483,7 +487,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects with undefined', () => {
-      const normalizeValue = createNormalizeValueFn(conditionalAtomicStyles);
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(
         normalizeValue({ mobile: 'one', tablet: undefined, desktop: 'three' }),
@@ -499,7 +503,7 @@ describe('sprinkles', () => {
 
   describe('createMapValueFn', () => {
     it('should handle strings', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         'foobar',
         (value, key) => `${value}_${key}` as const,
@@ -509,21 +513,21 @@ describe('sprinkles', () => {
     });
 
     it('should handle numbers', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(123, (value, key) => `${value}_${key}` as const);
 
       expect(value).toMatchInlineSnapshot(`"123_mobile"`);
     });
 
     it('should handle booleans', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(123, () => false);
 
       expect(value).toBe(false);
     });
 
     it('should handle conditional booleans', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         { mobile: 1, tablet: 2, desktop: 3 },
         (value) => value === 2,
@@ -537,14 +541,14 @@ describe('sprinkles', () => {
     });
 
     it('should handle nulls', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(123, () => null);
 
       expect(value).toBe(null);
     });
 
     it('should handle conditional nulls', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
         value === 2 ? null : value,
       );
@@ -553,14 +557,14 @@ describe('sprinkles', () => {
     });
 
     it('should handle undefined', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(123, () => undefined);
 
       expect(value).toBe(undefined);
     });
 
     it('should handle conditional undefined', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
         value === 2 ? undefined : value,
       );
@@ -569,7 +573,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const map = createMapValueFn(conditionalAtomicStyles);
+      const map = createMapValueFn(conditionalProperties);
       const value = map(['one'], (value, key) => `${value}_${key}` as const);
 
       expect(value).toMatchInlineSnapshot(`
@@ -580,7 +584,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const map = createMapValueFn(conditionalAtomicStyles);
+      const map = createMapValueFn(conditionalProperties);
       const value = map(
         ['one', 'two'],
         (value, key) => `${value}_${key}` as const,
@@ -595,7 +599,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         ['one', 'two', 'three'],
         (value, key) => `${value}_${key}` as const,
@@ -611,7 +615,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with nulls', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         ['one', null, 'three'] as const,
         (value, key) => `${value}_${key}` as const,
@@ -626,7 +630,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle responsive arrays with only nulls', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         [null, null, null] as const,
         (value, key) => `${value}_${key}` as const,
@@ -636,7 +640,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         { mobile: 'one', desktop: 'three' } as const,
         (value, key) => `${value}_${key}` as const,
@@ -651,7 +655,7 @@ describe('sprinkles', () => {
     });
 
     it('should handle conditional objects with undefined', () => {
-      const mapValue = createMapValueFn(conditionalAtomicStyles);
+      const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
         { mobile: 'one', tablet: undefined, desktop: 'three' } as const,
         (value, key) => `${value}_${key}` as const,
@@ -667,7 +671,7 @@ describe('sprinkles', () => {
   });
 
   it('should create atomic styles', () => {
-    expect(atomicWithShorthandStyles).toMatchInlineSnapshot(`
+    expect(propertiesWithShorthands).toMatchInlineSnapshot(`
       Object {
         "conditions": undefined,
         "styles": Object {
@@ -728,7 +732,7 @@ describe('sprinkles', () => {
   });
 
   it('should create conditional atomic styles', () => {
-    expect(conditionalAtomicStyles).toMatchInlineSnapshot(`
+    expect(conditionalProperties).toMatchInlineSnapshot(`
       Object {
         "conditions": Object {
           "conditionNames": Array [
@@ -879,8 +883,8 @@ describe('sprinkles', () => {
     `);
   });
 
-  it('should create conditional atomic styles with multiple default condition classes in "defaultClass"', () => {
-    expect(conditionalAtomicStylesWithMultipleDefaultConditions)
+  it('should create conditional properties with multiple default condition classes in "defaultClass"', () => {
+    expect(conditionalPropertiesWithMultipleDefaultConditions)
       .toMatchInlineSnapshot(`
       Object {
         "conditions": Object {

@@ -12,12 +12,12 @@ import Text from '../Typography/Text';
 import InlineCode from '../InlineCode/InlineCode';
 import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
-import { Atoms } from '../system/styles/sprinkles.css';
+import { Sprinkles } from '../system/styles/sprinkles.css';
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
   title?: string;
-  background?: Atoms['background'];
+  background?: Sprinkles['background'];
   children:
     | string
     | {

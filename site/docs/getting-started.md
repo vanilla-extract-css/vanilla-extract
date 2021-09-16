@@ -70,6 +70,6 @@ document.write(`
 
 ---
 
-Want to work at a higher level while maximising style re-use? Check out 🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+Want to work at a higher level while maximising style re-use? Check out 🍨 [Sprinkles](/documentation/sprinkles-api), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
 
 ---

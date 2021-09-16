@@ -7,13 +7,13 @@
   "module": "dist/vanilla-extract-sprinkles.esm.js",
   "files": [
     "/dist",
-    "/createRuntimeAtomsFn",
+    "/createRuntimeSprinkles",
     "/createUtils"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "createRuntimeAtomsFn.ts",
+      "createRuntimeSprinkles.ts",
       "createUtils.ts"
     ]
   },

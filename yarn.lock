@@ -6557,9 +6557,9 @@ __metadata:
   linkType: hard
 
 "csstype@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "csstype@npm:3.0.7"
-  checksum: 76d542d719cd6bca7c491e6425a28873f76b0f4cf602b626a9fee105806446be4fab2191c5d18a045aea412bb3d5dcb5cab9414328080c672671433b786746f5
+  version: 3.0.9
+  resolution: "csstype@npm:3.0.9"
+  checksum: e5d6ebc4581d09537e620b78b6741b4b1ececc0eb3fec065be1d59d42685954276847969b9c3652e835553a33dd8a7995bbd5cc834c4142375de8b417a433880
   languageName: node
   linkType: hard
 
