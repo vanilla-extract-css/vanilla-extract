@@ -42,7 +42,7 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [vanillaExtractPlugin()],
+    plugins: [vanillaExtractPlugin({ devStyleRuntime: 'vanilla-extract' })],
     server: {
       port,
     },
