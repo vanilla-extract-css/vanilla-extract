@@ -3,6 +3,7 @@ export type BuildType =
   | 'mini-css-extract'
   | 'style-loader'
   | 'esbuild'
+  | 'rollup'
   | 'vite'
   | 'snowpack';
 

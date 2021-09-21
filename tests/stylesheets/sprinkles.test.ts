@@ -3,7 +3,7 @@ import { getStylesheet, startFixture, TestServer } from 'test-helpers';
 const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
 let testCounter = 0;
 
-const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
+const buildTypes = ['vite', 'esbuild', 'rollup', 'mini-css-extract'] as const;
 
 buildTypes.forEach((buildType) => {
   describe(`features - ${buildType}`, () => {

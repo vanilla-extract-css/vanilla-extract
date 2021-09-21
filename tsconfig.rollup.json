@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["es2019", "es2017", "dom"],
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true /* Enable all strict type-checking options. */,
+    "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "incremental": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "downlevelIteration": true
+  },
+  "exclude": ["node_modules", "**/dist/**"],
+  "include": [
+    "./jest.setup.ts",
+    "packages/**/*",
+    "fixtures/*/src/**/*",
+    "test-helpers/**/*",
+    "tests/**/*"
+  ]
+}

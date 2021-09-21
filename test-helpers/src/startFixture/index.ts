@@ -2,6 +2,7 @@ import portfinder from 'portfinder';
 
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
+import { startRollupFixture, RollupFixtureOptions } from './rollup';
 import { startViteFixture, ViteFixtureOptions } from './vite';
 import { startSnowpackFixture, SnowpackFixtureOptions } from './snowpack';
 
@@ -11,6 +12,7 @@ type BuildType =
   | 'style-loader'
   | 'esbuild'
   | 'esbuild-runtime'
+  | 'rollup'
   | 'vite'
   | 'snowpack';
 
@@ -29,6 +31,7 @@ type FixtureOptions = SharedOptions &
   Omit<
     | EsbuildFixtureOptions
     | WebpackFixtureOptions
+    | RollupFixtureOptions
     | ViteFixtureOptions
     | SnowpackFixtureOptions,
     'port'
@@ -52,6 +55,14 @@ export async function startFixture(
 
   if (type === 'esbuild' || type === 'esbuild-runtime') {
     return startEsbuildFixture(fixtureName, {
+      type,
+      port,
+      mode: options.mode,
+    });
+  }
+
+  if (type === 'rollup') {
+    return startRollupFixture(fixtureName, {
       type,
       port,
       mode: options.mode,
