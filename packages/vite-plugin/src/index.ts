@@ -15,10 +15,20 @@ import {
 
 interface Options {
   identifiers?: IdentifierOption;
+
+  /**
+   * Which CSS runtime to use when running `vite serve`.
+   * @default 'vite'
+   */
+  devStyleRuntime?: 'vite' | 'vanilla-extract';
 }
-export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
+export function vanillaExtractPlugin({
+  identifiers,
+  devStyleRuntime = 'vite',
+}: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
+  let useRuntime = false;
   const cssMap = new Map<string, string>();
 
   return {
@@ -26,6 +36,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
     enforce: 'pre',
     configResolved(resolvedConfig) {
       config = resolvedConfig;
+      useRuntime =
+        devStyleRuntime === 'vanilla-extract' && config.command === 'serve';
 
       packageInfo = getPackageInfo(config.root);
     },
@@ -59,7 +71,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return null;
       }
 
-      if (ssr) {
+      if (ssr || useRuntime) {
         return addFileScope({
           source: code,
           filePath: normalizePath(path.relative(packageInfo.dirname, id)),
