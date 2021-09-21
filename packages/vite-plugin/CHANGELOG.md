@@ -1,5 +1,13 @@
 # @vanilla-extract/vite-plugin
 
+## 2.1.0
+
+### Minor Changes
+
+- [#373](https://github.com/seek-oss/vanilla-extract/pull/373) [`a55d2cf`](https://github.com/seek-oss/vanilla-extract/commit/a55d2cfd7c4ca9175a2c86557888df90907bfd0f) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `devStyleRuntime` option to allow switching between dev style runtimes
+
+  The built-in Vite dev style runtime (what adds styles to the page when running `vite serve`) doesn't seem to clean up old styles as expected. Passing `devStyleRuntime: 'vanilla-extract'` will instead use vanilla-extract's browser runtime. This pushes all style creation in development to the browser, but may give a better HMR experience.
+
 ## 2.0.2
 
 ### Patch Changes
