@@ -112,3 +112,40 @@ export const button = recipe({
   }
 });
 ```
+
+## TypeScript
+
+Our API's are completely typed, meaning `recipe` return value will autocomplete as expected.
+
+If you want to use the type of your variants from a Component or other parts of your code, you can get that type using `RecipeVariants`:
+
+```ts
+// button.css.ts
+import { recipe } from '@vanilla-extract/recipes';
+import { reset } from './reset.css.ts';
+import { sprinkles } from './sprinkles.css.ts';
+
+export const button = recipe({
+  variants: {
+    color: {
+      neutral: sprinkles({ background: 'neutral' }),
+      brand: sprinkles({ background: 'brand' }),
+      accent: sprinkles({ background: 'accent' })
+    },
+    size: {
+      small: sprinkles({ padding: 'small' }),
+      medium: sprinkles({ padding: 'medium' }),
+      large: sprinkles({ padding: 'large' })
+    }
+  }
+});
+
+// Get the type 
+type ButtonVariants = RecipeVariants<typeof button>;
+
+// the above will result in a similar type to:
+type ButtonVariants = {
+  color: 'neutral' | 'brand' | 'size';
+  size: 'small' | 'medium' | 'large';
+};
+```
