@@ -6,7 +6,8 @@ export const mockAdapter: Adapter = {
   onEndFileScope: () => {},
   registerComposition: () => {},
   markCompositionUsed: () => {},
-  getIdentOption: () => 'debug',
+  getIdentOption: () =>
+    process.env.NODE_ENV === 'production' ? 'short' : 'debug',
 };
 
 const adapterStack: Array<Adapter> = [mockAdapter];
