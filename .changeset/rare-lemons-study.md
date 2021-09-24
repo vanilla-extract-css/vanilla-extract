@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/recipes': patch
+'@vanilla-extract/recipes': minor
 ---
 
 Add `RecipeVariants` type to get variants from a recipe.
