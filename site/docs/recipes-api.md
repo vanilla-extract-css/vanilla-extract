@@ -143,7 +143,7 @@ export const button = recipe({
 // Get the type 
 type ButtonVariants = RecipeVariants<typeof button>;
 
-// the above will result in a similar type to:
+// the above will result in a type equivalent to:
 type ButtonVariants = {
   color: 'neutral' | 'brand' | 'size';
   size: 'small' | 'medium' | 'large';
