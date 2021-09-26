@@ -1,12 +1,46 @@
 # @vanilla-extract/recipes
 
+## 0.2.0
+
+### Minor Changes
+
+- [#376](https://github.com/seek-oss/vanilla-extract/pull/376) [`f8082b9`](https://github.com/seek-oss/vanilla-extract/commit/f8082b9b62c57f394bf82cf05296a680c3ef177b) Thanks [@TheMightyPenguin](https://github.com/TheMightyPenguin)! - Add `RecipeVariants` type
+
+  A utility to make use of the recipe’s type interface. This can be useful when typing functions or component props that need to accept recipe values as part of their interface.
+
+  ```ts
+  // button.css.ts
+  import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+
+  export const button = recipe({
+    variants: {
+      color: {
+        neutral: { background: 'whitesmoke' },
+        brand: { background: 'blueviolet' },
+        accent: { background: 'slateblue' },
+      },
+      size: {
+        small: { padding: 12 },
+        medium: { padding: 16 },
+        large: { padding: 24 },
+      },
+    },
+  });
+
+  // Get the type
+  export type ButtonVariants = RecipeVariants<typeof button>;
+
+  // the above will result in a type equivalent to:
+  export type ButtonVariants = {
+    color?: 'neutral' | 'brand' | 'accent';
+    size?: 'small' | 'medium' | 'large';
+  };
+  ```
+
 ## 0.1.1
+
 ### Patch Changes
-
-
 
 - [#380](https://github.com/seek-oss/vanilla-extract/pull/380) [`3ae2422`](https://github.com/seek-oss/vanilla-extract/commit/3ae24220e2187475561e0be54631558076370fa4) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add variant group names to debug IDs
 
-
-
-- [#380](https://github.com/seek-oss/vanilla-extract/pull/380) [`3ae2422`](https://github.com/seek-oss/vanilla-extract/commit/3ae24220e2187475561e0be54631558076370fa4) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Return default variants when selection is `undefined`
+* [#380](https://github.com/seek-oss/vanilla-extract/pull/380) [`3ae2422`](https://github.com/seek-oss/vanilla-extract/commit/3ae24220e2187475561e0be54631558076370fa4) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Return default variants when selection is `undefined`
