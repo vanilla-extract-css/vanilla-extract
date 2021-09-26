@@ -4,13 +4,11 @@
 
 Add `RecipeVariants` type to get variants from a recipe.
 
-This type would help consumers easily get the variants type. Useful for consuming variants from a Component, functions, or other parts of the code:
+This type allows you to extract the variants from the recipe function. Useful for consuming variants from a componen.
 
 ```ts
 // button.css.ts
 import { recipe } from '@vanilla-extract/recipes';
-import { reset } from './reset.css.ts';
-import { sprinkles } from './sprinkles.css.ts';
 
 export const button = recipe({
   variants: {
