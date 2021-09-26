@@ -6,6 +6,8 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 // @ts-expect-error Unused args
 const noop = (...args: Array<any>) => {};
 
+type AssertIsString<S> = S extends string ? true : never;
+
 () => {
   const textRecipes = recipe({
     variants: {
@@ -29,6 +31,15 @@ const noop = (...args: Array<any>) => {};
     color: 'brand',
   };
 
+  const validTextVariant: TextVariants = {
+    size: 'large',
+  };
+
+  const recipeStyles = textRecipes({ size: 'small' });
+  const recipeShouldReturnString: AssertIsString<typeof recipeStyles> = true;
+
   noop(invalidVariantValue);
   noop(invalidVariantName);
+  noop(validTextVariant);
+  noop(recipeShouldReturnString);
 };
