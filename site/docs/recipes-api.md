@@ -128,24 +128,36 @@ import { sprinkles } from './sprinkles.css.ts';
 export const button = recipe({
   variants: {
     color: {
-      neutral: sprinkles({ background: 'neutral' }),
-      brand: sprinkles({ background: 'brand' }),
-      accent: sprinkles({ background: 'accent' })
+      neutral: {
+        background: 'neutral'
+      },
+      brand: {
+        background: 'brand'
+      },
+      accend: {
+        background: 'accent'
+      }
     },
     size: {
-      small: sprinkles({ padding: 'small' }),
-      medium: sprinkles({ padding: 'medium' }),
-      large: sprinkles({ padding: 'large' })
+      small: {
+        padding: 'small'
+      },
+      medium: {
+        padding: 'medium'
+      },
+      large: {
+        padding: 'large'
+      }
     }
   }
 });
 
 // Get the type 
-type ButtonVariants = RecipeVariants<typeof button>;
+export type ButtonVariants = RecipeVariants<typeof button>;
 
 // the above will result in a type equivalent to:
-type ButtonVariants = {
-  color: 'neutral' | 'brand' | 'size';
-  size: 'small' | 'medium' | 'large';
+export type ButtonVariants = {
+  color?: 'neutral' | 'brand' | 'size';
+  size?: 'small' | 'medium' | 'large';
 };
 ```
