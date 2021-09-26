@@ -113,13 +113,16 @@ export const button = recipe({
 });
 ```
 
-## TypeScript
+## RecipeVariants
 
-If you want to use the type of your variants in a component API, you can use the `RecipeVariants` type.
+A utility to make use of the recipe’s type interface. This can be useful when typing functions or component props that need to accept recipe values as part of their interface.
 
 ```ts
 // button.css.ts
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+import {
+  recipe,
+  RecipeVariants
+} from '@vanilla-extract/recipes';
 
 export const button = recipe({
   variants: {
@@ -132,11 +135,11 @@ export const button = recipe({
       small: { padding: 12 },
       medium: { padding: 16 },
       large: { padding: 24 }
-    },
+    }
   }
 });
 
-// Get the type 
+// Get the type
 export type ButtonVariants = RecipeVariants<typeof button>;
 
 // the above will result in a type equivalent to:
