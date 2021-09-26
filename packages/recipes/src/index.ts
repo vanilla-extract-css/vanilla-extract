@@ -10,6 +10,8 @@ import type {
   VariantSelection,
 } from './types';
 
+export type { RecipeVariants } from './types';
+
 function mapValues<Input extends Record<string, any>, OutputValue>(
   input: Input,
   fn: (value: Input[keyof Input], key: keyof Input) => OutputValue,
