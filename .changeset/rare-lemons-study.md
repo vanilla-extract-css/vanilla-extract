@@ -4,7 +4,7 @@
 
 Add `RecipeVariants` type to get variants from a recipe.
 
-This type allows you to extract the variants from the recipe function. Useful for consuming variants from a componen.
+This type allows you to extract the variants from the recipe function. Useful for consuming variants from a component.
 
 ```ts
 // button.css.ts
