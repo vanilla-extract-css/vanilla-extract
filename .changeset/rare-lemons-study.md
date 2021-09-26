@@ -11,7 +11,7 @@ This type would help consumers easily get the variants type. Useful for typing t
 import { recipe } from '@vanilla-extract/recipes';
 import { reset } from './reset.css.ts';
 import { sprinkles } from './sprinkles.css.ts';
-// 
+
 export const button = recipe({
   variants: {
     color: {
