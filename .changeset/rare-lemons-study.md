@@ -8,7 +8,7 @@ This type allows you to extract the variants from the recipe function. Useful fo
 
 ```ts
 // button.css.ts
-import { recipe } from '@vanilla-extract/recipes';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 export const button = recipe({
   variants: {
