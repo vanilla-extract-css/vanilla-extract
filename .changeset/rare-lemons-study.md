@@ -11,31 +11,19 @@ This type would help consumers easily get the variants type. Useful for typing t
 import { recipe } from '@vanilla-extract/recipes';
 import { reset } from './reset.css.ts';
 import { sprinkles } from './sprinkles.css.ts';
-
+// 
 export const button = recipe({
   variants: {
     color: {
-      neutral: {
-        background: 'neutral'
-      },
-      brand: {
-        background: 'brand'
-      },
-      accend: {
-        background: 'accent'
-      }
+      neutral: { background: 'whitesmoke' },
+      brand: { background: 'blueviolet' },
+      accent: { background: 'slateblue' }
     },
     size: {
-      small: {
-        padding: 'small'
-      },
-      medium: {
-        padding: 'medium'
-      },
-      large: {
-        padding: 'large'
-      }
-    }
+      small: { padding: 12 },
+      medium: { padding: 16 },
+      large: { padding: 24 }
+    },
   }
 });
 
@@ -44,7 +32,7 @@ export type ButtonVariants = RecipeVariants<typeof button>;
 
 // the above will result in a type equivalent to:
 export type ButtonVariants = {
-  color?: 'neutral' | 'brand' | 'size';
+  color?: 'neutral' | 'brand' | 'accent';
   size?: 'small' | 'medium' | 'large';
 };
 ```

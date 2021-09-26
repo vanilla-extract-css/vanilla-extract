@@ -115,7 +115,7 @@ export const button = recipe({
 
 ## TypeScript
 
-Our API's are completely typed, meaning `recipe` return value will autocomplete as expected.
+Our API's are completely typed, meaning the function returned by `recipe` will autocomplete as expected.
 
 If you want to use the type of your variants from a Component or other parts of your code, you can get that type using `RecipeVariants`:
 
@@ -128,27 +128,15 @@ import { sprinkles } from './sprinkles.css.ts';
 export const button = recipe({
   variants: {
     color: {
-      neutral: {
-        background: 'neutral'
-      },
-      brand: {
-        background: 'brand'
-      },
-      accend: {
-        background: 'accent'
-      }
+      neutral: { background: 'whitesmoke' },
+      brand: { background: 'blueviolet' },
+      accent: { background: 'slateblue' }
     },
     size: {
-      small: {
-        padding: 'small'
-      },
-      medium: {
-        padding: 'medium'
-      },
-      large: {
-        padding: 'large'
-      }
-    }
+      small: { padding: 12 },
+      medium: { padding: 16 },
+      large: { padding: 24 }
+    },
   }
 });
 
@@ -157,7 +145,7 @@ export type ButtonVariants = RecipeVariants<typeof button>;
 
 // the above will result in a type equivalent to:
 export type ButtonVariants = {
-  color?: 'neutral' | 'brand' | 'size';
+  color?: 'neutral' | 'brand' | 'accent';
   size?: 'small' | 'medium' | 'large';
 };
 ```
