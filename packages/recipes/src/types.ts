@@ -16,7 +16,7 @@ export type PatternResult<Variants extends VariantGroups> = {
   variantClassNames: {
     [P in keyof Variants]: { [P in keyof Variants[keyof Variants]]: string };
   };
-  defaultVariants?: VariantSelection<Variants>;
+  defaultVariants: VariantSelection<Variants>;
   compoundVariants: Array<[VariantSelection<Variants>, string]>;
 };
 
