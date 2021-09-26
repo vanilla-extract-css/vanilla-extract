@@ -115,15 +115,11 @@ export const button = recipe({
 
 ## TypeScript
 
-Our API's are completely typed, meaning the function returned by `recipe` will autocomplete as expected.
-
-If you want to use the type of your variants from a Component or other parts of your code, you can get that type using `RecipeVariants`:
+If you want to use the type of your variants in a component API, you can use the `RecipeVariants` type.
 
 ```ts
 // button.css.ts
-import { recipe } from '@vanilla-extract/recipes';
-import { reset } from './reset.css.ts';
-import { sprinkles } from './sprinkles.css.ts';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 export const button = recipe({
   variants: {
