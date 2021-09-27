@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.6.1
+
+### Patch Changes
+
+- [#381](https://github.com/seek-oss/vanilla-extract/pull/381) [`b1e5936`](https://github.com/seek-oss/vanilla-extract/commit/b1e5936db253d81cca60c31adeabd2dd0a240389) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix identfiers not respecting `NODE_ENV` for SSR builds
+
 ## 1.6.0
 
 ### Minor Changes
