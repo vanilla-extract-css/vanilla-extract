@@ -25,13 +25,13 @@ export const createRuntimeFn =
   (options) => {
     let className = config.defaultClassName;
 
-    // @ts-expect-error
     const selections: VariantSelection<Variants> = {
       ...config.defaultVariants,
       ...options,
     };
     for (const variantName in selections) {
-      const variantSelection = selections[variantName];
+      const variantSelection =
+        selections[variantName] ?? config.defaultVariants[variantName];
 
       if (variantSelection) {
         className += ` ${

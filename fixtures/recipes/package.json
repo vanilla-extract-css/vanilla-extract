@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "@vanilla-extract/css": "1.6.0",
-    "@vanilla-extract/recipes": "0.1.0"
+    "@vanilla-extract/recipes": "0.2.0"
   }
 }
