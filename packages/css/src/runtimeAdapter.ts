@@ -1,7 +1,6 @@
 import type { Adapter, Composition, CSS, FileScope } from './types';
 import { transformCss } from './transformCss';
 import { setAdapterIfNotSet } from './adapter';
-import defaultIdentOption from './defaultIdentOption';
 
 const stylesheets: Record<string, CSSStyleSheet> = {};
 
@@ -68,7 +67,8 @@ const browserRuntimeAdapter: Adapter = {
 
     bufferedCSSObjs = [];
   },
-  getIdentOption: () => defaultIdentOption,
+  getIdentOption: () =>
+    process.env.NODE_ENV === 'production' ? 'short' : 'debug',
 };
 
 if (typeof window !== 'undefined') {

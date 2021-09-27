@@ -1,4 +1,3 @@
-import defaultIdentOption from './defaultIdentOption';
 import type { Adapter } from './types';
 
 export const mockAdapter: Adapter = {
@@ -7,7 +6,8 @@ export const mockAdapter: Adapter = {
   onEndFileScope: () => {},
   registerComposition: () => {},
   markCompositionUsed: () => {},
-  getIdentOption: () => defaultIdentOption,
+  getIdentOption: () =>
+    process.env.NODE_ENV === 'production' ? 'short' : 'debug',
 };
 
 const adapterStack: Array<Adapter> = [mockAdapter];
