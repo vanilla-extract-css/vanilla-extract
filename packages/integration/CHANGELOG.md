@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 1.4.1
+
+### Patch Changes
+
+- [#389](https://github.com/seek-oss/vanilla-extract/pull/389) [`23d2757`](https://github.com/seek-oss/vanilla-extract/commit/23d275794d38f01049b824e3e000fb1bb2411717) Thanks [@aulneau](https://github.com/aulneau)! - This update adds `mjs` to the file `*.css.*` regex, enabling better support for ESM packages/files.
+
 ## 1.4.0
 
 ### Minor Changes
