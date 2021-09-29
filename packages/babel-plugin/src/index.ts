@@ -87,6 +87,31 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
     return;
   }
 
+  // Special case: Handle `export const [themeClass, vars] = createTheme({});`
+  // when it's already been compiled into this:
+  //
+  // var _createTheme = createTheme({}),
+  //   _createTheme2 = _slicedToArray(_createTheme, 2),
+  //   themeClass = _createTheme2[0],
+  //   vars = _createTheme2[1];
+  if (
+    t.isVariableDeclaration(firstRelevantParentPath.parent) &&
+    firstRelevantParentPath.parent.declarations.length === 4
+  ) {
+    const [themeDeclarator, , classNameDeclarator] =
+      firstRelevantParentPath.parent.declarations;
+
+    if (
+      t.isCallExpression(themeDeclarator.init) &&
+      t.isIdentifier(themeDeclarator.init.callee) &&
+      themeDeclarator.init.callee.name === 'createTheme' &&
+      t.isVariableDeclarator(classNameDeclarator) &&
+      t.isIdentifier(classNameDeclarator.id)
+    ) {
+      return classNameDeclarator.id.name;
+    }
+  }
+
   const relevantParent = firstRelevantParentPath.node;
 
   if (

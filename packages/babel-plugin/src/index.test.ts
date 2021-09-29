@@ -411,6 +411,32 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle createTheme using destructuring when already compiled', () => {
+    const source = `
+      import { createTheme } from '@vanilla-extract/css';
+
+      var _createTheme = createTheme({}),
+        _createTheme2 = _slicedToArray(_createTheme, 2),
+        myThemeClass = _createTheme2[0],
+        vars = _createTheme2[1];
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      import { createTheme } from '@vanilla-extract/css';
+
+      var _createTheme = createTheme({}, \\"myThemeClass\\"),
+          _createTheme2 = _slicedToArray(_createTheme, 2),
+          myThemeClass = _createTheme2[0],
+          vars = _createTheme2[1];
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
+
   it('should handle createGlobalTheme', () => {
     const source = `
       import { createGlobalTheme } from '@vanilla-extract/css';
