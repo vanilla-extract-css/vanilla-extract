@@ -103,8 +103,7 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
 
     if (
       t.isCallExpression(themeDeclarator.init) &&
-      t.isIdentifier(themeDeclarator.init.callee) &&
-      themeDeclarator.init.callee.name === 'createTheme' &&
+      t.isIdentifier(themeDeclarator.init.callee, { name: 'createTheme' }) &&
       t.isVariableDeclarator(classNameDeclarator) &&
       t.isIdentifier(classNameDeclarator.id)
     ) {
