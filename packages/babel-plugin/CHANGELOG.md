@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin
 
+## 1.1.1
+
+### Patch Changes
+
+- [#391](https://github.com/seek-oss/vanilla-extract/pull/391) [`c0fa901`](https://github.com/seek-oss/vanilla-extract/commit/c0fa9019e0717f35cade939c7a9b665344cbf7a9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Handle array destructuring from `createTheme` when it's already been compiled
+
 ## 1.1.0
 
 ### Minor Changes
