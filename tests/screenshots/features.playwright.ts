@@ -25,7 +25,7 @@ buildTypes.forEach((buildType) => {
     });
 
     test('features', async ({ page }) => {
-      await page.goto(server.url, { timeout: 60000 });
+      await page.goto(server.url);
 
       expect(await page.screenshot()).toMatchSnapshot('features.png');
     });
