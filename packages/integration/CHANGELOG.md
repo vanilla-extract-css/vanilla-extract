@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 1.4.2
+
+### Patch Changes
+
+- [#393](https://github.com/seek-oss/vanilla-extract/pull/393) [`2f379f1`](https://github.com/seek-oss/vanilla-extract/commit/2f379f118c2a2fe6dc08a1cc15a395dbc0f17ece) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix compilation errors in Vite 2.6
+
 ## 1.4.1
 
 ### Patch Changes
