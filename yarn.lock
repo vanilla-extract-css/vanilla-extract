@@ -3864,7 +3864,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/integration@^1.2.0, @vanilla-extract/integration@^1.3.0, @vanilla-extract/integration@^1.4.0, @vanilla-extract/integration@workspace:packages/integration":
+"@vanilla-extract/integration@^1.2.0, @vanilla-extract/integration@^1.3.0, @vanilla-extract/integration@^1.4.0, @vanilla-extract/integration@^1.4.2, @vanilla-extract/integration@workspace:packages/integration":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/integration@workspace:packages/integration"
   dependencies:
@@ -3931,7 +3931,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
-    "@vanilla-extract/integration": ^1.3.0
+    "@vanilla-extract/integration": ^1.4.2
     vite: ^2.6.0
   peerDependencies:
     vite: ^2.2.3
