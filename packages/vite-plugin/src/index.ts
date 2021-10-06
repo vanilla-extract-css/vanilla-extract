@@ -71,19 +71,16 @@ export function vanillaExtractPlugin({
         return null;
       }
 
-      const usedIndex = id.indexOf('?used');
-      const fixedId = usedIndex > 0 ? id.substring(0, usedIndex) : id;
-
       if (ssr || useRuntime) {
         return addFileScope({
           source: code,
-          filePath: normalizePath(path.relative(packageInfo.dirname, fixedId)),
+          filePath: normalizePath(path.relative(packageInfo.dirname, id)),
           packageInfo,
         }).source;
       }
 
       const { source, watchFiles } = await compile({
-        filePath: fixedId,
+        filePath: id,
         cwd: config.root,
       });
 
@@ -91,10 +88,11 @@ export function vanillaExtractPlugin({
         this.addWatchFile(file);
       }
 
+      console.log(source);
       return processVanillaFile({
         source,
-        filePath: fixedId,
-        outputCss: !ssr,
+        filePath: id,
+        injectCss: true,
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
       });

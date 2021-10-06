@@ -3,9 +3,17 @@
   "version": "1.4.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-integration.cjs.js",
+  "module": "dist/vanilla-extract-integration.esm.js",
   "files": [
-    "/dist"
+    "/dist",
+    "/injectStyles"
   ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "injectStyles.ts"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",

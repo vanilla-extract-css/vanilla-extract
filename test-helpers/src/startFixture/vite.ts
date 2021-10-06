@@ -42,7 +42,7 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [vanillaExtractPlugin({ devStyleRuntime: 'vanilla-extract' })],
+    plugins: [vanillaExtractPlugin()],
     optimizeDeps: {
       include: ['@vanilla-extract/css', '@vanilla-extract/css/fileScope'],
     },

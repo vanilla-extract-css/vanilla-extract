@@ -28,6 +28,7 @@ interface ProcessVanillaFileOptions {
   source: string;
   filePath: string;
   outputCss?: boolean;
+  injectCss?: boolean;
   identOption?: IdentifierOption;
   serializeVirtualCssPath?: (file: {
     fileName: string;
@@ -41,6 +42,7 @@ export function processVanillaFile({
   outputCss = true,
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
+  injectCss = false,
 }: ProcessVanillaFileOptions) {
   type Css = Parameters<Adapter['appendCss']>[0];
   type Composition = Parameters<Adapter['registerComposition']>[0];
@@ -105,6 +107,14 @@ export function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
+    if (injectCss) {
+      const injectCall = `injectStyles({fileScopeId: ${JSON.stringify(
+        serialisedFileScope,
+      )}, css: ${JSON.stringify(css)}});`;
+      cssImports.push(injectCall);
+      return;
+    }
+
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');
     const fileName = `${
       fileScope.packageName
@@ -142,7 +152,12 @@ export function processVanillaFile({
       ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
       : null;
 
-  return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
+  return serializeVanillaModule(
+    cssImports,
+    evalResult,
+    unusedCompositionRegex,
+    injectCss,
+  );
 }
 
 function stringifyExports(
@@ -229,6 +244,7 @@ function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
   unusedCompositionRegex: RegExp | null,
+  injectStyles: boolean,
 ) {
   const recipeImports = new Set<string>();
 
@@ -246,7 +262,14 @@ function serializeVanillaModule(
         )};`,
   );
 
-  const outputCode = [...cssImports, ...recipeImports, ...moduleExports];
+  const outputCode = [
+    injectStyles
+      ? 'import { injectStyles } from "@vanilla-extract/integration/injectStyles"'
+      : '',
+    ...cssImports,
+    ...recipeImports,
+    ...moduleExports,
+  ];
 
   return outputCode.join('\n');
 }
