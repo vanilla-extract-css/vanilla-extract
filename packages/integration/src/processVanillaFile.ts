@@ -112,7 +112,7 @@ export function processVanillaFile({
         serialisedFileScope,
       )}, css: ${JSON.stringify(css)}});`;
       cssImports.push(injectCall);
-      return;
+      continue;
     }
 
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');

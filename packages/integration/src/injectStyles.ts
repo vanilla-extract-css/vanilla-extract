@@ -10,10 +10,6 @@ export const injectStyles = ({ fileScopeId, css }: InjectStylesOptions) => {
   if (!stylesheet) {
     const styleEl = document.createElement('style');
     styleEl.setAttribute('data-vanilla-extract', fileScopeId);
-
-    if (!styleEl.sheet) {
-      throw new Error(`Couldn't create stylesheet`);
-    }
     stylesheet = stylesheets[fileScopeId] = styleEl;
     document.head.appendChild(styleEl);
   }

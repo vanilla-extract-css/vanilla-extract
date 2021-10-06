@@ -88,7 +88,6 @@ export function vanillaExtractPlugin({
         this.addWatchFile(file);
       }
 
-      console.log(source);
       return processVanillaFile({
         source,
         filePath: id,
