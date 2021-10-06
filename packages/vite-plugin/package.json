@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/vite-plugin",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-vite-plugin.cjs.js",
   "module": "dist/vanilla-extract-vite-plugin.esm.js",

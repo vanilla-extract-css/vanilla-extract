@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 2.1.2
+
+### Patch Changes
+
+- [#398](https://github.com/seek-oss/vanilla-extract/pull/398) [`63f4ed0`](https://github.com/seek-oss/vanilla-extract/commit/63f4ed0e67419df565f3f447cf27cec612afbb8d) Thanks [@benjervis](https://github.com/benjervis)! - Fixes a bug with vite where "?used" is appended to the file path of css files.
+
+  This could cause different class name hashes to be generated between SSR and client builds.
+  This was introduced in vite 2.6.0.
+
 ## 2.1.1
 
 ### Patch Changes
