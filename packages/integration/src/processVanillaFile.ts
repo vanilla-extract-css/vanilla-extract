@@ -9,11 +9,14 @@ import { hash } from './hash';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
-function stringifyFileScope({ packageName, filePath }: FileScope): string {
+export function stringifyFileScope({
+  packageName,
+  filePath,
+}: FileScope): string {
   return packageName ? `${filePath}$$$${packageName}` : filePath;
 }
 
-function parseFileScope(serialisedFileScope: string): FileScope {
+export function parseFileScope(serialisedFileScope: string): FileScope {
   const [filePath, packageName] = serialisedFileScope.split('$$$');
 
   return {
@@ -34,6 +37,7 @@ interface ProcessVanillaFileOptions {
     fileName: string;
     base64Source: string;
     fileScope: FileScope;
+    source: string;
   }) => string;
 }
 export function processVanillaFile({
@@ -107,14 +111,6 @@ export function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    if (injectCss) {
-      const injectCall = `injectStyles({fileScopeId: ${JSON.stringify(
-        serialisedFileScope,
-      )}, css: ${JSON.stringify(css)}});`;
-      cssImports.push(injectCall);
-      continue;
-    }
-
     const base64Source = Buffer.from(css, 'utf-8').toString('base64');
     const fileName = `${
       fileScope.packageName
@@ -123,7 +119,12 @@ export function processVanillaFile({
     }.vanilla.css`;
 
     const virtualCssFilePath = serializeVirtualCssPath
-      ? serializeVirtualCssPath({ fileName, base64Source, fileScope })
+      ? serializeVirtualCssPath({
+          fileName,
+          base64Source,
+          fileScope,
+          source: css,
+        })
       : `import '${fileName}?source=${base64Source}';`;
 
     cssImports.push(virtualCssFilePath);

@@ -1,16 +1,17 @@
 import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { normalizePath } from 'vite';
+import outdent from 'outdent';
 import {
   cssFileFilter,
-  virtualCssFileFilter,
   processVanillaFile,
-  getSourceFromVirtualCssFile,
   compile,
   hash,
   getPackageInfo,
   IdentifierOption,
   addFileScope,
+  stringifyFileScope,
+  parseFileScope,
 } from '@vanilla-extract/integration';
 
 interface Options {
@@ -31,6 +32,8 @@ export function vanillaExtractPlugin({
   let useRuntime = false;
   const cssMap = new Map<string, string>();
 
+  let virtualExt: string;
+
   return {
     name: 'vanilla-extract',
     enforce: 'pre',
@@ -39,29 +42,37 @@ export function vanillaExtractPlugin({
       useRuntime =
         devStyleRuntime === 'vanilla-extract' && config.command === 'serve';
 
+      virtualExt = `.vanilla.${useRuntime ? 'js' : 'css'}?hash=`;
+
       packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
-      if (virtualCssFileFilter.test(id)) {
-        const { fileName, source } = getSourceFromVirtualCssFile(id);
-
-        // resolveId shouldn't really cause a side-effect however custom module meta isn't currently working
-        // This is a hack work around until https://github.com/vitejs/vite/issues/3240 is resolved
-        const shortHashFileName = normalizePath(
-          `${fileName}?hash=${hash(source)}`,
-        );
-        cssMap.set(shortHashFileName, source);
-
-        return shortHashFileName;
+      if (id.indexOf(virtualExt) > 0) {
+        return id;
       }
     },
     load(id) {
-      if (cssMap.has(id)) {
-        const css = cssMap.get(id);
+      const extensionIndex = id.indexOf(virtualExt);
+      if (extensionIndex > 0) {
+        const fileScopeId = id.substring(0, extensionIndex);
+        if (cssMap.has(fileScopeId)) {
+          const css = cssMap.get(fileScopeId)!;
 
-        cssMap.delete(id);
+          if (useRuntime) {
+            const fileScope = JSON.stringify(parseFileScope(fileScopeId));
 
-        return css;
+            return outdent`
+              import { injectStyles } from '@vanilla-extract/css/injectStyles';
+              
+              injectStyles({
+                fileScope: ${fileScope},
+                css: \`${css}\`
+              })
+            `;
+          }
+
+          return css;
+        }
       }
 
       return null;
@@ -71,7 +82,7 @@ export function vanillaExtractPlugin({
         return null;
       }
 
-      if (ssr || useRuntime) {
+      if (ssr) {
         return addFileScope({
           source: code,
           filePath: normalizePath(path.relative(packageInfo.dirname, id)),
@@ -85,15 +96,23 @@ export function vanillaExtractPlugin({
       });
 
       for (const file of watchFiles) {
-        this.addWatchFile(file);
+        if (config.command === 'build' || file !== id) {
+          this.addWatchFile(file);
+        }
       }
 
       return processVanillaFile({
         source,
         filePath: id,
-        injectCss: true,
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
+        serializeVirtualCssPath: ({ fileScope, source }) => {
+          const fileId = stringifyFileScope(fileScope);
+
+          cssMap.set(fileId, source);
+
+          return `import "${fileId}${virtualExt}${hash(source)}";`;
+        },
       });
     },
   };
