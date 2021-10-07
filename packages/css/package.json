@@ -17,6 +17,7 @@
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts",
+      "injectStyles.ts",
       "disableRuntimeStyles.ts"
     ]
   },
@@ -27,6 +28,7 @@
     "/adapter",
     "/transformCss",
     "/fileScope",
+    "/injectStyles",
     "/disableRuntimeStyles"
   ],
   "repository": {

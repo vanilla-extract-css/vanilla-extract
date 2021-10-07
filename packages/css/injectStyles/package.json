@@ -1,0 +1,8 @@
+{
+  "main": "dist/vanilla-extract-css-injectStyles.cjs.js",
+  "module": "dist/vanilla-extract-css-injectStyles.esm.js",
+  "browser": {
+    "./dist/vanilla-extract-css-injectStyles.cjs.js": "./dist/vanilla-extract-css-injectStyles.browser.cjs.js",
+    "./dist/vanilla-extract-css-injectStyles.esm.js": "./dist/vanilla-extract-css-injectStyles.browser.esm.js"
+  }
+}
