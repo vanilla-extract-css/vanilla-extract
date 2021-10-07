@@ -22,6 +22,9 @@ interface Options {
    */
   devStyleRuntime?: 'vite' | 'vanilla-extract';
 }
+
+const VIRTUAL_PREFIX = `/@vanilla-extract:`;
+
 export function vanillaExtractPlugin({
   identifiers,
   devStyleRuntime = 'vite',
@@ -52,14 +55,19 @@ export function vanillaExtractPlugin({
         );
         cssMap.set(shortHashFileName, source);
 
-        return shortHashFileName;
+        return VIRTUAL_PREFIX + shortHashFileName;
       }
     },
     load(id) {
-      if (cssMap.has(id)) {
-        const css = cssMap.get(id);
+      if (!id.startsWith(VIRTUAL_PREFIX)) {
+        return null;
+      }
 
-        cssMap.delete(id);
+      const shortHashFileName = id.substr(VIRTUAL_PREFIX.length);
+      if (cssMap.has(shortHashFileName)) {
+        const css = cssMap.get(shortHashFileName);
+
+        cssMap.delete(shortHashFileName);
 
         return css;
       }
