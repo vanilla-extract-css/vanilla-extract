@@ -75,12 +75,16 @@ export function vanillaExtractPlugin({
       return null;
     },
     async transform(code, id, ssr) {
-      if (!cssFileFilter.test(id)) {
+      if (!id.startsWith(VIRTUAL_PREFIX)) {
         return null;
       }
+      const shortHashFileName = id.substr(VIRTUAL_PREFIX.length);
 
-      const usedIndex = id.indexOf('?used');
-      const fixedId = usedIndex > 0 ? id.substring(0, usedIndex) : id;
+      const usedIndex = shortHashFileName.indexOf('?used');
+      const fixedId =
+        usedIndex > 0
+          ? shortHashFileName.substring(0, usedIndex)
+          : shortHashFileName;
 
       if (ssr || useRuntime) {
         return addFileScope({
