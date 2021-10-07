@@ -66,7 +66,7 @@ export function vanillaExtractPlugin({
               
               injectStyles({
                 fileScope: ${fileScope},
-                css: \`${css}\`
+                css: ${JSON.stringify(css)}
               })
             `;
           }

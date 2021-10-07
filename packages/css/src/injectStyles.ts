@@ -21,6 +21,7 @@ export const injectStyles = ({ fileScope, css }: InjectStylesOptions) => {
     }
 
     styleEl.setAttribute('data-file', fileScope.filePath);
+    styleEl.setAttribute('type', 'text/css');
     stylesheet = stylesheets[fileScopeId] = styleEl;
     document.head.appendChild(styleEl);
   }
