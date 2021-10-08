@@ -1,4 +1,0 @@
-{
-  "main": "dist/vanilla-extract-integration-injectStyles.cjs.js",
-  "module": "dist/vanilla-extract-integration-injectStyles.esm.js"
-}
