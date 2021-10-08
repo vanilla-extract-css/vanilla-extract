@@ -101,9 +101,10 @@ export function vanillaExtractPlugin({
       }
 
       if (ssr) {
+        const [validId] = id.split('?');
         return addFileScope({
           source: code,
-          filePath: normalizePath(path.relative(packageInfo.dirname, id)),
+          filePath: normalizePath(path.relative(packageInfo.dirname, validId)),
           packageInfo,
         }).source;
       }
