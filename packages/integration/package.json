@@ -7,11 +7,6 @@
   "files": [
     "/dist"
   ],
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
