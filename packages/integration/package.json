@@ -5,13 +5,11 @@
   "main": "dist/vanilla-extract-integration.cjs.js",
   "module": "dist/vanilla-extract-integration.esm.js",
   "files": [
-    "/dist",
-    "/injectStyles"
+    "/dist"
   ],
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
-      "injectStyles.ts"
+      "index.ts"
     ]
   },
   "repository": {
