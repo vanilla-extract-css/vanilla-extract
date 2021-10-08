@@ -31,7 +31,6 @@ interface ProcessVanillaFileOptions {
   source: string;
   filePath: string;
   outputCss?: boolean;
-  injectCss?: boolean;
   identOption?: IdentifierOption;
   serializeVirtualCssPath?: (file: {
     fileName: string;
@@ -46,7 +45,6 @@ export function processVanillaFile({
   outputCss = true,
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
-  injectCss = false,
 }: ProcessVanillaFileOptions) {
   type Css = Parameters<Adapter['appendCss']>[0];
   type Composition = Parameters<Adapter['registerComposition']>[0];
@@ -153,12 +151,7 @@ export function processVanillaFile({
       ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
       : null;
 
-  return serializeVanillaModule(
-    cssImports,
-    evalResult,
-    unusedCompositionRegex,
-    injectCss,
-  );
+  return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
 }
 
 function stringifyExports(
@@ -245,7 +238,6 @@ function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
   unusedCompositionRegex: RegExp | null,
-  injectStyles: boolean,
 ) {
   const recipeImports = new Set<string>();
 
@@ -263,14 +255,7 @@ function serializeVanillaModule(
         )};`,
   );
 
-  const outputCode = [
-    injectStyles
-      ? 'import { injectStyles } from "@vanilla-extract/integration/injectStyles"'
-      : '',
-    ...cssImports,
-    ...recipeImports,
-    ...moduleExports,
-  ];
+  const outputCode = [...cssImports, ...recipeImports, ...moduleExports];
 
   return outputCode.join('\n');
 }
