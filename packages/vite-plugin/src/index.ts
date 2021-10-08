@@ -37,25 +37,22 @@ export function vanillaExtractPlugin({
   return {
     name: 'vanilla-extract',
     enforce: 'pre',
-    config(userConfig, env) {
+    config(_userConfig, env) {
       useRuntime =
         devStyleRuntime === 'vanilla-extract' && env.command === 'serve';
 
-      const optimizeDeps = {
-        ...userConfig.optimizeDeps,
-        include: userConfig.optimizeDeps?.include ?? [],
+      const include = useRuntime ? ['@vanilla-extract/css/injectStyles'] : [];
+
+      return {
+        optimizeDeps: { include },
+        ssr: {
+          external: [
+            '@vanilla-extract/css',
+            '@vanilla-extract/css/fileScope',
+            '@vanilla-extract/css/adapter',
+          ],
+        },
       };
-
-      optimizeDeps.include.push(
-        '@vanilla-extract/css',
-        '@vanilla-extract/css/fileScope',
-      );
-
-      if (useRuntime) {
-        optimizeDeps.include.push('@vanilla-extract/css/injectStyles');
-      }
-
-      userConfig.optimizeDeps = optimizeDeps;
     },
     configResolved(resolvedConfig) {
       config = resolvedConfig;
