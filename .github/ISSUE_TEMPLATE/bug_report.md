@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 ---
 
-<!-- NOTE: Issues should only be used for actual issues. Any feature requests or general feedback should be raised in [Github Discussions](https://github.com/seek-oss/vanilla-extract/discussions) or [Discord](https://discord.gg/6nCfPwwz6w) -->
+<!-- NOTE: Issues should only be used for actual issues. Any feature requests or general feedback should be raised in Github Discussions (https://github.com/seek-oss/vanilla-extract/discussions) or Discord (https://discord.gg/6nCfPwwz6w) -->
 
 ### Describe the bug
 <!-- A clear and concise description of what the bug is, including any error message that were displayed. -->
