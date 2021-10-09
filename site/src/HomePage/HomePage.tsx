@@ -624,6 +624,14 @@ export const HomePage = () => {
                   >
                     Discussions
                   </Link>
+                  <Link
+                    to="https://discord.gg/6nCfPwwz6w"
+                    size="small"
+                    color="secondary"
+                    baseline
+                  >
+                    Discord
+                  </Link>
                 </Stack>
 
                 <Stack space="xlarge" align="center">
