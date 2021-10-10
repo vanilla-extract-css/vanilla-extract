@@ -4,6 +4,7 @@
 
 Change the way vanilla runtime works.
 
-The vanilla browser runtime now operates on a new model where a .css.js file is generated, that uses @vanilla-extract/css/injectStyles to add the css to the browser.
+The vanilla browser runtime now creates style tags containing the CSS itself, rather than injecting it directly into the CSSOM.
 
-This allows for hot reloading of styles, and makes styles a bit easier to debug at dev time (because they're actually visible).
+This helps with debugability, as the generated CSS can actually be seen in the devtools.
+There are also some new attributes set on the style tags, making it easier to identify the source of each style.
