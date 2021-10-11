@@ -68,25 +68,27 @@ export function vanillaExtractPlugin({
     },
     load(id) {
       const extensionIndex = id.indexOf(virtualExt);
+
       if (extensionIndex > 0) {
         const fileScopeId = id.substring(0, extensionIndex);
+
         if (cssMap.has(fileScopeId)) {
           const css = cssMap.get(fileScopeId)!;
 
-          if (useRuntime) {
-            const fileScope = JSON.stringify(parseFileScope(fileScopeId));
-
-            return outdent`
-              import { injectStyles } from '@vanilla-extract/css/injectStyles';
-              
-              injectStyles({
-                fileScope: ${fileScope},
-                css: ${JSON.stringify(css)}
-              })
-            `;
+          if (!useRuntime) {
+            return css;
           }
 
-          return css;
+          const fileScope = parseFileScope(fileScopeId);
+
+          return outdent`
+            import { injectStyles } from '@vanilla-extract/css/injectStyles';
+            
+            injectStyles({
+              fileScope: ${JSON.stringify(fileScope)},
+              css: ${JSON.stringify(css)}
+            })
+          `;
         }
       }
 
