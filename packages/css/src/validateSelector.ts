@@ -1,6 +1,6 @@
 import { parse } from 'css-what';
 import cssesc from 'cssesc';
-import dedent from 'dedent';
+import outdent from 'outdent';
 
 // https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
 function escapeRegex(string: string) {
@@ -53,7 +53,7 @@ export const validateSelector = (selector: string, targetClassName: string) => {
       }
     } catch (err) {
       throw new Error(
-        dedent`
+        outdent`
         Invalid selector: ${replaceTarget()}
     
         Style selectors must target the '&' character (along with any modifiers), e.g. ${'`${parent} &`'} or ${'`${parent} &:hover`'}.

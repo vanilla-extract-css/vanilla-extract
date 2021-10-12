@@ -9,8 +9,8 @@
   "dependencies": {
     "@mdx-js/react": "^1.6.22",
     "classnames": "^2.2.6",
-    "dedent": "^0.7.0",
     "lodash": "^4.17.21",
+    "outdent": "^0.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-head": "^3.4.0",
@@ -24,7 +24,6 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@types/classnames": "^2.2.11",
-    "@types/dedent": "^0.7.0",
     "@types/lodash": "^4.14.168",
     "@types/mdx-js__react": "^1.5.3",
     "@types/react": "^17",
