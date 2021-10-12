@@ -17,6 +17,7 @@
       "adapter.ts",
       "transformCss.ts",
       "fileScope.ts",
+      "injectStyles.ts",
       "disableRuntimeStyles.ts"
     ]
   },
@@ -27,6 +28,7 @@
     "/adapter",
     "/transformCss",
     "/fileScope",
+    "/injectStyles",
     "/disableRuntimeStyles"
   ],
   "repository": {
@@ -43,12 +45,11 @@
     "css-what": "^5.0.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
-    "dedent": "^0.7.0",
     "deep-object-diff": "^1.1.0",
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+    "outdent": "^0.8.0"
   },
   "devDependencies": {
-    "@types/cssesc": "^3.0.0",
-    "@types/dedent": "^0.7.0"
+    "@types/cssesc": "^3.0.0"
   }
 }

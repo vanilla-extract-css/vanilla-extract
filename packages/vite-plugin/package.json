@@ -15,7 +15,8 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^1.4.2"
+    "@vanilla-extract/integration": "^1.4.2",
+    "outdent": "^0.8.0"
   },
   "devDependencies": {
     "vite": "^2.6.0"

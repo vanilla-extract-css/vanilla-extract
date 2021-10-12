@@ -1,7 +1,7 @@
 import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
-import { getPackageInfo } from '@vanilla-extract/integration';
+import { cssFileFilter, getPackageInfo } from '@vanilla-extract/integration';
 
 const packageIdentifiers = new Set([
   '@vanilla-extract/css',
@@ -183,7 +183,7 @@ export default function (): PluginObj<Context> {
       }
 
       this.isESM = false;
-      this.isCssFile = /\.css\.(js|ts|jsx|tsx)$/.test(opts.filename);
+      this.isCssFile = cssFileFilter.test(opts.filename);
       this.alreadyCompiled = false;
 
       this.importIdentifiers = new Map();

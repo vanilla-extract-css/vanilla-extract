@@ -1,5 +1,5 @@
 import cssesc from 'cssesc';
-import dedent from 'dedent';
+import outdent from 'outdent';
 import deepmerge from 'deepmerge';
 
 import type {
@@ -97,7 +97,7 @@ export function fontFace(rule: FontFaceRule, debugId?: string) {
 
   if ('fontFamily' in rule) {
     throw new Error(
-      dedent`
+      outdent`
           This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
   
           If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
