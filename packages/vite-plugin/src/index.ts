@@ -85,13 +85,13 @@ export function vanillaExtractPlugin({
         const fileScope = parseFileScope(fileScopeId);
 
         return dedent`
-            import { injectStyles } from '@vanilla-extract/css/injectStyles';
-            
-            injectStyles({
-              fileScope: ${JSON.stringify(fileScope)},
-              css: ${JSON.stringify(css)}
-            })
-          `;
+          import { injectStyles } from '@vanilla-extract/css/injectStyles';
+          
+          injectStyles({
+            fileScope: ${JSON.stringify(fileScope)},
+            css: ${JSON.stringify(css)}
+          })
+        `;
       }
 
       return null;
@@ -101,8 +101,10 @@ export function vanillaExtractPlugin({
         return null;
       }
 
+      const index = id.indexOf('?');
+      const validId = index === -1 ? id : id.substring(0, index);
+
       if (ssr) {
-        const validId = id.substring(0, id.indexOf('?'));
         return addFileScope({
           source: code,
           filePath: normalizePath(path.relative(packageInfo.dirname, validId)),
@@ -111,7 +113,7 @@ export function vanillaExtractPlugin({
       }
 
       const { source, watchFiles } = await compile({
-        filePath: id,
+        filePath: validId,
         cwd: config.root,
       });
 
@@ -123,7 +125,7 @@ export function vanillaExtractPlugin({
 
       return processVanillaFile({
         source,
-        filePath: id,
+        filePath: validId,
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileScope, source }) => {
