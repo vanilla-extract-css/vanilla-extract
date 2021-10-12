@@ -2,7 +2,7 @@
 '@vanilla-extract/vite-plugin': patch
 ---
 
-Update the vanilla runtime integration.
+Update the "vanilla-extract" devStyleRuntime option.
 
 When using the vanilla browser runtime in vite, it now operates on a new model where a .css.js file is generated, that uses @vanilla-extract/css/injectStyles to add the css to the browser.
 

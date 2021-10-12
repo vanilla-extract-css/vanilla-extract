@@ -2,7 +2,7 @@
 '@vanilla-extract/css': patch
 ---
 
-Change the way vanilla runtime works.
+Improve the browser runtime dev experience.
 
 The vanilla browser runtime now creates style tags containing the CSS itself, rather than injecting it directly into the CSSOM.
 
