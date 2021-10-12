@@ -1,5 +1,37 @@
 # @vanilla-extract/vite-plugin
 
+## 2.1.3
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Fix plugin for watch mode.
+
+  The vite plugin previously relied on a one to one matching of resolve to load calls, and would clean up the CSS stored in memory after it was loaded.
+
+  This isn't true in `--watch` mode, as the same file can be loaded on the rebuild without having to be resolved, which the plugin now handles.
+
+* [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Update the "vanilla-extract" devStyleRuntime option.
+
+  When using the vanilla browser runtime in vite, it now operates on a new model where a .css.js file is generated, that uses @vanilla-extract/css/injectStyles to add the css to the browser.
+
+  This allows for hot reloading of styles, and makes styles a bit easier to debug at dev time (because they're actually visible).
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Handle vite 2.6.
+
+  As of vite 2.6 and greater, `?used` gets appended to css imports, which causes the file imports to be not what we expected.
+
+  This caused mismatching classnames in the vite plugin, and it caused the babel plugin to not add filescopes when it should have.
+
+* [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Automatically optimize deps.
+
+  When using the new vanilla browser runtime, the new `injectStyles` dependency gets injected at runtime, so vite can't discover it ahead of time and pre-bundle it.
+
+  The plugin will now add the dependency to optimizeDeps if the vanilla runtime is being used so that it's optimized up front.
+  It also ensures that some relevant vanilla packages are externalised in SSR mode.
+
+* Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/integration@1.4.3
+
 ## 2.1.2
 
 ### Patch Changes

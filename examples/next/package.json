@@ -15,8 +15,8 @@
   },
   "devDependencies": {
     "@types/react": "^17",
-    "@vanilla-extract/babel-plugin": "^1.1.1",
-    "@vanilla-extract/css": "^1.6.1",
+    "@vanilla-extract/babel-plugin": "^1.1.2",
+    "@vanilla-extract/css": "^1.6.2",
     "@vanilla-extract/next-plugin": "^1.0.0"
   },
   "browserslist": [

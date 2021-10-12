@@ -1,5 +1,16 @@
 # @vanilla-extract/integration
 
+## 1.4.3
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Export the fileScope functions.
+
+  `stringifyFileScope` and `parseFileScope` are now exported to be used in other packages.
+
+- Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/css@1.6.2
+
 ## 1.4.2
 
 ### Patch Changes

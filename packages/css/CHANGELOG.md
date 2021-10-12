@@ -1,5 +1,16 @@
 # @vanilla-extract/css
 
+## 1.6.2
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Improve the browser runtime dev experience.
+
+  The vanilla browser runtime now creates style tags containing the CSS itself, rather than injecting it directly into the CSSOM.
+
+  This helps with debugability, as the generated CSS can actually be seen in the devtools.
+  There are also some new attributes set on the style tags, making it easier to identify the source of each style.
+
 ## 1.6.1
 
 ### Patch Changes
