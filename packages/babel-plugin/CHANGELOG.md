@@ -1,5 +1,18 @@
 # @vanilla-extract/babel-plugin
 
+## 1.1.2
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Handle vite 2.6.
+
+  As of vite 2.6 and greater, `?used` gets appended to css imports, which causes the file imports to be not what we expected.
+
+  This caused mismatching classnames in the vite plugin, and it caused the babel plugin to not add filescopes when it should have.
+
+- Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/integration@1.4.3
+
 ## 1.1.1
 
 ### Patch Changes
