@@ -3931,8 +3931,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
+    "@types/dedent": ^0.7.0
     "@vanilla-extract/integration": ^1.4.2
-    outdent: ^0.8.0
+    dedent: ^0.7.0
     vite: ^2.6.0
   peerDependencies:
     vite: ^2.2.3
@@ -12712,13 +12713,6 @@ fsevents@~2.1.2:
   version: 0.5.0
   resolution: "outdent@npm:0.5.0"
   checksum: da0f784d119355c8c6e771e372eeb9a67a27a462f1eb0438ad79c6516684b3151a553ecb1599101da5b93312d21cc5f6b1aec30f0dce0d6af7f1984b31b0c6b7
-  languageName: node
-  linkType: hard
-
-"outdent@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "outdent@npm:0.8.0"
-  checksum: 5f48c7b6a2ef8cbedf1c15d8b09d4ab14a6a9414d5616f2790c5034a1b1684e42b087033188a0657f8e04b45a1a3dc5545627cf84c479864573665ecb5761152
   languageName: node
   linkType: hard
 

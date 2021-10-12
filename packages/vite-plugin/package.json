@@ -16,9 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/integration": "^1.4.2",
-    "outdent": "^0.8.0"
+    "dedent": "^0.7.0"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "vite": "^2.6.0"
   },
   "peerDependencies": {

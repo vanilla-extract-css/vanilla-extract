@@ -1,7 +1,7 @@
 import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { normalizePath } from 'vite';
-import outdent from 'outdent';
+import dedent from 'dedent';
 import {
   cssFileFilter,
   processVanillaFile,
@@ -81,7 +81,7 @@ export function vanillaExtractPlugin({
 
           const fileScope = parseFileScope(fileScopeId);
 
-          return outdent`
+          return dedent`
             import { injectStyles } from '@vanilla-extract/css/injectStyles';
             
             injectStyles({
