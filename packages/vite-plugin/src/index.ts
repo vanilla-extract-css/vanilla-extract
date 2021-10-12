@@ -72,16 +72,19 @@ export function vanillaExtractPlugin({
       if (extensionIndex > 0) {
         const fileScopeId = id.substring(0, extensionIndex);
 
-        if (cssMap.has(fileScopeId)) {
-          const css = cssMap.get(fileScopeId)!;
+        if (!cssMap.has(fileScopeId)) {
+          throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
+        }
 
-          if (!useRuntime) {
-            return css;
-          }
+        const css = cssMap.get(fileScopeId)!;
 
-          const fileScope = parseFileScope(fileScopeId);
+        if (!useRuntime) {
+          return css;
+        }
 
-          return dedent`
+        const fileScope = parseFileScope(fileScopeId);
+
+        return dedent`
             import { injectStyles } from '@vanilla-extract/css/injectStyles';
             
             injectStyles({
@@ -89,7 +92,6 @@ export function vanillaExtractPlugin({
               css: ${JSON.stringify(css)}
             })
           `;
-        }
       }
 
       return null;
