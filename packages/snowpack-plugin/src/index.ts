@@ -58,6 +58,9 @@ export default function vanillaExtractPlugin(
         source,
         filePath,
         outputCss: true,
+        identOption:
+          identifiers ??
+          (snowpackConfig.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath({ base64Source, fileScope }) {
           const cssUrl = `${path.join(cwd, fileScope.filePath)}.css`;
 
