@@ -1,5 +1,13 @@
 # @vanilla-extract/recipes
 
+## 0.2.1
+
+### Patch Changes
+
+- [#416](https://github.com/seek-oss/vanilla-extract/pull/416) [`65d0840`](https://github.com/seek-oss/vanilla-extract/commit/65d08407655579fd9d2bed3fea7df43521f10055) Thanks [@benjervis](https://github.com/benjervis)! - Allow explicit false variants.
+
+  Boolean variants in recipes can now also have a `false` case, which is handled properly by the type system and the build system.
+
 ## 0.2.0
 
 ### Minor Changes
