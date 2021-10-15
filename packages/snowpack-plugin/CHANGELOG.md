@@ -1,5 +1,11 @@
 # @vanilla-extract/snowpack-plugin
 
+## 2.0.1
+
+### Patch Changes
+
+- [#335](https://github.com/seek-oss/vanilla-extract/pull/335) [`2e86d9a`](https://github.com/seek-oss/vanilla-extract/commit/2e86d9ad3a4a7a2c99c31b69351d48caeb3a8766) Thanks [@jonathantneal](https://github.com/jonathantneal)! - Fix CSS not outputting on SSR builds
+
 ## 2.0.0
 
 ### Major Changes
