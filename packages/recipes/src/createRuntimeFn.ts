@@ -41,16 +41,14 @@ export const createRuntimeFn =
           selection = selection === true ? 'true' : 'false';
         }
 
-        className += ' '.concat(
-          // @ts-expect-error
-          config.variantClassNames[variantName][selection],
-        );
+        // @ts-expect-error
+        className += ' ' + config.variantClassNames[variantName][selection];
       }
     }
 
     for (const [compoundCheck, compoundClassName] of config.compoundVariants) {
       if (shouldApplyCompound(compoundCheck, selections)) {
-        className += ' '.concat(compoundClassName);
+        className += ' ' + compoundClassName;
       }
     }
 
