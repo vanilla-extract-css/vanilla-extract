@@ -41,7 +41,7 @@ export default function vanillaExtractPlugin(
       }
     },
     async load(args) {
-      const { filePath, isSSR } = args;
+      const { filePath } = args;
       const cwd = snowpackConfig.root || process.cwd();
 
       const { source, watchFiles } = await compile({
@@ -57,7 +57,7 @@ export default function vanillaExtractPlugin(
       const js = processVanillaFile({
         source,
         filePath,
-        outputCss: !isSSR,
+        outputCss: true,
         identOption:
           identifiers ??
           (snowpackConfig.mode === 'production' ? 'short' : 'debug'),
@@ -83,7 +83,7 @@ export default function vanillaExtractPlugin(
           code: js,
         },
       };
-      if (!isSSR && css) {
+      if (css) {
         buildMap['.css'] = { code: css };
       }
       return buildMap;
