@@ -33,19 +33,24 @@ export const createRuntimeFn =
       const variantSelection =
         selections[variantName] ?? config.defaultVariants[variantName];
 
-      if (variantSelection) {
-        className += ` ${
+      if (variantSelection != null) {
+        let selection = variantSelection;
+
+        if (typeof selection === 'boolean') {
           // @ts-expect-error
-          config.variantClassNames[variantName][
-            variantSelection === true ? 'true' : variantSelection
-          ]
-        }`;
+          selection = selection === true ? 'true' : 'false';
+        }
+
+        className += ' '.concat(
+          // @ts-expect-error
+          config.variantClassNames[variantName][selection],
+        );
       }
     }
 
     for (const [compoundCheck, compoundClassName] of config.compoundVariants) {
       if (shouldApplyCompound(compoundCheck, selections)) {
-        className += ` ${compoundClassName}`;
+        className += ' '.concat(compoundClassName);
       }
     }
 
