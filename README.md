@@ -56,7 +56,7 @@ export const exampleStyle = style({
 });
 ```
 
-> 💡 These `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
+> 💡 Once you've [configured your build tooling,](#setup) these `.css.ts` files will be evaluated at build time. None of the code in these files will be included in your final bundle. Think of it as using TypeScript as your preprocessor instead of Sass, Less, etc.
 
 **Then consume them in your markup.**
 
@@ -74,7 +74,7 @@ document.write(`
 
 ---
 
-Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
+Want to work at a higher level while maximising style re-use? Check out  🍨 [Sprinkles](https://vanilla-extract.style/documentation/sprinkles-api), our official zero-runtime atomic CSS framework, built on top of vanilla-extract.
 
 ---
 
@@ -83,6 +83,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [esbuild](#esbuild)
   - [Vite](#vite)
   - [Snowpack](#snowpack)
+  - [Next.js](#nextjs)
   - [Gatsby](#gatsby)
   - [Test environments](#test-environments)
   - [Configuration](#configuration)
@@ -101,6 +102,8 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [globalFontFace](#globalfontface)
   - [keyframes](#keyframes)
   - [globalKeyframes](#globalkeyframes)
+- [Recipes API](#recipes-api)
+  - [recipe](#recipe)
 - [Dynamic API](#dynamic-api)
   - [assignInlineVars](#assigninlinevars)
   - [setElementVars](#setelementvars)
@@ -120,18 +123,10 @@ There are currently a few integrations to choose from.
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/css @vanilla-extract/webpack-plugin
 ```
 
-2. Add the [Babel](https://babeljs.io) plugin.
-
-```json
-{
-  "plugins": ["@vanilla-extract/babel-plugin"]
-}
-```
-
-3. Add the [webpack](https://webpack.js.org) plugin.
+2. Add the [webpack](https://webpack.js.org) plugin.
 
 > 💡 This plugin accepts an optional [configuration object](#configuration).
 
@@ -177,6 +172,18 @@ module.exports = {
   };
   ```
 </details>
+
+3. If you'd like automatic debuggable identifiers, you can add the [Babel](https://babeljs.io) plugin.
+   
+```bash
+$ npm install @vanilla-extract/babel-plugin
+```
+
+```json
+{
+  "plugins": ["@vanilla-extract/babel-plugin"]
+}
+```
 
 ### esbuild
 
@@ -284,6 +291,55 @@ npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
 ```
 
 > Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
+
+### Next.js
+
+1. Install the dependencies.
+
+```bash
+npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/next-plugin
+```
+
+2. If you don't have a `.babelrc` file in the root of your project, create one. Add the [Babel](https://babeljs.io) plugin to your `.babelrc` file, ensuring that you're also including `"next/babel"` in your `presets` array.
+
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": ["@vanilla-extract/babel-plugin"]
+}
+```
+
+3. If you don't have a `next.config.js` file in the root of your project, create one. Add the [Next.js](https://nextjs.org) plugin to your `next.config.js` file.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
+```js
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+const nextConfig = {};
+
+module.exports = withVanillaExtract(nextConfig);
+```
+
+If required, this plugin can be composed with other plugins.
+
+```js
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx$/
+});
+
+const nextConfig = {};
+
+module.exports = withVanillaExtract(withMDX(nextConfig));
+```
 
 ### Gatsby
 
@@ -499,7 +555,7 @@ globalStyle('html, body', {
 Global selectors can also contain references to other scoped class names.
 
 ```ts
-import { globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle } from '@vanilla-extract/css';
 
 export const parentClass = style({});
 
@@ -856,8 +912,8 @@ Creates a locally scoped set of keyframes.
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({
@@ -873,8 +929,8 @@ Creates a globally scoped set of keyframes.
 import { globalKeyframes, style } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' },
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({
@@ -882,9 +938,117 @@ export const animated = style({
 });
 ```
 
+## Recipes API
+
+Create multi-variant styles with a type-safe runtime API, heavily inspired by [Stitches.](https://stitches.dev)
+
+As with the rest of vanilla-extract, all styles are generated at build time.
+
+```bash
+$ npm install @vanilla-extract/recipes
+```
+
+### recipe
+
+Creates a multi-variant style function that can be used at runtime or statically in `.css.ts` files.
+
+Accepts an optional set of `base` styles, `variants`, `compoundVariants` and `defaultVariants`.
+
+```ts
+import { recipe } from '@vanilla-extract/recipes';
+
+export const button = recipe({
+  base: {
+    borderRadius: 6
+  },
+
+  variants: {
+    color: {
+      neutral: { background: 'whitesmoke' },
+      brand: { background: 'blueviolet' },
+      accent: { background: 'slateblue' }
+    },
+    size: {
+      small: { padding: 12 },
+      medium: { padding: 16 },
+      large: { padding: 24 }
+    },
+    rounded: {
+      true: { borderRadius: 999 }
+    }
+  },
+
+  // Applied when multiple variants are set at once
+  compoundVariants: [
+    {
+      variants: {
+        color: 'neutral',
+        size: 'large'
+      },
+      style: {
+        background: 'ghostwhite'
+      }
+    }
+  ],
+
+  defaultVariants: {
+    color: 'accent',
+    size: 'medium'
+  }
+});
+```
+
+With this recipe configured, you can now use it in your templates.
+
+```ts
+import { button } from './button.css.ts';
+
+document.write(`
+  <button class="${button({
+    color: 'accent',
+    size: 'large',
+    rounded: true
+  })}">
+    Hello world
+  </button>
+`);
+```
+
+Your recipe configuration can also make use of existing variables, classes and styles.
+
+For example, you can pass in the result of your [`sprinkles`](https://vanilla-extract.style/documentation/sprinkles-api) function directly.
+
+```ts
+import { recipe } from '@vanilla-extract/recipes';
+import { reset } from './reset.css.ts';
+import { sprinkles } from './sprinkles.css.ts';
+
+export const button = recipe({
+  base: [reset, sprinkles({ borderRadius: 'round' })],
+
+  variants: {
+    color: {
+      neutral: sprinkles({ background: 'neutral' }),
+      brand: sprinkles({ background: 'brand' }),
+      accent: sprinkles({ background: 'accent' })
+    },
+    size: {
+      small: sprinkles({ padding: 'small' }),
+      medium: sprinkles({ padding: 'medium' }),
+      large: sprinkles({ padding: 'large' })
+    }
+  },
+
+  defaultVariants: {
+    color: 'accent',
+    size: 'medium'
+  }
+});
+```
+
 ## Dynamic API
 
-We also provide a lightweight standalone package to support dynamic runtime theming.
+Dynamically update theme variables at runtime.
 
 ```bash
 npm install @vanilla-extract/dynamic

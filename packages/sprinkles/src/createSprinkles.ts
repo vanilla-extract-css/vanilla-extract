@@ -1,7 +1,7 @@
 import {
   ResponsiveArrayByMaxLength,
   ConditionalPropertyValue,
-  AtomicStyles,
+  SprinklesProperties,
   ConditionalWithResponsiveArrayProperty,
   ConditionalProperty,
   ShorthandProperty,
@@ -26,56 +26,58 @@ type ConditionalStyleWithResponsiveArray<
   RA extends { length: number },
 > = ConditionalStyle<Values> | ResponsiveArrayVariant<RA, keyof Values>;
 
-type ChildAtomProps<Atoms extends AtomicStyles['styles']> = {
-  [Prop in keyof Atoms]?: Atoms[Prop] extends ConditionalWithResponsiveArrayProperty
+type ChildSprinkleProps<Sprinkles extends SprinklesProperties['styles']> = {
+  [Prop in keyof Sprinkles]?: Sprinkles[Prop] extends ConditionalWithResponsiveArrayProperty
     ? ConditionalStyleWithResponsiveArray<
-        Atoms[Prop]['values'],
-        Atoms[Prop]['responsiveArray']
+        Sprinkles[Prop]['values'],
+        Sprinkles[Prop]['responsiveArray']
       >
-    : Atoms[Prop] extends ConditionalProperty
-    ? ConditionalStyle<Atoms[Prop]['values']>
-    : Atoms[Prop] extends ShorthandProperty
-    ? Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
+    : Sprinkles[Prop] extends ConditionalProperty
+    ? ConditionalStyle<Sprinkles[Prop]['values']>
+    : Sprinkles[Prop] extends ShorthandProperty
+    ? Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
       ? ConditionalStyleWithResponsiveArray<
-          Atoms[Atoms[Prop]['mappings'][number]]['values'],
-          Atoms[Atoms[Prop]['mappings'][number]]['responsiveArray']
+          Sprinkles[Sprinkles[Prop]['mappings'][number]]['values'],
+          Sprinkles[Sprinkles[Prop]['mappings'][number]]['responsiveArray']
         >
-      : Atoms[Atoms[Prop]['mappings'][number]] extends ConditionalProperty
-      ? ConditionalStyle<Atoms[Atoms[Prop]['mappings'][number]]['values']>
-      : Atoms[Atoms[Prop]['mappings'][number]] extends UnconditionalProperty
-      ? keyof Atoms[Atoms[Prop]['mappings'][number]]['values']
+      : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalProperty
+      ? ConditionalStyle<
+          Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
+        >
+      : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends UnconditionalProperty
+      ? keyof Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
       : never
-    : Atoms[Prop] extends UnconditionalProperty
-    ? keyof Atoms[Prop]['values']
+    : Sprinkles[Prop] extends UnconditionalProperty
+    ? keyof Sprinkles[Prop]['values']
     : never;
 };
 
-type AtomProps<Args extends ReadonlyArray<any>> = Args extends [
+type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
   infer L,
   ...infer R
 ]
-  ? (L extends AtomicStyles ? ChildAtomProps<L['styles']> : never) &
-      AtomProps<R>
+  ? (L extends SprinklesProperties ? ChildSprinkleProps<L['styles']> : never) &
+      SprinkleProps<R>
   : {};
 
-export type AtomsFn<Args extends ReadonlyArray<AtomicStyles>> = ((
-  props: AtomProps<Args>,
-) => string) & { properties: Set<keyof AtomProps<Args>> };
+export type SprinklesFn<Args extends ReadonlyArray<SprinklesProperties>> = ((
+  props: SprinkleProps<Args>,
+) => string) & { properties: Set<keyof SprinkleProps<Args>> };
 
-export const createAtomsFn =
-  <Args extends ReadonlyArray<AtomicStyles>>(
+export const createSprinkles =
+  <Args extends ReadonlyArray<SprinklesProperties>>(
     composeStyles: (classList: string) => string,
   ) =>
-  (...args: Args): AtomsFn<Args> => {
-    const atomicStyles = Object.assign({}, ...args.map((a) => a.styles));
-    const atomicKeys = Object.keys(atomicStyles) as Array<
-      keyof AtomProps<Args>
+  (...args: Args): SprinklesFn<Args> => {
+    const sprinklesStyles = Object.assign({}, ...args.map((a) => a.styles));
+    const sprinklesKeys = Object.keys(sprinklesStyles) as Array<
+      keyof SprinkleProps<Args>
     >;
-    const shorthandNames = atomicKeys.filter(
-      (property) => 'mappings' in atomicStyles[property],
+    const shorthandNames = sprinklesKeys.filter(
+      (property) => 'mappings' in sprinklesStyles[property],
     );
 
-    const atomsFn = (props: any) => {
+    const sprinklesFn = (props: any) => {
       const classNames = [];
       const shorthands: any = {};
       const nonShorthands: any = { ...props };
@@ -84,9 +86,9 @@ export const createAtomsFn =
       for (const shorthand of shorthandNames) {
         const value = props[shorthand];
         if (value) {
-          const atomicProperty = atomicStyles[shorthand];
+          const sprinkle = sprinklesStyles[shorthand];
           hasShorthands = true;
-          for (const propMapping of atomicProperty.mappings) {
+          for (const propMapping of sprinkle.mappings) {
             shorthands[propMapping] = value;
             if (!nonShorthands[propMapping]) {
               delete nonShorthands[propMapping];
@@ -101,42 +103,37 @@ export const createAtomsFn =
 
       for (const prop in finalProps) {
         const propValue = finalProps[prop];
-        const atomicProperty = atomicStyles[prop];
+        const sprinkle = sprinklesStyles[prop];
         try {
-          if (atomicProperty.mappings) {
+          if (sprinkle.mappings) {
             // Skip shorthands
             continue;
           }
 
           if (typeof propValue === 'string' || typeof propValue === 'number') {
             if (process.env.NODE_ENV !== 'production') {
-              if (!atomicProperty.values[propValue].defaultClass) {
+              if (!sprinkle.values[propValue].defaultClass) {
                 throw new Error();
               }
             }
-            classNames.push(atomicProperty.values[propValue].defaultClass);
+            classNames.push(sprinkle.values[propValue].defaultClass);
           } else if (Array.isArray(propValue)) {
             for (const responsiveIndex in propValue) {
               const responsiveValue = propValue[responsiveIndex];
 
               if (responsiveValue != null) {
-                const conditionName =
-                  atomicProperty.responsiveArray[responsiveIndex];
+                const conditionName = sprinkle.responsiveArray[responsiveIndex];
 
                 if (process.env.NODE_ENV !== 'production') {
                   if (
-                    !atomicProperty.values[responsiveValue].conditions[
-                      conditionName
-                    ]
+                    !sprinkle.values[responsiveValue].conditions[conditionName]
                   ) {
                     throw new Error();
                   }
                 }
 
                 classNames.push(
-                  atomicProperty.values[responsiveValue].conditions[
-                    conditionName
-                  ],
+                  sprinkle.values[responsiveValue].conditions[conditionName],
                 );
               }
             }
@@ -147,12 +144,12 @@ export const createAtomsFn =
 
               if (value != null) {
                 if (process.env.NODE_ENV !== 'production') {
-                  if (!atomicProperty.values[value].conditions[conditionName]) {
+                  if (!sprinkle.values[value].conditions[conditionName]) {
                     throw new Error();
                   }
                 }
                 classNames.push(
-                  atomicProperty.values[value].conditions[conditionName],
+                  sprinkle.values[value].conditions[conditionName],
                 );
               }
             }
@@ -183,23 +180,21 @@ export const createAtomsFn =
               );
             };
 
-            if (!atomicProperty) {
-              throw new SprinklesError(
-                `"${prop}" is not a valid atom property`,
-              );
+            if (!sprinkle) {
+              throw new SprinklesError(`"${prop}" is not a valid sprinkle`);
             }
 
             if (
               typeof propValue === 'string' ||
               typeof propValue === 'number'
             ) {
-              if (!(propValue in atomicProperty.values)) {
-                invalidPropValue(prop, propValue, atomicProperty.values);
+              if (!(propValue in sprinkle.values)) {
+                invalidPropValue(prop, propValue, sprinkle.values);
               }
-              if (!atomicProperty.values[propValue].defaultClass) {
+              if (!sprinkle.values[propValue].defaultClass) {
                 throw new SprinklesError(
                   `"${prop}" has no default condition. You must specify which conditions to target explicitly. Possible options are ${Object.keys(
-                    atomicProperty.values[propValue].conditions,
+                    sprinkle.values[propValue].conditions,
                   )
                     .map(format)
                     .join(', ')}`,
@@ -211,7 +206,7 @@ export const createAtomsFn =
               if (
                 !(
                   'conditions' in
-                  atomicProperty.values[Object.keys(atomicProperty.values)[0]]
+                  sprinkle.values[Object.keys(sprinkle.values)[0]]
                 )
               ) {
                 throw new SprinklesError(
@@ -220,13 +215,13 @@ export const createAtomsFn =
               }
 
               if (Array.isArray(propValue)) {
-                if (!('responsiveArray' in atomicProperty)) {
+                if (!('responsiveArray' in sprinkle)) {
                   throw new SprinklesError(
                     `"${prop}" does not support responsive arrays`,
                   );
                 }
 
-                const breakpointCount = atomicProperty.responsiveArray.length;
+                const breakpointCount = sprinkle.responsiveArray.length;
                 if (breakpointCount < propValue.length) {
                   throw new SprinklesError(
                     `"${prop}" only supports up to ${breakpointCount} breakpoints. You passed ${propValue.length}`,
@@ -234,12 +229,8 @@ export const createAtomsFn =
                 }
 
                 for (const responsiveValue of propValue) {
-                  if (!atomicProperty.values[responsiveValue]) {
-                    invalidPropValue(
-                      prop,
-                      responsiveValue,
-                      atomicProperty.values,
-                    );
+                  if (!sprinkle.values[responsiveValue]) {
+                    invalidPropValue(prop, responsiveValue, sprinkle.values);
                   }
                 }
               } else {
@@ -247,18 +238,16 @@ export const createAtomsFn =
                   const value = propValue[conditionName];
 
                   if (value != null) {
-                    if (!atomicProperty.values[value]) {
-                      invalidPropValue(prop, value, atomicProperty.values);
+                    if (!sprinkle.values[value]) {
+                      invalidPropValue(prop, value, sprinkle.values);
                     }
 
-                    if (
-                      !atomicProperty.values[value].conditions[conditionName]
-                    ) {
+                    if (!sprinkle.values[value].conditions[conditionName]) {
                       throw new SprinklesError(
                         `"${prop}" has no condition named ${format(
                           conditionName,
                         )}. Possible values are ${Object.keys(
-                          atomicProperty.values[value].conditions,
+                          sprinkle.values[value].conditions,
                         )
                           .map(format)
                           .join(', ')}`,
@@ -277,7 +266,7 @@ export const createAtomsFn =
       return composeStyles(classNames.join(' '));
     };
 
-    return Object.assign(atomsFn, {
-      properties: new Set(atomicKeys),
+    return Object.assign(sprinklesFn, {
+      properties: new Set(sprinklesKeys),
     });
   };

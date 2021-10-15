@@ -3,6 +3,7 @@ import {
   AllHTMLAttributes,
   ElementType,
   createElement,
+  Children,
 } from 'react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
@@ -12,6 +13,7 @@ import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
+import { sprinkles } from './system/styles/sprinkles.css';
 
 interface Children {
   children: ReactNode;
@@ -47,12 +49,39 @@ const A = ({
   color, // Omit
   type, // Omit
   ...restProps
-}: AllHTMLAttributes<HTMLAnchorElement>) =>
-  href ? (
-    <Link to={href} {...restProps} inline underline="always" />
+}: AllHTMLAttributes<HTMLAnchorElement>) => {
+  let isInlineCodeLink = false;
+
+  if (
+    restProps.children &&
+    Children.count(restProps.children) === 1 &&
+    typeof restProps.children === 'object'
+  ) {
+    const child = Children.only(restProps.children);
+    if (child && typeof child === 'object' && 'props' in child) {
+      isInlineCodeLink =
+        child.props.parentName === 'a' &&
+        child.props.originalType === 'inlineCode';
+    }
+  }
+
+  return href ? (
+    <Link
+      to={href}
+      {...restProps}
+      inline
+      underline="always"
+      highlightOnFocus={!isInlineCodeLink}
+      className={
+        isInlineCodeLink
+          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'gray200' } })
+          : undefined
+      }
+    />
   ) : (
     <a {...restProps} />
   );
+};
 
 const Heading = ({ level, component, children, id }: HeadingProps) => {
   const headingElement = createElement(
@@ -99,8 +128,8 @@ export default {
   h2: ({ component, ...props }: HeadingProps) => (
     <Box
       component="h2"
-      marginTop={{ mobile: 'xxlarge', desktop: 'xxxlarge' }}
-      marginBottom="xxlarge"
+      paddingTop={{ mobile: 'xxlarge', desktop: 'xxlarge' }}
+      paddingBottom="xxlarge"
     >
       <Box position="relative" paddingLeft="large">
         <Box
@@ -121,8 +150,23 @@ export default {
     </Box>
   ),
   h3: ({ component, ...props }: HeadingProps) => (
-    <Box component="h3" marginTop="xlarge" marginBottom="xlarge">
-      <Heading component="span" {...props} level="3" />
+    <Box component="h3" paddingTop="xlarge" paddingBottom="xxlarge">
+      <Box position="relative" paddingLeft="large">
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          paddingLeft="xsmall"
+          marginTop="-xsmall"
+          borderRadius="medium"
+          background={{ lightMode: 'green400', darkMode: 'green500' }}
+          style={{
+            height: 28,
+            transform: 'skew(15deg)',
+          }}
+        />
+        <Heading component="span" {...props} level="3" />
+      </Box>
     </Box>
   ),
   pre: Pre,

@@ -1,20 +1,22 @@
 import { FileScope, Adapter } from '@vanilla-extract/css';
-import { setAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 // @ts-expect-error
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
-import dedent from 'dedent';
+import outdent from 'outdent';
 import { hash } from './hash';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
-function stringifyFileScope({ packageName, filePath }: FileScope): string {
+export function stringifyFileScope({
+  packageName,
+  filePath,
+}: FileScope): string {
   return packageName ? `${filePath}$$$${packageName}` : filePath;
 }
 
-function parseFileScope(serialisedFileScope: string): FileScope {
+export function parseFileScope(serialisedFileScope: string): FileScope {
   const [filePath, packageName] = serialisedFileScope.split('$$$');
 
   return {
@@ -34,6 +36,7 @@ interface ProcessVanillaFileOptions {
     fileName: string;
     base64Source: string;
     fileScope: FileScope;
+    source: string;
   }) => string;
 }
 export function processVanillaFile({
@@ -75,21 +78,22 @@ export function processVanillaFile({
     getIdentOption: () => identOption,
   };
 
-  setAdapter(cssAdapter);
-
   const currentNodeEnv = process.env.NODE_ENV;
-
-  const sourceWithBoundLoaderInstance = `require('@vanilla-extract/css/adapter').setAdapter(__adapter__);${source};`;
 
   // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
   // This can cause CSS to be bound to the wrong instance, resulting in no CSS output
   // To get around this we set the NODE_ENV back to the original value ONLY during eval
   process.env.NODE_ENV = originalNodeEnv;
 
+  const adapterBoundSource = `
+    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+    ${source}
+  `;
+
   const evalResult = evalCode(
-    sourceWithBoundLoaderInstance,
+    adapterBoundSource,
     filePath,
-    { console, __adapter__: cssAdapter, process },
+    { console, process, __adapter__: cssAdapter },
     true,
   );
 
@@ -113,11 +117,30 @@ export function processVanillaFile({
     }.vanilla.css`;
 
     const virtualCssFilePath = serializeVirtualCssPath
-      ? serializeVirtualCssPath({ fileName, base64Source, fileScope })
+      ? serializeVirtualCssPath({
+          fileName,
+          base64Source,
+          fileScope,
+          source: css,
+        })
       : `import '${fileName}?source=${base64Source}';`;
 
     cssImports.push(virtualCssFilePath);
   }
+
+  // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
+  // for requires executed within the eval and all CSS can be lost.
+  evalCode(
+    `const { removeAdapter } = require('@vanilla-extract/css/adapter');
+    // Backwards compat with older versions of @vanilla-extract/css
+    if (removeAdapter) {
+      removeAdapter();
+    }
+  `,
+    filePath,
+    { console, process },
+    true,
+  );
 
   const unusedCompositions = composedClassLists
     .filter(({ identifier }) => !usedCompositions.has(identifier))
@@ -159,8 +182,12 @@ function stringifyExports(
         );
       }
 
-      if (valueType === 'function' && value.__recipe__) {
-        const { importPath, importName, args } = value.__recipe__;
+      if (
+        valueType === 'function' &&
+        (value.__function_serializer__ || value.__recipe__)
+      ) {
+        const { importPath, importName, args } =
+          value.__function_serializer__ || value.__recipe__;
 
         if (
           typeof importPath !== 'string' ||
@@ -192,7 +219,7 @@ function stringifyExports(
         }
       }
 
-      throw new Error(dedent`
+      throw new Error(outdent`
         Invalid exports.
 
         You can only export plain objects, arrays, strings, numbers and null/undefined.

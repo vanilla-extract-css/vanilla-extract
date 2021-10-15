@@ -1,5 +1,5 @@
 import cssesc from 'cssesc';
-import dedent from 'dedent';
+import outdent from 'outdent';
 import deepmerge from 'deepmerge';
 
 import type {
@@ -8,6 +8,7 @@ import type {
   StyleRule,
   GlobalStyleRule,
   ClassNames,
+  ComplexStyleRule,
 } from './types';
 import {
   registerClassName,
@@ -18,8 +19,6 @@ import {
 import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
-
-type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
@@ -98,7 +97,7 @@ export function fontFace(rule: FontFaceRule, debugId?: string) {
 
   if ('fontFamily' in rule) {
     throw new Error(
-      dedent`
+      outdent`
           This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
   
           If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.

@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-extract-webpack-react",
+  "name": "vanilla-extract-example-webpack-react",
   "description": "Example React project using vanilla-extract and Sprinkles, compiling with webpack",
   "keywords": [
     "vanilla-extract",
@@ -22,10 +22,10 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@vanilla-extract/babel-plugin": "^1.0.1",
-    "@vanilla-extract/css": "1.4.0",
-    "@vanilla-extract/sprinkles": "^1.1.3",
-    "@vanilla-extract/webpack-plugin": "^2.0.0",
+    "@vanilla-extract/babel-plugin": "^1.1.2",
+    "@vanilla-extract/css": "1.6.2",
+    "@vanilla-extract/sprinkles": "^1.3.0",
+    "@vanilla-extract/webpack-plugin": "^2.1.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",

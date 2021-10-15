@@ -1,10 +1,11 @@
-import { dirname, relative, join, posix, sep } from 'path';
+import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
 
 import { build as esbuild, Plugin } from 'esbuild';
 
 import { cssFileFilter } from './filters';
 import { getPackageInfo } from './packageInfo';
+import { addFileScope } from './addFileScope';
 
 export const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
@@ -14,24 +15,15 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      if (originalSource.indexOf('@vanilla-extract/css/fileScope') === -1) {
-        // Encode windows file paths as posix
-        const filePath = posix.join(
-          ...relative(packageInfo.dirname, path).split(sep),
-        );
+      const { source, updated } = addFileScope({
+        source: originalSource,
+        filePath: path,
+        packageInfo,
+      });
 
-        const contents = `
-        import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${filePath}", ${
-          packageInfo.name ? `"${packageInfo.name}"` : 'undefined'
-        });
-
-        ${originalSource}
-        endFileScope()
-        `;
-
+      if (updated) {
         return {
-          contents,
+          contents: source,
           loader: path.match(/\.(ts|tsx)$/i) ? 'ts' : undefined,
           resolveDir: dirname(path),
         };

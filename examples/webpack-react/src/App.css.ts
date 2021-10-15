@@ -1,8 +1,8 @@
-import { style, composeStyles } from '@vanilla-extract/css';
-import { atoms } from './sprinkles.css';
+import { style } from '@vanilla-extract/css';
+import { sprinkles } from './sprinkles.css';
 
-export const card = composeStyles(
-  atoms({
+export const card = style([
+  sprinkles({
     background: {
       lightMode: 'green-50',
       darkMode: 'gray-800',
@@ -16,11 +16,11 @@ export const card = composeStyles(
       desktop: '8x',
     },
   }),
-  style({
+  {
     transition: 'transform 4s ease-in-out',
     ':hover': {
       cursor: 'default',
       transform: 'scale(2) rotate(720deg)',
     },
-  }),
-);
+  },
+]);

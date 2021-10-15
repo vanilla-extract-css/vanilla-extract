@@ -1,5 +1,5 @@
 import { createVar } from '@vanilla-extract/css';
-import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+import { defineProperties } from '@vanilla-extract/sprinkles';
 
 const spacing = {
   small: '4px',
@@ -7,7 +7,7 @@ const spacing = {
   large: '16px',
 };
 
-export const atomicStyles = createAtomicStyles({
+export const basicProperties = defineProperties({
   properties: {
     color: {
       'gray-500': '#6B7280',
@@ -20,7 +20,7 @@ export const atomicStyles = createAtomicStyles({
   },
 });
 
-export const atomicWithShorthandStyles = createAtomicStyles({
+export const propertiesWithShorthands = defineProperties({
   properties: {
     color: {
       'gray-500': '#6B7280',
@@ -36,7 +36,7 @@ export const atomicWithShorthandStyles = createAtomicStyles({
   },
 });
 
-export const conditionalAtomicStyles = createAtomicStyles({
+export const conditionalProperties = defineProperties({
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},
@@ -57,7 +57,19 @@ export const conditionalAtomicStyles = createAtomicStyles({
   },
 });
 
-export const conditionalStylesWithoutDefaultCondition = createAtomicStyles({
+export const conditionalPropertiesWithMultipleDefaultConditions =
+  defineProperties({
+    defaultCondition: ['lightMode', 'darkMode'],
+    conditions: {
+      lightMode: { '@media': '(prefers-color-scheme: light)' },
+      darkMode: { '@media': '(prefers-color-scheme: dark)' },
+    },
+    properties: {
+      background: ['red', 'green', 'blue'],
+    },
+  });
+
+export const conditionalPropertiesWithoutDefaultCondition = defineProperties({
   defaultCondition: false,
   conditions: {
     active: {
@@ -71,7 +83,7 @@ export const conditionalStylesWithoutDefaultCondition = createAtomicStyles({
   },
 });
 
-export const conditionalStylesWithoutResponsiveArray = createAtomicStyles({
+export const conditionalPropertiesWithoutResponsiveArray = defineProperties({
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},
@@ -88,7 +100,7 @@ export const conditionalStylesWithoutResponsiveArray = createAtomicStyles({
   },
 });
 
-export const atomicWithPaddingShorthandStyles = createAtomicStyles({
+export const propertiesWithPaddingShorthands = defineProperties({
   properties: {
     paddingLeft: spacing,
     paddingRight: spacing,

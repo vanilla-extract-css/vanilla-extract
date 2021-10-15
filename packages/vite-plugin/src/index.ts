@@ -1,54 +1,97 @@
 import path from 'path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { normalizePath } from 'vite';
+import outdent from 'outdent';
 import {
   cssFileFilter,
-  virtualCssFileFilter,
   processVanillaFile,
-  getSourceFromVirtualCssFile,
   compile,
   hash,
   getPackageInfo,
   IdentifierOption,
+  addFileScope,
+  stringifyFileScope,
+  parseFileScope,
 } from '@vanilla-extract/integration';
 
 interface Options {
   identifiers?: IdentifierOption;
+
+  /**
+   * Which CSS runtime to use when running `vite serve`.
+   * @default 'vite'
+   */
+  devStyleRuntime?: 'vite' | 'vanilla-extract';
 }
-export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
+export function vanillaExtractPlugin({
+  identifiers,
+  devStyleRuntime = 'vite',
+}: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
+  let useRuntime = false;
   const cssMap = new Map<string, string>();
+
+  let virtualExt: string;
 
   return {
     name: 'vanilla-extract',
     enforce: 'pre',
+    config(_userConfig, env) {
+      useRuntime =
+        devStyleRuntime === 'vanilla-extract' && env.command === 'serve';
+
+      const include = useRuntime ? ['@vanilla-extract/css/injectStyles'] : [];
+
+      return {
+        optimizeDeps: { include },
+        ssr: {
+          external: [
+            '@vanilla-extract/css',
+            '@vanilla-extract/css/fileScope',
+            '@vanilla-extract/css/adapter',
+          ],
+        },
+      };
+    },
     configResolved(resolvedConfig) {
       config = resolvedConfig;
+
+      virtualExt = `.vanilla.${useRuntime ? 'js' : 'css'}?hash=`;
 
       packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
-      if (virtualCssFileFilter.test(id)) {
-        const { fileName, source } = getSourceFromVirtualCssFile(id);
-
-        // resolveId shouldn't really cause a side-effect however custom module meta isn't currently working
-        // This is a hack work around until https://github.com/vitejs/vite/issues/3240 is resolved
-        const shortHashFileName = normalizePath(
-          `${fileName}?hash=${hash(source)}`,
-        );
-        cssMap.set(shortHashFileName, source);
-
-        return shortHashFileName;
+      if (id.indexOf(virtualExt) > 0) {
+        return id;
       }
     },
     load(id) {
-      if (cssMap.has(id)) {
-        const css = cssMap.get(id);
+      const extensionIndex = id.indexOf(virtualExt);
 
-        cssMap.delete(id);
+      if (extensionIndex > 0) {
+        const fileScopeId = id.substring(0, extensionIndex);
 
-        return css;
+        if (!cssMap.has(fileScopeId)) {
+          throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
+        }
+
+        const css = cssMap.get(fileScopeId)!;
+
+        if (!useRuntime) {
+          return css;
+        }
+
+        const fileScope = parseFileScope(fileScopeId);
+
+        return outdent`
+          import { injectStyles } from '@vanilla-extract/css/injectStyles';
+          
+          injectStyles({
+            fileScope: ${JSON.stringify(fileScope)},
+            css: ${JSON.stringify(css)}
+          })
+        `;
       }
 
       return null;
@@ -58,41 +101,42 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return null;
       }
 
+      const index = id.indexOf('?');
+      const validId = index === -1 ? id : id.substring(0, index);
+
       if (ssr) {
-        // If file already has a scope (has already run through babel plugin)
-        if (code.indexOf('@vanilla-extract/css/fileScope') > -1) {
-          return code;
-        }
-
-        const filePath = normalizePath(path.relative(packageInfo.dirname, id));
-
-        const packageName = packageInfo.name
-          ? `"${packageInfo.name}"`
-          : 'undefined';
-
-        return `
-          import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-          setFileScope("${filePath}", ${packageName});
-          ${code}
-          endFileScope();
-        `;
+        return addFileScope({
+          source: code,
+          filePath: normalizePath(path.relative(packageInfo.dirname, validId)),
+          packageInfo,
+        }).source;
       }
 
       const { source, watchFiles } = await compile({
-        filePath: id,
+        filePath: validId,
         cwd: config.root,
       });
 
       for (const file of watchFiles) {
-        this.addWatchFile(file);
+        // In start mode, we need to prevent the file from rewatching itself.
+        // If it's a `build --watch`, it needs to watch everything.
+        if (config.command === 'build' || file !== id) {
+          this.addWatchFile(file);
+        }
       }
 
       return processVanillaFile({
         source,
-        filePath: id,
-        outputCss: !ssr,
+        filePath: validId,
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
+        serializeVirtualCssPath: ({ fileScope, source }) => {
+          const fileId = stringifyFileScope(fileScope);
+
+          cssMap.set(fileId, source);
+
+          return `import "${fileId}${virtualExt}${hash(source)}";`;
+        },
       });
     },
   };

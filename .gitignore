@@ -5,6 +5,7 @@ yarn-error.log
 packages/**/README.md
 !packages/sprinkles/README.md
 !packages/integration/README.md
+test-results
 
 
 .yarn/*
@@ -14,3 +15,4 @@ packages/**/README.md
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.next

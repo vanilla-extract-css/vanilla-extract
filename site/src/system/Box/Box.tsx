@@ -1,14 +1,14 @@
 import { createElement, AllHTMLAttributes, ElementType } from 'react';
 import classnames from 'classnames';
 import * as resetStyles from '../styles/reset.css';
-import { atoms, Atoms } from '../styles/sprinkles.css';
+import { sprinkles, Sprinkles } from '../styles/sprinkles.css';
 
 export interface BoxProps
   extends Omit<
       AllHTMLAttributes<HTMLElement>,
       'content' | 'height' | 'translate' | 'color' | 'width' | 'cursor'
     >,
-    Atoms {
+    Sprinkles {
   component?: ElementType;
 }
 
@@ -56,7 +56,7 @@ export const Box = ({
   const atomClasses = classnames(
     resetStyles.base,
     resetStyles.element[component as keyof typeof resetStyles.element],
-    atoms({
+    sprinkles({
       padding,
       paddingX,
       paddingY,

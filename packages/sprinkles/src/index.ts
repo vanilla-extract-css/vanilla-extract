@@ -8,10 +8,10 @@ import { addRecipe } from '@vanilla-extract/css/recipe';
 import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
-  AtomsFn,
-  createAtomsFn as internalCreateAtomsFn,
-} from './createAtomsFn';
-import { AtomicStyles, ResponsiveArrayConfig } from './types';
+  SprinklesFn,
+  createSprinkles as internalCreateSprinkles,
+} from './createSprinkles';
+import { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
@@ -57,7 +57,7 @@ type ResponsiveArrayOptions<
 type ConditionalAtomicOptions<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = UnconditionalAtomicOptions<Properties> & {
   conditions: Conditions;
   defaultCondition: DefaultCondition;
@@ -83,7 +83,7 @@ type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
 type ConditionalAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -94,7 +94,7 @@ type ConditionalAtomicStyles<
       values: Values<
         Properties[Property],
         {
-          defaultClass: DefaultCondition extends string ? string : undefined;
+          defaultClass: DefaultCondition extends false ? undefined : string;
           conditions: {
             [Rule in keyof Conditions]: string;
           };
@@ -108,7 +108,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
   Properties extends AtomicProperties,
   Conditions extends { [conditionName: string]: Condition },
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 > = {
   conditions: {
     defaultCondition: DefaultCondition;
@@ -121,7 +121,7 @@ type ConditionalWithResponsiveArrayAtomicStyles<
       values: Values<
         Properties[Property],
         {
-          defaultClass: DefaultCondition extends string ? string : undefined;
+          defaultClass: DefaultCondition extends false ? undefined : string;
           conditions: {
             [Rule in keyof Conditions]: string;
           };
@@ -144,12 +144,12 @@ type ShorthandAtomicStyles<
 };
 
 // Conditional + Shorthands + ResponsiveArray
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   ResponsiveLength extends number,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands> &
@@ -162,22 +162,22 @@ export function createAtomicStyles<
 > &
   ShorthandAtomicStyles<Shorthands>;
 // Conditional + Shorthands
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ShorthandOptions<Properties, Shorthands>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition> &
   ShorthandAtomicStyles<Shorthands>;
 // Conditional + ResponsiveArray
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
   ResponsiveLength extends number,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition> &
     ResponsiveArrayOptions<Conditions, ResponsiveLength>,
@@ -188,15 +188,15 @@ export function createAtomicStyles<
   DefaultCondition
 >;
 // Conditional
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Conditions extends BaseConditions,
-  DefaultCondition extends keyof Conditions | false,
+  DefaultCondition extends keyof Conditions | Array<keyof Conditions> | false,
 >(
   options: ConditionalAtomicOptions<Properties, Conditions, DefaultCondition>,
 ): ConditionalAtomicStyles<Properties, Conditions, DefaultCondition>;
 // Unconditional + Shorthands
-export function createAtomicStyles<
+export function defineProperties<
   Properties extends AtomicProperties,
   Shorthands extends { [shorthandName: string]: Array<keyof Properties> },
 >(
@@ -204,10 +204,10 @@ export function createAtomicStyles<
     ShorthandOptions<Properties, Shorthands>,
 ): UnconditionalAtomicStyles<Properties> & ShorthandAtomicStyles<Shorthands>;
 // Unconditional
-export function createAtomicStyles<Properties extends AtomicProperties>(
+export function defineProperties<Properties extends AtomicProperties>(
   options: UnconditionalAtomicOptions<Properties>,
 ): UnconditionalAtomicStyles<Properties>;
-export function createAtomicStyles(options: any): any {
+export function defineProperties(options: any): any {
   let styles: any =
     'shorthands' in options
       ? Object.fromEntries(
@@ -236,6 +236,14 @@ export function createAtomicStyles(options: any): any {
         styles[key].values[valueName] = {
           conditions: {},
         };
+
+        const defaultConditions = options.defaultCondition
+          ? Array.isArray(options.defaultCondition)
+            ? options.defaultCondition
+            : [options.defaultCondition]
+          : [];
+
+        const defaultClasses = [];
 
         for (const conditionName in options.conditions) {
           let styleValue: StyleRule =
@@ -277,9 +285,13 @@ export function createAtomicStyles(options: any): any {
 
           styles[key].values[valueName].conditions[conditionName] = className;
 
-          if (conditionName === options.defaultCondition) {
-            styles[key].values[valueName].defaultClass = className;
+          if (defaultConditions.indexOf(conditionName) > -1) {
+            defaultClasses.push(className);
           }
+        }
+
+        if (defaultClasses.length > 0) {
+          styles[key].values[valueName].defaultClass = defaultClasses.join(' ');
         }
       } else {
         const styleValue: StyleRule =
@@ -317,20 +329,26 @@ export function createAtomicStyles(options: any): any {
 
 const mockComposeStyles = (classList: string) => classList;
 
-export function createAtomsFn<Args extends ReadonlyArray<AtomicStyles>>(
-  ...config: Args
-): AtomsFn<Args> {
+export function createSprinkles<
+  Args extends ReadonlyArray<SprinklesProperties>,
+>(...config: Args): SprinklesFn<Args> {
   // When using Sprinkles with the runtime (e.g. within a jest test)
   // `style` can be called (only for composition) outside of a fileScope.
   // Checking we're within a fileScope ensures this doesn't blow up and is
   // safe as compositions don't make sense at runtime
-  const atoms = internalCreateAtomsFn(
+  const sprinkles = internalCreateSprinkles(
     hasFileScope() ? composeStyles : mockComposeStyles,
   )(...config);
 
-  return addRecipe(atoms, {
-    importPath: '@vanilla-extract/sprinkles/createRuntimeAtomsFn',
-    importName: 'createAtomsFn',
+  return addRecipe(sprinkles, {
+    importPath: '@vanilla-extract/sprinkles/createRuntimeSprinkles',
+    importName: 'createSprinkles',
     args: config,
   });
 }
+
+/** @deprecated - Use `defineProperties` */
+export const createAtomicStyles = defineProperties;
+
+/** @deprecated - Use `createSprinkles` */
+export const createAtomsFn = createSprinkles;

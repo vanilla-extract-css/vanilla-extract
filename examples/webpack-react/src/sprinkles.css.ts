@@ -1,7 +1,7 @@
-import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
+import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
 import { vars } from './vars.css';
 
-const responsiveStyles = createAtomicStyles({
+const responsiveProperties = defineProperties({
   conditions: {
     mobile: {},
     tablet: { '@media': 'screen and (min-width: 768px)' },
@@ -35,7 +35,7 @@ const responsiveStyles = createAtomicStyles({
   },
 });
 
-const colorModeStyles = createAtomicStyles({
+const colorModeProperties = defineProperties({
   conditions: {
     lightMode: {},
     darkMode: { '@media': '(prefers-color-scheme: dark)' },
@@ -47,4 +47,7 @@ const colorModeStyles = createAtomicStyles({
   },
 });
 
-export const atoms = createAtomsFn(responsiveStyles, colorModeStyles);
+export const sprinkles = createSprinkles(
+  responsiveProperties,
+  colorModeProperties,
+);

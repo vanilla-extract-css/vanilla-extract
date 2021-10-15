@@ -1,5 +1,54 @@
 # @vanilla-extract/integration
 
+## 1.4.3
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Export the fileScope functions.
+
+  `stringifyFileScope` and `parseFileScope` are now exported to be used in other packages.
+
+- Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/css@1.6.2
+
+## 1.4.2
+
+### Patch Changes
+
+- [#393](https://github.com/seek-oss/vanilla-extract/pull/393) [`2f379f1`](https://github.com/seek-oss/vanilla-extract/commit/2f379f118c2a2fe6dc08a1cc15a395dbc0f17ece) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix compilation errors in Vite 2.6
+
+## 1.4.1
+
+### Patch Changes
+
+- [#389](https://github.com/seek-oss/vanilla-extract/pull/389) [`23d2757`](https://github.com/seek-oss/vanilla-extract/commit/23d275794d38f01049b824e3e000fb1bb2411717) Thanks [@aulneau](https://github.com/aulneau)! - This update adds `mjs` to the file `*.css.*` regex, enabling better support for ESM packages/files.
+
+## 1.4.0
+
+### Minor Changes
+
+- [#348](https://github.com/seek-oss/vanilla-extract/pull/348) [`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `addFunctionSerializer` function
+
+  This also marks `addRecipe` as deprecated.
+
+### Patch Changes
+
+- Updated dependencies [[`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42)]:
+  - @vanilla-extract/css@1.5.0
+
+## 1.3.0
+
+### Minor Changes
+
+- [#341](https://github.com/seek-oss/vanilla-extract/pull/341) [`0b743e7`](https://github.com/seek-oss/vanilla-extract/commit/0b743e744447616f8daf0c6b88beff8ffef8d41b) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `addFileScope` API
+
+### Patch Changes
+
+- [#343](https://github.com/seek-oss/vanilla-extract/pull/343) [`50bae14`](https://github.com/seek-oss/vanilla-extract/commit/50bae14bf38c8a971ad1727cb8e827c86da06772) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Cleanup adapter after processing styles
+
+- Updated dependencies [[`50bae14`](https://github.com/seek-oss/vanilla-extract/commit/50bae14bf38c8a971ad1727cb8e827c86da06772)]:
+  - @vanilla-extract/css@1.4.1
+
 ## 1.2.0
 
 ### Minor Changes

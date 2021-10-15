@@ -24,21 +24,23 @@ type Conditions<ConditionName extends string> = {
   };
 };
 
-type ExtractDefaultCondition<AtomicStyles extends Conditions<string>> =
-  AtomicStyles['conditions']['defaultCondition'];
+type ExtractDefaultCondition<SprinklesProperties extends Conditions<string>> =
+  SprinklesProperties['conditions']['defaultCondition'];
 
-type ExtractConditionNames<AtomicStyles extends Conditions<string>> =
-  AtomicStyles['conditions']['conditionNames'][number];
+type ExtractConditionNames<SprinklesProperties extends Conditions<string>> =
+  SprinklesProperties['conditions']['conditionNames'][number];
 
 export type ConditionalValue<
-  AtomicStyles extends Conditions<string>,
+  SprinklesProperties extends Conditions<string>,
   Value extends string | number,
 > =
-  | (ExtractDefaultCondition<AtomicStyles> extends false ? never : Value)
-  | Partial<Record<ExtractConditionNames<AtomicStyles>, Value>>
-  | (AtomicStyles['conditions']['responsiveArray'] extends { length: number }
+  | (ExtractDefaultCondition<SprinklesProperties> extends false ? never : Value)
+  | Partial<Record<ExtractConditionNames<SprinklesProperties>, Value>>
+  | (SprinklesProperties['conditions']['responsiveArray'] extends {
+      length: number;
+    }
       ? ResponsiveArrayByMaxLength<
-          AtomicStyles['conditions']['responsiveArray']['length'],
+          SprinklesProperties['conditions']['responsiveArray']['length'],
           Value
         >
       : never);
@@ -51,35 +53,37 @@ type RequiredConditionalObject<
   Partial<Record<OptionalConditionNames, Value>>;
 
 export type RequiredConditionalValue<
-  AtomicStyles extends Conditions<string>,
+  SprinklesProperties extends Conditions<string>,
   Value extends string | number,
-> = ExtractDefaultCondition<AtomicStyles> extends false
+> = ExtractDefaultCondition<SprinklesProperties> extends false
   ? never
   :
       | Value
       | RequiredConditionalObject<
-          Exclude<ExtractDefaultCondition<AtomicStyles>, false>,
+          Exclude<ExtractDefaultCondition<SprinklesProperties>, false>,
           Exclude<
-            ExtractConditionNames<AtomicStyles>,
-            ExtractDefaultCondition<AtomicStyles>
+            ExtractConditionNames<SprinklesProperties>,
+            ExtractDefaultCondition<SprinklesProperties>
           >,
           Value
         >
-      | (AtomicStyles['conditions']['responsiveArray'] extends {
+      | (SprinklesProperties['conditions']['responsiveArray'] extends {
           length: number;
         }
           ? RequiredResponsiveArrayByMaxLength<
-              AtomicStyles['conditions']['responsiveArray']['length'],
+              SprinklesProperties['conditions']['responsiveArray']['length'],
               Value
             >
           : never);
 
-export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
-  atomicStyles: AtomicStyles,
+export function createNormalizeValueFn<
+  SprinklesProperties extends Conditions<string>,
+>(
+  properties: SprinklesProperties,
 ): <Value extends string | number>(
-  value: ConditionalValue<AtomicStyles, Value>,
-) => Partial<Record<ExtractConditionNames<AtomicStyles>, Value>> {
-  const { conditions } = atomicStyles;
+  value: ConditionalValue<SprinklesProperties, Value>,
+) => Partial<Record<ExtractConditionNames<SprinklesProperties>, Value>> {
+  const { conditions } = properties;
 
   if (!conditions) {
     throw new Error('Styles have no conditions');
@@ -116,31 +120,33 @@ export function createNormalizeValueFn<AtomicStyles extends Conditions<string>>(
   return addRecipe(normalizeValue, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
     importName: 'createNormalizeValueFn',
-    args: [{ conditions: atomicStyles.conditions }],
+    args: [{ conditions: properties.conditions }],
   });
 }
 
-export function createMapValueFn<AtomicStyles extends Conditions<string>>(
-  atomicStyles: AtomicStyles,
+export function createMapValueFn<
+  SprinklesProperties extends Conditions<string>,
+>(
+  properties: SprinklesProperties,
 ): <
   OutputValue extends string | number | boolean | null | undefined,
-  Value extends ConditionalValue<AtomicStyles, string | number>,
+  Value extends ConditionalValue<SprinklesProperties, string | number>,
 >(
   value: Value,
   fn: (
     inputValue: ExtractValue<Value>,
-    key: ExtractConditionNames<AtomicStyles>,
+    key: ExtractConditionNames<SprinklesProperties>,
   ) => OutputValue,
 ) => Value extends string | number
   ? OutputValue
-  : Partial<Record<ExtractConditionNames<AtomicStyles>, OutputValue>> {
-  const { conditions } = atomicStyles;
+  : Partial<Record<ExtractConditionNames<SprinklesProperties>, OutputValue>> {
+  const { conditions } = properties;
 
   if (!conditions) {
     throw new Error('Styles have no conditions');
   }
 
-  const normalizeValue = createNormalizeValueFn(atomicStyles);
+  const normalizeValue = createNormalizeValueFn(properties);
 
   function mapValue(value: any, mapFn: any) {
     if (typeof value === 'string' || typeof value === 'number') {
@@ -169,6 +175,6 @@ export function createMapValueFn<AtomicStyles extends Conditions<string>>(
   return addRecipe(mapValue, {
     importPath: '@vanilla-extract/sprinkles/createUtils',
     importName: 'createMapValueFn',
-    args: [{ conditions: atomicStyles.conditions }],
+    args: [{ conditions: properties.conditions }],
   });
 }

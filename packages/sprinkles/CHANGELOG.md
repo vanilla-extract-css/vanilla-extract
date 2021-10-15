@@ -1,5 +1,64 @@
 # @vanilla-extract/sprinkles
 
+## 1.3.0
+
+### Minor Changes
+
+- [#360](https://github.com/seek-oss/vanilla-extract/pull/360) [`4ceb76e`](https://github.com/seek-oss/vanilla-extract/commit/4ceb76efd8063cb833e2f63a708968d054f76dc0) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Clean up public API, deprecating old API names. Also adding sprinkles to the docs site and using `sprinkles` in favour of `atoms` for the canoncial examples.
+
+  API changes include:
+
+  - Rename `createAtomicStyles` to `defineProperties`, `createAtomicStyles` is now deprecated
+  - Rename `createAtomsFn` to `createSprinkles`, `createAtomsFn` is now deprecated
+  - Rename `AtomicStyles` type to `SprinklesProperties`, `AtomicStyles` is now deprecated
+
+  ### Migration Guide
+
+  ```diff
+  -import { createAtomicStyles, createAtomsFn } from '@vanilla-extract/sprinkles';
+  +import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
+
+  -const responsiveProperties = createAtomicStyles({
+  +const responsiveProperties = defineProperties({
+    conditions: {
+      mobile: {},
+      tablet: { '@media': 'screen and (min-width: 768px)' },
+      desktop: { '@media': 'screen and (min-width: 1024px)' }
+    },
+    defaultCondition: 'mobile',
+    properties: {
+      display: ['none', 'block', 'flex'],
+      flexDirection: ['row', 'column'],
+      padding: space
+      // etc.
+    }
+  });
+
+  -export const sprinkles = createAtomsFn(responsiveProperties);
+  +export const sprinkles = createSprinkles(responsiveProperties);
+  ```
+
+## 1.2.0
+
+### Minor Changes
+
+- [#334](https://github.com/seek-oss/vanilla-extract/pull/334) [`0d8efe2`](https://github.com/seek-oss/vanilla-extract/commit/0d8efe2e782bfc8d02485a19b9e3be4fa5bf7302) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support multiple default conditions
+
+  If your conditions are mutually exclusive (e.g. light mode and dark mode), you can now provide an array of default conditions. For example, the following configuration would automatically expand `atoms({ background: 'white' })` to the equivalent of `atoms({ background: { lightMode: 'white', darkMode: 'white' }})`.
+
+  ```ts
+  import { createAtomicStyles } from '@vanilla-extract/sprinkles';
+
+  const responsiveStyles = createAtomicStyles({
+    conditions: {
+      lightMode: { '@media': '(prefers-color-scheme: light)' },
+      darkMode: { '@media': '(prefers-color-scheme: dark)' },
+    },
+    defaultCondition: ['lightMode', 'darkMode'],
+    // etc.
+  });
+  ```
+
 ## 1.1.3
 
 ### Patch Changes

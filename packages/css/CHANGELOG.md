@@ -1,5 +1,50 @@
 # @vanilla-extract/css
 
+## 1.6.2
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Improve the browser runtime dev experience.
+
+  The vanilla browser runtime now creates style tags containing the CSS itself, rather than injecting it directly into the CSSOM.
+
+  This helps with debugability, as the generated CSS can actually be seen in the devtools.
+  There are also some new attributes set on the style tags, making it easier to identify the source of each style.
+
+## 1.6.1
+
+### Patch Changes
+
+- [#381](https://github.com/seek-oss/vanilla-extract/pull/381) [`b1e5936`](https://github.com/seek-oss/vanilla-extract/commit/b1e5936db253d81cca60c31adeabd2dd0a240389) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix identfiers not respecting `NODE_ENV` for SSR builds
+
+## 1.6.0
+
+### Minor Changes
+
+- [#361](https://github.com/seek-oss/vanilla-extract/pull/361) [`531044b`](https://github.com/seek-oss/vanilla-extract/commit/531044b8c5c2d13c465ed77641d3cc6a11903ced) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Automatically add quotes to `content` values when necessary
+
+  For example `{ content: '' }` will now return CSS of `{ content: "" }`
+
+## 1.5.1
+
+### Patch Changes
+
+- [#354](https://github.com/seek-oss/vanilla-extract/pull/354) [`cdad52d`](https://github.com/seek-oss/vanilla-extract/commit/cdad52d6e95422f4ce53b74456fd510880a4a32a) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix function serialization with older versions of the `@vanilla-extract/integration` package
+
+## 1.5.0
+
+### Minor Changes
+
+- [#348](https://github.com/seek-oss/vanilla-extract/pull/348) [`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `addFunctionSerializer` function
+
+  This also marks `addRecipe` as deprecated.
+
+## 1.4.1
+
+### Patch Changes
+
+- [#343](https://github.com/seek-oss/vanilla-extract/pull/343) [`50bae14`](https://github.com/seek-oss/vanilla-extract/commit/50bae14bf38c8a971ad1727cb8e827c86da06772) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Cleanup adapter after processing styles
+
 ## 1.4.0
 
 ### Minor Changes

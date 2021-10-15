@@ -2,6 +2,7 @@ import './runtimeAdapter';
 
 export type {
   StyleRule,
+  ComplexStyleRule,
   GlobalStyleRule,
   Adapter,
   FileScope,

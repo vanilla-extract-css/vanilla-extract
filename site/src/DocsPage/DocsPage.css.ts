@@ -78,6 +78,10 @@ export const activeIndicator = style({
   },
 });
 
+export const activeIndicatorRight = style({
+  transform: 'skew(-15deg)',
+});
+
 export const primaryNavOpen = style({});
 
 export const primaryNav = style({

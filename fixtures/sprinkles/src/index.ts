@@ -1,15 +1,15 @@
 import {
-  atoms,
+  sprinkles,
   mapResponsiveValue,
   normalizeResponsiveValue,
-  preComposedAtoms,
-  preComposedAtomsUsedInSelector,
+  preComposedSprinkles,
+  preComposedSprinklesUsedInSelector,
 } from './styles.css';
 import testNodes from '../test-nodes.json';
 
 function render() {
   document.body.innerHTML = `
-  <div id="${testNodes.root}" class="${atoms({
+  <div id="${testNodes.root}" class="${sprinkles({
     display: normalizeResponsiveValue('block').mobile,
     paddingTop: mapResponsiveValue(
       {
@@ -21,8 +21,8 @@ function render() {
   })}"> 
     Sprinkles
   </div>
-  <div class="${preComposedAtoms}">Precomposed atoms</div>
-  <div class="${preComposedAtomsUsedInSelector}">Precomposed Atoms Used In Selector</div>
+  <div class="${preComposedSprinkles}">Precomposed sprinkles</div>
+  <div class="${preComposedSprinklesUsedInSelector}">Precomposed Sprinkles Used In Selector</div>
 `;
 }
 

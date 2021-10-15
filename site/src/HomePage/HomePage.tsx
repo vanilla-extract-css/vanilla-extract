@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import dedent from 'dedent';
+import outdent from 'outdent';
 import { Box, Stack, ContentBlock, Columns, ButtonLink } from '../system';
 import { Heading } from '../Typography/Heading';
 import { Chevron } from '../Chevron/Chevron';
@@ -190,7 +190,7 @@ export const HomePage = () => {
                   errorTokens={['brandd', 'large']}
                   title="styles.css.ts"
                 >
-                  {dedent`
+                  {outdent`
                   import { createTheme, style } from '@vanilla-extract/css';
 
                   export const [themeClass, vars] = createTheme({
@@ -255,20 +255,29 @@ export const HomePage = () => {
                 </Feature>
               </Columns>
               <Columns space="xxlarge" collapseOnMobile>
-                <Feature title="Portable styling">
-                  Write framework agnostic styles with integrations for webpack,
-                  esbuild, Vite and Snowpack.
+                <Feature title="Framework agnostic">
+                  Official integrations are provided for webpack, esbuild, Vite,
+                  Snowpack and Next.js.
                 </Feature>
 
-                <Feature title="Build it your way">
-                  Use high-level abstractions like{' '}
+                <Feature title="Built for extension">
+                  Use libraries like{' '}
                   <Link
-                    to="https://github.com/seek-oss/vanilla-extract/tree/master/packages/sprinkles"
+                    to="/documentation/sprinkles-api"
                     size="small"
                     underline="always"
                     inline
                   >
                     Sprinkles
+                  </Link>
+                  ,{' '}
+                  <Link
+                    to="/documentation/recipes-api"
+                    size="small"
+                    underline="always"
+                    inline
+                  >
+                    Recipes
                   </Link>{' '}
                   and{' '}
                   <Link
@@ -277,9 +286,9 @@ export const HomePage = () => {
                     underline="always"
                     inline
                   >
-                    Dessert Box
+                    Dessert&nbsp;Box
                   </Link>{' '}
-                  — or create and publish your own!
+                  — or create your own!
                 </Feature>
               </Columns>
             </Columns>
@@ -315,7 +324,7 @@ export const HomePage = () => {
                 title="styles.css.ts"
                 background={{ lightMode: 'coolGray800', darkMode: 'black' }}
               >
-                {dedent`
+                {outdent`
                 import { style } from '@vanilla-extract/css';
 
                 export const className = style({
@@ -362,7 +371,7 @@ export const HomePage = () => {
                   title="styles.css.ts"
                   background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
                 >
-                  {dedent`
+                  {outdent`
                     import { createTheme, style } from '@vanilla-extract/css';
                       
                     export const [themeClass, vars] = createTheme({
@@ -401,7 +410,7 @@ export const HomePage = () => {
                 title="styles.css.ts"
                 background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
               >
-                {dedent`import { style, createVar } from '@vanilla-extract/css';
+                {outdent`import { style, createVar } from '@vanilla-extract/css';
 
       const shadowColor = createVar();
 
@@ -440,7 +449,7 @@ export const HomePage = () => {
                 title="styles.css.ts"
                 background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
               >
-                {dedent`
+                {outdent`
                 import { styleVariants } from '@vanilla-extract/css';
 
                 export const background = styleVariants({
@@ -479,7 +488,7 @@ export const HomePage = () => {
                 title="output.css"
                 background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
               >
-                {dedent`
+                {outdent`
                   :root {
                     --space-none__ya5b7b0: 0;
                     --space-small__ya5b7b1: 4px;
@@ -614,6 +623,14 @@ export const HomePage = () => {
                     baseline
                   >
                     Discussions
+                  </Link>
+                  <Link
+                    to="https://discord.gg/6nCfPwwz6w"
+                    size="small"
+                    color="secondary"
+                    baseline
+                  >
+                    Discord
                   </Link>
                 </Stack>
 

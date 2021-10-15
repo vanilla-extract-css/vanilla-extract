@@ -1,9 +1,12 @@
 import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
 import template from '@babel/template';
-import { getPackageInfo } from '@vanilla-extract/integration';
+import { cssFileFilter, getPackageInfo } from '@vanilla-extract/integration';
 
-const packageIdentifier = '@vanilla-extract/css';
+const packageIdentifiers = new Set([
+  '@vanilla-extract/css',
+  '@vanilla-extract/recipes',
+]);
 const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
 
 const buildSetFileScopeESM = template(`
@@ -37,6 +40,9 @@ const debuggableFunctionConfig = {
   createVar: {
     maxParams: 1,
   },
+  recipe: {
+    maxParams: 2,
+  },
 };
 
 const styleFunctions = [
@@ -48,6 +54,7 @@ const styleFunctions = [
   'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
+  'recipe',
 ];
 
 type StyleFunction = typeof styleFunctions[number];
@@ -78,6 +85,30 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
 
   if (!firstRelevantParentPath) {
     return;
+  }
+
+  // Special case: Handle `export const [themeClass, vars] = createTheme({});`
+  // when it's already been compiled into this:
+  //
+  // var _createTheme = createTheme({}),
+  //   _createTheme2 = _slicedToArray(_createTheme, 2),
+  //   themeClass = _createTheme2[0],
+  //   vars = _createTheme2[1];
+  if (
+    t.isVariableDeclaration(firstRelevantParentPath.parent) &&
+    firstRelevantParentPath.parent.declarations.length === 4
+  ) {
+    const [themeDeclarator, , classNameDeclarator] =
+      firstRelevantParentPath.parent.declarations;
+
+    if (
+      t.isCallExpression(themeDeclarator.init) &&
+      t.isIdentifier(themeDeclarator.init.callee, { name: 'createTheme' }) &&
+      t.isVariableDeclarator(classNameDeclarator) &&
+      t.isIdentifier(classNameDeclarator.id)
+    ) {
+      return classNameDeclarator.id.name;
+    }
   }
 
   const relevantParent = firstRelevantParentPath.node;
@@ -135,7 +166,7 @@ const getRelevantCall = (
 type Context = PluginPass & {
   namespaceImport: string;
   importIdentifiers: Map<string, StyleFunction>;
-  packageIdentifier: string;
+  packageIdentifiers: Set<string>;
   filePath: string;
   packageName: string;
   isCssFile: boolean;
@@ -152,7 +183,7 @@ export default function (): PluginObj<Context> {
       }
 
       this.isESM = false;
-      this.isCssFile = /\.css\.(js|ts|jsx|tsx)$/.test(opts.filename);
+      this.isCssFile = cssFileFilter.test(opts.filename);
       this.alreadyCompiled = false;
 
       this.importIdentifiers = new Map();
@@ -202,7 +233,7 @@ export default function (): PluginObj<Context> {
           // If file scope import is found it means the file has already been compiled
           this.alreadyCompiled = true;
           return;
-        } else if (path.node.source.value === packageIdentifier) {
+        } else if (packageIdentifiers.has(path.node.source.value)) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;

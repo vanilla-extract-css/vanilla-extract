@@ -1,4 +1,4 @@
-import dedent from 'dedent';
+import outdent from 'outdent';
 import { onEndFileScope } from './adapter';
 import type { FileScope } from './types';
 
@@ -27,7 +27,7 @@ export function hasFileScope() {
 export function getFileScope(): FileScope {
   if (fileScopes.length === 0) {
     throw new Error(
-      dedent`
+      outdent`
         Styles were unable to be assigned to a file. This is generally caused by one of the following:
 
         - You may have created styles outside of a '.css.ts' context

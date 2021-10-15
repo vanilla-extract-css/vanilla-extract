@@ -189,7 +189,7 @@ Global selectors can also contain references to other scoped class names.
 ```tsx
 // app.css.ts
 
-import { globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle } from '@vanilla-extract/css';
 
 export const parentClass = style({});
 
@@ -565,8 +565,8 @@ Creates a locally scoped set of keyframes.
 import { keyframes, style } from '@vanilla-extract/css';
 
 const rotate = keyframes({
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' }
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({
@@ -587,8 +587,8 @@ import {
 } from '@vanilla-extract/css';
 
 globalKeyframes('rotate', {
-  '0%': { rotate: '0deg' },
-  '100%': { rotate: '360deg' }
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const animated = style({

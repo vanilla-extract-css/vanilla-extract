@@ -1,5 +1,35 @@
 # @vanilla-extract/babel-plugin
 
+## 1.1.2
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Handle vite 2.6.
+
+  As of vite 2.6 and greater, `?used` gets appended to css imports, which causes the file imports to be not what we expected.
+
+  This caused mismatching classnames in the vite plugin, and it caused the babel plugin to not add filescopes when it should have.
+
+- Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/integration@1.4.3
+
+## 1.1.1
+
+### Patch Changes
+
+- [#391](https://github.com/seek-oss/vanilla-extract/pull/391) [`c0fa901`](https://github.com/seek-oss/vanilla-extract/commit/c0fa9019e0717f35cade939c7a9b665344cbf7a9) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Handle array destructuring from `createTheme` when it's already been compiled
+
+## 1.1.0
+
+### Minor Changes
+
+- [#348](https://github.com/seek-oss/vanilla-extract/pull/348) [`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add debug IDs to `recipe` function
+
+### Patch Changes
+
+- Updated dependencies [[`c6cd1f2`](https://github.com/seek-oss/vanilla-extract/commit/c6cd1f2eee982474c213f43fc23ee38b7a8c5e42)]:
+  - @vanilla-extract/integration@1.4.0
+
 ## 1.0.1
 
 ### Patch Changes

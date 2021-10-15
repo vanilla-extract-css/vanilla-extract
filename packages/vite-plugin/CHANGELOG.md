@@ -1,5 +1,72 @@
 # @vanilla-extract/vite-plugin
 
+## 2.1.3
+
+### Patch Changes
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Fix plugin for watch mode.
+
+  The vite plugin previously relied on a one to one matching of resolve to load calls, and would clean up the CSS stored in memory after it was loaded.
+
+  This isn't true in `--watch` mode, as the same file can be loaded on the rebuild without having to be resolved, which the plugin now handles.
+
+* [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Update the "vanilla-extract" devStyleRuntime option.
+
+  When using the vanilla browser runtime in vite, it now operates on a new model where a .css.js file is generated, that uses @vanilla-extract/css/injectStyles to add the css to the browser.
+
+  This allows for hot reloading of styles, and makes styles a bit easier to debug at dev time (because they're actually visible).
+
+- [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Handle vite 2.6.
+
+  As of vite 2.6 and greater, `?used` gets appended to css imports, which causes the file imports to be not what we expected.
+
+  This caused mismatching classnames in the vite plugin, and it caused the babel plugin to not add filescopes when it should have.
+
+* [#409](https://github.com/seek-oss/vanilla-extract/pull/409) [`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0) Thanks [@benjervis](https://github.com/benjervis)! - Automatically optimize deps.
+
+  When using the new vanilla browser runtime, the new `injectStyles` dependency gets injected at runtime, so vite can't discover it ahead of time and pre-bundle it.
+
+  The plugin will now add the dependency to optimizeDeps if the vanilla runtime is being used so that it's optimized up front.
+  It also ensures that some relevant vanilla packages are externalised in SSR mode.
+
+* Updated dependencies [[`a9c5cb7`](https://github.com/seek-oss/vanilla-extract/commit/a9c5cb768ad10bd25dd1a31041733fc96cd467a0)]:
+  - @vanilla-extract/integration@1.4.3
+
+## 2.1.2
+
+### Patch Changes
+
+- [#398](https://github.com/seek-oss/vanilla-extract/pull/398) [`63f4ed0`](https://github.com/seek-oss/vanilla-extract/commit/63f4ed0e67419df565f3f447cf27cec612afbb8d) Thanks [@benjervis](https://github.com/benjervis)! - Fixes a bug with vite where "?used" is appended to the file path of css files.
+
+  This could cause different class name hashes to be generated between SSR and client builds.
+  This was introduced in vite 2.6.0.
+
+## 2.1.1
+
+### Patch Changes
+
+- [#393](https://github.com/seek-oss/vanilla-extract/pull/393) [`2f379f1`](https://github.com/seek-oss/vanilla-extract/commit/2f379f118c2a2fe6dc08a1cc15a395dbc0f17ece) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix compilation errors in Vite 2.6
+
+- Updated dependencies [[`2f379f1`](https://github.com/seek-oss/vanilla-extract/commit/2f379f118c2a2fe6dc08a1cc15a395dbc0f17ece)]:
+  - @vanilla-extract/integration@1.4.2
+
+## 2.1.0
+
+### Minor Changes
+
+- [#373](https://github.com/seek-oss/vanilla-extract/pull/373) [`a55d2cf`](https://github.com/seek-oss/vanilla-extract/commit/a55d2cfd7c4ca9175a2c86557888df90907bfd0f) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `devStyleRuntime` option to allow switching between dev style runtimes
+
+  The built-in Vite dev style runtime (what adds styles to the page when running `vite serve`) doesn't seem to clean up old styles as expected. Passing `devStyleRuntime: 'vanilla-extract'` will instead use vanilla-extract's browser runtime. This pushes all style creation in development to the browser, but may give a better HMR experience.
+
+## 2.0.2
+
+### Patch Changes
+
+- [#341](https://github.com/seek-oss/vanilla-extract/pull/341) [`0b743e7`](https://github.com/seek-oss/vanilla-extract/commit/0b743e744447616f8daf0c6b88beff8ffef8d41b) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Refactor SSR file scoping to use centralised `addFileScope` implementation
+
+- Updated dependencies [[`50bae14`](https://github.com/seek-oss/vanilla-extract/commit/50bae14bf38c8a971ad1727cb8e827c86da06772), [`0b743e7`](https://github.com/seek-oss/vanilla-extract/commit/0b743e744447616f8daf0c6b88beff8ffef8d41b)]:
+  - @vanilla-extract/integration@1.3.0
+
 ## 2.0.1
 
 ### Patch Changes

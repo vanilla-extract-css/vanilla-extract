@@ -239,9 +239,10 @@ const SecondaryNav = ({
     >
       <Stack space="small">
         {sections
-          .filter(({ level }) => level === 2)
-          .map(({ hash, name }, index) => {
+          .filter(({ level }) => level === 2 || level === 3)
+          .map(({ hash, name, level }, index) => {
             const active = activeHash ? hash === activeHash : index === 0;
+            const l2 = level === 2;
 
             return (
               <Link
@@ -257,20 +258,21 @@ const SecondaryNav = ({
                   <Box
                     component="span"
                     background={{
-                      lightMode: 'green300',
-                      darkMode: 'green400',
+                      lightMode: l2 ? 'green300' : 'pink300',
+                      darkMode: l2 ? 'green400' : 'pink400',
                     }}
                     borderRadius="full"
                     paddingLeft="xsmall"
-                    paddingTop="xlarge"
-                    marginLeft="xsmall"
+                    paddingTop={l2 ? 'xlarge' : 'large'}
+                    marginLeft={l2 ? 'xsmall' : 'xlarge'}
                     opacity={active ? undefined : 0}
                     className={classnames(
                       styles.activeIndicator,
+                      !l2 ? styles.activeIndicatorRight : '',
                       active ? styles.active : '',
                     )}
                   />
-                  <Box component="span" paddingLeft="large">
+                  <Box component="span" paddingLeft={l2 ? 'large' : 'large'}>
                     {name}
                   </Box>
                 </Box>
@@ -341,7 +343,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
                     title ? `${title} — ` : ''
                   }vanilla-extract`.trim();
                   const hashes = sections
-                    .filter(({ level }) => level === 2)
+                    .filter(({ level }) => level === 2 || level === 3)
                     .map(({ hash }) => hash);
 
                   return (
