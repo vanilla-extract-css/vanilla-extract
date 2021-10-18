@@ -135,7 +135,9 @@ export function vanillaExtractPlugin({
 
           cssMap.set(fileId, source);
 
-          return `import "${fileId}${virtualExt}${hash(source)}";`;
+          return `import "${fileId}${virtualExt}${hash(
+            Date.now().toString(),
+          )}";`;
         },
       });
     },
