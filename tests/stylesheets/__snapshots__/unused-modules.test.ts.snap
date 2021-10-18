@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`features - esbuild should create valid stylesheet 1`] = `
+exports[`unused-modules - esbuild should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
   border: 5px solid #000;
@@ -19,7 +19,7 @@ exports[`features - esbuild should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`features - mini-css-extract should create valid stylesheet 1`] = `
+exports[`unused-modules - mini-css-extract should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
 }
@@ -40,7 +40,7 @@ body {
 "
 `;
 
-exports[`features - vite should create valid stylesheet 1`] = `
+exports[`unused-modules - vite should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
   border: 5px solid #000;

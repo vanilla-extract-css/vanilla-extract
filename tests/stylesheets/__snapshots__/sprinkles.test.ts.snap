@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`features - esbuild should create valid stylesheet 1`] = `
+exports[`sprinkles - esbuild should create valid stylesheet 1`] = `
 "._1j5zl922 {
   display: flex;
 }
@@ -147,7 +147,7 @@ body > ._1j5zl921a {
 "
 `;
 
-exports[`features - mini-css-extract should create valid stylesheet 1`] = `
+exports[`sprinkles - mini-css-extract should create valid stylesheet 1`] = `
 "._3nw5tz2 {
   display: flex;
 }
@@ -294,7 +294,7 @@ body > ._3nw5tz1a {
 "
 `;
 
-exports[`features - vite should create valid stylesheet 1`] = `
+exports[`sprinkles - vite should create valid stylesheet 1`] = `
 "._1j5zl922 {
   display: flex;
 }

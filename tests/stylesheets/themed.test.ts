@@ -6,7 +6,7 @@ let testCounter = 0;
 const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
 
 buildTypes.forEach((buildType) => {
-  describe(`features - ${buildType}`, () => {
+  describe(`themed - ${buildType}`, () => {
     let server: TestServer;
 
     beforeAll(async () => {
