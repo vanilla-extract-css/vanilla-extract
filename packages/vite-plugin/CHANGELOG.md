@@ -1,5 +1,17 @@
 # @vanilla-extract/vite-plugin
 
+## 3.0.0
+
+### Major Changes
+
+- [#422](https://github.com/seek-oss/vanilla-extract/pull/422) [`4e5ba05`](https://github.com/seek-oss/vanilla-extract/commit/4e5ba05549bc0baae8d82b9e9da9e69f032a1191) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove the `devStyleRuntime` option
+
+### Patch Changes
+
+- [#422](https://github.com/seek-oss/vanilla-extract/pull/422) [`4e5ba05`](https://github.com/seek-oss/vanilla-extract/commit/4e5ba05549bc0baae8d82b9e9da9e69f032a1191) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix HMR for pre-existing CSS
+
+  Previously, styles would not hot reload correctly when returning to a previously cached version
+
 ## 2.1.3
 
 ### Patch Changes
