@@ -132,8 +132,16 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
+          const id = `${fileId}${virtualExt}`;
 
           if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
+            const { moduleGraph } = server;
+            const module = moduleGraph.getModuleById(id);
+
+            if (module) {
+              moduleGraph.invalidateModule(module);
+            }
+
             server.ws.send({
               type: 'custom',
               event: styleUpdateEvent(fileId),
@@ -143,7 +151,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
           cssMap.set(fileId, source);
 
-          return `import "${fileId}${virtualExt}";`;
+          return `import "${id}";`;
         },
       });
     },
