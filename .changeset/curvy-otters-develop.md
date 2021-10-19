@@ -4,4 +4,4 @@
 
 Fix HMR for pre-existing CSS
 
-Previosly, styles would not hot reload correctly when returning to a previously cached version
+Previously, styles would not hot reload correctly when returning to a previously cached version
