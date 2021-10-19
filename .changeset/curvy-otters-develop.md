@@ -2,6 +2,6 @@
 '@vanilla-extract/vite-plugin': patch
 ---
 
-Fix HMR issue when using `devStyleRuntime: 'vanilla-extract'`
+Fix HMR for pre-existing CSS
 
-Styles would not hot reload correctly when returning to a previously cached version
+Previosly, styles would not hot reload correctly when returning to a previously cached version

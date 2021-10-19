@@ -5,6 +5,16 @@ import { button, container, opacity } from './styles.css';
 import { shadow } from './shared.css';
 import testNodes from '../test-nodes.json';
 
+// Uncomment to get HMR for Vite working
+// if (import.meta.hot) {
+//   import.meta.hot.accept(
+//     ['./themes.css', './styles.css', './shared.css'],
+//     () => {
+//       render();
+//     },
+//   );
+// }
+
 const inlineTheme = assignInlineVars(vars, {
   colors: {
     backgroundColor: 'orange',
