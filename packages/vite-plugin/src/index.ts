@@ -1,12 +1,11 @@
 import path from 'path';
-import type { Plugin, ResolvedConfig } from 'vite';
+import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
 import { normalizePath } from 'vite';
 import outdent from 'outdent';
 import {
   cssFileFilter,
   processVanillaFile,
   compile,
-  hash,
   getPackageInfo,
   IdentifierOption,
   addFileScope,
@@ -14,22 +13,16 @@ import {
   parseFileScope,
 } from '@vanilla-extract/integration';
 
+const styleUpdateEvent = (fileId: string) =>
+  `vanilla-extract-style-update:${fileId}`;
+
 interface Options {
   identifiers?: IdentifierOption;
-
-  /**
-   * Which CSS runtime to use when running `vite serve`.
-   * @default 'vite'
-   */
-  devStyleRuntime?: 'vite' | 'vanilla-extract';
 }
-export function vanillaExtractPlugin({
-  identifiers,
-  devStyleRuntime = 'vite',
-}: Options = {}): Plugin {
+export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
-  let useRuntime = false;
+  let server: ViteDevServer;
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
@@ -37,11 +30,12 @@ export function vanillaExtractPlugin({
   return {
     name: 'vanilla-extract',
     enforce: 'pre',
+    configureServer(_server) {
+      server = _server;
+    },
     config(_userConfig, env) {
-      useRuntime =
-        devStyleRuntime === 'vanilla-extract' && env.command === 'serve';
-
-      const include = useRuntime ? ['@vanilla-extract/css/injectStyles'] : [];
+      const include =
+        env.command === 'serve' ? ['@vanilla-extract/css/injectStyles'] : [];
 
       return {
         optimizeDeps: { include },
@@ -57,7 +51,7 @@ export function vanillaExtractPlugin({
     configResolved(resolvedConfig) {
       config = resolvedConfig;
 
-      virtualExt = `.vanilla.${useRuntime ? 'js' : 'css'}?hash=`;
+      virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
 
       packageInfo = getPackageInfo(config.root);
     },
@@ -78,7 +72,7 @@ export function vanillaExtractPlugin({
 
         const css = cssMap.get(fileScopeId)!;
 
-        if (!useRuntime) {
+        if (!server) {
           return css;
         }
 
@@ -87,10 +81,16 @@ export function vanillaExtractPlugin({
         return outdent`
           import { injectStyles } from '@vanilla-extract/css/injectStyles';
           
-          injectStyles({
+          const inject = (css) => injectStyles({
             fileScope: ${JSON.stringify(fileScope)},
-            css: ${JSON.stringify(css)}
-          })
+            css
+          });
+
+          inject(${JSON.stringify(css)});
+
+          import.meta.hot.on('${styleUpdateEvent(fileScopeId)}', (css) => {
+            inject(css);
+          });   
         `;
       }
 
@@ -132,10 +132,26 @@ export function vanillaExtractPlugin({
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
+          const id = `${fileId}${virtualExt}`;
+
+          if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
+            const { moduleGraph } = server;
+            const module = moduleGraph.getModuleById(id);
+
+            if (module) {
+              moduleGraph.invalidateModule(module);
+            }
+
+            server.ws.send({
+              type: 'custom',
+              event: styleUpdateEvent(fileId),
+              data: source,
+            });
+          }
 
           cssMap.set(fileId, source);
 
-          return `import "${fileId}${virtualExt}${hash(source)}";`;
+          return `import "${id}";`;
         },
       });
     },
