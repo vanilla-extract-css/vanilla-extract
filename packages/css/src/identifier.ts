@@ -4,7 +4,7 @@ import { getIdentOption } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
 function getDevPrefix(debugId: string | undefined) {
-  const parts = debugId ? [debugId] : [];
+  const parts = debugId ? [debugId.replace(/\s/g, '_')] : [];
   const { filePath } = getFileScope();
 
   const matches = filePath.match(
