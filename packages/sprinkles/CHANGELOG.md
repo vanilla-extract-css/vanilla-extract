@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.3.1
+
+### Patch Changes
+
+- [#432](https://github.com/seek-oss/vanilla-extract/pull/432) [`8641738`](https://github.com/seek-oss/vanilla-extract/commit/8641738e20ec6c94804c49ee767b1a7d27efe8ad) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix handling of zero values in shorthands
+
 ## 1.3.0
 
 ### Minor Changes
