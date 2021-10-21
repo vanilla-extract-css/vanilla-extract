@@ -12,6 +12,7 @@ import {
   conditionalPropertiesWithMultipleDefaultConditions,
   conditionalPropertiesWithoutDefaultCondition,
   conditionalPropertiesWithoutResponsiveArray,
+  shorthandsWithZeroValues,
 } from './index.css';
 
 describe('sprinkles', () => {
@@ -262,6 +263,16 @@ describe('sprinkles', () => {
       ).toMatchInlineSnapshot(
         `"sprinkles_paddingTop_small__1kw4bre23 sprinkles_paddingBottom_medium__1kw4bre27 sprinkles_paddingLeft_small__1kw4bre1x sprinkles_paddingRight_small__1kw4bre20"`,
       );
+    });
+
+    it('should handle shorthands with zero values', () => {
+      const sprinkles = createSprinkles(shorthandsWithZeroValues);
+
+      expect(
+        sprinkles({
+          mt: 0,
+        }),
+      ).toMatchInlineSnapshot(`"sprinkles_marginTop_0__1kw4bre2a"`);
     });
 
     it('should preserve config order of shorthands', () => {

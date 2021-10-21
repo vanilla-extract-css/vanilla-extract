@@ -85,12 +85,12 @@ export const createSprinkles =
 
       for (const shorthand of shorthandNames) {
         const value = props[shorthand];
-        if (value) {
+        if (value != null) {
           const sprinkle = sprinklesStyles[shorthand];
           hasShorthands = true;
           for (const propMapping of sprinkle.mappings) {
             shorthands[propMapping] = value;
-            if (!nonShorthands[propMapping]) {
+            if (nonShorthands[propMapping] == null) {
               delete nonShorthands[propMapping];
             }
           }
