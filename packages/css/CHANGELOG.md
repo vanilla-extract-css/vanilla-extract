@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.6.3
+
+### Patch Changes
+
+- [#428](https://github.com/seek-oss/vanilla-extract/pull/428) [`e915f7f`](https://github.com/seek-oss/vanilla-extract/commit/e915f7f0c1176f8403118d867216cc19490ad13f) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ensure whitespace is stripped from debug Ids
+
 ## 1.6.2
 
 ### Patch Changes
