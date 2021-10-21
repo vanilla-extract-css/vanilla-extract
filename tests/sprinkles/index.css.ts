@@ -114,3 +114,15 @@ export const propertiesWithPaddingShorthands = defineProperties({
     paddingY: ['paddingTop', 'paddingBottom'],
   },
 });
+
+export const shorthandsWithZeroValues = defineProperties({
+  properties: {
+    marginTop: {
+      0: '0rem',
+      1: '0.5rem',
+    },
+  },
+  shorthands: {
+    mt: ['marginTop'],
+  },
+});
