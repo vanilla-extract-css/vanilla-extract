@@ -28,6 +28,8 @@ export const createVanillaExtractPlugin =
               isClient: !isServer,
               isServer,
               isDevelopment: dev,
+              future: nextConfig.future || {},
+              experimental: nextConfig.experimental || {},
             },
             [],
             [],
