@@ -342,6 +342,27 @@ export const sprinkles = createSprinkles(
 );
 ```
 
+You can combine your sprinkles with other styles [in the same way you combine styles on their own](/documentation/styling-api/#style).
+
+```ts
+// button.css.ts
+import { style } from '@vanilla-extract/css';
+import { sprinkles } from './sprinkles.css';
+
+export const button = style([
+  sprinkles({
+    paddingX: 'medium',
+    paddingY: 'small',
+  }),
+  {
+    transition: "transform 0.2s ease-in-out",
+    ":hover": {
+      transform: "scale(1.1)",
+    },
+  },
+])
+```
+
 The sprinkles function also exposes a static `properties` key that lets you check whether a given property can be handled by the function.
 
 ```ts
