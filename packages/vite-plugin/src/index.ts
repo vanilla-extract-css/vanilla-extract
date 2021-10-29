@@ -23,6 +23,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
   let server: ViteDevServer;
+  let useRuntime = false
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
@@ -34,8 +35,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       server = _server;
     },
     config(_userConfig, env) {
-      const include =
-        env.command === 'serve' ? ['@vanilla-extract/css/injectStyles'] : [];
+      useRuntime = server && env.command === 'serve'
+      const include = useRuntime ? ['@vanilla-extract/css/injectStyles'] : [];
 
       return {
         optimizeDeps: { include },
@@ -51,7 +52,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
     configResolved(resolvedConfig) {
       config = resolvedConfig;
 
-      virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
+      virtualExt = `.vanilla.${useRuntime ? 'js' : 'css'}?hash=`;
 
       packageInfo = getPackageInfo(config.root);
     },
@@ -72,7 +73,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
         const css = cssMap.get(fileScopeId)!;
 
-        if (!server) {
+        if (!useRuntime) {
           return css;
         }
 
