@@ -26,6 +26,7 @@
   "author": "SEEK",
   "license": "MIT",
   "peerDependencies": {
+    "@vanilla-extract/css": "*",
     "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
