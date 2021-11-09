@@ -3983,7 +3983,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@^2.0.0, @vanilla-extract/webpack-plugin@^2.1.0, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
+"@vanilla-extract/webpack-plugin@*, @vanilla-extract/webpack-plugin@^2.0.0, @vanilla-extract/webpack-plugin@^2.1.1, @vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vanilla-extract/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
@@ -17460,7 +17460,7 @@ typescript@^4.1.3:
     "@vanilla-extract/babel-plugin": ^1.1.2
     "@vanilla-extract/css": 1.6.3
     "@vanilla-extract/sprinkles": ^1.3.1
-    "@vanilla-extract/webpack-plugin": ^2.1.0
+    "@vanilla-extract/webpack-plugin": ^2.1.1
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
     html-webpack-plugin: ^5.3.1

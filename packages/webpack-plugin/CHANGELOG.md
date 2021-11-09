@@ -1,5 +1,15 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.1
+
+### Patch Changes
+
+- [#459](https://github.com/seek-oss/vanilla-extract/pull/459) [`2719dc0`](https://github.com/seek-oss/vanilla-extract/commit/2719dc0b75172bb43648ddf2a3f2f31f58e42426) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove unused files and dependencies
+
+* [#459](https://github.com/seek-oss/vanilla-extract/pull/459) [`2719dc0`](https://github.com/seek-oss/vanilla-extract/commit/2719dc0b75172bb43648ddf2a3f2f31f58e42426) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove "Styles detected outside of '.css.(ts/js)' files" error
+
+  This error could occasionally cause false positives, and was inconsistent with the rest of the integrations.
+
 ## 2.1.0
 
 ### Minor Changes
