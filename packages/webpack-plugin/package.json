@@ -8,14 +8,12 @@
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "validate-loader.ts",
       "extracted.js"
     ]
   },
   "files": [
     "/dist",
     "/loader",
-    "/validate-loader",
     "/extracted"
   ],
   "repository": {
@@ -33,7 +31,6 @@
     "chalk": "^4.1.1",
     "debug": "^4.3.1",
     "loader-utils": "^2.0.0",
-    "lodash": "^4.17.21",
     "virtual-resource-loader": "^1.0.0"
   },
   "devDependencies": {
