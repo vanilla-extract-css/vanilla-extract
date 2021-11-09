@@ -65,12 +65,13 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
       if (extensionIndex > 0) {
         const fileScopeId = id.substring(0, extensionIndex);
+        const normalizedFileId = normalizePath(`/${fileScopeId}`);
 
-        if (!cssMap.has(fileScopeId)) {
-          throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
+        if (!cssMap.has(normalizedFileId)) {
+          throw new Error(`Unable to locate ${normalizedFileId} in the CSS map.`);
         }
 
-        const css = cssMap.get(fileScopeId)!;
+        const css = cssMap.get(normalizedFileId)!;
 
         if (!server) {
           return css;
@@ -133,8 +134,9 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
           const id = `${fileId}${virtualExt}`;
+          const normalizedFileId = normalizePath(`/${fileId}`);
 
-          if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
+          if (server && cssMap.has(normalizedFileId) && cssMap.get(normalizedFileId) !== source) {
             const { moduleGraph } = server;
             const module = moduleGraph.getModuleById(id);
 
@@ -144,12 +146,12 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
             server.ws.send({
               type: 'custom',
-              event: styleUpdateEvent(fileId),
+              event: styleUpdateEvent(normalizedFileId),
               data: source,
             });
           }
 
-          cssMap.set(fileId, source);
+          cssMap.set(normalizedFileId, source);
 
           return `import "${id}";`;
         },
