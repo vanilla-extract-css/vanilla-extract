@@ -2,4 +2,4 @@
 '@vanilla-extract/vite-plugin': patch
 ---
 
-Use normalized path as a key for storing processed vanilla css.
+Prefix virtual files with `/@ve-css:` so that the paths do not get overridden.

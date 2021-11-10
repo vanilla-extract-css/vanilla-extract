@@ -19,6 +19,9 @@ const styleUpdateEvent = (fileId: string) =>
 interface Options {
   identifiers?: IdentifierOption;
 }
+
+const vanillaExtractVirtualFileRegExp = /^\/@ve-css\:/;
+
 export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
@@ -56,7 +59,10 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
-      if (id.indexOf(virtualExt) > 0) {
+      if (
+        vanillaExtractVirtualFileRegExp.test(id) &&
+        id.indexOf(virtualExt) > 0
+      ) {
         return id;
       }
     },
@@ -64,14 +70,15 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       const extensionIndex = id.indexOf(virtualExt);
 
       if (extensionIndex > 0) {
-        const fileScopeId = id.substring(0, extensionIndex);
-        const normalizedFileId = normalizePath(`/${fileScopeId}`);
+        const fileScopeId = id
+          .substring(0, extensionIndex)
+          .replace(vanillaExtractVirtualFileRegExp, '');
 
-        if (!cssMap.has(normalizedFileId)) {
-          throw new Error(`Unable to locate ${normalizedFileId} in the CSS map.`);
+        if (!cssMap.has(fileScopeId)) {
+          throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
         }
 
-        const css = cssMap.get(normalizedFileId)!;
+        const css = cssMap.get(fileScopeId)!;
 
         if (!server) {
           return css;
@@ -134,9 +141,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
           const id = `${fileId}${virtualExt}`;
-          const normalizedFileId = normalizePath(`/${fileId}`);
 
-          if (server && cssMap.has(normalizedFileId) && cssMap.get(normalizedFileId) !== source) {
+          if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
             const { moduleGraph } = server;
             const module = moduleGraph.getModuleById(id);
 
@@ -146,14 +152,14 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
             server.ws.send({
               type: 'custom',
-              event: styleUpdateEvent(normalizedFileId),
+              event: styleUpdateEvent(fileId),
               data: source,
             });
           }
 
-          cssMap.set(normalizedFileId, source);
+          cssMap.set(fileId, source);
 
-          return `import "${id}";`;
+          return `import "/@ve-css:${id}";`;
         },
       });
     },
