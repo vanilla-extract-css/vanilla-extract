@@ -43,6 +43,12 @@ export const button = recipe({
     }
   },
 
+  defaultVariants: {
+    size: 'medium'
+  },
+
+  requiredVariants: ['color'],
+
   // Applied when multiple variants are set at once
   compoundVariants: [
     {
@@ -54,12 +60,7 @@ export const button = recipe({
         background: 'ghostwhite'
       }
     }
-  ],
-
-  defaultVariants: {
-    color: 'accent',
-    size: 'medium'
-  }
+  ]
 });
 ```
 

@@ -1,4 +1,4 @@
-import { basic } from './recipes.css';
+import { basic, requiredVariants } from './recipes.css';
 
 describe('recipes', () => {
   it('should return default variants for no options', () => {
@@ -43,5 +43,40 @@ describe('recipes', () => {
     expect(basic({ color: 'red' })).toMatchInlineSnapshot(
       `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb7"`,
     );
+  });
+
+  describe('requiredVariants', () => {
+    it('should throw an error when no options provided', () => {
+      expect(() => {
+        // @ts-expect-error
+        requiredVariants();
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"Required variants not provided: \\"required_1\\", \\"required_2\\""`,
+      );
+    });
+
+    it('should throw an error when options is empty', () => {
+      expect(() => {
+        // @ts-expect-error
+        requiredVariants({});
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"Required variants not provided: \\"required_1\\", \\"required_2\\""`,
+      );
+    });
+
+    it('should throw an error when a single required variant is missing', () => {
+      expect(() => {
+        // @ts-expect-error
+        requiredVariants({ required_1: 'a' });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"Required variants not provided: \\"required_2\\""`,
+      );
+    });
+
+    it('should not throw an error when required variants are provided', () => {
+      expect(() => {
+        requiredVariants({ required_1: 'a', required_2: 'b' });
+      }).not.toThrow();
+    });
   });
 });

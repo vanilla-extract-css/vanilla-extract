@@ -29,3 +29,29 @@ export const basic = recipe({
     },
   ],
 });
+
+export const requiredVariants = recipe({
+  base: {},
+
+  variants: {
+    required_1: {
+      a: {},
+      b: {},
+      c: {},
+    },
+
+    required_2: {
+      a: {},
+      b: {},
+      c: {},
+    },
+
+    optional: {
+      a: {},
+      b: {},
+      c: {},
+    },
+  },
+
+  requiredVariants: ['required_1', 'required_2'],
+});

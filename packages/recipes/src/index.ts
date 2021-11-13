@@ -25,14 +25,18 @@ function mapValues<Input extends Record<string, any>, OutputValue>(
   return result;
 }
 
-export function recipe<Variants extends VariantGroups>(
-  options: PatternOptions<Variants>,
+export function recipe<
+  Variants extends VariantGroups,
+  RequiredVariants extends Array<keyof Variants> = [],
+>(
+  options: PatternOptions<Variants, RequiredVariants>,
   debugId?: string,
-): RuntimeFn<Variants> {
+): RuntimeFn<Variants, RequiredVariants> {
   const {
     variants = {},
     defaultVariants = {},
     compoundVariants = [],
+    requiredVariants,
     base = '',
   } = options;
 
@@ -61,11 +65,12 @@ export function recipe<Variants extends VariantGroups>(
     ]);
   }
 
-  const config: PatternResult<Variants> = {
+  const config: PatternResult<Variants, RequiredVariants> = {
     defaultClassName,
     variantClassNames,
     defaultVariants,
     compoundVariants: compounds,
+    requiredVariants,
   };
 
   return addRecipe(createRuntimeFn(config), {
