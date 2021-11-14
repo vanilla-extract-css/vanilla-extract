@@ -140,7 +140,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
-          const id = `${fileId}${virtualExt}`;
+          const id = `/@ve-css:${fileId}${virtualExt}`;
 
           if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
             const { moduleGraph } = server;
@@ -159,7 +159,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
           cssMap.set(fileId, source);
 
-          return `import "/@ve-css:${id}";`;
+          return `import "${id}";`;
         },
       });
     },
