@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.0.1
+
+### Patch Changes
+
+- [#470](https://github.com/seek-oss/vanilla-extract/pull/470) [`a6383e8`](https://github.com/seek-oss/vanilla-extract/commit/a6383e86218a49b5dd9fa471e0776f8cb50c9d7f) Thanks [@Katarina-UBCO](https://github.com/Katarina-UBCO)! - Prefix `.vanilla.js` and `.vanilla.css` virtual modules with `virtual:vanilla-extract:`.
+
 ## 3.0.0
 
 ### Major Changes
