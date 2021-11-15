@@ -66,7 +66,9 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       const extensionIndex = id.indexOf(virtualExt);
 
       if (id.startsWith(virtualPrefix) && extensionIndex > 0) {
-        const fileScopeId = id.substring(0, extensionIndex).slice(virtualPrefix.length);
+        const fileScopeId = id
+          .substring(0, extensionIndex)
+          .slice(virtualPrefix.length);
 
         if (!cssMap.has(fileScopeId)) {
           throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
