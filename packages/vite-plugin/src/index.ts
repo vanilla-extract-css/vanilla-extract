@@ -16,7 +16,7 @@ import {
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
 
-const virtualPrefix = 'vanilla-extract:';
+const virtualPrefix = 'virtual:vanilla-extract:';
 
 interface Options {
   identifiers?: IdentifierOption;
