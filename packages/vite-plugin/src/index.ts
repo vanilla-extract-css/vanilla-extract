@@ -16,6 +16,8 @@ import {
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
 
+const virtualPrefix = 'virtual:vanilla-extract:';
+
 interface Options {
   identifiers?: IdentifierOption;
 }
@@ -56,15 +58,16 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
-      if (id.indexOf(virtualExt) > 0) {
+      if (id.indexOf(virtualPrefix) === 0) {
         return id;
       }
     },
     load(id) {
-      const extensionIndex = id.indexOf(virtualExt);
-
-      if (extensionIndex > 0) {
-        const fileScopeId = id.substring(0, extensionIndex);
+      if (id.indexOf(virtualPrefix) === 0) {
+        const fileScopeId = id.slice(
+          virtualPrefix.length,
+          id.indexOf(virtualExt),
+        );
 
         if (!cssMap.has(fileScopeId)) {
           throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
@@ -132,7 +135,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
-          const id = `${fileId}${virtualExt}`;
+          const id = `${virtualPrefix}${fileId}${virtualExt}`;
 
           if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
             const { moduleGraph } = server;
