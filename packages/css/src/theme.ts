@@ -12,7 +12,7 @@ export function createGlobalTheme<ThemeTokens extends Tokens>(
 export function createGlobalTheme<ThemeContract extends Contract>(
   selector: string,
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string>,
+  tokens: MapLeafNodes<Record<keyof ThemeContract, string>, string>,
 ): void;
 export function createGlobalTheme(
   selector: string,
@@ -47,7 +47,7 @@ export function createTheme<ThemeTokens extends Tokens>(
 ): [className: string, vars: ThemeVars<ThemeTokens>];
 export function createTheme<ThemeContract extends Contract>(
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string>,
+  tokens: MapLeafNodes<Record<keyof ThemeContract, string>, string>,
   debugId?: string,
 ): string;
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
