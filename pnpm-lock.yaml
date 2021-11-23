@@ -43,9 +43,9 @@ importers:
   examples/next:
     specifiers:
       '@types/react': ^17
-      '@vanilla-extract/babel-plugin': workspace:^1.1.2
-      '@vanilla-extract/css': workspace:^1.6.3
-      '@vanilla-extract/next-plugin': workspace:^1.0.1
+      '@vanilla-extract/babel-plugin': ^1.1.2
+      '@vanilla-extract/css': ^1.6.3
+      '@vanilla-extract/next-plugin': ^1.0.1
       next: ^12.0.0
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -67,10 +67,10 @@ importers:
       '@types/react': ^17
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
-      '@vanilla-extract/babel-plugin': workspace:^1.1.2
-      '@vanilla-extract/css': workspace:1.6.3
-      '@vanilla-extract/sprinkles': workspace:^1.3.1
-      '@vanilla-extract/webpack-plugin': workspace:^2.1.1
+      '@vanilla-extract/babel-plugin': ^1.1.2
+      '@vanilla-extract/css': 1.6.3
+      '@vanilla-extract/sprinkles': ^1.3.1
+      '@vanilla-extract/webpack-plugin': ^2.1.1
       babel-loader: ^8.2.2
       css-loader: ^5.2.4
       html-webpack-plugin: ^5.3.1
@@ -108,45 +108,45 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
-      '@vanilla-extract/dynamic': workspace:2.0.0
+      '@vanilla-extract/css': 1.6.3
+      '@vanilla-extract/dynamic': 2.0.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
+      '@vanilla-extract/css': 1.6.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
-      '@vanilla-extract/recipes': workspace:0.2.1
+      '@vanilla-extract/css': 1.6.3
+      '@vanilla-extract/recipes': 0.2.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
-      '@vanilla-extract/sprinkles': workspace:1.3.1
+      '@vanilla-extract/css': 1.6.3
+      '@vanilla-extract/sprinkles': 1.3.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
-      '@vanilla-extract/dynamic': workspace:2.0.0
+      '@vanilla-extract/css': 1.6.3
+      '@vanilla-extract/dynamic': 2.0.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': workspace:1.6.3
+      '@vanilla-extract/css': 1.6.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -154,7 +154,7 @@ importers:
     specifiers:
       '@babel/core': ^7.13.10
       '@babel/template': ^7.12.13
-      '@vanilla-extract/integration': workspace:^1.4.3
+      '@vanilla-extract/integration': ^1.4.3
     dependencies:
       '@babel/core': 7.16.0
       '@babel/template': 7.16.0
@@ -164,7 +164,7 @@ importers:
     specifiers:
       '@emotion/hash': ^0.8.0
       '@types/cssesc': ^3.0.0
-      '@vanilla-extract/private': workspace:^1.0.1
+      '@vanilla-extract/private': ^1.0.1
       chalk: ^4.1.1
       css-what: ^5.0.1
       cssesc: ^3.0.0
@@ -187,8 +187,8 @@ importers:
 
   packages/dynamic:
     specifiers:
-      '@vanilla-extract/css': workspace:*
-      '@vanilla-extract/private': workspace:^1.0.0
+      '@vanilla-extract/css': '*'
+      '@vanilla-extract/private': ^1.0.0
     dependencies:
       '@vanilla-extract/private': link:../private
     devDependencies:
@@ -196,7 +196,7 @@ importers:
 
   packages/esbuild-plugin:
     specifiers:
-      '@vanilla-extract/integration': workspace:^1.2.0
+      '@vanilla-extract/integration': ^1.2.0
       esbuild: ^0.11.16
     dependencies:
       '@vanilla-extract/integration': link:../integration
@@ -206,7 +206,7 @@ importers:
   packages/integration:
     specifiers:
       '@types/lodash': ^4.14.168
-      '@vanilla-extract/css': workspace:^1.6.2
+      '@vanilla-extract/css': ^1.6.2
       chalk: ^4.1.1
       esbuild: ^0.11.16
       eval: ^0.1.6
@@ -228,7 +228,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
-      '@vanilla-extract/webpack-plugin': workspace:^2.0.0
+      '@vanilla-extract/webpack-plugin': ^2.0.0
       next: ^12.0.0
     dependencies:
       '@vanilla-extract/webpack-plugin': link:../webpack-plugin
@@ -240,13 +240,13 @@ importers:
 
   packages/recipes:
     specifiers:
-      '@vanilla-extract/css': workspace:^1.0.0
+      '@vanilla-extract/css': ^1.0.0
     devDependencies:
       '@vanilla-extract/css': link:../css
 
   packages/snowpack-plugin:
     specifiers:
-      '@vanilla-extract/integration': workspace:^1.2.0
+      '@vanilla-extract/integration': ^1.2.0
       snowpack: ^3.5.1
     dependencies:
       '@vanilla-extract/integration': link:../integration
@@ -255,7 +255,7 @@ importers:
 
   packages/sprinkles:
     specifiers:
-      '@vanilla-extract/css': workspace:^1.0.0
+      '@vanilla-extract/css': ^1.0.0
     devDependencies:
       '@vanilla-extract/css': link:../css
 
@@ -264,7 +264,7 @@ importers:
 
   packages/vite-plugin:
     specifiers:
-      '@vanilla-extract/integration': workspace:^1.4.3
+      '@vanilla-extract/integration': ^1.4.3
       outdent: ^0.8.0
       vite: ^2.6.0
     dependencies:
@@ -276,7 +276,7 @@ importers:
   packages/webpack-plugin:
     specifiers:
       '@types/debug': ^4.1.5
-      '@vanilla-extract/integration': workspace:^1.3.0
+      '@vanilla-extract/integration': ^1.3.0
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0
@@ -381,9 +381,9 @@ importers:
       '@types/prettier': ^2
       '@types/serve-handler': ^6
       '@types/webpack-dev-server': ^3.11.1
-      '@vanilla-extract/esbuild-plugin': workspace:*
-      '@vanilla-extract/vite-plugin': workspace:*
-      '@vanilla-extract/webpack-plugin': workspace:*
+      '@vanilla-extract/esbuild-plugin': '*'
+      '@vanilla-extract/vite-plugin': '*'
+      '@vanilla-extract/webpack-plugin': '*'
       babel-loader: ^8.2.2
       css-loader: ^5.2.4
       cssnano: ^5.0.8
