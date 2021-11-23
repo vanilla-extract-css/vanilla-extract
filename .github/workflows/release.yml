@@ -24,13 +24,13 @@ jobs:
           node-version: 14.x
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: pnpm i
 
       - name: Create release PR or publish to npm
         uses: changesets/action@c2918239208f2162b9d27a87f491375c51592434
         with:
-          version: yarn run version
-          publish: yarn release
+          version: pnpm run version
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.SEEK_OSS_CI_NPM_TOKEN }}

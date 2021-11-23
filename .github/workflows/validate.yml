@@ -18,16 +18,16 @@ jobs:
           node-version: 14.x
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: pnpm i
 
       - name: Build
-        run: yarn build && node ./site/makeDocsManifest
+        run: pnpm build && node ./site/makeDocsManifest
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Test
-        run: yarn test:jest
+        run: pnpm test:jest
   playwright:
     name: Playwright tests
     runs-on: macos-11
@@ -43,16 +43,16 @@ jobs:
           node-version: 14.x
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: pnpm i
 
       - name: Install Browsers
-        run: yarn playwright install chromium
+        run: pnpm playwright install chromium
 
       - name: Build packages
-        run: yarn build
+        run: pnpm build
 
       - name: Screenshot tests
-        run: yarn test:playwright
+        run: pnpm test:playwright
 
       - uses: actions/upload-artifact@v2
         if: failure()
