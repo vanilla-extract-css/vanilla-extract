@@ -16,7 +16,7 @@ function getDevPrefix(debugId: string | undefined) {
     parts.unshift(file && file !== 'index' ? file : dir);
   }
 
-  return parts.join('_');
+  return parts.join('_').replace(/([^\w\d])/gm, '_');
 }
 
 export function generateIdentifier(debugId: string | undefined) {
