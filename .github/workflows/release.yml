@@ -12,6 +12,7 @@ jobs:
     env:
       CI: true
     steps:
+      - uses: pnpm/action-setup@v2.0.1
       - name: Checkout Repo
         uses: actions/checkout@main
         with:
@@ -22,6 +23,7 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version: 14.x
+          cache: 'pnpm'
 
       - name: Install Dependencies
         run: pnpm i
