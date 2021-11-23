@@ -10,3 +10,4 @@ README.md
 site/docs-manifest.json
 .changeset
 .next
+pnpm-lock.yaml

@@ -96,6 +96,7 @@ export const startWebpackFixture = (
     });
     const compiler = webpack(config);
 
+    // @ts-expect-error - webpack version mismatch
     const server = new WDS(compiler, {
       hot,
       stats: logLevel,
