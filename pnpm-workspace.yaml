@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+  - 'test-helpers'
+  - 'fixtures/*'
+  - 'site'
+  - 'examples/*'
