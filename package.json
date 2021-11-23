@@ -9,17 +9,17 @@
     "build": "preconstruct build",
     "watch": "preconstruct watch",
     "start-fixture": "ts-node --log-error ./test-helpers/src/startFixtureCLI",
-    "start": "yarn start-fixture themed",
+    "start": "pnpm start-fixture themed",
     "start-site": "manypkg run site start",
     "build-site": "manypkg run site build",
-    "postinstall": "yarn dev",
+    "postinstall": "pnpm dev",
     "test:jest": "jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",
-    "version": "changeset version && yarn --mode=update-lockfile",
-    "release": "yarn copy-readme-to-packages && yarn build && changeset publish"
+    "version": "changeset version && pnpm --lockfile-only",
+    "release": "pnpm copy-readme-to-packages && pnpm build && changeset publish"
   },
   "workspaces": [
     "packages/*",
@@ -34,8 +34,7 @@
     ]
   },
   "volta": {
-    "node": "14.16.0",
-    "yarn": "1.22.10"
+    "node": "14.16.0"
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
