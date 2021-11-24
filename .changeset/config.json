@@ -15,7 +15,6 @@
   "ignore": [
     "@fixtures/*",
     "test-helpers",
-    "tests",
     "vanilla-extract-example-next",
     "vanilla-extract-example-webpack-react"
   ]
