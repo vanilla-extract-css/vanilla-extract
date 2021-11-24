@@ -92,20 +92,25 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: join(__dirname, 'src/assets') }],
       }),
-      ...(process.env.CI !== 'true'
+      ...(process.env.CI !== 'true' && isProduction
         ? [
             new BundleAnalyzerPlugin({
+              analyzerMode: 'static',
               openAnalyzer: false,
             }),
           ]
         : []),
     ],
-    stats: 'errors-only',
+    stats: 'errors-warnings',
   },
   {
     name: 'render',
     target: 'node',
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals({
+        allowlist: [/^react-syntax-highlighter\/dist\/esm/],
+      }),
+    ],
     output: {
       filename: 'render.js',
       path: targetDirectory,
@@ -162,6 +167,6 @@ module.exports = [
       }),
       htmlRenderPlugin.rendererPlugin,
     ],
-    stats: 'errors-only',
+    stats: 'errors-warnings',
   },
 ];
