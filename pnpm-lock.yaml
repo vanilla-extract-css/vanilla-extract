@@ -14,6 +14,7 @@ importers:
       '@playwright/test': ^1.14.1
       '@preconstruct/cli': ^2.0.1
       '@types/jest': ^26.0.20
+      '@vanilla-extract/babel-plugin': '*'
       babel-jest: ^26.6.3
       jest: ^26.6.3
       prettier: ^2.3.2
@@ -30,6 +31,7 @@ importers:
       '@playwright/test': 1.16.3
       '@preconstruct/cli': 2.1.5
       '@types/jest': 26.0.24
+      '@vanilla-extract/babel-plugin': link:packages/babel-plugin
       babel-jest: 26.6.3_@babel+core@7.16.0
       jest: 26.6.3_ts-node@9.1.1
       prettier: 2.4.1
@@ -380,12 +382,20 @@ importers:
   test-helpers:
     specifiers:
       '@babel/core': ^7.13.10
+      '@fixtures/features': '*'
+      '@fixtures/low-level': '*'
+      '@fixtures/recipes': '*'
+      '@fixtures/sprinkles': '*'
+      '@fixtures/themed': '*'
+      '@fixtures/unused-modules': '*'
       '@types/mini-css-extract-plugin': ^1.2.2
       '@types/minimist': ^1
       '@types/prettier': ^2
       '@types/serve-handler': ^6
       '@types/webpack-dev-server': ^3.11.1
+      '@vanilla-extract/babel-plugin': '*'
       '@vanilla-extract/esbuild-plugin': '*'
+      '@vanilla-extract/snowpack-plugin': '*'
       '@vanilla-extract/vite-plugin': '*'
       '@vanilla-extract/webpack-plugin': '*'
       babel-loader: ^8.2.2
@@ -409,9 +419,17 @@ importers:
       webpack-merge: ^5.7.3
     dependencies:
       '@babel/core': 7.16.0
+      '@fixtures/features': link:../fixtures/features
+      '@fixtures/low-level': link:../fixtures/low-level
+      '@fixtures/recipes': link:../fixtures/recipes
+      '@fixtures/sprinkles': link:../fixtures/sprinkles
+      '@fixtures/themed': link:../fixtures/themed
+      '@fixtures/unused-modules': link:../fixtures/unused-modules
       '@types/mini-css-extract-plugin': 1.4.3_esbuild@0.11.23
       '@types/webpack-dev-server': 3.11.6
+      '@vanilla-extract/babel-plugin': link:../packages/babel-plugin
       '@vanilla-extract/esbuild-plugin': link:../packages/esbuild-plugin
+      '@vanilla-extract/snowpack-plugin': link:../packages/snowpack-plugin
       '@vanilla-extract/vite-plugin': link:../packages/vite-plugin
       '@vanilla-extract/webpack-plugin': link:../packages/webpack-plugin
       babel-loader: 8.2.3_95e63ddb935ae8cb6c63cf95c1e0c16e

@@ -24,7 +24,7 @@ export const startSnowpackFixture = async (
     devOptions: {
       port,
     },
-    plugins: ['@vanilla-extract/snowpack-plugin'],
+    plugins: [require.resolve('@vanilla-extract/snowpack-plugin')],
     mount: {
       'snowpack-public': { url: '/', static: true },
       src: { url: '/dist' },
