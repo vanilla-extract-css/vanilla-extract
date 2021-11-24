@@ -308,6 +308,7 @@ importers:
       '@vanilla-extract/css': '*'
       '@vanilla-extract/css-utils': '*'
       '@vanilla-extract/sprinkles': '*'
+      '@vanilla-extract/webpack-plugin': '*'
       babel-loader: ^8.2.2
       classnames: ^2.2.6
       copy-webpack-plugin: ^8.1.0
@@ -362,6 +363,7 @@ importers:
       '@vanilla-extract/css': link:../packages/css
       '@vanilla-extract/css-utils': link:../packages/utils
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
+      '@vanilla-extract/webpack-plugin': link:../packages/webpack-plugin
       babel-loader: 8.2.3_95e63ddb935ae8cb6c63cf95c1e0c16e
       copy-webpack-plugin: 8.1.1_webpack@5.64.2
       css-loader: 5.2.7_webpack@5.64.2
@@ -465,7 +467,7 @@ importers:
       '@vanilla-extract/dynamic': '*'
       '@vanilla-extract/recipes': '*'
       '@vanilla-extract/sprinkles': '*'
-      test-helpers: workspace:*
+      '@ve-private/test-helpers': '*'
     dependencies:
       '@playwright/test': 1.16.3
       '@testing-library/dom': 7.31.2
@@ -474,7 +476,7 @@ importers:
       '@vanilla-extract/dynamic': link:../packages/dynamic
       '@vanilla-extract/recipes': link:../packages/recipes
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
-      test-helpers: link:../test-helpers
+      '@ve-private/test-helpers': link:../test-helpers
 
 packages:
 
@@ -3386,7 +3388,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       webpack: 5.64.2_webpack-cli@4.9.1
-      webpack-cli: 4.9.1_c69cf8e3223d1f7964f2a4dca4e19522
+      webpack-cli: 4.9.1_a761998eb9941c8173906added6d4fe0
 
   /@webpack-cli/info/1.4.0_webpack-cli@4.9.1:
     resolution: {integrity: sha512-F6b+Man0rwE4n0409FyAJHStYA5OIZERxmnUfLVwv0mc0V1wLad3V7jqRlMkgKBeAq07jUvglacNaa6g9lOpuw==}
@@ -3394,7 +3396,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.9.1_c69cf8e3223d1f7964f2a4dca4e19522
+      webpack-cli: 4.9.1_a761998eb9941c8173906added6d4fe0
 
   /@webpack-cli/serve/1.6.0_e2c932f94d0bc4cedf5966adac972f2e:
     resolution: {integrity: sha512-ZkVeqEmRpBV2GHvjjUZqEai2PpUbuq8Bqd//vEYsp63J8WyexI8ppCqVS3Zs0QADf6aWuPdU+0XsPI647PVlQA==}
@@ -13666,7 +13668,7 @@ packages:
       tapable: 2.2.1
       terser-webpack-plugin: 5.2.5_acorn@8.6.0+webpack@5.64.2
       watchpack: 2.2.0
-      webpack-cli: 4.9.1_c69cf8e3223d1f7964f2a4dca4e19522
+      webpack-cli: 4.9.1_a761998eb9941c8173906added6d4fe0
       webpack-sources: 3.2.2
     transitivePeerDependencies:
       - '@swc/core'

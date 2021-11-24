@@ -1,5 +1,5 @@
 {
-  "name": "test-helpers",
+  "name": "@ve-private/test-helpers",
   "private": true,
   "version": "0.0.0",
   "main": "src/index.ts",
