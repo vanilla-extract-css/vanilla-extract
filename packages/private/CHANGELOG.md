@@ -1,5 +1,11 @@
 # @vanilla-extract/private
 
+## 1.0.2
+
+### Patch Changes
+
+- [#489](https://github.com/seek-oss/vanilla-extract/pull/489) [`0c1ec7d`](https://github.com/seek-oss/vanilla-extract/commit/0c1ec7d5bfa5c4e66b4655c4f417f2751af7b3e3) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix theme contract types in TypeScript 4.5
+
 ## 1.0.1
 
 ### Patch Changes
