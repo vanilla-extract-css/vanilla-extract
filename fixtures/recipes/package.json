@@ -6,7 +6,7 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "workspace:*",
-    "@vanilla-extract/recipes": "workspace:*"
+    "@vanilla-extract/css": "*",
+    "@vanilla-extract/recipes": "*"
   }
 }
