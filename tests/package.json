@@ -8,10 +8,10 @@
     "@playwright/test": "^1.14.1",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
-    "@vanilla-extract/css": "*",
-    "@vanilla-extract/dynamic": "*",
-    "@vanilla-extract/recipes": "*",
-    "@vanilla-extract/sprinkles": "*",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/dynamic": "workspace:*",
+    "@vanilla-extract/recipes": "workspace:*",
+    "@vanilla-extract/sprinkles": "workspace:*",
     "test-helpers": "workspace:*"
   }
 }
