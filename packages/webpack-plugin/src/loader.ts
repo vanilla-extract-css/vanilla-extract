@@ -13,12 +13,7 @@ import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
 
 const emptyCssExtractionFile = require.resolve(
-  path.join(
-    path.dirname(
-      require.resolve('@vanilla-extract/webpack-plugin/package.json'),
-    ),
-    'extracted',
-  ),
+  path.join(path.dirname(require.resolve('../../package.json')), 'extracted'),
 );
 
 interface LoaderOptions {

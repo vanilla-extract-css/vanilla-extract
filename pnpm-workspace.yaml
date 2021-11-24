@@ -1,0 +1,8 @@
+prefer-workspace-packages: true
+packages:
+  - 'packages/*'
+  - 'test-helpers'
+  - 'fixtures/*'
+  - 'site'
+  - 'examples/*'
+  - 'tests'
