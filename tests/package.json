@@ -1,5 +1,5 @@
 {
-  "name": "tests",
+  "name": "@ve-private/tests",
   "private": true,
   "version": "0.0.0",
   "author": "SEEK",
@@ -12,6 +12,6 @@
     "@vanilla-extract/dynamic": "*",
     "@vanilla-extract/recipes": "*",
     "@vanilla-extract/sprinkles": "*",
-    "test-helpers": "workspace:*"
+    "@ve-private/test-helpers": "*"
   }
 }

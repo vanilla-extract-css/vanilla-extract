@@ -21,13 +21,6 @@
     "version": "changeset version && pnpm install --lockfile-only",
     "release": "pnpm copy-readme-to-packages && pnpm build && changeset publish"
   },
-  "workspaces": [
-    "packages/*",
-    "test-helpers",
-    "fixtures/*",
-    "site",
-    "examples/*"
-  ],
   "preconstruct": {
     "packages": [
       "packages/*"
