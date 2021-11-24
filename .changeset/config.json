@@ -11,12 +11,5 @@
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
-  },
-  "ignore": [
-    "@fixtures/*",
-    "test-helpers",
-    "tests",
-    "vanilla-extract-example-next",
-    "vanilla-extract-example-webpack-react"
-  ]
+  }
 }
