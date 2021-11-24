@@ -46,8 +46,6 @@
     "@manypkg/cli": "^0.17.0",
     "@playwright/test": "^1.14.1",
     "@preconstruct/cli": "^2.0.1",
-    "@testing-library/dom": "^7.30.0",
-    "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^26.0.20",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
