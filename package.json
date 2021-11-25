@@ -12,7 +12,6 @@
     "start": "pnpm start-fixture themed",
     "start-site": "manypkg run site start",
     "build-site": "manypkg run site build",
-    "postinstall": "pnpm dev",
     "test:jest": "jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
