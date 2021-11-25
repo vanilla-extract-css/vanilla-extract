@@ -94,7 +94,7 @@ export class VanillaExtractPlugin {
       test: this.test,
       use: [
         {
-          loader: require.resolve('@vanilla-extract/webpack-plugin/loader'),
+          loader: require.resolve('../loader'),
           options: {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,

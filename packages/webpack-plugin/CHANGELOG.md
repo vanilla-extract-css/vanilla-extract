@@ -1,5 +1,17 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.2
+
+### Patch Changes
+
+- [#492](https://github.com/seek-oss/vanilla-extract/pull/492) [`f2d2d9e`](https://github.com/seek-oss/vanilla-extract/commit/f2d2d9eea18dcd4ffec694f8056a78d850485592) Thanks [@benjervis](https://github.com/benjervis)! - Fix requiring of webpack loader
+
+  Previously, the webpack plugin would reference itself as a loader by requiring `@vanilla-extract/webpack-plugin/loader`, but this was technically incorrect, and only worked because of the flat node_modules structure that yarn provides.
+
+  When using a package manager like pnpm, which does not have a flat structure, this breaks.
+
+  This change uses relative references internally to ensure that the loader can always be required.
+
 ## 2.1.1
 
 ### Patch Changes

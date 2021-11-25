@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { startFixture, TestServer } from 'test-helpers';
+import { startFixture, TestServer } from '@ve-private/test-helpers';
 
 import test from './fixture';
 

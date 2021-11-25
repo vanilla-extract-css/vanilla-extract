@@ -25,8 +25,9 @@ const mediaQuery = {
   desktop: makeMediaQuery('desktop'),
 };
 
-type CSSProps = Properties<string | number> &
-  { [P in SimplePseudos]?: Properties<string | number> };
+type CSSProps = Properties<string | number> & {
+  [P in SimplePseudos]?: Properties<string | number>;
+};
 
 interface ResponsiveStyle {
   mobile?: CSSProps;

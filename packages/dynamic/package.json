@@ -16,7 +16,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/private": "^1.0.0"
+    "@vanilla-extract/private": "^1.0.2"
   },
   "devDependencies": {
     "@vanilla-extract/css": "*"

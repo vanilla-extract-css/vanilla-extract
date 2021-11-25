@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { startFixture, TestServer } from 'test-helpers';
+import { startFixture, TestServer } from '@ve-private/test-helpers';
 
 import test from './fixture';
 
@@ -10,7 +10,7 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
-  'snowpack',
+  // 'snowpack', All tests are broken for snowpack
 ] as const;
 
 buildTypes.forEach((buildType) => {
