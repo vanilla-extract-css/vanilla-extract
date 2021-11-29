@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.6.5
+
+### Patch Changes
+
+- [#504](https://github.com/seek-oss/vanilla-extract/pull/504) [`16c960f`](https://github.com/seek-oss/vanilla-extract/commit/16c960f32a011580eb6c4d0a45479fc28729e762) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ensure identifiers are escaped properly
+
 ## 1.6.4
 
 ### Patch Changes
