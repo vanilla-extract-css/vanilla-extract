@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.2.2
+
+### Patch Changes
+
+- [#508](https://github.com/seek-oss/vanilla-extract/pull/508) [`d15e783`](https://github.com/seek-oss/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `exports` field to `package.json` so nested package paths can be imported in a Node.js ESM context
+
 ## 0.2.1
 
 ### Patch Changes

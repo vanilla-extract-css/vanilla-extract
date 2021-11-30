@@ -1,5 +1,13 @@
 # @fixtures/themed
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`d15e783`](https://github.com/seek-oss/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1)]:
+  - @vanilla-extract/css@1.6.6
+  - @vanilla-extract/dynamic@2.0.1
+
 ## 0.0.2
 
 ### Patch Changes
