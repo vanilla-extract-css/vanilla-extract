@@ -68,9 +68,9 @@ importers:
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
       '@vanilla-extract/babel-plugin': ^1.1.2
-      '@vanilla-extract/css': 1.6.5
-      '@vanilla-extract/sprinkles': ^1.3.1
-      '@vanilla-extract/webpack-plugin': ^2.1.2
+      '@vanilla-extract/css': 1.6.6
+      '@vanilla-extract/sprinkles': ^1.3.2
+      '@vanilla-extract/webpack-plugin': ^2.1.3
       babel-loader: ^8.2.2
       css-loader: ^5.2.4
       html-webpack-plugin: ^5.3.1
@@ -108,45 +108,45 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
-      '@vanilla-extract/dynamic': 2.0.0
+      '@vanilla-extract/css': 1.6.6
+      '@vanilla-extract/dynamic': 2.0.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
+      '@vanilla-extract/css': 1.6.6
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
-      '@vanilla-extract/recipes': 0.2.1
+      '@vanilla-extract/css': 1.6.6
+      '@vanilla-extract/recipes': 0.2.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
-      '@vanilla-extract/sprinkles': 1.3.1
+      '@vanilla-extract/css': 1.6.6
+      '@vanilla-extract/sprinkles': 1.3.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
-      '@vanilla-extract/dynamic': 2.0.0
+      '@vanilla-extract/css': 1.6.6
+      '@vanilla-extract/dynamic': 2.0.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.6.5
+      '@vanilla-extract/css': 1.6.6
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -242,7 +242,7 @@ importers:
 
   packages/recipes:
     specifiers:
-      '@vanilla-extract/css': ^1.0.0
+      '@vanilla-extract/css': ^1.6.6
     devDependencies:
       '@vanilla-extract/css': link:../css
 
@@ -257,7 +257,7 @@ importers:
 
   packages/sprinkles:
     specifiers:
-      '@vanilla-extract/css': ^1.0.0
+      '@vanilla-extract/css': ^1.6.6
     devDependencies:
       '@vanilla-extract/css': link:../css
 
