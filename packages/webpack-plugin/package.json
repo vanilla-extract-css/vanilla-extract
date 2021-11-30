@@ -4,6 +4,21 @@
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
+    },
+    "./loader": {
+      "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
+      "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
+    },
+    "./extracted": {
+      "module": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.esm.js",
+      "default": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.cjs.js"
+    }
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts",

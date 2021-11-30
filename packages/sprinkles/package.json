@@ -5,6 +5,21 @@
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
   "module": "dist/vanilla-extract-sprinkles.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/vanilla-extract-sprinkles.esm.js",
+      "default": "./dist/vanilla-extract-sprinkles.cjs.js"
+    },
+    "./createRuntimeSprinkles": {
+      "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
+      "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
+    },
+    "./createUtils": {
+      "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
+      "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
+    }
+  },
   "files": [
     "/dist",
     "/createRuntimeSprinkles",
