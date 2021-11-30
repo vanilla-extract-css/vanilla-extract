@@ -11,7 +11,7 @@ describe('transformCss', () => {
     expect(
       transformCss({
         composedClassLists: [],
-        localClassNames: ['test_1/2_className'],
+        localClassNames: ['test_1/2_className', '[test_with_brackets]'],
         cssObjs: [
           {
             type: 'local',
@@ -28,11 +28,21 @@ describe('transformCss', () => {
               },
             },
           },
+          {
+            type: 'local',
+            selector: '[test_with_brackets]',
+            rule: {
+              color: 'blue',
+            },
+          },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".test_1\\\\/2_className {
         color: red;
+      }
+      .\\\\[test_with_brackets\\\\] {
+        color: blue;
       }
       @media screen and (min-width: 700px) {
         .test_1\\\\/2_className {
