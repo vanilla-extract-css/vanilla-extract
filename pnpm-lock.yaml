@@ -68,7 +68,7 @@ importers:
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
       '@vanilla-extract/babel-plugin': ^1.1.2
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
       '@vanilla-extract/sprinkles': ^1.3.1
       '@vanilla-extract/webpack-plugin': ^2.1.2
       babel-loader: ^8.2.2
@@ -108,7 +108,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
       '@vanilla-extract/dynamic': 2.0.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -116,13 +116,13 @@ importers:
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
       '@vanilla-extract/recipes': 0.2.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -130,7 +130,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
       '@vanilla-extract/sprinkles': 1.3.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -138,7 +138,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
       '@vanilla-extract/dynamic': 2.0.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -146,7 +146,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
