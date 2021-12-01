@@ -3,7 +3,6 @@ import portfinder from 'portfinder';
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
-import { startSnowpackFixture, SnowpackFixtureOptions } from './snowpack';
 
 type BuildType =
   | 'browser'
@@ -11,8 +10,7 @@ type BuildType =
   | 'style-loader'
   | 'esbuild'
   | 'esbuild-runtime'
-  | 'vite'
-  | 'snowpack';
+  | 'vite';
 
 export interface TestServer {
   type: BuildType;
@@ -27,10 +25,7 @@ type SharedOptions = {
 
 type FixtureOptions = SharedOptions &
   Omit<
-    | EsbuildFixtureOptions
-    | WebpackFixtureOptions
-    | ViteFixtureOptions
-    | SnowpackFixtureOptions,
+    EsbuildFixtureOptions | WebpackFixtureOptions | ViteFixtureOptions,
     'port'
   >;
 export async function startFixture(
@@ -60,14 +55,6 @@ export async function startFixture(
 
   if (type === 'vite') {
     return startViteFixture(fixtureName, {
-      type,
-      port,
-      mode: options.mode,
-    });
-  }
-
-  if (type === 'snowpack') {
-    return startSnowpackFixture(fixtureName, {
       type,
       port,
       mode: options.mode,
