@@ -1,5 +1,25 @@
 # @vanilla-extract/css
 
+## 1.6.7
+
+### Patch Changes
+
+- [#514](https://github.com/seek-oss/vanilla-extract/pull/514) [`e3dfd4a`](https://github.com/seek-oss/vanilla-extract/commit/e3dfd4a54a66ebb3a3cacc0fcc94d2689f97bb40) Thanks [@benjervis](https://github.com/benjervis)! - Export the package.json for css/fileScope
+
+  This is required to maintain backwards compatibility with older versions of webpack-plugin
+
+## 1.6.6
+
+### Patch Changes
+
+- [#508](https://github.com/seek-oss/vanilla-extract/pull/508) [`d15e783`](https://github.com/seek-oss/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `exports` field to `package.json` so nested package paths can be imported in a Node.js ESM context
+
+## 1.6.5
+
+### Patch Changes
+
+- [#504](https://github.com/seek-oss/vanilla-extract/pull/504) [`16c960f`](https://github.com/seek-oss/vanilla-extract/commit/16c960f32a011580eb6c4d0a45479fc28729e762) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ensure identifiers are escaped properly
+
 ## 1.6.4
 
 ### Patch Changes

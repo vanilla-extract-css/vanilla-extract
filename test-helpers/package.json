@@ -1,7 +1,7 @@
 {
   "name": "@ve-private/test-helpers",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "src/index.ts",
   "author": "SEEK",
   "license": "MIT",

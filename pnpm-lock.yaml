@@ -70,9 +70,9 @@ importers:
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
       '@vanilla-extract/babel-plugin': ^1.1.2
-      '@vanilla-extract/css': 1.6.4
-      '@vanilla-extract/sprinkles': ^1.3.1
-      '@vanilla-extract/webpack-plugin': ^2.1.2
+      '@vanilla-extract/css': 1.6.7
+      '@vanilla-extract/sprinkles': ^1.3.2
+      '@vanilla-extract/webpack-plugin': ^2.1.3
       babel-loader: ^8.2.2
       css-loader: ^5.2.4
       html-webpack-plugin: ^5.3.1
@@ -110,45 +110,45 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
-      '@vanilla-extract/dynamic': 2.0.0
+      '@vanilla-extract/css': 1.6.7
+      '@vanilla-extract/dynamic': 2.0.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.7
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
-      '@vanilla-extract/recipes': 0.2.1
+      '@vanilla-extract/css': 1.6.7
+      '@vanilla-extract/recipes': 0.2.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
-      '@vanilla-extract/sprinkles': 1.3.1
+      '@vanilla-extract/css': 1.6.7
+      '@vanilla-extract/sprinkles': 1.3.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
-      '@vanilla-extract/dynamic': 2.0.0
+      '@vanilla-extract/css': 1.6.7
+      '@vanilla-extract/dynamic': 2.0.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.6.4
+      '@vanilla-extract/css': 1.6.7
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -173,6 +173,7 @@ importers:
       csstype: ^3.0.7
       deep-object-diff: ^1.1.0
       deepmerge: ^4.2.2
+      escape-string-regexp: ^4.0.0
       outdent: ^0.8.0
     dependencies:
       '@emotion/hash': 0.8.0
@@ -183,6 +184,7 @@ importers:
       csstype: 3.0.10
       deep-object-diff: 1.1.0
       deepmerge: 4.2.2
+      escape-string-regexp: 4.0.0
       outdent: 0.8.0
     devDependencies:
       '@types/cssesc': 3.0.0
@@ -242,7 +244,7 @@ importers:
 
   packages/recipes:
     specifiers:
-      '@vanilla-extract/css': ^1.0.0
+      '@vanilla-extract/css': ^1.6.6
     devDependencies:
       '@vanilla-extract/css': link:../css
 
@@ -257,7 +259,7 @@ importers:
 
   packages/sprinkles:
     specifiers:
-      '@vanilla-extract/css': ^1.0.0
+      '@vanilla-extract/css': ^1.6.6
     devDependencies:
       '@vanilla-extract/css': link:../css
 
@@ -5991,6 +5993,11 @@ packages:
   /escape-string-regexp/2.0.0:
     resolution: {integrity: sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==}
     engines: {node: '>=8'}
+    dev: false
+
+  /escape-string-regexp/4.0.0:
+    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
+    engines: {node: '>=10'}
     dev: false
 
   /escodegen/2.0.0:

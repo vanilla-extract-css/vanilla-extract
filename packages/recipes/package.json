@@ -1,10 +1,21 @@
 {
   "name": "@vanilla-extract/recipes",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Create multi-variant styles with a type-safe runtime API, heavily inspired by https://stitches.dev",
   "sideEffects": false,
   "main": "dist/vanilla-extract-recipes.cjs.js",
   "module": "dist/vanilla-extract-recipes.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/vanilla-extract-recipes.esm.js",
+      "default": "./dist/vanilla-extract-recipes.cjs.js"
+    },
+    "./createRuntimeFn": {
+      "module": "./createRuntimeFn/dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
+      "default": "./createRuntimeFn/dist/vanilla-extract-recipes-createRuntimeFn.cjs.js"
+    }
+  },
   "files": [
     "/dist",
     "/createRuntimeFn"
@@ -26,6 +37,6 @@
     "@vanilla-extract/css": "^1.0.0"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "^1.0.0"
+    "@vanilla-extract/css": "^1.6.6"
   }
 }
