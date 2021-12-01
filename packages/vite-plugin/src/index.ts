@@ -148,7 +148,11 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           if (postCssConfig) {
             const postCssResult = await (await import('postcss'))
               .default(postCssConfig.plugins)
-              .process(source, { ...postCssConfig.options, map: false });
+              .process(source, {
+                ...postCssConfig.options,
+                from: undefined,
+                map: false,
+              });
 
             cssSource = postCssResult.css;
           }
