@@ -59,6 +59,7 @@
       "module": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
       "default": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.js"
     },
+    "./fileScope/package.json": "./fileScope/package.json",
     "./injectStyles": {
       "browser": {
         "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
