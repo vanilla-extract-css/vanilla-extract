@@ -82,7 +82,6 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [webpack](#webpack)
   - [esbuild](#esbuild)
   - [Vite](#vite)
-  - [Snowpack](#snowpack)
   - [Next.js](#nextjs)
   - [Gatsby](#gatsby)
   - [Test environments](#test-environments)
@@ -95,6 +94,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [createTheme](#createtheme)
   - [createGlobalTheme](#createglobaltheme)
   - [createThemeContract](#createthemecontract)
+  - [createGlobalThemeContract](#createglobalthemecontract)
   - [assignVars](#assignvars)
   - [createVar](#createvar)
   - [fallbackVar](#fallbackvar)
@@ -266,27 +266,6 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 // vite.config.js
 export default {
   plugins: [vanillaExtractPlugin()]
-}
-```
-
-> Please note: There are currently no automatic readable class names during development. However, you can still manually provide a debug ID as the last argument to functions that generate scoped styles, e.g. `export const className = style({ ... }, 'className');`
-
-### Snowpack
-
-1. Install the dependencies.
-
-```bash
-npm install @vanilla-extract/css @vanilla-extract/snowpack-plugin
-```
-
-2. Add the [Snowpack](https://www.snowpack.dev/) plugin to your snowpack config.
-
-> 💡 This plugin accepts an optional [configuration object](#configuration).
-
-```js
-// snowpack.config.json
-{
-  "plugins": ["@vanilla-extract/snowpack-plugin"]
 }
 ```
 
