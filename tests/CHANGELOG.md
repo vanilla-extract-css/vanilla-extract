@@ -1,5 +1,13 @@
 # @ve-private/tests
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`e3dfd4a`](https://github.com/seek-oss/vanilla-extract/commit/e3dfd4a54a66ebb3a3cacc0fcc94d2689f97bb40)]:
+  - @vanilla-extract/css@1.6.7
+  - @ve-private/test-helpers@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
