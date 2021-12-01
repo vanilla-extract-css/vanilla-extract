@@ -54,7 +54,7 @@ export default function vanillaExtractPlugin(
       });
 
       let css;
-      const js = processVanillaFile({
+      const js = await processVanillaFile({
         source,
         filePath,
         outputCss: true,
