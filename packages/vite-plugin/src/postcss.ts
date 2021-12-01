@@ -1,5 +1,4 @@
 import type { ResolvedConfig } from 'vite';
-import postcssrc from 'postcss-load-config';
 import type { ProcessOptions, Plugin } from 'postcss';
 
 export interface PostCSSConfigResult {
@@ -29,7 +28,9 @@ export const resolvePostcssConfig = async (
       const searchPath =
         typeof inlineOptions === 'string' ? inlineOptions : config.root;
 
-      const postCssConfig = await postcssrc({}, searchPath);
+      const postCssConfig = await (
+        await import('postcss-load-config')
+      ).default({}, searchPath);
 
       return {
         options: postCssConfig.options,
