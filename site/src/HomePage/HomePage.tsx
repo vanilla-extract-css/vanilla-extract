@@ -256,8 +256,8 @@ export const HomePage = () => {
               </Columns>
               <Columns space="xxlarge" collapseOnMobile>
                 <Feature title="Framework agnostic">
-                  Official integrations are provided for webpack, esbuild, Vite,
-                  Snowpack and Next.js.
+                  Official integrations are provided for webpack, esbuild, Vite
+                  and Next.js.
                 </Feature>
 
                 <Feature title="Built for extension">

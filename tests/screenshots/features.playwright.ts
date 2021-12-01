@@ -10,7 +10,6 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
-  // 'snowpack', All tests are broken for snowpack
 ] as const;
 
 buildTypes.forEach((buildType) => {
