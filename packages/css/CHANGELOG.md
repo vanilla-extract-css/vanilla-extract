@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.6.7
+
+### Patch Changes
+
+- [#514](https://github.com/seek-oss/vanilla-extract/pull/514) [`e3dfd4a`](https://github.com/seek-oss/vanilla-extract/commit/e3dfd4a54a66ebb3a3cacc0fcc94d2689f97bb40) Thanks [@benjervis](https://github.com/benjervis)! - Export the package.json for css/fileScope
+
+  This is required to maintain backwards compatibility with older versions of webpack-plugin
+
 ## 1.6.6
 
 ### Patch Changes

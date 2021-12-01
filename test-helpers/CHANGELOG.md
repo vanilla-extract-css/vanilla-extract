@@ -1,5 +1,17 @@
 # @ve-private/test-helpers
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.4
+  - @fixtures/low-level@0.0.4
+  - @fixtures/recipes@0.0.4
+  - @fixtures/sprinkles@0.0.4
+  - @fixtures/themed@0.0.4
+  - @fixtures/unused-modules@1.0.4
+
 ## 0.0.3
 
 ### Patch Changes
