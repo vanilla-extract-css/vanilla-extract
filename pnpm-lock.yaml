@@ -108,11 +108,9 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@ttou/postcss-px-to-viewport': ^1.1.5
       '@vanilla-extract/css': 1.6.7
       '@vanilla-extract/dynamic': 2.0.1
     dependencies:
-      '@ttou/postcss-px-to-viewport': 1.1.5
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
@@ -2678,13 +2676,6 @@ packages:
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
-    dev: false
-
-  /@ttou/postcss-px-to-viewport/1.1.5:
-    resolution: {integrity: sha512-Mre86Ypy+LRJNdaB9cQqwwHFXKegD9mGwBWGwg3NuEN3++6Dwz4dJitUSOk7fy+Cs697KXhIVGfQioaAyySzkA==}
-    engines: {node: '>= 12.0.0'}
-    peerDependencies:
-      postcss: '>=8.0.0'
     dev: false
 
   /@types/aria-query/4.2.2:
