@@ -63,7 +63,7 @@ export function vanillaExtractPlugin({
           cwd: build.initialOptions.absWorkingDir,
         });
 
-        const contents = processVanillaFile({
+        const contents = await processVanillaFile({
           source,
           filePath: path,
           outputCss,
