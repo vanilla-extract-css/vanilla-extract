@@ -1,9 +1,5 @@
-const baseConfig = require('./babel.config');
-
 module.exports = {
-  ...baseConfig,
-  plugins: [
-    ...(baseConfig.plugins ?? []),
-    require.resolve('@vanilla-extract/babel-plugin'),
-  ],
+  extends: './babel.config',
+  presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
+  plugins: [require.resolve('@vanilla-extract/babel-plugin')],
 };
