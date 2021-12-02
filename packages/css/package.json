@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -108,7 +108,7 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
-    "@vanilla-extract/private": "^1.0.2",
+    "@vanilla-extract/private": "^1.0.3",
     "chalk": "^4.1.1",
     "css-what": "^5.0.1",
     "cssesc": "^3.0.0",
