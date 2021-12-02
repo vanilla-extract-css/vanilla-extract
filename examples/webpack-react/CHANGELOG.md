@@ -1,5 +1,15 @@
 # vanilla-extract-example-webpack-react
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
+  - @vanilla-extract/css@1.6.8
+  - @vanilla-extract/sprinkles@1.3.3
+  - @vanilla-extract/babel-plugin@1.1.3
+  - @vanilla-extract/webpack-plugin@2.1.4
+
 ## 0.0.6
 
 ### Patch Changes

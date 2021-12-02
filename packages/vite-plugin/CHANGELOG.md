@@ -1,5 +1,20 @@
 # @vanilla-extract/vite-plugin
 
+## 3.1.0
+
+### Minor Changes
+
+- [#517](https://github.com/seek-oss/vanilla-extract/pull/517) [`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69) Thanks [@benjervis](https://github.com/benjervis)! - Add postcss processing to the plugin
+
+  Vite supports postcss processing as a built in feature, but that's lost in dev mode with vanilla-extract because there are no actual css files for vite to pick up.
+
+  The vite plugin now manually runs postcss over the generated css in serve mode, if any postcss config was found.
+
+### Patch Changes
+
+- Updated dependencies [[`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69)]:
+  - @vanilla-extract/integration@2.0.0
+
 ## 3.0.1
 
 ### Patch Changes
