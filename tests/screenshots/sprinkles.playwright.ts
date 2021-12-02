@@ -10,7 +10,6 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
-  // 'snowpack', Snowpack seems to be broken for the Sprinkles fixture
 ] as const;
 
 buildTypes.forEach((buildType) => {

@@ -1,5 +1,16 @@
 # @ve-private/tests
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [[`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
+  - @vanilla-extract/css@1.6.8
+  - @vanilla-extract/dynamic@2.0.2
+  - @vanilla-extract/recipes@0.2.3
+  - @vanilla-extract/sprinkles@1.3.3
+  - @ve-private/test-helpers@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes

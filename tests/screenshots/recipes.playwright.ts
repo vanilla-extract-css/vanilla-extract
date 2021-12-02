@@ -10,7 +10,6 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
-  // 'snowpack', Recipes seem to be broken for snowpack
 ] as const;
 
 buildTypes.forEach((buildType) => {

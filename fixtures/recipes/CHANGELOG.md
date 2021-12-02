@@ -1,5 +1,13 @@
 # @fixtures/recipes
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [[`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
+  - @vanilla-extract/css@1.6.8
+  - @vanilla-extract/recipes@0.2.3
+
 ## 0.0.4
 
 ### Patch Changes
