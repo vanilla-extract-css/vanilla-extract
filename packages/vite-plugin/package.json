@@ -16,7 +16,9 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/integration": "^1.4.3",
-    "outdent": "^0.8.0"
+    "outdent": "^0.8.0",
+    "postcss": "^8.3.6",
+    "postcss-load-config": "^3.1.0"
   },
   "devDependencies": {
     "vite": "^2.6.0"

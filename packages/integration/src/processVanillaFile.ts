@@ -37,9 +37,9 @@ interface ProcessVanillaFileOptions {
     base64Source: string;
     fileScope: FileScope;
     source: string;
-  }) => string;
+  }) => string | Promise<string>;
 }
-export function processVanillaFile({
+export async function processVanillaFile({
   source,
   filePath,
   outputCss = true,
@@ -116,14 +116,24 @@ export function processVanillaFile({
         : fileScope.filePath
     }.vanilla.css`;
 
-    const virtualCssFilePath = serializeVirtualCssPath
-      ? serializeVirtualCssPath({
-          fileName,
-          base64Source,
-          fileScope,
-          source: css,
-        })
-      : `import '${fileName}?source=${base64Source}';`;
+    let virtualCssFilePath: string;
+
+    if (serializeVirtualCssPath) {
+      const serializedResult = serializeVirtualCssPath({
+        fileName,
+        base64Source,
+        fileScope,
+        source: css,
+      });
+
+      if (typeof serializedResult === 'string') {
+        virtualCssFilePath = serializedResult;
+      } else {
+        virtualCssFilePath = await serializedResult;
+      }
+    } else {
+      virtualCssFilePath = `import '${fileName}?source=${base64Source}';`;
+    }
 
     cssImports.push(virtualCssFilePath);
   }

@@ -65,8 +65,8 @@ export function pitch(this: LoaderContext) {
 
   childCompiler
     .getCompiledSource(this)
-    .then(({ source }) => {
-      const result = processVanillaFile({
+    .then(async ({ source }) => {
+      const result = await processVanillaFile({
         source,
         outputCss,
         filePath: this.resourcePath,
