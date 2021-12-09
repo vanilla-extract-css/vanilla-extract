@@ -28,6 +28,7 @@ import { vars } from './vars.css.ts';
 
 export const className = style({
   display: 'flex',
+  minHeight: ['100vh', '-webkit-fill-available'],
   vars: {
     [vars.localVar]: 'green',
     '--global-variable': 'purple'
