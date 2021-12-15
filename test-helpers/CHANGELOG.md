@@ -1,4 +1,4 @@
-# @ve-private/test-helpers
+# @vanilla-extract-private/test-helpers
 
 ## 0.0.5
 

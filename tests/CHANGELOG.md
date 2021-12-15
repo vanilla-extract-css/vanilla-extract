@@ -1,4 +1,4 @@
-# @ve-private/tests
+# @vanilla-extract-private/tests
 
 ## 0.0.5
 
@@ -9,7 +9,7 @@
   - @vanilla-extract/dynamic@2.0.2
   - @vanilla-extract/recipes@0.2.3
   - @vanilla-extract/sprinkles@1.3.3
-  - @ve-private/test-helpers@0.0.5
+  - @vanilla-extract-private/test-helpers@0.0.5
 
 ## 0.0.4
 
@@ -17,7 +17,7 @@
 
 - Updated dependencies [[`e3dfd4a`](https://github.com/seek-oss/vanilla-extract/commit/e3dfd4a54a66ebb3a3cacc0fcc94d2689f97bb40)]:
   - @vanilla-extract/css@1.6.7
-  - @ve-private/test-helpers@0.0.4
+  - @vanilla-extract-private/test-helpers@0.0.4
 
 ## 0.0.3
 
@@ -28,7 +28,7 @@
   - @vanilla-extract/dynamic@2.0.1
   - @vanilla-extract/recipes@0.2.2
   - @vanilla-extract/sprinkles@1.3.2
-  - @ve-private/test-helpers@0.0.3
+  - @vanilla-extract-private/test-helpers@0.0.3
 
 ## 0.0.2
 
@@ -36,7 +36,7 @@
 
 - Updated dependencies [[`16c960f`](https://github.com/seek-oss/vanilla-extract/commit/16c960f32a011580eb6c4d0a45479fc28729e762)]:
   - @vanilla-extract/css@1.6.5
-  - @ve-private/test-helpers@0.0.2
+  - @vanilla-extract-private/test-helpers@0.0.2
 
 ## 0.0.1
 
@@ -44,4 +44,4 @@
 
 - Updated dependencies [[`0c1ec7d`](https://github.com/seek-oss/vanilla-extract/commit/0c1ec7d5bfa5c4e66b4655c4f417f2751af7b3e3)]:
   - @vanilla-extract/css@1.6.4
-  - @ve-private/test-helpers@0.0.1
+  - @vanilla-extract-private/test-helpers@0.0.1
