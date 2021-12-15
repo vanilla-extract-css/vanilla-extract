@@ -464,7 +464,7 @@ importers:
       '@vanilla-extract/dynamic': '*'
       '@vanilla-extract/recipes': '*'
       '@vanilla-extract/sprinkles': '*'
-      '@ve-private/test-helpers': '*'
+      '@vanilla-extract-private/test-helpers': '*'
     dependencies:
       '@playwright/test': 1.16.3
       '@testing-library/dom': 7.31.2
@@ -473,7 +473,7 @@ importers:
       '@vanilla-extract/dynamic': link:../packages/dynamic
       '@vanilla-extract/recipes': link:../packages/recipes
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
-      '@ve-private/test-helpers': link:../test-helpers
+      '@vanilla-extract-private/test-helpers': link:../test-helpers
 
 packages:
 

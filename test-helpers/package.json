@@ -1,5 +1,5 @@
 {
-  "name": "@ve-private/test-helpers",
+  "name": "@vanilla-extract-private/test-helpers",
   "private": true,
   "version": "0.0.5",
   "main": "src/index.ts",
