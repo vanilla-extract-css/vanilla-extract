@@ -105,9 +105,17 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
       return null;
     },
-    async transform(code, id, ssr) {
+    async transform(code, id, ssrParam) {
       if (!cssFileFilter.test(id)) {
         return null;
+      }
+
+      let ssr: boolean | undefined;
+
+      if (typeof ssrParam === 'boolean') {
+        ssr = ssrParam;
+      } else {
+        ssr = ssrParam?.ssr;
       }
 
       const index = id.indexOf('?');
