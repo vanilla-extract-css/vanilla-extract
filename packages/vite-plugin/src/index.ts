@@ -115,7 +115,6 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       if (typeof ssrParam === 'boolean') {
         ssr = ssrParam;
       } else {
-        // @ts-ignore If vite 2.6 is installed, this will trigger a `never` error
         ssr = ssrParam?.ssr;
       }
 
