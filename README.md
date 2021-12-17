@@ -837,7 +837,7 @@ import { createVar, fallbackVar, style } from '@vanilla-extract/css';
 export const colorVar = createVar();
 
 export const exampleStyle = style({
-  color: fallbackVar(colorVar, 'blue');
+  color: fallbackVar(colorVar, 'blue'),
 });
 ```
 
@@ -850,7 +850,16 @@ export const primaryColorVar = createVar();
 export const secondaryColorVar = createVar();
 
 export const exampleStyle = style({
-  color: fallbackVar(primaryColorVar, secondaryColorVar, 'blue');
+  color: fallbackVar(primaryColorVar, secondaryColorVar, 'blue'),
+});
+```
+
+For fallback styles you may simply pass an array of properties instead of a single prop.
+
+```ts
+export const exampleStyle = style({
+  // in Firefox and IE the "overflow: overlay" will be ignored and the "overflow: auto" will be applied
+  overflow: ['auto', 'overlay'],
 });
 ```
 
