@@ -17,7 +17,7 @@
     "@types/react": "^17",
     "@vanilla-extract/babel-plugin": "^1.1.2",
     "@vanilla-extract/css": "^1.6.3",
-    "@vanilla-extract/next-plugin": "^1.0.1"
+    "@vanilla-extract/next-plugin": "^2.0.0"
   },
   "browserslist": [
     ">0.3%",
