@@ -15,12 +15,13 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/webpack-plugin": "^2.0.0"
+    "@vanilla-extract/webpack-plugin": "^2.0.0",
+    "browserslist": "^4.19.1"
   },
   "peerDependencies": {
-    "next": ">=11.0.0"
+    "next": "^12.0.5"
   },
   "devDependencies": {
-    "next": "^12.0.0"
+    "next": "^12.0.5"
   }
 }
