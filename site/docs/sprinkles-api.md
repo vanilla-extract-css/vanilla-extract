@@ -8,8 +8,232 @@ Generate a static set of custom utility classes and compose them either statical
 
 Basically, it’s like building your own zero-runtime, type-safe version of [Tailwind](https://tailwindcss.com), [Styled System](https://styled-system.com), etc.
 
+**Compose sprinkles statically at build time.**
+
+```ts
+// styles.css.ts
+
+export const className = sprinkles({
+  display: 'flex',
+  paddingX: 'small',
+  flexDirection: {
+    mobile: 'column',
+    desktop: 'row'
+  },
+  background: {
+    lightMode: 'blue-50',
+    darkMode: 'gray-700'
+  }
+});
+```
+
+**Or compose them dynamically at runtime! 🏃‍♂️**
+
+```ts
+// app.ts
+
+import { sprinkles } from './sprinkles.css.ts';
+
+const flexDirection =
+  Math.random() > 0.5 ? 'column' : 'row';
+
+document.write(`
+  <section class="${sprinkles({
+    display: 'flex',
+    flexDirection
+  })}">
+    ...
+  </section>
+`);
+```
+
+> 🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/sprinkles.css.ts)
+
+## Setup
+
+> 💡 Before starting, ensure you've set up [vanilla-extract.](/documentation/setup)
+
+Install Sprinkles.
+
 ```bash
 $ npm install @vanilla-extract/sprinkles
+```
+
+Create a `sprinkles.css.ts` file, then configure and export your `sprinkles` function.
+
+> 💡 This is just an example! Feel free to customise properties, values and conditions to match your requirements.
+
+```ts
+// sprinkles.css.ts
+import {
+  defineProperties,
+  createSprinkles
+} from '@vanilla-extract/sprinkles';
+
+const space = {
+  none: 0,
+  small: '4px',
+  medium: '8px',
+  large: '16px'
+  // etc.
+};
+
+const responsiveProperties = defineProperties({
+  conditions: {
+    mobile: {},
+    tablet: { '@media': 'screen and (min-width: 768px)' },
+    desktop: { '@media': 'screen and (min-width: 1024px)' }
+  },
+  defaultCondition: 'mobile',
+  properties: {
+    display: ['none', 'flex', 'block', 'inline'],
+    flexDirection: ['row', 'column'],
+    justifyContent: [
+      'stretch',
+      'flex-start',
+      'center',
+      'flex-end',
+      'space-around',
+      'space-between'
+    ],
+    alignItems: [
+      'stretch',
+      'flex-start',
+      'center',
+      'flex-end'
+    ],
+    paddingTop: space,
+    paddingBottom: space,
+    paddingLeft: space,
+    paddingRight: space
+    // etc.
+  },
+  shorthands: {
+    padding: [
+      'paddingTop',
+      'paddingBottom',
+      'paddingLeft',
+      'paddingRight'
+    ],
+    paddingX: ['paddingLeft', 'paddingRight'],
+    paddingY: ['paddingTop', 'paddingBottom'],
+    placeItems: ['justifyContent', 'alignItems']
+  }
+});
+
+const colors = {
+  'blue-50': '#eff6ff',
+  'blue-100': '#dbeafe',
+  'blue-200': '#bfdbfe',
+  'gray-700': '#374151',
+  'gray-800': '#1f2937',
+  'gray-900': '#111827'
+  // etc.
+};
+
+const colorProperties = defineProperties({
+  conditions: {
+    lightMode: {},
+    darkMode: { '@media': '(prefers-color-scheme: dark)' }
+  },
+  defaultCondition: 'lightMode',
+  properties: {
+    color: colors,
+    background: colors
+    // etc.
+  }
+});
+
+export const sprinkles = createSprinkles(
+  responsiveProperties,
+  colorProperties
+);
+
+// It's a good idea to export the Sprinkles type too
+export type Sprinkles = Parameters<typeof sprinkles>[0];
+```
+
+**🎉 That's it — you’re ready to go!**
+
+## Usage
+
+You can now use your `sprinkles` function in `.css.ts` files for zero-runtime usage.
+
+```ts
+// styles.css.ts
+import { sprinkles } from './sprinkles.css.ts';
+
+export const container = sprinkles({
+  display: 'flex',
+  paddingX: 'small',
+
+  // Conditional sprinkles:
+  flexDirection: {
+    mobile: 'column',
+    desktop: 'row'
+  },
+  background: {
+    lightMode: 'blue-50',
+    darkMode: 'gray-700'
+  }
+});
+```
+
+If you want, you can even use your `sprinkles` function at runtime! 🏃‍♂️
+
+```tsx
+// app.ts
+import { sprinkles } from './sprinkles.css.ts';
+
+const flexDirection =
+  Math.random() > 0.5 ? 'column' : 'row';
+
+document.write(`
+  <section class="${sprinkles({
+    display: 'flex',
+    flexDirection
+  })}">
+    ...
+  </section>
+`);
+```
+
+> 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
+
+Within `.css.ts` files, combine with any custom styles by providing an array to vanilla-extract’s [`style`](/documentation/styling-api/#style) function.
+
+```ts
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+import { sprinkles } from './sprinkles.css.ts';
+
+export const container = style([
+  sprinkles({
+    display: 'flex',
+    padding: 'small'
+  }),
+  {
+    ':hover': {
+      outline: '2px solid currentColor'
+    }
+  }
+]);
+```
+
+Sprinkles uses this internally, which means that a class list returned by `sprinkles` can be treated as if it were a single class within vanilla-extract selectors.
+
+```ts
+// styles.css.ts
+import { globalStyle } from '@vanilla-extract/css';
+import { sprinkles } from './sprinkles.css.ts';
+
+export const container = sprinkles({
+  padding: 'small'
+});
+
+globalStyle(`${container} *`, {
+  boxSizing: 'border-box'
+});
 ```
 
 ## defineProperties
@@ -340,27 +564,6 @@ export const sprinkles = createSprinkles(
   unconditionalProperties,
   colorProperties
 );
-```
-
-As the sprinkles function returns a standard class list, you can combine it with a custom style using [style composition](/documentation/styling-api/#style).
-
-```ts
-// button.css.ts
-import { style } from '@vanilla-extract/css';
-import { sprinkles } from './sprinkles.css';
-
-export const button = style([
-  sprinkles({
-    paddingX: 'medium',
-    paddingY: 'small'
-  }),
-  {
-    transition: 'transform 0.2s ease-in-out',
-    ':hover': {
-      transform: 'scale(1.1)'
-    }
-  }
-]);
 ```
 
 The sprinkles function also exposes a static `properties` key that lets you check whether a given property can be handled by the function.
