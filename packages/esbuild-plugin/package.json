@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/esbuild-plugin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^2.0.0"
+    "@vanilla-extract/integration": "^2.0.1"
   },
   "devDependencies": {
     "esbuild": "^0.11.16"

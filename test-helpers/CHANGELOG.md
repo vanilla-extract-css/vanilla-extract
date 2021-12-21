@@ -1,5 +1,15 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`2c7abb1`](https://github.com/seek-oss/vanilla-extract/commit/2c7abb1f981fc030decf01e460e2478ff84c4013)]:
+  - @vanilla-extract/babel-plugin@1.1.4
+  - @vanilla-extract/esbuild-plugin@2.0.2
+  - @vanilla-extract/vite-plugin@3.1.2
+  - @vanilla-extract/webpack-plugin@2.1.5
+
 ## 0.0.6
 
 ### Patch Changes
