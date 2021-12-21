@@ -352,15 +352,15 @@ import { sprinkles } from './sprinkles.css';
 export const button = style([
   sprinkles({
     paddingX: 'medium',
-    paddingY: 'small',
+    paddingY: 'small'
   }),
   {
-    transition: "transform 0.2s ease-in-out",
-    ":hover": {
-      transform: "scale(1.1)",
-    },
-  },
-])
+    transition: 'transform 0.2s ease-in-out',
+    ':hover': {
+      transform: 'scale(1.1)'
+    }
+  }
+]);
 ```
 
 The sprinkles function also exposes a static `properties` key that lets you check whether a given property can be handled by the function.
