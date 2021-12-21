@@ -342,7 +342,7 @@ export const sprinkles = createSprinkles(
 );
 ```
 
-You can combine your sprinkles with other styles [in the same way you combine styles on their own](/documentation/styling-api/#style).
+As the sprinkles function returns a standard class list, you can combine it with a custom style using [style composition](/documentation/styling-api/#style).
 
 ```ts
 // button.css.ts
