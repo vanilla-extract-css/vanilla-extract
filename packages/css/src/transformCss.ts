@@ -1,5 +1,6 @@
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
+import escapeStringRegexp from 'escape-string-regexp';
 
 import type {
   CSS,
@@ -105,7 +106,7 @@ class Stylesheet {
     this.keyframesRules = [];
     this.localClassNameRegex =
       localClassNames.length > 0
-        ? RegExp(`(${localClassNames.join('|')})`, 'g')
+        ? RegExp(`(${localClassNames.map(escapeStringRegexp).join('|')})`, 'g')
         : null;
 
     // Class list compositions should be priortized by Newer > Older

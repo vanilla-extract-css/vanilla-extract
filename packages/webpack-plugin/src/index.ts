@@ -3,22 +3,12 @@ import {
   IdentifierOption,
   getPackageInfo,
 } from '@vanilla-extract/integration';
-import path from 'path';
 import type { Compiler, RuleSetRule } from 'webpack';
-import chalk from 'chalk';
 
 import { ChildCompiler } from './compiler';
 import createCompat, { WebpackCompat } from './compat';
 
 const pluginName = 'VanillaExtractPlugin';
-
-const resolvedFileScopeModule = path.dirname(
-  require.resolve('@vanilla-extract/css/fileScope/package.json'),
-);
-
-const resolvedCoreModule = path.dirname(
-  require.resolve('@vanilla-extract/css/package.json'),
-);
 
 function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
   compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
@@ -98,57 +88,13 @@ export class VanillaExtractPlugin {
       Boolean(compiler.webpack && compiler.webpack.version),
     );
 
-    if (!compiler.parentCompilation && !this.allowRuntime) {
-      compiler.hooks.compilation.tap(pluginName, (compilation) => {
-        compilation.hooks.afterOptimizeModules.tap(pluginName, (modules) => {
-          for (const module of modules) {
-            if (
-              // Use the presence of the `fileScope` module as the indicator that the runtime has been loaded
-              module.context?.startsWith(resolvedFileScopeModule)
-            ) {
-              const dependentResources = new Set<string>();
-
-              if (compat.isWebpack5) {
-                for (const con of compilation.moduleGraph.getIncomingConnections(
-                  module,
-                )) {
-                  // @ts-expect-error resource should exist on module
-                  const originResource = con.originModule.resource || '';
-
-                  if (!originResource.startsWith(resolvedCoreModule)) {
-                    dependentResources.add(originResource);
-                  }
-                }
-              }
-
-              let errorMessage = chalk.red(
-                `VanillaExtractPlugin: Styles detected outside of '.css.(ts/js)' files. These styles cannot be statically extracted.`,
-              );
-
-              if (dependentResources.size > 0) {
-                errorMessage += '\n\nOffending files:\n';
-                errorMessage += Array.from(dependentResources)
-                  .map(
-                    (res) =>
-                      `- ${chalk.yellow(path.relative(compiler.context, res))}`,
-                  )
-                  .join('\n');
-              }
-
-              throw new Error(errorMessage);
-            }
-          }
-        });
-      });
-    }
-
     markCSSFilesAsSideEffects(compiler, compat);
 
     compiler.options.module?.rules.splice(0, 0, {
       test: this.test,
       use: [
         {
-          loader: require.resolve('@vanilla-extract/webpack-plugin/loader'),
+          loader: require.resolve('../loader'),
           options: {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,

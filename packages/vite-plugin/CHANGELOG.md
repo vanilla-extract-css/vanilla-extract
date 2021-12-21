@@ -1,5 +1,35 @@
 # @vanilla-extract/vite-plugin
 
+## 3.1.1
+
+### Patch Changes
+
+- [#530](https://github.com/seek-oss/vanilla-extract/pull/530) [`0d7f912`](https://github.com/seek-oss/vanilla-extract/commit/0d7f912e4f20f8aab0f8d00f797b91ae5005de4d) Thanks [@benjervis](https://github.com/benjervis)! - Fix compatibility issues with vite@2.7
+
+  Vite 2.7 introduced some [breaking changes](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#270-2021-12-07) around the way SSR was indicated in plugins.
+  The plugin has been updated to handle both the old and new formats, so it should support both 2.7 forward, as well as previous versions.
+
+## 3.1.0
+
+### Minor Changes
+
+- [#517](https://github.com/seek-oss/vanilla-extract/pull/517) [`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69) Thanks [@benjervis](https://github.com/benjervis)! - Add postcss processing to the plugin
+
+  Vite supports postcss processing as a built in feature, but that's lost in dev mode with vanilla-extract because there are no actual css files for vite to pick up.
+
+  The vite plugin now manually runs postcss over the generated css in serve mode, if any postcss config was found.
+
+### Patch Changes
+
+- Updated dependencies [[`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69)]:
+  - @vanilla-extract/integration@2.0.0
+
+## 3.0.1
+
+### Patch Changes
+
+- [#470](https://github.com/seek-oss/vanilla-extract/pull/470) [`a6383e8`](https://github.com/seek-oss/vanilla-extract/commit/a6383e86218a49b5dd9fa471e0776f8cb50c9d7f) Thanks [@Katarina-UBCO](https://github.com/Katarina-UBCO)! - Prefix `.vanilla.js` and `.vanilla.css` virtual modules with `virtual:vanilla-extract:`.
+
 ## 3.0.0
 
 ### Major Changes

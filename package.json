@@ -8,34 +8,25 @@
     "dev": "preconstruct dev",
     "build": "preconstruct build",
     "watch": "preconstruct watch",
-    "start-fixture": "ts-node --log-error ./test-helpers/src/startFixtureCLI",
-    "start": "yarn start-fixture themed",
+    "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
+    "start": "pnpm start-fixture themed",
     "start-site": "manypkg run site start",
     "build-site": "manypkg run site build",
-    "postinstall": "yarn dev",
     "test:jest": "jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",
-    "version": "changeset version && yarn",
-    "release": "yarn copy-readme-to-packages && yarn build && changeset publish"
+    "version": "changeset version && pnpm install --lockfile-only",
+    "release": "pnpm copy-readme-to-packages && pnpm build && changeset publish"
   },
-  "workspaces": [
-    "packages/*",
-    "test-helpers",
-    "fixtures/*",
-    "site",
-    "examples/*"
-  ],
   "preconstruct": {
     "packages": [
       "packages/*"
     ]
   },
   "volta": {
-    "node": "14.16.0",
-    "yarn": "1.22.10"
+    "node": "14.16.0"
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
@@ -44,16 +35,17 @@
     "@babel/preset-typescript": "^7.13.0",
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.17.0",
-    "@manypkg/cli": "^0.17.0",
+    "@manypkg/cli": "^0.19.1",
     "@playwright/test": "^1.14.1",
     "@preconstruct/cli": "^2.0.1",
-    "@testing-library/dom": "^7.30.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@types/jest": "^26.0.20",
-    "babel-jest": "^26.6.3",
-    "jest": "^26.6.3",
+    "@swc/core": "^1.2.112",
+    "@types/jest": "^27.0.3",
+    "@vanilla-extract/babel-plugin": "*",
+    "babel-jest": "^27.3.1",
+    "fast-glob": "^3.2.7",
+    "jest": "^27.3.1",
     "prettier": "^2.3.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.3"
+    "ts-node": "^10.0.0",
+    "typescript": "^4.5.0"
   }
 }

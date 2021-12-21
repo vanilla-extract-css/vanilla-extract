@@ -12,9 +12,12 @@ import {
   stringifyFileScope,
   parseFileScope,
 } from '@vanilla-extract/integration';
+import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
+
+const virtualPrefix = 'virtual:vanilla-extract:';
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -23,6 +26,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
   let server: ViteDevServer;
+  let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
@@ -48,23 +52,28 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         },
       };
     },
-    configResolved(resolvedConfig) {
+    async configResolved(resolvedConfig) {
       config = resolvedConfig;
+
+      if (config.command === 'serve') {
+        postCssConfig = await resolvePostcssConfig(config);
+      }
 
       virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
 
       packageInfo = getPackageInfo(config.root);
     },
     resolveId(id) {
-      if (id.indexOf(virtualExt) > 0) {
+      if (id.indexOf(virtualPrefix) === 0) {
         return id;
       }
     },
     load(id) {
-      const extensionIndex = id.indexOf(virtualExt);
-
-      if (extensionIndex > 0) {
-        const fileScopeId = id.substring(0, extensionIndex);
+      if (id.indexOf(virtualPrefix) === 0) {
+        const fileScopeId = id.slice(
+          virtualPrefix.length,
+          id.indexOf(virtualExt),
+        );
 
         if (!cssMap.has(fileScopeId)) {
           throw new Error(`Unable to locate ${fileScopeId} in the CSS map.`);
@@ -96,9 +105,17 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
       return null;
     },
-    async transform(code, id, ssr) {
+    async transform(code, id, ssrParam) {
       if (!cssFileFilter.test(id)) {
         return null;
+      }
+
+      let ssr: boolean | undefined;
+
+      if (typeof ssrParam === 'boolean') {
+        ssr = ssrParam;
+      } else {
+        ssr = ssrParam?.ssr;
       }
 
       const index = id.indexOf('?');
@@ -130,9 +147,23 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         filePath: validId,
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
-        serializeVirtualCssPath: ({ fileScope, source }) => {
+        serializeVirtualCssPath: async ({ fileScope, source }) => {
           const fileId = stringifyFileScope(fileScope);
-          const id = `${fileId}${virtualExt}`;
+          const id = `${virtualPrefix}${fileId}${virtualExt}`;
+
+          let cssSource = source;
+
+          if (postCssConfig) {
+            const postCssResult = await (await import('postcss'))
+              .default(postCssConfig.plugins)
+              .process(source, {
+                ...postCssConfig.options,
+                from: undefined,
+                map: false,
+              });
+
+            cssSource = postCssResult.css;
+          }
 
           if (server && cssMap.has(fileId) && cssMap.get(fileId) !== source) {
             const { moduleGraph } = server;
@@ -145,11 +176,11 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
             server.ws.send({
               type: 'custom',
               event: styleUpdateEvent(fileId),
-              data: source,
+              data: cssSource,
             });
           }
 
-          cssMap.set(fileId, source);
+          cssMap.set(fileId, cssSource);
 
           return `import "${id}";`;
         },

@@ -56,9 +56,9 @@ export const startWebpackFixture = (
             use: [
               type === 'mini-css-extract'
                 ? MiniCssExtractPlugin.loader
-                : 'style-loader',
+                : require.resolve('style-loader'),
               {
-                loader: 'css-loader',
+                loader: require.resolve('css-loader'),
                 options: {
                   url: false,
                 },
@@ -70,20 +70,20 @@ export const startWebpackFixture = (
             exclude: [/node_modules/],
             use: [
               {
-                loader: 'babel-loader',
+                loader: require.resolve('babel-loader'),
                 options: {
                   babelrc: false,
                   presets: [
-                    '@babel/preset-typescript',
-                    '@babel/preset-react',
+                    require.resolve('@babel/preset-typescript'),
+                    require.resolve('@babel/preset-react'),
                     [
-                      '@babel/preset-env',
+                      require.resolve('@babel/preset-env'),
                       { targets: { node: 14 }, modules: false },
                     ],
                   ],
                   plugins: [
                     type !== 'mini-css-extract'
-                      ? '@vanilla-extract/babel-plugin'
+                      ? require.resolve('@vanilla-extract/babel-plugin')
                       : null,
                   ].filter(Boolean),
                 },
@@ -96,6 +96,7 @@ export const startWebpackFixture = (
     });
     const compiler = webpack(config);
 
+    // @ts-expect-error - webpack version mismatch
     const server = new WDS(compiler, {
       hot,
       stats: logLevel,

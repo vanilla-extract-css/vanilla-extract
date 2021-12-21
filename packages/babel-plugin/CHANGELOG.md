@@ -1,5 +1,12 @@
 # @vanilla-extract/babel-plugin
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69)]:
+  - @vanilla-extract/integration@2.0.0
+
 ## 1.1.2
 
 ### Patch Changes

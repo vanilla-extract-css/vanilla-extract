@@ -13,12 +13,7 @@ import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
 
 const emptyCssExtractionFile = require.resolve(
-  path.join(
-    path.dirname(
-      require.resolve('@vanilla-extract/webpack-plugin/package.json'),
-    ),
-    'extracted',
-  ),
+  path.join(path.dirname(require.resolve('../../package.json')), 'extracted'),
 );
 
 interface LoaderOptions {
@@ -70,8 +65,8 @@ export function pitch(this: LoaderContext) {
 
   childCompiler
     .getCompiledSource(this)
-    .then(({ source }) => {
-      const result = processVanillaFile({
+    .then(async ({ source }) => {
+      const result = await processVanillaFile({
         source,
         outputCss,
         filePath: this.resourcePath,

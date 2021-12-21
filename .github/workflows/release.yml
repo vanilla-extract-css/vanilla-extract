@@ -12,6 +12,10 @@ jobs:
     env:
       CI: true
     steps:
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.1
+
       - name: Checkout Repo
         uses: actions/checkout@main
         with:
@@ -22,15 +26,16 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version: 14.x
+          cache: 'pnpm'
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: pnpm i
 
       - name: Create release PR or publish to npm
         uses: changesets/action@c2918239208f2162b9d27a87f491375c51592434
         with:
-          version: yarn run version
-          publish: yarn release
+          version: pnpm run version
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.SEEK_OSS_CI_NPM_TOKEN }}

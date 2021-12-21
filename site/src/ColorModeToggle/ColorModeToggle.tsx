@@ -59,13 +59,14 @@ export const ColorModeToggle = () => {
   return (
     <Box
       component="button"
-      padding={{ desktop: 'small' }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="full"
       cursor="pointer"
       className={styles.root}
       title="Toggle colour mode"
       onClick={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
-    >
-      &nbsp;
-    </Box>
+    />
   );
 };

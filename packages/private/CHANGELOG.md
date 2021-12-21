@@ -1,5 +1,19 @@
 # @vanilla-extract/private
 
+## 1.0.3
+
+### Patch Changes
+
+- [#520](https://github.com/seek-oss/vanilla-extract/pull/520) [`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Transpile code to meet [esmodules target](https://babeljs.io/docs/en/babel-preset-env#targetsesmodules)
+
+  This should allow code that runs in the browser to conform to most browser policies. If you need to support browsers prior to the esmodules target (e.g. IE 11) then you'll need to configure custom transpilation in your projects.
+
+## 1.0.2
+
+### Patch Changes
+
+- [#489](https://github.com/seek-oss/vanilla-extract/pull/489) [`0c1ec7d`](https://github.com/seek-oss/vanilla-extract/commit/0c1ec7d5bfa5c4e66b4655c4f417f2751af7b3e3) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix theme contract types in TypeScript 4.5
+
 ## 1.0.1
 
 ### Patch Changes

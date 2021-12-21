@@ -1,12 +1,12 @@
 {
   "name": "@fixtures/features",
-  "version": "0.0.0",
+  "version": "0.0.5",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.6.3",
-    "@vanilla-extract/dynamic": "2.0.0"
+    "@vanilla-extract/css": "1.6.8",
+    "@vanilla-extract/dynamic": "2.0.2"
   }
 }

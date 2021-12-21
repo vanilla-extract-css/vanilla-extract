@@ -1,5 +1,40 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69)]:
+  - @vanilla-extract/integration@2.0.0
+
+## 2.1.3
+
+### Patch Changes
+
+- [#508](https://github.com/seek-oss/vanilla-extract/pull/508) [`d15e783`](https://github.com/seek-oss/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `exports` field to `package.json` so nested package paths can be imported in a Node.js ESM context
+
+## 2.1.2
+
+### Patch Changes
+
+- [#492](https://github.com/seek-oss/vanilla-extract/pull/492) [`f2d2d9e`](https://github.com/seek-oss/vanilla-extract/commit/f2d2d9eea18dcd4ffec694f8056a78d850485592) Thanks [@benjervis](https://github.com/benjervis)! - Fix requiring of webpack loader
+
+  Previously, the webpack plugin would reference itself as a loader by requiring `@vanilla-extract/webpack-plugin/loader`, but this was technically incorrect, and only worked because of the flat node_modules structure that yarn provides.
+
+  When using a package manager like pnpm, which does not have a flat structure, this breaks.
+
+  This change uses relative references internally to ensure that the loader can always be required.
+
+## 2.1.1
+
+### Patch Changes
+
+- [#459](https://github.com/seek-oss/vanilla-extract/pull/459) [`2719dc0`](https://github.com/seek-oss/vanilla-extract/commit/2719dc0b75172bb43648ddf2a3f2f31f58e42426) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove unused files and dependencies
+
+* [#459](https://github.com/seek-oss/vanilla-extract/pull/459) [`2719dc0`](https://github.com/seek-oss/vanilla-extract/commit/2719dc0b75172bb43648ddf2a3f2f31f58e42426) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove "Styles detected outside of '.css.(ts/js)' files" error
+
+  This error could occasionally cause false positives, and was inconsistent with the rest of the integrations.
+
 ## 2.1.0
 
 ### Minor Changes

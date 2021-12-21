@@ -1,21 +1,34 @@
 {
   "name": "@vanilla-extract/webpack-plugin",
-  "version": "2.1.0",
+  "version": "2.1.4",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
+    },
+    "./loader": {
+      "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
+      "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
+    },
+    "./extracted": {
+      "module": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.esm.js",
+      "default": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.cjs.js"
+    }
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "validate-loader.ts",
       "extracted.js"
     ]
   },
   "files": [
     "/dist",
     "/loader",
-    "/validate-loader",
     "/extracted"
   ],
   "repository": {
@@ -29,11 +42,10 @@
     "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
-    "@vanilla-extract/integration": "^1.3.0",
+    "@vanilla-extract/integration": "^2.0.0",
     "chalk": "^4.1.1",
     "debug": "^4.3.1",
     "loader-utils": "^2.0.0",
-    "lodash": "^4.17.21",
     "virtual-resource-loader": "^1.0.0"
   },
   "devDependencies": {

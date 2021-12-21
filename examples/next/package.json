@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^12.0.0",
+    "next": "^12.0.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -17,12 +17,12 @@
     "@types/react": "^17",
     "@vanilla-extract/babel-plugin": "^1.1.2",
     "@vanilla-extract/css": "^1.6.3",
-    "@vanilla-extract/next-plugin": "^1.0.1"
+    "@vanilla-extract/next-plugin": "^2.0.0"
   },
   "browserslist": [
     ">0.3%",
-    "not ie 11",
-    "not dead",
+    "ie 11",
+    "safari 4",
     "not op_mini all"
   ]
 }

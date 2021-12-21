@@ -1,5 +1,16 @@
 # @vanilla-extract/integration
 
+## 2.0.0
+
+### Major Changes
+
+- [#517](https://github.com/seek-oss/vanilla-extract/pull/517) [`64791f3`](https://github.com/seek-oss/vanilla-extract/commit/64791f39c7090eeb301796b15218f51d43532e69) Thanks [@benjervis](https://github.com/benjervis)! - processVanillaFile is now async
+
+### Patch Changes
+
+- Updated dependencies [[`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
+  - @vanilla-extract/css@1.6.8
+
 ## 1.4.3
 
 ### Patch Changes

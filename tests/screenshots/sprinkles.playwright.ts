@@ -1,5 +1,8 @@
 import { expect } from '@playwright/test';
-import { startFixture, TestServer } from 'test-helpers';
+import {
+  startFixture,
+  TestServer,
+} from '@vanilla-extract-private/test-helpers';
 
 import test from './fixture';
 
@@ -10,7 +13,6 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
-  // 'snowpack', Snowpack seems to be broken for the Sprinkles fixture
 ] as const;
 
 buildTypes.forEach((buildType) => {
