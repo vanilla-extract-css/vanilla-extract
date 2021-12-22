@@ -1,46 +1,41 @@
-import { styleVariants } from '@vanilla-extract/css';
-import { createCss } from '../capsize';
+import { style, styleVariants } from '@vanilla-extract/css';
+import { createTextStyle } from '@capsizecss/vanilla-extract';
 import { vars } from '../themes.css';
-import { mapToProperty, responsiveStyle } from '../themeUtils';
+import { mapToProperty, responsiveStyle, queries } from '../themeUtils';
 
 const makeTypographyRules = (textDefinition: typeof vars.text.standard) => {
-  const {
-    fontSize: mobileFontSize,
-    lineHeight: mobileLineHeight,
-    ...mobileTrims
-  } = createCss(textDefinition.mobile);
+  const { fontSize: mobileFontSize, lineHeight: mobileLineHeight } =
+    textDefinition.mobile;
 
-  const {
-    fontSize: tabletFontSize,
-    lineHeight: tabletLineHeight,
-    ...desktopTrims
-  } = createCss(textDefinition.tablet);
+  const { fontSize: tabletFontSize, lineHeight: tabletLineHeight } =
+    textDefinition.tablet;
 
-  const {
-    fontSize: desktopFontSize,
-    lineHeight: desktopLineHeight,
-    ...tabletTrims
-  } = createCss(textDefinition.tablet);
+  const { fontSize: desktopFontSize, lineHeight: desktopLineHeight } =
+    textDefinition.tablet;
 
   return {
-    base: responsiveStyle({
-      mobile: {
-        fontSize: mobileFontSize,
-        lineHeight: mobileLineHeight,
+    untrimmed: style(
+      responsiveStyle({
+        mobile: {
+          fontSize: mobileFontSize,
+          lineHeight: mobileLineHeight,
+        },
+        tablet: {
+          fontSize: tabletFontSize,
+          lineHeight: tabletLineHeight,
+        },
+        desktop: {
+          fontSize: desktopFontSize,
+          lineHeight: desktopLineHeight,
+        },
+      }),
+    ),
+    trimmed: createTextStyle(textDefinition.mobile, {
+      // @ts-expect-error TS 4.5
+      '@media': {
+        [queries.tablet]: textDefinition.tablet,
+        [queries.desktop]: textDefinition.desktop,
       },
-      tablet: {
-        fontSize: tabletFontSize,
-        lineHeight: tabletLineHeight,
-      },
-      desktop: {
-        fontSize: desktopFontSize,
-        lineHeight: desktopLineHeight,
-      },
-    }),
-    trims: responsiveStyle({
-      mobile: mobileTrims,
-      tablet: tabletTrims,
-      desktop: desktopTrims,
     }),
   };
 };
@@ -49,15 +44,15 @@ export const font = styleVariants(vars.fonts, mapToProperty('fontFamily'));
 export const weight = styleVariants(vars.weight, mapToProperty('fontWeight'));
 
 export const text = {
-  standard: styleVariants(makeTypographyRules(vars.text.standard)),
-  small: styleVariants(makeTypographyRules(vars.text.small)),
-  xsmall: styleVariants(makeTypographyRules(vars.text.xsmall)),
-  code: styleVariants(makeTypographyRules(vars.text.code)),
+  standard: makeTypographyRules(vars.text.standard),
+  small: makeTypographyRules(vars.text.small),
+  xsmall: makeTypographyRules(vars.text.xsmall),
+  code: makeTypographyRules(vars.text.code),
 };
 
 export const heading = {
-  '1': styleVariants(makeTypographyRules(vars.heading.h1)),
-  '2': styleVariants(makeTypographyRules(vars.heading.h2)),
-  '3': styleVariants(makeTypographyRules(vars.heading.h3)),
-  '4': styleVariants(makeTypographyRules(vars.heading.h4)),
+  '1': makeTypographyRules(vars.heading.h1),
+  '2': makeTypographyRules(vars.heading.h2),
+  '3': makeTypographyRules(vars.heading.h3),
+  '4': makeTypographyRules(vars.heading.h4),
 };

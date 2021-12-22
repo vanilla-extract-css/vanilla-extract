@@ -1,6 +1,7 @@
 import { createGlobalTheme } from '@vanilla-extract/css';
 import colors from 'tailwindcss/colors';
-import { computeValues } from './capsize';
+import { precomputeValues } from '@capsizecss/vanilla-extract';
+
 import { Breakpoint } from './themeUtils';
 
 const grid = 4;
@@ -108,19 +109,19 @@ const calculateTypographyStyles = (
   definition: Record<Breakpoint, { fontSize: number; rows: number }>,
   type: keyof typeof fontMetrics,
 ) => {
-  const mobile = computeValues({
+  const mobile = precomputeValues({
     fontSize: definition.mobile.fontSize,
     leading: definition.mobile.rows * grid,
     fontMetrics: fontMetrics[type],
   });
 
-  const tablet = computeValues({
+  const tablet = precomputeValues({
     fontSize: definition.tablet.fontSize,
     leading: definition.tablet.rows * grid,
     fontMetrics: fontMetrics[type],
   });
 
-  const desktop = computeValues({
+  const desktop = precomputeValues({
     fontSize: definition.desktop.fontSize,
     leading: definition.desktop.rows * grid,
     fontMetrics: fontMetrics[type],
