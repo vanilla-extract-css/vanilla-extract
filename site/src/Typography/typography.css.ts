@@ -31,7 +31,7 @@ const makeTypographyRules = (textDefinition: typeof vars.text.standard) => {
       }),
     ),
     trimmed: createTextStyle(textDefinition.mobile, {
-      // @ts-expect-error TS 4.5
+      // @ts-ignore TS 4.5
       '@media': {
         [queries.tablet]: textDefinition.tablet,
         [queries.desktop]: textDefinition.desktop,
