@@ -43,8 +43,7 @@ export const useHeadingStyles = (
       textAlign: align,
       color: { lightMode: 'coolGray900', darkMode: 'gray100' },
     }),
-    styles.heading[level].base,
-    styles.heading[level].trims,
+    styles.heading[level].trimmed,
   );
 
 export const Heading = ({

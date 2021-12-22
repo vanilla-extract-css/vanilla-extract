@@ -37,12 +37,9 @@ export const useTextStyles = ({
 }: TextStyleProps) =>
   classnames(
     styles.font[type],
-    styles.text[size].base,
+    baseline ? styles.text[size].trimmed : styles.text[size].untrimmed,
     sprinkles({ color: colorMap[color], textAlign: align }),
     styles.weight[weight],
-    {
-      [styles.text.standard.trims]: baseline,
-    },
   );
 
 export default ({

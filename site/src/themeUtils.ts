@@ -2,6 +2,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import { StyleRule } from '@vanilla-extract/css';
 import { Properties, SimplePseudos } from 'csstype';
+import mapValues from 'lodash/mapValues';
 
 export const breakpoints = {
   mobile: 0,
@@ -11,13 +12,17 @@ export const breakpoints = {
 
 export type Breakpoint = keyof typeof breakpoints;
 
+export const queries = mapValues(
+  omit(breakpoints, 'mobile'),
+  (bp) => `screen and (min-width: ${bp}px)`,
+);
+
 const makeMediaQuery =
-  (breakpoint: keyof typeof breakpoints) =>
-  (styles: Properties<string | number>) =>
+  (breakpoint: keyof typeof queries) => (styles: Properties<string | number>) =>
     !styles || Object.keys(styles).length === 0
       ? {}
       : {
-          [`screen and (min-width: ${breakpoints[breakpoint]}px)`]: styles,
+          [queries[breakpoint]]: styles,
         };
 
 const mediaQuery = {
