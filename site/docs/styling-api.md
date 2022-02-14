@@ -81,6 +81,15 @@ export const childClass = style({
 >
 > If you want to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [`globalStyle`](#globalstyle) instead.
 
+For fallback styles you may simply pass an array of properties instead of a single prop.
+
+```ts
+export const exampleStyle = style({
+  // in Firefox and IE the "overflow: overlay" will be ignored and the "overflow: auto" will be applied
+  overflow: ['auto', 'overlay'],
+});
+```
+
 Multiple styles can be composed into a single rule by providing an array of styles.
 
 ```ts
