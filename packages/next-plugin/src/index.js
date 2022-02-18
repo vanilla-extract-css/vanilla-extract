@@ -1,12 +1,26 @@
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
+import browserslist from 'browserslist';
+import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { getGlobalCssLoader } from 'next/dist/build/webpack/config/blocks/css/loaders';
+
+function getSupportedBrowsers(dir, isDevelopment) {
+  let browsers;
+  try {
+    browsers = browserslist.loadConfig({
+      path: dir,
+      env: isDevelopment ? 'development' : 'production',
+    });
+  } catch {}
+
+  return browsers;
+}
 
 export const createVanillaExtractPlugin =
   (pluginOptions = {}) =>
   (nextConfig = {}) =>
     Object.assign({}, nextConfig, {
       webpack(config, options) {
-        const { dev, isServer } = options;
+        const { dir, dev, isServer } = options;
 
         const cssRules = config.module.rules.find(
           (rule) =>
@@ -31,7 +45,7 @@ export const createVanillaExtractPlugin =
               future: nextConfig.future || {},
               experimental: nextConfig.experimental || {},
             },
-            [],
+            () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev)),
             [],
           ),
         });

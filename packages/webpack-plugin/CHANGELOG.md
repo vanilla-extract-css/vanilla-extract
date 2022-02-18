@@ -1,5 +1,14 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.5
+
+### Patch Changes
+
+- [#543](https://github.com/seek-oss/vanilla-extract/pull/543) [`2c7abb1`](https://github.com/seek-oss/vanilla-extract/commit/2c7abb1f981fc030decf01e460e2478ff84c4013) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Ensure code is compatible with node 12
+
+- Updated dependencies [[`2c7abb1`](https://github.com/seek-oss/vanilla-extract/commit/2c7abb1f981fc030decf01e460e2478ff84c4013)]:
+  - @vanilla-extract/integration@2.0.1
+
 ## 2.1.4
 
 ### Patch Changes
