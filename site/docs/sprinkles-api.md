@@ -220,7 +220,7 @@ export const container = style([
 ]);
 ```
 
-Sprinkles uses this internally, which means that a class list returned by `sprinkles` can be treated as if it were a single class within vanilla-extract selectors.
+Sprinkles uses this internally, which means that a class list returned by `sprinkles` can be treated as if it was a single class within vanilla-extract selectors.
 
 ```ts
 // styles.css.ts
