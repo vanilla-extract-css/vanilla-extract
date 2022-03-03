@@ -451,13 +451,23 @@ describe('sprinkles', () => {
       `);
     });
 
+    it('should handle unresponsive booleans', () => {
+      const normalizeValue = createNormalizeValueFn(conditionalProperties);
+
+      expect(normalizeValue(false)).toMatchInlineSnapshot(`
+        Object {
+          "mobile": false,
+        }
+      `);
+    });
+
     it('should handle responsive arrays', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
-      expect(normalizeValue(['one', 'two'])).toMatchInlineSnapshot(`
+      expect(normalizeValue([false, true])).toMatchInlineSnapshot(`
         Object {
-          "mobile": "one",
-          "tablet": "two",
+          "mobile": false,
+          "tablet": true,
         }
       `);
     });
@@ -477,10 +487,10 @@ describe('sprinkles', () => {
     it('should handle responsive arrays with nulls', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
-      expect(normalizeValue(['one', null, 'three'])).toMatchInlineSnapshot(`
+      expect(normalizeValue(['mobile', null, true])).toMatchInlineSnapshot(`
         Object {
-          "desktop": "three",
-          "mobile": "one",
+          "desktop": true,
+          "mobile": "mobile",
         }
       `);
     });
@@ -560,8 +570,9 @@ describe('sprinkles', () => {
 
     it('should handle conditional nulls', () => {
       const mapValue = createMapValueFn(conditionalProperties);
-      const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
-        value === 2 ? null : value,
+      const value = mapValue(
+        { mobile: 1, tablet: false, desktop: 3 },
+        (value) => value || null,
       );
 
       expect(value).toStrictEqual({ mobile: 1, tablet: null, desktop: 3 });
@@ -569,15 +580,16 @@ describe('sprinkles', () => {
 
     it('should handle undefined', () => {
       const mapValue = createMapValueFn(conditionalProperties);
-      const value = mapValue(123, () => undefined);
+      const value = mapValue(true, () => undefined);
 
       expect(value).toBe(undefined);
     });
 
     it('should handle conditional undefined', () => {
       const mapValue = createMapValueFn(conditionalProperties);
-      const value = mapValue({ mobile: 1, tablet: 2, desktop: 3 }, (value) =>
-        value === 2 ? undefined : value,
+      const value = mapValue(
+        { mobile: 1, tablet: false, desktop: 3 },
+        (value) => value || undefined,
       );
 
       expect(value).toStrictEqual({ mobile: 1, tablet: undefined, desktop: 3 });
@@ -612,15 +624,15 @@ describe('sprinkles', () => {
     it('should handle responsive arrays', () => {
       const mapValue = createMapValueFn(conditionalProperties);
       const value = mapValue(
-        ['one', 'two', 'three'],
+        [false, true, false],
         (value, key) => `${value}_${key}` as const,
       );
 
       expect(value).toMatchInlineSnapshot(`
         Object {
-          "desktop": "three_desktop",
-          "mobile": "one_mobile",
-          "tablet": "two_tablet",
+          "desktop": "false_desktop",
+          "mobile": "false_mobile",
+          "tablet": "true_tablet",
         }
       `);
     });

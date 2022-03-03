@@ -8,11 +8,15 @@ type ExtractValue<
   Value extends
     | string
     | number
-    | Partial<Record<string, string | number>>
-    | ResponsiveArrayByMaxLength<number, string | number | null>,
-> = Value extends ResponsiveArrayByMaxLength<number, string | number | null>
+    | boolean
+    | Partial<Record<string, string | number | boolean>>
+    | ResponsiveArrayByMaxLength<number, string | number | boolean | null>,
+> = Value extends ResponsiveArrayByMaxLength<
+  number,
+  string | number | boolean | null
+>
   ? NonNullable<Value[number]>
-  : Value extends Partial<Record<string, string | number>>
+  : Value extends Partial<Record<string, string | number | boolean>>
   ? NonNullable<Value[keyof Value]>
   : Value;
 
@@ -32,7 +36,7 @@ type ExtractConditionNames<SprinklesProperties extends Conditions<string>> =
 
 export type ConditionalValue<
   SprinklesProperties extends Conditions<string>,
-  Value extends string | number,
+  Value extends string | number | boolean,
 > =
   | (ExtractDefaultCondition<SprinklesProperties> extends false ? never : Value)
   | Partial<Record<ExtractConditionNames<SprinklesProperties>, Value>>
@@ -48,13 +52,13 @@ export type ConditionalValue<
 type RequiredConditionalObject<
   RequiredConditionName extends string,
   OptionalConditionNames extends string,
-  Value extends string | number,
+  Value extends string | number | boolean,
 > = Record<RequiredConditionName, Value> &
   Partial<Record<OptionalConditionNames, Value>>;
 
 export type RequiredConditionalValue<
   SprinklesProperties extends Conditions<string>,
-  Value extends string | number,
+  Value extends string | number | boolean,
 > = ExtractDefaultCondition<SprinklesProperties> extends false
   ? never
   :
@@ -80,7 +84,7 @@ export function createNormalizeValueFn<
   SprinklesProperties extends Conditions<string>,
 >(
   properties: SprinklesProperties,
-): <Value extends string | number>(
+): <Value extends string | number | boolean>(
   value: ConditionalValue<SprinklesProperties, Value>,
 ) => Partial<Record<ExtractConditionNames<SprinklesProperties>, Value>> {
   const { conditions } = properties;
@@ -90,7 +94,11 @@ export function createNormalizeValueFn<
   }
 
   function normalizeValue(value: any) {
-    if (typeof value === 'string' || typeof value === 'number') {
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean'
+    ) {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
       }
@@ -130,14 +138,17 @@ export function createMapValueFn<
   properties: SprinklesProperties,
 ): <
   OutputValue extends string | number | boolean | null | undefined,
-  Value extends ConditionalValue<SprinklesProperties, string | number>,
+  Value extends ConditionalValue<
+    SprinklesProperties,
+    string | number | boolean
+  >,
 >(
   value: Value,
   fn: (
     inputValue: ExtractValue<Value>,
     key: ExtractConditionNames<SprinklesProperties>,
   ) => OutputValue,
-) => Value extends string | number
+) => Value extends string | number | boolean
   ? OutputValue
   : Partial<Record<ExtractConditionNames<SprinklesProperties>, OutputValue>> {
   const { conditions } = properties;
@@ -149,7 +160,11 @@ export function createMapValueFn<
   const normalizeValue = createNormalizeValueFn(properties);
 
   function mapValue(value: any, mapFn: any) {
-    if (typeof value === 'string' || typeof value === 'number') {
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean'
+    ) {
       if (!conditions.defaultCondition) {
         throw new Error('No default condition');
       }
