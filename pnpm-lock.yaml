@@ -211,7 +211,6 @@ importers:
     specifiers:
       '@types/lodash': ^4.14.168
       '@vanilla-extract/css': ^1.6.8
-      chalk: ^4.1.1
       esbuild: ^0.11.16
       eval: ^0.1.6
       find-up: ^5.0.0
@@ -220,7 +219,6 @@ importers:
       outdent: ^0.8.0
     dependencies:
       '@vanilla-extract/css': link:../css
-      chalk: 4.1.2
       esbuild: 0.11.23
       eval: 0.1.6
       find-up: 5.0.0
