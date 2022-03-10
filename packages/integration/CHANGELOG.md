@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 2.0.2
+
+### Patch Changes
+
+- [#609](https://github.com/seek-oss/vanilla-extract/pull/609) [`02f2a23`](https://github.com/seek-oss/vanilla-extract/commit/02f2a236ac0b9ce1feeac4f840eb0759e8ca1b6f) Thanks [@xnuk](https://github.com/xnuk)! - Remove unused `chalk` dep
+
 ## 2.0.1
 
 ### Patch Changes
