@@ -1,3 +1,5 @@
+import zlib from 'zlib';
+
 export function getSourceFromVirtualCssFile(id: string) {
   const match = id.match(/^(?<fileName>.*)\?source=(?<source>.*)$/) ?? [];
 
@@ -5,8 +7,12 @@ export function getSourceFromVirtualCssFile(id: string) {
     throw new Error('No source in vanilla CSS file');
   }
 
+  const decompressedSource = zlib.gunzipSync(
+    Buffer.from(match.groups.source, 'base64'),
+  );
+
   return {
     fileName: match.groups.fileName,
-    source: Buffer.from(match.groups.source, 'base64').toString('utf-8'),
+    source: decompressedSource.toString('utf-8'),
   };
 }

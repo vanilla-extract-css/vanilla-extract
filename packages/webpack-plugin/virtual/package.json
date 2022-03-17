@@ -1,0 +1,4 @@
+{
+  "main": "dist/vanilla-extract-webpack-plugin-virtual.cjs.js",
+  "module": "dist/vanilla-extract-webpack-plugin-virtual.esm.js"
+}
