@@ -279,14 +279,12 @@ importers:
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0
-      virtual-resource-loader: ^1.0.0
       webpack: ^5.36.1
     dependencies:
       '@vanilla-extract/integration': link:../integration
       chalk: 4.1.2
       debug: 4.3.2
       loader-utils: 2.0.2
-      virtual-resource-loader: 1.0.0
     devDependencies:
       '@types/debug': 4.1.7
       webpack: 5.64.2_@swc+core@1.2.112
@@ -12359,12 +12357,6 @@ packages:
       unist-util-stringify-position: 2.0.3
       vfile-message: 2.0.4
     dev: true
-
-  /virtual-resource-loader/1.0.0:
-    resolution: {integrity: sha512-MalwfaqwMcUmb2MtHb2hK6YYg3It4j7Hxv8I7FEAtm1h477kZ8hWPcqVpxZAInLIkmh0YbnCpvXwzmnyhdAyhw==}
-    dependencies:
-      loader-utils: 2.0.2
-    dev: false
 
   /vite/2.7.2:
     resolution: {integrity: sha512-wMffVVdKZRZP/HwW3yttKL8X+IJePz7bUcnGm0vqljffpVwHpjWC3duZtJQHAGvy+wrTjmwU7vkULpZ1dVXY6w==}

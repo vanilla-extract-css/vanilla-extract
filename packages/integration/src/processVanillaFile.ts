@@ -6,6 +6,7 @@ import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 import outdent from 'outdent';
 import { hash } from './hash';
+import zlib from 'zlib';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
@@ -109,7 +110,9 @@ export async function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    const base64Source = Buffer.from(css, 'utf-8').toString('base64');
+    const compressedCSS = zlib.gzipSync(css);
+    const base64Source = compressedCSS.toString('base64');
+
     const fileName = `${
       fileScope.packageName
         ? `${fileScope.packageName}/${fileScope.filePath}`

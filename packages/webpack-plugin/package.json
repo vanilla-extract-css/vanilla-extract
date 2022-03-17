@@ -17,19 +17,25 @@
     "./extracted": {
       "module": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.esm.js",
       "default": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.cjs.js"
+    },
+    "./virtual": {
+      "module": "./virtual/dist/vanilla-extract-webpack-plugin-virtual.esm.js",
+      "default": "./virtual/dist/vanilla-extract-webpack-plugin-virtual.cjs.js"
     }
   },
   "preconstruct": {
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "extracted.js"
+      "extracted.js",
+      "virtual.ts"
     ]
   },
   "files": [
     "/dist",
     "/loader",
-    "/extracted"
+    "/extracted",
+    "/virtual"
   ],
   "repository": {
     "type": "git",
@@ -45,8 +51,7 @@
     "@vanilla-extract/integration": "^2.0.1",
     "chalk": "^4.1.1",
     "debug": "^4.3.1",
-    "loader-utils": "^2.0.0",
-    "virtual-resource-loader": "^1.0.0"
+    "loader-utils": "^2.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
