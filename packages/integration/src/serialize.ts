@@ -4,6 +4,7 @@ import { promisify } from 'util';
 const zip = promisify(gzip);
 const unzip = promisify(gunzip);
 
+// The byte threshold for applying compression, below which compressing would out-weigh its value.
 const compressionThreshold = 1000;
 const compressionFlag = '#';
 
