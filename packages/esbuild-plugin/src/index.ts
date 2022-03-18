@@ -43,7 +43,7 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          let { source } = getSourceFromVirtualCssFile(path);
+          let { source } = await getSourceFromVirtualCssFile(path);
 
           if (typeof processCss === 'function') {
             source = await processCss(source);
