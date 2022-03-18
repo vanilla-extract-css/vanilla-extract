@@ -92,6 +92,7 @@ export const exampleStyle = style({
   // in Firefox and IE the "overflow: overlay" will be ignored and the "overflow: auto" will be applied
   overflow: ['auto', 'overlay']
 });
+```
 
 Multiple styles can be composed into a single rule by providing an array of styles.
 
