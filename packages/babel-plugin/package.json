@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/babel-plugin",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-babel-plugin.cjs.js",
   "module": "dist/vanilla-extract-babel-plugin.esm.js",
@@ -22,6 +22,6 @@
   "dependencies": {
     "@babel/core": "^7.13.10",
     "@babel/template": "^7.12.13",
-    "@vanilla-extract/integration": "^2.0.1"
+    "@vanilla-extract/integration": "^3.0.0"
   }
 }
