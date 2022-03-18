@@ -133,7 +133,7 @@ const noop = (...args: Array<any>) => {};
     mobille: '',
   });
 
-  function testGenericNormalizeValue<Key extends string | number>(
+  function testGenericNormalizeValue<Key extends string | number | boolean>(
     value: ResponsiveValue<Key>,
   ): Key | undefined {
     const normalizedValue = normalizeValue(value);
@@ -161,12 +161,10 @@ const noop = (...args: Array<any>) => {};
   // @ts-expect-error - Should force conditional value as no default condition
   mapValueWithoutDefaultCondition('test');
 
-  type ResponsiveValue<Value extends string | number> = ConditionalValue<
-    typeof conditionalProperties,
-    Value
-  >;
+  type ResponsiveValue<Value extends string | number | boolean> =
+    ConditionalValue<typeof conditionalProperties, Value>;
 
-  let responsiveValue: ResponsiveValue<'row' | 'column'>;
+  let responsiveValue: ResponsiveValue<'row' | 'column' | boolean>;
 
   // Valid values
   responsiveValue = 'row';
@@ -174,18 +172,33 @@ const noop = (...args: Array<any>) => {};
   responsiveValue = [null];
   responsiveValue = ['row', 'column'];
   responsiveValue = ['row', null, 'column'];
+  responsiveValue = true;
+  responsiveValue = false;
+  responsiveValue = [false];
+  responsiveValue = [false, null, true];
   responsiveValue = {};
   responsiveValue = { mobile: 'row' };
   responsiveValue = { tablet: 'column' };
   responsiveValue = { desktop: 'column' };
+  responsiveValue = { mobile: true };
+  responsiveValue = { mobile: false };
   responsiveValue = {
     mobile: 'row',
     tablet: 'column',
   };
   responsiveValue = {
+    mobile: true,
+    tablet: false,
+  };
+  responsiveValue = {
     mobile: 'row',
     tablet: 'column',
     desktop: 'row',
+  };
+  responsiveValue = {
+    mobile: false,
+    tablet: true,
+    desktop: false,
   };
 
   // Invalid values
@@ -221,17 +234,22 @@ const noop = (...args: Array<any>) => {};
 
   noop(responsiveValue);
 
-  type RequiredResponsiveValue<Value extends string | number> =
-    RequiredConditionalValue<typeof conditionalProperties, Value>;
-
-  let requiredValue: RequiredResponsiveValue<'row' | 'column'>;
+  let requiredValue: RequiredConditionalValue<
+    typeof conditionalProperties,
+    'row' | 'column' | boolean
+  >;
 
   // Valid values
   requiredValue = 'row';
   requiredValue = { mobile: 'row' };
   requiredValue = { mobile: 'row', desktop: 'column' };
+  requiredValue = true;
+  requiredValue = { mobile: false };
+  requiredValue = { mobile: false, desktop: true };
   requiredValue = ['row'];
   requiredValue = ['row', null, 'column'];
+  requiredValue = [false];
+  requiredValue = [false, null, true];
 
   // @ts-expect-error
   requiredValue = [];
@@ -242,9 +260,13 @@ const noop = (...args: Array<any>) => {};
   // @ts-expect-error
   requiredValue = [null, null, 'column'];
   // @ts-expect-error
+  requiredValue = [null, null, true];
+  // @ts-expect-error
   requiredValue = {};
   // @ts-expect-error
   requiredValue = { desktop: 'column' };
+  // @ts-expect-error
+  requiredValue = { desktop: true };
 
   noop(requiredValue);
 

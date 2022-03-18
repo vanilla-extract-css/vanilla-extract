@@ -6,11 +6,19 @@ import {
   processVanillaFile,
   addFileScope,
   PackageInfo,
+  serializeCss,
 } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
+
+const virtualLoader = require.resolve(
+  path.join(
+    path.dirname(require.resolve('../../package.json')),
+    'virtualFileLoader',
+  ),
+);
 
 const emptyCssExtractionFile = require.resolve(
   path.join(path.dirname(require.resolve('../../package.json')), 'extracted'),
@@ -72,10 +80,11 @@ export function pitch(this: LoaderContext) {
         filePath: this.resourcePath,
         identOption:
           identifiers ?? (this.mode === 'production' ? 'short' : 'debug'),
-        serializeVirtualCssPath: ({ fileName, base64Source }) => {
-          const virtualResourceLoader = `${require.resolve(
-            'virtual-resource-loader',
-          )}?${JSON.stringify({ source: base64Source })}`;
+        serializeVirtualCssPath: async ({ fileName, source }) => {
+          const serializedCss = await serializeCss(source);
+          const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
+            source: serializedCss,
+          })}`;
 
           const request = loaderUtils.stringifyRequest(
             this,

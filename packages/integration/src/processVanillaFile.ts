@@ -5,7 +5,9 @@ import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
 import outdent from 'outdent';
+
 import { hash } from './hash';
+import { serializeCss } from './serialize';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
@@ -34,7 +36,6 @@ interface ProcessVanillaFileOptions {
   identOption?: IdentifierOption;
   serializeVirtualCssPath?: (file: {
     fileName: string;
-    base64Source: string;
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
@@ -109,7 +110,6 @@ export async function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    const base64Source = Buffer.from(css, 'utf-8').toString('base64');
     const fileName = `${
       fileScope.packageName
         ? `${fileScope.packageName}/${fileScope.filePath}`
@@ -121,7 +121,6 @@ export async function processVanillaFile({
     if (serializeVirtualCssPath) {
       const serializedResult = serializeVirtualCssPath({
         fileName,
-        base64Source,
         fileScope,
         source: css,
       });
@@ -132,7 +131,9 @@ export async function processVanillaFile({
         virtualCssFilePath = await serializedResult;
       }
     } else {
-      virtualCssFilePath = `import '${fileName}?source=${base64Source}';`;
+      const serializedCss = await serializeCss(css);
+
+      virtualCssFilePath = `import '${fileName}?source=${serializedCss}';`;
     }
 
     cssImports.push(virtualCssFilePath);

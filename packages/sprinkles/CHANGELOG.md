@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.4.0
+
+### Minor Changes
+
+- [#605](https://github.com/seek-oss/vanilla-extract/pull/605) [`81a3d98`](https://github.com/seek-oss/vanilla-extract/commit/81a3d98b3fb36660406a59049e1cd464418b00fc) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support boolean conditional values, e.g. `{ mobile: false, desktop: true }`
+
 ## 1.3.3
 
 ### Patch Changes
