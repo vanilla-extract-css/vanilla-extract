@@ -18,9 +18,9 @@
       "module": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.esm.js",
       "default": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.cjs.js"
     },
-    "./virtual": {
-      "module": "./virtual/dist/vanilla-extract-webpack-plugin-virtual.esm.js",
-      "default": "./virtual/dist/vanilla-extract-webpack-plugin-virtual.cjs.js"
+    "./virtualFileLoader": {
+      "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
+      "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
     }
   },
   "preconstruct": {
@@ -28,14 +28,14 @@
       "index.ts",
       "loader.ts",
       "extracted.js",
-      "virtual.ts"
+      "virtualFileLoader.ts"
     ]
   },
   "files": [
     "/dist",
     "/loader",
     "/extracted",
-    "/virtual"
+    "/virtualFileLoader"
   ],
   "repository": {
     "type": "git",
