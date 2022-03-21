@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract-private/tests",
   "private": true,
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {

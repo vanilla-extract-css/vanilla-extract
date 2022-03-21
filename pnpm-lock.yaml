@@ -125,7 +125,7 @@ importers:
   fixtures/recipes:
     specifiers:
       '@vanilla-extract/css': 1.6.8
-      '@vanilla-extract/recipes': 0.2.3
+      '@vanilla-extract/recipes': 0.2.4
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
