@@ -148,7 +148,11 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const fileId = stringifyFileScope(fileScope);
+          // This file id is requested through a URL where ".." isn't valid.
+          const fileId = stringifyFileScope(fileScope).replace(
+            /\.\./g,
+            '_dir_up_',
+          );
           const id = `${virtualPrefix}${fileId}${virtualExt}`;
 
           let cssSource = source;
