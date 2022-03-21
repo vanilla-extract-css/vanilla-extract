@@ -151,7 +151,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           // This file id is requested through a URL where ".." isn't valid.
           const fileId = stringifyFileScope(fileScope).replace(
             /\.\./g,
-            'DIR_UP',
+            '_dir_up_',
           );
           const id = `${virtualPrefix}${fileId}${virtualExt}`;
 
