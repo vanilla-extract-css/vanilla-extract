@@ -16,6 +16,9 @@ export const basic = recipe({
       red: {},
       blue: {},
     },
+    rounded: {
+      true: { borderRadius: 999 },
+    },
   },
 
   defaultVariants: {

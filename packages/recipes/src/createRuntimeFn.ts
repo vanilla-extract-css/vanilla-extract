@@ -41,8 +41,13 @@ export const createRuntimeFn =
           selection = selection === true ? 'true' : 'false';
         }
 
-        // @ts-expect-error
-        className += ' ' + config.variantClassNames[variantName][selection];
+        const selectionClassName =
+          // @ts-expect-error
+          config.variantClassNames[variantName][selection];
+
+        if (selectionClassName) {
+          className += ' ' + selectionClassName;
+        }
       }
     }
 
