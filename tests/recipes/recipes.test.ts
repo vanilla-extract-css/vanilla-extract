@@ -35,13 +35,25 @@ describe('recipes', () => {
     expect(
       basic({ spaceWithDefault: 'small', color: 'red' }),
     ).toMatchInlineSnapshot(
-      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb7"`,
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb8"`,
     );
   });
 
   it('should return compound variants via defaultVariants', () => {
     expect(basic({ color: 'red' })).toMatchInlineSnapshot(
-      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb7"`,
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb8"`,
+    );
+  });
+
+  it('should return boolean variants', () => {
+    expect(basic({ rounded: true })).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_rounded_true__niwegb7"`,
+    );
+  });
+
+  it('should ignore missing boolean variants', () => {
+    expect(basic({ rounded: false })).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1"`,
     );
   });
 });
