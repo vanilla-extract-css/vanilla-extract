@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.1.4
+
+### Patch Changes
+
+- [#628](https://github.com/seek-oss/vanilla-extract/pull/628) [`6fa65ad`](https://github.com/seek-oss/vanilla-extract/commit/6fa65ad60b5e2aed05f1c3ab01f12c6c8f10a730) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix style imports from parent directories
+
 ## 3.1.3
 
 ### Patch Changes
