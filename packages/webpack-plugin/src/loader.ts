@@ -83,6 +83,7 @@ export function pitch(this: LoaderContext) {
         serializeVirtualCssPath: async ({ fileName, source }) => {
           const serializedCss = await serializeCss(source);
           const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
+            fileName: fileName,
             source: serializedCss,
           })}`;
 
