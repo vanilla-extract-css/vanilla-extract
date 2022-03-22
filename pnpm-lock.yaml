@@ -252,6 +252,15 @@ importers:
     devDependencies:
       '@vanilla-extract/css': link:../css
 
+  packages/rollup-plugin:
+    specifiers:
+      '@vanilla-extract/integration': ^3.0.0
+      rollup: ^2.0.0
+    dependencies:
+      '@vanilla-extract/integration': link:../integration
+    devDependencies:
+      rollup: 2.60.1
+
   packages/sprinkles:
     specifiers:
       '@vanilla-extract/css': ^1.6.8
