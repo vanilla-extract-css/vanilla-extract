@@ -15,7 +15,9 @@ export function stringifyFileScope({
   packageName,
   filePath,
 }: FileScope): string {
-  return packageName ? `${filePath}$$$${packageName}` : filePath;
+  const fileScope = packageName ? `${filePath}$$$${packageName}` : filePath;
+  // This file id is requested through a URL where "/", "\" and ".." isn't valid.
+  return fileScope.replace(/(\|\/|\.\.)/, '_');
 }
 
 export function parseFileScope(serialisedFileScope: string): FileScope {
