@@ -2,4 +2,6 @@
 '@vanilla-extract/webpack-plugin': patch
 ---
 
-Add fileName to the webpack loader params, allowing users to identify the source file for vanilla-extra css imports
+Add fileName to the CSS virtual loader params
+
+This allows users to identify the source file for vanilla-extract css imports
