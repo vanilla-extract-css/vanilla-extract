@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 3.0.1
+
+### Patch Changes
+
+- [#639](https://github.com/seek-oss/vanilla-extract/pull/639) [`7b9ddfc`](https://github.com/seek-oss/vanilla-extract/commit/7b9ddfc30dacc66db11253f9d1862e7ba46b88ec) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Fix "\_\_webpack_require\_\_ is not defined" error
+
 ## 3.0.0
 
 ### Major Changes
