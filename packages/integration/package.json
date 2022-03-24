@@ -16,7 +16,7 @@
   "dependencies": {
     "@vanilla-extract/css": "^1.6.8",
     "esbuild": "^0.11.16",
-    "eval": "^0.1.6",
+    "eval": "0.1.6",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
