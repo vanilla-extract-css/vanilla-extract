@@ -25,11 +25,13 @@ export const GitHubStars = () => {
       );
       const { stargazers_count: count } = await res.json();
 
-      setStars(
-        Math.abs(count) > 999
-          ? `${(Math.sign(count) * (Math.abs(count) / 1000)).toFixed(1)}k`
-          : `${Math.sign(count) * Math.abs(count)}`,
-      );
+      if (typeof count === 'number') {
+        setStars(
+          Math.abs(count) > 999
+            ? `${(Math.sign(count) * (Math.abs(count) / 1000)).toFixed(1)}k`
+            : `${Math.sign(count) * Math.abs(count)}`,
+        );
+      }
     };
     getCount();
   }, []);
