@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/webpack-plugin": "^2.1.5",
+    "@vanilla-extract/webpack-plugin": "^2.1.6",
     "browserslist": "^4.19.1"
   },
   "peerDependencies": {
