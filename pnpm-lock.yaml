@@ -230,7 +230,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
-      '@vanilla-extract/webpack-plugin': ^2.1.5
+      '@vanilla-extract/webpack-plugin': ^2.1.7
       browserslist: ^4.19.1
       next: ^12.0.5
     dependencies:
