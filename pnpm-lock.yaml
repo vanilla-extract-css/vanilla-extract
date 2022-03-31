@@ -275,7 +275,7 @@ importers:
   packages/webpack-plugin:
     specifiers:
       '@types/debug': ^4.1.5
-      '@vanilla-extract/integration': ^3.0.0
+      '@vanilla-extract/integration': ^3.0.1
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0
