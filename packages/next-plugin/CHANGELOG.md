@@ -1,5 +1,14 @@
 # @vanilla-extract/next-plugin
 
+## 2.0.2
+
+### Patch Changes
+
+- [#645](https://github.com/seek-oss/vanilla-extract/pull/645) [`5ebca75`](https://github.com/seek-oss/vanilla-extract/commit/5ebca758d18e7d55d0c079c00178cb14e936ac2e) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Bump `@vanilla-extract/integration` dep
+
+- Updated dependencies [[`5ebca75`](https://github.com/seek-oss/vanilla-extract/commit/5ebca758d18e7d55d0c079c00178cb14e936ac2e)]:
+  - @vanilla-extract/webpack-plugin@2.1.7
+
 ## 2.0.1
 
 ### Patch Changes
