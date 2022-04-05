@@ -9,8 +9,6 @@ import {
 } from '@vanilla-extract/integration';
 import { relative, normalize, dirname } from 'path';
 
-const virtualPrefix = 'virtual:vanilla-extract:';
-
 interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
@@ -60,23 +58,25 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd() }: Optio
         });
         emittedFiles.set(fileName, assetId);
       }
-      const assetId = emittedFiles.get(fileName);
 
-      // Resolve to a temporary virtual external chunk
+      // Resolve to an external chunk
       return {
-        id: `${virtualPrefix}${assetId}`,
+        id: fileName,
         external: true,
       };
     },
     renderChunk(code, chunkInfo) {
-      // Replace external virtual imports with emitted css files
-      const chunkPath = dirname(chunkInfo.fileName);
-      const importsToReplace = chunkInfo.imports.filter((i) => i.startsWith(virtualPrefix));
+      // For all imports that we emitted files for...
+      const importsToReplace = chunkInfo.imports.filter((fileName) => emittedFiles.get(fileName));
       if (!importsToReplace.length) return null;
+
+      // Replace css imports in chunks with relative paths to emitted css files
+      const chunkPath = dirname(chunkInfo.fileName);
       return importsToReplace.reduce((codeResult, importPath) => {
-        const assetId = importPath.replace(virtualPrefix, '');
+        const assetId = emittedFiles.get(importPath)!;
         const assetName = this.getFileName(assetId);
-        return codeResult.replace(importPath, `./${normalize(relative(chunkPath, assetName))}`);
+        const fixedImportPath = `./${normalize(relative(chunkPath, assetName))}`;
+        return codeResult.replace(importPath, fixedImportPath);
       }, code);
     },
   };
