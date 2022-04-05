@@ -1,54 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`features - esbuild should create valid stylesheet 1`] = `
-"._1o6ek500 {
+".ro14k60 {
   height: 50px;
 }
-._1o6ek500:after {
+.ro14k60:after {
   content: \\"Below 700px\\";
   display: block;
 }
-._1o6ek501 {
+.ro14k61 {
   background-color: #b0e0e6;
 }
-._1o6ek501:hover {
+.ro14k61:hover {
   background-color: #708090;
 }
-._1o6ek502 {
+.ro14k62 {
   background-color: #b0e0e6;
 }
-._1o6ek502:hover {
+.ro14k62:hover {
   background-color: #708090;
 }
-._1o6ek503 {
+.ro14k63 {
   background-color: #b0e0e6;
 }
-._1o6ek503:hover {
+.ro14k63:hover {
   background-color: #708090;
 }
-._1o6ek505 {
+.ro14k65 {
   color: #fff;
 }
-._1o6ek506 {
+.ro14k66 {
   background-color: #000;
 }
-body ._1o6ek507 {
+body .ro14k67 {
   font-size: 24px;
 }
-._1o6ek508 {
+.ro14k68 {
   color: #fff;
 }
-._1o6ek509 {
+.ro14k69 {
   background-color: #000;
 }
-body ._1o6ek50a {
+body .ro14k6a {
   font-size: 24px;
 }
 @media screen and (min-width: 700px) {
-  ._1o6ek500 {
+  .ro14k60 {
     color: plum;
   }
-  ._1o6ek500:after {
+  .ro14k60:after {
     content: \\"Above 700px\\";
   }
 }
@@ -56,54 +56,54 @@ body ._1o6ek50a {
 `;
 
 exports[`features - mini-css-extract should create valid stylesheet 1`] = `
-"._87f2ru0 {
+"._8gph040 {
   height: 50px;
 }
-._87f2ru0:after {
+._8gph040:after {
   content: \\"Below 700px\\";
   display: block;
 }
-._87f2ru1 {
+._8gph041 {
   background-color: #b0e0e6;
 }
-._87f2ru1:hover {
+._8gph041:hover {
   background-color: #708090;
 }
-._87f2ru2 {
+._8gph042 {
   background-color: #b0e0e6;
 }
-._87f2ru2:hover {
+._8gph042:hover {
   background-color: #708090;
 }
-._87f2ru3 {
+._8gph043 {
   background-color: #b0e0e6;
 }
-._87f2ru3:hover {
+._8gph043:hover {
   background-color: #708090;
 }
-._87f2ru5 {
+._8gph045 {
   color: #fff;
 }
-._87f2ru6 {
+._8gph046 {
   background-color: #000;
 }
-body ._87f2ru7 {
+body ._8gph047 {
   font-size: 24px;
 }
-._87f2ru8 {
+._8gph048 {
   color: #fff;
 }
-._87f2ru9 {
+._8gph049 {
   background-color: #000;
 }
-body ._87f2rua {
+body ._8gph04a {
   font-size: 24px;
 }
 @media screen and (min-width: 700px) {
-  ._87f2ru0 {
+  ._8gph040 {
     color: plum;
   }
-  ._87f2ru0:after {
+  ._8gph040:after {
     content: \\"Above 700px\\";
   }
 }
@@ -111,54 +111,54 @@ body ._87f2rua {
 `;
 
 exports[`features - vite should create valid stylesheet 1`] = `
-"._1o6ek500 {
+".ro14k60 {
   height: 50px;
 }
-._1o6ek500:after {
+.ro14k60:after {
   content: \\"Below 700px\\";
   display: block;
 }
-._1o6ek501 {
+.ro14k61 {
   background-color: #b0e0e6;
 }
-._1o6ek501:hover {
+.ro14k61:hover {
   background-color: #708090;
 }
-._1o6ek502 {
+.ro14k62 {
   background-color: #b0e0e6;
 }
-._1o6ek502:hover {
+.ro14k62:hover {
   background-color: #708090;
 }
-._1o6ek503 {
+.ro14k63 {
   background-color: #b0e0e6;
 }
-._1o6ek503:hover {
+.ro14k63:hover {
   background-color: #708090;
 }
-._1o6ek505 {
+.ro14k65 {
   color: #fff;
 }
-._1o6ek506 {
+.ro14k66 {
   background-color: #000;
 }
-body ._1o6ek507 {
+body .ro14k67 {
   font-size: 24px;
 }
-._1o6ek508 {
+.ro14k68 {
   color: #fff;
 }
-._1o6ek509 {
+.ro14k69 {
   background-color: #000;
 }
-body ._1o6ek50a {
+body .ro14k6a {
   font-size: 24px;
 }
 @media screen and (min-width: 700px) {
-  ._1o6ek500 {
+  .ro14k60 {
     color: plum;
   }
-  ._1o6ek500:after {
+  .ro14k60:after {
     content: \\"Above 700px\\";
   }
 }
