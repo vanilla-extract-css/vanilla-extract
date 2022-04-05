@@ -13,7 +13,10 @@ interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
 }
-export function vanillaExtractPlugin({ identifiers, cwd = process.cwd() }: Options = {}): Plugin {
+export function vanillaExtractPlugin({
+  identifiers,
+  cwd = process.cwd(),
+}: Options = {}): Plugin {
   const emittedFiles = new Map<string, string>();
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -43,12 +46,11 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd() }: Optio
       });
     },
     async resolveId(id) {
-      // Only handle virtual css modules here
       if (!virtualCssFileFilter.test(id)) {
         return null;
       }
 
-      // Emit the css asset
+      // Emit an asset for every virtual css file
       const { fileName, source } = await getSourceFromVirtualCssFile(id);
       if (!emittedFiles.get(fileName)) {
         const assetId = this.emitFile({
@@ -59,23 +61,29 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd() }: Optio
         emittedFiles.set(fileName, assetId);
       }
 
-      // Resolve to an external chunk
+      // Resolve to a temporary external module
       return {
         id: fileName,
         external: true,
       };
     },
     renderChunk(code, chunkInfo) {
-      // For all imports that we emitted files for...
-      const importsToReplace = chunkInfo.imports.filter((fileName) => emittedFiles.get(fileName));
-      if (!importsToReplace.length) return null;
+      // For all imports in this chunk that we have emitted files for...
+      const importsToReplace = chunkInfo.imports.filter((fileName) =>
+        emittedFiles.get(fileName),
+      );
+      if (!importsToReplace.length) {
+        return null;
+      }
 
-      // Replace css imports in chunks with relative paths to emitted css files
+      // ...replace import paths with relative paths to emitted css files
       const chunkPath = dirname(chunkInfo.fileName);
       return importsToReplace.reduce((codeResult, importPath) => {
         const assetId = emittedFiles.get(importPath)!;
         const assetName = this.getFileName(assetId);
-        const fixedImportPath = `./${normalize(relative(chunkPath, assetName))}`;
+        const fixedImportPath = `./${normalize(
+          relative(chunkPath, assetName),
+        )}`;
         return codeResult.replace(importPath, fixedImportPath);
       }, code);
     },
