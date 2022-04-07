@@ -9,6 +9,7 @@ import type {
   GlobalStyleRule,
   ClassNames,
   ComplexStyleRule,
+  GlobalImportRule,
 } from './types';
 import {
   registerClassName,
@@ -88,6 +89,10 @@ export function composeStyles(...classNames: Array<ClassNames>) {
 
 export function globalStyle(selector: string, rule: GlobalStyleRule) {
   appendCss({ type: 'global', selector, rule }, getFileScope());
+}
+
+export function globalImport(rule: GlobalImportRule) {
+  appendCss({ type: 'import', rule }, getFileScope());
 }
 
 export function fontFace(rule: FontFaceRule, debugId?: string) {

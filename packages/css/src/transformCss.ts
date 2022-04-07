@@ -13,6 +13,7 @@ import type {
   StyleWithSelectors,
   GlobalFontFaceRule,
   CSSSelectorBlock,
+  CSSImportBlock,
   Composition,
 } from './types';
 import { markCompositionUsed } from './adapter';
@@ -94,6 +95,7 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
+  importRules: Array<CSSImportBlock>;
   localClassNameRegex: RegExp | null;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
 
@@ -105,6 +107,7 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
+    this.importRules = [];
     this.localClassNameRegex =
       localClassNames.length > 0
         ? RegExp(`(${localClassNames.map(escapeStringRegexp).join('|')})`, 'g')
@@ -128,6 +131,11 @@ class Stylesheet {
     }
     if (root.type === 'keyframes') {
       this.keyframesRules.push(root);
+
+      return;
+    }
+    if (root.type === 'import') {
+      this.importRules.push(root);
 
       return;
     }
@@ -422,6 +430,13 @@ class Stylesheet {
   toCss() {
     const css: Array<string> = [];
 
+    // Render imports
+    for (const importRule of this.importRules) {
+      css.push(`@import ${importRule.rule.url}${
+        importRule.rule.supportsQuery ? ` supports( ${importRule.rule.supportsQuery} )` : ''
+      }${importRule.rule.mediaQuery ? ` ${importRule.rule.mediaQuery}` : ''};`);
+    }
+    
     // Render font-face rules
     for (const fontFaceRule of this.fontFaceRules) {
       css.push(renderCss({ '@font-face': fontFaceRule }));

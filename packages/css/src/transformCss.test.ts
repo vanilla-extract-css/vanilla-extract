@@ -1488,6 +1488,42 @@ describe('transformCss', () => {
       }"
     `);
   });
+
+  it('should handle imports', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'import',
+            rule: {
+              url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)',
+            },
+          },
+          {
+            type: 'import',
+            rule: {
+              url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)',
+              mediaQuery: 'print'
+            },
+          },
+          {
+            type: 'import',
+            rule: {
+              url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)',
+              supportsQuery: 'display: grid',
+              mediaQuery: 'screen and (orientation:landscape)'
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500);
+      @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500) print;
+      @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500) supports( display: grid ) screen and (orientation:landscape);"
+    `);
+  });
 });
 
 endFileScope();

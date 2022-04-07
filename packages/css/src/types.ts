@@ -63,6 +63,11 @@ export type GlobalStyleRule = CSSPropertiesWithVars &
 export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
   Required<Pick<AtRule.FontFaceFallback, 'src'>>;
 export type FontFaceRule = Omit<GlobalFontFaceRule, 'fontFamily'>;
+export type GlobalImportRule = {
+  url: string;
+  mediaQuery?: string;
+  supportsQuery?: string;
+};
 
 export type CSSStyleBlock = {
   type: 'local';
@@ -87,11 +92,17 @@ export type CSSSelectorBlock = {
   rule: GlobalStyleRule;
 };
 
+export type CSSImportBlock = {
+  type: 'import';
+  rule: GlobalImportRule;
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
-  | CSSSelectorBlock;
+  | CSSSelectorBlock
+  | CSSImportBlock;
 
 export type FileScope = {
   packageName?: string;
