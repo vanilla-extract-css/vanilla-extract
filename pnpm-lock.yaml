@@ -212,7 +212,7 @@ importers:
       '@types/lodash': ^4.14.168
       '@vanilla-extract/css': ^1.6.8
       esbuild: ^0.11.16
-      eval: ^0.1.6
+      eval: 0.1.6
       find-up: ^5.0.0
       javascript-stringify: ^2.0.1
       lodash: ^4.17.21
@@ -230,7 +230,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
-      '@vanilla-extract/webpack-plugin': ^2.1.5
+      '@vanilla-extract/webpack-plugin': ^2.1.7
       browserslist: ^4.19.1
       next: ^12.0.5
     dependencies:
@@ -275,7 +275,7 @@ importers:
   packages/webpack-plugin:
     specifiers:
       '@types/debug': ^4.1.5
-      '@vanilla-extract/integration': ^3.0.0
+      '@vanilla-extract/integration': ^3.0.1
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0

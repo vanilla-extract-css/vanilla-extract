@@ -529,7 +529,7 @@ export const HomePage = () => {
                   <Tweet
                     handle="@okonetchnikov"
                     name="Andrey Okonetchnikov"
-                    avatar="https://pbs.twimg.com/profile_images/1327698924698804226/io9KdHy__400x400.jpg"
+                    avatar="https://pbs.twimg.com/profile_images/1327698924698804226/io9KdHy__200x200.jpg"
                     url="https://twitter.com/okonetchnikov/status/1389450586257514505"
                   >
                     I really don’t want to rework my whole workshop but this is
@@ -540,7 +540,7 @@ export const HomePage = () => {
                   <Tweet
                     handle="@lorvsso"
                     name="Jack Lo Russo"
-                    avatar="https://pbs.twimg.com/profile_images/1407676210419683335/8A9Om8_p_400x400.jpg"
+                    avatar="https://pbs.twimg.com/profile_images/1479290361268695041/QMcVReSQ_200x200.jpg"
                     url="https://twitter.com/lorvsso/status/1375592486182084613"
                   >
                     I love this ✨ The first time I made a decision at work
@@ -551,7 +551,7 @@ export const HomePage = () => {
                   <Tweet
                     handle="@kossnocorp"
                     name="Sasha Koss"
-                    avatar="https://pbs.twimg.com/profile_images/979030533719064576/rD33B86M_400x400.jpg"
+                    avatar="https://pbs.twimg.com/profile_images/979030533719064576/rD33B86M_200x200.jpg"
                     url="https://twitter.com/kossnocorp/status/1390214753352658946"
                   >
                     vanilla-extract is the first CSS-in-JS library that excites

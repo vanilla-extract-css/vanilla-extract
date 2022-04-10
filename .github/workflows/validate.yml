@@ -16,10 +16,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - name: Setup Node.js 14.x
+      - name: Setup Node.js
         uses: actions/setup-node@main
         with:
-          node-version: 14.x
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -46,10 +46,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - name: Setup Node.js 14.x
+      - name: Setup Node.js
         uses: actions/setup-node@main
         with:
-          node-version: 14.x
+          node-version-file: '.nvmrc'
 
       - name: Install Dependencies
         run: pnpm i

@@ -1,5 +1,12 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`5ebca75`](https://github.com/seek-oss/vanilla-extract/commit/5ebca758d18e7d55d0c079c00178cb14e936ac2e)]:
+  - @vanilla-extract/webpack-plugin@2.1.7
+
 ## 0.0.11
 
 ### Patch Changes

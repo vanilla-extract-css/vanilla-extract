@@ -22,10 +22,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
 
-      - name: Setup Node.js 14.x
+      - name: Setup Node.js
         uses: actions/setup-node@main
         with:
-          node-version: 14.x
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install Dependencies
