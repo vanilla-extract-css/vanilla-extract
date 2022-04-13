@@ -110,6 +110,7 @@
     "@emotion/hash": "^0.8.0",
     "@vanilla-extract/private": "^1.0.3",
     "chalk": "^4.1.1",
+    "css-mediaquery": "^0.1.2",
     "css-what": "^5.0.1",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
@@ -119,6 +120,7 @@
     "outdent": "^0.8.0"
   },
   "devDependencies": {
+    "@types/css-mediaquery": "^0.1.1",
     "@types/cssesc": "^3.0.0"
   }
 }
