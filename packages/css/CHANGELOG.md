@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.7.0
+
+### Minor Changes
+
+- [#651](https://github.com/seek-oss/vanilla-extract/pull/651) [`32f309f`](https://github.com/seek-oss/vanilla-extract/commit/32f309faad90e927efc7a277d4208480c8b5122c) Thanks [@amorriscode](https://github.com/amorriscode)! - Add CSS media query validation
+
 ## 1.6.8
 
 ### Patch Changes

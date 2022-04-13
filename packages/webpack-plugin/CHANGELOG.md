@@ -1,5 +1,13 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.8
+
+### Patch Changes
+
+- [#634](https://github.com/seek-oss/vanilla-extract/pull/634) [`69b8460`](https://github.com/seek-oss/vanilla-extract/commit/69b846015ecada3354ea292e1276e5da560923c6) Thanks [@phil-lgr](https://github.com/phil-lgr)! - Add fileName to the CSS virtual loader params
+
+  This allows users to identify the source file for vanilla-extract css imports
+
 ## 2.1.7
 
 ### Patch Changes
