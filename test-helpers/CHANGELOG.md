@@ -1,5 +1,18 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`69b8460`](https://github.com/seek-oss/vanilla-extract/commit/69b846015ecada3354ea292e1276e5da560923c6)]:
+  - @vanilla-extract/webpack-plugin@2.1.8
+  - @fixtures/features@0.0.6
+  - @fixtures/low-level@0.0.6
+  - @fixtures/recipes@0.0.7
+  - @fixtures/sprinkles@0.0.7
+  - @fixtures/themed@0.0.6
+  - @fixtures/unused-modules@1.0.6
+
 ## 0.0.12
 
 ### Patch Changes
