@@ -165,9 +165,11 @@ importers:
   packages/css:
     specifiers:
       '@emotion/hash': ^0.8.0
+      '@types/css-mediaquery': ^0.1.1
       '@types/cssesc': ^3.0.0
       '@vanilla-extract/private': ^1.0.3
       chalk: ^4.1.1
+      css-mediaquery: ^0.1.2
       css-what: ^5.0.1
       cssesc: ^3.0.0
       csstype: ^3.0.7
@@ -179,6 +181,7 @@ importers:
       '@emotion/hash': 0.8.0
       '@vanilla-extract/private': link:../private
       chalk: 4.1.2
+      css-mediaquery: 0.1.2
       css-what: 5.1.0
       cssesc: 3.0.0
       csstype: 3.0.10
@@ -187,6 +190,7 @@ importers:
       escape-string-regexp: 4.0.0
       outdent: 0.8.0
     devDependencies:
+      '@types/css-mediaquery': 0.1.1
       '@types/cssesc': 3.0.0
 
   packages/dynamic:
@@ -2917,6 +2921,10 @@ packages:
       '@types/node': 16.11.10
     dev: false
 
+  /@types/css-mediaquery/0.1.1:
+    resolution: {integrity: sha512-JQ+sPiPlRUHmlL4e3DBUNbxVEb6p7dis78/uSDbQpkeCKVoepChZMWGPIVA2JIH0ylfkA9S+TZUdShlgDpFKrw==}
+    dev: true
+
   /@types/cssesc/3.0.0:
     resolution: {integrity: sha512-4mBnOrTpVKn+tYzlnMO7cwDkDa6wlQ2bBXW+79/6ahMd36GF216kxWYxgz+S4d5Ev1ByFbnQbPGxV4P5BSL8MA==}
     dev: true
@@ -4789,6 +4797,10 @@ packages:
       schema-utils: 3.1.1
       semver: 7.3.5
       webpack: 5.64.2_93fbbb02a3bda170b039a49a61f47e0a
+
+  /css-mediaquery/0.1.2:
+    resolution: {integrity: sha1-aiw3NEkoYYYxxUvTPO3TAdoYvqA=}
+    dev: false
 
   /css-select/4.1.3:
     resolution: {integrity: sha512-gT3wBNd9Nj49rAbmtFHj1cljIAOLYSX1nZ8CB7TBO3INYckygm5B7LISU/szY//YmdiSLbJvDLOx9VnMVpMBxA==}
