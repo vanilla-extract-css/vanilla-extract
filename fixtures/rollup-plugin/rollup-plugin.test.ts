@@ -11,11 +11,14 @@ async function buildAndMatchSnapshot(outputOptions: OutputOptions) {
   const bundle = await rollup(inputOptions);
   const { output } = await bundle.generate(outputOptions);
   output.sort((a, b) => a.fileName.localeCompare(b.fileName));
-  expect(output.map((chunkOrAsset) => ({
-    name: chunkOrAsset.name,
-    fileName: chunkOrAsset.fileName,
-    code: chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
-  }))).toMatchSnapshot();
+  expect(
+    output.map((chunkOrAsset) => ({
+      name: chunkOrAsset.name,
+      fileName: chunkOrAsset.fileName,
+      code:
+        chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
+    })),
+  ).toMatchSnapshot();
   if (bundle) {
     await bundle.close();
   }
@@ -38,7 +41,7 @@ describe('rollup-plugin', () => {
     } as const;
     await buildAndMatchSnapshot(outputOptions);
   });
-  
+
   it('should build with preserveModules and assetFileNames', async () => {
     // Preserve JS modules and place assets next to JS files instead of assets directory
     const outputOptions = {
@@ -51,4 +54,3 @@ describe('rollup-plugin', () => {
     await buildAndMatchSnapshot(outputOptions);
   });
 });
-
