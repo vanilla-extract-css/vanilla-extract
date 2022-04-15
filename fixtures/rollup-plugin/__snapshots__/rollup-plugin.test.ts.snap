@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rollup-plugin should build with preserveModules 1`] = `
+Array [
+  Object {
+    "code": ".Button__rscmzm0 {
+  border-radius: 111px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/Button.css.ts.vanilla-9d92f183.css",
+    "name": "@fixtures/rollup-plugin/src/Button.css.ts.vanilla.css",
+  },
+  Object {
+    "code": ".style__pbyrxo0 {
+  border-radius: 999px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla-e563dbfb.css",
+    "name": "@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla.css",
+  },
+  Object {
+    "code": ".style__1352h0c0 {
+  border-radius: 555px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/style.css.ts.vanilla-4a3e9f3b.css",
+    "name": "@fixtures/rollup-plugin/src/style.css.ts.vanilla.css",
+  },
+  Object {
+    "code": "import './assets/@fixtures/rollup-plugin/src/Button.css.ts.vanilla-9d92f183.css';
+
+var button1 = \\"Button__rscmzm0\\";
+
+export { button1 };
+",
+    "fileName": "Button.css.js",
+    "name": "Button.css",
+  },
+  Object {
+    "code": "import './../assets/@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla-e563dbfb.css';
+
+var button3 = \\"style__pbyrxo0\\";
+
+export { button3 };
+",
+    "fileName": "Button/style.css.js",
+    "name": "style.css",
+  },
+  Object {
+    "code": "export { button1 } from './Button.css.js';
+export { button2 } from './style.css.js';
+export { button3 } from './Button/style.css.js';
+",
+    "fileName": "index.js",
+    "name": "index",
+  },
+  Object {
+    "code": "import './assets/@fixtures/rollup-plugin/src/style.css.ts.vanilla-4a3e9f3b.css';
+
+var button2 = \\"style__1352h0c0\\";
+
+export { button2 };
+",
+    "fileName": "style.css.js",
+    "name": "style.css",
+  },
+]
+`;
+
+exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
+Array [
+  Object {
+    "code": "import './Button.css.ts.vanilla.css';
+
+var button1 = \\"Button__rscmzm0\\";
+
+export { button1 };
+",
+    "fileName": "Button.css.js",
+    "name": "Button.css",
+  },
+  Object {
+    "code": ".Button__rscmzm0 {
+  border-radius: 111px;
+}",
+    "fileName": "Button.css.ts.vanilla.css",
+    "name": "@fixtures/rollup-plugin/src/Button.css.ts.vanilla.css",
+  },
+  Object {
+    "code": "import './style.css.ts.vanilla.css';
+
+var button3 = \\"style__pbyrxo0\\";
+
+export { button3 };
+",
+    "fileName": "Button/style.css.js",
+    "name": "style.css",
+  },
+  Object {
+    "code": ".style__pbyrxo0 {
+  border-radius: 999px;
+}",
+    "fileName": "Button/style.css.ts.vanilla.css",
+    "name": "@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla.css",
+  },
+  Object {
+    "code": "export { button1 } from './Button.css.js';
+export { button2 } from './style.css.js';
+export { button3 } from './Button/style.css.js';
+",
+    "fileName": "index.js",
+    "name": "index",
+  },
+  Object {
+    "code": "import './style.css.ts.vanilla.css';
+
+var button2 = \\"style__1352h0c0\\";
+
+export { button2 };
+",
+    "fileName": "style.css.js",
+    "name": "style.css",
+  },
+  Object {
+    "code": ".style__1352h0c0 {
+  border-radius: 555px;
+}",
+    "fileName": "style.css.ts.vanilla.css",
+    "name": "@fixtures/rollup-plugin/src/style.css.ts.vanilla.css",
+  },
+]
+`;
+
+exports[`rollup-plugin should build without preserveModules 1`] = `
+Array [
+  Object {
+    "code": ".Button__rscmzm0 {
+  border-radius: 111px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/Button.css.ts.vanilla-9d92f183.css",
+    "name": "@fixtures/rollup-plugin/src/Button.css.ts.vanilla.css",
+  },
+  Object {
+    "code": ".style__pbyrxo0 {
+  border-radius: 999px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla-e563dbfb.css",
+    "name": "@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla.css",
+  },
+  Object {
+    "code": ".style__1352h0c0 {
+  border-radius: 555px;
+}",
+    "fileName": "assets/@fixtures/rollup-plugin/src/style.css.ts.vanilla-4a3e9f3b.css",
+    "name": "@fixtures/rollup-plugin/src/style.css.ts.vanilla.css",
+  },
+  Object {
+    "code": "import './assets/@fixtures/rollup-plugin/src/Button.css.ts.vanilla-9d92f183.css';
+import './assets/@fixtures/rollup-plugin/src/style.css.ts.vanilla-4a3e9f3b.css';
+import './assets/@fixtures/rollup-plugin/src/Button/style.css.ts.vanilla-e563dbfb.css';
+
+var button1 = \\"Button__rscmzm0\\";
+
+var button2 = \\"style__1352h0c0\\";
+
+var button3 = \\"style__pbyrxo0\\";
+
+export { button1, button2, button3 };
+",
+    "fileName": "index.js",
+    "name": "index",
+  },
+]
+`;
