@@ -232,6 +232,45 @@ If you don't have a `.babelrc` file in the root of your project, create one. Add
 
 To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-vanilla-extract](https://github.com/gatsby-uc/plugins/tree/main/packages/gatsby-plugin-vanilla-extract) plugin.
 
+## Rollup
+
+1/ Install the dependencies.
+
+```bash
+npm install @vanilla-extract/css @vanilla-extract/rollup-plugin
+```
+
+2/ Add the [Rollup](https://rollupjs.org/) plugin to your Rollup config.
+
+> 💡 This plugin accepts an optional [configuration object](#configuration).
+
+```js
+import { vanillaExtractPlugin } from '@vanilla-extract/rollup-plugin';
+
+// rollup.config.js
+export default {
+  plugins: [vanillaExtractPlugin(), ...]
+}
+```
+
+> Note: This option is useful for library development but not suitable for application bundles.
+> Rollup has no built-in CSS bundling, so this plugin just outputs styles as individual CSS assets.
+> For applications we instead recommend to use Vite
+> (which itself uses Rollup under the hood but comes with its own CSS bundling).
+
+This plugin works well with Rollup's `preserveModules`.
+
+Rollup by default places assets in an "assets" directory.
+You can configure [asset file names](https://rollupjs.org/guide/en/#outputassetfilenames)
+if you care about CSS assets being placed right next to source files.
+
+```js
+  preserveModules: true,
+  assetFileNames({ name }) {
+    return name.replace(new RegExp(`^package-name/src/`), '');
+  },
+```
+
 ## Test environments
 
 1/ Install the dependencies.
