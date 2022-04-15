@@ -234,6 +234,11 @@ To add to your [Gatsby](https://www.gatsbyjs.com) site, use the [gatsby-plugin-v
 
 ## Rollup
 
+> Note: This option is useful for library development but not suitable for application bundles.
+> Rollup has no built-in CSS bundling, so this plugin just outputs styles as individual CSS assets.
+> For applications we instead recommend to use Vite
+> (which itself uses Rollup under the hood but comes with its own CSS bundling).
+
 1/ Install the dependencies.
 
 ```bash
@@ -252,11 +257,6 @@ export default {
   plugins: [vanillaExtractPlugin(), ...]
 }
 ```
-
-> Note: This option is useful for library development but not suitable for application bundles.
-> Rollup has no built-in CSS bundling, so this plugin just outputs styles as individual CSS assets.
-> For applications we instead recommend to use Vite
-> (which itself uses Rollup under the hood but comes with its own CSS bundling).
 
 This plugin works well with Rollup's `preserveModules`.
 
