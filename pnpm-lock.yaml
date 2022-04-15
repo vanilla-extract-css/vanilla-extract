@@ -267,7 +267,7 @@ importers:
   packages/rollup-plugin:
     specifiers:
       '@vanilla-extract/integration': ^3.0.0
-      rollup: ^2.0.0
+      rollup: ^2.7.0
     dependencies:
       '@vanilla-extract/integration': link:../integration
     devDependencies:

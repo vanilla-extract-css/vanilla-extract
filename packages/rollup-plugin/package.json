@@ -18,7 +18,7 @@
     "@vanilla-extract/integration": "^3.0.0"
   },
   "devDependencies": {
-    "rollup": "^2.0.0"
+    "rollup": "^2.7.0"
   },
   "peerDependencies": {
     "rollup": "^2.0.0"
