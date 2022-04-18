@@ -103,7 +103,11 @@ export interface Composition {
   classList: string;
 }
 
-type IdentOption = 'short' | 'debug';
+type IdentOption =
+  | 'short'
+  | 'debug'
+  | ((scope: string, index: number, debugId: string | undefined) => string);
+
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string) => void;

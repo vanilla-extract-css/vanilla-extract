@@ -19,24 +19,46 @@ function getDevPrefix(debugId: string | undefined) {
   return parts.join('_');
 }
 
-export function generateIdentifier(debugId: string | undefined) {
+function generateShortIdentifier(scope: string, index: number) {
   // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter().toString(36);
+  const refCountStr = index.toString(36);
+  const fileScopeHash = hash(scope);
+  return `${fileScopeHash}${refCountStr}`;
+}
+
+function generateDebugIdentifier(
+  scope: string,
+  index: number,
+  debugId: string | undefined,
+) {
+  let identifier = generateShortIdentifier(scope, index);
+  const devPrefix = getDevPrefix(debugId);
+  if (devPrefix) {
+    identifier = `${devPrefix}__${identifier}`;
+  }
+  return identifier;
+}
+
+export function generateIdentifier(debugId: string | undefined) {
+  const refCount = getAndIncrementRefCounter();
   const { filePath, packageName } = getFileScope();
+  const fileScopeStr = packageName ? `${packageName}${filePath}` : filePath;
+  const opt = getIdentOption();
 
-  const fileScopeHash = hash(
-    packageName ? `${packageName}${filePath}` : filePath,
-  );
+  let identifier: string;
+  if (opt === 'short') {
+    identifier = generateShortIdentifier(fileScopeStr, refCount);
+    identifier = identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
+  } else if (opt === 'debug') {
+    identifier = generateDebugIdentifier(fileScopeStr, refCount, debugId);
+    identifier = identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
+  } else {
+    identifier = opt(fileScopeStr, refCount, debugId);
 
-  let identifier = `${fileScopeHash}${refCount}`;
-
-  if (getIdentOption() === 'debug') {
-    const devPrefix = getDevPrefix(debugId);
-
-    if (devPrefix) {
-      identifier = `${devPrefix}__${identifier}`;
+    if (!identifier.match(/^[A-Z_][0-9A-Z_]+$/i)) {
+      throw new Error(`Invalid identifier:"${identifier}"`);
     }
   }
 
-  return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
+  return identifier;
 }
