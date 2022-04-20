@@ -155,7 +155,7 @@ export const vars = createGlobalTheme(':root', {
     heading:
       '"DM Sans", "Helvetica Neue", HelveticaNeue, Helvetica, sans-serif',
     body: '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif',
-    code: 'MonoLisa, "Roboto Mono", Menlo, monospace',
+    code: 'ml, "Roboto Mono", Menlo, monospace',
   },
   grid: px(grid),
   spacing: {
