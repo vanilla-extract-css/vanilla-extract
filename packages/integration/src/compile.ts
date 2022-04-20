@@ -60,7 +60,12 @@ export async function compile({
   }
 
   return {
-    source: outputFiles[0].text,
+    source: outputFiles[0].text
+      .replace(new RegExp('__' + 'filename', 'g'), JSON.stringify(filePath))
+      .replace(
+        new RegExp('__' + 'dirname', 'g'),
+        JSON.stringify(dirname(filePath)),
+      ),
     watchFiles: Object.keys(metafile?.inputs || {}).map((filePath) =>
       join(cwd, filePath),
     ),
