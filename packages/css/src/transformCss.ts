@@ -432,11 +432,17 @@ class Stylesheet {
 
     // Render imports
     for (const importRule of this.importRules) {
-      css.push(`@import ${importRule.rule.url}${
-        importRule.rule.supportsQuery ? ` supports( ${importRule.rule.supportsQuery} )` : ''
-      }${importRule.rule.mediaQuery ? ` ${importRule.rule.mediaQuery}` : ''};`);
+      css.push(
+        `@import ${importRule.rule.url}${
+          importRule.rule.supportsQuery
+            ? ` supports( ${importRule.rule.supportsQuery} )`
+            : ''
+        }${
+          importRule.rule.mediaQuery ? ` ${importRule.rule.mediaQuery}` : ''
+        };`,
+      );
     }
-    
+
     // Render font-face rules
     for (const fontFaceRule of this.fontFaceRules) {
       css.push(renderCss({ '@font-face': fontFaceRule }));

@@ -1505,7 +1505,7 @@ describe('transformCss', () => {
             type: 'import',
             rule: {
               url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)',
-              mediaQuery: 'print'
+              mediaQuery: 'print',
             },
           },
           {
@@ -1513,7 +1513,7 @@ describe('transformCss', () => {
             rule: {
               url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)',
               supportsQuery: 'display: grid',
-              mediaQuery: 'screen and (orientation:landscape)'
+              mediaQuery: 'screen and (orientation:landscape)',
             },
           },
         ],
