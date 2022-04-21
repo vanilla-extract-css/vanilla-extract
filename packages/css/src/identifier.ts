@@ -56,7 +56,7 @@ export function generateIdentifier(debugId: string | undefined) {
     identifier = opt(fileScopeStr, refCount, debugId);
 
     if (!identifier.match(/^[A-Z_][0-9A-Z_]+$/i)) {
-      throw new Error(`Invalid identifier:"${identifier}"`);
+      throw new Error(`Identifier function returned invalid indentifier: "${identifier}"`);
     }
   }
 
