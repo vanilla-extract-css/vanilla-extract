@@ -211,6 +211,20 @@ globalStyle(`${parentClass} > a`, {
 });
 ```
 
+## globalImport
+
+Creates a global [CSS import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import).
+
+```tsx
+// app.css.ts
+
+import { globalImport } from '@vanilla-extract/css';
+
+globalImport({
+  url: 'url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500)'
+});
+```
+
 ## createTheme
 
 Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
