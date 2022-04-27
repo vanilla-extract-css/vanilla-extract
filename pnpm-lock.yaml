@@ -211,6 +211,16 @@ importers:
     devDependencies:
       esbuild: 0.11.23
 
+  packages/fillings:
+    specifiers:
+      '@vanilla-extract/css': ^1.6.8
+      '@vanilla-extract/dynamic': 2.0.2
+      '@vanilla-extract/private': ^1.0.3
+    devDependencies:
+      '@vanilla-extract/css': link:../css
+      '@vanilla-extract/dynamic': link:../dynamic
+      '@vanilla-extract/private': link:../private
+
   packages/integration:
     specifiers:
       '@types/lodash': ^4.14.168
@@ -340,7 +350,7 @@ importers:
       webpack-cli: ^4.6.0
       webpack-node-externals: ^2.5.2
     dependencies:
-      '@capsizecss/vanilla-extract': 1.0.0
+      '@capsizecss/vanilla-extract': 1.0.0_cf1abb0951f542a1b319c501bfbdbab5
       '@mdx-js/react': 1.6.22_react@17.0.2
       classnames: 2.3.1
       lodash: 4.17.21
@@ -1723,12 +1733,13 @@ packages:
     resolution: {integrity: sha512-tJNEWMmhHcU5z6ITAiVNN9z+PCTylybVIJqgX7Ts4zN66fe/W2Fe5UWJCCZIP/5uutsl5fYOaVVHZIjsuTVhBQ==}
     dev: false
 
-  /@capsizecss/vanilla-extract/1.0.0:
+  /@capsizecss/vanilla-extract/1.0.0_cf1abb0951f542a1b319c501bfbdbab5:
     resolution: {integrity: sha512-/cY34CgCAmuf6SmpgPXmDJaIdJOaRe37MsoeZIeZme4k0F0HFts+poTxq4m8UtBH7LRxpUkfUHDoRO9OYjjVBg==}
     peerDependencies:
       '@vanilla-extract/css': ^1.2.1
     dependencies:
       '@capsizecss/core': 3.0.0
+      '@vanilla-extract/css': link:packages/css
     dev: false
 
   /@changesets/apply-release-plan/5.0.2:

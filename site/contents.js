@@ -4,6 +4,7 @@ module.exports = [
   { fileName: 'sprinkles-api.md', id: 'sprinkles-api' },
   { fileName: 'recipes-api.md', id: 'recipes-api' },
   { fileName: 'dynamic-api.md', id: 'dynamic-api' },
+  { fileName: 'fillings-api.md', id: 'fillings-api' },
   { fileName: 'utility-functions.md', id: 'utility-functions' },
   { fileName: 'setup.md', id: 'setup' },
 ];

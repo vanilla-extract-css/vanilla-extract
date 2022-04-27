@@ -1,0 +1,35 @@
+{
+  "name": "@vanilla-extract/fillings",
+  "version": "0.1.0",
+  "description": "Zero-runtime atomic CSS framework for vanilla-extract",
+  "sideEffects": false,
+  "main": "dist/vanilla-extract-fillings.cjs.js",
+  "module": "dist/vanilla-extract-fillings.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/vanilla-extract-fillings.esm.js",
+      "default": "./dist/vanilla-extract-fillings.cjs.js"
+    }
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/fillings"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "peerDependencies": {
+    "@vanilla-extract/css": "^1.0.0",
+    "@vanilla-extract/dynamic": "2.0.2",
+    "@vanilla-extract/private": "^1.0.3"
+  },
+  "devDependencies": {
+    "@vanilla-extract/css": "^1.6.8",
+    "@vanilla-extract/dynamic": "2.0.2",
+    "@vanilla-extract/private": "^1.0.3"
+  }
+}
