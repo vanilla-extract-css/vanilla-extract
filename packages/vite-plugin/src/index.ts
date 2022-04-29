@@ -13,6 +13,7 @@ import {
   parseFileScope,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
+import { BuildOptions as EsbuildOptions } from 'esbuild';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
@@ -21,8 +22,9 @@ const virtualPrefix = 'virtual:vanilla-extract:';
 
 interface Options {
   identifiers?: IdentifierOption;
+  esbuildOptions?: EsbuildOptions;
 }
-export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
+export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let packageInfo: ReturnType<typeof getPackageInfo>;
   let server: ViteDevServer;
@@ -132,6 +134,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       const { source, watchFiles } = await compile({
         filePath: validId,
         cwd: config.root,
+        esbuildOptions,
       });
 
       for (const file of watchFiles) {

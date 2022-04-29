@@ -7,7 +7,7 @@ import {
   vanillaExtractFilescopePlugin,
   IdentifierOption,
 } from '@vanilla-extract/integration';
-import type { Plugin } from 'esbuild';
+import type { Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
@@ -17,6 +17,7 @@ interface VanillaExtractPluginOptions {
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
+  internalEsbuildOptions?: EsbuildOptions;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -24,6 +25,7 @@ export function vanillaExtractPlugin({
   runtime = false,
   processCss,
   identifiers,
+  internalEsbuildOptions,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
@@ -61,6 +63,7 @@ export function vanillaExtractPlugin({
           filePath: path,
           externals,
           cwd: build.initialOptions.absWorkingDir,
+          esbuildOptions: internalEsbuildOptions,
         });
 
         const contents = await processVanillaFile({

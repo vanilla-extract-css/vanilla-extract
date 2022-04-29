@@ -1,7 +1,8 @@
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
+import merge from 'ts-deepmerge';
 
-import { build as esbuild, Plugin } from 'esbuild';
+import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
 import { cssFileFilter } from './filters';
 import { getPackageInfo } from './packageInfo';
@@ -32,17 +33,21 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
   },
 });
 
+
 interface CompileOptions {
   filePath: string;
   cwd?: string;
   externals?: Array<string>;
+  esbuildOptions?: EsbuildOptions;
 }
 export async function compile({
   filePath,
   cwd = process.cwd(),
   externals = [],
+  esbuildOptions,
 }: CompileOptions) {
-  const result = await esbuild({
+
+  const baseOptions: EsbuildOptions = {
     entryPoints: [filePath],
     metafile: true,
     bundle: true,
@@ -51,7 +56,12 @@ export async function compile({
     write: false,
     plugins: [vanillaExtractFilescopePlugin()],
     absWorkingDir: cwd,
-  });
+  };
+
+
+  const resolvedOptions = merge(baseOptions, esbuildOptions ?? {});
+
+  const result = await esbuild(resolvedOptions);
 
   const { outputFiles, metafile } = result;
 

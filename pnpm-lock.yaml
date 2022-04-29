@@ -221,6 +221,7 @@ importers:
       javascript-stringify: ^2.0.1
       lodash: ^4.17.21
       outdent: ^0.8.0
+      ts-deepmerge: ^2.0.1
     dependencies:
       '@vanilla-extract/css': link:../css
       esbuild: 0.11.23
@@ -229,6 +230,7 @@ importers:
       javascript-stringify: 2.1.0
       lodash: 4.17.21
       outdent: 0.8.0
+      ts-deepmerge: 2.0.1
     devDependencies:
       '@types/lodash': 4.14.177
 
@@ -11875,6 +11877,10 @@ packages:
   /trough/1.0.5:
     resolution: {integrity: sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==}
     dev: true
+
+  /ts-deepmerge/2.0.1:
+    resolution: {integrity: sha512-2RpGIE0YVW6blKY756MP74czemC9x4XThhNCxq0A14Owm3ac8tZvigPbpZyZZQSyfOc7Qba5kG5xKBq74ihZfA==}
+    dev: false
 
   /ts-node/10.4.0_a588688dbc7baf701dec5b7cd871f9c5:
     resolution: {integrity: sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==}
