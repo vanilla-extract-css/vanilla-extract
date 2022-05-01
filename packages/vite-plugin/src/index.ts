@@ -75,7 +75,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
       const cssFileId = id.slice(config.root.length + 1);
       const css = cssMap.get(cssFileId);
 
-      if (!css) {
+      if (typeof css !== 'string') {
         return;
       }
 
