@@ -18,7 +18,13 @@
     "@vanilla-extract/integration": "^3.0.0"
   },
   "devDependencies": {
-    "rollup": "^2.7.0"
+    "@fixtures/themed": "*",
+    "@rollup/plugin-json": "^4.1.0",
+    "@vanilla-extract/css": "^1.7.0",
+    "@vanilla-extract/rollup-plugin": "^1.0.0",
+    "esbuild": "^0.11.16",
+    "rollup": "^2.7.0",
+    "rollup-plugin-esbuild": "^4.9.1"
   },
   "peerDependencies": {
     "rollup": "^2.0.0"
