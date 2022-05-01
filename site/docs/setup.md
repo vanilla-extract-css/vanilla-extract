@@ -267,7 +267,7 @@ if you care about CSS assets being placed right next to source files.
 ```js
   preserveModules: true,
   assetFileNames({ name }) {
-    return name.replace(new RegExp(`^package-name/src/`), '');
+    return name.replace(/^package-name\/src/, '');
   },
 ```
 
