@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 4.0.0
+
+### Major Changes
+
+- [#647](https://github.com/seek-oss/vanilla-extract/pull/647) [`3c9b7d9`](https://github.com/seek-oss/vanilla-extract/commit/3c9b7d9f2f7cba8635e7459c36585109b6616636) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Update `addFileScope` to always update and only use file names
+
 ## 3.0.1
 
 ### Patch Changes
