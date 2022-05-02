@@ -156,7 +156,7 @@ importers:
     specifiers:
       '@babel/core': ^7.13.10
       '@babel/template': ^7.12.13
-      '@vanilla-extract/integration': ^3.0.0
+      '@vanilla-extract/integration': ^4.0.0
     dependencies:
       '@babel/core': 7.16.0
       '@babel/template': 7.16.0
@@ -204,7 +204,7 @@ importers:
 
   packages/esbuild-plugin:
     specifiers:
-      '@vanilla-extract/integration': ^3.0.0
+      '@vanilla-extract/integration': ^4.0.0
       esbuild: ^0.11.16
     dependencies:
       '@vanilla-extract/integration': link:../integration
@@ -257,8 +257,8 @@ importers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
       '@vanilla-extract/css': ^1.7.0
-      '@vanilla-extract/integration': ^3.0.0
-      '@vanilla-extract/rollup-plugin': ^1.0.0
+      '@vanilla-extract/integration': ^4.0.0
+      '@vanilla-extract/rollup-plugin': ^1.0.1
       esbuild: ^0.11.16
       rollup: ^2.7.0
       rollup-plugin-esbuild: ^4.9.1
@@ -284,7 +284,7 @@ importers:
 
   packages/vite-plugin:
     specifiers:
-      '@vanilla-extract/integration': ^3.0.0
+      '@vanilla-extract/integration': ^4.0.0
       outdent: ^0.8.0
       postcss: ^8.3.6
       postcss-load-config: ^3.1.0
@@ -300,7 +300,7 @@ importers:
   packages/webpack-plugin:
     specifiers:
       '@types/debug': ^4.1.5
-      '@vanilla-extract/integration': ^3.0.1
+      '@vanilla-extract/integration': ^4.0.0
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0
