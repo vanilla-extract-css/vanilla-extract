@@ -1,6 +1,5 @@
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
-import deepmerge from 'deepmerge';
 
 import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
@@ -33,30 +32,25 @@ interface CompileOptions {
   filePath: string;
   cwd?: string;
   externals?: Array<string>;
-  esbuildOptions?: EsbuildOptions;
+  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
 }
 export async function compile({
   filePath,
   cwd = process.cwd(),
-  externals = [],
   esbuildOptions,
 }: CompileOptions) {
-
-  const baseOptions: EsbuildOptions = {
+  const result = await esbuild({
     entryPoints: [filePath],
     metafile: true,
     bundle: true,
-    external: ['@vanilla-extract', ...externals],
+    external: ['@vanilla-extract', ...(esbuildOptions?.external ?? [])],
     platform: 'node',
     write: false,
-    plugins: [vanillaExtractFilescopePlugin()],
+    plugins: [vanillaExtractFilescopePlugin(), ...(esbuildOptions?.plugins ?? [])],
     absWorkingDir: cwd,
-  };
-
-
-  const resolvedOptions = esbuildOptions ? deepmerge(baseOptions, esbuildOptions) : baseOptions;
-
-  const result = await esbuild(resolvedOptions);
+    loader: esbuildOptions?.loader,
+    define: esbuildOptions?.define,
+  });
 
   const { outputFiles, metafile } = result;
 

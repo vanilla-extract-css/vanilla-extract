@@ -18,7 +18,7 @@ const styleUpdateEvent = (fileId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
-  esbuildOptions?: EsbuildOptions;
+  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
 }
 export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = {}): Plugin {
   let config: ResolvedConfig;

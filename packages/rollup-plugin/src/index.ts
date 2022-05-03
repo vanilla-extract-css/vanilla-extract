@@ -13,7 +13,7 @@ import { BuildOptions as EsbuildOptions } from 'esbuild';
 interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
-  esbuildOptions?: EsbuildOptions;
+  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
 }
 export function vanillaExtractPlugin({
   identifiers,
