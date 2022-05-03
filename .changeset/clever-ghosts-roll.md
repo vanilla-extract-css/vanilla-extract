@@ -1,8 +1,7 @@
 ---
-"@vanilla-extract/esbuild-plugin": patch
-"@vanilla-extract/integration": patch
-"@vanilla-extract/vite-plugin": patch
-"site": patch
+"@vanilla-extract/esbuild-plugin": minor
+"@vanilla-extract/integration": minor
+"@vanilla-extract/vite-plugin": minor
 ---
 
-Add esbuild configuration
+Add esbuild configurations to vite/esbuild/rollup plugins
