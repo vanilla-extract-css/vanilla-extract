@@ -393,13 +393,10 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
-### esbuildOptions (Vite)
-The Vite plugin uses esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
+### esbuildOptions
+> Only for `esbuild`, `vite` and `rollup` plugins
 
-Accepts an esbuild build options object: https://esbuild.github.io/api/#build-api which is deep merged with the default options.
-
-### internalEsbuildOptions (Vite)
-The esbuild plugin uses esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
+The `vite`, `esbuild` and `rollup` plugins use esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
 
 Accepts an esbuild build options object: https://esbuild.github.io/api/#build-api which is deep merged with the default options.
 
