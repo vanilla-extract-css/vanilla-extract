@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 3.1.5
+
+### Patch Changes
+
+- [#647](https://github.com/seek-oss/vanilla-extract/pull/647) [`3c9b7d9`](https://github.com/seek-oss/vanilla-extract/commit/3c9b7d9f2f7cba8635e7459c36585109b6616636) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Use more realistic file paths for virtual CSS files
+
+- Updated dependencies [[`3c9b7d9`](https://github.com/seek-oss/vanilla-extract/commit/3c9b7d9f2f7cba8635e7459c36585109b6616636)]:
+  - @vanilla-extract/integration@4.0.0
+
 ## 3.1.4
 
 ### Patch Changes

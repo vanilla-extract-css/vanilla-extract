@@ -1,0 +1,713 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rollup-plugin should build with preserveModules 1`] = `
+Array [
+  Array [
+    "assets/src/shared.css.ts.vanilla-82a38ac6.css",
+    ".shared__9k2war0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}",
+  ],
+  Array [
+    "assets/src/styles.css.ts.vanilla-3addedd5.css",
+    "@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles__g7vce90\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+.styles__g7vce91 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__6cbmls4);
+  padding: var(--space-3__6cbmls5);
+}
+.styles__g7vce92 {
+  z-index: 1;
+  position: relative;
+}
+.styles__g7vce93 {
+  font-family: \\"styles__g7vce90\\";
+  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__6cbmls2);
+  border-radius: 9999px;
+}
+.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles__g7vce92:after {
+  content: 'I am content';
+}
+html .styles_1\\\\/2__g7vce96 {
+  opacity: var(--g7vce94, 0.5);
+}
+html .styles_1\\\\/4__g7vce97 {
+  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles__g7vce91 {
+    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  }
+  .styles__g7vce93 {
+    padding: var(--space-1__6cbmls3);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles__g7vce93 {
+    padding: var(--space-2__6cbmls4);
+  }
+}",
+  ],
+  Array [
+    "assets/src/themes.css.ts.vanilla-becd40aa.css",
+    ":root, .themes__6cbmls0 {
+  --colors-backgroundColor__6cbmls1: blue;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 4px;
+  --space-2__6cbmls4: 8px;
+  --space-3__6cbmls5: 12px;
+}
+.themes__6cbmls6 {
+  --colors-backgroundColor__6cbmls1: green;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 8px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 16px;
+}
+.themes__6cbmls7 {
+  --colors-backgroundColor__6cbmls1: pink;
+  --colors-text__6cbmls2: purple;
+  --space-1__6cbmls3: 6px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__6cbmls7 {
+    --colors-backgroundColor__6cbmls1: purple;
+    --colors-text__6cbmls2: pink;
+  }
+}",
+  ],
+  Array [
+    "src/index.js",
+    "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
+import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
+import { container, button, opacity } from './styles.css.js';
+import { shadow } from './shared.css.js';
+import testNodes from '../test-nodes.json.js';
+
+const inlineTheme = assignInlineVars(vars, {
+  colors: {
+    backgroundColor: \\"orange\\",
+    text: \\"black\\"
+  },
+  space: {
+    1: \\"4px\\",
+    2: \\"8px\\",
+    3: \\"12px\\"
+  }
+});
+function render() {
+  document.body.innerHTML = \`
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+    Root theme
+    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
+      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
+      <div class=\\"\${altTheme}\\"> 
+        Alt theme
+        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
+          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
+          <div class=\\"\${theme}\\"> 
+            Back to root theme
+            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
+              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
+            <div style=\\"\${inlineTheme}\\">
+              Inline theme
+                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
+                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
+                  <div class=\\"\${responsiveTheme}\\">
+              Responsive theme
+                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  if (!dynamicVarsContainer) {
+    throw new Error(\\"Dynamic vars container not found.\\");
+  }
+  setElementVars(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: \\"transparent\\",
+      text: \\"papayawhip\\"
+    },
+    space: {
+      1: \\"5px\\",
+      2: \\"10px\\",
+      3: \\"15px\\"
+    }
+  });
+  setElementVars(dynamicVarsContainer, {
+    [vars.colors.backgroundColor]: \\"darksalmon\\"
+  });
+}
+render();
+",
+  ],
+  Array [
+    "src/shared.css.js",
+    "import './../assets/src/shared.css.ts.vanilla-82a38ac6.css';
+
+var shadow = \\"shared__9k2war0\\";
+
+export { shadow };
+",
+  ],
+  Array [
+    "src/styles.css.js",
+    "import './../assets/src/shared.css.ts.vanilla-82a38ac6.css';
+import './../assets/src/themes.css.ts.vanilla-becd40aa.css';
+import './../assets/src/styles.css.ts.vanilla-3addedd5.css';
+
+var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
+var container = \\"styles__g7vce91\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+
+export { button, container, opacity };
+",
+  ],
+  Array [
+    "src/themes.css.js",
+    "import './../assets/src/themes.css.ts.vanilla-becd40aa.css';
+
+var altTheme = \\"themes__6cbmls6\\";
+var responsiveTheme = \\"themes__6cbmls7\\";
+var theme = \\"themes__6cbmls0\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
+
+export { altTheme, responsiveTheme, theme, vars };
+",
+  ],
+  Array [
+    "test-nodes.json.js",
+    "var root = \\"root\\";
+var rootContainer = \\"rootContainer\\";
+var rootButton = \\"rootButton\\";
+var altContainer = \\"altContainer\\";
+var altButton = \\"altButton\\";
+var nestedRootContainer = \\"nestedRootContainer\\";
+var nestedRootButton = \\"nestedRootButton\\";
+var inlineThemeContainer = \\"inlineThemeContainer\\";
+var inlineThemeButton = \\"inlineThemeButton\\";
+var dynamicVarsContainer = \\"dynamicVarsContainer\\";
+var dynamicVarsButton = \\"dynamicVarsButton\\";
+var responsiveThemeContainer = \\"responsiveThemeContainer\\";
+var responsiveThemeButton = \\"responsiveThemeButton\\";
+var testNodes = {
+	root: root,
+	rootContainer: rootContainer,
+	rootButton: rootButton,
+	altContainer: altContainer,
+	altButton: altButton,
+	nestedRootContainer: nestedRootContainer,
+	nestedRootButton: nestedRootButton,
+	inlineThemeContainer: inlineThemeContainer,
+	inlineThemeButton: inlineThemeButton,
+	dynamicVarsContainer: dynamicVarsContainer,
+	dynamicVarsButton: dynamicVarsButton,
+	responsiveThemeContainer: responsiveThemeContainer,
+	responsiveThemeButton: responsiveThemeButton
+};
+
+export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
+",
+  ],
+]
+`;
+
+exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
+Array [
+  Array [
+    "src/index.js",
+    "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
+import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
+import { container, button, opacity } from './styles.css.js';
+import { shadow } from './shared.css.js';
+import testNodes from '../test-nodes.json.js';
+
+const inlineTheme = assignInlineVars(vars, {
+  colors: {
+    backgroundColor: \\"orange\\",
+    text: \\"black\\"
+  },
+  space: {
+    1: \\"4px\\",
+    2: \\"8px\\",
+    3: \\"12px\\"
+  }
+});
+function render() {
+  document.body.innerHTML = \`
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+    Root theme
+    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
+      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
+      <div class=\\"\${altTheme}\\"> 
+        Alt theme
+        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
+          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
+          <div class=\\"\${theme}\\"> 
+            Back to root theme
+            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
+              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
+            <div style=\\"\${inlineTheme}\\">
+              Inline theme
+                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
+                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
+                  <div class=\\"\${responsiveTheme}\\">
+              Responsive theme
+                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  if (!dynamicVarsContainer) {
+    throw new Error(\\"Dynamic vars container not found.\\");
+  }
+  setElementVars(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: \\"transparent\\",
+      text: \\"papayawhip\\"
+    },
+    space: {
+      1: \\"5px\\",
+      2: \\"10px\\",
+      3: \\"15px\\"
+    }
+  });
+  setElementVars(dynamicVarsContainer, {
+    [vars.colors.backgroundColor]: \\"darksalmon\\"
+  });
+}
+render();
+",
+  ],
+  Array [
+    "src/shared.css.js",
+    "import './shared.css.ts.vanilla.css';
+
+var shadow = \\"shared__9k2war0\\";
+
+export { shadow };
+",
+  ],
+  Array [
+    "src/shared.css.ts.vanilla.css",
+    ".shared__9k2war0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}",
+  ],
+  Array [
+    "src/styles.css.js",
+    "import './shared.css.ts.vanilla.css';
+import './themes.css.ts.vanilla.css';
+import './styles.css.ts.vanilla.css';
+
+var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
+var container = \\"styles__g7vce91\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+
+export { button, container, opacity };
+",
+  ],
+  Array [
+    "src/styles.css.ts.vanilla.css",
+    "@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles__g7vce90\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+.styles__g7vce91 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__6cbmls4);
+  padding: var(--space-3__6cbmls5);
+}
+.styles__g7vce92 {
+  z-index: 1;
+  position: relative;
+}
+.styles__g7vce93 {
+  font-family: \\"styles__g7vce90\\";
+  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__6cbmls2);
+  border-radius: 9999px;
+}
+.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles__g7vce92:after {
+  content: 'I am content';
+}
+html .styles_1\\\\/2__g7vce96 {
+  opacity: var(--g7vce94, 0.5);
+}
+html .styles_1\\\\/4__g7vce97 {
+  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles__g7vce91 {
+    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  }
+  .styles__g7vce93 {
+    padding: var(--space-1__6cbmls3);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles__g7vce93 {
+    padding: var(--space-2__6cbmls4);
+  }
+}",
+  ],
+  Array [
+    "src/themes.css.js",
+    "import './themes.css.ts.vanilla.css';
+
+var altTheme = \\"themes__6cbmls6\\";
+var responsiveTheme = \\"themes__6cbmls7\\";
+var theme = \\"themes__6cbmls0\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
+
+export { altTheme, responsiveTheme, theme, vars };
+",
+  ],
+  Array [
+    "src/themes.css.ts.vanilla.css",
+    ":root, .themes__6cbmls0 {
+  --colors-backgroundColor__6cbmls1: blue;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 4px;
+  --space-2__6cbmls4: 8px;
+  --space-3__6cbmls5: 12px;
+}
+.themes__6cbmls6 {
+  --colors-backgroundColor__6cbmls1: green;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 8px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 16px;
+}
+.themes__6cbmls7 {
+  --colors-backgroundColor__6cbmls1: pink;
+  --colors-text__6cbmls2: purple;
+  --space-1__6cbmls3: 6px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__6cbmls7 {
+    --colors-backgroundColor__6cbmls1: purple;
+    --colors-text__6cbmls2: pink;
+  }
+}",
+  ],
+  Array [
+    "test-nodes.json.js",
+    "var root = \\"root\\";
+var rootContainer = \\"rootContainer\\";
+var rootButton = \\"rootButton\\";
+var altContainer = \\"altContainer\\";
+var altButton = \\"altButton\\";
+var nestedRootContainer = \\"nestedRootContainer\\";
+var nestedRootButton = \\"nestedRootButton\\";
+var inlineThemeContainer = \\"inlineThemeContainer\\";
+var inlineThemeButton = \\"inlineThemeButton\\";
+var dynamicVarsContainer = \\"dynamicVarsContainer\\";
+var dynamicVarsButton = \\"dynamicVarsButton\\";
+var responsiveThemeContainer = \\"responsiveThemeContainer\\";
+var responsiveThemeButton = \\"responsiveThemeButton\\";
+var testNodes = {
+	root: root,
+	rootContainer: rootContainer,
+	rootButton: rootButton,
+	altContainer: altContainer,
+	altButton: altButton,
+	nestedRootContainer: nestedRootContainer,
+	nestedRootButton: nestedRootButton,
+	inlineThemeContainer: inlineThemeContainer,
+	inlineThemeButton: inlineThemeButton,
+	dynamicVarsContainer: dynamicVarsContainer,
+	dynamicVarsButton: dynamicVarsButton,
+	responsiveThemeContainer: responsiveThemeContainer,
+	responsiveThemeButton: responsiveThemeButton
+};
+
+export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
+",
+  ],
+]
+`;
+
+exports[`rollup-plugin should build without preserveModules 1`] = `
+Array [
+  Array [
+    "assets/src/shared.css.ts.vanilla-82a38ac6.css",
+    ".shared__9k2war0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}",
+  ],
+  Array [
+    "assets/src/styles.css.ts.vanilla-3addedd5.css",
+    "@font-face {
+  src: local(\\"Impact\\");
+  font-family: \\"styles__g7vce90\\";
+}
+@font-face {
+  src: local(\\"Comic Sans MS\\");
+  font-family: MyGlobalComicSans;
+}
+.styles__g7vce91 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__6cbmls4);
+  padding: var(--space-3__6cbmls5);
+}
+.styles__g7vce92 {
+  z-index: 1;
+  position: relative;
+}
+.styles__g7vce93 {
+  font-family: \\"styles__g7vce90\\";
+  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__6cbmls2);
+  border-radius: 9999px;
+}
+.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles__g7vce92:after {
+  content: 'I am content';
+}
+html .styles_1\\\\/2__g7vce96 {
+  opacity: var(--g7vce94, 0.5);
+}
+html .styles_1\\\\/4__g7vce97 {
+  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles__g7vce91 {
+    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  }
+  .styles__g7vce93 {
+    padding: var(--space-1__6cbmls3);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles__g7vce93 {
+    padding: var(--space-2__6cbmls4);
+  }
+}",
+  ],
+  Array [
+    "assets/src/themes.css.ts.vanilla-becd40aa.css",
+    ":root, .themes__6cbmls0 {
+  --colors-backgroundColor__6cbmls1: blue;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 4px;
+  --space-2__6cbmls4: 8px;
+  --space-3__6cbmls5: 12px;
+}
+.themes__6cbmls6 {
+  --colors-backgroundColor__6cbmls1: green;
+  --colors-text__6cbmls2: white;
+  --space-1__6cbmls3: 8px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 16px;
+}
+.themes__6cbmls7 {
+  --colors-backgroundColor__6cbmls1: pink;
+  --colors-text__6cbmls2: purple;
+  --space-1__6cbmls3: 6px;
+  --space-2__6cbmls4: 12px;
+  --space-3__6cbmls5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__6cbmls7 {
+    --colors-backgroundColor__6cbmls1: purple;
+    --colors-text__6cbmls2: pink;
+  }
+}",
+  ],
+  Array [
+    "index.js",
+    "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
+import './assets/src/themes.css.ts.vanilla-becd40aa.css';
+import './assets/src/shared.css.ts.vanilla-82a38ac6.css';
+import './assets/src/styles.css.ts.vanilla-3addedd5.css';
+
+var altTheme = \\"themes__6cbmls6\\";
+var responsiveTheme = \\"themes__6cbmls7\\";
+var theme = \\"themes__6cbmls0\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
+
+var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
+var container = \\"styles__g7vce91\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+
+var shadow = \\"shared__9k2war0\\";
+
+var root = \\"root\\";
+var rootContainer = \\"rootContainer\\";
+var rootButton = \\"rootButton\\";
+var altContainer = \\"altContainer\\";
+var altButton = \\"altButton\\";
+var nestedRootContainer = \\"nestedRootContainer\\";
+var nestedRootButton = \\"nestedRootButton\\";
+var inlineThemeContainer = \\"inlineThemeContainer\\";
+var inlineThemeButton = \\"inlineThemeButton\\";
+var dynamicVarsContainer = \\"dynamicVarsContainer\\";
+var dynamicVarsButton = \\"dynamicVarsButton\\";
+var responsiveThemeContainer = \\"responsiveThemeContainer\\";
+var responsiveThemeButton = \\"responsiveThemeButton\\";
+var testNodes = {
+	root: root,
+	rootContainer: rootContainer,
+	rootButton: rootButton,
+	altContainer: altContainer,
+	altButton: altButton,
+	nestedRootContainer: nestedRootContainer,
+	nestedRootButton: nestedRootButton,
+	inlineThemeContainer: inlineThemeContainer,
+	inlineThemeButton: inlineThemeButton,
+	dynamicVarsContainer: dynamicVarsContainer,
+	dynamicVarsButton: dynamicVarsButton,
+	responsiveThemeContainer: responsiveThemeContainer,
+	responsiveThemeButton: responsiveThemeButton
+};
+
+const inlineTheme = assignInlineVars(vars, {
+  colors: {
+    backgroundColor: \\"orange\\",
+    text: \\"black\\"
+  },
+  space: {
+    1: \\"4px\\",
+    2: \\"8px\\",
+    3: \\"12px\\"
+  }
+});
+function render() {
+  document.body.innerHTML = \`
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+    Root theme
+    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
+      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
+      <div class=\\"\${altTheme}\\"> 
+        Alt theme
+        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
+          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
+          <div class=\\"\${theme}\\"> 
+            Back to root theme
+            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
+              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
+            <div style=\\"\${inlineTheme}\\">
+              Inline theme
+                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
+                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
+                  <div class=\\"\${responsiveTheme}\\">
+              Responsive theme
+                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
+                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  if (!dynamicVarsContainer) {
+    throw new Error(\\"Dynamic vars container not found.\\");
+  }
+  setElementVars(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: \\"transparent\\",
+      text: \\"papayawhip\\"
+    },
+    space: {
+      1: \\"5px\\",
+      2: \\"10px\\",
+      3: \\"15px\\"
+    }
+  });
+  setElementVars(dynamicVarsContainer, {
+    [vars.colors.backgroundColor]: \\"darksalmon\\"
+  });
+}
+render();
+",
+  ],
+]
+`;

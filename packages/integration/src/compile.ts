@@ -5,30 +5,25 @@ import merge from 'ts-deepmerge';
 import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
 import { cssFileFilter } from './filters';
-import { getPackageInfo } from './packageInfo';
 import { addFileScope } from './addFileScope';
 
 export const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
-    const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
-
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      const { source, updated } = addFileScope({
+      const source = addFileScope({
         source: originalSource,
         filePath: path,
-        packageInfo,
+        rootPath: build.initialOptions.absWorkingDir!,
       });
 
-      if (updated) {
-        return {
-          contents: source,
-          loader: path.match(/\.(ts|tsx)$/i) ? 'ts' : undefined,
-          resolveDir: dirname(path),
-        };
-      }
+      return {
+        contents: source,
+        loader: path.match(/\.(ts|tsx)$/i) ? 'ts' : undefined,
+        resolveDir: dirname(path),
+      };
     });
   },
 });

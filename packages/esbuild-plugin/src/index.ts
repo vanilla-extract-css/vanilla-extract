@@ -1,3 +1,5 @@
+import { dirname, join } from 'path';
+
 import {
   cssFileFilter,
   virtualCssFileFilter,
@@ -45,15 +47,20 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          let { source } = await getSourceFromVirtualCssFile(path);
+          let { source, fileName } = await getSourceFromVirtualCssFile(path);
 
           if (typeof processCss === 'function') {
             source = await processCss(source);
           }
 
+          const rootDir = build.initialOptions.absWorkingDir ?? process.cwd();
+
+          const resolveDir = dirname(join(rootDir, fileName));
+
           return {
             contents: source,
             loader: 'css',
+            resolveDir,
           };
         },
       );
