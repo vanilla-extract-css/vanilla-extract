@@ -19,7 +19,7 @@ interface VanillaExtractPluginOptions {
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
-  internalEsbuildOptions?: EsbuildOptions;
+  esbuildOptions?: EsbuildOptions;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -27,7 +27,7 @@ export function vanillaExtractPlugin({
   runtime = false,
   processCss,
   identifiers,
-  internalEsbuildOptions,
+  esbuildOptions,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
@@ -70,7 +70,7 @@ export function vanillaExtractPlugin({
           filePath: path,
           externals,
           cwd: build.initialOptions.absWorkingDir,
-          esbuildOptions: internalEsbuildOptions,
+          esbuildOptions: esbuildOptions,
         });
 
         const contents = await processVanillaFile({
