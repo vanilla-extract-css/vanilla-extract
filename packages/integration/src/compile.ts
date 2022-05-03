@@ -1,6 +1,6 @@
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
-import merge from 'ts-deepmerge';
+import deepmerge from 'deepmerge';
 
 import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
@@ -54,7 +54,7 @@ export async function compile({
   };
 
 
-  const resolvedOptions = merge(baseOptions, esbuildOptions ?? {});
+  const resolvedOptions = esbuildOptions ? deepmerge(baseOptions, esbuildOptions) : baseOptions;
 
   const result = await esbuild(resolvedOptions);
 

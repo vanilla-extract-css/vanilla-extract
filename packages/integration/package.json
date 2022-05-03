@@ -21,7 +21,7 @@
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
     "outdent": "^0.8.0",
-    "ts-deepmerge": "^2.0.1"
+    "deepmerge": "^4.2.2"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168"
