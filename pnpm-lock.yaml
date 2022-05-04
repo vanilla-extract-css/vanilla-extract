@@ -215,11 +215,9 @@ importers:
     specifiers:
       '@vanilla-extract/css': ^1.6.8
       '@vanilla-extract/dynamic': 2.0.2
-      '@vanilla-extract/private': ^1.0.3
     devDependencies:
       '@vanilla-extract/css': link:../css
       '@vanilla-extract/dynamic': link:../dynamic
-      '@vanilla-extract/private': link:../private
 
   packages/integration:
     specifiers:
@@ -498,6 +496,7 @@ importers:
       '@vanilla-extract-private/test-helpers': '*'
       '@vanilla-extract/css': '*'
       '@vanilla-extract/dynamic': '*'
+      '@vanilla-extract/fillings': '*'
       '@vanilla-extract/recipes': '*'
       '@vanilla-extract/sprinkles': '*'
     dependencies:
@@ -507,6 +506,7 @@ importers:
       '@vanilla-extract-private/test-helpers': link:../test-helpers
       '@vanilla-extract/css': link:../packages/css
       '@vanilla-extract/dynamic': link:../packages/dynamic
+      '@vanilla-extract/fillings': link:../packages/fillings
       '@vanilla-extract/recipes': link:../packages/recipes
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
 
@@ -3953,6 +3953,7 @@ packages:
 
   /bindings/1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: false
@@ -6054,6 +6055,7 @@ packages:
 
   /file-uri-to-path/1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -8764,6 +8766,7 @@ packages:
 
   /nan/2.15.0:
     resolution: {integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==}
+    requiresBuild: true
     dev: false
     optional: true
 
