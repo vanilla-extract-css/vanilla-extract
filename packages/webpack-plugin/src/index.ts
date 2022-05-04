@@ -1,8 +1,4 @@
-import {
-  cssFileFilter,
-  IdentifierOption,
-  getPackageInfo,
-} from '@vanilla-extract/integration';
+import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
 
 import { ChildCompiler } from './compiler';
@@ -99,7 +95,6 @@ export class VanillaExtractPlugin {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,
             identifiers: this.identifiers,
-            packageInfo: getPackageInfo(compiler.context),
           },
         },
       ],
