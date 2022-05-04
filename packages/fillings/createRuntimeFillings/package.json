@@ -1,0 +1,4 @@
+{
+  "main": "dist/vanilla-extract-fillings-createRuntimeFillings.cjs.js",
+  "module": "dist/vanilla-extract-fillings-createRuntimeFillings.esm.js"
+}

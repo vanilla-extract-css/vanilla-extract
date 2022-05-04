@@ -1,5 +1,8 @@
 import { CSSProperties } from '@vanilla-extract/css';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import type { CSSVarFunction } from '@vanilla-extract/private';
+
+// Config
 
 type Condition =
   | {
@@ -24,12 +27,12 @@ type ConditionalProperty<Conditions extends BaseConditions> = Record<
   PropertyDefinition
 >;
 
-export type Fillings<PropertyName extends string> = {
+export type FillingsConfig<PropertyName extends string> = {
   properties: readonly PropertyName[];
   definitions: Record<PropertyName, PropertyDefinition>;
 };
 
-export type ConditionalFillings<
+export type ConditionalFillingsConfig<
   Conditions extends BaseConditions,
   PropertyName extends string,
 > = {
@@ -37,6 +40,8 @@ export type ConditionalFillings<
   definitions: Record<PropertyName, ConditionalProperty<Conditions>>;
   defaultCondition: keyof Conditions;
 };
+
+// Props
 
 type ComputeProps<PropertyName extends string> =
   PropertyName extends keyof CSSProperties
@@ -52,13 +57,35 @@ type ComputeConditionalProps<
       | CSSProperties[PropertyName]
   : Partial<Record<keyof Conditions, string>> | string;
 
-export type FillingsProps<Filling> = Filling extends ConditionalFillings<
-  infer Conditions,
-  infer PropertyName
+export type ComputeFillingsProps<Config> =
+  Config extends ConditionalFillingsConfig<infer Conditions, infer PropertyName>
+    ? Partial<
+        Record<PropertyName, ComputeConditionalProps<Conditions, PropertyName>>
+      >
+    : Config extends FillingsConfig<infer PropertyName>
+    ? Partial<Record<PropertyName, ComputeProps<PropertyName>>>
+    : never;
+
+// Runtime function
+
+type FillingsReturn = {
+  className: string;
+  assignVars(): ReturnType<typeof assignInlineVars>;
+};
+
+export type FillingsFn<Config> = Config extends ConditionalFillingsConfig<
+  BaseConditions,
+  string
 >
-  ? Partial<
-      Record<PropertyName, ComputeConditionalProps<Conditions, PropertyName>>
-    >
-  : Filling extends Fillings<infer PropertyName>
-  ? Partial<Record<PropertyName, ComputeProps<PropertyName>>>
+  ? (
+      props: ComputeFillingsProps<Config>,
+    ) => FillingsReturn & { properties: Config['properties'] }
+  : Config extends FillingsConfig<string>
+  ? (
+      props: ComputeFillingsProps<Config>,
+    ) => FillingsReturn & { properties: Config['properties'] }
+  : never;
+
+export type FillingsProps<Fn> = Fn extends FillingsFn<infer Config>
+  ? ComputeFillingsProps<Config>
   : never;

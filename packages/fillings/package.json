@@ -10,11 +10,22 @@
     ".": {
       "module": "./dist/vanilla-extract-fillings.esm.js",
       "default": "./dist/vanilla-extract-fillings.cjs.js"
+    },
+    "./createRuntimeFillings": {
+      "module": "./createRuntimeFillings/dist/vanilla-extract-recipes-createRuntimeFillings.esm.js",
+      "default": "./createRuntimeFillings/dist/vanilla-extract-recipes-createRuntimeFillings.cjs.js"
     }
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/createRuntimeFillings"
   ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "createRuntimeFillings.ts"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
