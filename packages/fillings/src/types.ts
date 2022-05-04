@@ -1,6 +1,5 @@
-import { CSSProperties } from '@vanilla-extract/css';
+import { createVar, CSSProperties } from '@vanilla-extract/css';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import type { CSSVarFunction } from '@vanilla-extract/private';
 
 // Config
 
@@ -14,6 +13,8 @@ type Condition =
   | {
       selector: string;
     };
+
+export type CSSVarFunction = ReturnType<typeof createVar>;
 
 export type BaseConditions = Record<string, Condition>;
 

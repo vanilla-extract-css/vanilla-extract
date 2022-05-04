@@ -1,9 +1,9 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import type { CSSVarFunction } from '@vanilla-extract/private';
 
 import type {
   BaseConditions,
   ConditionalFillingsConfig,
+  CSSVarFunction,
   FillingsConfig,
   FillingsFn,
   ComputeFillingsProps,
