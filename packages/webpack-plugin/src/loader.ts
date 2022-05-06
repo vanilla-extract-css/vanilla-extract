@@ -6,6 +6,7 @@ import {
   processVanillaFile,
   addFileScope,
   serializeCss,
+  getPackageInfo,
 } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
@@ -35,10 +36,13 @@ interface InternalLoaderOptions extends LoaderOptions {
 export default function (this: LoaderContext, source: string) {
   this.cacheable(true);
 
+  const { name } = getPackageInfo(this.rootContext);
+
   return addFileScope({
     source,
     filePath: this.resourcePath,
     rootPath: this.rootContext,
+    packageName: name,
   });
 }
 
@@ -80,7 +84,7 @@ export function pitch(this: LoaderContext) {
         serializeVirtualCssPath: async ({ fileName, source }) => {
           const serializedCss = await serializeCss(source);
           const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
-            fileName: fileName,
+            fileName,
             source: serializedCss,
           })}`;
 

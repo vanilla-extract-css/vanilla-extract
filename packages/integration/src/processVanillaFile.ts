@@ -110,11 +110,7 @@ export async function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    const fileName = `${
-      fileScope.packageName
-        ? `${fileScope.packageName}/${fileScope.filePath}`
-        : fileScope.filePath
-    }.vanilla.css`;
+    const fileName = `${fileScope.filePath}.vanilla.css`;
 
     let virtualCssFilePath: string;
 
