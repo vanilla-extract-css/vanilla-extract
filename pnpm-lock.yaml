@@ -133,7 +133,7 @@ importers:
   fixtures/sprinkles:
     specifiers:
       '@vanilla-extract/css': 1.7.0
-      '@vanilla-extract/sprinkles': 1.4.0
+      '@vanilla-extract/sprinkles': 1.4.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
