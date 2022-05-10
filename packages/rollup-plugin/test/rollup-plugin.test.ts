@@ -51,8 +51,9 @@ describe('rollup-plugin', () => {
     await buildAndMatchSnapshot({
       format: 'esm',
       preserveModules: true,
+      preserveModulesRoot: path.dirname(require.resolve('@fixtures/themed')),
       assetFileNames({ name }) {
-        return name?.replace(/^@fixtures\/themed\/src\//, '') ?? '';
+        return name?.replace(/^src\//, '') ?? '';
       },
     });
   });
