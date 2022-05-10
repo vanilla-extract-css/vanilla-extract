@@ -19,6 +19,15 @@ export function createRuntimeFillings<Config extends FillingsConfig<string>>(
 export function createRuntimeFillings(config: any): any {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (options: any) => {
+    if (typeof options !== 'object' || options === null) {
+      return {
+        className: '',
+        assignVars() {
+          return {};
+        },
+      };
+    }
+
     if (config.defaultCondition) {
       const fillings = config as ConditionalFillingsConfig<
         BaseConditions,
