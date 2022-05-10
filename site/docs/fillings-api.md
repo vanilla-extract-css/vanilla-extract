@@ -19,41 +19,6 @@ export const sizeFillings = createFillings({
 });
 ```
 
-## computeFillings
-
-In the runtime compute necessary className list and create handler to assign only necessary CSS variables
-
-```tsx
-// app.tsx
-import { computeFillings } from '@vanilla-extract/fillings';
-import type { FillingsProps } from '@vanilla-extract/fillings';
-import { sizeFillings } from './styles.css.ts';
-import { ReactNode } from 'react';
-
-type Props = FillingsProps<typeof sizeFillings> & {
-  children: ReactNode;
-};
-
-const Box = forwardRef(({ children, ...props }: Props) => {
-  const { className, assignVars } = computeFillings({
-    fillings: sizeFillings,
-    props
-  });
-
-  return (
-    <div style={assignVars()} className={className}>
-      {children}
-    </div>
-  );
-});
-
-const App = () => (
-  <Box width="100vw" height="100vh">
-    ... App content
-  </Box>
-);
-```
-
 ## Conditional styles
 
 This API really shines when used in combination with `@media`/`@supports`/`selector` conditions, creating dynamic API that remove the need to create custom styles every time you would want to assign different values to CSS properties on different screen sizes, color modes or other conditions.
@@ -78,22 +43,20 @@ export const sizeFillings = createFillings({
 // app.tsx
 import { computeFillings } from '@vanilla-extract/fillings';
 import type { FillingsProps } from '@vanilla-extract/fillings';
+import type { FC } from 'react';
 import { sizeFillings } from './styles.css.ts';
 
 type Props = FillingsProps<typeof sizeFillings>;
 
-const Box = forwardRef(({ ...children, props }: Props) => {
-  const { className, assignVars } = computeFillings({
-    fillings: sizeFillings,
-    props
-  });
+const Box: FC<Props> = ({ ...props, children }) => {
+  const { className, assignVars } = sizeFillings(props);
 
   return (
     <div style={assignVars()} className={className}>
       {children}
     </div>
   );
-});
+};
 
 const App = () => (
   <Box

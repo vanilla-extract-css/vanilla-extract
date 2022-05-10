@@ -87,6 +87,4 @@ export type FillingsFn<Config> = Config extends ConditionalFillingsConfig<
     ) => FillingsReturn & { properties: Config['properties'] }
   : never;
 
-export type FillingsProps<Fn> = Fn extends FillingsFn<infer Config>
-  ? ComputeFillingsProps<Config>
-  : never;
+export type FillingsProps<Fn extends FillingsFn<any>> = Parameters<Fn>[0];
