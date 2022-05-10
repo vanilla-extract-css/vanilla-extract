@@ -9,6 +9,7 @@ import {
   compile,
   IdentifierOption,
   addFileScope,
+  getPackageInfo,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
@@ -25,6 +26,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
+  let packageName: string;
 
   return {
     name: 'vanilla-extract',
@@ -49,6 +51,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
+      packageName = getPackageInfo(config.root).name;
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -119,6 +122,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,
+          packageName,
         });
       }
 

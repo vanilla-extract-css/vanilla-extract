@@ -118,7 +118,11 @@ export const createSprinkles =
             }
             classNames.push(sprinkle.values[propValue].defaultClass);
           } else if (Array.isArray(propValue)) {
-            for (const responsiveIndex in propValue) {
+            for (
+              let responsiveIndex = 0;
+              responsiveIndex < propValue.length;
+              responsiveIndex++
+            ) {
               const responsiveValue = propValue[responsiveIndex];
 
               if (responsiveValue != null) {

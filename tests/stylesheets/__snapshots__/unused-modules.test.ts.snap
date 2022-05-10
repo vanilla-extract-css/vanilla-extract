@@ -5,15 +5,15 @@ exports[`unused-modules - esbuild should create valid stylesheet 1`] = `
   background-color: #e6e6fa;
   border: 5px solid #000;
 }
-.dhmnel0 {
+.fbihc60 {
   display: flex;
 }
-._1fuoslw0 {
+._36o3zb0 {
   background: green;
   height: 100px;
   width: 100px;
 }
-._13dgx5x0 {
+._1j78ztq0 {
   box-sizing: border-box;
 }
 "
@@ -23,16 +23,16 @@ exports[`unused-modules - mini-css-extract should create valid stylesheet 1`] = 
 "body {
   background-color: #e6e6fa;
 }
-.uwiqg30 {
+._13dn9qt0 {
   box-sizing: border-box;
 }
 body {
   border: 5px solid #000;
 }
-._1qsu10z0 {
+._1mtonhh0 {
   display: flex;
 }
-._1q2bj4l0 {
+.plqi3i0 {
   background: green;
   height: 100px;
   width: 100px;
@@ -45,19 +45,19 @@ exports[`unused-modules - vite should create valid stylesheet 1`] = `
   background-color: #e6e6fa;
   border: 5px solid #000;
 }
-.dhmnel0 {
+.fbihc60 {
   display: flex;
 }
-._11jrfhp0 {
+.g6ndup0 {
   background-color: #00f;
   color: red;
 }
-._1fuoslw0 {
+._36o3zb0 {
   background: green;
   height: 100px;
   width: 100px;
 }
-._13dgx5x0 {
+._1j78ztq0 {
   box-sizing: border-box;
 }
 "

@@ -1,5 +1,21 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/sprinkles@0.0.8
+
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`f6d5337`](https://github.com/seek-oss/vanilla-extract/commit/f6d5337ae7b955add2bb4a27ffafe1ff55b1a140)]:
+  - @vanilla-extract/vite-plugin@3.1.6
+  - @vanilla-extract/webpack-plugin@2.1.10
+  - @vanilla-extract/esbuild-plugin@2.0.5
+
 ## 0.0.14
 
 ### Patch Changes

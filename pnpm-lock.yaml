@@ -133,7 +133,7 @@ importers:
   fixtures/sprinkles:
     specifiers:
       '@vanilla-extract/css': 1.7.0
-      '@vanilla-extract/sprinkles': 1.4.0
+      '@vanilla-extract/sprinkles': 1.4.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
@@ -204,7 +204,7 @@ importers:
 
   packages/esbuild-plugin:
     specifiers:
-      '@vanilla-extract/integration': ^4.0.0
+      '@vanilla-extract/integration': ^4.0.1
       esbuild: ^0.11.16
     dependencies:
       '@vanilla-extract/integration': link:../integration
@@ -265,8 +265,8 @@ importers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
       '@vanilla-extract/css': ^1.7.0
-      '@vanilla-extract/integration': ^4.0.0
-      '@vanilla-extract/rollup-plugin': ^1.0.1
+      '@vanilla-extract/integration': ^4.0.1
+      '@vanilla-extract/rollup-plugin': ^1.0.2
       esbuild: ^0.11.16
       rollup: ^2.7.0
       rollup-plugin-esbuild: ^4.9.1
@@ -292,7 +292,7 @@ importers:
 
   packages/vite-plugin:
     specifiers:
-      '@vanilla-extract/integration': ^4.0.0
+      '@vanilla-extract/integration': ^4.0.1
       outdent: ^0.8.0
       postcss: ^8.3.6
       postcss-load-config: ^3.1.0
@@ -308,7 +308,7 @@ importers:
   packages/webpack-plugin:
     specifiers:
       '@types/debug': ^4.1.5
-      '@vanilla-extract/integration': ^4.0.0
+      '@vanilla-extract/integration': ^4.0.1
       chalk: ^4.1.1
       debug: ^4.3.1
       loader-utils: ^2.0.0
