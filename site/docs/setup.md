@@ -262,12 +262,12 @@ This plugin works well with Rollup's `preserveModules`.
 
 Rollup by default places assets in an "assets" directory.
 You can configure [asset file names](https://rollupjs.org/guide/en/#outputassetfilenames)
-if you care about CSS assets being placed right next to source files.
+if you care about CSS assets being placed right next to the corresponding JS files.
 
 ```js
   preserveModules: true,
   assetFileNames({ name }) {
-    return name.replace(/^package-name\/src/, '');
+    return name?.replace(/^src\//, '') ?? '';
   },
 ```
 
