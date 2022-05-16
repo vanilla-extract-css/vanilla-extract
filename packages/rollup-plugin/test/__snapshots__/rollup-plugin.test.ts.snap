@@ -257,13 +257,13 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
 Array [
   Array [
-    "src/index.js",
+    "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
 import { container, button, opacity } from './styles.css.js';
 import { shadow } from './shared.css.js';
 import './untyped.css.js.vanilla.css';
-import testNodes from '../test-nodes.json.js';
+import testNodes from './test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
@@ -340,7 +340,7 @@ render();
 ",
   ],
   Array [
-    "src/shared.css.js",
+    "shared.css.js",
     "import './shared.css.ts.vanilla.css';
 
 var shadow = \\"shared__4dtfen0\\";
@@ -349,7 +349,7 @@ export { shadow };
 ",
   ],
   Array [
-    "src/shared.css.ts.vanilla.css",
+    "shared.css.ts.vanilla.css",
     ".shared__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -358,7 +358,7 @@ body {
 }",
   ],
   Array [
-    "src/styles.css.js",
+    "styles.css.js",
     "import './shared.css.ts.vanilla.css';
 import './themes.css.ts.vanilla.css';
 import './styles.css.ts.vanilla.css';
@@ -371,7 +371,7 @@ export { button, container, opacity };
 ",
   ],
   Array [
-    "src/styles.css.ts.vanilla.css",
+    "styles.css.ts.vanilla.css",
     "@font-face {
   src: local(\\"Impact\\");
   font-family: \\"styles__jteyb10\\";
@@ -424,54 +424,6 @@ html .styles_1\\\\/4__jteyb17 {
 }",
   ],
   Array [
-    "src/themes.css.js",
-    "import './themes.css.ts.vanilla.css';
-
-var altTheme = \\"themes__cvta176\\";
-var responsiveTheme = \\"themes__cvta177\\";
-var theme = \\"themes__cvta170\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
-
-export { altTheme, responsiveTheme, theme, vars };
-",
-  ],
-  Array [
-    "src/themes.css.ts.vanilla.css",
-    ":root, .themes__cvta170 {
-  --colors-backgroundColor__cvta171: blue;
-  --colors-text__cvta172: white;
-  --space-1__cvta173: 4px;
-  --space-2__cvta174: 8px;
-  --space-3__cvta175: 12px;
-}
-.themes__cvta176 {
-  --colors-backgroundColor__cvta171: green;
-  --colors-text__cvta172: white;
-  --space-1__cvta173: 8px;
-  --space-2__cvta174: 12px;
-  --space-3__cvta175: 16px;
-}
-.themes__cvta177 {
-  --colors-backgroundColor__cvta171: pink;
-  --colors-text__cvta172: purple;
-  --space-1__cvta173: 6px;
-  --space-2__cvta174: 12px;
-  --space-3__cvta175: 18px;
-}
-@media screen and (min-width: 768px) {
-  .themes__cvta177 {
-    --colors-backgroundColor__cvta171: purple;
-    --colors-text__cvta172: pink;
-  }
-}",
-  ],
-  Array [
-    "src/untyped.css.js.vanilla.css",
-    ".untyped__1u9kf2n0 {
-  color: yellow;
-}",
-  ],
-  Array [
     "test-nodes.json.js",
     "var root = \\"root\\";
 var rootContainer = \\"rootContainer\\";
@@ -504,6 +456,54 @@ var testNodes = {
 
 export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
+  ],
+  Array [
+    "themes.css.js",
+    "import './themes.css.ts.vanilla.css';
+
+var altTheme = \\"themes__cvta176\\";
+var responsiveTheme = \\"themes__cvta177\\";
+var theme = \\"themes__cvta170\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
+
+export { altTheme, responsiveTheme, theme, vars };
+",
+  ],
+  Array [
+    "themes.css.ts.vanilla.css",
+    ":root, .themes__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes__cvta177 {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__cvta177 {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}",
+  ],
+  Array [
+    "untyped.css.js.vanilla.css",
+    ".untyped__1u9kf2n0 {
+  color: yellow;
+}",
   ],
 ]
 `;
