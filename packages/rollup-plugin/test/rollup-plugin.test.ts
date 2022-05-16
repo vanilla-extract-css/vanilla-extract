@@ -82,9 +82,6 @@ describe('rollup-plugin', () => {
     expect(
       !processedFiles.some((filename) => filename.includes('untyped.css.js')),
     );
-    if (bundle) {
-      await bundle.close();
-    }
   });
 
   it('observes include option', async () => {
@@ -114,8 +111,5 @@ describe('rollup-plugin', () => {
     expect(
       !processedFiles.some((filename) => filename.includes('untyped.css.js')),
     );
-    if (bundle) {
-      await bundle.close();
-    }
   });
 });
