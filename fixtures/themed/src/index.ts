@@ -3,6 +3,7 @@ import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';
 import { shadow } from './shared.css';
+import './untyped.css';
 import testNodes from '../test-nodes.json';
 
 // Uncomment to get HMR for Vite working
@@ -29,15 +30,15 @@ const inlineTheme = assignInlineVars(vars, {
 
 function render() {
   document.body.innerHTML = `
-  <div id="${testNodes.root}" class="${shadow}"> 
+  <div id="${testNodes.root}" class="${shadow}">
     Root theme
     <div id="${testNodes.rootContainer}" class="${container}">
       <button id="${testNodes.rootButton}" class="${button}">Main theme button</button>
-      <div class="${altTheme}"> 
+      <div class="${altTheme}">
         Alt theme
         <div id="${testNodes.altContainer}" class="${container}">
           <button id="${testNodes.altButton}" class="${button}">Alt theme button</button>
-          <div class="${theme}"> 
+          <div class="${theme}">
             Back to root theme
             <div id="${testNodes.nestedRootContainer}" class="${container}">
               <button id="${testNodes.nestedRootButton}" class="${button}">Main theme button</button>

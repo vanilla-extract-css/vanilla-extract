@@ -25,9 +25,6 @@ async function buildAndMatchSnapshot(outputOptions: OutputOptions) {
       chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
     ]),
   ).toMatchSnapshot();
-  if (bundle) {
-    await bundle.close();
-  }
 }
 
 describe('rollup-plugin', () => {
@@ -55,5 +52,69 @@ describe('rollup-plugin', () => {
         return name?.replace(/^@fixtures\/themed\/src\//, '') ?? '';
       },
     });
+  });
+
+  it('observes exclude option', async () => {
+    const bundle = await rollup({
+      input: require.resolve('@fixtures/themed'),
+      plugins: [
+        vanillaExtractPlugin({
+          cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
+          exclude: /\.css\.js/,
+        }),
+        esbuild(),
+        json(),
+      ],
+      external: ['@vanilla-extract/dynamic'],
+    });
+    const processedFiles: string[] = [];
+    await bundle.generate({
+      format: 'esm',
+      preserveModules: true,
+      assetFileNames({ name }) {
+        if (name) {
+          processedFiles.push(name);
+        }
+        return name ?? '';
+      },
+    });
+    expect(
+      !processedFiles.some((filename) => filename.includes('untyped.css.js')),
+    );
+    if (bundle) {
+      await bundle.close();
+    }
+  });
+
+  it('observes include option', async () => {
+    const bundle = await rollup({
+      input: require.resolve('@fixtures/themed'),
+      plugins: [
+        vanillaExtractPlugin({
+          cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
+          include: /\.css\.ts/,
+        }),
+        esbuild(),
+        json(),
+      ],
+      external: ['@vanilla-extract/dynamic'],
+    });
+    const processedFiles: string[] = [];
+    await bundle.generate({
+      format: 'esm',
+      preserveModules: true,
+      assetFileNames({ name }) {
+        if (name) {
+          processedFiles.push(name);
+        }
+        return name ?? '';
+      },
+    });
+    expect(
+      !processedFiles.some((filename) => filename.includes('untyped.css.js')),
+    );
+    if (bundle) {
+      await bundle.close();
+    }
   });
 });

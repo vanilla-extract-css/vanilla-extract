@@ -95,11 +95,18 @@ html .styles_1\\\\/4__jteyb17 {
 }",
   ],
   Array [
+    "assets/src/untyped.css.js.vanilla-00c89f7d.css",
+    ".untyped__1u9kf2n0 {
+  color: yellow;
+}",
+  ],
+  Array [
     "src/index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
 import { container, button, opacity } from './styles.css.js';
 import { shadow } from './shared.css.js';
+import './../assets/src/untyped.css.js.vanilla-00c89f7d.css';
 import testNodes from '../test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
@@ -115,15 +122,15 @@ const inlineTheme = assignInlineVars(vars, {
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\">
     Root theme
     <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
       <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+      <div class=\\"\${altTheme}\\">
         Alt theme
         <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
           <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+          <div class=\\"\${theme}\\">
             Back to root theme
             <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
               <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
@@ -255,6 +262,7 @@ Array [
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
 import { container, button, opacity } from './styles.css.js';
 import { shadow } from './shared.css.js';
+import './untyped.css.js.vanilla.css';
 import testNodes from '../test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
@@ -270,15 +278,15 @@ const inlineTheme = assignInlineVars(vars, {
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\">
     Root theme
     <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
       <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+      <div class=\\"\${altTheme}\\">
         Alt theme
         <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
           <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+          <div class=\\"\${theme}\\">
             Back to root theme
             <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
               <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
@@ -458,6 +466,12 @@ export { altTheme, responsiveTheme, theme, vars };
 }",
   ],
   Array [
+    "src/untyped.css.js.vanilla.css",
+    ".untyped__1u9kf2n0 {
+  color: yellow;
+}",
+  ],
+  Array [
     "test-nodes.json.js",
     "var root = \\"root\\";
 var rootContainer = \\"rootContainer\\";
@@ -589,11 +603,18 @@ html .styles_1\\\\/4__jteyb17 {
 }",
   ],
   Array [
+    "assets/src/untyped.css.js.vanilla-00c89f7d.css",
+    ".untyped__1u9kf2n0 {
+  color: yellow;
+}",
+  ],
+  Array [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-9cd4611f.css';
 import './assets/src/shared.css.ts.vanilla-31027048.css';
 import './assets/src/styles.css.ts.vanilla-eb3ed277.css';
+import './assets/src/untyped.css.js.vanilla-00c89f7d.css';
 
 var altTheme = \\"themes__cvta176\\";
 var responsiveTheme = \\"themes__cvta177\\";
@@ -648,15 +669,15 @@ const inlineTheme = assignInlineVars(vars, {
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\">
     Root theme
     <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
       <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+      <div class=\\"\${altTheme}\\">
         Alt theme
         <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
           <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+          <div class=\\"\${theme}\\">
             Back to root theme
             <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
               <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>

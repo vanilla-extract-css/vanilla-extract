@@ -15,6 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@rollup/pluginutils": "^4.2.1",
     "@vanilla-extract/integration": "^4.0.1"
   },
   "devDependencies": {

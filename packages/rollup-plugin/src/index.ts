@@ -8,24 +8,28 @@ import {
   virtualCssFileFilter,
 } from '@vanilla-extract/integration';
 import { relative, normalize, dirname } from 'path';
+import { createFilter, FilterPattern } from '@rollup/pluginutils';
 
 interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
+  exclude?: FilterPattern;
+  include?: FilterPattern;
 }
 export function vanillaExtractPlugin({
   identifiers,
   cwd = process.cwd(),
+  exclude,
+  include = cssFileFilter,
 }: Options = {}): Plugin {
   const emittedFiles = new Map<string, string>();
   const isProduction = process.env.NODE_ENV === 'production';
+  const filter = createFilter(include, exclude);
 
   return {
     name: 'vanilla-extract',
     async transform(_code, id) {
-      if (!cssFileFilter.test(id)) {
-        return null;
-      }
+      if (!filter(id)) return null;
 
       const index = id.indexOf('?');
       const filePath = index === -1 ? id : id.substring(0, index);
