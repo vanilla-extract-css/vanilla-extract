@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/rollup-plugin': minor
+'@vanilla-extract/rollup-plugin': patch
 ---
 
 Fix emitting assets when in watch mode
