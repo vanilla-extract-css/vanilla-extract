@@ -8,9 +8,10 @@ import type {
 const shouldApplyCompound = <Variants extends VariantGroups>(
   compoundCheck: VariantSelection<Variants>,
   selections: VariantSelection<Variants>,
+  defaultVariants: VariantSelection<Variants>,
 ) => {
   for (const key of Object.keys(compoundCheck)) {
-    if (compoundCheck[key] !== selections[key]) {
+    if (compoundCheck[key] !== (selections[key] ?? defaultVariants[key])) {
       return false;
     }
   }
@@ -52,7 +53,9 @@ export const createRuntimeFn =
     }
 
     for (const [compoundCheck, compoundClassName] of config.compoundVariants) {
-      if (shouldApplyCompound(compoundCheck, selections)) {
+      if (
+        shouldApplyCompound(compoundCheck, selections, config.defaultVariants)
+      ) {
         className += ' ' + compoundClassName;
       }
     }
