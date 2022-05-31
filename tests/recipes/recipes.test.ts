@@ -1,4 +1,4 @@
-import { basic, compoundWithOnlyDefaults } from './recipes.css';
+import { basic } from './recipes.css';
 
 describe('recipes', () => {
   it('should return default variants for no options', () => {
