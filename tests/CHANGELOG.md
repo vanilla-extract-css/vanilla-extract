@@ -1,5 +1,14 @@
 # @vanilla-extract-private/tests
 
+## 0.0.17
+
+### Patch Changes
+
+- Updated dependencies [[`e531251`](https://github.com/seek-oss/vanilla-extract/commit/e531251689b8795eebd316ae8385f1ecc5b9b8a0), [`64378b0`](https://github.com/seek-oss/vanilla-extract/commit/64378b083ed6fb54f073e77b62fefee673602742)]:
+  - @vanilla-extract/css@1.7.1
+  - @vanilla-extract/recipes@0.2.5
+  - @vanilla-extract-private/test-helpers@0.0.17
+
 ## 0.0.16
 
 ### Patch Changes

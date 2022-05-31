@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.7.1
+
+### Patch Changes
+
+- [#684](https://github.com/seek-oss/vanilla-extract/pull/684) [`e531251`](https://github.com/seek-oss/vanilla-extract/commit/e531251689b8795eebd316ae8385f1ecc5b9b8a0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve media query validation messaging
+
 ## 1.7.0
 
 ### Minor Changes
