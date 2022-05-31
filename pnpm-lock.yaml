@@ -256,7 +256,6 @@ importers:
       '@rollup/plugin-json': ^4.1.0
       '@vanilla-extract/css': ^1.7.0
       '@vanilla-extract/integration': ^4.0.1
-      '@vanilla-extract/rollup-plugin': ^1.0.2
       esbuild: ^0.11.16
       rollup: ^2.7.0
       rollup-plugin-esbuild: ^4.9.1
@@ -266,7 +265,6 @@ importers:
       '@fixtures/themed': link:../../fixtures/themed
       '@rollup/plugin-json': 4.1.0_rollup@2.60.1
       '@vanilla-extract/css': link:../css
-      '@vanilla-extract/rollup-plugin': 'link:'
       esbuild: 0.11.23
       rollup: 2.60.1
       rollup-plugin-esbuild: 4.9.1_esbuild@0.11.23+rollup@2.60.1
@@ -785,6 +783,8 @@ packages:
     resolution: {integrity: sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.16.0
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.16.2_@babel+core@7.16.0:
     resolution: {integrity: sha512-h37CvpLSf8gb2lIJ2CgC3t+EjFbi0t8qS7LCS1xcJIlEXE4czlofwaW7W1HA8zpgOCzI9C1nmoqNR1zWkk0pQg==}
@@ -6419,6 +6419,8 @@ packages:
     dependencies:
       '@sindresorhus/is': 0.14.0
       '@szmarczak/http-timer': 1.1.2
+      '@types/keyv': 3.1.3
+      '@types/responselike': 1.0.0
       cacheable-request: 6.1.0
       decompress-response: 3.3.0
       duplexer3: 0.1.4
@@ -6687,8 +6689,6 @@ packages:
       param-case: 3.0.4
       relateurl: 0.2.7
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /html-render-webpack-plugin/3.0.1:
@@ -6722,8 +6722,6 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.64.2_93fbbb02a3bda170b039a49a61f47e0a
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /htmlparser2/6.1.0:
@@ -11753,6 +11751,7 @@ packages:
       acorn:
         optional: true
     dependencies:
+      acorn: 8.6.0
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21

@@ -1,5 +1,11 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.0.3
+
+### Patch Changes
+
+- [#693](https://github.com/seek-oss/vanilla-extract/pull/693) [`351388a`](https://github.com/seek-oss/vanilla-extract/commit/351388ab2f4bfea13d7c2c327b86aabdb1cc2e19) Thanks [@graup](https://github.com/graup)! - Fix emitting assets when in watch mode
+
 ## 1.0.2
 
 ### Patch Changes
