@@ -42,12 +42,13 @@ export function vanillaExtractPlugin({
         this.addWatchFile(file);
       }
 
+      const output = await processVanillaFile({
+        source,
+        filePath,
+        identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
+      });
       return {
-        code: await processVanillaFile({
-          source,
-          filePath,
-          identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
-        }),
+        code: output,
         map: { mappings: '' },
       };
     },
