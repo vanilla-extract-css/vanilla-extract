@@ -42,11 +42,14 @@ export function vanillaExtractPlugin({
         this.addWatchFile(file);
       }
 
-      return processVanillaFile({
-        source,
-        filePath,
-        identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
-      });
+      return {
+        code: await processVanillaFile({
+          source,
+          filePath,
+          identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
+        }),
+        map: { mappings: '' },
+      };
     },
     async resolveId(id) {
       if (!virtualCssFileFilter.test(id)) {
@@ -81,7 +84,7 @@ export function vanillaExtractPlugin({
 
       // ...replace import paths with relative paths to emitted css files
       const chunkPath = dirname(chunkInfo.fileName);
-      return importsToReplace.reduce((codeResult, importPath) => {
+      const output = importsToReplace.reduce((codeResult, importPath) => {
         const assetId = emittedFiles.get(importPath)!;
         const assetName = this.getFileName(assetId);
         const fixedImportPath = `./${normalize(
@@ -89,6 +92,10 @@ export function vanillaExtractPlugin({
         )}`;
         return codeResult.replace(importPath, fixedImportPath);
       }, code);
+      return {
+        code: output,
+        map: chunkInfo.map ?? null,
+      };
     },
   };
 }
