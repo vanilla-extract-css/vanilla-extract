@@ -1,4 +1,4 @@
-import { basic } from './recipes.css';
+import { basic, compoundWithOnlyDefaults } from './recipes.css';
 
 describe('recipes', () => {
   it('should return default variants for no options', () => {
@@ -41,6 +41,14 @@ describe('recipes', () => {
 
   it('should return compound variants via defaultVariants', () => {
     expect(basic({ color: 'red' })).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb8"`,
+    );
+  });
+
+  it('should return compound variants via defaultVariants, even when undefined is passed', () => {
+    expect(
+      basic({ color: 'red', spaceWithDefault: undefined }),
+    ).toMatchInlineSnapshot(
       `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb8"`,
     );
   });
