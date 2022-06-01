@@ -7,7 +7,7 @@ import {
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
 } from '@vanilla-extract/integration';
-import { relative, normalize, dirname, sep as separator } from 'path';
+import { relative, normalize, dirname } from 'path/posix';
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -84,8 +84,9 @@ export function vanillaExtractPlugin({
       return importsToReplace.reduce((codeResult, importPath) => {
         const assetId = emittedFiles.get(importPath)!;
         const assetName = this.getFileName(assetId);
-        const normalizedImportPath = normalize(relative(chunkPath, assetName)).split(separator).join('/');
-        const fixedImportPath = `./${normalizedImportPath}`;
+        const fixedImportPath = `./${normalize(
+          relative(chunkPath, assetName),
+        )}`;
         return codeResult.replace(importPath, fixedImportPath);
       }, code);
     },
