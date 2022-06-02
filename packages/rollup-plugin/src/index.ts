@@ -7,7 +7,9 @@ import {
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
 } from '@vanilla-extract/integration';
-import { relative, normalize, dirname } from 'path/posix';
+import { posix } from 'path';
+
+const { relative, normalize, dirname } = posix;
 
 interface Options {
   identifiers?: IdentifierOption;
