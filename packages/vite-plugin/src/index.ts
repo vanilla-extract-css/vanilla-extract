@@ -163,7 +163,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
           if (server && cssMap.has(id) && cssMap.get(id) !== source) {
             const { moduleGraph } = server;
-            const module = moduleGraph.getModuleById(id);
+            const moduleId = normalizePath(path.join(config.root, id));
+            const module = moduleGraph.getModuleById(moduleId);
 
             if (module) {
               moduleGraph.invalidateModule(module);
