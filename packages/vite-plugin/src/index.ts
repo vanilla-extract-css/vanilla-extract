@@ -139,7 +139,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         }
       }
 
-      return processVanillaFile({
+      const output = await processVanillaFile({
         source,
         filePath: validId,
         identOption:
@@ -182,6 +182,11 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
           return `import "${id}";`;
         },
       });
+
+      return {
+        code: output,
+        map: { mappings: '' },
+      };
     },
   };
 }
