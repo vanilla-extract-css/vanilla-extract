@@ -1,6 +1,6 @@
 ---
-'@vanilla-extract/rollup-plugin': minor
-'@vanilla-extract/vite-plugin': minor
+'@vanilla-extract/rollup-plugin': patch
+'@vanilla-extract/vite-plugin': patch
 ---
 
 Suppress empty sourcemap warnings
