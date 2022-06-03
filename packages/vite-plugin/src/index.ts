@@ -67,7 +67,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return;
       }
 
-      const absoluteId = path.isAbsolute(source)
+      const absoluteId = source.startsWith(config.root)
         ? source
         : getAbsoluteVirtualFileId(source);
 
@@ -180,7 +180,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
             server.ws.send({
               type: 'custom',
-              event: styleUpdateEvent(id),
+              event: styleUpdateEvent(absoluteId),
               data: cssSource,
             });
           }
