@@ -187,7 +187,7 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
           cssMap.set(absoluteId, cssSource);
 
-          // We use the root relative id here to ensure files contents (content-hashes)
+          // We use the root relative id here to ensure file contents (content-hashes)
           // are consistent across build machines
           return `import "${rootRelativeId}";`;
         },
