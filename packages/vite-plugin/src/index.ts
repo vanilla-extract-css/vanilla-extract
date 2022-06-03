@@ -67,6 +67,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         return;
       }
 
+      // Absolute paths seem to occur often in monorepos, where files are
+      // imported from outside the config root.
       const absoluteId = source.startsWith(config.root)
         ? source
         : getAbsoluteVirtualFileId(source);
