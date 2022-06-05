@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract-private/test-helpers",
   "private": true,
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "src/index.ts",
   "author": "SEEK",
   "license": "MIT",
