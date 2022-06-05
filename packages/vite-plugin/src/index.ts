@@ -28,6 +28,9 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
   let virtualExt: string;
   let packageName: string;
 
+  const getAbsoluteVirtualFileId = (source: string) =>
+    normalizePath(path.join(config.root, source));
+
   return {
     name: 'vanilla-extract',
     enforce: 'pre',
@@ -59,24 +62,30 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
       virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
     },
-    resolveId(id) {
-      if (!id.endsWith(virtualExt)) {
+    resolveId(source) {
+      if (!source.endsWith(virtualExt)) {
         return;
       }
 
-      const normalizedId = id.startsWith('/') ? id.slice(1) : id;
+      // Absolute paths seem to occur often in monorepos, where files are
+      // imported from outside the config root.
+      const absoluteId = source.startsWith(config.root)
+        ? source
+        : getAbsoluteVirtualFileId(source);
 
-      if (cssMap.has(normalizedId)) {
-        return normalizePath(path.join(config.root, normalizedId));
+      // There should always be an entry in the `cssMap` here.
+      // The only valid scenario for a missing one is if someone had written
+      // a file in their app using the .vanilla.js/.vanilla.css extension
+      if (cssMap.has(absoluteId)) {
+        return absoluteId;
       }
     },
     load(id) {
-      if (!id.endsWith(virtualExt)) {
+      if (!cssMap.has(id)) {
         return;
       }
 
-      const cssFileId = id.slice(config.root.length + 1);
-      const css = cssMap.get(cssFileId);
+      const css = cssMap.get(id);
 
       if (typeof css !== 'string') {
         return;
@@ -90,13 +99,13 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         import { injectStyles } from '@vanilla-extract/css/injectStyles';
         
         const inject = (css) => injectStyles({
-          fileScope: ${JSON.stringify({ filePath: cssFileId })},
+          fileScope: ${JSON.stringify({ filePath: id })},
           css
         });
 
         inject(${JSON.stringify(css)});
 
-        import.meta.hot.on('${styleUpdateEvent(cssFileId)}', (css) => {
+        import.meta.hot.on('${styleUpdateEvent(id)}', (css) => {
           inject(css);
         });   
       `;
@@ -145,7 +154,8 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const id = `${fileScope.filePath}${virtualExt}`;
+          const rootRelativeId = `${fileScope.filePath}${virtualExt}`;
+          const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
           let cssSource = source;
 
@@ -161,10 +171,13 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
             cssSource = postCssResult.css;
           }
 
-          if (server && cssMap.has(id) && cssMap.get(id) !== source) {
+          if (
+            server &&
+            cssMap.has(absoluteId) &&
+            cssMap.get(absoluteId) !== source
+          ) {
             const { moduleGraph } = server;
-            const moduleId = normalizePath(path.join(config.root, id));
-            const module = moduleGraph.getModuleById(moduleId);
+            const module = moduleGraph.getModuleById(absoluteId);
 
             if (module) {
               moduleGraph.invalidateModule(module);
@@ -172,14 +185,16 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
 
             server.ws.send({
               type: 'custom',
-              event: styleUpdateEvent(id),
+              event: styleUpdateEvent(absoluteId),
               data: cssSource,
             });
           }
 
-          cssMap.set(id, cssSource);
+          cssMap.set(absoluteId, cssSource);
 
-          return `import "${id}";`;
+          // We use the root relative id here to ensure file contents (content-hashes)
+          // are consistent across build machines
+          return `import "${rootRelativeId}";`;
         },
       });
 
