@@ -73,6 +73,9 @@ export function vanillaExtractPlugin({ identifiers }: Options = {}): Plugin {
         ? source
         : getAbsoluteVirtualFileId(source);
 
+      // There should always be an entry in the `cssMap` here.
+      // The only valid scenario for a missing one is if someone had written
+      // a file in their app using the .vanilla.js/.vanilla.css extension
       if (cssMap.has(absoluteId)) {
         return absoluteId;
       }
