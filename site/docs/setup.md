@@ -306,3 +306,11 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### esbuildOptions
+
+> Only for `esbuild`, `vite` and `rollup` plugins
+
+The `vite`, `esbuild` and `rollup` plugins use esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
+
+Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api. The options are deep merged with the default options provided by Vanilla Extract.

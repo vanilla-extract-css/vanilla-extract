@@ -9,16 +9,23 @@ import {
   vanillaExtractFilescopePlugin,
   IdentifierOption,
 } from '@vanilla-extract/integration';
-import type { Plugin } from 'esbuild';
+import type { Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
+  /**
+   * @deprecated Use `esbuildOptions.external` instead.
+   */
   externals?: Array<string>;
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
+  esbuildOptions?: Pick<
+    EsbuildOptions,
+    'plugins' | 'external' | 'define' | 'loader'
+  >;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -26,6 +33,7 @@ export function vanillaExtractPlugin({
   runtime = false,
   processCss,
   identifiers,
+  esbuildOptions,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes to code
@@ -64,10 +72,22 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
+        const combinedEsbuildOptions = { ...esbuildOptions } ?? {};
+
+        // To avoid a breaking change this combines the `external` option from
+        // esbuildOptions with the pre-existing externals option.
+        if (externals) {
+          if (combinedEsbuildOptions.external) {
+            combinedEsbuildOptions.external.push(...externals);
+          } else {
+            combinedEsbuildOptions.external = externals;
+          }
+        }
+
         const { source, watchFiles } = await compile({
           filePath: path,
-          externals,
           cwd: build.initialOptions.absWorkingDir,
+          esbuildOptions: combinedEsbuildOptions,
         });
 
         const contents = await processVanillaFile({
