@@ -8,8 +8,9 @@ import {
   compile,
   vanillaExtractFilescopePlugin,
   IdentifierOption,
+  CompileOptions,
 } from '@vanilla-extract/integration';
-import type { Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
+import type { Plugin } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
@@ -22,10 +23,7 @@ interface VanillaExtractPluginOptions {
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
-  esbuildOptions?: Pick<
-    EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader'
-  >;
+  esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   outputCss,

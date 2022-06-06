@@ -35,7 +35,7 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
   },
 });
 
-interface CompileOptions {
+export interface CompileOptions {
   filePath: string;
   cwd?: string;
   esbuildOptions?: Pick<

@@ -10,19 +10,16 @@ import {
   IdentifierOption,
   addFileScope,
   getPackageInfo,
+  CompileOptions,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
-import { BuildOptions as EsbuildOptions } from 'esbuild';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
 
 interface Options {
   identifiers?: IdentifierOption;
-  esbuildOptions?: Pick<
-    EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader'
-  >;
+  esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
