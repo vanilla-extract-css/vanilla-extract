@@ -312,4 +312,4 @@ Each integration will set a default value based on the configuration options pas
 
 The `vite`, `esbuild` and `rollup` plugins use esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
 
-Accepts an esbuild build options object: https://esbuild.github.io/api/#build-api which is deep merged with the default options.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api. The options are deep merged with the default options provided by Vanilla Extract.
