@@ -1,6 +1,6 @@
 ---
 "@vanilla-extract/esbuild-plugin": minor
-"@vanilla-extract/integration": minor
+"@vanilla-extract/integration": major
 "@vanilla-extract/vite-plugin": minor
 ---
 
