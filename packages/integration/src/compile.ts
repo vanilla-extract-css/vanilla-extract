@@ -27,11 +27,9 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
   },
 });
 
-
 interface CompileOptions {
   filePath: string;
   cwd?: string;
-  externals?: Array<string>;
   esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
 }
 export async function compile({
