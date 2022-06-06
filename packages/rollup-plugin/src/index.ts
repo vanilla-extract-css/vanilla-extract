@@ -6,8 +6,8 @@ import {
   IdentifierOption,
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
+  CompileOptions,
 } from '@vanilla-extract/integration';
-import { BuildOptions as EsbuildOptions } from 'esbuild';
 import { posix } from 'path';
 
 const { relative, normalize, dirname } = posix;
@@ -15,10 +15,7 @@ const { relative, normalize, dirname } = posix;
 interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
-  esbuildOptions?: Pick<
-    EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader'
-  >;
+  esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,

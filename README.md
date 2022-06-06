@@ -88,6 +88,7 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
   - [Test environments](#test-environments)
   - [Configuration](#configuration)
     - [identifiers](#identifiers)
+    - [esbuildOptions](#esbuildoptions)
 - [Styling API](#styling-api)
   - [style](#style)
   - [styleVariants](#stylevariants)
@@ -396,9 +397,8 @@ Each integration will set a default value based on the configuration options pas
 ### esbuildOptions
 > Only for `esbuild`, `vite` and `rollup` plugins
 
-The `vite`, `esbuild` and `rollup` plugins use esbuild internally to compile `.css.ts` files before running them to extract styles. You can pass additional options here to customize that process.
-
-Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api. The options are deep merged with the default options provided by Vanilla Extract.
+esbuild is internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api.
 
 ---
 
