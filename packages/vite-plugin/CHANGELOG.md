@@ -1,5 +1,15 @@
 # @vanilla-extract/vite-plugin
 
+## 3.1.7
+
+### Patch Changes
+
+- [#716](https://github.com/seek-oss/vanilla-extract/pull/716) [`9b6f3ea`](https://github.com/seek-oss/vanilla-extract/commit/9b6f3ea4160c84e48172ea01b922888dbc7f7c81) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix unresolvable imports inside monorepos
+
+* [#707](https://github.com/seek-oss/vanilla-extract/pull/707) [`162b66f`](https://github.com/seek-oss/vanilla-extract/commit/162b66fb48262182846ff71a25d541e00257672c) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Fix styles not updating in dev mode
+
+- [#706](https://github.com/seek-oss/vanilla-extract/pull/706) [`3fc5040`](https://github.com/seek-oss/vanilla-extract/commit/3fc50406d5e57bb131eaebab42052cb1370cddff) Thanks [@graup](https://github.com/graup)! - Suppress empty sourcemap warnings
+
 ## 3.1.6
 
 ### Patch Changes
