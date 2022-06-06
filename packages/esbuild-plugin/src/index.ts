@@ -22,7 +22,10 @@ interface VanillaExtractPluginOptions {
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
-  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
+  esbuildOptions?: Pick<
+    EsbuildOptions,
+    'plugins' | 'external' | 'define' | 'loader'
+  >;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -69,7 +72,7 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const combinedEsbuildOptions = {...esbuildOptions} ?? {};
+        const combinedEsbuildOptions = { ...esbuildOptions } ?? {};
 
         // To avoid a breaking change this combines the `external` option from
         // esbuildOptions with the pre-existing externals option.

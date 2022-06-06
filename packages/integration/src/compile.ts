@@ -1,7 +1,11 @@
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
 
-import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuild';
+import {
+  build as esbuild,
+  Plugin,
+  BuildOptions as EsbuildOptions,
+} from 'esbuild';
 
 import { cssFileFilter } from './filters';
 import { addFileScope } from './addFileScope';
@@ -34,7 +38,10 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
 interface CompileOptions {
   filePath: string;
   cwd?: string;
-  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
+  esbuildOptions?: Pick<
+    EsbuildOptions,
+    'plugins' | 'external' | 'define' | 'loader'
+  >;
 }
 export async function compile({
   filePath,
@@ -48,7 +55,10 @@ export async function compile({
     external: ['@vanilla-extract', ...(esbuildOptions?.external ?? [])],
     platform: 'node',
     write: false,
-    plugins: [vanillaExtractFilescopePlugin(), ...(esbuildOptions?.plugins ?? [])],
+    plugins: [
+      vanillaExtractFilescopePlugin(),
+      ...(esbuildOptions?.plugins ?? []),
+    ],
     absWorkingDir: cwd,
     loader: esbuildOptions?.loader,
     define: esbuildOptions?.define,

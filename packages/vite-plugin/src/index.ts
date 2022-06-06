@@ -19,9 +19,15 @@ const styleUpdateEvent = (fileId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
-  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
+  esbuildOptions?: Pick<
+    EsbuildOptions,
+    'plugins' | 'external' | 'define' | 'loader'
+  >;
 }
-export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = {}): Plugin {
+export function vanillaExtractPlugin({
+  identifiers,
+  esbuildOptions,
+}: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;

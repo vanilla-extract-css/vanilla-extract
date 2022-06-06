@@ -15,7 +15,10 @@ const { relative, normalize, dirname } = posix;
 interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
-  esbuildOptions?: Pick<EsbuildOptions, 'plugins' | 'external' | 'define' | 'loader'>;
+  esbuildOptions?: Pick<
+    EsbuildOptions,
+    'plugins' | 'external' | 'define' | 'loader'
+  >;
 }
 export function vanillaExtractPlugin({
   identifiers,
