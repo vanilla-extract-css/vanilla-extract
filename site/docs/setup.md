@@ -311,5 +311,5 @@ Each integration will set a default value based on the configuration options pas
 
 > Only for `esbuild`, `vite` and `rollup` plugins
 
-esbuild is internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
+esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
 Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api.
