@@ -13,11 +13,12 @@ test('should add missing fileScope', () => {
       source,
       rootPath: '/the-root',
       filePath: '/the-root/app/app.css.ts',
+      packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
     "
         import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-        setFileScope(\\"app/app.css.ts\\");
+        setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
         import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -41,10 +42,11 @@ test('should update existing fileScope', () => {
       source,
       rootPath: '/the-root',
       filePath: '/the-root/app/app.css.ts',
+      packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
     "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-    setFileScope(\\"app/app.css.ts\\");
+    setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -70,10 +72,11 @@ test('should update existing fileScope with newlines', () => {
       source,
       rootPath: '/the-root',
       filePath: '/the-root/app/app.css.ts',
+      packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
     "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-    setFileScope(\\"app/app.css.ts\\");
+    setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -96,10 +99,11 @@ test('should handle namespaced filescope calls', () => {
       source,
       rootPath: '/the-root',
       filePath: '/the-root/app/app.css.ts',
+      packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
     "import * as vanillaFileScope from \\"@vanilla-extract/css/fileScope\\";
-    vanillaFileScope.setFileScope(\\"app/app.css.ts\\");
+    vanillaFileScope.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});

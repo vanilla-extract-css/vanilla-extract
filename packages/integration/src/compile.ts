@@ -5,10 +5,13 @@ import { build as esbuild, Plugin, BuildOptions as EsbuildOptions } from 'esbuil
 
 import { cssFileFilter } from './filters';
 import { addFileScope } from './addFileScope';
+import { getPackageInfo } from './packageInfo';
 
 export const vanillaExtractFilescopePlugin = (): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
+    const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
+
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
@@ -16,6 +19,7 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
         source: originalSource,
         filePath: path,
         rootPath: build.initialOptions.absWorkingDir!,
+        packageName: packageInfo.name,
       });
 
       return {

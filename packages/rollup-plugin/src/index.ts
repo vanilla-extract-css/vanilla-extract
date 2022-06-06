@@ -25,6 +25,9 @@ export function vanillaExtractPlugin({
 
   return {
     name: 'vanilla-extract',
+    buildStart() {
+      emittedFiles.clear();
+    },
     async transform(_code, id) {
       if (!cssFileFilter.test(id)) {
         return null;

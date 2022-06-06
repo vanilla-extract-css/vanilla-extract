@@ -1,5 +1,29 @@
 # @vanilla-extract-private/tests
 
+## 0.0.17
+
+### Patch Changes
+
+- Updated dependencies [[`e531251`](https://github.com/seek-oss/vanilla-extract/commit/e531251689b8795eebd316ae8385f1ecc5b9b8a0), [`64378b0`](https://github.com/seek-oss/vanilla-extract/commit/64378b083ed6fb54f073e77b62fefee673602742)]:
+  - @vanilla-extract/css@1.7.1
+  - @vanilla-extract/recipes@0.2.5
+  - @vanilla-extract-private/test-helpers@0.0.17
+
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies [[`98ab94a`](https://github.com/seek-oss/vanilla-extract/commit/98ab94a99fa7dbee395a7ae6ea4af24c7b1bd7ab)]:
+  - @vanilla-extract/sprinkles@1.4.1
+  - @vanilla-extract-private/test-helpers@0.0.16
+
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.15
+
 ## 0.0.14
 
 ### Patch Changes

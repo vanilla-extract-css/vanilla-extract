@@ -9,6 +9,7 @@ import {
   compile,
   IdentifierOption,
   addFileScope,
+  getPackageInfo,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 import { BuildOptions as EsbuildOptions } from 'esbuild';
@@ -27,6 +28,7 @@ export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = 
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
+  let packageName: string;
 
   return {
     name: 'vanilla-extract',
@@ -51,6 +53,7 @@ export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = 
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
+      packageName = getPackageInfo(config.root).name;
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -121,6 +124,7 @@ export function vanillaExtractPlugin({ identifiers, esbuildOptions }: Options = 
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,
+          packageName,
         });
       }
 

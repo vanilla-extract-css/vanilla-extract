@@ -45,6 +45,14 @@ describe('recipes', () => {
     );
   });
 
+  it('should return compound variants via defaultVariants, even when undefined is passed', () => {
+    expect(
+      basic({ color: 'red', spaceWithDefault: undefined }),
+    ).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_color_red__niwegb5 recipes_basic_compound_0__niwegb8"`,
+    );
+  });
+
   it('should return boolean variants', () => {
     expect(basic({ rounded: true })).toMatchInlineSnapshot(
       `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1 recipes_basic_rounded_true__niwegb7"`,

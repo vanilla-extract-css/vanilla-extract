@@ -3,8 +3,8 @@
 exports[`rollup-plugin should build with preserveModules 1`] = `
 Array [
   Array [
-    "assets/src/shared.css.ts.vanilla-82a38ac6.css",
-    ".shared__9k2war0 {
+    "assets/src/shared.css.ts.vanilla-31027048.css",
+    ".shared__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
 body {
@@ -12,85 +12,85 @@ body {
 }",
   ],
   Array [
-    "assets/src/styles.css.ts.vanilla-3addedd5.css",
+    "assets/src/styles.css.ts.vanilla-eb3ed277.css",
     "@font-face {
   src: local(\\"Impact\\");
-  font-family: \\"styles__g7vce90\\";
+  font-family: \\"styles__jteyb10\\";
 }
 @font-face {
   src: local(\\"Comic Sans MS\\");
   font-family: MyGlobalComicSans;
 }
-.styles__g7vce91 {
+.styles__jteyb11 {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2__6cbmls4);
-  padding: var(--space-3__6cbmls5);
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
 }
-.styles__g7vce92 {
+.styles__jteyb12 {
   z-index: 1;
   position: relative;
 }
-.styles__g7vce93 {
-  font-family: \\"styles__g7vce90\\";
-  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
-  color: var(--colors-text__6cbmls2);
+.styles__jteyb13 {
+  font-family: \\"styles__jteyb10\\";
+  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
-.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+.themes__cvta176 .themes__cvta170 .styles__jteyb11 .styles__jteyb13 {
   font-family: MyGlobalComicSans;
   outline: 5px solid red;
 }
-body .styles__g7vce92:after {
+body .styles__jteyb12:after {
   content: 'I am content';
 }
-html .styles_1\\\\/2__g7vce96 {
-  opacity: var(--g7vce94, 0.5);
+html .styles_1\\\\/2__jteyb16 {
+  opacity: var(--jteyb14, 0.5);
 }
-html .styles_1\\\\/4__g7vce97 {
-  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+html .styles_1\\\\/4__jteyb17 {
+  opacity: var(--jteyb14, var(--jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
-  .styles__g7vce91 {
-    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  .styles__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
   }
-  .styles__g7vce93 {
-    padding: var(--space-1__6cbmls3);
+  .styles__jteyb13 {
+    padding: var(--space-1__cvta173);
   }
 }
 @media only screen and (min-width: 1000px) {
-  .styles__g7vce93 {
-    padding: var(--space-2__6cbmls4);
+  .styles__jteyb13 {
+    padding: var(--space-2__cvta174);
   }
 }",
   ],
   Array [
-    "assets/src/themes.css.ts.vanilla-becd40aa.css",
-    ":root, .themes__6cbmls0 {
-  --colors-backgroundColor__6cbmls1: blue;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 4px;
-  --space-2__6cbmls4: 8px;
-  --space-3__6cbmls5: 12px;
+    "assets/src/themes.css.ts.vanilla-9cd4611f.css",
+    ":root, .themes__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
 }
-.themes__6cbmls6 {
-  --colors-backgroundColor__6cbmls1: green;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 8px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 16px;
+.themes__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
 }
-.themes__6cbmls7 {
-  --colors-backgroundColor__6cbmls1: pink;
-  --colors-text__6cbmls2: purple;
-  --space-1__6cbmls3: 6px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 18px;
+.themes__cvta177 {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
 }
 @media screen and (min-width: 768px) {
-  .themes__6cbmls7 {
-    --colors-backgroundColor__6cbmls1: purple;
-    --colors-text__6cbmls2: pink;
+  .themes__cvta177 {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
   }
 }",
   ],
@@ -178,34 +178,34 @@ render();
   ],
   Array [
     "src/shared.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-82a38ac6.css';
+    "import './../assets/src/shared.css.ts.vanilla-31027048.css';
 
-var shadow = \\"shared__9k2war0\\";
+var shadow = \\"shared__4dtfen0\\";
 
 export { shadow };
 ",
   ],
   Array [
     "src/styles.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-82a38ac6.css';
-import './../assets/src/themes.css.ts.vanilla-becd40aa.css';
-import './../assets/src/styles.css.ts.vanilla-3addedd5.css';
+    "import './../assets/src/shared.css.ts.vanilla-31027048.css';
+import './../assets/src/themes.css.ts.vanilla-9cd4611f.css';
+import './../assets/src/styles.css.ts.vanilla-eb3ed277.css';
 
-var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
-var container = \\"styles__g7vce91\\";
-var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+var button = \\"styles__jteyb13 shared__4dtfen0 styles__jteyb12\\";
+var container = \\"styles__jteyb11\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__jteyb16\\", \\"1/4\\": \\"styles_1/4__jteyb17\\"};
 
 export { button, container, opacity };
 ",
   ],
   Array [
     "src/themes.css.js",
-    "import './../assets/src/themes.css.ts.vanilla-becd40aa.css';
+    "import './../assets/src/themes.css.ts.vanilla-9cd4611f.css';
 
-var altTheme = \\"themes__6cbmls6\\";
-var responsiveTheme = \\"themes__6cbmls7\\";
-var theme = \\"themes__6cbmls0\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
+var altTheme = \\"themes__cvta176\\";
+var responsiveTheme = \\"themes__cvta177\\";
+var theme = \\"themes__cvta170\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
 
 export { altTheme, responsiveTheme, theme, vars };
 ",
@@ -250,12 +250,12 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
 Array [
   Array [
-    "src/index.js",
+    "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
 import { container, button, opacity } from './styles.css.js';
 import { shadow } from './shared.css.js';
-import testNodes from '../test-nodes.json.js';
+import testNodes from './test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
@@ -332,17 +332,17 @@ render();
 ",
   ],
   Array [
-    "src/shared.css.js",
+    "shared.css.js",
     "import './shared.css.ts.vanilla.css';
 
-var shadow = \\"shared__9k2war0\\";
+var shadow = \\"shared__4dtfen0\\";
 
 export { shadow };
 ",
   ],
   Array [
-    "src/shared.css.ts.vanilla.css",
-    ".shared__9k2war0 {
+    "shared.css.ts.vanilla.css",
+    ".shared__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
 body {
@@ -350,110 +350,68 @@ body {
 }",
   ],
   Array [
-    "src/styles.css.js",
+    "styles.css.js",
     "import './shared.css.ts.vanilla.css';
 import './themes.css.ts.vanilla.css';
 import './styles.css.ts.vanilla.css';
 
-var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
-var container = \\"styles__g7vce91\\";
-var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+var button = \\"styles__jteyb13 shared__4dtfen0 styles__jteyb12\\";
+var container = \\"styles__jteyb11\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__jteyb16\\", \\"1/4\\": \\"styles_1/4__jteyb17\\"};
 
 export { button, container, opacity };
 ",
   ],
   Array [
-    "src/styles.css.ts.vanilla.css",
+    "styles.css.ts.vanilla.css",
     "@font-face {
   src: local(\\"Impact\\");
-  font-family: \\"styles__g7vce90\\";
+  font-family: \\"styles__jteyb10\\";
 }
 @font-face {
   src: local(\\"Comic Sans MS\\");
   font-family: MyGlobalComicSans;
 }
-.styles__g7vce91 {
+.styles__jteyb11 {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2__6cbmls4);
-  padding: var(--space-3__6cbmls5);
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
 }
-.styles__g7vce92 {
+.styles__jteyb12 {
   z-index: 1;
   position: relative;
 }
-.styles__g7vce93 {
-  font-family: \\"styles__g7vce90\\";
-  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
-  color: var(--colors-text__6cbmls2);
+.styles__jteyb13 {
+  font-family: \\"styles__jteyb10\\";
+  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
-.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+.themes__cvta176 .themes__cvta170 .styles__jteyb11 .styles__jteyb13 {
   font-family: MyGlobalComicSans;
   outline: 5px solid red;
 }
-body .styles__g7vce92:after {
+body .styles__jteyb12:after {
   content: 'I am content';
 }
-html .styles_1\\\\/2__g7vce96 {
-  opacity: var(--g7vce94, 0.5);
+html .styles_1\\\\/2__jteyb16 {
+  opacity: var(--jteyb14, 0.5);
 }
-html .styles_1\\\\/4__g7vce97 {
-  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+html .styles_1\\\\/4__jteyb17 {
+  opacity: var(--jteyb14, var(--jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
-  .styles__g7vce91 {
-    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  .styles__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
   }
-  .styles__g7vce93 {
-    padding: var(--space-1__6cbmls3);
+  .styles__jteyb13 {
+    padding: var(--space-1__cvta173);
   }
 }
 @media only screen and (min-width: 1000px) {
-  .styles__g7vce93 {
-    padding: var(--space-2__6cbmls4);
-  }
-}",
-  ],
-  Array [
-    "src/themes.css.js",
-    "import './themes.css.ts.vanilla.css';
-
-var altTheme = \\"themes__6cbmls6\\";
-var responsiveTheme = \\"themes__6cbmls7\\";
-var theme = \\"themes__6cbmls0\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
-
-export { altTheme, responsiveTheme, theme, vars };
-",
-  ],
-  Array [
-    "src/themes.css.ts.vanilla.css",
-    ":root, .themes__6cbmls0 {
-  --colors-backgroundColor__6cbmls1: blue;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 4px;
-  --space-2__6cbmls4: 8px;
-  --space-3__6cbmls5: 12px;
-}
-.themes__6cbmls6 {
-  --colors-backgroundColor__6cbmls1: green;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 8px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 16px;
-}
-.themes__6cbmls7 {
-  --colors-backgroundColor__6cbmls1: pink;
-  --colors-text__6cbmls2: purple;
-  --space-1__6cbmls3: 6px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 18px;
-}
-@media screen and (min-width: 768px) {
-  .themes__6cbmls7 {
-    --colors-backgroundColor__6cbmls1: purple;
-    --colors-text__6cbmls2: pink;
+  .styles__jteyb13 {
+    padding: var(--space-2__cvta174);
   }
 }",
   ],
@@ -491,14 +449,56 @@ var testNodes = {
 export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
   ],
+  Array [
+    "themes.css.js",
+    "import './themes.css.ts.vanilla.css';
+
+var altTheme = \\"themes__cvta176\\";
+var responsiveTheme = \\"themes__cvta177\\";
+var theme = \\"themes__cvta170\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
+
+export { altTheme, responsiveTheme, theme, vars };
+",
+  ],
+  Array [
+    "themes.css.ts.vanilla.css",
+    ":root, .themes__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes__cvta177 {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes__cvta177 {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}",
+  ],
 ]
 `;
 
 exports[`rollup-plugin should build without preserveModules 1`] = `
 Array [
   Array [
-    "assets/src/shared.css.ts.vanilla-82a38ac6.css",
-    ".shared__9k2war0 {
+    "assets/src/shared.css.ts.vanilla-31027048.css",
+    ".shared__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
 body {
@@ -506,105 +506,105 @@ body {
 }",
   ],
   Array [
-    "assets/src/styles.css.ts.vanilla-3addedd5.css",
+    "assets/src/styles.css.ts.vanilla-eb3ed277.css",
     "@font-face {
   src: local(\\"Impact\\");
-  font-family: \\"styles__g7vce90\\";
+  font-family: \\"styles__jteyb10\\";
 }
 @font-face {
   src: local(\\"Comic Sans MS\\");
   font-family: MyGlobalComicSans;
 }
-.styles__g7vce91 {
+.styles__jteyb11 {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2__6cbmls4);
-  padding: var(--space-3__6cbmls5);
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
 }
-.styles__g7vce92 {
+.styles__jteyb12 {
   z-index: 1;
   position: relative;
 }
-.styles__g7vce93 {
-  font-family: \\"styles__g7vce90\\";
-  background-color: var(--colors-backgroundColor__6cbmls1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
-  color: var(--colors-text__6cbmls2);
+.styles__jteyb13 {
+  font-family: \\"styles__jteyb10\\";
+  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
-.themes__6cbmls6 .themes__6cbmls0 .styles__g7vce91 .styles__g7vce93 {
+.themes__cvta176 .themes__cvta170 .styles__jteyb11 .styles__jteyb13 {
   font-family: MyGlobalComicSans;
   outline: 5px solid red;
 }
-body .styles__g7vce92:after {
+body .styles__jteyb12:after {
   content: 'I am content';
 }
-html .styles_1\\\\/2__g7vce96 {
-  opacity: var(--g7vce94, 0.5);
+html .styles_1\\\\/2__jteyb16 {
+  opacity: var(--jteyb14, 0.5);
 }
-html .styles_1\\\\/4__g7vce97 {
-  opacity: var(--g7vce94, var(--g7vce95, 0.25));
+html .styles_1\\\\/4__jteyb17 {
+  opacity: var(--jteyb14, var(--jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
-  .styles__g7vce91 {
-    border: 1px solid var(--colors-backgroundColor__6cbmls1);
+  .styles__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
   }
-  .styles__g7vce93 {
-    padding: var(--space-1__6cbmls3);
+  .styles__jteyb13 {
+    padding: var(--space-1__cvta173);
   }
 }
 @media only screen and (min-width: 1000px) {
-  .styles__g7vce93 {
-    padding: var(--space-2__6cbmls4);
+  .styles__jteyb13 {
+    padding: var(--space-2__cvta174);
   }
 }",
   ],
   Array [
-    "assets/src/themes.css.ts.vanilla-becd40aa.css",
-    ":root, .themes__6cbmls0 {
-  --colors-backgroundColor__6cbmls1: blue;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 4px;
-  --space-2__6cbmls4: 8px;
-  --space-3__6cbmls5: 12px;
+    "assets/src/themes.css.ts.vanilla-9cd4611f.css",
+    ":root, .themes__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
 }
-.themes__6cbmls6 {
-  --colors-backgroundColor__6cbmls1: green;
-  --colors-text__6cbmls2: white;
-  --space-1__6cbmls3: 8px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 16px;
+.themes__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
 }
-.themes__6cbmls7 {
-  --colors-backgroundColor__6cbmls1: pink;
-  --colors-text__6cbmls2: purple;
-  --space-1__6cbmls3: 6px;
-  --space-2__6cbmls4: 12px;
-  --space-3__6cbmls5: 18px;
+.themes__cvta177 {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
 }
 @media screen and (min-width: 768px) {
-  .themes__6cbmls7 {
-    --colors-backgroundColor__6cbmls1: purple;
-    --colors-text__6cbmls2: pink;
+  .themes__cvta177 {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
   }
 }",
   ],
   Array [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
-import './assets/src/themes.css.ts.vanilla-becd40aa.css';
-import './assets/src/shared.css.ts.vanilla-82a38ac6.css';
-import './assets/src/styles.css.ts.vanilla-3addedd5.css';
+import './assets/src/themes.css.ts.vanilla-9cd4611f.css';
+import './assets/src/shared.css.ts.vanilla-31027048.css';
+import './assets/src/styles.css.ts.vanilla-eb3ed277.css';
 
-var altTheme = \\"themes__6cbmls6\\";
-var responsiveTheme = \\"themes__6cbmls7\\";
-var theme = \\"themes__6cbmls0\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__6cbmls1)\\", text: \\"var(--colors-text__6cbmls2)\\"}, space: {\\"1\\": \\"var(--space-1__6cbmls3)\\", \\"2\\": \\"var(--space-2__6cbmls4)\\", \\"3\\": \\"var(--space-3__6cbmls5)\\"}};
+var altTheme = \\"themes__cvta176\\";
+var responsiveTheme = \\"themes__cvta177\\";
+var theme = \\"themes__cvta170\\";
+var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
 
-var button = \\"styles__g7vce93 shared__9k2war0 styles__g7vce92\\";
-var container = \\"styles__g7vce91\\";
-var opacity = {\\"1/2\\": \\"styles_1/2__g7vce96\\", \\"1/4\\": \\"styles_1/4__g7vce97\\"};
+var button = \\"styles__jteyb13 shared__4dtfen0 styles__jteyb12\\";
+var container = \\"styles__jteyb11\\";
+var opacity = {\\"1/2\\": \\"styles_1/2__jteyb16\\", \\"1/4\\": \\"styles_1/4__jteyb17\\"};
 
-var shadow = \\"shared__9k2war0\\";
+var shadow = \\"shared__4dtfen0\\";
 
 var root = \\"root\\";
 var rootContainer = \\"rootContainer\\";

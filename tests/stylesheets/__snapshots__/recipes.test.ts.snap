@@ -1,53 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`recipes - esbuild should create valid stylesheet 1`] = `
-".g7vce92 {
-  --g7vce90: #b0e0e6;
-  --g7vce91: #fff;
+"._103pmpm2 {
+  --_103pmpm0: #b0e0e6;
+  --_103pmpm1: #fff;
 }
-.g7vce93 {
-  --g7vce90: crimson;
-  --g7vce91: #000;
+._103pmpm3 {
+  --_103pmpm0: crimson;
+  --_103pmpm1: #000;
 }
-.g7vce94 {
+._103pmpm4 {
   border: 0;
 }
-.g7vce95 {
-  background: var(--g7vce90);
+._103pmpm5 {
+  background: var(--_103pmpm0);
   border-radius: 6px;
-  color: var(--g7vce91);
+  color: var(--_103pmpm1);
   transition: all 0.2s ease;
 }
-.g7vce95:hover {
+._103pmpm5:hover {
   transform: translateY(-3px);
 }
-.g7vce96 {
+._103pmpm6 {
   font-size: 16px;
   line-height: 24px;
 }
-.g7vce97 {
+._103pmpm7 {
   font-size: 24px;
   line-height: 40px;
 }
-.g7vce99:hover {
+._103pmpm9:hover {
   box-shadow: 0 10px 6px -6px #777;
 }
-.g7vce9a {
+._103pmpma {
   font-weight: 700;
 }
-.g7vce9c {
+._103pmpmc {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
-.g7vce9d {
+._103pmpmd {
   gap: 20px;
 }
 @media only screen and (min-width: 600px) {
-  .g7vce9b {
+  ._103pmpmb {
     border: 2px solid green;
   }
-  .g7vce9d {
+  ._103pmpmd {
     gap: 30px;
   }
 }
@@ -55,53 +55,53 @@ exports[`recipes - esbuild should create valid stylesheet 1`] = `
 `;
 
 exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
-"._1ohhcjl2 {
-  --_1ohhcjl0: #b0e0e6;
-  --_1ohhcjl1: #fff;
+".spi1fr2 {
+  --spi1fr0: #b0e0e6;
+  --spi1fr1: #fff;
 }
-._1ohhcjl3 {
-  --_1ohhcjl0: crimson;
-  --_1ohhcjl1: #000;
+.spi1fr3 {
+  --spi1fr0: crimson;
+  --spi1fr1: #000;
 }
-._1ohhcjl4 {
+.spi1fr4 {
   border: 0;
 }
-._1ohhcjl5 {
-  background: var(--_1ohhcjl0);
+.spi1fr5 {
+  background: var(--spi1fr0);
   border-radius: 6px;
-  color: var(--_1ohhcjl1);
+  color: var(--spi1fr1);
   transition: all 0.2s ease;
 }
-._1ohhcjl5:hover {
+.spi1fr5:hover {
   transform: translateY(-3px);
 }
-._1ohhcjl6 {
+.spi1fr6 {
   font-size: 16px;
   line-height: 24px;
 }
-._1ohhcjl7 {
+.spi1fr7 {
   font-size: 24px;
   line-height: 40px;
 }
-._1ohhcjl9:hover {
+.spi1fr9:hover {
   box-shadow: 0 10px 6px -6px #777;
 }
-._1ohhcjla {
+.spi1fra {
   font-weight: 700;
 }
-._1ohhcjlc {
+.spi1frc {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
-._1ohhcjld {
+.spi1frd {
   gap: 20px;
 }
 @media only screen and (min-width: 600px) {
-  ._1ohhcjlb {
+  .spi1frb {
     border: 2px solid green;
   }
-  ._1ohhcjld {
+  .spi1frd {
     gap: 30px;
   }
 }
@@ -109,53 +109,53 @@ exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
 `;
 
 exports[`recipes - vite should create valid stylesheet 1`] = `
-".g7vce92 {
-  --g7vce90: #b0e0e6;
-  --g7vce91: #fff;
+"._103pmpm2 {
+  --_103pmpm0: #b0e0e6;
+  --_103pmpm1: #fff;
 }
-.g7vce93 {
-  --g7vce90: crimson;
-  --g7vce91: #000;
+._103pmpm3 {
+  --_103pmpm0: crimson;
+  --_103pmpm1: #000;
 }
-.g7vce94 {
+._103pmpm4 {
   border: 0;
 }
-.g7vce95 {
-  background: var(--g7vce90);
+._103pmpm5 {
+  background: var(--_103pmpm0);
   border-radius: 6px;
-  color: var(--g7vce91);
+  color: var(--_103pmpm1);
   transition: all 0.2s ease;
 }
-.g7vce95:hover {
+._103pmpm5:hover {
   transform: translateY(-3px);
 }
-.g7vce96 {
+._103pmpm6 {
   font-size: 16px;
   line-height: 24px;
 }
-.g7vce97 {
+._103pmpm7 {
   font-size: 24px;
   line-height: 40px;
 }
-.g7vce99:hover {
+._103pmpm9:hover {
   box-shadow: 0 10px 6px -6px #777;
 }
-.g7vce9a {
+._103pmpma {
   font-weight: 700;
 }
-.g7vce9c {
+._103pmpmc {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
-.g7vce9d {
+._103pmpmd {
   gap: 20px;
 }
 @media only screen and (min-width: 600px) {
-  .g7vce9b {
+  ._103pmpmb {
     border: 2px solid green;
   }
-  .g7vce9d {
+  ._103pmpmd {
     gap: 30px;
   }
 }
