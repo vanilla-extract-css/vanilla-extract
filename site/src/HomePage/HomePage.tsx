@@ -8,7 +8,7 @@ import Text from '../Typography/Text';
 import Logo from '../Logo/Logo';
 import Code from '../Code/Code';
 import { Tweet } from '../Tweet/Tweet';
-import docsStore from '../docs-store';
+// import docsStore from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
 import * as styles from './HomePage.css';
@@ -166,7 +166,7 @@ export const HomePage = () => {
                     >
                       <Box paddingRight={{ mobile: 'small', tablet: 'xlarge' }}>
                         <ButtonLink
-                          to="/documentation"
+                          to="/documentation/introduction"
                           icon={
                             <Box display={{ mobile: 'none', desktop: 'block' }}>
                               <Chevron direction="right" />
@@ -591,7 +591,7 @@ export const HomePage = () => {
             <Stack space="xxlarge" align="center">
               <Logo height={60} />
               <Columns space="xxxlarge" collapseOnMobile>
-                <Stack space="xlarge" align="center">
+                {/* <Stack space="xlarge" align="center">
                   <Heading level="4">Documentation</Heading>
                   {docsStore.map(({ title, route }) => (
                     <Link
@@ -604,7 +604,7 @@ export const HomePage = () => {
                       {title}
                     </Link>
                   ))}
-                </Stack>
+                </Stack> */}
 
                 <Stack space="xlarge" align="center">
                   <Heading level="4">Community</Heading>

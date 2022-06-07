@@ -52,9 +52,6 @@ const parseContents = (rawContent) => {
 
     return {
       ...heading,
-      content: stripMarkdown(
-        content.substring(currHeadingIndex, nextHeadingIndex),
-      ),
       page: data.title,
       hash: slugger.slug(heading.name),
     };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import {
   Link as ReactRouterLink,
   Route,
@@ -12,7 +12,7 @@ import SiblingDoc from './SiblingDoc/SiblingDoc';
 import mdxComponents from '../mdx-components';
 import { Fab } from '../Fab/Fab';
 import { Box, ContentBlock, Stack } from '../system';
-import docs from '../docs-store';
+import { groups, pages } from '../docs-store';
 import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
@@ -158,40 +158,50 @@ const PrimaryNav = ({
         <ColorModeToggle />
       </Box>
       <Stack space="medium">
-        {docs.map(({ title, route }) => {
-          const active = route === `${pathname}/`;
+        {groups.map((group) => {
+          const groupPages = pages.filter((page) => group === page.group);
+
           return (
-            <Link
-              key={route}
-              to={route}
-              onClick={selectAndScrollToTop}
-              weight={active ? 'strong' : undefined}
-              highlightOnFocus={false}
-              underline="never"
-              size="small"
-            >
-              <Box component="span" display="flex" alignItems="center">
-                <Box
-                  component="span"
-                  background={{
-                    lightMode: 'blue300',
-                    darkMode: 'blue400',
-                  }}
-                  borderRadius="full"
-                  paddingLeft="xsmall"
-                  paddingTop="xlarge"
-                  marginLeft="xsmall"
-                  opacity={active ? undefined : 0}
-                  className={classnames(
-                    styles.activeIndicator,
-                    active ? styles.active : '',
-                  )}
-                />
-                <Box component="span" paddingLeft="large">
-                  {title}
-                </Box>
-              </Box>
-            </Link>
+            <Fragment key={group}>
+              <Box>{group}</Box>
+
+              {groupPages.map(({ route, title }) => {
+                const active = route === `${pathname}/`;
+                return (
+                  <Link
+                    key={route}
+                    to={route}
+                    onClick={selectAndScrollToTop}
+                    weight={active ? 'strong' : undefined}
+                    highlightOnFocus={false}
+                    underline="never"
+                    size="small"
+                  >
+                    <Box component="span" display="flex" alignItems="center">
+                      <Box
+                        component="span"
+                        background={{
+                          lightMode: 'blue300',
+                          darkMode: 'blue400',
+                        }}
+                        borderRadius="full"
+                        paddingLeft="xsmall"
+                        paddingTop="xlarge"
+                        marginLeft="xsmall"
+                        opacity={active ? undefined : 0}
+                        className={classnames(
+                          styles.activeIndicator,
+                          active ? styles.active : '',
+                        )}
+                      />
+                      <Box component="span" paddingLeft="large">
+                        {title}
+                      </Box>
+                    </Box>
+                  </Link>
+                );
+              })}
+            </Fragment>
           );
         })}
         <Link
@@ -212,7 +222,7 @@ const PrimaryNav = ({
   );
 };
 
-const headingForRoute = mapKeys(docs, (d) => {
+const headingForRoute = mapKeys(pages, (d) => {
   return d.route.endsWith('/')
     ? d.route.slice(0, d.route.lastIndexOf('/'))
     : d.route;
@@ -336,9 +346,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           <ContentBlock>
             <Box paddingBottom="xxxlarge">
               <MDXProvider components={mdxComponents}>
-                {docs.map(({ route, Component, title, sections }, index) => {
-                  const prevDoc = docs[index - 1];
-                  const nextDoc = docs[index + 1];
+                {pages.map(({ route, Component, title, sections }, index) => {
+                  const prevDoc = pages[index - 1];
+                  const nextDoc = pages[index + 1];
                   const pageTitle = `${
                     title ? `${title} — ` : ''
                   }vanilla-extract`.trim();
