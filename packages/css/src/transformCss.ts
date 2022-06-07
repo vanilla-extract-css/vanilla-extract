@@ -329,9 +329,11 @@ class Stylesheet {
       );
 
       forEach(rules, (mediaRule, query) => {
-        validateMediaQuery(query);
+        const mediaQuery = `@media ${query}`;
 
-        const conditions = [...parentConditions, `@media ${query}`];
+        validateMediaQuery(mediaQuery);
+
+        const conditions = [...parentConditions, mediaQuery];
 
         this.addConditionalRule(
           {
