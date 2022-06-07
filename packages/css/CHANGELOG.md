@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.7.2
+
+### Patch Changes
+
+- [#723](https://github.com/seek-oss/vanilla-extract/pull/723) [`8467fc2`](https://github.com/seek-oss/vanilla-extract/commit/8467fc28707372f30d8b6239580244c06859a605) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Validate duplicate '@media' in media queries
+
 ## 1.7.1
 
 ### Patch Changes
