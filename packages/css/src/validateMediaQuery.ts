@@ -13,7 +13,8 @@ const createMediaQueryError = (mediaQuery: string, msg: string) =>
   );
 
 export const validateMediaQuery = (mediaQuery: string) => {
-  if (mediaQuery === '') {
+  // Empty queries will start with '@media '
+  if (mediaQuery === '@media ') {
     throw createMediaQueryError(mediaQuery, 'Query is empty');
   }
 
