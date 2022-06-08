@@ -16,11 +16,17 @@ const contents = require('./contents');
         join(__dirname, './docs', fileName),
       );
 
+      const { sections, parent } = makeDocumentIndex(fileContents);
+
+      const route = parent
+        ? `/documentation/${parent}/${page}/`
+        : `/documentation/${page}/`;
+
       manifest.pages.push({
         group,
         fileName,
-        route: `/documentation/${page}/`,
-        sections: makeDocumentIndex(fileContents),
+        route,
+        sections,
       });
     }
   }

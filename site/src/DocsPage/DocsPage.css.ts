@@ -58,6 +58,7 @@ export const sidebar = style({
       transition: 'transform .15s ease, opacity .15s ease',
       top: 0,
       bottom: 0,
+      overflow: 'auto',
     },
     desktop: {
       width: sidebarWidth,

@@ -25,8 +25,16 @@ const contents = [
     ],
   },
   {
+    group: 'sprinkles',
+    pages: ['introduction', 'usage', 'utilities'],
+  },
+  {
     group: 'ecosystem',
-    pages: ['sprinkles', 'recipes', 'dynamic', 'css-utils'],
+    pages: ['recipes', 'dynamic', 'css-utils'],
+  },
+  {
+    group: 'integrations',
+    pages: ['vite', 'esbuild', 'webpack', 'rollup', 'next', 'gatsby'],
   },
 ];
 

@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Introduction
 ---
 
 # **Zero-runtime<br/>Stylesheets-in-TypeScript.**

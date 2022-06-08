@@ -17,6 +17,8 @@ import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
+import Text from '../Typography/Text';
+
 import mapKeys from 'lodash/mapKeys';
 
 interface DocsRouteProps {
@@ -162,46 +164,48 @@ const PrimaryNav = ({
           const groupPages = pages.filter((page) => group === page.group);
 
           return (
-            <Fragment key={group}>
-              <Box>{group}</Box>
+            <Stack key={group} space="medium">
+              <Text>{group}</Text>
 
-              {groupPages.map(({ route, title }) => {
-                const active = route === `${pathname}/`;
-                return (
-                  <Link
-                    key={route}
-                    to={route}
-                    onClick={selectAndScrollToTop}
-                    weight={active ? 'strong' : undefined}
-                    highlightOnFocus={false}
-                    underline="never"
-                    size="small"
-                  >
-                    <Box component="span" display="flex" alignItems="center">
-                      <Box
-                        component="span"
-                        background={{
-                          lightMode: 'blue300',
-                          darkMode: 'blue400',
-                        }}
-                        borderRadius="full"
-                        paddingLeft="xsmall"
-                        paddingTop="xlarge"
-                        marginLeft="xsmall"
-                        opacity={active ? undefined : 0}
-                        className={classnames(
-                          styles.activeIndicator,
-                          active ? styles.active : '',
-                        )}
-                      />
-                      <Box component="span" paddingLeft="large">
-                        {title}
+              <>
+                {groupPages.map(({ route, title }) => {
+                  const active = route === `${pathname}/`;
+                  return (
+                    <Link
+                      key={route}
+                      to={route}
+                      onClick={selectAndScrollToTop}
+                      weight={active ? 'strong' : undefined}
+                      highlightOnFocus={false}
+                      underline="never"
+                      size="small"
+                    >
+                      <Box component="span" display="flex" alignItems="center">
+                        <Box
+                          component="span"
+                          background={{
+                            lightMode: 'blue300',
+                            darkMode: 'blue400',
+                          }}
+                          borderRadius="full"
+                          paddingLeft="xsmall"
+                          paddingTop="xlarge"
+                          marginLeft="xsmall"
+                          opacity={active ? undefined : 0}
+                          className={classnames(
+                            styles.activeIndicator,
+                            active ? styles.active : '',
+                          )}
+                        />
+                        <Box component="span" paddingLeft="large">
+                          {title}
+                        </Box>
                       </Box>
-                    </Box>
-                  </Link>
-                );
-              })}
-            </Fragment>
+                    </Link>
+                  );
+                })}
+              </>
+            </Stack>
           );
         })}
         <Link

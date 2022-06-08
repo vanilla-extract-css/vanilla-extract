@@ -41,7 +41,7 @@ const parseContents = (rawContent) => {
     breadcrumbs: getBreadcrumbs(headings, index),
   }));
 
-  return breadcrumbs.map((heading, index) => {
+  const sections = breadcrumbs.map((heading, index) => {
     const nextHeadingIndex =
       index < headings.length - 1
         ? content.lastIndexOf(headings[index + 1].raw)
@@ -56,6 +56,11 @@ const parseContents = (rawContent) => {
       hash: slugger.slug(heading.name),
     };
   });
+
+  return {
+    sections,
+    parent: data.parent,
+  };
 };
 
 module.exports = parseContents;
