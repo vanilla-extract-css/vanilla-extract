@@ -8,7 +8,7 @@ const contents = [
     pages: ['style', 'style-variants', 'global-style'],
   },
   {
-    group: 'variables',
+    group: 'css-variables',
     pages: ['assign-vars', 'create-var', 'fallback-var'],
   },
   {
