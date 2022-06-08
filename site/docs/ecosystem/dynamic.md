@@ -1,8 +1,8 @@
 ---
-title: Dynamic API
+title: Dynamic
 ---
 
-# Dynamic API
+# Dynamic
 
 Dynamically update theme variables at runtime.
 

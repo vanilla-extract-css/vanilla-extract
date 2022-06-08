@@ -1,8 +1,8 @@
 ---
-title: Recipes API
+title: Recipes
 ---
 
-# Recipes API
+# Recipes
 
 Create multi-variant styles with a type-safe runtime API, heavily inspired by [Stitches.](https://stitches.dev)
 
