@@ -5,7 +5,7 @@ parent: sprinkles
 
 # Usage
 
-You can now use your `sprinkles` function in `.css.ts` files for zero-runtime usage.
+Once you're setup, you can use your `sprinkles` function in `.css.ts` files for zero-runtime usage.
 
 ```ts
 // styles.css.ts
