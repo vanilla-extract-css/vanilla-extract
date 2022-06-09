@@ -1,5 +1,16 @@
 # @vanilla-extract/esbuild-plugin
 
+## 2.1.0
+
+### Minor Changes
+
+- [#668](https://github.com/seek-oss/vanilla-extract/pull/668) [`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Add esbuild configurations to vite/esbuild/rollup plugins
+
+### Patch Changes
+
+- Updated dependencies [[`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3)]:
+  - @vanilla-extract/integration@5.0.0
+
 ## 2.0.5
 
 ### Patch Changes

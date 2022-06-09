@@ -1,5 +1,12 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.11
+
+### Patch Changes
+
+- Updated dependencies [[`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3)]:
+  - @vanilla-extract/integration@5.0.0
+
 ## 2.1.10
 
 ### Patch Changes
