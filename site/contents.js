@@ -4,6 +4,10 @@ const contents = [
     pages: ['introduction', 'setup'],
   },
   {
+    group: 'concepts',
+    pages: ['style-object', 'style-composition'],
+  },
+  {
     group: 'styling',
     pages: ['style', 'style-variants', 'global-style'],
   },
