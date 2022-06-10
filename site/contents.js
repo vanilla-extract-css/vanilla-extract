@@ -5,7 +5,7 @@ const contents = [
   },
   {
     group: 'concepts',
-    pages: ['style-object', 'style-composition'],
+    pages: ['style-object', 'style-composition', 'theming'],
   },
   {
     group: 'styling',

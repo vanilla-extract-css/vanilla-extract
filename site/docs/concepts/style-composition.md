@@ -33,6 +33,19 @@ const base = style({ padding: 12 });
 ```
 
 However, when using style composition you will recive multiple classes in a single string, separated by a single space ' ' character, often referred to as a classlist.
+
+```ts
+// styles.css.ts
+
+import { style } from '@vanilla-extract/css';
+
+// base ≈ 'base_12345'
+const base = style({ padding: 12 });
+
+// primary ≈ 'base_12345 primary_12346'
+const primary = style([base, { background: 'blue' }]);
+```
+
 This doesn't affect usage when assigning to the class property on DOM elements as they already accept a classlist.
 However, what if we want to use our style inside another styles selector?
 
@@ -54,10 +67,10 @@ const text = style({
 });
 ```
 
-This is solved by assigning an additional class to all style compositions so they can be uniquely identified.
-When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes.
+When selectors are processed internally, the composed classes are removed, only leaving behind a single unique identifier class.
 This allows you to treat them as if they were a single class within vanilla-extract selectors.
-Finally, if the extra identifier class is unneeded, then it is removed from the output completely.
+
+When multiple pre-existing classes are composed, a new identifier is created and added to the classlist.
 
 ```ts
 // styles.css.ts
