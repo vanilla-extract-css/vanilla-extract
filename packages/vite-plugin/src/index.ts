@@ -96,7 +96,7 @@ export function vanillaExtractPlugin({
         return;
       }
 
-      if (!server) {
+      if (!server || server.config.isProduction) {
         return css;
       }
 
