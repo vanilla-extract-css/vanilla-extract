@@ -6689,6 +6689,8 @@ packages:
       param-case: 3.0.4
       relateurl: 0.2.7
       terser: 5.10.0
+    transitivePeerDependencies:
+      - acorn
     dev: false
 
   /html-render-webpack-plugin/3.0.1:
@@ -6722,6 +6724,8 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.64.2_93fbbb02a3bda170b039a49a61f47e0a
+    transitivePeerDependencies:
+      - acorn
     dev: false
 
   /htmlparser2/6.1.0:

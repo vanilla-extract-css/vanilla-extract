@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.2.1
+
+### Patch Changes
+
+- [#729](https://github.com/seek-oss/vanilla-extract/pull/729) [`02ea735`](https://github.com/seek-oss/vanilla-extract/commit/02ea73552d1c1b9b7b9ec44be00d89413e28a97f) Thanks [@danielroe](https://github.com/danielroe)! - Generate CSS and not HMR code if vite server is present in production mode
+
 ## 3.2.0
 
 ### Minor Changes
