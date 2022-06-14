@@ -6,8 +6,8 @@ const contents = require('./contents');
 (async () => {
   const manifest = { groups: [], pages: [] };
 
-  for (const { group, pages } of contents) {
-    manifest.groups.push(group);
+  for (const { group, label, pages } of contents) {
+    manifest.groups.push(label);
 
     for (const page of pages) {
       console.log('Loading', page);
@@ -24,6 +24,7 @@ const contents = require('./contents');
 
       manifest.pages.push({
         group,
+        label,
         fileName,
         route,
         sections,

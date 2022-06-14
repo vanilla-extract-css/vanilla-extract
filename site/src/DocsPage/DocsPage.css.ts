@@ -54,7 +54,7 @@ export const container = style(
 export const sidebar = style({
   ...responsiveStyle({
     mobile: {
-      width: `clamp(270px, 40vw, 400px)`,
+      width: `clamp(300px, 40vw, 400px)`,
       transition: 'transform .15s ease, opacity .15s ease',
       top: 0,
       bottom: 0,
@@ -99,7 +99,7 @@ export const primaryNav = style({
   },
   ...responsiveStyle({
     mobile: {
-      width: `clamp(270px, 40vw, 400px)`,
+      width: `clamp(300px, 40vw, 400px)`,
       transition: 'transform .15s ease, opacity .15s ease',
       top: 0,
       bottom: 0,

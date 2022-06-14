@@ -54,7 +54,7 @@ export const themeClass = 'theme_12347';
 ```
 
 ```css
-/* theme.css */
+/* theme.css (generated) */
 
 .theme_12347 {
   --color-brand-12345: blue;
@@ -115,7 +115,7 @@ export const otherThemeClass = 'othertheme_12348';
 ```
 
 ```css
-/* theme.css */
+/* theme.css (generated) */
 
 .theme_12347 {
   --color-brand-12345: blue;

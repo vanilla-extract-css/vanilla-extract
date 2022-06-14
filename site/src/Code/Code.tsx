@@ -76,7 +76,7 @@ export default ({
 
   if (children && typeof children !== 'string') {
     const matches = children.__html.match(
-      /^(?<node>\<span class=\".*\"\>\/\/(?:\s)?(?<title>.*)\<\/span\>)/,
+      /^(?<node>\<span class=\".*\"\>(?:\/[\/*])(?:\s)?(?<title>[^*\/]*)(?:\*\/)?\<\/span\>)/,
     );
 
     if (matches && matches.groups) {

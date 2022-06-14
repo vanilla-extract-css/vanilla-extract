@@ -65,7 +65,7 @@ const Header = () => (
     display="flex"
     justifyContent="space-between"
     paddingTop="large"
-    paddingX="large"
+    paddingX={{ mobile: 'large', desktop: 'none' }}
     position={{ mobile: 'relative', desktop: 'fixed' }}
     zIndex={1}
     className={styles.header}
@@ -142,6 +142,7 @@ const PrimaryNav = ({
     <Box
       component="aside"
       padding={{ mobile: 'xlarge', desktop: 'large' }}
+      paddingY="xlarge"
       position="fixed"
       background={{
         lightMode: 'white',
@@ -159,13 +160,17 @@ const PrimaryNav = ({
       <Box display={{ desktop: 'none' }} paddingBottom="xxlarge">
         <ColorModeToggle />
       </Box>
-      <Stack space="medium">
-        {groups.map((group) => {
-          const groupPages = pages.filter((page) => group === page.group);
+      <Stack space="xlarge">
+        {groups.map((label) => {
+          const groupPages = pages.filter((page) => label === page.label);
 
           return (
-            <Stack key={group} space="medium">
-              <Text>{group}</Text>
+            <Stack key={label} space="medium">
+              <Text size="xsmall">
+                <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
+                  {label}
+                </span>
+              </Text>
 
               <>
                 {groupPages.map(({ route, title }) => {
@@ -180,7 +185,12 @@ const PrimaryNav = ({
                       underline="never"
                       size="small"
                     >
-                      <Box component="span" display="flex" alignItems="center">
+                      <Box
+                        component="span"
+                        display="flex"
+                        alignItems="center"
+                        paddingY="xsmall"
+                      >
                         <Box
                           component="span"
                           background={{
@@ -208,19 +218,84 @@ const PrimaryNav = ({
             </Stack>
           );
         })}
-        <Link
-          to="https://github.com/seek-oss/vanilla-extract"
-          onClick={selectAndScrollToTop}
-          highlightOnFocus={false}
-          underline="never"
-          size="small"
-        >
-          <Box component="span" paddingLeft="large">
-            <Box component="span" paddingLeft="xsmall" marginLeft="xsmall">
-              Github
-            </Box>
-          </Box>
-        </Link>
+        <Stack space="medium">
+          <Text size="xsmall" color="secondary">
+            <span style={{ textTransform: 'uppercase' }}>Community</span>
+          </Text>
+          <>
+            <Link
+              to="https://github.com/seek-oss/vanilla-extract"
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+            >
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
+                <Box
+                  component="span"
+                  display="block"
+                  paddingLeft="xsmall"
+                  marginLeft="xsmall"
+                >
+                  Github
+                </Box>
+              </Box>
+            </Link>
+
+            <Link
+              to="https://github.com/seek-oss/vanilla-extract/discussions"
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+            >
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
+                <Box
+                  component="span"
+                  display="block"
+                  paddingLeft="xsmall"
+                  marginLeft="xsmall"
+                >
+                  Discussions
+                </Box>
+              </Box>
+            </Link>
+
+            <Link
+              to="https://discord.gg/6nCfPwwz6w"
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+            >
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
+                <Box
+                  component="span"
+                  display="block"
+                  paddingLeft="xsmall"
+                  marginLeft="xsmall"
+                >
+                  Discord
+                </Box>
+              </Box>
+            </Link>
+          </>
+        </Stack>
       </Stack>
     </Box>
   );
@@ -286,7 +361,7 @@ const SecondaryNav = ({
                       active ? styles.active : '',
                     )}
                   />
-                  <Box component="span" paddingLeft={l2 ? 'large' : 'large'}>
+                  <Box component="span" paddingLeft={l2 ? 'large' : 'medium'}>
                     {name}
                   </Box>
                 </Box>

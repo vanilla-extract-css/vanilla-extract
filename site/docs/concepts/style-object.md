@@ -5,11 +5,9 @@ title: Style object
 # Style object
 
 The style object is the core API for describing styles in vanilla-extract.
-All the styling APIs take this object as input, some just have a slightly stripped down version with less features.
-Those limitations are documented alongside their respective APIs.
+All the styling APIs take this object as input, some just have a slightly stripped down version with less features. Those limitations are documented alongside their respective APIs.
 
-While we know some people prefer to author CSS in it's native syntax, we've chosen to use objects for describing styles.
-This allows for much better use of TypeScipt in your styling code as the styles are just typed data-structures like the rest of your application code.
+Describing styles in this way enables much better use of TypeScipt through your styling code, as the styles are just typed data-structures like the rest of your application code.
 It also brings type-safety and autocomplete to CSS authoring (via [csstype](https://github.com/frenic/csstype)).
 
 ## Basic properties
@@ -35,8 +33,7 @@ globalStyle('body', myStyleDefinition);
 
 ## CSS Variables
 
-In regular CSS, variables (or CSS custom properties) are set just like any other property. We instead nest CSS variables inside the `vars` key.
-This allows us to provide more accurate static typing for the basic CSS properties.
+In regular CSS, variables (or CSS custom properties) are able to be set alongside the other properties within the rule. In vanilla-extract CSS variables must be nested within the `vars` key — providing more accurate static typing for the rest of the style object.
 
 ```ts
 // styles.css.ts
@@ -64,11 +61,13 @@ const myStyle = style({
 });
 ```
 
-## Simple psuedos
+## Simple pseudo selectors
 
-Simple pseudo's are plain pseudo classes that don't take any parameters and therefore can be easily detected and statically typed.
+Simple pseudo selectors are those that don’t take any parameters and therefore can be easily detected and statically typed.
 
-> Simple pseudos are not available for global style APIs
+> Not available for global style APIs
+
+<foo />
 
 ```ts
 // styles.css.ts
@@ -86,11 +85,11 @@ const myStyle = style({
 });
 ```
 
-Simple pseudos can only accept [Basic Properties](#basic-properties) and [CSS Variables](#css-variables).
+The style object for simple pseudo selectors can only contain [Basic Properties](#basic-properties) and [CSS Variables](#css-variables).
 
 ## Media queries
 
-Unlike in regular CSS, vanilla-extract let's you embed media queries **within** your style defintions using the `@media` key.
+Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style defintions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
 ```ts
@@ -132,9 +131,11 @@ const myStyle = style({
 
 ## Selectors
 
-The `selectors` key allows you to write custom CSS selectors. You can reference the current style using the `&` convention.
+More complex rules can be written within the `selectors` key.
 
-> Selectors are not available for global style APIs
+> Not available for global style APIs
+
+The class name for the current style block can be included within the selector using the `&` character.
 
 ```ts
 // styles.css.ts
