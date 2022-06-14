@@ -67,8 +67,6 @@ Simple pseudo selectors are those that don’t take any parameters and therefore
 
 > Not available for global style APIs
 
-<foo />
-
 ```ts
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
