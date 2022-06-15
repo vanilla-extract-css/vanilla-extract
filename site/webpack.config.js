@@ -152,7 +152,7 @@ module.exports = [
         },
         {
           test: /\.mdx?$/,
-          use: ['mdx-loader'],
+          use: ['mdx-loader', './code-block-loader'],
         },
         {
           test: /\.(png?)$/,
