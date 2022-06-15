@@ -6,9 +6,14 @@ import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter/dist/e
 import * as styles from './Code.css';
 import { Box, Stack } from '../system';
 
+interface File {
+  fileName: string;
+  contents: string;
+}
+
 interface CompiledCodeProps {
-  code: string;
-  css: string;
+  code: Array<File>;
+  css: Array<File>;
 }
 export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
   return (
@@ -24,12 +29,25 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
     >
       <Text size="code" component="div" color="code" baseline={false}>
         <Stack space="xlarge">
-          <SyntaxHighlighter language="tsx" style={styles.theme}>
-            {code}
-          </SyntaxHighlighter>
-          <SyntaxHighlighter language="css" style={styles.theme}>
-            {css}
-          </SyntaxHighlighter>
+          {code.map(({ fileName, contents }) => (
+            <SyntaxHighlighter
+              key={fileName}
+              language="tsx"
+              style={styles.theme}
+            >
+              {`// ${fileName}\n${contents}`}
+            </SyntaxHighlighter>
+          ))}
+
+          {css.map(({ fileName, contents }) => (
+            <SyntaxHighlighter
+              key={fileName}
+              language="css"
+              style={styles.theme}
+            >
+              {`/* ${fileName} */\n${contents}`}
+            </SyntaxHighlighter>
+          ))}
         </Stack>
       </Text>
     </Box>

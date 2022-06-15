@@ -1,5 +1,3 @@
-const path = require('path');
-
 const { transform } = require('@babel/core');
 const { compile } = require('@vanilla-extract/integration');
 
@@ -32,8 +30,8 @@ const getAdapter = () => {
         }).join('\n');
 
         cssFiles.push({
-          file: fileScope.filePath,
-          css,
+          fileName: fileScope.filePath,
+          contents: css,
         });
 
         bufferedCSSObjs = [];
@@ -44,6 +42,30 @@ const getAdapter = () => {
   };
 };
 
+function extractFilesFromCodeBlock(code) {
+  const fileMatches = code.matchAll(/(?:\/\/\s(?<title>\w+)(?:\.css\.ts))/g);
+
+  let lastIndex = code.length - 1;
+
+  return Array.from(fileMatches, (match) => ({
+    ...match.groups,
+    index: match.index,
+  })).reduceRight((acc, curr) => {
+    const result = [
+      {
+        fileName: `./${curr.title}`,
+        contents: code
+          .slice(curr.index + `// ${curr.title}.css.ts`.length, lastIndex)
+          .trim(),
+      },
+      ...acc,
+    ];
+    lastIndex = curr.index;
+
+    return result;
+  }, []);
+}
+
 async function loader(source) {
   this.cacheable(true);
 
@@ -51,7 +73,7 @@ async function loader(source) {
   const rootContext = this.rootContext;
 
   const result = source.matchAll(
-    /```(?<language>\w+)\n(?:\/\/\s(?<title>.+))?(?<code>(?:.|\n)*?)```/g,
+    /```(?<language>\w+)\n(?<code>(?:.|\n)*?)```/g,
   );
 
   const codeBlocks = Array.from(result, (match) => ({
@@ -63,28 +85,23 @@ async function loader(source) {
   const newSource = [];
   let currIndex = 0;
 
-  for (const { title, code, language, startIndex, endIndex } of codeBlocks) {
-    if (!title || title !== 'dawg.css.ts') {
-      continue;
-    }
+  for (const { code, language, startIndex, endIndex } of codeBlocks) {
+    const files = extractFilesFromCodeBlock(code);
 
-    const entrypointFile = 'entrypoint.ts';
-    const entrypointFilter = new RegExp(entrypointFile);
-    const entrypointNamespace = 'entrypoint-ns';
-
-    const babelResult = await transform(code, {
-      filename: title,
-      cwd: rootContext,
-      plugins: [
-        require('@babel/plugin-syntax-typescript'),
-        require('@vanilla-extract/babel-plugin'),
-      ],
-      configFile: false,
-    });
-
-    if (!babelResult) {
+    if (
+      files.length === 0 ||
+      !files.some(({ fileName }) => fileName.includes('dawg'))
+    ) {
       return callback(null, source);
     }
+
+    // Rename to just '.ts' so it doesn't get loaded by
+    // the internal filescope plugin
+    const entrypointFile = files[0].fileName;
+
+    // Any relative file is considered virtual
+    const virtualFileFilter = /^\.\//;
+    const virtualFileNamespace = 'virtual-file-ns';
 
     try {
       const { source: compiledSource } = await compile({
@@ -95,21 +112,41 @@ async function loader(source) {
             {
               name: 'virtual-entrypoint',
               setup(build) {
-                build.onResolve({ filter: entrypointFilter }, ({ path }) => {
+                build.onResolve({ filter: virtualFileFilter }, ({ path }) => {
+                  const file = files.find(({ fileName }) =>
+                    path.includes(fileName),
+                  );
+
                   return {
-                    namespace: entrypointNamespace,
-                    path,
+                    namespace: virtualFileNamespace,
+                    path: file.fileName,
                   };
                 });
 
                 build.onLoad(
-                  { filter: /.*/, namespace: entrypointNamespace },
-                  () => {
-                    return {
-                      contents: babelResult.code,
-                      loader: 'ts',
-                      resolveDir: rootContext,
-                    };
+                  { filter: /.*/, namespace: virtualFileNamespace },
+                  async ({ path }) => {
+                    const file = files.find(({ fileName }) =>
+                      path.includes(fileName),
+                    );
+
+                    if (file) {
+                      const babelResult = await transform(file.contents, {
+                        filename: `${path}.css.ts`,
+                        cwd: rootContext,
+                        plugins: [
+                          require('@babel/plugin-syntax-typescript'),
+                          require('@vanilla-extract/babel-plugin'),
+                        ],
+                        configFile: false,
+                      });
+
+                      return {
+                        contents: babelResult.code,
+                        loader: 'ts',
+                        resolveDir: rootContext,
+                      };
+                    }
                   },
                 );
               },
@@ -129,8 +166,8 @@ async function loader(source) {
       newSource.push(source.slice(currIndex, startIndex));
 
       newSource.push(
-        `<compiledcode code={${JSON.stringify(code)}} css={${JSON.stringify(
-          cssFiles[0].css,
+        `<compiledcode code={${JSON.stringify(files)}} css={${JSON.stringify(
+          cssFiles,
         )}} />`,
       );
 

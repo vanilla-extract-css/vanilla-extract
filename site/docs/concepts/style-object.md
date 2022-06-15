@@ -18,10 +18,14 @@ The only difference is all properties use `camelCase` rather than `kebab-case`.
 ```ts
 // dawg.css.ts
 import { style, globalStyle } from '@vanilla-extract/css';
+import { yaMum } from './variables.css.ts';
 
 const myStyleDefinition = {
   display: 'flex',
-  paddingTop: '3px'
+  paddingTop: '3px',
+  vars: {
+    [yaMum]: 'green'
+  }
 } as const;
 
 // Use with the `style` API
@@ -29,6 +33,18 @@ const myStyle = style(myStyleDefinition);
 
 // Or with the `globalStyle` API
 globalStyle('body', myStyleDefinition);
+
+// variables.css.ts
+import {
+  createVar,
+  globalStyle
+} from '@vanilla-extract/css';
+
+export const yaMum = createVar();
+
+globalStyle('body', {
+  background: 'blue'
+});
 ```
 
 ## CSS Variables
