@@ -1,8 +1,7 @@
-import React from 'react';
 import Text from '../Typography/Text';
 
 // @ts-ignore
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter/dist/esm/index';
 
 import * as styles from './Code.css';
 import { Box, Stack } from '../system';
@@ -12,7 +11,6 @@ interface CompiledCodeProps {
   css: string;
 }
 export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
-  console.log(css.length, code.length);
   return (
     <Box
       className={styles.root}

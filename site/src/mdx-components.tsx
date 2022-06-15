@@ -181,16 +181,7 @@ export default {
     </Box>
   ),
   pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
-  compiledcode: (props) => (
-    <MDXProvider
-      components={{
-        pre: ({ children }) => <>{children}</>,
-        code: ({ children }) => <>{children}</>,
-      }}
-    >
-      <CompiledCode {...props} />
-    </MDXProvider>
-  ),
+  compiledcode: CompiledCode,
   code: ({
     'data-language': language,
     dangerouslySetInnerHTML,
