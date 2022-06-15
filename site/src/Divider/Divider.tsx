@@ -7,6 +7,7 @@ export default () => {
       component="hr"
       background={{ lightMode: 'pink400', darkMode: 'pink500' }}
       borderRadius="full"
+      marginBottom="xxlarge"
       className={styles.root}
     />
   );

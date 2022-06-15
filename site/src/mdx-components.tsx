@@ -5,6 +5,7 @@ import {
   createElement,
   Children,
 } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
 import Code from './Code/Code';
@@ -26,14 +27,23 @@ interface HeadingProps {
   id: string;
 }
 
-const P = (props: Children) => (
-  <Box component="p" paddingBottom="xlarge">
-    <Text>{props.children}</Text>
+const Block = ({ component, children, ...restProps }) => (
+  <Box component={component} marginBottom="xxlarge" {...restProps}>
+    {children}
   </Box>
 );
 
+const RemoveNestedParagraphs = (p: Children) => (
+  <MDXProvider
+    {...p}
+    components={{
+      p: ({ children }) => <Text>{children}</Text>,
+    }}
+  />
+);
+
 const Pre = ({ color, width, ...props }: AllHTMLAttributes<HTMLPreElement>) => (
-  <Box component="pre" paddingBottom="large" {...props} />
+  <Box component="pre" marginBottom="xxlarge" {...props} />
 );
 
 const Th = (props: Children) => (
@@ -115,16 +125,16 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
 };
 
 export default {
-  hr: () => (
-    <Box paddingTop="small" paddingBottom="xxlarge">
-      <Divider />
-    </Box>
+  hr: () => <Divider />,
+  p: ({ children }: Children) => (
+    <Block component="p">
+      <Text>{children}</Text>
+    </Block>
   ),
-  p: P,
   h1: ({ component, ...props }: HeadingProps) => (
-    <Box component="h1" marginBottom="xxlarge">
+    <Block component="h1">
       <Heading component="span" {...props} level="1" />
-    </Box>
+    </Block>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
     <Box
@@ -170,7 +180,7 @@ export default {
       </Box>
     </Box>
   ),
-  pre: Pre,
+  pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
   compiledcode: CompiledCode,
   code: ({
     'data-language': language,
@@ -192,7 +202,13 @@ export default {
   th: Th,
   td: Td,
   a: A,
-  blockquote: Blockquote,
+  blockquote: ({ children }: Children) => (
+    <Block component="blockquote">
+      <RemoveNestedParagraphs>
+        <Blockquote>{children}</Blockquote>
+      </RemoveNestedParagraphs>
+    </Block>
+  ),
   ul: (props: Children) => (
     <Box
       component="ul"
