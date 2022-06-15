@@ -16,7 +16,7 @@ At the top-level of the object, all basic CSS properties can be set just like wh
 The only difference is all properties use `camelCase` rather than `kebab-case`.
 
 ```ts
-// dawg.css.ts
+// styles.css.ts
 import { style, globalStyle } from '@vanilla-extract/css';
 import { yaMum } from './variables.css.ts';
 

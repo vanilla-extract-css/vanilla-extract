@@ -1,5 +1,6 @@
 const { transform } = require('@babel/core');
 const { compile } = require('@vanilla-extract/integration');
+const evalCode = require('eval');
 
 const { transformCss } = require('@vanilla-extract/css/transformCss');
 const { setAdapter, removeAdapter } = require('@vanilla-extract/css/adapter');
@@ -68,8 +69,12 @@ function extractFilesFromCodeBlock(code) {
 
 async function loader(source) {
   this.cacheable(true);
-
   const callback = this.async();
+
+  if (!this.resourcePath.includes('style-object')) {
+    return callback(null, source);
+  }
+
   const rootContext = this.rootContext;
 
   const result = source.matchAll(
@@ -88,15 +93,11 @@ async function loader(source) {
   for (const { code, language, startIndex, endIndex } of codeBlocks) {
     const files = extractFilesFromCodeBlock(code);
 
-    if (
-      files.length === 0 ||
-      !files.some(({ fileName }) => fileName.includes('dawg'))
-    ) {
-      return callback(null, source);
+    if (files.length === 0) {
+      continue;
     }
 
-    // Rename to just '.ts' so it doesn't get loaded by
-    // the internal filescope plugin
+    // Use the first file as the entrypoint
     const entrypointFile = files[0].fileName;
 
     // Any relative file is considered virtual
@@ -159,7 +160,7 @@ async function loader(source) {
 
       setAdapter(adapter);
 
-      eval(compiledSource);
+      evalCode(compiledSource, entrypointFile, { console, process }, true);
 
       removeAdapter(adapter);
 
@@ -173,17 +174,15 @@ async function loader(source) {
 
       currIndex = endIndex;
     } catch (e) {
-      console.error('Hi', e);
+      console.error(e);
 
-      return callback(null, source);
+      return callback(e, source);
     }
-
-    newSource.push(source.slice(currIndex));
-
-    return callback(null, newSource.join('\n'));
   }
 
-  return callback(null, source);
+  newSource.push(source.slice(currIndex));
+  console.log(newSource.join('\n'));
+  return callback(null, newSource.join('\n'));
 }
 
 module.exports = loader;
