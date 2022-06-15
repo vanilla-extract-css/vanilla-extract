@@ -14,6 +14,7 @@ import Blockquote from './Blockquote/Blockquote';
 import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
 import { sprinkles } from './system/styles/sprinkles.css';
+import { CompiledCode } from './Code/CompiledCode';
 
 interface Children {
   children: ReactNode;
@@ -170,6 +171,7 @@ export default {
     </Box>
   ),
   pre: Pre,
+  compiledcode: CompiledCode,
   code: ({
     'data-language': language,
     dangerouslySetInnerHTML,

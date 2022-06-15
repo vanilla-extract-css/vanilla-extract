@@ -21,6 +21,8 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/plugin-syntax-typescript": "^7.17.12",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
