@@ -12,7 +12,7 @@ interface File {
 
 export interface CompiledCodeProps {
   code: Array<File>;
-  css: Array<File>;
+  css: Record<string, string>;
 }
 
 export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
@@ -114,19 +114,11 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
                 <Chevron direction={showCss ? 'up' : 'down'} />
               </Text>
             </Box>
-            {showCss
-              ? css
-                  .filter(
-                    ({ fileName }) =>
-                      fileName.replace(/\.css\.ts$/, '') ===
-                      activeFileName.replace(/^\.\//, ''),
-                  )
-                  .map(({ fileName, contents }) => (
-                    <SyntaxHighlighter key={fileName} language="css">
-                      {contents}
-                    </SyntaxHighlighter>
-                  ))
-              : null}
+            {showCss ? (
+              <SyntaxHighlighter language="css">
+                {css[activeFileName]}
+              </SyntaxHighlighter>
+            ) : null}
           </Stack>
         </Box>
       </Stack>

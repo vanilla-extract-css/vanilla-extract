@@ -9,7 +9,7 @@ const getAdapter = () => {
   const localClassNames = new Set();
   const composedClassLists = [];
   let bufferedCSSObjs = [];
-  const cssFiles = [];
+  const cssFiles = {};
 
   return {
     adapter: {
@@ -24,16 +24,11 @@ const getAdapter = () => {
       },
       markCompositionUsed: () => {},
       onEndFileScope: (fileScope) => {
-        const css = transformCss({
+        cssFiles[fileScope.filePath] = transformCss({
           localClassNames: Array.from(localClassNames),
           composedClassLists,
           cssObjs: bufferedCSSObjs,
         }).join('\n');
-
-        cssFiles.push({
-          fileName: fileScope.filePath,
-          contents: css,
-        });
 
         bufferedCSSObjs = [];
       },
@@ -44,7 +39,7 @@ const getAdapter = () => {
 };
 
 function extractFilesFromCodeBlock(code) {
-  const fileMatches = code.matchAll(/(?:\/\/\s(?<title>\w+)(?:\.css\.ts))/g);
+  const fileMatches = code.matchAll(/(?:\/\/\s(?<fileName>\w+\.css\.ts))/g);
 
   let lastIndex = code.length - 1;
 
@@ -54,9 +49,9 @@ function extractFilesFromCodeBlock(code) {
   })).reduceRight((acc, curr) => {
     const result = [
       {
-        fileName: `./${curr.title}`,
+        fileName: curr.fileName,
         contents: code
-          .slice(curr.index + `// ${curr.title}.css.ts`.length, lastIndex)
+          .slice(curr.index + `// ${curr.fileName}`.length, lastIndex)
           .trim(),
       },
       ...acc,
@@ -98,7 +93,7 @@ async function loader(source) {
     }
 
     // Use the first file as the entrypoint
-    const entrypointFile = files[0].fileName;
+    const entrypointFile = `./${files[0].fileName}`;
 
     // Any relative file is considered virtual
     const virtualFileFilter = /^\.\//;
@@ -120,7 +115,7 @@ async function loader(source) {
 
                   return {
                     namespace: virtualFileNamespace,
-                    path: file.fileName,
+                    path: file.fileName.replace(/\.css\.ts$/, ''),
                   };
                 });
 
@@ -128,12 +123,12 @@ async function loader(source) {
                   { filter: /.*/, namespace: virtualFileNamespace },
                   async ({ path }) => {
                     const file = files.find(({ fileName }) =>
-                      path.includes(fileName),
+                      fileName.includes(path),
                     );
 
                     if (file) {
                       const babelResult = await transform(file.contents, {
-                        filename: `${path}.css.ts`,
+                        filename: file.fileName,
                         cwd: rootContext,
                         plugins: [
                           require('@babel/plugin-syntax-typescript'),
@@ -181,7 +176,7 @@ async function loader(source) {
   }
 
   newSource.push(source.slice(currIndex));
-  console.log(newSource.join('\n'));
+
   return callback(null, newSource.join('\n'));
 }
 
