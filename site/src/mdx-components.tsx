@@ -14,8 +14,9 @@ import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
+import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
+import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
-import { CompiledCode } from './Code/CompiledCode';
 
 interface Children {
   children: ReactNode;
@@ -27,8 +28,12 @@ interface HeadingProps {
   id: string;
 }
 
-const Block = ({ component, children, ...restProps }) => (
-  <Box component={component} marginBottom="xxlarge" {...restProps}>
+const Block = ({
+  component,
+  children,
+  ...restProps
+}: Omit<BoxProps, 'marginBottom'>) => (
+  <Box component={component} paddingBottom="xxlarge" {...restProps}>
     {children}
   </Box>
 );
@@ -40,10 +45,6 @@ const RemoveNestedParagraphs = (p: Children) => (
       p: ({ children }) => <Text>{children}</Text>,
     }}
   />
-);
-
-const Pre = ({ color, width, ...props }: AllHTMLAttributes<HTMLPreElement>) => (
-  <Box component="pre" marginBottom="xxlarge" {...props} />
 );
 
 const Th = (props: Children) => (
@@ -137,13 +138,16 @@ export default {
     </Block>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
-    <Box
-      component="h2"
-      paddingTop={{ mobile: 'xxlarge', desktop: 'xxlarge' }}
-      paddingBottom="xxlarge"
-    >
-      <Box position="relative" paddingLeft="large">
+    <Block component="h2" paddingTop="xxlarge">
+      <Box
+        position="relative"
+        component="span"
+        display="block"
+        paddingLeft="large"
+      >
         <Box
+          component="span"
+          display="block"
           position="absolute"
           top={0}
           left={0}
@@ -158,12 +162,19 @@ export default {
         />
         <Heading component="span" {...props} level="3" />
       </Box>
-    </Box>
+    </Block>
   ),
   h3: ({ component, ...props }: HeadingProps) => (
-    <Box component="h3" paddingTop="xlarge" paddingBottom="xxlarge">
-      <Box position="relative" paddingLeft="large">
+    <Block component="h3" paddingTop="xlarge">
+      <Box
+        position="relative"
+        component="span"
+        display="block"
+        paddingLeft="large"
+      >
         <Box
+          component="span"
+          display="block"
           position="absolute"
           top={0}
           left={0}
@@ -178,10 +189,14 @@ export default {
         />
         <Heading component="span" {...props} level="3" />
       </Box>
-    </Box>
+    </Block>
   ),
   pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
-  compiledcode: CompiledCode,
+  compiledcode: (props: CompiledCodeProps) => (
+    <Block>
+      <CompiledCode {...props} />
+    </Block>
+  ),
   code: ({
     'data-language': language,
     dangerouslySetInnerHTML,
@@ -189,14 +204,12 @@ export default {
     'data-language': string;
     dangerouslySetInnerHTML: { __html: string };
   }) => (
-    <Box marginBottom={{ mobile: 'small', tablet: 'medium', desktop: 'large' }}>
-      <Code
-        language={language}
-        background={{ lightMode: 'coolGray800', darkMode: 'gray900' }}
-      >
-        {dangerouslySetInnerHTML}
-      </Code>
-    </Box>
+    <Code
+      language={language}
+      background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
+    >
+      {dangerouslySetInnerHTML}
+    </Code>
   ),
   inlineCode: InlineCode,
   th: Th,

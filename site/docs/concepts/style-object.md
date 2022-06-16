@@ -7,7 +7,7 @@ title: Style object
 The style object is the core API for describing styles in vanilla-extract.
 All the styling APIs take this object as input, some just have a slightly stripped down version with less features. Those limitations are documented alongside their respective APIs.
 
-Describing styles in tÁhis way enables much better use of TypeScipt through your styling code, as the styles are just typed data-structures like the rest of your application code.
+Describing styles in this way enables much better use of TypeScipt through your styling code, as the styles are just typed data-structures like the rest of your application code.
 It also brings type-safety and autocomplete to CSS authoring (via [csstype](https://github.com/frenic/csstype)).
 
 ## Basic properties

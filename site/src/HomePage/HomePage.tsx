@@ -319,11 +319,7 @@ export const HomePage = () => {
                 </Text>
               </Box>
 
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray800', darkMode: 'black' }}
-              >
+              <Code language="tsx" title="styles.css.ts">
                 {outdent`
                 import { style } from '@vanilla-extract/css';
 

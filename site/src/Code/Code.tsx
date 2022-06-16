@@ -1,18 +1,10 @@
-// @ts-ignore
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter/dist/esm/index';
-// @ts-ignore
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-// @ts-ignore
-import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
-SyntaxHighlighter.registerLanguage('tsx', tsx);
-SyntaxHighlighter.registerLanguage('ts', ts);
-
-import { Box, Stack } from '../system';
-import Text from '../Typography/Text';
-import InlineCode from '../InlineCode/InlineCode';
-import * as styles from './Code.css';
 import { useRef, useEffect } from 'react';
+import { Box, Stack } from '../system';
 import { Sprinkles } from '../system/styles/sprinkles.css';
+import Text from '../Typography/Text';
+import SyntaxHighlighter from './SyntaxHighlighter';
+import * as styles from './Code.css';
+
 export interface CodeProps {
   language: string;
   errorTokens?: Array<string>;
@@ -72,7 +64,7 @@ export default ({
   }, [rootRef.current, errorTokens]);
 
   let resolvedTitle;
-  let resolvedChildren;
+  let resolvedChildren = '';
 
   if (children && typeof children !== 'string') {
     const matches = children.__html.match(
@@ -81,19 +73,16 @@ export default ({
 
     if (matches && matches.groups) {
       resolvedTitle = matches.groups.title;
-      resolvedChildren = {
-        __html: children.__html.replace(`${matches.groups.node}`, '').trim(),
-      };
+      resolvedChildren = children.__html
+        .replace(`${matches.groups.node}`, '')
+        .trim();
     }
+  } else {
+    resolvedChildren = children;
   }
   return (
     <div ref={rootRef}>
-      <Box
-        className={styles.root}
-        background={background}
-        borderRadius="large"
-        padding={padding}
-      >
+      <Box background={background} borderRadius="large" padding={padding}>
         <Stack space="large">
           {title || resolvedTitle ? (
             <Box display="flex" alignItems="center">
@@ -130,23 +119,12 @@ export default ({
               </Text>
             </Box>
           ) : null}
-          <Text size="code" component="div" color="code" baseline={false}>
-            {typeof children === 'string' ? (
-              <SyntaxHighlighter language={language} style={styles.theme}>
-                {children}
-              </SyntaxHighlighter>
-            ) : (
-              <InlineCode inline={false}>
-                <span
-                  className={`language-${language}`}
-                  data-language={language}
-                  dangerouslySetInnerHTML={
-                    resolvedTitle ? resolvedChildren : children
-                  }
-                />
-              </InlineCode>
-            )}
-          </Text>
+          <SyntaxHighlighter
+            language={language}
+            tokenized={typeof children !== 'string'}
+          >
+            {resolvedChildren}
+          </SyntaxHighlighter>
         </Stack>
       </Box>
     </div>
