@@ -337,6 +337,7 @@ importers:
       copy-webpack-plugin: ^8.1.0
       css-loader: ^5.2.4
       csstype: ^3.0.7
+      eval: ^0.1.8
       file-loader: ^6.2.0
       github-slugger: ^1.3.0
       gray-matter: ^4.0.2
@@ -394,6 +395,7 @@ importers:
       copy-webpack-plugin: 8.1.1_webpack@5.64.2
       css-loader: 5.2.7_webpack@5.64.2
       csstype: 3.0.10
+      eval: 0.1.8
       file-loader: 6.2.0_webpack@5.64.2
       github-slugger: 1.4.0
       gray-matter: 4.0.3
@@ -7118,6 +7120,14 @@ packages:
     dependencies:
       require-like: 0.1.2
 
+  /eval/0.1.8:
+    resolution: {integrity: sha512-EzV94NYKoO09GLXGjXj9JIlXijVck4ONSr5wiCWDvhsvj5jxSrzTmRU/9C1DyB6uToszLs8aifA6NQ7lEQdvFw==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      '@types/node': 16.11.10
+      require-like: 0.1.2
+    dev: true
+
   /eventemitter3/4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
 
@@ -8091,7 +8101,7 @@ packages:
       express: '>=4.0.0'
     dependencies:
       chalk: 4.1.2
-      eval: 0.1.6
+      eval: 0.1.8
       exception-formatter: 2.1.2
       schema-utils: 3.1.1
     dev: true
@@ -12021,7 +12031,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   /require-like/0.1.2:
-    resolution: {integrity: sha1-rW8wwTvs15cBDEaK+ndcDAprR/o=}
+    resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
 
   /require-main-filename/2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
