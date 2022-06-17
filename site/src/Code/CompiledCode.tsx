@@ -38,14 +38,18 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
             return (
               <Box
                 key={fileName}
-                component="button"
-                cursor="pointer"
+                component={code.length > 1 ? 'button' : 'span'}
+                cursor={code.length > 1 ? 'pointer' : undefined}
                 marginRight="large"
                 marginTop="-medium"
-                onClick={() => {
-                  setActiveFileName(fileName);
-                  setShowCss(false);
-                }}
+                onClick={
+                  code.length > 1
+                    ? () => {
+                        setActiveFileName(fileName);
+                        setShowCss(false);
+                      }
+                    : undefined
+                }
               >
                 <Box position="relative" display="flex" alignItems="center">
                   <Box
