@@ -15,16 +15,16 @@ It also brings type-safety and autocomplete to CSS authoring (via [csstype](http
 At the top-level of the object, all basic CSS properties can be set just like when writing a regular CSS class.
 The only difference is all properties use `camelCase` rather than `kebab-case`.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style, globalStyle } from '@vanilla-extract/css';
-import { yaMum } from './variables.css.ts';
+import { positive } from './variables.css.ts';
 
 const myStyleDefinition = {
   display: 'flex',
   paddingTop: '3px',
   vars: {
-    [yaMum]: 'green'
+    [positive]: 'green'
   }
 } as const;
 
@@ -40,7 +40,7 @@ import {
   globalStyle
 } from '@vanilla-extract/css';
 
-export const yaMum = createVar();
+export const positive = createVar();
 
 globalStyle('body', {
   background: 'blue'
@@ -51,7 +51,7 @@ globalStyle('body', {
 
 In regular CSS, variables (or CSS custom properties) are able to be set alongside the other properties within the rule. In vanilla-extract CSS variables must be nested within the `vars` key — providing more accurate static typing for the rest of the style object.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
 
@@ -64,7 +64,7 @@ const myStyle = style({
 
 The `vars` key also accepts scoped CSS variables, created via the [createVar](/documentation/create-var/) API.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style, createVar } from '@vanilla-extract/css';
 
@@ -83,7 +83,7 @@ Simple pseudo selectors are those that don’t take any parameters and therefore
 
 > Not available for global style APIs
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
 
@@ -106,7 +106,7 @@ The style object for simple pseudo selectors can only contain [Basic Properties]
 Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style defintions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
 
@@ -130,7 +130,7 @@ When processing your code into CSS, vanilla-extract will always render your medi
 
 Supports queries work the same as [Media queries](#media-queries) and are nested inside the `@supports` key.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
 
@@ -151,7 +151,7 @@ More complex rules can be written within the `selectors` key.
 
 The class name for the current style block can be included within the selector using the `&` character.
 
-```ts
+```ts compiled
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
 
@@ -166,16 +166,16 @@ const myStyle = style({
 
 Selectors can also contain references to other scoped class names.
 
-```ts
+```ts compiled
 // styles.css.ts
 
 import { style } from '@vanilla-extract/css';
 
-export const parentClass = style({});
+export const parent = style({});
 
-export const childClass = style({
+export const child = style({
   selectors: {
-    [`${parentClass}:focus &`]: {
+    [`${parent}:focus &`]: {
       background: '#fafafa'
     }
   }
@@ -200,13 +200,14 @@ When using CSS property values that don't exist in some browsers, you'll often d
 This isn't possible using JS objects as you can't declare the same key twice.
 So instead, we use an array to define fallback values.
 
-```ts
+```ts compiled
 // styles.css.ts
 
 import { style } from '@vanilla-extract/css';
 
 export const myStyle = style({
-  // in Firefox and IE the "overflow: overlay" will be ignored and the "overflow: auto" will be applied
+  // In Firefox and IE the "overflow: overlay" will be
+  // ignored and the "overflow: auto" will be applied
   overflow: ['auto', 'overlay']
 });
 ```
@@ -215,7 +216,7 @@ export const myStyle = style({
 
 If you want to target a vendor specific property (e.g. `-webkit-tap-highlight-color`), you can do so using `PascalCase` and removing the beginning `-`.
 
-```ts
+```ts compiled
 // styles.css.ts
 
 import { style } from '@vanilla-extract/css';

@@ -92,7 +92,7 @@ export const HomePage = () => {
         className={styles.skewedContainer}
       >
         <ContentBlock
-          size={{ mobile: 'standard', desktop: 'large' }}
+          size={{ mobile: 'standard', desktop: 'xxlarge' }}
           withGutters
         >
           <Box position="relative">
@@ -219,7 +219,7 @@ export const HomePage = () => {
       <Stack space="xxxlarge">
         <ContentBlock
           withGutters
-          size={{ mobile: 'standard', desktop: 'large' }}
+          size={{ mobile: 'standard', desktop: 'xxlarge' }}
         >
           <Box
             paddingY="xxxlarge"
@@ -347,7 +347,7 @@ export const HomePage = () => {
           <Box paddingTop="xxxlarge">
             <ContentBlock
               withGutters
-              size={{ mobile: 'standard', desktop: 'large' }}
+              size={{ mobile: 'standard', desktop: 'xxlarge' }}
             >
               <Columns space="xlarge" collapseOnTablet alignY="center">
                 <Stack space="xxlarge">
@@ -388,7 +388,7 @@ export const HomePage = () => {
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
@@ -427,7 +427,7 @@ export const HomePage = () => {
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xlarge" collapseOnTablet alignY="center">
               <Stack space="xxlarge">
@@ -466,7 +466,7 @@ export const HomePage = () => {
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
@@ -508,7 +508,7 @@ export const HomePage = () => {
             background={{ lightMode: 'blue100', darkMode: 'gray900' }}
             className={styles.skewedContainerSecondary}
           >
-            <ContentBlock size="large" withGutters>
+            <ContentBlock size="xxlarge" withGutters>
               <Stack space="xxlarge" align="center">
                 <Columns space="xxlarge" collapseOnMobile alignY="center">
                   <Tweet

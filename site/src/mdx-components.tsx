@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
-import { Box } from './system';
+import { Box, ContentBlock } from './system';
 import Code from './Code/Code';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
@@ -31,9 +31,18 @@ interface HeadingProps {
 const Block = ({
   component,
   children,
+  maxWidth = 'large',
   ...restProps
 }: Omit<BoxProps, 'marginBottom'>) => (
-  <Box component={component} paddingBottom="xxlarge" {...restProps}>
+  <Box
+    component={component}
+    paddingBottom="xxlarge"
+    {...restProps}
+    maxWidth={maxWidth}
+    style={{
+      margin: '0 auto',
+    }}
+  >
     {children}
   </Box>
 );
@@ -126,7 +135,11 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
 };
 
 export default {
-  hr: () => <Divider />,
+  hr: () => (
+    <Block>
+      <Divider />
+    </Block>
+  ),
   p: ({ children }: Children) => (
     <Block component="p">
       <Text>{children}</Text>
@@ -193,7 +206,7 @@ export default {
   ),
   pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
   compiledcode: (props: CompiledCodeProps) => (
-    <Block>
+    <Block maxWidth="xlarge">
       <CompiledCode {...props} />
     </Block>
   ),

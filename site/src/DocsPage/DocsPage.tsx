@@ -422,7 +422,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
           className={styles.main}
         >
-          <ContentBlock>
+          <ContentBlock size={{ mobile: 'standard', desktop: 'xxlarge' }}>
             <Box paddingBottom="xxxlarge">
               <MDXProvider components={mdxComponents}>
                 {pages.map(({ route, Component, title, sections }, index) => {

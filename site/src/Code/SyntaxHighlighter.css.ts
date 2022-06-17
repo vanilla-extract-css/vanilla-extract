@@ -26,14 +26,14 @@ globalStyle(`${root} code`, {
 globalStyle(tokenSelector({ tokens: ['comment'] }), {
   color: vars.palette.coolGray500,
 });
-globalStyle(tokenSelector({ tokens: ['keyword', 'selector'] }), {
+globalStyle(tokenSelector({ tokens: ['selector', 'keyword'] }), {
   color: vars.palette.blue200,
 });
 globalStyle(tokenSelector({ tokens: ['string'] }), {
   color: vars.palette.green200,
 });
 globalStyle(
-  tokenSelector({ tokens: ['function', 'property', 'number', 'unit'] }),
+  tokenSelector({ tokens: ['function', 'number', 'unit'] }),
   {
     color: vars.palette.pink300,
   },
@@ -51,16 +51,19 @@ globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
 globalStyle(tokenSelector({ darkMode, tokens: ['comment'] }), {
   color: vars.palette.gray500,
 });
-globalStyle(tokenSelector({ darkMode, tokens: ['keyword', 'selector'] }), {
+globalStyle(tokenSelector({ darkMode, tokens: ['selector', 'keyword'] }), {
   color: vars.palette.blue300,
 });
 globalStyle(tokenSelector({ darkMode, tokens: ['string'] }), {
   color: vars.palette.green300,
 });
+globalStyle(tokenSelector({ tokens: ['property'] }), {
+  color: vars.palette.white,
+});
 globalStyle(
   tokenSelector({
     darkMode,
-    tokens: ['function', 'property', 'number', 'unit'],
+    tokens: ['function', 'number', 'unit'],
   }),
   {
     color: vars.palette.pink400,
@@ -72,6 +75,13 @@ globalStyle(
     color: vars.palette.gray400,
   },
 );
+
+globalStyle(`${root} .language-css`, {
+  color: vars.palette.green200,
+});
+globalStyle(`.${darkMode} ${root} .language-css`, {
+  color: vars.palette.green300,
+});
 
 export const theme = {
   'pre[class*="language-"]': {

@@ -66,15 +66,9 @@ async function loader(source) {
   this.cacheable(true);
   const callback = this.async();
 
-  if (!this.resourcePath.includes('style-object')) {
-    return callback(null, source);
-  }
-
   const rootContext = this.rootContext;
 
-  const result = source.matchAll(
-    /```(?<language>\w+)\n(?<code>(?:.|\n)*?)```/g,
-  );
+  const result = source.matchAll(/```(?<language>.+)\n(?<code>(?:.|\n)*?)```/g);
 
   const codeBlocks = Array.from(result, (match) => ({
     ...match.groups,
@@ -86,6 +80,10 @@ async function loader(source) {
   let currIndex = 0;
 
   for (const { code, language, startIndex, endIndex } of codeBlocks) {
+    if (language !== 'ts compiled') {
+      continue;
+    }
+
     const files = extractFilesFromCodeBlock(code);
 
     if (files.length === 0) {

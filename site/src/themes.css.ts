@@ -172,7 +172,9 @@ export const vars = createGlobalTheme(':root', {
     xsmall: px(480),
     small: px(600),
     standard: px(740),
-    large: px(1350),
+    large: px(960),
+    xlarge: px(1120),
+    xxlarge: px(1350),
   },
   heading: {
     h1: calculateTypographyStyles(
@@ -269,12 +271,12 @@ export const vars = createGlobalTheme(':root', {
           rows: 6,
         },
         tablet: {
-          fontSize: 15,
-          rows: 8,
+          fontSize: 14,
+          rows: 7,
         },
         desktop: {
-          fontSize: 15,
-          rows: 8,
+          fontSize: 14,
+          rows: 7,
         },
       },
       'body',
