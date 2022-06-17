@@ -67,6 +67,14 @@ export const sidebar = style({
   }),
 });
 
+export const showOnWideScreens = style({
+  '@media': {
+    [`screen and (max-width: 1500px)`]: {
+      display: 'none'
+    }
+  }
+});
+
 export const active = style({});
 
 export const activeIndicator = style({
@@ -126,14 +134,20 @@ export const scrollContainer = style({
   height: '100%',
 });
 
-export const main = style(
+export const main = style([
   responsiveStyle({
     desktop: {
       marginLeft: sidebarWidth,
-      marginRight: sidebarWidth,
     },
   }),
-);
+  {
+    '@media': {
+      [`screen and (min-width: 1500px)`]: {
+        marginRight: sidebarWidth,
+      }
+    }
+  }
+]);
 
 export const backdrop = style({
   transition: 'opacity 0.1s ease',

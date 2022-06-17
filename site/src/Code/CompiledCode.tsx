@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { Chevron } from '../Chevron/Chevron';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
 import SyntaxHighlighter from './SyntaxHighlighter';
+
+import * as styles from './CompiledCode.css';
 
 interface File {
   fileName: string;
@@ -15,6 +18,7 @@ export interface CompiledCodeProps {
 
 export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
   const [activeFileName, setActiveFileName] = useState(code[0].fileName);
+  const [showCss, setShowCss] = useState(false);
 
   return (
     <Box
@@ -22,97 +26,158 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
       borderRadius="large"
       padding={{
         mobile: 'large',
-        tablet: 'large',
-        desktop: 'xlarge',
+        tablet: 'xlarge',
       }}
+      paddingTop="xlarge"
     >
       <Stack space="xlarge">
         <Box display="flex" alignItems="center">
-          {code.map(({ fileName }) => (
-            <Box
-              key={fileName}
-              component="button"
-              cursor="pointer"
-              marginRight="xlarge"
-              onClick={() => setActiveFileName(fileName)}
-            >
-              <Box position="relative" display="flex" alignItems="center">
-                <Box
-                  component="span"
-                  position="absolute"
-                  background={{
-                    lightMode: 'green300',
-                    darkMode: 'green400',
-                  }}
-                  borderRadius="full"
-                  paddingLeft="xsmall"
-                  paddingTop="large"
-                  marginLeft="xsmall"
-                  style={{
-                    transition: 'transform .3s ease, opacity .3s ease',
-                    transform:
-                      fileName === activeFileName
-                        ? `skew(15deg)`
-                        : `skew(-15deg)`,
-                    opacity: fileName === activeFileName ? 1 : 0,
-                    filter:
-                      fileName === activeFileName ? undefined : 'saturate(0)',
-                  }}
-                />
-                <Box
-                  component="span"
-                  paddingLeft="large"
-                  paddingY="large"
-                  marginY="-large"
-                  paddingRight="large"
-                  marginRight="-large"
-                >
-                  <Text
-                    key={fileName}
-                    color={fileName === activeFileName ? 'code' : 'secondary'}
-                    size="small"
-                    weight={fileName === activeFileName ? 'strong' : undefined}
+          {code.map(({ fileName }) => {
+            const isActiveFile = fileName === activeFileName;
+
+            return (
+              <Box
+                key={fileName}
+                component="button"
+                cursor="pointer"
+                marginRight="large"
+                marginTop="-medium"
+                onClick={() => {
+                  setActiveFileName(fileName);
+                  setShowCss(false);
+                }}
+              >
+                <Box position="relative" display="flex" alignItems="center">
+                  <Box
+                    component="span"
+                    position="absolute"
+                    background={{
+                      lightMode: 'green300',
+                      darkMode: 'green400',
+                    }}
+                    borderRadius="full"
+                    paddingLeft="xsmall"
+                    paddingTop="large"
+                    marginLeft="xsmall"
+                    transition="slow"
+                    className={
+                      isActiveFile
+                        ? styles.fileIndicatorActive
+                        : styles.fileIndicatorInactive
+                    }
+                  />
+                  <Box
+                    component="span"
+                    paddingLeft="large"
+                    position="relative"
+                    className={styles.boldLayoutShiftFix}
+                    data-text={fileName}
                   >
-                    {fileName}
-                  </Text>
+                    <Box position="absolute" left={0} paddingLeft="large">
+                      <Text
+                        key={fileName}
+                        color={isActiveFile ? 'code' : 'secondary'}
+                        size="small"
+                        weight={isActiveFile ? 'strong' : undefined}
+                        baseline={false}
+                      >
+                        {fileName}
+                      </Text>
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Box>
-        <Box display={{ mobile: 'block', desktop: 'flex' }}>
-          <Box style={{ minWidth: 0 }} width="full" flexGrow={1}>
-            <SyntaxHighlighter language="tsx">
-              {
-                code.filter(({ fileName }) => fileName === activeFileName)[0]
-                  .contents
-              }
-            </SyntaxHighlighter>
-          </Box>
+        <Box padding="large" margin="-large" overflow="hidden">
           <Box
-            style={{ width: '45%' }}
-            width="full"
-            flexGrow={0}
-            flexShrink={0}
-            padding={{ desktop: 'large' }}
-            marginTop={{ desktop: '-medium' }}
-            marginY={{ desktop: '-large' }}
-            marginRight={{ desktop: '-large' }}
-            marginLeft={{ desktop: 'xlarge' }}
-            background={{ darkMode: 'black' }}
-            borderRadius="large"
+            display="flex"
+            className={showCss ? styles.showCssOnMobile : undefined}
           >
-            <Stack space="large">
-              <Text weight="strong" size="small" color="secondary">
-                CSS
-              </Text>
-              <SyntaxHighlighter language="css">
-                {css[activeFileName]}
+            <Box
+              width="full"
+              flexGrow={1}
+              flexShrink={0}
+              minWidth={0}
+              opacity={showCss ? 0 : undefined}
+              transition="slow"
+              className={styles.sourceContainer}
+            >
+              <SyntaxHighlighter language="tsx">
+                {
+                  code.filter(({ fileName }) => fileName === activeFileName)[0]
+                    .contents
+                }
               </SyntaxHighlighter>
-            </Stack>
+            </Box>
+            <Box
+              width="full"
+              flexShrink={0}
+              minWidth={0}
+              padding="large"
+              background={{ lightMode: 'coolGray900', darkMode: 'black' }}
+              borderRadius="large"
+              transition="slow"
+              className={styles.outputContainer}
+            >
+              <Stack space="large">
+                <Text weight="strong" size="small" color="secondary">
+                  CSS
+                </Text>
+                <SyntaxHighlighter language="css">
+                  {css[activeFileName]}
+                </SyntaxHighlighter>
+              </Stack>
+            </Box>
           </Box>
         </Box>
       </Stack>
+
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        paddingTop={{ mobile: 'medium' }}
+        className={styles.buttonContainer}
+      >
+        <Box
+          opacity={!showCss ? 0 : undefined}
+          pointerEvents={!showCss ? 'none' : undefined}
+          transition="fast"
+        >
+          <Box
+            component="button"
+            background="gray600"
+            borderRadius="medium"
+            padding="medium"
+            cursor="pointer"
+            onClick={() => setShowCss(false)}
+          >
+            <Text size="small" color="code">
+              Close x
+            </Text>
+          </Box>
+        </Box>
+        <Box
+          position="absolute"
+          opacity={showCss ? 0 : undefined}
+          pointerEvents={showCss ? 'none' : undefined}
+          transition="fast"
+        >
+          <Box
+            component="button"
+            background="pink600"
+            borderRadius="medium"
+            padding="medium"
+            cursor="pointer"
+            onClick={() => setShowCss(true)}
+          >
+            <Text size="small" color="code">
+              Output <Chevron direction="right" />
+            </Text>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

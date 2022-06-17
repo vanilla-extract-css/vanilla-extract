@@ -90,7 +90,7 @@ const Header = () => (
         paddingLeft={{ mobile: 'none', tablet: 'xsmall', desktop: 'large' }}
         paddingTop={{ mobile: 'xsmall', tablet: 'small', desktop: 'medium' }}
       >
-        <Box paddingLeft={{ desktop: 'xsmall' }}>
+        <Box paddingLeft={{ tablet: 'xsmall', desktop: 'medium' }}>
           <Logo height={68} />
         </Box>
       </Box>
@@ -323,8 +323,7 @@ const SecondaryNav = ({
       padding="large"
       position="fixed"
       right={0}
-      display={{ mobile: 'none', desktop: 'block' }}
-      className={styles.sidebar}
+      className={[styles.sidebar, styles.showOnWideScreens]}
     >
       <Stack space="small">
         {sections
@@ -422,7 +421,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
           className={styles.main}
         >
-          <ContentBlock size={{ mobile: 'standard', desktop: 'xxlarge' }}>
+          <ContentBlock
+            size={{ mobile: 'standard', tablet: 'xlarge', desktop: 'xxlarge' }}
+          >
             <Box paddingBottom="xxxlarge">
               <MDXProvider components={mdxComponents}>
                 {pages.map(({ route, Component, title, sections }, index) => {

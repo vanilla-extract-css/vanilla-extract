@@ -48,9 +48,15 @@ const responsiveProperties = defineProperties({
     marginLeft: margins,
     marginRight: margins,
     pointerEvents: ['none', 'auto'],
+    overflow: ['hidden'],
     opacity: [0, 1],
     textAlign: ['left', 'center'],
+    minWidth: [0],
     maxWidth: vars.contentWidth,
+    transition: {
+      slow: 'transform .3s ease, opacity .3s ease',
+      fast: 'transform .15s ease, opacity .15s ease'
+    },
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
