@@ -80,6 +80,7 @@ export const outputContainer = style([
     transform: 'translateX(-80%)',
     flexGrow: 1,
     opacity: 0,
+    pointerEvents: 'none'
   }),
   {
     selectors: {
