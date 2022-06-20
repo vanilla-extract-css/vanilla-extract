@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Chevron } from '../Chevron/Chevron';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
 import SyntaxHighlighter from './SyntaxHighlighter';
@@ -42,6 +41,8 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
                 cursor={code.length > 1 ? 'pointer' : undefined}
                 marginRight="large"
                 marginTop="-medium"
+                className={styles.fileNameFocus}
+                borderRadius="small"
                 onClick={
                   code.length > 1
                     ? () => {
@@ -104,7 +105,6 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
               flexGrow={1}
               flexShrink={0}
               minWidth={0}
-              opacity={showCss ? 0 : undefined}
               transition="slow"
               className={styles.sourceContainer}
             >
@@ -116,6 +116,7 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
               </SyntaxHighlighter>
             </Box>
             <Box
+              id="outputContainer"
               width="full"
               flexShrink={0}
               minWidth={0}
@@ -145,39 +146,32 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
         className={styles.buttonContainer}
       >
         <Box
-          opacity={!showCss ? 0 : undefined}
-          pointerEvents={!showCss ? 'none' : undefined}
+          component="button"
+          background="gray600"
+          borderRadius="medium"
+          padding="medium"
+          cursor="pointer"
+          className={styles.button}
+          onClick={() => setShowCss(!showCss)}
+          position="relative"
           transition="fast"
+          aria-expanded={showCss}
+          aria-controls="outputContainer"
         >
           <Box
-            component="button"
-            background="gray600"
-            borderRadius="medium"
-            padding="medium"
-            cursor="pointer"
-            onClick={() => setShowCss(false)}
-          >
-            <Text size="small" color="code">
-              Close x
-            </Text>
-          </Box>
-        </Box>
-        <Box
-          position="absolute"
-          opacity={showCss ? 0 : undefined}
-          pointerEvents={showCss ? 'none' : undefined}
-          transition="fast"
-        >
-          <Box
-            component="button"
+            component="span"
+            display="block"
             background="pink600"
+            position="absolute"
+            inset={0}
+            pointerEvents="none"
             borderRadius="medium"
-            padding="medium"
-            cursor="pointer"
-            onClick={() => setShowCss(true)}
-          >
-            <Text size="small" color="code">
-              Output <Chevron direction="right" />
+            opacity={showCss ? 0 : undefined}
+            transition="slow"
+          />
+          <Box component="span" position="relative">
+            <Text size="small" color="code" weight="strong">
+              {showCss ? 'Close' : 'Show Output'}
             </Text>
           </Box>
         </Box>

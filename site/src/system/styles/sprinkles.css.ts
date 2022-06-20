@@ -106,6 +106,9 @@ const unresponsiveProperties = defineProperties({
     borderRadius: vars.border.radius,
     cursor: ['pointer'],
   },
+  shorthands: {
+    inset: ['top', 'bottom', 'left', 'right']
+  }
 });
 
 export const sprinkles = createSprinkles(

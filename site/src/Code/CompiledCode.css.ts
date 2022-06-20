@@ -1,6 +1,25 @@
-import { style, StyleRule } from "@vanilla-extract/css";
+import { createVar, style, StyleRule } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
+import { darkMode } from "../system/styles/sprinkles.css";
 import { vars } from "../themes.css";
+
+const backgroundColor = createVar();
+export const fileNameFocus = style({
+  vars: {
+    [backgroundColor]: vars.palette.coolGray900
+  },
+  outline: 'none',
+  ':focus-visible': {
+    boxShadow: `0 0 0 6px ${backgroundColor}, 0px 0px 0px 8px ${vars.palette.blue300}`,
+  },
+  selectors: {
+    [`${darkMode} &:focus-visible`]: {
+      vars: {
+        [backgroundColor]: vars.palette.gray900
+      },
+    }
+  }
+});
 
 export const fileIndicatorInactive = style({
   transform: 'skew(-15deg)',
@@ -55,13 +74,12 @@ export const sourceContainer = style([
   sideBySideStyles({
     width: 'auto',
     flexShrink: 1,
-    opacity: 1,
   }),
   {
     selectors: {
       [`${showCssOnMobile} &`]: belowSideBySideStyles({
         transform: `scale(.9)`,
-        opacity: 0.5,
+        opacity: 0,
       })
     }
   }
@@ -87,6 +105,7 @@ export const outputContainer = style([
       [`${showCssOnMobile} &`]: belowSideBySideStyles({
         transform: 'translateX(-100%)',
         opacity: 1,
+        pointerEvents: 'auto'
       })
     }
   }
@@ -95,3 +114,15 @@ export const outputContainer = style([
 export const buttonContainer = style(sideBySideStyles({
   display: 'none'
 }));
+
+export const button = style({
+  userSelect: 'none',
+  outline: 'none',
+  ':active': {
+    transform: 'scale(.95) translateZ(0)',
+    transformOrigin: '50% 50%',
+  },
+  ':focus-visible': {
+    boxShadow: `0px 0px 0px 4px ${vars.palette.blue400}`,
+  },
+});
