@@ -95,15 +95,15 @@ export const outputContainer = style([
     marginLeft: vars.spacing.large
   }),
   belowSideBySideStyles({
-    transform: 'translateX(-80%)',
+    transform: 'scale(1.1) translateX(-82%)',
     flexGrow: 1,
     opacity: 0,
-    pointerEvents: 'none'
+    pointerEvents: 'none',
   }),
   {
     selectors: {
       [`${showCssOnMobile} &`]: belowSideBySideStyles({
-        transform: 'translateX(-100%)',
+        transform: 'scale(1) translateX(-100%)',
         opacity: 1,
         pointerEvents: 'auto'
       })
