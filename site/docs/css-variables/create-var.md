@@ -7,7 +7,7 @@ title: createVar
 Creates a single scoped CSS Variable reference.
 
 ```ts compiled
-// style.css.ts
+// accent.css.ts
 
 import { createVar, style } from '@vanilla-extract/css';
 
@@ -16,7 +16,7 @@ export const accentVar = createVar();
 
 ## Setting the variable
 
-The variable reference created above can be applied using the `vars` key within the [style object](/documentation/style-object/#css-variables).
+The variable reference created above can be set using the `vars` key within the [style object](/documentation/style-object/#css-variables).
 
 ```ts compiled
 // accent.css.ts
@@ -25,20 +25,20 @@ import { createVar, style } from '@vanilla-extract/css';
 
 export const accentVar = createVar();
 
-export const blueAccent = style({
+export const blue = style({
   vars: {
     [accentVar]: 'blue'
   }
 });
 
-export const pinkAccent = style({
+export const pink = style({
   vars: {
     [accentVar]: 'pink'
   }
 });
 ```
 
-Keep in mind the value of the variable can be changed in another class or media query, for example if the consumer prefers a dark color-scheme.
+Keep in mind the value of the variable can be changed in another class or even in a media query. For example, let’s change the value when the user prefers a dark color-scheme:
 
 ```ts compiled
 // accent.css.ts
@@ -47,7 +47,7 @@ import { createVar, style } from '@vanilla-extract/css';
 
 export const accentVar = createVar();
 
-export const blueAccent = style({
+export const blue = style({
   vars: {
     [accentVar]: 'blue'
   },
@@ -60,7 +60,7 @@ export const blueAccent = style({
   }
 });
 
-export const pinkAccent = style({
+export const pink = style({
   vars: {
     [accentVar]: 'pink'
   },
@@ -93,13 +93,13 @@ import { createVar, style } from '@vanilla-extract/css';
 
 export const accentVar = createVar();
 
-export const blueAccent = style({
+export const blue = style({
   vars: {
     [accentVar]: 'blue'
   }
 });
 
-export const pinkAccent = style({
+export const pink = style({
   vars: {
     [accentVar]: 'pink'
   }
