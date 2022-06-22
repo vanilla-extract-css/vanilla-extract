@@ -17,7 +17,7 @@ const contents = [
   {
     group: 'css-variables',
     label: 'CSS Variables',
-    pages: ['assign-vars', 'create-var', 'fallback-var'],
+    pages: ['create-var', 'assign-vars', 'fallback-var'],
   },
   {
     group: 'at-rules',

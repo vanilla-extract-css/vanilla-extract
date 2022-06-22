@@ -6,7 +6,7 @@ title: styleVariants
 
 Creates a collection of named style variants.
 
-```tsx
+```ts compiled
 // styles.css.ts
 
 import { styleVariants } from '@vanilla-extract/css';
@@ -21,10 +21,10 @@ export const variant = styleVariants({
 
 Multiple styles can be composed into a single rule by providing an array of styles.
 
-```ts
+```ts compiled
 // styles.css.ts
 
-import { styleVariants } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 const base = style({ padding: 12 });
 
@@ -36,10 +36,10 @@ export const variant = styleVariants({
 
 You can also transform the values by providing a map function as the second argument.
 
-```ts
+```ts compiled
 // styles.css.ts
 
-import { styleVariants } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 const base = style({ padding: 12 });
 

@@ -6,7 +6,7 @@ title: style
 
 Creates styles attached to a locally scoped class name using the [Style object](/documentation/style-object/).
 
-```ts
+```ts compiled
 // styles.css.ts
 
 import { style } from '@vanilla-extract/css';
@@ -18,16 +18,17 @@ export const className = style({
 
 CSS Variables, simple pseudos, selectors and media/feature queries are all supported.
 
-```ts
+```ts compiled
 // styles.css.ts
 
-import { style } from '@vanilla-extract/css';
-import { vars } from './vars.css.ts';
+import { style, createVar } from '@vanilla-extract/css';
+
+const scopedVar = createVar();
 
 export const className = style({
   display: 'flex',
   vars: {
-    [vars.localVar]: 'green',
+    [scopedVar]: 'green',
     '--global-variable': 'purple'
   },
   ':hover': {
@@ -53,7 +54,7 @@ export const className = style({
 
 [Style composition](/documentation/style-composition/) can be used by passing an array.
 
-```ts
+```ts compiled
 // styles.css.ts
 
 import { style } from '@vanilla-extract/css';

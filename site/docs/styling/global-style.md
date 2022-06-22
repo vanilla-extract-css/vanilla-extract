@@ -6,7 +6,7 @@ title: globalStyle
 
 Creates styles attached to a global selector.
 
-```tsx
+```ts compiled
 // app.css.ts
 
 import { globalStyle } from '@vanilla-extract/css';
@@ -18,7 +18,7 @@ globalStyle('html, body', {
 
 Global selectors can also contain references to other scoped class names.
 
-```tsx
+```ts compiled
 // app.css.ts
 
 import { style, globalStyle } from '@vanilla-extract/css';

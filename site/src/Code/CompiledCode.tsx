@@ -130,9 +130,16 @@ export const CompiledCode = ({ code, css }: CompiledCodeProps) => {
                 <Text weight="strong" size="small" color="secondary">
                   CSS
                 </Text>
-                <SyntaxHighlighter language="css">
-                  {css[activeFileName]}
-                </SyntaxHighlighter>
+
+                {css[activeFileName] ? (
+                  <SyntaxHighlighter language="css">
+                    {css[activeFileName]}
+                  </SyntaxHighlighter>
+                ) : (
+                  <Text size="small" type="code">
+                    No CSS created
+                  </Text>
+                )}
               </Stack>
             </Box>
           </Box>

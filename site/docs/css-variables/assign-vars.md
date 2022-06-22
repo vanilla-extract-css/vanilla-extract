@@ -8,7 +8,7 @@ Assigns a collection of CSS Variables anywhere within a style block.
 
 > 💡 This is useful for creating responsive themes since it can be used within `@media` blocks.
 
-```tsx
+```ts compiled
 // theme.css.ts
 
 import {
@@ -25,7 +25,7 @@ export const vars = createThemeContract({
   }
 });
 
-export const responsiveSpaceTheme = style({
+export const responsiveSpace = style({
   vars: assignVars(vars.space, {
     small: '4px',
     medium: '8px',
