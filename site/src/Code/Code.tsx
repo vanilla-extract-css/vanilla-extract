@@ -76,6 +76,8 @@ export default ({
       resolvedChildren = children.__html
         .replace(`${matches.groups.node}`, '')
         .trim();
+    } else {
+      resolvedChildren = children.__html;
     }
   } else {
     resolvedChildren = children;

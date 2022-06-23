@@ -6,8 +6,8 @@ title: keyframes
 
 Creates a locally scoped set of keyframes.
 
-```tsx
-// styles.css.ts
+```ts compiled
+// animation.css.ts
 
 import { keyframes, style } from '@vanilla-extract/css';
 
@@ -16,7 +16,7 @@ const rotate = keyframes({
   '100%': { transform: 'rotate(360deg)' }
 });
 
-export const animated = style({
+export const spin = style({
   animation: `3s infinite ${rotate}`
 });
 ```

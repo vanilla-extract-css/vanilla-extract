@@ -6,19 +6,21 @@ title: globalFontFace
 
 Creates a globally scoped custom font.
 
-```tsx
-// app.css.ts
+```ts compiled
+// text.css.ts
 
 import {
   globalFontFace,
   style
 } from '@vanilla-extract/css';
 
-globalFontFace('MyGlobalFont', {
+const comicSans = 'GlobalComicSans';
+
+globalFontFace(comicSans, {
   src: 'local("Comic Sans MS")'
 });
 
-export const text = style({
-  fontFamily: 'MyGlobalFont'
+export const font = style({
+  fontFamily: comicSans
 });
 ```

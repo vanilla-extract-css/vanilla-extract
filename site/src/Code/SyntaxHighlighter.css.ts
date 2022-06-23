@@ -70,6 +70,12 @@ globalStyle(`${root} .language-css`, {
 globalStyle(`.${darkMode} ${root} .language-css`, {
   color: vars.palette.green300,
 });
+globalStyle(`${root} .language-css .function, ${root} .language-bash .function`, {
+  color: vars.palette.blue200,
+});
+globalStyle(`.${darkMode} ${root} .language-css .function, .${darkMode} ${root} .language-bash .function`, {
+  color: vars.palette.blue300,
+});
 
 export const theme = {
   'pre[class*="language-"]': {

@@ -8,7 +8,7 @@ Creates a theme attached to a global selector, but with locally scoped variable 
 
 **Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
 
-```tsx
+```ts compiled
 // theme.css.ts
 import { createGlobalTheme } from '@vanilla-extract/css';
 
@@ -26,7 +26,7 @@ export const vars = createGlobalTheme(':root', {
 
 If you want to implement an existing theme contract, you can pass it as the second argument.
 
-```ts
+```ts compiled
 // theme.css.ts
 import {
   createThemeContract,

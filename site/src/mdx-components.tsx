@@ -32,6 +32,7 @@ const Block = ({
   component,
   children,
   maxWidth = 'large',
+  style,
   ...restProps
 }: Omit<BoxProps, 'marginBottom'>) => (
   <Box
@@ -41,6 +42,7 @@ const Block = ({
     maxWidth={maxWidth}
     style={{
       margin: '0 auto',
+      ...style,
     }}
   >
     {children}
@@ -236,9 +238,8 @@ export default {
     </Block>
   ),
   ul: (props: Children) => (
-    <Box
+    <Block
       component="ul"
-      paddingBottom="xlarge"
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'disc',
@@ -247,12 +248,11 @@ export default {
       }}
     >
       {props.children}
-    </Box>
+    </Block>
   ),
   ol: (props: Children) => (
-    <Box
+    <Block
       component="ol"
-      paddingBottom="xlarge"
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'decimal',
@@ -261,10 +261,10 @@ export default {
       }}
     >
       {props.children}
-    </Box>
+    </Block>
   ),
   li: (props: Children) => (
-    <Box component="li" paddingBottom="large">
+    <Box component="li" paddingBottom="small">
       {props.children}
     </Box>
   ),

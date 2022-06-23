@@ -8,10 +8,10 @@ Creates a locally scoped theme class and a theme contract which can be consumed 
 
 **Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
 
-```tsx
+```ts compiled
 // theme.css.ts
 
-import { createTheme } from '@vanilla-extract/css';
+import { createTheme, style } from '@vanilla-extract/css';
 
 export const [themeClass, vars] = createTheme({
   color: {
@@ -21,13 +21,18 @@ export const [themeClass, vars] = createTheme({
     body: 'arial'
   }
 });
+
+export const brandText = style({
+  color: vars.color.brand,
+  fontFamily: vars.font.body
+});
 ```
 
 You can create theme variants by passing a theme contract as the first argument to `createTheme`.
 
-```tsx
+```ts compiled
 // themes.css.ts
-import { createTheme } from '@vanilla-extract/css';
+import { createTheme, style } from '@vanilla-extract/css';
 
 export const [themeA, vars] = createTheme({
   color: {
@@ -45,6 +50,11 @@ export const themeB = createTheme(vars, {
   font: {
     body: 'comic sans ms'
   }
+});
+
+export const brandText = style({
+  color: vars.color.brand,
+  fontFamily: vars.font.body
 });
 ```
 

@@ -10,11 +10,12 @@ Creates a contract of locally scoped variable names for themes to implement.
 
 > 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
-```tsx
+```ts compiled
 // themes.css.ts
 import {
   createThemeContract,
-  createTheme
+  createTheme,
+  style
 } from '@vanilla-extract/css';
 
 export const vars = createThemeContract({
@@ -42,5 +43,10 @@ export const themeB = createTheme(vars, {
   font: {
     body: 'comic sans ms'
   }
+});
+
+export const brandText = style({
+  color: vars.color.brand,
+  fontFamily: vars.font.body
 });
 ```

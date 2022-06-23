@@ -6,16 +6,16 @@ title: fontFace
 
 Creates a custom font attached to a locally scoped font name.
 
-```tsx
-// style.css.ts
+```ts compiled
+// text.css.ts
 
 import { fontFace, style } from '@vanilla-extract/css';
 
-const myFont = fontFace({
+const comicSans = fontFace({
   src: 'local("Comic Sans MS")'
 });
 
-export const text = style({
-  fontFamily: myFont
+export const font = style({
+  fontFamily: comicSans
 });
 ```

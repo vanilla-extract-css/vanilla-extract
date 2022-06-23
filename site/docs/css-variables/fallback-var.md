@@ -6,7 +6,7 @@ title: fallbackVar
 
 Provides fallback values when consuming variables.
 
-```tsx
+```ts compiled
 // style.css.ts
 
 import {
@@ -17,14 +17,14 @@ import {
 
 export const colorVar = createVar();
 
-export const exampleStyle = style({
+export const color = style({
   color: fallbackVar(colorVar, 'blue')
 });
 ```
 
 Multiple fallbacks are also supported.
 
-```tsx
+```ts compiled
 // style.css.ts
 
 import {
@@ -33,14 +33,10 @@ import {
   style
 } from '@vanilla-extract/css';
 
-export const primaryColorVar = createVar();
-export const secondaryColorVar = createVar();
+export const primaryVar = createVar();
+export const secondaryVar = createVar();
 
-export const exampleStyle = style({
-  color: fallbackVar(
-    primaryColorVar,
-    secondaryColorVar,
-    'blue'
-  )
+export const color = style({
+  color: fallbackVar(primaryVar, secondaryVar, 'blue')
 });
 ```
