@@ -16,8 +16,9 @@ export default ({ children, inline = true }: InlineCodeProps) => {
       }
       borderRadius="small"
       padding="small"
+      paddingY="xsmall"
       marginX="xsmall"
-      marginY="-small"
+      marginY="-medium"
       className={styles.code}
     >
       {children}

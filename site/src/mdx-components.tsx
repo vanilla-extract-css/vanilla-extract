@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
-import { Box, ContentBlock } from './system';
+import { Box } from './system';
 import Code from './Code/Code';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
@@ -262,10 +262,5 @@ export default {
     >
       {props.children}
     </Block>
-  ),
-  li: (props: Children) => (
-    <Box component="li" paddingBottom="small">
-      {props.children}
-    </Box>
   ),
 };
