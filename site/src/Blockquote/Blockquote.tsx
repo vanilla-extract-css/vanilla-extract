@@ -7,8 +7,8 @@ export default (props: { children: ReactNode }) => {
     <Box
       paddingX={{ mobile: 'large', tablet: 'xlarge' }}
       paddingY="xlarge"
-      borderRadius="small"
-      background={{ lightMode: 'blue100', darkMode: 'gray800' }}
+      borderRadius="medium"
+      background={{ lightMode: 'blue100', darkMode: 'blueGray900' }}
       className={styles.root}
     >
       {props.children}
