@@ -1,5 +1,6 @@
 ---
 title: Recipes
+parent: packages
 ---
 
 # Recipes

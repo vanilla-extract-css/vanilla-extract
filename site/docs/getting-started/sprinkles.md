@@ -1,9 +1,8 @@
 ---
-title: Getting started
-parent: sprinkles
+title: Atomic CSS (Sprinkles)
 ---
 
-# Introduction
+# Sprinkles
 
 Generate a static set of custom utility classes and compose them either statically at build time, or dynamically at runtime, without the usual style generation overhead of CSS-in-JS.
 

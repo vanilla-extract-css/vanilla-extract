@@ -1,5 +1,6 @@
 ---
 title: Dynamic
+parent: packages
 ---
 
 # Dynamic

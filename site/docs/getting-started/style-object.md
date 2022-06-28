@@ -1,8 +1,8 @@
 ---
-title: Style object
+title: Styling
 ---
 
-# Style object
+# Styling
 
 The style object is the core API for describing styles in vanilla-extract.
 All the styling APIs take this object as input, some just have a slightly stripped down version with less features. Those limitations are documented alongside their respective APIs.

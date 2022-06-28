@@ -1,5 +1,5 @@
 ---
-title: Style composition
+title: Composition
 ---
 
 # Style composition

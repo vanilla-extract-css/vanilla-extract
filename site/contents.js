@@ -2,47 +2,44 @@ const contents = [
   {
     group: 'getting-started',
     label: 'Getting Started',
-    pages: ['introduction', 'setup'],
-  },
-  {
-    group: 'concepts',
-    label: 'Concepts',
-    pages: ['style-object', 'style-composition', 'theming'],
-  },
-  {
-    group: 'styling',
-    label: 'Styling',
-    pages: ['style', 'style-variants', 'global-style'],
-  },
-  {
-    group: 'css-variables',
-    label: 'CSS Variables',
-    pages: ['create-var', 'assign-vars', 'fallback-var'],
-  },
-  {
-    group: 'at-rules',
-    label: 'At-rules',
-    pages: ['font-face', 'global-font-face', 'keyframes', 'global-keyframes'],
-  },
-  {
-    group: 'theming',
-    label: 'Theming',
     pages: [
+      'installation',
+      'style-object',
+      'theming',
+      'style-composition',
+      'sprinkles',
+    ],
+  },
+  {
+    group: 'api',
+    label: 'API',
+    pages: [
+      'style',
+      'style-variants',
+      'create-var',
+      'assign-vars',
+      'fallback-var',
+      'font-face',
+      'keyframes',
       'create-theme',
-      'create-global-theme',
       'create-theme-contract',
+    ],
+  },
+  {
+    group: 'global-api',
+    label: 'Global API',
+    pages: [
+      'global-style',
+      'global-font-face',
+      'global-keyframes',
+      'create-global-theme',
       'create-global-theme-contract',
     ],
   },
   {
-    group: 'sprinkles',
-    label: 'Sprinkles',
-    pages: ['introduction', 'usage', 'utilities'],
-  },
-  {
-    group: 'ecosystem',
-    label: 'Ecosystem',
-    pages: ['recipes', 'dynamic', 'css-utils'],
+    group: 'packages',
+    label: 'Packages',
+    pages: ['sprinkles', 'recipes', 'dynamic', 'css-utils'],
   },
   {
     group: 'integrations',

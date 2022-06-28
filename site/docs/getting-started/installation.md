@@ -1,8 +1,8 @@
 ---
-title: Setup
+title: Installation
 ---
 
-# Setup
+# Installation
 
 Install your integration of preference:
 

@@ -1,5 +1,6 @@
 ---
 title: CSS Utils
+parent: packages
 ---
 
 # CSS Utils
