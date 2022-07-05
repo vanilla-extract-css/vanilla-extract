@@ -11,7 +11,10 @@ import { Tweet } from '../Tweet/Tweet';
 // import docsStore from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
+import { CompiledCode } from '../Code/CompiledCode';
+import { ErrorHighlighter } from '../Code/ErrorHighlighter';
 import * as styles from './HomePage.css';
+import { vars } from '../themes.css';
 
 const InstallPrompt = () => {
   return (
@@ -26,8 +29,6 @@ const InstallPrompt = () => {
         lightMode: 'teal200',
         darkMode: 'gray800',
       }}
-      aria-label="npm install @vanilla-extract/css. Click to copy to clipboard"
-      title="Copy to clipboard"
       className={styles.installBlock}
     >
       <Box display={{ mobile: 'none', tablet: 'block' }}>
@@ -185,31 +186,32 @@ export const HomePage = () => {
                     </Box>
                   </Stack>
                 </Box>
-                <Code
-                  language="tsx"
-                  errorTokens={['brandd', 'large']}
-                  title="styles.css.ts"
-                >
-                  {outdent`
-                  import { createTheme, style } from '@vanilla-extract/css';
+                <ErrorHighlighter tokens={['brandd', 'large']}>
+                  <CompiledCode
+                    background={{ lightMode: "teal50", darkMode: 'black' }}
+                    code={[{
+                      fileName: 'styles.css.ts',
+                      contents: outdent`
+                        import { createTheme, style } from '@vanilla-extract/css';
 
-                  export const [themeClass, vars] = createTheme({
-                    color: {
-                      brand: 'blue',
-                      white: '#fff'
-                    },
-                    space: {
-                      small: '4px',
-                      medium: '8px',
-                    }
-                  });
+                        export const [themeClass, vars] = createTheme({
+                          color: {
+                            brand: 'blue',
+                            white: '#fff'
+                          },
+                          space: {
+                            small: '4px',
+                            medium: '8px',
+                          }
+                        });
 
-                  export const hero = style({
-                    backgroundColor: vars.color.brandd,
-                    color: vars.color.white,
-                    padding: vars.space.large
-                  });`}
-                </Code>
+                        export const hero = style({
+                          backgroundColor: vars.color.brandd,
+                          color: vars.color.white,
+                          padding: vars.space.large
+                        });`,
+                    }]} />
+                </ErrorHighlighter>
               </Columns>
             </Box>
           </Box>
@@ -319,26 +321,30 @@ export const HomePage = () => {
                 </Text>
               </Box>
 
-              <Code language="tsx" title="styles.css.ts">
-                {outdent`
-                import { style } from '@vanilla-extract/css';
-
-                export const className = style({
-                  display: 'flex',
-                  flexDirection: 'column',
-                  selectors: {
-                    '&:nth-child(2n)': {
-                      background: 'aliceblue'
-                    }
-                  },
-                  '@media': {
-                    'screen and (min-width: 768px)': {
-                      flexDirection: 'row'
-                    }
-                  }
-                });
-              `}
-              </Code>
+              <CompiledCode
+                background={{ lightMode: "blue50", darkMode: 'black' }}
+                code={[{
+                  fileName: 'styles.css.ts',
+                  contents: outdent`
+                    import { style } from '@vanilla-extract/css';
+    
+                    export const className = style({
+                      display: 'flex',
+                      flexDirection: 'column',
+                      selectors: {
+                        '&:nth-child(2n)': {
+                          background: 'aliceblue'
+                        }
+                      },
+                      '@media': {
+                        'screen and (min-width: 768px)': {
+                          flexDirection: 'row'
+                        }
+                      }
+                    });
+                  `,
+                }]}
+              />
             </Stack>
           </ContentBlock>
         </Box>
@@ -361,27 +367,26 @@ export const HomePage = () => {
                   </Text>
                 </Stack>
 
-                <Code
-                  language="tsx"
-                  errorTokens={['brandd']}
-                  title="styles.css.ts"
-                  background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-                >
-                  {outdent`
-                    import { createTheme, style } from '@vanilla-extract/css';
-                      
-                    export const [themeClass, vars] = createTheme({
-                      color: {
-                        brand: 'aquamarine',
-                        accent: 'honeydew',
-                      },
-                    });
+                <ErrorHighlighter tokens={['brandd']}>
+                  <CompiledCode
+                    code={[{
+                      fileName: 'styles.css.ts',
+                      contents: outdent`
+                        import { createTheme, style } from '@vanilla-extract/css';
+                          
+                        export const [themeClass, vars] = createTheme({
+                          color: {
+                            brand: 'aquamarine',
+                            accent: 'honeydew',
+                          },
+                        });
 
-                    export const brandedSection = style({
-                      backgroundColor: vars.color.brandd,
-                    });
-                  `}
-                </Code>
+                        export const brandedSection = style({
+                          backgroundColor: vars.color.brandd,
+                      `,
+                    }]}
+                  />
+                </ErrorHighlighter>
               </Columns>
             </ContentBlock>
           </Box>
@@ -401,27 +406,26 @@ export const HomePage = () => {
                   vanilla-extract.
                 </Text>
               </Stack>
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`import { style, createVar } from '@vanilla-extract/css';
+              <CompiledCode
+                code={[{
+                  fileName: 'styles.css.ts',
+                  contents: outdent`import { style, createVar } from '@vanilla-extract/css';
 
-      const shadowColor = createVar();
-
-      export const shadow = style({
-        boxShadow: ${'`0 0 10px ${shadowColor}`'},
-        selectors: {
-          '.light &': {
-            vars: { [shadowColor]: 'black' }
-          },
-          '.dark &': {
-            vars: { [shadowColor]: 'white' }
-          },
-        }
-      });`}
-              </Code>
+                  const shadowColor = createVar();
+            
+                  export const shadow = style({
+                    boxShadow: ${'`0 0 10px ${shadowColor}`'},
+                    selectors: {
+                      '.light &': {
+                        vars: { [shadowColor]: 'black' }
+                      },
+                      '.dark &': {
+                        vars: { [shadowColor]: 'white' }
+                      },
+                    }
+                  });`,
+                }]}
+              />
             </Columns>
           </ContentBlock>
 
@@ -439,28 +443,26 @@ export const HomePage = () => {
                   up by name. No awkward naming conventions required.
                 </Text>
               </Stack>
-
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`
-                import { styleVariants } from '@vanilla-extract/css';
-
-                export const background = styleVariants({
-                  primary: { background: 'navy' },
-                  secondary: { background: 'blue' },
-                  tertiary: { background: 'aqua' },
-                });
-
-                export const color = styleVariants({
-                  neutral: { color: 'black' },
-                  secondary: { color: 'gray' },
-                  link: { color: 'blue' },
-                });
-              `}
-              </Code>
+              <CompiledCode
+                code={[{
+                  fileName: 'styles.css.ts',
+                  contents: outdent`
+                  import { styleVariants } from '@vanilla-extract/css';
+  
+                  export const background = styleVariants({
+                    primary: { background: 'navy' },
+                    secondary: { background: 'blue' },
+                    tertiary: { background: 'aqua' },
+                  });
+  
+                  export const color = styleVariants({
+                    neutral: { color: 'black' },
+                    secondary: { color: 'gray' },
+                    link: { color: 'blue' },
+                  });
+                `,
+                }]}
+              />
             </Columns>
           </ContentBlock>
 
@@ -479,12 +481,11 @@ export const HomePage = () => {
                   CSS.
                 </Text>
               </Stack>
-              <Code
-                language="css"
-                title="output.css"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`
+              <CompiledCode
+                code={[{
+                  fileName: 'output.css',
+                  language: 'css',
+                  contents: outdent`
                   :root {
                     --space-none__ya5b7b0: 0;
                     --space-small__ya5b7b1: 4px;
@@ -495,8 +496,9 @@ export const HomePage = () => {
                   .Hero_container__1ldw6lo0 {
                     padding: var(--space-medium__ya5b7b2);
                   }
-                `}
-              </Code>
+                `,
+                }]}
+              />
             </Columns>
           </ContentBlock>
         </Stack>

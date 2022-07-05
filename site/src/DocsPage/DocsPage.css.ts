@@ -3,7 +3,7 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
-const headerHeight = '90px';
+const headerHeight = '145px';
 const sidebarWidth = '300px';
 
 export const bodyLock = style({
@@ -18,16 +18,9 @@ export const homeLink = style({
   },
 });
 
-export const header = style(
-  responsiveStyle({
-    mobile: {
-      height: '136px',
-    },
-    desktop: {
-      height: headerHeight,
-    },
-  }),
-);
+export const header = style({
+  height: headerHeight,
+});
 
 export const headerBg = style({
   ...responsiveStyle({
@@ -36,9 +29,10 @@ export const headerBg = style({
       clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
     },
     desktop: {
-      width: sidebarWidth,
-      height: '100vh',
-      clipPath: 'initial',
+      width: '100vw',
+      clipPath: 'polygon(0 0, 45% 0, 45% 0, 0 100%)',
+      opacity: .9,
+      backdropFilter: 'blur(4px)'
     },
   }),
 });

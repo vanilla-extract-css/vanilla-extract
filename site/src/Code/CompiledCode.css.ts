@@ -1,7 +1,32 @@
-import { createVar, style, StyleRule } from "@vanilla-extract/css";
+import { createVar, fallbackVar, style, StyleRule } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
-import { darkMode } from "../system/styles/sprinkles.css";
+import { darkMode, sprinkles } from "../system/styles/sprinkles.css";
 import { vars } from "../themes.css";
+
+export const darkModeBg = createVar();
+export const lightModeBg = createVar();
+
+export const root = style([
+  sprinkles({ position: 'relative', zIndex: 0 }),
+  {
+    '::before': {
+      content: '""',
+      position: 'absolute',
+      background: fallbackVar(lightModeBg, vars.palette.blue50),
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: -1,
+      transform: 'skewX(-1deg) skewY(0.75deg)',
+    },
+    selectors: {
+      [`.${darkMode} &::before`]: {
+        background: fallbackVar(darkModeBg, vars.palette.gray900)
+      }
+    }
+  }
+]);
 
 const backgroundColor = createVar();
 export const fileNameFocus = style({
@@ -13,7 +38,7 @@ export const fileNameFocus = style({
     boxShadow: `0 0 0 6px ${backgroundColor}, 0px 0px 0px 8px ${vars.palette.blue300}`,
   },
   selectors: {
-    [`${darkMode} &:focus-visible`]: {
+    [`.${darkMode} &:focus-visible`]: {
       vars: {
         [backgroundColor]: vars.palette.gray900
       },
@@ -29,6 +54,17 @@ export const fileIndicatorInactive = style({
 export const fileIndicatorActive = style({
   transform: 'skew(15deg)',
 });
+export const fileName = style({
+  color: vars.palette.blue800,
+  selectors: {
+    [`.${darkMode} &`]: {
+      color: vars.palette.white,
+    }
+  }
+});
+export const fileNameInactive = style({
+  opacity: .7
+})
 
 export const boldLayoutShiftFix = style({
   "::after": {
@@ -86,11 +122,29 @@ export const sourceContainer = style([
 ]);
 
 export const outputContainer = style([
+  {
+    position: 'relative',
+    '::before': {
+      content: '""',
+      position: 'absolute',
+      background: vars.palette.blue100,
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: -1,
+      transform: 'skewX(.75deg) skewY(1.5deg)',
+    },
+    selectors: {
+      [`.${darkMode} &::before`]: {
+        background: vars.palette.black
+      }
+    }
+  },
   sideBySideStyles({
     width: '45%',
     flexGrow: 0,
     marginTop: calc(vars.spacing.medium).negate().toString(),
-    marginRight: calc(vars.spacing.large).negate().toString(),
     marginBottom: calc(vars.spacing.large).negate().toString(),
     marginLeft: vars.spacing.large
   }),

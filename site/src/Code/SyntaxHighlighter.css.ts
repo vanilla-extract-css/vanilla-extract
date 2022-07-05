@@ -1,85 +1,67 @@
-import { style, globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle, createThemeContract, assignVars } from '@vanilla-extract/css';
 import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
-export const root = style({
-  overflowX: 'auto',
+const themeVars = createThemeContract({
+  base: null,
+  subtle: null,
+  blue: null,
+  green: null,
+  pink: null
 });
 
-const tokenSelector = ({
-  darkMode,
-  tokens,
-}: {
-  darkMode?: string;
-  tokens: Array<string>;
-}) =>
+const lightVars = assignVars(themeVars, {
+  base: vars.palette.coolGray500,
+  subtle: vars.palette.coolGray400,
+  blue: vars.palette.blue600,
+  green: vars.palette.green600,
+  pink: vars.palette.pink600
+});
+
+const darkVars = assignVars(themeVars, {
+  base: vars.palette.white,
+  subtle: vars.palette.gray400,
+  blue: vars.palette.blue300,
+  green: vars.palette.green300,
+  pink: vars.palette.pink400
+});
+
+export const root = style([
+  {
+    overflowX: 'auto',
+    selectors: {
+      [`:not(.${darkMode}) &`]: {
+        vars: lightVars
+      },
+      [`.${darkMode} &`]: {
+        vars: darkVars
+      }
+    }
+  }
+]);
+
+const scopeSelectors = (tokens: Array<string>) =>
   tokens
-    .map((t) => `${darkMode ? `.${darkMode} ` : ''}${root} .${t}`)
+    .map((t) => `${root} ${t}`)
     .join(', ');
 
-globalStyle(`${root} code`, {
+globalStyle(scopeSelectors(['pre', 'code']), {
   fontFamily: vars.fonts.code,
   padding: 0,
   margin: 0,
 });
-
-globalStyle(tokenSelector({ tokens: ['comment'] }), {
-  color: vars.palette.coolGray500,
+globalStyle(scopeSelectors(['code', '.attr-name', '.property']), {
+  color: themeVars.base
 });
-globalStyle(tokenSelector({ tokens: ['selector', 'number', 'keyword'] }), {
-  color: vars.palette.blue200,
+globalStyle(scopeSelectors(['.comment', '.tag', '.punctuation', '.operator']), {
+  color: themeVars.subtle,
 });
-globalStyle(tokenSelector({ tokens: ['string'] }), {
-  color: vars.palette.green200,
+globalStyle(scopeSelectors(['.language-css', '.string']), {
+  color: themeVars.green
 });
-globalStyle(tokenSelector({ tokens: ['function', 'unit'] }), {
-  color: vars.palette.pink300,
+globalStyle(scopeSelectors(['.language-css .function', '.language-bash .function', '.selector', '.number', '.keyword']), {
+  color: themeVars.blue,
 });
-globalStyle(tokenSelector({ tokens: ['tag'] }), {
-  color: vars.palette.pink200,
+globalStyle(scopeSelectors(['.function', '.unit']), {
+  color: themeVars.pink,
 });
-globalStyle(tokenSelector({ tokens: ['attr-name'] }), {
-  color: vars.palette.pink100,
-});
-globalStyle(tokenSelector({ tokens: ['punctuation', 'operator'] }), {
-  color: vars.palette.coolGray400,
-});
-
-globalStyle(tokenSelector({ darkMode, tokens: ['comment'] }), {
-  color: vars.palette.gray500,
-});
-globalStyle(tokenSelector({ darkMode, tokens: ['selector', 'number', 'keyword'] }), {
-  color: vars.palette.blue300,
-});
-globalStyle(tokenSelector({ darkMode, tokens: ['string'] }), {
-  color: vars.palette.green300,
-});
-globalStyle(tokenSelector({ tokens: ['property'] }), {
-  color: vars.palette.white,
-});
-globalStyle(tokenSelector({ darkMode, tokens: ['function', 'unit'], }), {
-  color: vars.palette.pink400,
-});
-globalStyle(tokenSelector({ darkMode: darkMode, tokens: ['punctuation', 'operator'] }), {
-  color: vars.palette.gray400,
-});
-
-globalStyle(`${root} .language-css`, {
-  color: vars.palette.green200,
-});
-globalStyle(`.${darkMode} ${root} .language-css`, {
-  color: vars.palette.green300,
-});
-globalStyle(`${root} .language-css .function, ${root} .language-bash .function`, {
-  color: vars.palette.blue200,
-});
-globalStyle(`.${darkMode} ${root} .language-css .function, .${darkMode} ${root} .language-bash .function`, {
-  color: vars.palette.blue300,
-});
-
-export const theme = {
-  'pre[class*="language-"]': {
-    whiteSpace: 'pre',
-    margin: 0,
-  },
-};

@@ -166,11 +166,13 @@ const PrimaryNav = ({
 
           return (
             <Stack key={label} space="medium">
-              <Text size="xsmall">
-                <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
-                  {label}
-                </span>
-              </Text>
+              <Box paddingLeft="small">
+                <Text size="xsmall" weight="strong">
+                  <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
+                    {label}
+                  </span>
+                </Text>
+              </Box>
 
               <>
                 {groupPages.map(({ route, title }) => {
@@ -219,9 +221,11 @@ const PrimaryNav = ({
           );
         })}
         <Stack space="medium">
-          <Text size="xsmall" color="secondary">
-            <span style={{ textTransform: 'uppercase' }}>Community</span>
-          </Text>
+          <Box paddingLeft="small">
+            <Text size="xsmall" weight="strong">
+              <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>Community</span>
+            </Text>
+          </Box>
           <>
             <Link
               to="https://github.com/seek-oss/vanilla-extract"
@@ -429,9 +433,8 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
                 {pages.map(({ route, Component, title, sections }, index) => {
                   const prevDoc = pages[index - 1];
                   const nextDoc = pages[index + 1];
-                  const pageTitle = `${
-                    title ? `${title} — ` : ''
-                  }vanilla-extract`.trim();
+                  const pageTitle = `${title ? `${title} — ` : ''
+                    }vanilla-extract`.trim();
                   const hashes = sections
                     .filter(({ level }) => level === 2 || level === 3)
                     .map(({ hash }) => hash);

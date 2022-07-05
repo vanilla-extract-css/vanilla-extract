@@ -20,7 +20,7 @@ export interface CodeProps {
 export default ({ language, children, tokenized }: CodeProps) => {
   return (
     <Box className={styles.root}>
-      <Text size="code" component="div" color="code" baseline={false}>
+      <Text size="code" component="div" baseline={false}>
         {tokenized ? (
           <code
             className={`language-${language}`}
@@ -28,11 +28,11 @@ export default ({ language, children, tokenized }: CodeProps) => {
             dangerouslySetInnerHTML={{ __html: children }}
           />
         ) : (
-          <SyntaxHighlighter language={language} style={styles.theme}>
+          <SyntaxHighlighter language={language} style={{ [`pre[class*="language-"]`]: {} }}>
             {children}
           </SyntaxHighlighter>
         )}
       </Text>
-    </Box>
+    </Box >
   );
 };

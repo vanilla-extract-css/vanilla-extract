@@ -44,10 +44,12 @@ const tailwindPalette = {
 
   red: colors.red['500'],
   yellow: colors.yellow['300'],
+  green50: colors.emerald['50'],
   green200: colors.emerald['200'],
   green300: colors.emerald['300'],
   green400: colors.emerald['400'],
   green500: colors.emerald['500'],
+  green600: colors.emerald['600'],
 
   coolGray50: colors.coolGray['50'],
   coolGray100: colors.coolGray['100'],

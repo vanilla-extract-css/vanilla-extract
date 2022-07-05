@@ -37,6 +37,7 @@
     "@types/webpack-bundle-analyzer": "^4",
     "@vanilla-extract/css": "*",
     "@vanilla-extract/css-utils": "*",
+    "@vanilla-extract/dynamic": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/webpack-plugin": "*",
     "babel-loader": "^8.2.2",

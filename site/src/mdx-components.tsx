@@ -8,7 +8,6 @@ import {
 import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
-import Code from './Code/Code';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
@@ -34,7 +33,7 @@ const Block = ({
   maxWidth = 'large',
   style,
   ...restProps
-}: Omit<BoxProps, 'marginBottom'>) => (
+}: Omit<BoxProps, 'paddingBottom'>) => (
   <Box
     component={component}
     paddingBottom="xxlarge"
@@ -209,23 +208,44 @@ export default {
   pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
   compiledcode: (props: CompiledCodeProps) => (
     <Block maxWidth="xlarge">
-      <CompiledCode {...props} />
+      <Box paddingY="large">
+        <CompiledCode {...props} />
+      </Box>
     </Block>
   ),
-  code: ({
-    'data-language': language,
-    dangerouslySetInnerHTML,
-  }: {
-    'data-language': string;
-    dangerouslySetInnerHTML: { __html: string };
-  }) => (
-    <Code
-      language={language}
-      background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-    >
-      {dangerouslySetInnerHTML}
-    </Code>
-  ),
+  code: (
+    {
+      'data-language': language,
+      dangerouslySetInnerHTML,
+    }: {
+      'data-language': string;
+      dangerouslySetInnerHTML: { __html: string };
+    }
+  ) => {
+    let resolvedTitle = '';
+    let resolvedChildren = dangerouslySetInnerHTML.__html;
+    const matches = resolvedChildren.match(
+      /^(?<node>\<span class=\".*\"\>(?:\/[\/*])(?:\s)?(?<title>[^*\/]*)(?:\*\/)?\<\/span\>)/,
+    );
+
+    if (matches && matches.groups) {
+      resolvedTitle = matches.groups.title;
+      resolvedChildren = resolvedChildren
+        .replace(`${matches.groups.node}`, '')
+        .trim();
+    }
+
+    return (
+      <CompiledCode
+        code={[{
+          fileName: resolvedTitle,
+          contents: resolvedChildren,
+          language,
+          tokenized: true
+        }]}
+      />
+    );
+  },
   inlineCode: InlineCode,
   th: Th,
   td: Td,

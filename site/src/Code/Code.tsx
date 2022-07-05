@@ -3,7 +3,7 @@ import { Box, Stack } from '../system';
 import { Sprinkles } from '../system/styles/sprinkles.css';
 import Text from '../Typography/Text';
 import SyntaxHighlighter from './SyntaxHighlighter';
-import * as styles from './Code.css';
+import * as styles from './ErrorHighlighter.css';
 
 export interface CodeProps {
   language: string;
@@ -11,10 +11,10 @@ export interface CodeProps {
   title?: string;
   background?: Sprinkles['background'];
   children:
-    | string
-    | {
-        __html: string;
-      };
+  | string
+  | {
+    __html: string;
+  };
 }
 
 const defaultBackground = {
