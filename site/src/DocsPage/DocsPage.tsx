@@ -45,16 +45,18 @@ const DocsRoute = ({
   return (
     <div>
       <Component />
-      {prevDoc && (
-        <div style={{ float: 'left' }}>
-          <SiblingDoc direction="left" {...prevDoc} />
-        </div>
-      )}
-      {nextDoc && (
-        <div style={{ float: 'right' }}>
-          <SiblingDoc direction="right" {...nextDoc} />
-        </div>
-      )}
+      <ContentBlock size="large">
+        {prevDoc && (
+          <div style={{ float: 'left' }}>
+            <SiblingDoc subtitle="Previous" direction="left" {...prevDoc} />
+          </div>
+        )}
+        {nextDoc && (
+          <div style={{ float: 'right' }}>
+            <SiblingDoc subtitle="Next" direction="right" {...nextDoc} />
+          </div>
+        )}
+      </ContentBlock>
     </div>
   );
 };

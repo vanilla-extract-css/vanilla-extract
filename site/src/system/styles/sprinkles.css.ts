@@ -50,7 +50,7 @@ const responsiveProperties = defineProperties({
     pointerEvents: ['none', 'auto'],
     overflow: ['hidden'],
     opacity: [0, 1],
-    textAlign: ['left', 'center'],
+    textAlign: ['left', 'center', 'right'],
     minWidth: [0],
     maxWidth: vars.contentWidth,
     transition: {

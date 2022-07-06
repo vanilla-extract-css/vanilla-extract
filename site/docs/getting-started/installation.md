@@ -1,8 +1,16 @@
 ---
-title: Installation
+title: Setup
 ---
 
-# Installation
+# Setup
+
+## Installation
+
+```bash
+$ npm install @vanilla-extract/css
+```
+
+## Bundler integration
 
 Install your integration of preference:
 
@@ -12,3 +20,5 @@ Install your integration of preference:
 - [rollup](/documentation/rollup/)
 - [vite](/documentation/vite/)
 - [gatsby](/documentation/gatsby/)
+
+## Creating a style

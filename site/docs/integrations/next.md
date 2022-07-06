@@ -4,15 +4,17 @@ title: Next.js
 
 # Next.js
 
-1/ Install the dependencies.
+A plugin for integrating vanilla-extract with [Next.js](https://nextjs.org).
+
+## Installation
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/next-plugin
+npm install @vanilla-extract/next-plugin
 ```
 
-2/ If you don't have a `next.config.js` file in the root of your project, create one. Add the [Next.js](https://nextjs.org) plugin to your `next.config.js` file.
+## Setup
 
-> 💡 This plugin accepts an optional [configuration object](#configuration).
+If you don't have a `next.config.js` file in the root of your project, create one. Add the plugin to your `next.config.js` file.
 
 ```js
 const {
@@ -44,7 +46,15 @@ const nextConfig = {};
 module.exports = withVanillaExtract(withMDX(nextConfig));
 ```
 
-3/ (Optional) If you want to automatically generate debug IDs during development, you can add the [Babel](https://babeljs.io) plugin. Note that this step will cause Next.js to switch from [SWC](https://github.com/swc-project/swc) to Babel, increasing build times. This may or may not be an issue depending on the size of your project.
+## Debug Identifiers
+
+If you want to automatically generate debug IDs during development, you can add the [Babel](https://babeljs.io) plugin.
+
+```bash
+npm install @vanilla-extract/babel-plugin
+```
+
+Note that this step will cause Next.js to switch from [SWC](https://github.com/swc-project/swc) to Babel, increasing build times. This may or may not be an issue depending on the size of your project.
 
 > Note: While optional for Next.js, the Babel plugin is still required when trying to run `.css.ts` files in Node for unit testing since the files are no longer being processed by a bundler.
 

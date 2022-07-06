@@ -44,7 +44,15 @@ const contents = [
   {
     group: 'integrations',
     label: 'Integrations',
-    pages: ['vite', 'esbuild', 'webpack', 'rollup', 'next', 'gatsby'],
+    pages: [
+      'vite',
+      'esbuild',
+      'webpack',
+      'rollup',
+      'next',
+      'gatsby',
+      'test-environments',
+    ],
   },
 ];
 

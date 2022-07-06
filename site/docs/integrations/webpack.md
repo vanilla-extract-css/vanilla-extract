@@ -4,15 +4,17 @@ title: Webpack
 
 # Webpack
 
-1/ Install the dependencies.
+A plugin for integrating vanilla-extract with [webpack](https://webpack.js.org).
+
+## Installation
 
 ```bash
-$ npm install @vanilla-extract/css @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/webpack-plugin
 ```
 
-2/ Add the [webpack](https://webpack.js.org) plugin.
+## Setup
 
-> 💡 This plugin accepts an optional [configuration object](#configuration).
+Add the plugin to your Webpack configuration, along with any desired [plugin configuration](#configuration).
 
 ```js
 // webpack.config.js
@@ -24,18 +26,6 @@ const {
 module.exports = {
   plugins: [new VanillaExtractPlugin()]
 };
-```
-
-3/ If you'd like automatic debuggable identifiers, you can add the [Babel](https://babeljs.io) plugin.
-
-```bash
-$ npm install @vanilla-extract/babel-plugin
-```
-
-```json
-{
-  "plugins": ["@vanilla-extract/babel-plugin"]
-}
 ```
 
 > You'll need to ensure you're handling CSS files in your webpack config.
@@ -74,7 +64,25 @@ module.exports = {
 };
 ```
 
+## Debug identifiers
+
+If you'd like automatic debuggable identifiers, you can install the [Babel](https://babeljs.io) plugin.
+
+```bash
+$ npm install @vanilla-extract/babel-plugin
+```
+
+The plugin should be added to the `plugins` array in your babel config.
+
+```json
+{
+  "plugins": ["@vanilla-extract/babel-plugin"]
+}
+```
+
 ## Configuration
+
+The plugin accepts the following as optional configuration:
 
 ### identifiers
 
