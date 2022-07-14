@@ -116,7 +116,7 @@ export function vanillaExtractPlugin({
       `;
     },
     async transform(code, id, ssrParam) {
-      if (!cssFileFilter.test(id)) {
+      if (!cssFileFilter.test(id.split('?')[0])) {
         return null;
       }
 
