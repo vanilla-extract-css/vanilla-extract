@@ -131,7 +131,7 @@ export function vanillaExtractPlugin({
       const index = id.indexOf('?');
       const validId = index === -1 ? id : id.substring(0, index);
 
-      if (ssr) {
+      if (ssr && !process.env.RSC_BUILD) {
         return addFileScope({
           source: code,
           filePath: normalizePath(validId),
