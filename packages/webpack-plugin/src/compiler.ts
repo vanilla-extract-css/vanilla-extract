@@ -114,7 +114,7 @@ function compileVanillaSource(
     new ExternalsPlugin('commonjs', [
       '@vanilla-extract/css',
       '@vanilla-extract/css/fileScope',
-      externals,
+      ...(Array.isArray(externals) ? externals : [externals]),
     ]).apply(childCompiler);
 
     let source: string;
