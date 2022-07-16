@@ -68,7 +68,8 @@ export function vanillaExtractPlugin({
       virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
     },
     resolveId(source) {
-      if (!source.endsWith(virtualExt)) {
+      const [validId, query] = source.split('?');
+      if (!validId.endsWith(virtualExt)) {
         return;
       }
 
@@ -76,21 +77,24 @@ export function vanillaExtractPlugin({
       // imported from outside the config root.
       const absoluteId = source.startsWith(config.root)
         ? source
-        : getAbsoluteVirtualFileId(source);
+        : getAbsoluteVirtualFileId(validId);
 
       // There should always be an entry in the `cssMap` here.
       // The only valid scenario for a missing one is if someone had written
       // a file in their app using the .vanilla.js/.vanilla.css extension
       if (cssMap.has(absoluteId)) {
-        return absoluteId;
+        // Keep the original query string for HMR.
+        return absoluteId + (query ? `?${query}` : '');
       }
     },
     load(id) {
-      if (!cssMap.has(id)) {
+      const [validId] = id.split('?');
+
+      if (!cssMap.has(validId)) {
         return;
       }
 
-      const css = cssMap.get(id);
+      const css = cssMap.get(validId);
 
       if (typeof css !== 'string') {
         return;
@@ -102,21 +106,23 @@ export function vanillaExtractPlugin({
 
       return outdent`
         import { injectStyles } from '@vanilla-extract/css/injectStyles';
-        
+
         const inject = (css) => injectStyles({
-          fileScope: ${JSON.stringify({ filePath: id })},
+          fileScope: ${JSON.stringify({ filePath: validId })},
           css
         });
 
         inject(${JSON.stringify(css)});
 
-        import.meta.hot.on('${styleUpdateEvent(id)}', (css) => {
+        import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
           inject(css);
-        });   
+        });
       `;
     },
     async transform(code, id, ssrParam) {
-      if (!cssFileFilter.test(id.split('?')[0])) {
+      const [validId] = id.split('?');
+
+      if (!cssFileFilter.test(validId)) {
         return null;
       }
 
@@ -127,9 +133,6 @@ export function vanillaExtractPlugin({
       } else {
         ssr = ssrParam?.ssr;
       }
-
-      const index = id.indexOf('?');
-      const validId = index === -1 ? id : id.substring(0, index);
 
       if (ssr && !process.env.RSC_BUILD) {
         return addFileScope({
@@ -149,7 +152,7 @@ export function vanillaExtractPlugin({
       for (const file of watchFiles) {
         // In start mode, we need to prevent the file from rewatching itself.
         // If it's a `build --watch`, it needs to watch everything.
-        if (config.command === 'build' || file !== id) {
+        if (config.command === 'build' || file !== validId) {
           this.addWatchFile(file);
         }
       }
@@ -183,10 +186,16 @@ export function vanillaExtractPlugin({
             cssMap.get(absoluteId) !== source
           ) {
             const { moduleGraph } = server;
-            const module = moduleGraph.getModuleById(absoluteId);
+            const [module] = Array.from(
+              moduleGraph.getModulesByFile(absoluteId) || [],
+            );
 
             if (module) {
               moduleGraph.invalidateModule(module);
+
+              // Vite uses this timestamp to add `?t=` query string automatically for HMR.
+              module.lastHMRTimestamp =
+                (module as any).lastInvalidationTimestamp || Date.now();
             }
 
             server.ws.send({
