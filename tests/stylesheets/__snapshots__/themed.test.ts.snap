@@ -85,6 +85,9 @@ html .jteyb17 {
     padding: var(--cvta174);
   }
 }
+._1u9kf2n0 {
+  color: #ff0;
+}
 "
 `;
 
@@ -173,6 +176,9 @@ html .blj6yb7 {
     padding: var(--cdwe0v4);
   }
 }
+._116tj3z0 {
+  color: #ff0;
+}
 "
 `;
 
@@ -260,6 +266,9 @@ html .jteyb17 {
   .jteyb13 {
     padding: var(--cvta174);
   }
+}
+._1u9kf2n0 {
+  color: #ff0;
 }
 "
 `;
