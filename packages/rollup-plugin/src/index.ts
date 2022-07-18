@@ -24,7 +24,7 @@ export function vanillaExtractPlugin({
   identifiers,
   cwd = process.cwd(),
   exclude,
-  include = cssFileFilter,
+  include,
   esbuildOptions,
 }: Options = {}): Plugin {
   const emittedFiles = new Map<string, string>();
@@ -37,7 +37,7 @@ export function vanillaExtractPlugin({
       emittedFiles.clear();
     },
     async transform(_code, id) {
-      if (!filter(id)) return null;
+      if (!cssFileFilter.test(id) || !filter(id)) return null;
 
       const index = id.indexOf('?');
       const filePath = index === -1 ? id : id.substring(0, index);
