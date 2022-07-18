@@ -1,5 +1,47 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.20
+
+### Patch Changes
+
+- Updated dependencies [[`02ea735`](https://github.com/seek-oss/vanilla-extract/commit/02ea73552d1c1b9b7b9ec44be00d89413e28a97f)]:
+  - @vanilla-extract/vite-plugin@3.2.1
+
+## 0.0.19
+
+### Patch Changes
+
+- Updated dependencies [[`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3)]:
+  - @vanilla-extract/esbuild-plugin@2.1.0
+  - @vanilla-extract/vite-plugin@3.2.0
+  - @vanilla-extract/babel-plugin@1.1.7
+  - @vanilla-extract/webpack-plugin@2.1.11
+  - @fixtures/features@0.0.8
+  - @fixtures/low-level@0.0.8
+  - @fixtures/recipes@0.0.9
+  - @fixtures/sprinkles@0.0.10
+  - @fixtures/themed@0.0.8
+  - @fixtures/unused-modules@1.0.8
+
+## 0.0.18
+
+### Patch Changes
+
+- Updated dependencies [[`9b6f3ea`](https://github.com/seek-oss/vanilla-extract/commit/9b6f3ea4160c84e48172ea01b922888dbc7f7c81), [`162b66f`](https://github.com/seek-oss/vanilla-extract/commit/162b66fb48262182846ff71a25d541e00257672c), [`3fc5040`](https://github.com/seek-oss/vanilla-extract/commit/3fc50406d5e57bb131eaebab42052cb1370cddff)]:
+  - @vanilla-extract/vite-plugin@3.1.7
+
+## 0.0.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.7
+  - @fixtures/low-level@0.0.7
+  - @fixtures/recipes@0.0.8
+  - @fixtures/sprinkles@0.0.9
+  - @fixtures/themed@0.0.7
+  - @fixtures/unused-modules@1.0.7
+
 ## 0.0.16
 
 ### Patch Changes

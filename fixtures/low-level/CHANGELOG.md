@@ -1,5 +1,19 @@
 # @fixtures/low-level
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [[`8467fc2`](https://github.com/seek-oss/vanilla-extract/commit/8467fc28707372f30d8b6239580244c06859a605)]:
+  - @vanilla-extract/css@1.7.2
+
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`e531251`](https://github.com/seek-oss/vanilla-extract/commit/e531251689b8795eebd316ae8385f1ecc5b9b8a0)]:
+  - @vanilla-extract/css@1.7.1
+
 ## 0.0.6
 
 ### Patch Changes

@@ -6,8 +6,11 @@ import {
   IdentifierOption,
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
+  CompileOptions,
 } from '@vanilla-extract/integration';
-import { relative, normalize, dirname } from 'path';
+import { posix } from 'path';
+
+const { relative, normalize, dirname } = posix;
 import { createFilter, FilterPattern } from '@rollup/pluginutils';
 
 interface Options {
@@ -15,12 +18,14 @@ interface Options {
   cwd?: string;
   exclude?: FilterPattern;
   include?: FilterPattern;
+  esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   cwd = process.cwd(),
   exclude,
   include = cssFileFilter,
+  esbuildOptions,
 }: Options = {}): Plugin {
   const emittedFiles = new Map<string, string>();
   const isProduction = process.env.NODE_ENV === 'production';
@@ -28,6 +33,9 @@ export function vanillaExtractPlugin({
 
   return {
     name: 'vanilla-extract',
+    buildStart() {
+      emittedFiles.clear();
+    },
     async transform(_code, id) {
       if (!filter(id)) return null;
 
@@ -37,17 +45,22 @@ export function vanillaExtractPlugin({
       const { source, watchFiles } = await compile({
         filePath,
         cwd,
+        esbuildOptions,
       });
 
       for (const file of watchFiles) {
         this.addWatchFile(file);
       }
 
-      return processVanillaFile({
+      const output = await processVanillaFile({
         source,
         filePath,
         identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
       });
+      return {
+        code: output,
+        map: { mappings: '' },
+      };
     },
     async resolveId(id) {
       if (!virtualCssFileFilter.test(id)) {
@@ -82,7 +95,7 @@ export function vanillaExtractPlugin({
 
       // ...replace import paths with relative paths to emitted css files
       const chunkPath = dirname(chunkInfo.fileName);
-      return importsToReplace.reduce((codeResult, importPath) => {
+      const output = importsToReplace.reduce((codeResult, importPath) => {
         const assetId = emittedFiles.get(importPath)!;
         const assetName = this.getFileName(assetId);
         const fixedImportPath = `./${normalize(
@@ -90,6 +103,10 @@ export function vanillaExtractPlugin({
         )}`;
         return codeResult.replace(importPath, fixedImportPath);
       }, code);
+      return {
+        code: output,
+        map: chunkInfo.map ?? null,
+      };
     },
   };
 }

@@ -287,7 +287,34 @@ $ npm install @vanilla-extract/babel-plugin
 }
 ```
 
-3/ Disable runtime styles (Optional)
+3/ Remove any existing `.css` file mocks
+
+It is very common in Jest setups to have a mock file returned for all `.css` files. This clashes with vanilla-extract as Jest can't differentiate between `.css` and `.css.ts` imports.
+
+```json
+{
+  "jest": {
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/styleMock.js"
+    }
+  }
+}
+```
+
+Ideally, remove this mock from your setup. However, if you need to support both at the same time you'll need a way to target your regular CSS files. Using a folder for all your CSS files, or giving your CSS files a custom extension will work.
+
+```json
+{
+  "jest": {
+    "moduleNameMapper": {
+      "my-css-folder/.*\\.css$": "<rootDir>/styleMock.js",
+      "\\.legacy\\.css$": "<rootDir>/styleMock.js"
+    }
+  }
+}
+```
+
+4/ Disable runtime styles (Optional)
 
 In testing environments (like `jsdom`) vanilla-extract will create and insert styles. While this is often desirable, it can be a major slowdown in your tests. If your tests don’t require styles to be available, the `disableRuntimeStyles` import will disable all style creation.
 
@@ -306,3 +333,10 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### esbuildOptions
+
+> Only for `esbuild`, `vite` and `rollup` plugins
+
+esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see https://esbuild.github.io/api/#build-api.

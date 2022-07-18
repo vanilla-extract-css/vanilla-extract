@@ -5,7 +5,7 @@ import path from 'path';
 
 import { vanillaExtractPlugin } from '..';
 
-async function buildAndMatchSnapshot(outputOptions: OutputOptions) {
+async function build(outputOptions: OutputOptions) {
   const bundle = await rollup({
     input: require.resolve('@fixtures/themed'),
     plugins: [
@@ -19,6 +19,11 @@ async function buildAndMatchSnapshot(outputOptions: OutputOptions) {
   });
   const { output } = await bundle.generate(outputOptions);
   output.sort((a, b) => a.fileName.localeCompare(b.fileName));
+  return output;
+}
+
+async function buildAndMatchSnapshot(outputOptions: OutputOptions) {
+  const output = await build(outputOptions);
   expect(
     output.map((chunkOrAsset) => [
       chunkOrAsset.fileName,
@@ -111,5 +116,19 @@ describe('rollup-plugin', () => {
     expect(
       !processedFiles.some((filename) => filename.includes('untyped.css.js')),
     );
+  });
+
+  it('should build with sourcemaps', async () => {
+    const output = await build({
+      format: 'esm',
+      preserveModules: true,
+      sourcemap: true,
+    });
+    expect(
+      output.map((chunkOrAsset) => [
+        chunkOrAsset.fileName,
+        chunkOrAsset.type === 'asset' ? '' : chunkOrAsset.map?.mappings,
+      ]),
+    ).toMatchSnapshot();
   });
 });
