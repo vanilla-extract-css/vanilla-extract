@@ -103,3 +103,48 @@ setElementVars(el, vars.colors, {
   accent: 'green'
 });
 ```
+
+## fallbackVar
+
+Provides fallback values when consuming variables.
+
+```tsx
+// app.ts
+
+import {
+  fallbackVar,
+  setElementVars
+} from '@vanilla-extract/dynamic';
+import { vars } from './styles.css.ts';
+
+const el = document.getElementById('myElement');
+
+setElementVars(el, {
+  [vars.colors.accent]: fallbackVar(
+    vars.colors.brand,
+    'pink'
+  )
+});
+```
+
+Multiple fallbacks are also supported.
+
+```tsx
+// app.ts
+
+import {
+  fallbackVar,
+  setElementVars
+} from '@vanilla-extract/dynamic';
+import { vars } from './styles.css.ts';
+
+const el = document.getElementById('myElement');
+
+setElementVars(el, {
+  [vars.colors.accent]: fallbackVar(
+    vars.colors.brand,
+    vars.colors.primary,
+    'pink'
+  )
+});
+```
