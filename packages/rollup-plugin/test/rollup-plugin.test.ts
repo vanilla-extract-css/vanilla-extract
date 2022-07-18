@@ -66,7 +66,7 @@ describe('rollup-plugin', () => {
       plugins: [
         vanillaExtractPlugin({
           cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
-          exclude: /\.css\.js/,
+          exclude: ['**/*.js'],
         }),
         esbuild(),
         json(),
@@ -95,7 +95,7 @@ describe('rollup-plugin', () => {
       plugins: [
         vanillaExtractPlugin({
           cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
-          include: /\.css\.ts/,
+          include: ['**/nested/**/*'],
         }),
         esbuild(),
         json(),
@@ -113,9 +113,7 @@ describe('rollup-plugin', () => {
         return name ?? '';
       },
     });
-    expect(
-      !processedFiles.some((filename) => filename.includes('untyped.css.js')),
-    );
+    expect(processedFiles.length).toEqual(1);
   });
 
   it('should build with sourcemaps', async () => {

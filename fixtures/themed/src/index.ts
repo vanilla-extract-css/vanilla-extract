@@ -3,7 +3,7 @@ import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { theme, altTheme, responsiveTheme, vars } from './themes.css';
 import { button, container, opacity } from './styles.css';
 import { shadow } from './shared.css';
-import './untyped.css';
+import './nested/untyped.css';
 import testNodes from '../test-nodes.json';
 
 // Uncomment to get HMR for Vite working
