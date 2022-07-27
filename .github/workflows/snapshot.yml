@@ -32,7 +32,7 @@ jobs:
       - name: Publish
         uses: seek-oss/changesets-snapshot@v0
         with:
-          pre-publish: pnpm prepare-publish
+          pre-publish: pnpm prepare-release
         env:
           NPM_TOKEN: ${{ secrets.SEEK_OSS_CI_NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
