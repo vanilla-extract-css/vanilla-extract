@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js 16.x
         uses: actions/setup-node@main
         with:
-          node-version: 16.x
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install Dependencies
