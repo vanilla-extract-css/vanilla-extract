@@ -134,7 +134,7 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
-      if (ssr && !process.env.RSC_BUILD) {
+      if (ssr && !process.env.VITE_RSC_BUILD) {
         return addFileScope({
           source: code,
           filePath: normalizePath(validId),
