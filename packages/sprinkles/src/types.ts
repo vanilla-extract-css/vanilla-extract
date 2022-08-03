@@ -1,3 +1,5 @@
+import type { Condition } from './';
+
 export interface ResponsiveArray<Length extends number, Value>
   extends ReadonlyArray<Value> {
   0: Value;
@@ -75,6 +77,7 @@ export type ShorthandProperty = {
 };
 
 export type SprinklesProperties = {
+  conditions?: { [conditionName: string]: Condition };
   styles: {
     [property: string]:
       | ConditionalWithResponsiveArrayProperty

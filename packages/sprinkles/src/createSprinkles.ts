@@ -62,7 +62,10 @@ type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
 
 export type SprinklesFn<Args extends ReadonlyArray<SprinklesProperties>> = ((
   props: SprinkleProps<Args>,
-) => string) & { properties: Set<keyof SprinkleProps<Args>> };
+) => string) & {
+  properties: Set<keyof SprinkleProps<Args>>;
+  conditions: Set<string>;
+};
 
 export const createSprinkles =
   <Args extends ReadonlyArray<SprinklesProperties>>(
@@ -70,6 +73,9 @@ export const createSprinkles =
   ) =>
   (...args: Args): SprinklesFn<Args> => {
     const sprinklesStyles = Object.assign({}, ...args.map((a) => a.styles));
+    const sprinklesConditions = new Set<any>(
+      args.flatMap((a) => a.conditions?.conditionNames).filter(Boolean),
+    );
     const sprinklesKeys = Object.keys(sprinklesStyles) as Array<
       keyof SprinkleProps<Args>
     >;
@@ -272,5 +278,6 @@ export const createSprinkles =
 
     return Object.assign(sprinklesFn, {
       properties: new Set(sprinklesKeys),
+      conditions: sprinklesConditions,
     });
   };

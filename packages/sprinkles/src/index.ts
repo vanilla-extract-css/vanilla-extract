@@ -19,7 +19,7 @@ export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 export type { ResponsiveArray } from './types';
 
 type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
-type Condition = Partial<Record<ConditionKey, string>>;
+export type Condition = Partial<Record<ConditionKey, string>>;
 
 type BaseConditions = { [conditionName: string]: Condition };
 

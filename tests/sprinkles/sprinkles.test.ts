@@ -309,6 +309,20 @@ describe('sprinkles', () => {
         }
       `);
     });
+    it('should provide a static set of conditions on the sprinkles function', () => {
+      const sprinkles = createSprinkles(
+        propertiesWithShorthands,
+        conditionalProperties,
+      );
+
+      expect(sprinkles.conditions).toMatchInlineSnapshot(`
+        Set {
+          "mobile",
+          "tablet",
+          "desktop",
+        }
+      `);
+    });
   });
 
   describe('errors', () => {
