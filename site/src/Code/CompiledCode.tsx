@@ -17,14 +17,19 @@ interface File {
 export interface CompiledCodeProps {
   code: Array<File>;
   css?: Record<string, string>;
-  background?: { lightMode?: keyof typeof vars.palette, darkMode?: keyof typeof vars.palette }
+  background?: {
+    lightMode?: keyof typeof vars.palette;
+    darkMode?: keyof typeof vars.palette;
+  };
 }
 
 export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
   const [activeFileName, setActiveFileName] = useState(code[0].fileName);
   const [showCss, setShowCss] = useState(false);
 
-  const activeFile = code.filter(({ fileName }) => fileName === activeFileName)[0];
+  const activeFile = code.filter(
+    ({ fileName }) => fileName === activeFileName,
+  )[0];
 
   return (
     <Box
@@ -33,15 +38,19 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
         tablet: 'xlarge',
       }}
       paddingY="xlarge"
-      paddingBottom={css ? "xxlarge" : undefined}
+      paddingBottom={css ? 'xxlarge' : undefined}
       className={styles.root}
-      style={background ? assignInlineVars({
-        [styles.darkModeBg]: vars.palette[background.darkMode!],
-        [styles.lightModeBg]: vars.palette[background.lightMode!]
-      }) : undefined}
+      style={
+        background
+          ? assignInlineVars({
+              [styles.darkModeBg]: vars.palette[background.darkMode!],
+              [styles.lightModeBg]: vars.palette[background.lightMode!],
+            })
+          : undefined
+      }
     >
-      <Stack space={code.length > 1 ? "xlarge" : 'large'}>
-        {activeFile.fileName ?
+      <Stack space={code.length > 1 ? 'xlarge' : 'large'}>
+        {activeFile.fileName ? (
           <Box display="flex" alignItems="center">
             {code.map(({ fileName }) => {
               const isActiveFile = fileName === activeFileName;
@@ -58,9 +67,9 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                   onClick={
                     code.length > 1
                       ? () => {
-                        setActiveFileName(fileName);
-                        setShowCss(false);
-                      }
+                          setActiveFileName(fileName);
+                          setShowCss(false);
+                        }
                       : undefined
                   }
                 >
@@ -97,7 +106,15 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                           weight={isActiveFile ? 'strong' : undefined}
                           baseline={false}
                         >
-                          <Box component="span" className={[styles.fileName, !isActiveFile ? styles.fileNameInactive : undefined]}>
+                          <Box
+                            component="span"
+                            className={[
+                              styles.fileName,
+                              !isActiveFile
+                                ? styles.fileNameInactive
+                                : undefined,
+                            ]}
+                          >
                             {fileName}
                           </Box>
                         </Text>
@@ -107,7 +124,8 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                 </Box>
               );
             })}
-          </Box> : null}
+          </Box>
+        ) : null}
         <Box padding="large" margin="-large">
           <Box
             display="flex"
@@ -121,13 +139,14 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
               transition="slow"
               className={styles.sourceContainer}
             >
-              <SyntaxHighlighter language={activeFile.language || 'tsx'} tokenized={activeFile.tokenized}>
-                {
-                  activeFile.contents
-                }
+              <SyntaxHighlighter
+                language={activeFile.language || 'tsx'}
+                tokenized={activeFile.tokenized}
+              >
+                {activeFile.contents}
               </SyntaxHighlighter>
             </Box>
-            {css ?
+            {css ? (
               <Box
                 id="outputContainer"
                 width="full"
@@ -153,13 +172,13 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                     </Text>
                   )}
                 </Stack>
-              </Box> : null}
+              </Box>
+            ) : null}
           </Box>
         </Box>
       </Stack>
 
-
-      {css ?
+      {css ? (
         <Box
           display="flex"
           justifyContent="flex-end"
@@ -196,7 +215,8 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
               </Text>
             </Box>
           </Box>
-        </Box> : null}
+        </Box>
+      ) : null}
     </Box>
   );
 };

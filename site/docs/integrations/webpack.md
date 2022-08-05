@@ -82,6 +82,22 @@ The plugin should be added to the `plugins` array in your babel config.
 
 ## Configuration
 
+```js
+// webpack.config.js
+
+const {
+  VanillaExtractPlugin
+} = require('@vanilla-extract/webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new VanillaExtractPlugin({
+      // configuration
+    })
+  ]
+};
+```
+
 The plugin accepts the following as optional configuration:
 
 ### identifiers

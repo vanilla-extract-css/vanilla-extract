@@ -6,10 +6,7 @@ export interface CodeProps {
   tokens: Array<string>;
 }
 
-export const ErrorHighlighter = ({
-  tokens,
-  children,
-}: CodeProps) => {
+export const ErrorHighlighter = ({ tokens, children }: CodeProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,9 +35,5 @@ export const ErrorHighlighter = ({
     };
   }, [rootRef.current, tokens]);
 
-  return (
-    <div ref={rootRef}>
-      {children}
-    </div>
-  );
+  return <div ref={rootRef}>{children}</div>;
 };

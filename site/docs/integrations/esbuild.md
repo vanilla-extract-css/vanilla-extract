@@ -37,6 +37,22 @@ require('esbuild')
 
 ## Configuration
 
+```js
+// bundle.js
+
+const {
+  vanillaExtractPlugin
+} = require('@vanilla-extract/esbuild-plugin');
+
+require('esbuild').build({
+  plugins: [
+    vanillaExtractPlugin({
+      // configuration
+    })
+  ]
+});
+```
+
 The plugin accepts the following as optional configuration:
 
 ### processCss

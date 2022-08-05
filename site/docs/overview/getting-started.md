@@ -1,8 +1,8 @@
 ---
-title: Setup
+title: Getting started
 ---
 
-# Setup
+# Getting Started
 
 ## Installation
 
@@ -20,5 +20,7 @@ Install your integration of preference:
 - [rollup](/documentation/rollup/)
 - [vite](/documentation/vite/)
 - [gatsby](/documentation/gatsby/)
+
+## Creating a style
 
 ## Creating a style

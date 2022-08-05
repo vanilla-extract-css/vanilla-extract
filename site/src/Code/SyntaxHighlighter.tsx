@@ -28,11 +28,14 @@ export default ({ language, children, tokenized }: CodeProps) => {
             dangerouslySetInnerHTML={{ __html: children }}
           />
         ) : (
-          <SyntaxHighlighter language={language} style={{ [`pre[class*="language-"]`]: {} }}>
+          <SyntaxHighlighter
+            language={language}
+            style={{ [`pre[class*="language-"]`]: {} }}
+          >
             {children}
           </SyntaxHighlighter>
         )}
       </Text>
-    </Box >
+    </Box>
   );
 };

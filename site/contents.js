@@ -1,13 +1,14 @@
 const contents = [
   {
-    group: 'getting-started',
-    label: 'Getting Started',
+    group: 'overview',
+    label: 'Overview',
     pages: [
-      'installation',
+      'getting-started',
       'style-object',
       'theming',
       'style-composition',
       'sprinkles',
+      'test-environments',
     ],
   },
   {
@@ -44,15 +45,7 @@ const contents = [
   {
     group: 'integrations',
     label: 'Integrations',
-    pages: [
-      'vite',
-      'esbuild',
-      'webpack',
-      'rollup',
-      'next',
-      'gatsby',
-      'test-environments',
-    ],
+    pages: ['vite', 'esbuild', 'webpack', 'rollup', 'next', 'gatsby'],
   },
 ];
 
