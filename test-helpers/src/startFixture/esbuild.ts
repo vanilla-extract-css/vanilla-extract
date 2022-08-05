@@ -15,7 +15,7 @@ export const startEsbuildFixture = async (
   fixtureName: string,
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
-  const entry = require.resolve(`@fixtures/${fixtureName}`);
+  const entry = require.resolve(`@fixtures/${fixtureName}/src/index.ts`);
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );

@@ -7,7 +7,7 @@ import { vanillaExtractPlugin } from '..';
 
 async function build(outputOptions: OutputOptions) {
   const bundle = await rollup({
-    input: require.resolve('@fixtures/themed'),
+    input: require.resolve('@fixtures/themed/src/index.ts'),
     plugins: [
       vanillaExtractPlugin({
         cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
@@ -53,7 +53,9 @@ describe('rollup-plugin', () => {
     await buildAndMatchSnapshot({
       format: 'esm',
       preserveModules: true,
-      preserveModulesRoot: path.dirname(require.resolve('@fixtures/themed')),
+      preserveModulesRoot: path.dirname(
+        require.resolve('@fixtures/themed/src/index.ts'),
+      ),
       assetFileNames({ name }) {
         return name?.replace(/^src\//, '') ?? '';
       },

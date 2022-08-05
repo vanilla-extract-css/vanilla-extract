@@ -1,7 +1,6 @@
 {
   "name": "@fixtures/recipes",
   "version": "0.0.9",
-  "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,

@@ -45,7 +45,9 @@ export const startWebpackFixture = (
   }: WebpackFixtureOptions,
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
-    const fixtureEntry = require.resolve(`@fixtures/${fixtureName}`);
+    const fixtureEntry = require.resolve(
+      `@fixtures/${fixtureName}/src/index.ts`,
+    );
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
       mode,

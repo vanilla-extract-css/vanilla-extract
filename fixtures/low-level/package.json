@@ -1,7 +1,6 @@
 {
   "name": "@fixtures/low-level",
   "version": "0.0.8",
-  "main": "src/index.ts",
   "author": "SEEK",
   "private": true,
   "dependencies": {
