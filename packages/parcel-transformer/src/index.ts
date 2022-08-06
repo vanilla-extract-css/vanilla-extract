@@ -2,10 +2,6 @@ import { Transformer } from '@parcel/plugin';
 import { compile, processVanillaFile } from '@vanilla-extract/integration';
 
 export default new Transformer({
-  // async loadConfig({ config }) {
-  //   await config.getConfig()
-  //   return contents;
-  // },
   async transform({ asset, options }) {
     const { source, watchFiles } = await compile({
       filePath: asset.filePath,
@@ -16,13 +12,18 @@ export default new Transformer({
       asset.invalidateOnFileChange(watchFile);
     }
 
-    const css: Array<{ type: 'css'; content: string; uniqueKey: string }> = [];
+    const css: Array<{
+      type: 'css';
+      content: string;
+      uniqueKey: string;
+      sideEffects: boolean;
+    }> = [];
 
     const contents = await processVanillaFile({
       source,
       filePath: asset.filePath,
       outputCss: asset.env.isBrowser(),
-      identOption: 'debug',
+      identOption: options.mode === 'development' ? 'debug' : 'short',
       serializeVirtualCssPath: ({ fileName, source: cssSource }) => {
         const uniqueKey = fileName;
 
@@ -30,6 +31,7 @@ export default new Transformer({
           type: 'css',
           content: cssSource,
           uniqueKey,
+          sideEffects: false,
         });
 
         asset.addDependency({
@@ -37,11 +39,10 @@ export default new Transformer({
           specifierType: 'esm',
         });
 
+        // CSS deps are added above so no need to add the import to the file
         return '';
       },
     });
-
-    console.log(contents);
 
     asset.setCode(contents);
     asset.type = 'js';

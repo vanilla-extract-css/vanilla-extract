@@ -7,6 +7,9 @@
   "files": [
     "/dist"
   ],
+  "engines": {
+    "parcel": "2.x"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",

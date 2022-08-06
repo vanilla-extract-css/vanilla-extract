@@ -32,18 +32,28 @@ export const startParcelFixture = async (
     logLevel: 'verbose',
   });
 
-  const subscription = await bundler.watch((err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
+  return new Promise(async (resolve) => {
+    const subscription = await bundler.watch((err, buildEvent) => {
+      if (err) {
+        console.error(err);
+      }
 
-  return {
-    type: 'parcel',
-    url: `http://localhost:${port}`,
-    stylesheet: 'index.css',
-    close: async () => {
-      await subscription.unsubscribe();
-    },
-  };
+      if (buildEvent?.type === 'buildSuccess') {
+        const cssBundle = buildEvent.bundleGraph
+          .getBundles()
+          .find((bundle) => bundle.type === 'css');
+
+        const stylesheet = cssBundle?.filePath.substring(distDir.length + 1);
+
+        resolve({
+          type: 'parcel',
+          url: `http://localhost:${port}`,
+          stylesheet,
+          close: async () => {
+            await subscription.unsubscribe();
+          },
+        });
+      }
+    });
+  });
 };
