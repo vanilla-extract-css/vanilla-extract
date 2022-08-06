@@ -16,7 +16,6 @@ export default new Transformer({
       type: 'css';
       content: string;
       uniqueKey: string;
-      sideEffects: boolean;
     }> = [];
 
     const contents = await processVanillaFile({
@@ -31,7 +30,6 @@ export default new Transformer({
           type: 'css',
           content: cssSource,
           uniqueKey,
-          sideEffects: false,
         });
 
         asset.addDependency({
