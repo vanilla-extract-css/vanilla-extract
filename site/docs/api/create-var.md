@@ -14,6 +14,8 @@ import { createVar, style } from '@vanilla-extract/css';
 export const accentVar = createVar();
 ```
 
+As you can see, no CSS is generated when you create a variable, it is only a reference that can be set later on.
+
 ## Setting the variable
 
 The variable reference created above can be set using the `vars` key within the [style object](/documentation/style-object/#css-variables).

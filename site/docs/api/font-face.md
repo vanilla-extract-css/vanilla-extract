@@ -4,7 +4,7 @@ title: fontFace
 
 # fontFace
 
-Creates a custom font attached to a locally scoped font name.
+Creates a locally scoped [font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-family) for the defined [@font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face).
 
 ```ts compiled
 // text.css.ts

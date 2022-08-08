@@ -146,7 +146,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                 {activeFile.contents}
               </SyntaxHighlighter>
             </Box>
-            {css ? (
+            {css && activeFileName?.endsWith('.css.ts') ? (
               <Box
                 id="outputContainer"
                 width="full"

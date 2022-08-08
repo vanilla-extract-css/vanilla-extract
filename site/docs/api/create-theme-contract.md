@@ -6,9 +6,9 @@ title: createThemeContract
 
 Creates a contract of locally scoped variable names for themes to implement.
 
-**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
+This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
 
-> 💡 This is useful if you want to split your themes into different bundles. In this case, your themes would be defined in separate files, but we'll keep this example simple.
+> 🎨&nbsp;&nbsp;New to theming in vanilla-extract? Make sure you’ve read the [theming overview](/documentation/theming) first.
 
 ```ts compiled
 // themes.css.ts

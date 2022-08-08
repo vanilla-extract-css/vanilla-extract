@@ -1,4 +1,9 @@
-import { style, globalStyle, createThemeContract, assignVars } from '@vanilla-extract/css';
+import {
+  style,
+  globalStyle,
+  createThemeContract,
+  assignVars,
+} from '@vanilla-extract/css';
 import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
@@ -7,15 +12,15 @@ const themeVars = createThemeContract({
   subtle: null,
   blue: null,
   green: null,
-  pink: null
+  pink: null,
 });
 
 const lightVars = assignVars(themeVars, {
-  base: vars.palette.coolGray500,
+  base: vars.palette.blue800,
   subtle: vars.palette.coolGray400,
   blue: vars.palette.blue600,
   green: vars.palette.green600,
-  pink: vars.palette.pink600
+  pink: vars.palette.pink600,
 });
 
 const darkVars = assignVars(themeVars, {
@@ -23,7 +28,7 @@ const darkVars = assignVars(themeVars, {
   subtle: vars.palette.gray400,
   blue: vars.palette.blue300,
   green: vars.palette.green300,
-  pink: vars.palette.pink400
+  pink: vars.palette.pink400,
 });
 
 export const root = style([
@@ -31,37 +36,44 @@ export const root = style([
     overflowX: 'auto',
     selectors: {
       [`:not(.${darkMode}) &`]: {
-        vars: lightVars
+        vars: lightVars,
       },
       [`.${darkMode} &`]: {
-        vars: darkVars
-      }
-    }
-  }
+        vars: darkVars,
+      },
+    },
+  },
 ]);
 
 const scopeSelectors = (tokens: Array<string>) =>
-  tokens
-    .map((t) => `${root} ${t}`)
-    .join(', ');
+  tokens.map((t) => `${root} ${t}`).join(', ');
 
 globalStyle(scopeSelectors(['pre', 'code']), {
   fontFamily: vars.fonts.code,
   padding: 0,
   margin: 0,
 });
-globalStyle(scopeSelectors(['code', '.attr-name', '.property']), {
-  color: themeVars.base
+globalStyle(scopeSelectors(['code', '.attr-name', '.tag', '.property']), {
+  color: themeVars.base,
 });
-globalStyle(scopeSelectors(['.comment', '.tag', '.punctuation', '.operator']), {
+globalStyle(scopeSelectors(['.comment', '.punctuation', '.operator']), {
   color: themeVars.subtle,
 });
 globalStyle(scopeSelectors(['.language-css', '.string']), {
-  color: themeVars.green
+  color: themeVars.green,
 });
-globalStyle(scopeSelectors(['.language-css .function', '.language-bash .function', '.selector', '.number', '.keyword']), {
-  color: themeVars.blue,
-});
+globalStyle(
+  scopeSelectors([
+    '.language-css .function',
+    '.language-bash .function',
+    '.selector',
+    '.number',
+    '.keyword',
+  ]),
+  {
+    color: themeVars.blue,
+  },
+);
 globalStyle(scopeSelectors(['.function', '.unit']), {
   color: themeVars.pink,
 });

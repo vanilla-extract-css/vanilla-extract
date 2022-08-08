@@ -39,7 +39,7 @@ const getAdapter = () => {
 };
 
 function extractFilesFromCodeBlock(code) {
-  const fileMatches = code.matchAll(/(?:\/\/\s(?<fileName>\w+\.css\.ts))/g);
+  const fileMatches = code.matchAll(/(?:\/\/\s(?<fileName>[\w\.]+\.tsx?))/g);
 
   let lastIndex = code.length - 1;
 
@@ -91,7 +91,9 @@ async function loader(source) {
     }
 
     // Use the first file as the entrypoint
-    const entrypointFile = `./${files[0].fileName}`;
+    const entrypointFile = `./${
+      files.find((f) => f.fileName.endsWith('.css.ts')).fileName
+    }`;
 
     // Any relative file is considered virtual
     const virtualFileFilter = /^\.\//;

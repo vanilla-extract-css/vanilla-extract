@@ -18,12 +18,12 @@ const contents = [
       'style',
       'style-variants',
       'create-var',
-      'assign-vars',
       'fallback-var',
-      'font-face',
-      'keyframes',
       'create-theme',
       'create-theme-contract',
+      'assign-vars',
+      'font-face',
+      'keyframes',
     ],
   },
   {
@@ -31,10 +31,10 @@ const contents = [
     label: 'Global API',
     pages: [
       'global-style',
-      'global-font-face',
-      'global-keyframes',
       'create-global-theme',
       'create-global-theme-contract',
+      'global-font-face',
+      'global-keyframes',
     ],
   },
   {
@@ -45,7 +45,7 @@ const contents = [
   {
     group: 'integrations',
     label: 'Integrations',
-    pages: ['vite', 'esbuild', 'webpack', 'rollup', 'next', 'gatsby'],
+    pages: ['vite', 'esbuild', 'webpack', 'next', 'rollup', 'gatsby'],
   },
 ];
 

@@ -4,7 +4,7 @@ title: keyframes
 
 # keyframes
 
-Creates a locally scoped set of keyframes.
+Creates a locally scoped [animation name](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name) for the defined [@keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes).
 
 ```ts compiled
 // animation.css.ts
@@ -17,6 +17,12 @@ const rotate = keyframes({
 });
 
 export const spin = style({
-  animation: `3s infinite ${rotate}`
+  animationName: rotate,
+  animationDuration: '3s'
+});
+
+// or interpolate as a shorthand:
+export const spinAgain = style({
+  animation: `${rotate} 3s`
 });
 ```

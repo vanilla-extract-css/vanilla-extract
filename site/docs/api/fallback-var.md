@@ -4,7 +4,9 @@ title: fallbackVar
 
 # fallbackVar
 
-Provides fallback values when consuming variables.
+Provides fallback values for variables that have been created using vanilla-extract APIs, e.g. `createVar`, `createTheme`, etc.
+
+As these APIs produce variable references that contain the CSS var function, e.g. `var(--colorVar__qzfheg0)`, it is necessary to handle the wrapping function when providing a fallback.
 
 ```ts compiled
 // style.css.ts
@@ -22,7 +24,9 @@ export const color = style({
 });
 ```
 
-Multiple fallbacks are also supported.
+## Multiple fallback values
+
+The `fallbackVar` function handles falling back across multiple variables by providing multiple parameters.
 
 ```ts compiled
 // style.css.ts

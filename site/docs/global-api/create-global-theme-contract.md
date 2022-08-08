@@ -6,7 +6,9 @@ title: createGlobalThemeContract
 
 Creates a contract of globally scoped variable names for themes to implement.
 
-> 💡 This is useful if you want to make your theme contract available to non-JavaScript environments.
+This is useful if you want to make your theme contract available to non-JavaScript environments.
+
+> 🎨&nbsp;&nbsp;New to theming in vanilla-extract? Make sure you’ve read the [theming overview](/documentation/theming) first.
 
 ```ts compiled
 // themes.css.ts
@@ -40,16 +42,17 @@ export const brandText = style({
 });
 ```
 
-You can also provide a map function as the second argument which has access to the value and the object path.
+## Formatting the variable names
 
-For example, you can automatically prefix all variable names.
+A map function can be provided as the second argument which has access to the value and the object path.
+
+For example, you can automatically prefix all variable names:
 
 ```ts compiled
 // themes.css.ts
 import {
   createGlobalThemeContract,
-  createGlobalTheme,
-  style
+  createGlobalTheme
 } from '@vanilla-extract/css';
 
 export const vars = createGlobalThemeContract(
@@ -72,21 +75,21 @@ createGlobalTheme(':root', vars, {
     body: 'arial'
   }
 });
-
-export const brandText = style({
-  color: vars.color.brand,
-  fontFamily: vars.font.body
-});
 ```
 
-You can also use the map function to automatically generate names from the object path, joining keys with a hyphen.
+Or, automatically generate names from the object path.
+
+For example, converting to title case:
 
 ```ts compiled
 // themes.css.ts
 import {
   createGlobalThemeContract,
-  style
+  createGlobalTheme
 } from '@vanilla-extract/css';
+
+const toTitleCase = (s) =>
+  `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
 
 export const vars = createGlobalThemeContract(
   {
@@ -97,17 +100,15 @@ export const vars = createGlobalThemeContract(
       body: null
     }
   },
-  (_value, path) =>
-    `prefix${path
-      .map(
-        // convert theme contract path to camel case
-        (p) => `${p.charAt(0).toUpperCase()}${p.slice(1)}`
-      )
-      .join('')}`
+  (_value, path) => `${path.map(toTitleCase).join('')}`
 );
 
-export const brandText = style({
-  color: vars.color.brand,
-  fontFamily: vars.font.body
+createGlobalTheme(':root', vars, {
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
 });
 ```

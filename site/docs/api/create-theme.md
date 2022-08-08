@@ -6,7 +6,7 @@ title: createTheme
 
 Creates a locally scoped theme class and a theme contract which can be consumed within your styles.
 
-**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
+> 🎨&nbsp;&nbsp;New to theming in vanilla-extract? Make sure you’ve read the [theming overview](/documentation/theming) first.
 
 ```ts compiled
 // theme.css.ts
@@ -28,7 +28,11 @@ export const brandText = style({
 });
 ```
 
-You can create theme variants by passing a theme contract as the first argument to `createTheme`.
+## Creating theme variants
+
+Theme variants can be created by passing a theme contract as the first argument to `createTheme`.
+
+All theme values must be provided or it’s a type error.
 
 ```ts compiled
 // themes.css.ts
@@ -57,5 +61,3 @@ export const brandText = style({
   fontFamily: vars.font.body
 });
 ```
-
-> 💡 All theme variants must provide a value for every variable or it’s a type error.

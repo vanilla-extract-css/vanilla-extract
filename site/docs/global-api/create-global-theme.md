@@ -6,7 +6,7 @@ title: createGlobalTheme
 
 Creates a theme attached to a global selector, but with locally scoped variable names.
 
-**Ensure this function is called within a `.css.ts` context, otherwise variable names will be mismatched between files.**
+> 🎨&nbsp;&nbsp;New to theming in vanilla-extract? Make sure you’ve read the [theming overview](/documentation/theming) first.
 
 ```ts compiled
 // theme.css.ts
@@ -22,9 +22,18 @@ export const vars = createGlobalTheme(':root', {
 });
 ```
 
-> 💡 All theme variants must provide a value for every variable or it’s a type error.
+All theme values must be provided or it’s a type error.
 
-If you want to implement an existing theme contract, you can pass it as the second argument.
+Importing this stylesheet as a side affect to include the styles in your CSS bundle.
+
+```ts
+// app.ts
+import './theme.css.ts';
+```
+
+## Implementing a Theme Contract
+
+An existing theme contract can be implemented by passing it as the second argument.
 
 ```ts compiled
 // theme.css.ts
