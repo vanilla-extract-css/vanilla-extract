@@ -6,15 +6,13 @@ import { Chevron } from '../Chevron/Chevron';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 import Logo from '../Logo/Logo';
-import Code from '../Code/Code';
 import { Tweet } from '../Tweet/Tweet';
-// import docsStore from '../docs-store';
+import { groups, pages } from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
 import { CompiledCode } from '../Code/CompiledCode';
 import { ErrorHighlighter } from '../Code/ErrorHighlighter';
 import * as styles from './HomePage.css';
-import { vars } from '../themes.css';
 
 const InstallPrompt = () => {
   return (
@@ -188,10 +186,11 @@ export const HomePage = () => {
                 </Box>
                 <ErrorHighlighter tokens={['brandd', 'large']}>
                   <CompiledCode
-                    background={{ lightMode: "teal50", darkMode: 'black' }}
-                    code={[{
-                      fileName: 'styles.css.ts',
-                      contents: outdent`
+                    background={{ lightMode: 'teal50', darkMode: 'black' }}
+                    code={[
+                      {
+                        fileName: 'styles.css.ts',
+                        contents: outdent`
                         import { createTheme, style } from '@vanilla-extract/css';
 
                         export const [themeClass, vars] = createTheme({
@@ -210,7 +209,9 @@ export const HomePage = () => {
                           color: vars.color.white,
                           padding: vars.space.large
                         });`,
-                    }]} />
+                      },
+                    ]}
+                  />
                 </ErrorHighlighter>
               </Columns>
             </Box>
@@ -322,10 +323,11 @@ export const HomePage = () => {
               </Box>
 
               <CompiledCode
-                background={{ lightMode: "blue50", darkMode: 'black' }}
-                code={[{
-                  fileName: 'styles.css.ts',
-                  contents: outdent`
+                background={{ lightMode: 'blue50', darkMode: 'black' }}
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`
                     import { style } from '@vanilla-extract/css';
     
                     export const className = style({
@@ -343,7 +345,8 @@ export const HomePage = () => {
                       }
                     });
                   `,
-                }]}
+                  },
+                ]}
               />
             </Stack>
           </ContentBlock>
@@ -369,9 +372,10 @@ export const HomePage = () => {
 
                 <ErrorHighlighter tokens={['brandd']}>
                   <CompiledCode
-                    code={[{
-                      fileName: 'styles.css.ts',
-                      contents: outdent`
+                    code={[
+                      {
+                        fileName: 'styles.css.ts',
+                        contents: outdent`
                         import { createTheme, style } from '@vanilla-extract/css';
                           
                         export const [themeClass, vars] = createTheme({
@@ -384,7 +388,8 @@ export const HomePage = () => {
                         export const brandedSection = style({
                           backgroundColor: vars.color.brandd,
                       `,
-                    }]}
+                      },
+                    ]}
                   />
                 </ErrorHighlighter>
               </Columns>
@@ -407,9 +412,10 @@ export const HomePage = () => {
                 </Text>
               </Stack>
               <CompiledCode
-                code={[{
-                  fileName: 'styles.css.ts',
-                  contents: outdent`import { style, createVar } from '@vanilla-extract/css';
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`import { style, createVar } from '@vanilla-extract/css';
 
                   const shadowColor = createVar();
             
@@ -424,7 +430,8 @@ export const HomePage = () => {
                       },
                     }
                   });`,
-                }]}
+                  },
+                ]}
               />
             </Columns>
           </ContentBlock>
@@ -444,9 +451,10 @@ export const HomePage = () => {
                 </Text>
               </Stack>
               <CompiledCode
-                code={[{
-                  fileName: 'styles.css.ts',
-                  contents: outdent`
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`
                   import { styleVariants } from '@vanilla-extract/css';
   
                   export const background = styleVariants({
@@ -461,7 +469,8 @@ export const HomePage = () => {
                     link: { color: 'blue' },
                   });
                 `,
-                }]}
+                  },
+                ]}
               />
             </Columns>
           </ContentBlock>
@@ -482,10 +491,11 @@ export const HomePage = () => {
                 </Text>
               </Stack>
               <CompiledCode
-                code={[{
-                  fileName: 'output.css',
-                  language: 'css',
-                  contents: outdent`
+                code={[
+                  {
+                    fileName: 'output.css',
+                    language: 'css',
+                    contents: outdent`
                   :root {
                     --space-none__ya5b7b0: 0;
                     --space-small__ya5b7b1: 4px;
@@ -497,7 +507,8 @@ export const HomePage = () => {
                     padding: var(--space-medium__ya5b7b2);
                   }
                 `,
-                }]}
+                  },
+                ]}
               />
             </Columns>
           </ContentBlock>
@@ -584,92 +595,129 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
 
-        <ContentBlock withGutters>
+        <ContentBlock size="xxlarge" withGutters>
           <Box component="footer" paddingBottom="xxxlarge">
-            <Stack space="xxlarge" align="center">
+            <Stack space="xxxlarge" align="center">
               <Logo height={60} />
-              <Columns space="xxxlarge" collapseOnMobile>
-                {/* <Stack space="xlarge" align="center">
-                  <Heading level="4">Documentation</Heading>
-                  {docsStore.map(({ title, route }) => (
+              <Box display="flex" flexWrap="wrap">
+                {groups.map((label) => {
+                  const groupPages = pages.filter(
+                    (page) => label === page.label,
+                  );
+
+                  return (
+                    <Box
+                      key={label}
+                      flexGrow={0}
+                      flexShrink={0}
+                      paddingX="xlarge"
+                      paddingBottom="xxlarge"
+                      className={styles.footerLayout}
+                    >
+                      <Stack space="large">
+                        <Text size="small" component="h4">
+                          {label}
+                        </Text>
+                        {groupPages.map(({ route, title }) => (
+                          <Link
+                            to={route}
+                            key={title}
+                            size="xsmall"
+                            color="secondary"
+                            baseline
+                          >
+                            {title}
+                          </Link>
+                        ))}
+                      </Stack>
+                    </Box>
+                  );
+                })}
+                <Box
+                  flexGrow={0}
+                  flexShrink={0}
+                  paddingX="xlarge"
+                  paddingBottom="xxlarge"
+                  className={styles.footerLayout}
+                >
+                  <Stack space="large">
+                    <Text size="small" component="h4">
+                      Community
+                    </Text>
                     <Link
-                      to={route}
-                      key={title}
-                      size="small"
+                      to="https://github.com/seek-oss/vanilla-extract"
+                      size="xsmall"
                       color="secondary"
                       baseline
                     >
-                      {title}
+                      GitHub
                     </Link>
-                  ))}
-                </Stack> */}
-
-                <Stack space="xlarge" align="center">
-                  <Heading level="4">Community</Heading>
-                  <Link
-                    to="https://github.com/seek-oss/vanilla-extract"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    GitHub
-                  </Link>
-                  <Link
-                    to="https://github.com/seek-oss/vanilla-extract/discussions"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Discussions
-                  </Link>
-                  <Link
-                    to="https://discord.gg/6nCfPwwz6w"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Discord
-                  </Link>
-                </Stack>
-
-                <Stack space="xlarge" align="center">
-                  <Heading level="4">Related work</Heading>
-                  <Link
-                    to="https://seek-oss.github.io/braid-design-system/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      Braid Design System
-                    </span>
-                  </Link>
-                  <Link
-                    to="https://seek-oss.github.io/capsize/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Capsize
-                  </Link>
-                  <Link
-                    to="https://github.com/seek-oss/playroom"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Playroom
-                  </Link>
-                  <Link
-                    to="https://seek-oss.github.io/treat/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Treat
-                  </Link>
-                </Stack>
-              </Columns>
+                    <Link
+                      to="https://github.com/seek-oss/vanilla-extract/discussions"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Discussions
+                    </Link>
+                    <Link
+                      to="https://discord.gg/6nCfPwwz6w"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Discord
+                    </Link>
+                  </Stack>
+                </Box>
+                <Box
+                  flexGrow={0}
+                  flexShrink={0}
+                  paddingX="xlarge"
+                  paddingBottom="xxlarge"
+                  className={styles.footerLayout}
+                >
+                  <Stack space="large">
+                    <Text size="small" component="h4">
+                      Related work
+                    </Text>
+                    <Link
+                      to="https://seek-oss.github.io/braid-design-system/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      <span style={{ whiteSpace: 'nowrap' }}>
+                        Braid Design System
+                      </span>
+                    </Link>
+                    <Link
+                      to="https://seek-oss.github.io/capsize/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Capsize
+                    </Link>
+                    <Link
+                      to="https://github.com/seek-oss/playroom"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Playroom
+                    </Link>
+                    <Link
+                      to="https://seek-oss.github.io/treat/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Treat
+                    </Link>
+                  </Stack>
+                </Box>
+              </Box>
             </Stack>
           </Box>
         </ContentBlock>

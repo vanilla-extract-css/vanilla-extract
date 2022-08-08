@@ -58,3 +58,18 @@ export const skewedContainerSecondary = style({
     clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 100%)',
   },
 });
+
+export const footerLayout = style([
+  {
+    '@media': {
+      [`screen and (min-width: 480px)`]: {
+        flexBasis: '50%',
+      },
+    },
+  },
+  responsiveStyle({
+    mobile: { flexBasis: '100%' },
+    tablet: { flexBasis: '33%' },
+    desktop: { flexBasis: '25%' },
+  }),
+]);
