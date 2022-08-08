@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`recipes - esbuild should create valid stylesheet 1`] = `
+exports[`recipes - esbuild > should create valid stylesheet 1`] = `
 "._103pmpm2 {
   --_103pmpm0: #b0e0e6;
   --_103pmpm1: #fff;
@@ -54,7 +54,7 @@ exports[`recipes - esbuild should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
+exports[`recipes - mini-css-extract > should create valid stylesheet 1`] = `
 ".spi1fr2 {
   --spi1fr0: #b0e0e6;
   --spi1fr1: #fff;
@@ -108,7 +108,7 @@ exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`recipes - vite should create valid stylesheet 1`] = `
+exports[`recipes - vite > should create valid stylesheet 1`] = `
 "._103pmpm2 {
   --_103pmpm0: #b0e0e6;
   --_103pmpm1: #fff;

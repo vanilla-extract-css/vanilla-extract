@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`rollup-plugin should build with preserveModules 1`] = `
+exports[`rollup-plugin > should build with preserveModules 1`] = `
 Array [
   Array [
     "assets/src/shared.css.ts.vanilla-31027048.css",
@@ -247,7 +247,7 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 ]
 `;
 
-exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
+exports[`rollup-plugin > should build with preserveModules and assetFileNames 1`] = `
 Array [
   Array [
     "index.js",
@@ -494,7 +494,7 @@ export { altTheme, responsiveTheme, theme, vars };
 ]
 `;
 
-exports[`rollup-plugin should build with sourcemaps 1`] = `
+exports[`rollup-plugin > should build with sourcemaps 1`] = `
 Array [
   Array [
     "assets/src/shared.css.ts.vanilla-31027048.css",
@@ -531,7 +531,7 @@ Array [
 ]
 `;
 
-exports[`rollup-plugin should build without preserveModules 1`] = `
+exports[`rollup-plugin > should build without preserveModules 1`] = `
 Array [
   Array [
     "assets/src/shared.css.ts.vanilla-31027048.css",

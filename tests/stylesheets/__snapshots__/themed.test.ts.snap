@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`themed - esbuild should create valid stylesheet 1`] = `
+exports[`themed - esbuild > should create valid stylesheet 1`] = `
 ".cvta170,
 :root {
   --cvta171: blue;
@@ -88,7 +88,7 @@ html .jteyb17 {
 "
 `;
 
-exports[`themed - mini-css-extract should create valid stylesheet 1`] = `
+exports[`themed - mini-css-extract > should create valid stylesheet 1`] = `
 ".cdwe0v0,
 :root {
   --cdwe0v1: blue;
@@ -176,7 +176,7 @@ html .blj6yb7 {
 "
 `;
 
-exports[`themed - vite should create valid stylesheet 1`] = `
+exports[`themed - vite > should create valid stylesheet 1`] = `
 ".cvta170,
 :root {
   --cvta171: blue;

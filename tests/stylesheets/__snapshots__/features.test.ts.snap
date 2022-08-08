@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`features - esbuild should create valid stylesheet 1`] = `
+exports[`features - esbuild > should create valid stylesheet 1`] = `
 "._1o6ek500 {
   height: 50px;
 }
@@ -55,7 +55,7 @@ body ._1o6ek50a {
 "
 `;
 
-exports[`features - mini-css-extract should create valid stylesheet 1`] = `
+exports[`features - mini-css-extract > should create valid stylesheet 1`] = `
 "._87f2ru0 {
   height: 50px;
 }
@@ -110,7 +110,7 @@ body ._87f2rua {
 "
 `;
 
-exports[`features - vite should create valid stylesheet 1`] = `
+exports[`features - vite > should create valid stylesheet 1`] = `
 "._1o6ek500 {
   height: 50px;
 }
