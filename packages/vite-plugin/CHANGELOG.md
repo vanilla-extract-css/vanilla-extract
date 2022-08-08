@@ -1,5 +1,15 @@
 # @vanilla-extract/vite-plugin
 
+## 3.3.0
+
+### Minor Changes
+
+- [#751](https://github.com/seek-oss/vanilla-extract/pull/751) [`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b) Thanks [@frandiox](https://github.com/frandiox)! - Add [experimental support for React Server Components](https://github.com/facebook/react/pull/22952)
+
+### Patch Changes
+
+- [#751](https://github.com/seek-oss/vanilla-extract/pull/751) [`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b) Thanks [@frandiox](https://github.com/frandiox)! - Fix HMR
+
 ## 3.2.1
 
 ### Patch Changes

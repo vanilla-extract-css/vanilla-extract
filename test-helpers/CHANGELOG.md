@@ -1,5 +1,12 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.21
+
+### Patch Changes
+
+- Updated dependencies [[`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b), [`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b)]:
+  - @vanilla-extract/vite-plugin@3.3.0
+
 ## 0.0.20
 
 ### Patch Changes
