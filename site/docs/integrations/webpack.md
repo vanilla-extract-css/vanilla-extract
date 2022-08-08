@@ -1,5 +1,6 @@
 ---
 title: Webpack
+parent: integrations
 ---
 
 # Webpack

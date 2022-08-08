@@ -1,5 +1,6 @@
 ---
 title: createGlobalThemeContract
+parent: global-api
 ---
 
 # createGlobalThemeContract

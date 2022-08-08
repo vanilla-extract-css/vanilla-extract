@@ -1,5 +1,6 @@
 ---
 title: esbuild
+parent: integrations
 ---
 
 # esbuild

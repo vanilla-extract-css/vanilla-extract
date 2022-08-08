@@ -62,7 +62,7 @@ const myStyle = style({
 });
 ```
 
-The `vars` key also accepts scoped CSS variables, created via the [createVar](/documentation/create-var/) API.
+The `vars` key also accepts scoped CSS variables, created via the [createVar](/documentation/api/create-var/) API.
 
 ```ts compiled
 // styles.css.ts

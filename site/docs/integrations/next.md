@@ -1,5 +1,6 @@
 ---
 title: Next.js
+parent: integrations
 ---
 
 # Next.js

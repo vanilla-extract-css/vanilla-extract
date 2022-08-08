@@ -1,12 +1,13 @@
 ---
 title: assignVars
+parent: api
 ---
 
 # assignVars
 
 Allows you to populate the values of a theme contract and assign them to a style.
 
-While similar to [createTheme](/documentation/create-theme), this API provides more fine-grained control of how you populate the variables.
+While similar to [createTheme](/documentation/api/create-theme), this API provides more fine-grained control of how you populate the variables.
 
 For example, this is useful for creating responsive themes since it can be used within `@media` blocks:
 

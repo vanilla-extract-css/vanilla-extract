@@ -1,5 +1,6 @@
 ---
 title: createThemeContract
+parent: api
 ---
 
 # createThemeContract

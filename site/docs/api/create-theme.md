@@ -1,5 +1,6 @@
 ---
 title: createTheme
+parent: api
 ---
 
 # createTheme

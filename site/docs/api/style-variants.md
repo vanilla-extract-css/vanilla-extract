@@ -1,5 +1,6 @@
 ---
 title: styleVariants
+parent: api
 ---
 
 # styleVariants

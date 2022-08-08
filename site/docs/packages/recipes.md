@@ -83,7 +83,7 @@ document.write(`
 
 Your recipe configuration can also make use of existing variables, classes and styles.
 
-For example, you can pass in the result of your [`sprinkles`](/documentation/sprinkles-api) function directly.
+For example, you can pass in the result of your [`sprinkles`](/documentation/packages/sprinkles) function directly.
 
 ```ts
 // button.css.ts

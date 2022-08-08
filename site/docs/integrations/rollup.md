@@ -1,5 +1,6 @@
 ---
 title: Rollup
+parent: integrations
 ---
 
 # Rollup

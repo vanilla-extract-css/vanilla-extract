@@ -1,5 +1,6 @@
 ---
 title: fontFace
+parent: api
 ---
 
 # fontFace

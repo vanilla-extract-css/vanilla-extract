@@ -1,5 +1,6 @@
 ---
 title: createGlobalTheme
+parent: global-api
 ---
 
 # createGlobalTheme

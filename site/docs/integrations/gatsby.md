@@ -1,5 +1,6 @@
 ---
 title: Gatsby
+parent: integrations
 ---
 
 # Gatsby

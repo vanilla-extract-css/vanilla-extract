@@ -1,5 +1,6 @@
 ---
 title: globalFontFace
+parent: global-api
 ---
 
 # globalFontFace

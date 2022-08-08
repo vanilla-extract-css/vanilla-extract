@@ -1,5 +1,6 @@
 ---
 title: globalKeyframes
+parent: global-api
 ---
 
 # globalKeyframes

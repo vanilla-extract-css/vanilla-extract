@@ -1,5 +1,6 @@
 ---
 title: Vite
+parent: integrations
 ---
 
 # Vite

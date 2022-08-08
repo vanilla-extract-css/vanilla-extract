@@ -1,5 +1,6 @@
 ---
 title: globalStyle
+parent: global-api
 ---
 
 # globalStyle

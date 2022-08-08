@@ -48,7 +48,7 @@ document.write(`
 
 > 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
 
-Within `.css.ts` files, combine with any custom styles by providing an array to vanilla-extract’s [`style`](/documentation/styling-api/#style) function.
+Within `.css.ts` files, combine with any custom styles by providing an array to vanilla-extract’s [`style`](/documentation/api/style) function.
 
 ```ts
 // styles.css.ts
@@ -199,7 +199,7 @@ const responsiveProperties = defineProperties({
 });
 ```
 
-You can also use [vanilla-extract themes](/documentation/styling-api/#createtheme) to configure themed values.
+You can also use [vanilla-extract themes](/documentation/api/create-theme) to configure themed values.
 
 ```ts
 // sprinkles.css.ts

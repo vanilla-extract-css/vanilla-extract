@@ -4,7 +4,7 @@ title: Theming
 
 # Theming
 
-Theming in vanilla-extract is really just a set of helpers on top of the scoped CSS variable creation provided by [createVar](/documentation/create-var).
+Theming in vanilla-extract is really just a set of helpers on top of the scoped CSS variable creation provided by [createVar](/documentation/api/create-var).
 
 > 🧠 Themes are often thought of as global, application wide concepts.
 > While vanilla-extract themes are great for that, they can also be used for more foccussed, lower level use-cases.
@@ -231,7 +231,7 @@ const MyComponent = ({
 
 This pattern opens up a lot of interesting possibilities. Type-safe runtime theming without the need for runtime creation and injection of CSS.
 
-[createtheme]: /documentation/create-theme/
-[createthemecontract]: /documentation/create-theme/
-[assigninlinevars]: /documentation/dynamic/#assigninlinevars
+[createtheme]: /documentation/api/create-theme/
+[createthemecontract]: /documentation/api/create-theme/
+[assigninlinevars]: /documentation/packages/dynamic/#assigninlinevars
 [theme-contracts]: #theme-contracts
