@@ -5,4 +5,5 @@ module.exports = {
   },
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   testTimeout: 10000,
+  resolver: '<rootDir>/jest-resolver.js',
 };

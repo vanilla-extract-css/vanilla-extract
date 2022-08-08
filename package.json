@@ -12,7 +12,7 @@
     "start": "pnpm start-fixture themed",
     "start-site": "manypkg run site start",
     "build-site": "manypkg run site build",
-    "test:jest": "jest",
+    "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
