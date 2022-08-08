@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest';
+
 import { validateMediaQuery } from './validateMediaQuery';
 
 describe('validateMediaQuery', () => {

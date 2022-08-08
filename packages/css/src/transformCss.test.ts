@@ -2,6 +2,8 @@ import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
 
+import { expect, describe, it } from 'vitest';
+
 setFileScope('test');
 
 const testVar = createVar();

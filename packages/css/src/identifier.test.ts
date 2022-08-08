@@ -1,6 +1,8 @@
 import { setFileScope, endFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 
+import { expect, describe, beforeAll, afterAll, it } from 'vitest';
+
 describe('identifier', () => {
   beforeAll(() => {
     setFileScope('test');

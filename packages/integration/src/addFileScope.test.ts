@@ -1,4 +1,6 @@
 import { outdent } from 'outdent';
+import { expect, test } from 'vitest';
+
 import { addFileScope } from './addFileScope';
 
 test('should add missing fileScope', () => {

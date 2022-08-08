@@ -2,6 +2,8 @@ import { transformSync } from '@babel/core';
 import { Options } from './types';
 import plugin from './';
 
+import { expect, describe, it } from 'vitest';
+
 const transform = (
   source: string,
   options: Options = {},

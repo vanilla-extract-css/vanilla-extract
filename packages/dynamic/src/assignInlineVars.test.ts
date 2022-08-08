@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest';
+
 import { assignInlineVars } from './';
 import { vars } from './assignInlineVars.test.css';
 

@@ -3,8 +3,9 @@ import {
   startFixture,
   TestServer,
 } from '@vanilla-extract-private/test-helpers';
+import { expect, describe, beforeAll, afterAll, test } from 'vitest';
 
-const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
+const workerIndex = parseInt(process.env.VITEST_WORKER_ID ?? '', 10);
 let testCounter = 0;
 
 const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;

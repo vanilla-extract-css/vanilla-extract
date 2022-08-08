@@ -2,6 +2,7 @@ import { rollup, OutputOptions } from 'rollup';
 import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import path from 'path';
+import { expect, describe, it } from 'vitest';
 
 import { vanillaExtractPlugin } from '..';
 

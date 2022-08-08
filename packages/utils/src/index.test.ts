@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest';
+
 import { calc } from './';
 
 describe('utils', () => {

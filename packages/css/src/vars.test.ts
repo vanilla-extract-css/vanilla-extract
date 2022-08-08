@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest';
+
 import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {

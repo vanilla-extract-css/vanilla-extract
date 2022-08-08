@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest';
+
 import { basic } from './recipes.css';
 
 describe('recipes', () => {

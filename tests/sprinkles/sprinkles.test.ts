@@ -4,6 +4,8 @@ import {
   createSprinkles,
 } from '@vanilla-extract/sprinkles';
 
+import { expect, describe, it } from 'vitest';
+
 import {
   basicProperties,
   propertiesWithPaddingShorthands,
