@@ -1,6 +1,6 @@
 import outdent from 'outdent';
 import { onEndFileScope } from './adapter';
-import type { FileScope } from './types';
+import type { FileScope } from '../types';
 
 let refCounter = 0;
 

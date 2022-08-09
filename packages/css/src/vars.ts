@@ -9,9 +9,9 @@ import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
 import { Tokens, NullableTokens, ThemeVars } from './types';
-import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { getAndIncrementRefCounter, getFileScope } from './entries/fileScope';
 import { validateContract } from './validateContract';
-import { getIdentOption } from './adapter';
+import { getIdentOption } from './entries/adapter';
 
 export function createVar(debugId?: string): CSSVarFunction {
   // Convert ref count to base 36 for optimal hash lengths

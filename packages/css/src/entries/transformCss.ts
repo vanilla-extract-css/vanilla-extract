@@ -14,13 +14,13 @@ import type {
   GlobalFontFaceRule,
   CSSSelectorBlock,
   Composition,
-} from './types';
+} from '../types';
 import { markCompositionUsed } from './adapter';
-import { forEach, omit, mapKeys } from './utils';
-import { validateSelector } from './validateSelector';
-import { ConditionalRuleset } from './conditionalRulesets';
-import { simplePseudos, simplePseudoLookup } from './simplePseudos';
-import { validateMediaQuery } from './validateMediaQuery';
+import { forEach, omit, mapKeys } from '../utils';
+import { validateSelector } from '../validateSelector';
+import { ConditionalRuleset } from '../conditionalRulesets';
+import { simplePseudos, simplePseudoLookup } from '../simplePseudos';
+import { validateMediaQuery } from '../validateMediaQuery';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,

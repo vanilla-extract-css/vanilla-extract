@@ -15,8 +15,8 @@ import {
   appendCss,
   registerComposition,
   markCompositionUsed,
-} from './adapter';
-import { getFileScope, hasFileScope } from './fileScope';
+} from './entries/adapter';
+import { getFileScope, hasFileScope } from './entries/fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
 

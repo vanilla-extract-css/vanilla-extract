@@ -1,7 +1,7 @@
 import type { Adapter, Composition, CSS } from './types';
-import { injectStyles } from './injectStyles';
-import { transformCss } from './transformCss';
-import { setAdapterIfNotSet } from './adapter';
+import { injectStyles } from './entries/injectStyles';
+import { transformCss } from './entries/transformCss';
+import { setAdapterIfNotSet } from './entries/adapter';
 
 const localClassNames = new Set<string>();
 const composedClassLists: Array<Composition> = [];

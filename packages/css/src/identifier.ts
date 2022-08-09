@@ -1,7 +1,7 @@
 import hash from '@emotion/hash';
 
-import { getIdentOption } from './adapter';
-import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { getIdentOption } from './entries/adapter';
+import { getAndIncrementRefCounter, getFileScope } from './entries/fileScope';
 
 function getDevPrefix(debugId: string | undefined) {
   const parts = debugId ? [debugId.replace(/\s/g, '_')] : [];

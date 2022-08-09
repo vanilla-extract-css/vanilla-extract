@@ -1,4 +1,4 @@
-import type { FileScope } from './types';
+import type { FileScope } from '../types';
 
 const stylesheets: Record<string, HTMLElement> = {};
 

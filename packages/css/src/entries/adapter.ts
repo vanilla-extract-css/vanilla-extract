@@ -1,4 +1,4 @@
-import type { Adapter } from './types';
+import type { Adapter } from '../types';
 
 export const mockAdapter: Adapter = {
   appendCss: () => {},
