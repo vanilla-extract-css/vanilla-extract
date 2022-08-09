@@ -16,7 +16,7 @@
     "directory": "packages/webpack-plugin"
   },
   "scripts": {
-    "build": "crackle package --fix"
+    "build": "crackle package"
   },
   "author": "SEEK",
   "license": "MIT",
