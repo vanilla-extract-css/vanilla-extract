@@ -321,6 +321,7 @@ importers:
 
   packages/webpack-plugin:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@types/debug': ^4.1.5
       '@vanilla-extract/integration': ^5.0.0
       chalk: ^4.1.1
@@ -333,6 +334,7 @@ importers:
       debug: 4.3.2
       loader-utils: 2.0.2
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-2022791028_ts-node@10.4.0
       '@types/debug': 4.1.7
       webpack: 5.64.2_@swc+core@1.2.112
 

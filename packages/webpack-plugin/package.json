@@ -2,45 +2,21 @@
   "name": "@vanilla-extract/webpack-plugin",
   "version": "2.1.11",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin.esm.js",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
-      "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
-    },
-    "./loader": {
-      "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
-      "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
-    },
-    "./extracted": {
-      "module": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.esm.js",
-      "default": "./extracted/dist/vanilla-extract-webpack-plugin-extracted.cjs.js"
-    },
-    "./virtualFileLoader": {
-      "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
-      "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
-    }
-  },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "loader.ts",
-      "extracted.js",
-      "virtualFileLoader.ts"
-    ]
-  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "files": [
     "/dist",
-    "/loader",
     "/extracted",
+    "/loader",
     "/virtualFileLoader"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
     "directory": "packages/webpack-plugin"
+  },
+  "scripts": {
+    "build": "crackle package --fix"
   },
   "author": "SEEK",
   "license": "MIT",
@@ -54,7 +30,51 @@
     "loader-utils": "^2.0.0"
   },
   "devDependencies": {
+    "@crackle/cli": "publish-snapshot",
     "@types/debug": "^4.1.5",
     "webpack": "^5.36.1"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./extracted": {
+      "import": {
+        "types": "./extracted/index.cjs.d.ts",
+        "default": "./extracted/index.mjs"
+      },
+      "require": {
+        "types": "./extracted/index.cjs.d.ts",
+        "default": "./extracted/index.cjs"
+      }
+    },
+    "./loader": {
+      "import": {
+        "types": "./loader/index.cjs.d.ts",
+        "default": "./loader/index.mjs"
+      },
+      "require": {
+        "types": "./loader/index.cjs.d.ts",
+        "default": "./loader/index.cjs"
+      }
+    },
+    "./virtualFileLoader": {
+      "import": {
+        "types": "./virtualFileLoader/index.cjs.d.ts",
+        "default": "./virtualFileLoader/index.mjs"
+      },
+      "require": {
+        "types": "./virtualFileLoader/index.cjs.d.ts",
+        "default": "./virtualFileLoader/index.cjs"
+      }
+    }
   }
 }

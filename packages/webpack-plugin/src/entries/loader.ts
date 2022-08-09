@@ -9,9 +9,9 @@ import {
   getPackageInfo,
 } from '@vanilla-extract/integration';
 
-import type { LoaderContext } from './types';
-import { debug, formatResourcePath } from './logger';
-import { ChildCompiler } from './compiler';
+import type { LoaderContext } from '../types';
+import { debug, formatResourcePath } from '../logger';
+import { ChildCompiler } from '../compiler';
 
 const virtualLoader = require.resolve(
   path.join(
