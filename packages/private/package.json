@@ -3,12 +3,10 @@
   "version": "1.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-private.cjs.js",
-  "module": "dist/vanilla-extract-private.esm.js",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "scripts": {
+    "build": "crackle package"
   },
   "files": [
     "/dist"
@@ -19,5 +17,21 @@
     "directory": "packages/private"
   },
   "author": "SEEK",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@crackle/cli": "publish-snapshot"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  }
 }
