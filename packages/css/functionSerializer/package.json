@@ -1,8 +1,0 @@
-{
-  "main": "dist/vanilla-extract-css-functionSerializer.cjs.js",
-  "module": "dist/vanilla-extract-css-functionSerializer.esm.js",
-  "browser": {
-    "./dist/vanilla-extract-css-functionSerializer.cjs.js": "./dist/vanilla-extract-css-functionSerializer.browser.cjs.js",
-    "./dist/vanilla-extract-css-functionSerializer.esm.js": "./dist/vanilla-extract-css-functionSerializer.browser.esm.js"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "main": "dist/vanilla-extract-css-transformCss.cjs.js",
-  "module": "dist/vanilla-extract-css-transformCss.esm.js",
-  "browser": {
-    "./dist/vanilla-extract-css-transformCss.cjs.js": "./dist/vanilla-extract-css-transformCss.browser.cjs.js",
-    "./dist/vanilla-extract-css-transformCss.esm.js": "./dist/vanilla-extract-css-transformCss.browser.esm.js"
-  },
-  "sideEffects": false
-}

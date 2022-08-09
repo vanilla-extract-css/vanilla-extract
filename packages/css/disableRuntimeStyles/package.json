@@ -1,8 +1,0 @@
-{
-  "main": "dist/vanilla-extract-css-disableRuntimeStyles.cjs.js",
-  "module": "dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
-  "browser": {
-    "./dist/vanilla-extract-css-disableRuntimeStyles.cjs.js": "./dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js",
-    "./dist/vanilla-extract-css-disableRuntimeStyles.esm.js": "./dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js"
-  }
-}

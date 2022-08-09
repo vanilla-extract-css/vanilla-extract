@@ -1,9 +1,0 @@
-{
-  "main": "dist/vanilla-extract-css-adapter.cjs.js",
-  "module": "dist/vanilla-extract-css-adapter.esm.js",
-  "browser": {
-    "./dist/vanilla-extract-css-adapter.cjs.js": "./dist/vanilla-extract-css-adapter.browser.cjs.js",
-    "./dist/vanilla-extract-css-adapter.esm.js": "./dist/vanilla-extract-css-adapter.browser.esm.js"
-  },
-  "sideEffects": false
-}

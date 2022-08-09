@@ -1,8 +1,0 @@
-{
-  "main": "dist/vanilla-extract-css-recipe.cjs.js",
-  "module": "dist/vanilla-extract-css-recipe.esm.js",
-  "browser": {
-    "./dist/vanilla-extract-css-recipe.cjs.js": "./dist/vanilla-extract-css-recipe.browser.cjs.js",
-    "./dist/vanilla-extract-css-recipe.esm.js": "./dist/vanilla-extract-css-recipe.browser.esm.js"
-  }
-}
