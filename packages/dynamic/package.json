@@ -3,18 +3,27 @@
   "version": "2.0.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-dynamic.cjs.js",
-  "module": "dist/vanilla-extract-dynamic.esm.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-dynamic.esm.js",
-      "default": "./dist/vanilla-extract-dynamic.cjs.js"
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "files": [
     "/dist"
   ],
+  "scripts": {
+    "build": "crackle package"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
@@ -26,6 +35,7 @@
     "@vanilla-extract/private": "^1.0.3"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "*"
+    "@vanilla-extract/css": "*",
+    "@crackle/cli": "publish-snapshot"
   }
 }

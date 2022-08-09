@@ -201,11 +201,13 @@ importers:
 
   packages/dynamic:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@vanilla-extract/css': '*'
       '@vanilla-extract/private': ^1.0.3
     dependencies:
       '@vanilla-extract/private': link:../private
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-2022791028_ts-node@10.4.0
       '@vanilla-extract/css': link:../css
 
   packages/esbuild-plugin:
