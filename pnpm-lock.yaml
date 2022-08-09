@@ -261,8 +261,10 @@ importers:
 
   packages/recipes:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@vanilla-extract/css': ^1.7.1
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-2022791028_ts-node@10.4.0
       '@vanilla-extract/css': link:../css
 
   packages/rollup-plugin:

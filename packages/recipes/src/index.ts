@@ -1,7 +1,7 @@
 import { addRecipe } from '@vanilla-extract/css/recipe';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-import { createRuntimeFn } from './createRuntimeFn';
+import { createRuntimeFn } from './entries/createRuntimeFn';
 import type {
   PatternOptions,
   PatternResult,

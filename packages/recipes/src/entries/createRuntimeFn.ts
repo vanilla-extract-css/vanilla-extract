@@ -3,7 +3,7 @@ import type {
   RuntimeFn,
   VariantGroups,
   VariantSelection,
-} from './types';
+} from '../types';
 
 const shouldApplyCompound = <Variants extends VariantGroups>(
   compoundCheck: VariantSelection<Variants>,
