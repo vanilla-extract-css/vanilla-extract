@@ -212,11 +212,13 @@ importers:
 
   packages/esbuild-plugin:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@vanilla-extract/integration': ^5.0.0
       esbuild: ^0.11.16
     dependencies:
       '@vanilla-extract/integration': link:../integration
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-2022791028_ts-node@10.4.0
       esbuild: 0.11.23
 
   packages/integration:
