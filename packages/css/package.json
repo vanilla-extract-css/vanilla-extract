@@ -77,17 +77,8 @@
       "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
     }
   },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "recipe.ts",
-      "functionSerializer.ts",
-      "adapter.ts",
-      "transformCss.ts",
-      "fileScope.ts",
-      "injectStyles.ts",
-      "disableRuntimeStyles.ts"
-    ]
+  "scripts": {
+    "build": "crackle package"
   },
   "files": [
     "/dist",
@@ -107,6 +98,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@crackle/cli": "^0.0.0-publish-snapshot-20227901557",
     "@emotion/hash": "^0.8.0",
     "@vanilla-extract/private": "^1.0.3",
     "chalk": "^4.1.1",
