@@ -3,8 +3,8 @@
   "version": "1.7.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
-  "main": "dist/vanilla-extract-css.cjs.js",
-  "module": "dist/vanilla-extract-css.esm.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "browser": {
     "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
     "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
@@ -12,83 +12,98 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "browser": {
-        "module": "./dist/vanilla-extract-css.browser.esm.js",
-        "default": "./dist/vanilla-extract-css.browser.cjs.js"
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
       },
-      "module": "./dist/vanilla-extract-css.esm.js",
-      "default": "./dist/vanilla-extract-css.cjs.js"
-    },
-    "./recipe": {
-      "browser": {
-        "module": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
-        "default": "./recipe/dist/vanilla-extract-css-recipe.browser.cjs.js"
-      },
-      "module": "./recipe/dist/vanilla-extract-css-recipe.esm.js",
-      "default": "./recipe/dist/vanilla-extract-css-recipe.cjs.js"
-    },
-    "./functionSerializer": {
-      "browser": {
-        "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
-        "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
-      },
-      "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.esm.js",
-      "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.js"
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./adapter": {
-      "browser": {
-        "module": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
-        "default": "./adapter/dist/vanilla-extract-css-adapter.browser.cjs.js"
+      "import": {
+        "types": "./adapter/index.cjs.d.ts",
+        "default": "./adapter/index.mjs"
       },
-      "module": "./adapter/dist/vanilla-extract-css-adapter.esm.js",
-      "default": "./adapter/dist/vanilla-extract-css-adapter.cjs.js"
-    },
-    "./transformCss": {
-      "browser": {
-        "module": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
-        "default": "./transformCss/dist/vanilla-extract-css-transformCss.browser.cjs.js"
-      },
-      "module": "./transformCss/dist/vanilla-extract-css-transformCss.esm.js",
-      "default": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.js"
-    },
-    "./fileScope": {
-      "browser": {
-        "module": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
-        "default": "./fileScope/dist/vanilla-extract-css-fileScope.browser.cjs.js"
-      },
-      "module": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
-      "default": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.js"
-    },
-    "./fileScope/package.json": "./fileScope/package.json",
-    "./injectStyles": {
-      "browser": {
-        "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
-        "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.cjs.js"
-      },
-      "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.esm.js",
-      "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.js"
+      "require": {
+        "types": "./adapter/index.cjs.d.ts",
+        "default": "./adapter/index.cjs"
+      }
     },
     "./disableRuntimeStyles": {
-      "browser": {
-        "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
-        "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"
+      "import": {
+        "types": "./disableRuntimeStyles/index.cjs.d.ts",
+        "default": "./disableRuntimeStyles/index.mjs"
       },
-      "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
-      "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
+      "require": {
+        "types": "./disableRuntimeStyles/index.cjs.d.ts",
+        "default": "./disableRuntimeStyles/index.cjs"
+      }
+    },
+    "./fileScope": {
+      "import": {
+        "types": "./fileScope/index.cjs.d.ts",
+        "default": "./fileScope/index.mjs"
+      },
+      "require": {
+        "types": "./fileScope/index.cjs.d.ts",
+        "default": "./fileScope/index.cjs"
+      }
+    },
+    "./functionSerializer": {
+      "import": {
+        "types": "./functionSerializer/index.cjs.d.ts",
+        "default": "./functionSerializer/index.mjs"
+      },
+      "require": {
+        "types": "./functionSerializer/index.cjs.d.ts",
+        "default": "./functionSerializer/index.cjs"
+      }
+    },
+    "./injectStyles": {
+      "import": {
+        "types": "./injectStyles/index.cjs.d.ts",
+        "default": "./injectStyles/index.mjs"
+      },
+      "require": {
+        "types": "./injectStyles/index.cjs.d.ts",
+        "default": "./injectStyles/index.cjs"
+      }
+    },
+    "./recipe": {
+      "import": {
+        "types": "./recipe/index.cjs.d.ts",
+        "default": "./recipe/index.mjs"
+      },
+      "require": {
+        "types": "./recipe/index.cjs.d.ts",
+        "default": "./recipe/index.cjs"
+      }
+    },
+    "./transformCss": {
+      "import": {
+        "types": "./transformCss/index.cjs.d.ts",
+        "default": "./transformCss/index.mjs"
+      },
+      "require": {
+        "types": "./transformCss/index.cjs.d.ts",
+        "default": "./transformCss/index.cjs"
+      }
     }
   },
   "scripts": {
     "build": "crackle package"
   },
   "files": [
-    "/dist",
-    "/recipe",
-    "/functionSerializer",
     "/adapter",
-    "/transformCss",
+    "/disableRuntimeStyles",
+    "/dist",
     "/fileScope",
+    "/functionSerializer",
     "/injectStyles",
-    "/disableRuntimeStyles"
+    "/recipe",
+    "/transformCss"
   ],
   "repository": {
     "type": "git",
@@ -98,7 +113,6 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@crackle/cli": "^0.0.0-publish-snapshot-20227901557",
     "@emotion/hash": "^0.8.0",
     "@vanilla-extract/private": "^1.0.3",
     "chalk": "^4.1.1",
@@ -112,6 +126,7 @@
     "outdent": "^0.8.0"
   },
   "devDependencies": {
+    "@crackle/cli": "^0.0.0-publish-snapshot-20227903150",
     "@types/cssesc": "^3.0.0"
   }
 }
