@@ -304,6 +304,7 @@ importers:
 
   packages/vite-plugin:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@vanilla-extract/integration': ^5.0.0
       outdent: ^0.8.0
       postcss: ^8.3.6
@@ -315,6 +316,7 @@ importers:
       postcss: 8.3.11
       postcss-load-config: 3.1.0_ts-node@10.4.0
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-2022791028_ts-node@10.4.0
       vite: 2.7.2
 
   packages/webpack-plugin:
