@@ -1,21 +1,17 @@
 {
   "extends": "nx/presets/npm.json",
+  "npmScope": "vanilla-extract",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "dev",
-          "build"
-        ]
+        "cacheableOperations": ["dev", "build"]
       }
     }
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     }
   },
   "affected": {

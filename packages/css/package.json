@@ -126,7 +126,7 @@
     "outdent": "^0.8.0"
   },
   "devDependencies": {
-    "@crackle/cli": "^0.0.0-publish-snapshot-20227903150",
+    "@crackle/cli": "publish-snapshot",
     "@types/cssesc": "^3.0.0"
   }
 }
