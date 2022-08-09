@@ -2,10 +2,13 @@
   "name": "@vanilla-extract/integration",
   "version": "5.0.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-integration.cjs.js",
+  "main": "dist/index.cjs",
   "files": [
     "/dist"
   ],
+  "scripts": {
+    "build": "crackle package"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
@@ -23,6 +26,21 @@
     "outdent": "^0.8.0"
   },
   "devDependencies": {
+    "@crackle/cli": "publish-snapshot",
     "@types/lodash": "^4.14.168"
+  },
+  "module": "dist/index.mjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
   }
 }
