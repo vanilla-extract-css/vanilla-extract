@@ -165,7 +165,7 @@ export const HomePage = () => {
                     >
                       <Box paddingRight={{ mobile: 'small', tablet: 'xlarge' }}>
                         <ButtonLink
-                          to="/documentation/installation"
+                          to="/documentation/getting-started"
                           icon={
                             <Box display={{ mobile: 'none', desktop: 'block' }}>
                               <Chevron direction="right" />

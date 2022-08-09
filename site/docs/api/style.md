@@ -7,7 +7,7 @@ parent: api
 
 Creates a style rule with a locally scoped class name.
 
-> 🖌&nbsp;&nbsp;New to styling with vanilla-extract? Make sure you’ve read the [styling overview](/documentation/style-object) first.
+> 🖌&nbsp;&nbsp;New to styling with vanilla-extract? Make sure you’ve read the [styling overview](/documentation/styling) first.
 
 This class can then be imported directly into your consuming application code, creating a first-class contract between your CSS and JavaScript.
 

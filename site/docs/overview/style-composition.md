@@ -5,7 +5,7 @@ title: Composition
 # Style composition
 
 Style composition is a special feature of vanilla-extract that makes it easy to get maximum re-use from your styles.
-It allows you to pass an array of class names and/or [style objects](/documentation/style-object/) but continue to treat them as if they are a single class name.
+It allows you to pass an array of class names and/or [styles](/documentation/styling/) but continue to treat them as if they are a single class name.
 
 ```ts
 // styles.css.ts

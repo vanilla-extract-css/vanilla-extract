@@ -195,7 +195,7 @@ export default {
           paddingLeft="xsmall"
           marginTop="-xsmall"
           borderRadius="medium"
-          background={{ lightMode: 'green400', darkMode: 'green500' }}
+          background={{ lightMode: 'blue400', darkMode: 'blue500' }}
           style={{
             height: 28,
             transform: 'skew(15deg)',
@@ -213,15 +213,13 @@ export default {
       </Box>
     </Block>
   ),
-  code: (
-    {
-      'data-language': language,
-      dangerouslySetInnerHTML,
-    }: {
-      'data-language': string;
-      dangerouslySetInnerHTML: { __html: string };
-    }
-  ) => {
+  code: ({
+    'data-language': language,
+    dangerouslySetInnerHTML,
+  }: {
+    'data-language': string;
+    dangerouslySetInnerHTML: { __html: string };
+  }) => {
     let resolvedTitle = '';
     let resolvedChildren = dangerouslySetInnerHTML.__html;
     const matches = resolvedChildren.match(
@@ -237,12 +235,14 @@ export default {
 
     return (
       <CompiledCode
-        code={[{
-          fileName: resolvedTitle,
-          contents: resolvedChildren,
-          language,
-          tokenized: true
-        }]}
+        code={[
+          {
+            fileName: resolvedTitle,
+            contents: resolvedChildren,
+            language,
+            tokenized: true,
+          },
+        ]}
       />
     );
   },

@@ -857,7 +857,7 @@ export const exampleStyle = style({
 });
 ```
 
-Scoped variables can be set via the `vars` property on style objects.
+Scoped variables can be set using the `vars` key.
 
 ```ts
 import { createVar, style } from '@vanilla-extract/css';

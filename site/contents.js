@@ -4,7 +4,7 @@ const contents = [
     label: 'Overview',
     pages: [
       'getting-started',
-      'style-object',
+      'styling',
       'theming',
       'style-composition',
       'sprinkles',

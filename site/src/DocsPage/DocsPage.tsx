@@ -225,7 +225,9 @@ const PrimaryNav = ({
         <Stack space="medium">
           <Box paddingLeft="small">
             <Text size="xsmall" weight="strong">
-              <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>Community</span>
+              <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
+                Community
+              </span>
             </Text>
           </Box>
           <>
@@ -352,8 +354,8 @@ const SecondaryNav = ({
                   <Box
                     component="span"
                     background={{
-                      lightMode: l2 ? 'green300' : 'pink300',
-                      darkMode: l2 ? 'green400' : 'pink400',
+                      lightMode: l2 ? 'pink300' : 'blue300',
+                      darkMode: l2 ? 'pink400' : 'blue400',
                     }}
                     borderRadius="full"
                     paddingLeft="xsmall"
@@ -435,8 +437,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
                 {pages.map(({ route, Component, title, sections }, index) => {
                   const prevDoc = pages[index - 1];
                   const nextDoc = pages[index + 1];
-                  const pageTitle = `${title ? `${title} — ` : ''
-                    }vanilla-extract`.trim();
+                  const pageTitle = `${
+                    title ? `${title} — ` : ''
+                  }vanilla-extract`.trim();
                   const hashes = sections
                     .filter(({ level }) => level === 2 || level === 3)
                     .map(({ hash }) => hash);

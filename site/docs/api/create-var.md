@@ -19,7 +19,7 @@ As you can see, no CSS is generated when you create a variable, it is only a ref
 
 ## Setting the variable
 
-The variable reference created above can be set using the `vars` key within the [style object](/documentation/style-object/#css-variables).
+The variable reference created above can be set using the [“vars” key](/documentation/styling/#css-variables).
 
 ```ts compiled
 // accent.css.ts
