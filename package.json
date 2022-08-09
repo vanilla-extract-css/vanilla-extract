@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "preconstruct dev",
-    "build": "preconstruct build",
+    "build": "pnpx nx run-many --target=build",
     "watch": "preconstruct watch",
     "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
     "start": "pnpm start-fixture themed",
@@ -48,5 +48,8 @@
     "prettier": "^2.3.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.5.0"
+  },
+  "devDependencies": {
+    "nx": "14.5.4"
   }
 }
