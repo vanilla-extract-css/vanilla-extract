@@ -23,8 +23,8 @@
     "@vanilla-extract/css": "^1.0.0"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "^1.7.1",
-    "@crackle/cli": "publish-snapshot"
+    "@crackle/cli": "publish-snapshot",
+    "@vanilla-extract/css": "^1.7.1"
   },
   "exports": {
     "./package.json": "./package.json",
