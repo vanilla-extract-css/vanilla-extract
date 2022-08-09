@@ -13,8 +13,14 @@ import {
 } from './createSprinkles';
 import { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
-export { createNormalizeValueFn, createMapValueFn } from './createUtils';
-export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
+export {
+  createNormalizeValueFn,
+  createMapValueFn,
+} from './entries/createUtils';
+export type {
+  ConditionalValue,
+  RequiredConditionalValue,
+} from './entries/createUtils';
 
 interface Condition {
   '@media'?: string;

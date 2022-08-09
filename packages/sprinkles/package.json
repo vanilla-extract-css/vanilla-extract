@@ -3,34 +3,48 @@
   "version": "1.4.1",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-sprinkles.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles.esm.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-sprinkles.esm.js",
-      "default": "./dist/vanilla-extract-sprinkles.cjs.js"
+      "import": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.cjs.d.ts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./createRuntimeSprinkles": {
-      "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
-      "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
+      "import": {
+        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/index.mjs"
+      },
+      "require": {
+        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/index.cjs"
+      }
     },
     "./createUtils": {
-      "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
-      "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
+      "import": {
+        "types": "./createUtils/index.cjs.d.ts",
+        "default": "./createUtils/index.mjs"
+      },
+      "require": {
+        "types": "./createUtils/index.cjs.d.ts",
+        "default": "./createUtils/index.cjs"
+      }
     }
   },
   "files": [
-    "/dist",
     "/createRuntimeSprinkles",
-    "/createUtils"
+    "/createUtils",
+    "/dist"
   ],
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "createRuntimeSprinkles.ts",
-      "createUtils.ts"
-    ]
+  "scripts": {
+    "build": "crackle package"
   },
   "repository": {
     "type": "git",
@@ -43,6 +57,7 @@
     "@vanilla-extract/css": "^1.0.0"
   },
   "devDependencies": {
+    "@crackle/cli": "publish-snapshot",
     "@vanilla-extract/css": "^1.6.8"
   }
 }

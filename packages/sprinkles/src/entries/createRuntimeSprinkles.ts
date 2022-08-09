@@ -1,8 +1,8 @@
 import {
   createSprinkles as internalCreateSprinkles,
   SprinklesFn,
-} from './createSprinkles';
-import { SprinklesProperties } from './types';
+} from '../createSprinkles';
+import { SprinklesProperties } from '../types';
 
 const composeStyles = (classList: string) => classList;
 

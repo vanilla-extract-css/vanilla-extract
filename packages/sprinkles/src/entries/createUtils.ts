@@ -2,7 +2,7 @@ import { addRecipe } from '@vanilla-extract/css/recipe';
 import {
   ResponsiveArrayByMaxLength,
   RequiredResponsiveArrayByMaxLength,
-} from './types';
+} from '../types';
 
 type ExtractValue<
   Value extends
