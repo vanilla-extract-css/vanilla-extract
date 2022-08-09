@@ -203,7 +203,6 @@ If you want to target another scoped class then it should be defined within the 
 
 ```ts
 // styles.css.ts
-
 import { style } from '@vanilla-extract/css';
 
 // Invalid example:
@@ -224,7 +223,18 @@ export const child = style({
 });
 ```
 
-If you want to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [`globalStyle`](/documentation/global-api/global-style) instead.
+If you need to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [`globalStyle`](/documentation/global-api/global-style) instead.
+
+```ts compiled
+// styles.css.ts
+import { style, globalStyle } from '@vanilla-extract/css';
+
+export const parent = style({});
+
+globalStyle(`${parent} a[href]`, {
+  color: 'pink'
+});
+```
 
 ## Supports queries
 
