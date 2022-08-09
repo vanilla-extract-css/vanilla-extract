@@ -45,9 +45,9 @@ Importantly, this is does two things:
 
 ## Apply the style
 
-To apply the style to an element, we need to import the it from our stylesheet.
+To apply the style to an element, we need to import it from our stylesheet.
 
-By importing the style we receive the scoped class name that was generated for us to apply to the `class` attribute on the element.
+By importing the style we receive the scoped class name that was generated and we can apply it to the `class` attribute on the element.
 
 ```ts compiled
 // app.ts
