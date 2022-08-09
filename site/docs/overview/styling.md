@@ -113,13 +113,13 @@ const myStyle = style({
 
 When processing your code into CSS, vanilla-extract will always render your media queries **at the end of the file**. This means styles inside the `@media` key will always have higher precedence than other styles due to CSS rule order precedence.
 
-> When it's safe to do so, vanilla-extract will merge your `@media` (and `@supports`) condition blocks together to create the smallest possible CSS output.
+> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media` (and `@supports`) condition blocks together to create the smallest possible CSS output.
 
 ## Selectors
 
 There are two methods of specifying selectors for a given style, simple pseudo selectors that can be used alongside all other CSS properties, and the `selectors` option which allows construction of more complex rules.
 
-> 🚫&nbsp;&nbsp;All selectors are not available for `globalStyle`. This API accepts a selector as its first parameter (e.g. `ul li:first-of-type, a > span`), merging selectors may produce unexpected results.
+> 🧠&nbsp;&nbsp;All selectors are not available for `globalStyle`. This API accepts a selector as its first parameter (e.g. `ul li:first-of-type, a > span`), merging selectors may produce unexpected results.
 
 ### Simple pseudo selectors
 
