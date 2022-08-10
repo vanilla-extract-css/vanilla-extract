@@ -1,4 +1,4 @@
-import { setFileScope, endFileScope } from './fileScope';
+import { setFileScope, endFileScope } from './entries/fileScope';
 import { generateIdentifier } from './identifier';
 
 describe('identifier', () => {
