@@ -246,6 +246,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
+      '@crackle/cli': publish-snapshot
       '@vanilla-extract/webpack-plugin': ^2.1.7
       browserslist: ^4.19.1
       next: ^12.0.5
@@ -253,6 +254,7 @@ importers:
       '@vanilla-extract/webpack-plugin': link:../webpack-plugin
       browserslist: 4.19.1
     devDependencies:
+      '@crackle/cli': 0.0.0-publish-snapshot-20227944617_ts-node@10.4.0
       next: 12.0.7_@babel+core@7.16.0
 
   packages/private:
@@ -9706,7 +9708,6 @@ packages:
   /mime-db/1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
-    dev: true
 
   /mime-types/2.1.18:
     resolution: {integrity: sha512-lc/aahn+t4/SWV/qcmumYjymLsWfN3ELhpmVuUFjgsORruuZPVSwAQryq+HHGvO/SI2KVX26bx+En+zhM8g8hQ==}
@@ -9725,7 +9726,6 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
-    dev: true
 
   /mime/1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -13478,7 +13478,7 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       media-typer: 0.3.0
-      mime-types: 2.1.34
+      mime-types: 2.1.35
 
   /typedarray-to-buffer/3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}

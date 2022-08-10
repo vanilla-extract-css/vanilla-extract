@@ -3,7 +3,7 @@ import browserslist from 'browserslist';
 import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { getGlobalCssLoader } from 'next/dist/build/webpack/config/blocks/css/loaders';
 
-function getSupportedBrowsers(dir, isDevelopment) {
+function getSupportedBrowsers(dir: any, isDevelopment: any) {
   let browsers;
   try {
     browsers = browserslist.loadConfig({
@@ -16,17 +16,17 @@ function getSupportedBrowsers(dir, isDevelopment) {
 }
 
 export const createVanillaExtractPlugin =
-  (pluginOptions = {}) =>
-  (nextConfig = {}) =>
+  (pluginOptions: any = {}) =>
+  (nextConfig: any = {}) =>
     Object.assign({}, nextConfig, {
-      webpack(config, options) {
+      webpack(config: any, options: any) {
         const { dir, dev, isServer } = options;
 
         const cssRules = config.module.rules.find(
-          (rule) =>
+          (rule: any) =>
             Array.isArray(rule.oneOf) &&
             rule.oneOf.some(
-              ({ test }) =>
+              ({ test }: any) =>
                 typeof test === 'object' &&
                 typeof test.test === 'function' &&
                 test.test('filename.css'),
@@ -44,7 +44,8 @@ export const createVanillaExtractPlugin =
               isDevelopment: dev,
               future: nextConfig.future || {},
               experimental: nextConfig.experimental || {},
-            },
+            } as any,
+            // @ts-expect-error
             () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev)),
             [],
           ),
