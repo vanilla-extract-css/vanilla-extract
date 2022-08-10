@@ -205,7 +205,11 @@ export default {
       </Box>
     </Block>
   ),
-  pre: ({ children }: Children) => <Block component="pre">{children}</Block>,
+  pre: ({ children }: Children) => (
+    <Block maxWidth="xlarge" component="pre">
+      {children}
+    </Block>
+  ),
   compiledcode: (props: CompiledCodeProps) => (
     <Block maxWidth="xlarge">
       <Box paddingY="large">

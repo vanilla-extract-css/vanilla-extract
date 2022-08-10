@@ -4,20 +4,14 @@ title: Theming
 
 # Theming
 
+Themes are often thought of as global, application wide concepts. While vanilla-extract themes are great for that, they can also be used for more focussed, lower level use-cases.
+For example, a component being rendered in different color schemes.
+
 Theming in vanilla-extract is really just a set of helpers on top of the scoped CSS variable creation provided by [createVar](/documentation/api/create-var).
 
-> 🧠 Themes are often thought of as global, application wide concepts.
-> While vanilla-extract themes are great for that, they can also be used for more foccussed, lower level use-cases.
-> e.g. A component that can be rendered with different tones, or color schemes.
+To understand how it works, let's take a look at an example.
 
-Themes are comprised of two things:
-
-- a typed data-structure of CSS variables. We refer to this as a **theme contract**.
-- a CSS class setting all the variables in the theme contract to a specific value.
-
-Let's take a look at an example.
-
-```tsx
+```ts compiled
 // theme.css.ts
 
 import { createTheme } from '@vanilla-extract/css';
@@ -32,40 +26,35 @@ export const [themeClass, vars] = createTheme({
 });
 ```
 
-Here we've called [createTheme] with our theme implementation.
-From this, vanilla-extract infers you want to create a new theme contract matching this shape, and a CSS class implementing the theme with these values.
-After processing this file, the resulting JS and CSS may look something like the following:
+Here we’ve called [createTheme] with our theme implementation.
+Based on this, vanilla-extract will return two things:
+
+- **A class name:** a container class for the provided theme variables.
+- **A theme contract:** a typed data-structure of CSS variables, matching the shape of the provided theme implementation.
+
+After processing this file, the resulting compiled JS will look something like this:
 
 ```js
-// theme.css.js
-
+// theme.js
+// Example result of the compiled JS
 import './theme.css';
 
 export const vars = {
   color: {
-    brand: 'var(--color-brand-12345)'
+    brand: 'var(--color-brand__l520oi1)'
   },
   font: {
-    body: 'var(--font-body-12346)'
+    body: 'var(--font-body__l520oi2)'
   }
 };
 
-export const themeClass = 'theme_12347';
+export const themeClass = 'theme_themeClass__l520oi0';
 ```
 
-```css
-/* theme.css (generated) */
+To create an alternative version of this theme, call [createTheme] again.
+But this time pass the existing theme contract (i.e. `vars`), as well as the new values.
 
-.theme_12347 {
-  --color-brand-12345: blue;
-  --font-body-12346: arial;
-}
-```
-
-Now if we want to create an alternative version of this theme, we can call [createTheme] again.
-But this time we'll pass our existing theme contract in as well as our new values.
-
-```tsx
+```ts compiled
 // theme.css.ts
 
 import { createTheme } from '@vanilla-extract/css';
@@ -89,49 +78,38 @@ export const otherThemeClass = createTheme(vars, {
 });
 ```
 
-This time, instead of using the passed theme data-structure to create a new theme contract, it re-uses the existing one!
-No new CSS variables are created as we're just creating a new CSS class setting the existing ones to different values.
-On top of this, vanilla-extract knows the type of the existing theme contract and enforces you implement it completely and correctly.
+By passing in an existing theme contract, instead of creating new CSS variables the existing ones are reused, but assigned to new values within a new CSS class.
 
-After adding our second theme, our resulting compiled JS and CSS might look something like the following:
+On top of this, vanilla-extract knows the type of the existing theme contract and requires you implement it completely and correctly.
+
+After processing the updated file, the resulting compiled JS will look something like this:
 
 ```js
-// theme.css.js
-
+// theme.js
+// Example result of the compiled JS
 import './theme.css';
 
 export const vars = {
   color: {
-    brand: 'var(--color-brand-12345)'
+    brand: 'var(--color-brand__l520oi1)'
   },
   font: {
-    body: 'var(--font-body-12346)'
+    body: 'var(--font-body__l520oi2)'
   }
 };
 
-export const themeClass = 'theme_12347';
+export const themeClass = 'theme_themeClass__l520oi0';
 
-export const otherThemeClass = 'othertheme_12348';
+export const otherThemeClass =
+  'theme_otherThemeClass__l520oi3';
 ```
 
-```css
-/* theme.css (generated) */
+As can be observed, the only addition here is the reference to the new theme class name.
 
-.theme_12347 {
-  --color-brand-12345: blue;
-  --font-body-12346: arial;
-}
-
-.othertheme_12348 {
-  --color-brand-12345: red;
-  --font-body-12346: helvetica;
-}
-```
-
-## Theme contracts
+## Code Splitting Themes
 
 While [createTheme] makes getting started with a theme really easy, it has some trade-offs.
-It couples the defintion of our theme contract to a specific theme implementation.
+It couples the definition of our theme contract to a specific theme implementation.
 It also means all your alternative themes must import the original theme to access the theme contract.
 This causes you to unintentionally import the original theme's CSS as well, making it impossible to CSS code-split your themes.
 
@@ -139,11 +117,8 @@ This is where [createThemeContract] comes in. Remember before when we said theme
 
 Implementing the above scenario with [createThemeContract] would look something like the following:
 
-> When creating a theme contract, the values of the input are ignored so you can pass an empty string, null, or real values. Whatever makes sense to you.
-
-```tsx
+```ts compiled
 // contract.css.ts
-
 import { createThemeContract } from '@vanilla-extract/css';
 
 export const vars = createThemeContract({
@@ -156,13 +131,14 @@ export const vars = createThemeContract({
 });
 ```
 
-```tsx
-// theme-one.css.ts
+Based on this contract individual themes can now be created. Each theme will need to populate the contract in its entirety.
 
+```ts compiled
+// blueTheme.css.ts
 import { createTheme } from '@vanilla-extract/css';
-import { vars } from './contract.css';
+import { vars } from './contract.css.ts';
 
-export const themeClass = createTheme(vars, {
+export const blueThemeClass = createTheme(vars, {
   color: {
     brand: 'blue'
   },
@@ -170,15 +146,12 @@ export const themeClass = createTheme(vars, {
     body: 'arial'
   }
 });
-```
 
-```tsx
-// theme-one.css.ts
-
+// redTheme.css.ts
 import { createTheme } from '@vanilla-extract/css';
-import { vars } from './contract.css';
+import { vars } from './contract.css.ts';
 
-export const otherThemeClass = createTheme(vars, {
+export const redThemeClass = createTheme(vars, {
   color: {
     brand: 'red'
   },
@@ -186,7 +159,21 @@ export const otherThemeClass = createTheme(vars, {
     body: 'helvetica'
   }
 });
+
+// contract.css.ts
+import { createThemeContract } from '@vanilla-extract/css';
+
+export const vars = createThemeContract({
+  color: {
+    brand: ''
+  },
+  font: {
+    body: ''
+  }
+});
 ```
+
+> 🧠&nbsp;&nbsp;When creating a theme contract, the values of the input are ignored so you can pass an empty string, null, or real values. Whatever makes sense to you.
 
 Now we have two themes implementing the same contract, but importing either one will only import their respective CSS!
 
