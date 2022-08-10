@@ -45,11 +45,9 @@
     "babel-jest": "^27.3.1",
     "fast-glob": "^3.2.7",
     "jest": "^27.3.1",
+    "nx": "14.5.4",
     "prettier": "^2.3.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.5.0"
-  },
-  "devDependencies": {
-    "nx": "14.5.4"
   }
 }
