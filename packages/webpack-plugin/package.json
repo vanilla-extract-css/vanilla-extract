@@ -48,32 +48,32 @@
     },
     "./extracted": {
       "import": {
-        "types": "./extracted/index.cjs.d.ts",
-        "default": "./extracted/index.mjs"
+        "types": "./extracted/dist/index.cjs.d.ts",
+        "default": "./extracted/dist/index.mjs"
       },
       "require": {
-        "types": "./extracted/index.cjs.d.ts",
-        "default": "./extracted/index.cjs"
+        "types": "./extracted/dist/index.cjs.d.ts",
+        "default": "./extracted/dist/index.cjs"
       }
     },
     "./loader": {
       "import": {
-        "types": "./loader/index.cjs.d.ts",
-        "default": "./loader/index.mjs"
+        "types": "./loader/dist/index.cjs.d.ts",
+        "default": "./loader/dist/index.mjs"
       },
       "require": {
-        "types": "./loader/index.cjs.d.ts",
-        "default": "./loader/index.cjs"
+        "types": "./loader/dist/index.cjs.d.ts",
+        "default": "./loader/dist/index.cjs"
       }
     },
     "./virtualFileLoader": {
       "import": {
-        "types": "./virtualFileLoader/index.cjs.d.ts",
-        "default": "./virtualFileLoader/index.mjs"
+        "types": "./virtualFileLoader/dist/index.cjs.d.ts",
+        "default": "./virtualFileLoader/dist/index.mjs"
       },
       "require": {
-        "types": "./virtualFileLoader/index.cjs.d.ts",
-        "default": "./virtualFileLoader/index.cjs"
+        "types": "./virtualFileLoader/dist/index.cjs.d.ts",
+        "default": "./virtualFileLoader/dist/index.cjs"
       }
     }
   }

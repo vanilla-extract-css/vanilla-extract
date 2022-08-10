@@ -19,22 +19,22 @@
     },
     "./createRuntimeSprinkles": {
       "import": {
-        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
-        "default": "./createRuntimeSprinkles/index.mjs"
+        "types": "./createRuntimeSprinkles/dist/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/dist/index.mjs"
       },
       "require": {
-        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
-        "default": "./createRuntimeSprinkles/index.cjs"
+        "types": "./createRuntimeSprinkles/dist/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/dist/index.cjs"
       }
     },
     "./createUtils": {
       "import": {
-        "types": "./createUtils/index.cjs.d.ts",
-        "default": "./createUtils/index.mjs"
+        "types": "./createUtils/dist/index.cjs.d.ts",
+        "default": "./createUtils/dist/index.mjs"
       },
       "require": {
-        "types": "./createUtils/index.cjs.d.ts",
-        "default": "./createUtils/index.cjs"
+        "types": "./createUtils/dist/index.cjs.d.ts",
+        "default": "./createUtils/dist/index.cjs"
       }
     }
   },

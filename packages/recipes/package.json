@@ -40,12 +40,12 @@
     },
     "./createRuntimeFn": {
       "import": {
-        "types": "./createRuntimeFn/index.cjs.d.ts",
-        "default": "./createRuntimeFn/index.mjs"
+        "types": "./createRuntimeFn/dist/index.cjs.d.ts",
+        "default": "./createRuntimeFn/dist/index.mjs"
       },
       "require": {
-        "types": "./createRuntimeFn/index.cjs.d.ts",
-        "default": "./createRuntimeFn/index.cjs"
+        "types": "./createRuntimeFn/dist/index.cjs.d.ts",
+        "default": "./createRuntimeFn/dist/index.cjs"
       }
     }
   }
