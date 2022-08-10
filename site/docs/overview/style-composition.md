@@ -2,10 +2,10 @@
 title: Composition
 ---
 
-# Style composition
+# Style Composition
 
 Style composition is a special feature of vanilla-extract that makes it easy to get maximum re-use from your styles.
-It allows you to pass an array of class names and/or [styles](/documentation/styling/) but continue to treat them as if they are a single class name.
+It allows you to pass an array of class names and/or [styles] but continue to treat them as if they are a single class name.
 
 ```ts compiled
 // styles.css.ts
@@ -21,7 +21,7 @@ const secondary = style([base, { background: 'aqua' }]);
 
 Let's look at how this works in practice.
 
-When you create a style you recieve a class name back in return.
+When you create a style you receive a class name back in return.
 
 ```ts compiled
 // styles.css.ts
@@ -32,7 +32,7 @@ import { style } from '@vanilla-extract/css';
 const base = style({ padding: 12 });
 ```
 
-However, when using style composition you will recive multiple classes in a single string, separated by a single space character, often referred to as a classlist.
+However, when using style composition you will receive multiple classes in a single string, separated by a single space character, often referred to as a classlist.
 
 ```ts compiled
 // styles.css.ts
@@ -87,3 +87,5 @@ globalStyle(`${container} *`, {
   boxSizing: 'border-box'
 });
 ```
+
+[styles]: /documentation/styling/

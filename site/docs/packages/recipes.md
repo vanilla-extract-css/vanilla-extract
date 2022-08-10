@@ -5,12 +5,12 @@ parent: packages
 
 # Recipes
 
-Create multi-variant styles with a type-safe runtime API, heavily inspired by [Stitches.](https://stitches.dev)
+Create multi-variant styles with a type-safe runtime API, heavily inspired by [Stitches](https://stitches.dev).
 
 As with the rest of vanilla-extract, all styles are generated at build time.
 
 ```bash
-$ npm install @vanilla-extract/recipes
+npm install @vanilla-extract/recipes
 ```
 
 ## recipe
@@ -19,7 +19,7 @@ Creates a multi-variant style function that can be used at runtime or statically
 
 Accepts an optional set of `base` styles, `variants`, `compoundVariants` and `defaultVariants`.
 
-```ts
+```ts compiled
 // button.css.ts
 import { recipe } from '@vanilla-extract/recipes';
 

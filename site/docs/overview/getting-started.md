@@ -1,5 +1,5 @@
 ---
-title: Getting started
+title: Getting Started
 ---
 
 # Getting Started
@@ -7,21 +7,22 @@ title: Getting started
 ## Installation
 
 ```bash
-$ npm install @vanilla-extract/css
+npm install @vanilla-extract/css
 ```
 
-## Bundler integration
+## Bundler Integration
 
-Vanilla-extract requires that you have setup a bundler and configured it to handle CSS. This allows your styles to be handled the same as any other dependencies in your code, importing and bundling only what is required.
+Vanilla-extract requires that you have set up a bundler and configured it to handle CSS.
+This allows your styles to be handled the same as any other dependencies in your code, importing and bundling only what is required.
 
 Install your integration of preference:
 
-- [vite](/documentation/integrations/vite/)
-- [esbuild](/documentation/integrations/esbuild/)
-- [webpack](/documentation/integrations/webpack/)
-- [next](/documentation/integrations/next/)
-- [rollup](/documentation/integrations/rollup/)
-- [gatsby](/documentation/integrations/gatsby/)
+- [vite]
+- [esbuild]
+- [webpack]
+- [next]
+- [rollup]
+- [gatsby]
 
 ## Create a style
 
@@ -68,3 +69,10 @@ export const container = style({
 ```
 
 As a side effect of this import, the CSS is also processed by the selected bundler integration and handled accordingly.
+
+[vite]: /documentation/integrations/vite/
+[esbuild]: /documentation/integrations/esbuild/
+[webpack]: /documentation/integrations/webpack/
+[next]: /documentation/integrations/next/
+[rollup]: /documentation/integrations/rollup/
+[gatsby]: /documentation/integrations/gatsby/

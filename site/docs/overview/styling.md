@@ -5,10 +5,10 @@ title: Styling
 # Styling
 
 All the styling APIs in vanilla-extract take a style object as input.
-Describing styles as a JavaScript object enables much better use of TypeScipt through your styling code, as the styles are typed data-structures like the rest of your application code.
-It also brings type-safety and autocomplete to CSS authoring (via [csstype](https://github.com/frenic/csstype)).
+Describing styles as a JavaScript object enables much better use of TypeScript through your styling code, as the styles are typed data-structures like the rest of your application code.
+It also brings type-safety and autocomplete to CSS authoring (via [csstype]).
 
-## CSS properties
+## CSS Properties
 
 At the top-level of the style object, CSS properties can be set just like when writing a regular CSS class.
 The only difference is all properties use `camelCase` rather than `kebab-case`.
@@ -27,9 +27,9 @@ globalStyle('body', {
 });
 ```
 
-### Unitless properties
+### Unitless Properties
 
-Some properties accept numbers as values. Excluding [unitless properties](https://github.com/seek-oss/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25), these values are assumed to be a pixel and `px` is automatically appended to the value.
+Some properties accept numbers as values. Excluding [unitless properties], these values are assumed to be a pixel and `px` is automatically appended to the value.
 
 ```ts compiled
 // styles.css.ts
@@ -46,7 +46,7 @@ export const myStyle = style({
 });
 ```
 
-### Vendor prefixes
+### Vendor Prefixes
 
 If you want to target a vendor specific property (e.g. `-webkit-tap-highlight-color`), you can do so using `PascalCase` and removing the beginning `-`.
 
@@ -60,9 +60,10 @@ export const myStyle = style({
 });
 ```
 
-## CSS variables
+## CSS Variables
 
-In regular CSS, variables (or CSS custom properties) are able to be set alongside the other properties within the rule. In vanilla-extract CSS variables must be nested within the `vars` key — providing more accurate static typing for the other CSS properties.
+In regular CSS, variables (or CSS custom properties) are able to be set alongside the other properties within the rule.
+In vanilla-extract CSS variables must be nested within the `vars` key — providing more accurate static typing for the other CSS properties.
 
 ```ts compiled
 // styles.css.ts
@@ -75,7 +76,7 @@ const myStyle = style({
 });
 ```
 
-The `vars` key also accepts scoped CSS variables, created via the [createVar](/documentation/api/create-var/) API.
+The `vars` key also accepts scoped CSS variables, created via the [createVar] API.
 
 ```ts compiled
 // styles.css.ts
@@ -90,9 +91,9 @@ const myStyle = style({
 });
 ```
 
-## Media queries
+## Media Queries
 
-Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style defintions using the `@media` key.
+Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style definitions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
 ```ts compiled
@@ -121,9 +122,9 @@ There are two methods of specifying selectors for a given style, simple pseudo s
 
 > 🧠&nbsp;&nbsp;All selectors are not available for `globalStyle`. This API accepts a selector as its first parameter (e.g. `ul li:first-of-type, a > span`), merging selectors may produce unexpected results.
 
-### Simple pseudo selectors
+### Simple Pseudo Selectors
 
-Simple pseudo selectors are those that don’t take any parameters and therefore can be easily detected and statically typed. These can be used at the top level alongside the other [CSS properties](#css-properties) and can only contain [CSS Properties](#css-properties) and [CSS Variables](#css-variables).
+Simple pseudo selectors are those that don’t take any parameters and therefore can be easily detected and statically typed. These can be used at the top level alongside the other [CSS properties] and can only contain [CSS Properties] and [CSS Variables].
 
 ```ts compiled
 // styles.css.ts
@@ -142,7 +143,7 @@ const myStyle = style({
 });
 ```
 
-### Complex selectors
+### Complex Selectors
 
 More complex rules can be written using the `selectors` key.
 
@@ -223,7 +224,7 @@ export const child = style({
 });
 ```
 
-If you need to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [`globalStyle`](/documentation/global-api/global-style) instead.
+If you need to globally target child nodes within the current element (e.g. `'& a[href]'`), you should use [globalStyle] instead.
 
 ```ts compiled
 // styles.css.ts
@@ -236,9 +237,9 @@ globalStyle(`${parent} a[href]`, {
 });
 ```
 
-## Supports queries
+## Supports Queries
 
-Supports queries work the same as [Media queries](#media-queries) and are nested inside the `@supports` key.
+Supports queries work the same as [Media queries] and are nested inside the `@supports` key.
 
 ```ts compiled
 // styles.css.ts
@@ -253,7 +254,7 @@ const myStyle = style({
 });
 ```
 
-## Fallback styles
+## Fallback Styles
 
 When using CSS property values that don't exist in some browsers, you'll often declare the property twice and the older browser will ignore the value it doesn't understand.
 This isn't possible using JS objects as you can't declare the same key twice.
@@ -270,3 +271,11 @@ export const myStyle = style({
   overflow: ['auto', 'overlay']
 });
 ```
+
+[csstype]: https://github.com/frenic/csstype
+[unitless properties]: https://github.com/seek-oss/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
+[createvar]: /documentation/api/create-var/
+[css properties]: #css-properties
+[css variables]: #css-variables
+[globalstyle]: /documentation/global-api/global-style
+[media queries]: #media-queries

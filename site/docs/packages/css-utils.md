@@ -8,7 +8,7 @@ parent: packages
 An optional package providing utility functions that make it easier to work with CSS in TypeScript.
 
 ```bash
-$ npm install @vanilla-extract/css-utils
+npm install @vanilla-extract/css-utils
 ```
 
 This package is not limited to vanilla-extract—it can be used with any CSS-in-JS library.

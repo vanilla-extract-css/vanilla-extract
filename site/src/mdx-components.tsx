@@ -16,6 +16,7 @@ import Divider from './Divider/Divider';
 import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
 import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
+import { vars } from './themes.css';
 
 interface Children {
   children: ReactNode;
@@ -267,8 +268,9 @@ export default {
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'disc',
-        paddingLeft: '1em',
+        paddingLeft: '2em',
         paddingRight: '1em',
+        margin: `calc(${vars.spacing.xlarge} * -1) auto 0`,
       }}
     >
       {props.children}
@@ -280,8 +282,9 @@ export default {
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'decimal',
-        paddingLeft: '1em',
+        paddingLeft: '2em',
         paddingRight: '1em',
+        margin: `calc(${vars.spacing.xlarge} * -1) auto 0`,
       }}
     >
       {props.children}

@@ -38,6 +38,7 @@
     "@vanilla-extract/css": "*",
     "@vanilla-extract/css-utils": "*",
     "@vanilla-extract/dynamic": "*",
+    "@vanilla-extract/recipes": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/webpack-plugin": "*",
     "babel-loader": "^8.2.2",
@@ -56,6 +57,7 @@
     "webpack": "^5.36.1",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^4.9.3",
     "webpack-node-externals": "^2.5.2"
   }
 }

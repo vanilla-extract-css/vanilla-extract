@@ -1,7 +1,7 @@
-import { createVar, fallbackVar, style, StyleRule } from "@vanilla-extract/css";
-import { calc } from "@vanilla-extract/css-utils";
-import { darkMode, sprinkles } from "../system/styles/sprinkles.css";
-import { vars } from "../themes.css";
+import { createVar, fallbackVar, style, StyleRule } from '@vanilla-extract/css';
+import { calc } from '@vanilla-extract/css-utils';
+import { darkMode, sprinkles } from '../system/styles/sprinkles.css';
+import { vars } from '../themes.css';
 
 export const darkModeBg = createVar();
 export const lightModeBg = createVar();
@@ -22,16 +22,16 @@ export const root = style([
     },
     selectors: {
       [`.${darkMode} &::before`]: {
-        background: fallbackVar(darkModeBg, vars.palette.gray900)
-      }
-    }
-  }
+        background: fallbackVar(darkModeBg, vars.palette.gray900),
+      },
+    },
+  },
 ]);
 
 const backgroundColor = createVar();
 export const fileNameFocus = style({
   vars: {
-    [backgroundColor]: vars.palette.coolGray900
+    [backgroundColor]: vars.palette.coolGray900,
   },
   outline: 'none',
   ':focus-visible': {
@@ -40,10 +40,10 @@ export const fileNameFocus = style({
   selectors: {
     [`.${darkMode} &:focus-visible`]: {
       vars: {
-        [backgroundColor]: vars.palette.gray900
+        [backgroundColor]: vars.palette.gray900,
       },
-    }
-  }
+    },
+  },
 });
 
 export const fileIndicatorInactive = style({
@@ -59,15 +59,15 @@ export const fileName = style({
   selectors: {
     [`.${darkMode} &`]: {
       color: vars.palette.white,
-    }
-  }
+    },
+  },
 });
 export const fileNameInactive = style({
-  opacity: .7
-})
+  opacity: 0.7,
+});
 
 export const boldLayoutShiftFix = style({
-  "::after": {
+  '::after': {
     content: ['attr(data-text)', 'attr(data-text) / ""'],
     fontWeight: vars.weight.strong,
     fontSize: vars.text.small.mobile.fontSize,
@@ -80,30 +80,36 @@ export const boldLayoutShiftFix = style({
   },
   '@media': {
     speech: {
-      "::after": {
-        display: 'none'
-      }
-    }
-  }
+      '::after': {
+        display: 'none',
+      },
+    },
+  },
 });
 
 const sideBySideBreakpoint = 1000;
 
 const sideBySideStyles = (styles: StyleRule): StyleRule => ({
-  "@media": {
-    [`screen and (min-width: ${sideBySideBreakpoint}px)`]: styles
-  }
+  '@media': {
+    [`screen and (min-width: ${sideBySideBreakpoint}px)`]: styles,
+  },
 });
 
 const belowSideBySideStyles = (styles: StyleRule): StyleRule => ({
-  "@media": {
-    [`screen and (max-width: ${sideBySideBreakpoint - 1}px)`]: styles
-  }
+  '@media': {
+    [`screen and (max-width: ${sideBySideBreakpoint - 1}px)`]: styles,
+  },
 });
 
 export const showCssOnMobile = style({});
 
+export const maxHeight = style({
+  maxHeight: 800,
+  overflow: 'auto',
+});
+
 export const sourceContainer = style([
+  maxHeight,
   {
     transformOrigin: '0 50%',
   },
@@ -116,9 +122,9 @@ export const sourceContainer = style([
       [`${showCssOnMobile} &`]: belowSideBySideStyles({
         transform: `scale(.9)`,
         opacity: 0,
-      })
-    }
-  }
+      }),
+    },
+  },
 ]);
 
 export const outputContainer = style([
@@ -137,16 +143,16 @@ export const outputContainer = style([
     },
     selectors: {
       [`.${darkMode} &::before`]: {
-        background: vars.palette.black
-      }
-    }
+        background: vars.palette.black,
+      },
+    },
   },
   sideBySideStyles({
     width: '45%',
     flexGrow: 0,
     marginTop: calc(vars.spacing.medium).negate().toString(),
     marginBottom: calc(vars.spacing.large).negate().toString(),
-    marginLeft: vars.spacing.large
+    marginLeft: vars.spacing.large,
   }),
   belowSideBySideStyles({
     transform: 'scale(1.1) translateX(-82%)',
@@ -159,15 +165,17 @@ export const outputContainer = style([
       [`${showCssOnMobile} &`]: belowSideBySideStyles({
         transform: 'scale(1) translateX(-100%)',
         opacity: 1,
-        pointerEvents: 'auto'
-      })
-    }
-  }
+        pointerEvents: 'auto',
+      }),
+    },
+  },
 ]);
 
-export const buttonContainer = style(sideBySideStyles({
-  display: 'none'
-}));
+export const buttonContainer = style(
+  sideBySideStyles({
+    display: 'none',
+  }),
+);
 
 export const button = style({
   userSelect: 'none',

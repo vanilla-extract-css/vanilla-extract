@@ -153,7 +153,6 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                 flexShrink={0}
                 minWidth={0}
                 padding="large"
-                borderRadius="large"
                 transition="slow"
                 className={styles.outputContainer}
               >
@@ -163,9 +162,11 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                   </Text>
 
                   {activeFileName && css[activeFileName] ? (
-                    <SyntaxHighlighter language="css">
-                      {css[activeFileName]}
-                    </SyntaxHighlighter>
+                    <Box className={styles.maxHeight}>
+                      <SyntaxHighlighter language="css">
+                        {css[activeFileName]}
+                      </SyntaxHighlighter>
+                    </Box>
                   ) : (
                     <Text size="small" type="code">
                       No CSS created

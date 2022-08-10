@@ -7,7 +7,7 @@ title: Theming
 Themes are often thought of as global, application wide concepts. While vanilla-extract themes are great for that, they can also be used for more focussed, lower level use-cases.
 For example, a component being rendered in different color schemes.
 
-Theming in vanilla-extract is really just a set of helpers on top of the scoped CSS variable creation provided by [createVar](/documentation/api/create-var).
+Theming in vanilla-extract is really just a set of helpers on top of the scoped CSS variable creation provided by [createVar].
 
 To understand how it works, let's take a look at an example.
 
@@ -177,13 +177,13 @@ export const vars = createThemeContract({
 
 Now we have two themes implementing the same contract, but importing either one will only import their respective CSS!
 
-## Dynamic theming
+## Dynamic Theming
 
 Sometimes theme values aren't known until runtime.
-[Theme contracts](#theme-contracts) are a perfect fit for this situation as they are just collections of CSS variables.
+Theme contracts are a perfect fit for this situation as they are just collections of CSS variables.
 This means they can easily be set as inline styles while still retaining type safety.
 
-We can use the [assignInlineVars] API from the [tiny](https://bundlephobia.com/package/@vanilla-extract/dynamic) `@vanilla-extract/dynamic` package to apply our theme contract at runtime.
+We can use the [assignInlineVars] API from the [tiny] `@vanilla-extract/dynamic` package to apply our theme contract at runtime.
 
 > This example uses React, but [assignInlineVars] will work with any framework or vanilla JS.
 
@@ -243,4 +243,5 @@ This pattern opens up a lot of interesting possibilities. Type-safe runtime them
 [createtheme]: /documentation/api/create-theme/
 [createthemecontract]: /documentation/api/create-theme/
 [assigninlinevars]: /documentation/packages/dynamic/#assigninlinevars
-[theme-contracts]: #theme-contracts
+[createvar]: /documentation/api/create-var
+[tiny]: https://bundlephobia.com/package/@vanilla-extract/dynamic
