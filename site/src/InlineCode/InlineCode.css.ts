@@ -20,7 +20,7 @@ export const code = style({
   },
   selectors: {
     [`.${darkMode} &::before`]: {
-      background: vars.palette.gray800
-    }
-  }
+      background: vars.palette.gray800,
+    },
+  },
 });

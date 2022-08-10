@@ -31,8 +31,8 @@ export const headerBg = style({
     desktop: {
       width: '100vw',
       clipPath: 'polygon(0 0, 45% 0, 45% 0, 0 100%)',
-      opacity: .9,
-      backdropFilter: 'blur(4px)'
+      opacity: 0.9,
+      backdropFilter: 'blur(4px)',
     },
   }),
 });
@@ -64,9 +64,9 @@ export const sidebar = style({
 export const showOnWideScreens = style({
   '@media': {
     [`screen and (max-width: 1500px)`]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 });
 
 export const active = style({});
@@ -138,9 +138,9 @@ export const main = style([
     '@media': {
       [`screen and (min-width: 1500px)`]: {
         marginRight: sidebarWidth,
-      }
-    }
-  }
+      },
+    },
+  },
 ]);
 
 export const backdrop = style({

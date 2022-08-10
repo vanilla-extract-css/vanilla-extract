@@ -55,7 +55,7 @@ const responsiveProperties = defineProperties({
     maxWidth: vars.contentWidth,
     transition: {
       slow: 'transform .3s ease, opacity .3s ease',
-      fast: 'transform .15s ease, opacity .15s ease'
+      fast: 'transform .15s ease, opacity .15s ease',
     },
   },
   shorthands: {
@@ -107,8 +107,8 @@ const unresponsiveProperties = defineProperties({
     cursor: ['pointer'],
   },
   shorthands: {
-    inset: ['top', 'bottom', 'left', 'right']
-  }
+    inset: ['top', 'bottom', 'left', 'right'],
+  },
 });
 
 export const sprinkles = createSprinkles(

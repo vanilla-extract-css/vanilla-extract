@@ -22,8 +22,8 @@ export default ({ title, route, subtitle, direction }: SiblingDocProps) => (
       <Box
         component="span"
         display="inline-block"
-        marginLeft={direction === 'left' ? "small" : undefined}
-        marginRight={direction === 'right' ? "small" : undefined}
+        marginLeft={direction === 'left' ? 'small' : undefined}
+        marginRight={direction === 'right' ? 'small' : undefined}
       >
         <Text component="span" color="secondary" size="small" align={direction}>
           {subtitle}
