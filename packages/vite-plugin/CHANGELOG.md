@@ -1,5 +1,32 @@
 # @vanilla-extract/vite-plugin
 
+## 3.3.0
+
+### Minor Changes
+
+- [#751](https://github.com/seek-oss/vanilla-extract/pull/751) [`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b) Thanks [@frandiox](https://github.com/frandiox)! - Add [experimental support for React Server Components](https://github.com/facebook/react/pull/22952)
+
+### Patch Changes
+
+- [#751](https://github.com/seek-oss/vanilla-extract/pull/751) [`8c4f71b`](https://github.com/seek-oss/vanilla-extract/commit/8c4f71bce455e551cdce90840b6d6dbde80ccc5b) Thanks [@frandiox](https://github.com/frandiox)! - Fix HMR
+
+## 3.2.1
+
+### Patch Changes
+
+- [#729](https://github.com/seek-oss/vanilla-extract/pull/729) [`02ea735`](https://github.com/seek-oss/vanilla-extract/commit/02ea73552d1c1b9b7b9ec44be00d89413e28a97f) Thanks [@danielroe](https://github.com/danielroe)! - Generate CSS and not HMR code if vite server is present in production mode
+
+## 3.2.0
+
+### Minor Changes
+
+- [#668](https://github.com/seek-oss/vanilla-extract/pull/668) [`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Add esbuild configurations to vite/esbuild/rollup plugins
+
+### Patch Changes
+
+- Updated dependencies [[`e373b51`](https://github.com/seek-oss/vanilla-extract/commit/e373b51bfa8401e0746596adafbda350c9fad4c3)]:
+  - @vanilla-extract/integration@5.0.0
+
 ## 3.1.7
 
 ### Patch Changes
