@@ -15,13 +15,13 @@ import { ChildCompiler } from '../compiler';
 
 const virtualLoader = require.resolve(
   path.join(
-    path.dirname(require.resolve('../../package.json')),
+    path.dirname(require.resolve('../package.json')),
     'virtualFileLoader',
   ),
 );
 
 const emptyCssExtractionFile = require.resolve(
-  path.join(path.dirname(require.resolve('../../package.json')), 'extracted'),
+  path.join(path.dirname(require.resolve('../package.json')), 'extracted'),
 );
 
 interface LoaderOptions {
