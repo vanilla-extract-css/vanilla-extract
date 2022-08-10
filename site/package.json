@@ -38,6 +38,7 @@
     "@vanilla-extract/css": "*",
     "@vanilla-extract/css-utils": "*",
     "@vanilla-extract/dynamic": "*",
+    "@vanilla-extract/integration": "*",
     "@vanilla-extract/recipes": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/webpack-plugin": "*",
