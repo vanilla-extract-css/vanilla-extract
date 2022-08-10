@@ -4,20 +4,33 @@ const makeDocumentIndex = require('./documentIndexer');
 const contents = require('./contents');
 
 (async () => {
-  const manifest = await Promise.all(
-    contents.map(async ({ fileName, id, root }) => {
+  const manifest = { groups: [], pages: [] };
+
+  for (const { group, label, pages } of contents) {
+    manifest.groups.push(label);
+
+    for (const page of pages) {
+      console.log('Loading', page);
+      const fileName = join(group, `${page}.md`);
       const fileContents = await promises.readFile(
         join(__dirname, './docs', fileName),
       );
 
-      return {
+      const { sections, parent } = makeDocumentIndex(fileContents);
+
+      const route = parent
+        ? `/documentation/${parent}/${page}/`
+        : `/documentation/${page}/`;
+
+      manifest.pages.push({
+        group,
+        label,
         fileName,
-        id,
-        route: `/documentation/${id && !root ? `${id}/` : ''}`,
-        sections: makeDocumentIndex(fileContents),
-      };
-    }),
-  );
+        route,
+        sections,
+      });
+    }
+  }
 
   await promises.writeFile(
     resolve(__dirname, 'docs-manifest.json'),
