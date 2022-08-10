@@ -26,14 +26,17 @@ Add the plugin to your Babel configuration.
 
 In testing environments (like `jsdom`) vanilla-extract will create and insert styles. As this behaviour can differ from other styling solutions there are some points to consider.
 
-### Style mocking
+### Remove style mocking
 
 It is very common in Jest setups to have a mock file returned for all `.css` files. This clashes with vanilla-extract as Jest can't differentiate between `.css` and `.css.ts` imports.
+
+For example:
 
 ```json
 {
   "jest": {
     "moduleNameMapper": {
+      // ❌ Breaks .css.ts imports
       "\\.css$": "<rootDir>/styleMock.js"
     }
   }

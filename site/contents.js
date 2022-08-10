@@ -7,7 +7,6 @@ const contents = [
       'styling',
       'theming',
       'style-composition',
-      'sprinkles',
       'test-environments',
     ],
   },

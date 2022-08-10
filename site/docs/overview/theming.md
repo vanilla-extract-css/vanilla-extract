@@ -183,37 +183,59 @@ Sometimes theme values aren't known until runtime.
 [Theme contracts](#theme-contracts) are a perfect fit for this situation as they are just collections of CSS variables.
 This means they can easily be set as inline styles while still retaining type safety.
 
-We can use the [assignInlineVars] API from the [tiny](https://bundlephobia.com/package/@vanilla-extract/dynamic) _@vanilla-extract/dynamic_ package to apply our theme contract at runtime.
+We can use the [assignInlineVars] API from the [tiny](https://bundlephobia.com/package/@vanilla-extract/dynamic) `@vanilla-extract/dynamic` package to apply our theme contract at runtime.
 
 > This example uses React, but [assignInlineVars] will work with any framework or vanilla JS.
 
-```tsx
+```ts compiled
 // app.tsx
-
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { vars } from './contract.css.ts';
+import { container, themeVars } from './theme.css.ts';
 
-interface MyComponentProps {
+interface ContainerProps {
   brandColor: string;
-  bodyFont: string;
+  fontFamily: string;
 }
-const MyComponent = ({
+const Container = ({
   brandColor,
-  bodyFont
-}: MyComponentProps) => (
+  fontFamily
+}: ContainerProps) => (
   <section
-    style={assignInlineVars(vars, {
-      color: {
-        brand: brandColor
-      },
-      font: {
-        body: bodyFont
-      }
+    className={container}
+    style={assignInlineVars(themeVars, {
+      color: { brand: brandColor },
+      font: { body: fontFamily }
     })}
   >
     ...
   </section>
 );
+
+const App = () => (
+  <Container brand="pink" body="Arial">
+    ...
+  </Container>
+);
+
+// theme.css.ts
+import {
+  createThemeContract,
+  style
+} from '@vanilla-extract/css';
+
+export const themeVars = createThemeContract({
+  color: {
+    brand: null
+  },
+  font: {
+    body: null
+  }
+});
+
+export const container = style({
+  background: themeVars.color.brand,
+  fontFamily: themeVars.font.body
+});
 ```
 
 This pattern opens up a lot of interesting possibilities. Type-safe runtime theming without the need for runtime creation and injection of CSS.

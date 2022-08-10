@@ -73,20 +73,32 @@ This API makes the concept of dynamic theming much simpler.
 
 ```ts compiled
 // app.tsx
-
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { container, themeVars } from './theme.css.ts';
 
-const MyComponent = () => (
+interface ContainerProps {
+  brandColor: string;
+  fontFamily: string;
+}
+const Container = ({
+  brandColor,
+  fontFamily
+}: ContainerProps) => (
   <section
     className={container}
     style={assignInlineVars(themeVars, {
-      color: { brand: 'pink' },
-      font: { body: 'Arial' }
+      color: { brand: brandColor },
+      font: { body: fontFamily }
     })}
   >
     ...
   </section>
+);
+
+const App = () => (
+  <Container brand="pink" body="Arial">
+    ...
+  </Container>
 );
 
 // theme.css.ts
