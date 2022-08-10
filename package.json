@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "preconstruct dev",
-    "build": "pnpx nx run-many --target=build",
+    "build": "nx run-many --target=build --exclude=vanilla-extract-example-next",
     "watch": "preconstruct watch",
     "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
     "start": "pnpm start-fixture themed",
