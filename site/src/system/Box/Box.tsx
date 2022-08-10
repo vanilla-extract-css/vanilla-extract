@@ -6,10 +6,17 @@ import { sprinkles, Sprinkles } from '../styles/sprinkles.css';
 export interface BoxProps
   extends Omit<
       AllHTMLAttributes<HTMLElement>,
-      'content' | 'height' | 'translate' | 'color' | 'width' | 'cursor'
+      | 'className'
+      | 'content'
+      | 'height'
+      | 'translate'
+      | 'color'
+      | 'width'
+      | 'cursor'
     >,
     Sprinkles {
   component?: ElementType;
+  className?: Parameters<typeof classnames>[0];
 }
 
 export const Box = ({
@@ -42,6 +49,7 @@ export const Box = ({
   bottom,
   left,
   right,
+  inset,
   background,
   color,
   width,
@@ -51,6 +59,9 @@ export const Box = ({
   cursor,
   textAlign,
   maxWidth,
+  minWidth,
+  transition,
+  overflow,
   ...restProps
 }: BoxProps) => {
   const atomClasses = classnames(
@@ -84,6 +95,7 @@ export const Box = ({
       bottom,
       left,
       right,
+      inset,
       background,
       color,
       width,
@@ -93,6 +105,9 @@ export const Box = ({
       cursor,
       textAlign,
       maxWidth,
+      minWidth,
+      transition,
+      overflow,
     }),
     className,
   );

@@ -12,11 +12,13 @@ import SiblingDoc from './SiblingDoc/SiblingDoc';
 import mdxComponents from '../mdx-components';
 import { Fab } from '../Fab/Fab';
 import { Box, ContentBlock, Stack } from '../system';
-import docs from '../docs-store';
+import { groups, pages } from '../docs-store';
 import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
+import Text from '../Typography/Text';
+
 import mapKeys from 'lodash/mapKeys';
 
 interface DocsRouteProps {
@@ -43,16 +45,18 @@ const DocsRoute = ({
   return (
     <div>
       <Component />
-      {prevDoc && (
-        <div style={{ float: 'left' }}>
-          <SiblingDoc direction="left" {...prevDoc} />
-        </div>
-      )}
-      {nextDoc && (
-        <div style={{ float: 'right' }}>
-          <SiblingDoc direction="right" {...nextDoc} />
-        </div>
-      )}
+      <ContentBlock size="large">
+        {prevDoc && (
+          <div style={{ float: 'left' }}>
+            <SiblingDoc subtitle="Previous" direction="left" {...prevDoc} />
+          </div>
+        )}
+        {nextDoc && (
+          <div style={{ float: 'right' }}>
+            <SiblingDoc subtitle="Next" direction="right" {...nextDoc} />
+          </div>
+        )}
+      </ContentBlock>
     </div>
   );
 };
@@ -63,7 +67,7 @@ const Header = () => (
     display="flex"
     justifyContent="space-between"
     paddingTop="large"
-    paddingX="large"
+    paddingX={{ mobile: 'large', desktop: 'none' }}
     position={{ mobile: 'relative', desktop: 'fixed' }}
     zIndex={1}
     className={styles.header}
@@ -88,7 +92,7 @@ const Header = () => (
         paddingLeft={{ mobile: 'none', tablet: 'xsmall', desktop: 'large' }}
         paddingTop={{ mobile: 'xsmall', tablet: 'small', desktop: 'medium' }}
       >
-        <Box paddingLeft={{ desktop: 'xsmall' }}>
+        <Box paddingLeft={{ tablet: 'xsmall', desktop: 'medium' }}>
           <Logo height={68} />
         </Box>
       </Box>
@@ -140,6 +144,7 @@ const PrimaryNav = ({
     <Box
       component="aside"
       padding={{ mobile: 'xlarge', desktop: 'large' }}
+      paddingY="xlarge"
       position="fixed"
       background={{
         lightMode: 'white',
@@ -157,62 +162,154 @@ const PrimaryNav = ({
       <Box display={{ desktop: 'none' }} paddingBottom="xxlarge">
         <ColorModeToggle />
       </Box>
-      <Stack space="medium">
-        {docs.map(({ title, route }) => {
-          const active = route === `${pathname}/`;
+      <Stack space="xlarge">
+        {groups.map((label) => {
+          const groupPages = pages.filter((page) => label === page.label);
+
           return (
+            <Stack key={label} space="medium">
+              <Box paddingLeft="small">
+                <Text size="xsmall" weight="strong">
+                  <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
+                    {label}
+                  </span>
+                </Text>
+              </Box>
+
+              <>
+                {groupPages.map(({ route, title }) => {
+                  const active = route === `${pathname}/`;
+                  return (
+                    <Link
+                      key={route}
+                      to={route}
+                      onClick={selectAndScrollToTop}
+                      weight={active ? 'strong' : undefined}
+                      highlightOnFocus={false}
+                      underline="never"
+                      size="small"
+                    >
+                      <Box
+                        component="span"
+                        display="flex"
+                        alignItems="center"
+                        paddingY="xsmall"
+                      >
+                        <Box
+                          component="span"
+                          background={{
+                            lightMode: 'blue300',
+                            darkMode: 'blue400',
+                          }}
+                          borderRadius="full"
+                          paddingLeft="xsmall"
+                          paddingTop="xlarge"
+                          marginLeft="xsmall"
+                          opacity={active ? undefined : 0}
+                          className={classnames(
+                            styles.activeIndicator,
+                            active ? styles.active : '',
+                          )}
+                        />
+                        <Box component="span" paddingLeft="large">
+                          {title}
+                        </Box>
+                      </Box>
+                    </Link>
+                  );
+                })}
+              </>
+            </Stack>
+          );
+        })}
+        <Stack space="medium">
+          <Box paddingLeft="small">
+            <Text size="xsmall" weight="strong">
+              <span style={{ textTransform: 'uppercase', opacity: 0.7 }}>
+                Community
+              </span>
+            </Text>
+          </Box>
+          <>
             <Link
-              key={route}
-              to={route}
-              onClick={selectAndScrollToTop}
-              weight={active ? 'strong' : undefined}
+              to="https://github.com/seek-oss/vanilla-extract"
               highlightOnFocus={false}
               underline="never"
               size="small"
             >
-              <Box component="span" display="flex" alignItems="center">
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
                 <Box
                   component="span"
-                  background={{
-                    lightMode: 'blue300',
-                    darkMode: 'blue400',
-                  }}
-                  borderRadius="full"
+                  display="block"
                   paddingLeft="xsmall"
-                  paddingTop="xlarge"
                   marginLeft="xsmall"
-                  opacity={active ? undefined : 0}
-                  className={classnames(
-                    styles.activeIndicator,
-                    active ? styles.active : '',
-                  )}
-                />
-                <Box component="span" paddingLeft="large">
-                  {title}
+                >
+                  Github
                 </Box>
               </Box>
             </Link>
-          );
-        })}
-        <Link
-          to="https://github.com/seek-oss/vanilla-extract"
-          onClick={selectAndScrollToTop}
-          highlightOnFocus={false}
-          underline="never"
-          size="small"
-        >
-          <Box component="span" paddingLeft="large">
-            <Box component="span" paddingLeft="xsmall" marginLeft="xsmall">
-              Github
-            </Box>
-          </Box>
-        </Link>
+
+            <Link
+              to="https://github.com/seek-oss/vanilla-extract/discussions"
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+            >
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
+                <Box
+                  component="span"
+                  display="block"
+                  paddingLeft="xsmall"
+                  marginLeft="xsmall"
+                >
+                  Discussions
+                </Box>
+              </Box>
+            </Link>
+
+            <Link
+              to="https://discord.gg/6nCfPwwz6w"
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+            >
+              <Box
+                component="span"
+                display="flex"
+                alignItems="center"
+                paddingY="xsmall"
+                paddingLeft="large"
+              >
+                <Box
+                  component="span"
+                  display="block"
+                  paddingLeft="xsmall"
+                  marginLeft="xsmall"
+                >
+                  Discord
+                </Box>
+              </Box>
+            </Link>
+          </>
+        </Stack>
       </Stack>
     </Box>
   );
 };
 
-const headingForRoute = mapKeys(docs, (d) => {
+const headingForRoute = mapKeys(pages, (d) => {
   return d.route.endsWith('/')
     ? d.route.slice(0, d.route.lastIndexOf('/'))
     : d.route;
@@ -234,8 +331,7 @@ const SecondaryNav = ({
       padding="large"
       position="fixed"
       right={0}
-      display={{ mobile: 'none', desktop: 'block' }}
-      className={styles.sidebar}
+      className={[styles.sidebar, styles.showOnWideScreens]}
     >
       <Stack space="small">
         {sections
@@ -258,8 +354,8 @@ const SecondaryNav = ({
                   <Box
                     component="span"
                     background={{
-                      lightMode: l2 ? 'green300' : 'pink300',
-                      darkMode: l2 ? 'green400' : 'pink400',
+                      lightMode: l2 ? 'pink300' : 'blue300',
+                      darkMode: l2 ? 'pink400' : 'blue400',
                     }}
                     borderRadius="full"
                     paddingLeft="xsmall"
@@ -272,7 +368,7 @@ const SecondaryNav = ({
                       active ? styles.active : '',
                     )}
                   />
-                  <Box component="span" paddingLeft={l2 ? 'large' : 'large'}>
+                  <Box component="span" paddingLeft={l2 ? 'large' : 'medium'}>
                     {name}
                   </Box>
                 </Box>
@@ -333,12 +429,14 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
           className={styles.main}
         >
-          <ContentBlock>
+          <ContentBlock
+            size={{ mobile: 'standard', tablet: 'xlarge', desktop: 'xxlarge' }}
+          >
             <Box paddingBottom="xxxlarge">
               <MDXProvider components={mdxComponents}>
-                {docs.map(({ route, Component, title, sections }, index) => {
-                  const prevDoc = docs[index - 1];
-                  const nextDoc = docs[index + 1];
+                {pages.map(({ route, Component, title, sections }, index) => {
+                  const prevDoc = pages[index - 1];
+                  const nextDoc = pages[index + 1];
                   const pageTitle = `${
                     title ? `${title} — ` : ''
                   }vanilla-extract`.trim();
