@@ -114,7 +114,7 @@ export function vanillaExtractPlugin({
 
         inject(${JSON.stringify(css)});
 
-        if(import.meta.hot) {
+        if (import.meta.hot) {
           import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
             inject(css);
           });
