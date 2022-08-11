@@ -639,7 +639,7 @@ export const themeB = createTheme(vars, {
 });
 ```
 
-> 💡 All theme variants must provide a value for every variable or it’s a type error.
+> 💡 All theme values must be provided or it’s a type error.
 
 ### createGlobalTheme
 
@@ -662,7 +662,7 @@ export const vars = createGlobalTheme(':root', {
 });
 ```
 
-> 💡 All theme variants must provide a value for every variable or it’s a type error.
+> 💡 All theme values must be provided or it’s a type error.
 
 If you want to implement an existing theme contract, you can pass it as the second argument.
 
@@ -857,7 +857,7 @@ export const exampleStyle = style({
 });
 ```
 
-Scoped variables can be set via the `vars` property on style objects.
+Scoped variables can be set using the `vars` key.
 
 ```ts
 import { createVar, style } from '@vanilla-extract/css';

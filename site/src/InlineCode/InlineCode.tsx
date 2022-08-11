@@ -6,18 +6,16 @@ export interface InlineCodeProps {
   children: ReactNode;
   inline?: boolean;
 }
-export default ({ children, inline = true }: InlineCodeProps) => {
+export default ({ children }: InlineCodeProps) => {
   return (
     <Box
       component="code"
-      color={inline ? { lightMode: 'pink700', darkMode: 'gray200' } : undefined}
-      background={
-        inline ? { lightMode: 'pink100', darkMode: 'gray800' } : undefined
-      }
-      borderRadius="small"
-      padding="small"
+      color={{ lightMode: 'pink700', darkMode: 'gray200' }}
+      display="inline-block"
+      position="relative"
+      paddingX="small"
       marginX="xsmall"
-      marginY="-small"
+      marginY="-medium"
       className={styles.code}
     >
       {children}
