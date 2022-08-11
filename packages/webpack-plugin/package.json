@@ -37,16 +37,8 @@
       }
     }
   },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "loader.ts",
-      "virtualFileLoader.ts"
-    ]
-  },
   "files": [
     "/dist",
-    "/extracted",
     "/loader",
     "/virtualFileLoader",
     "extracted.js"
