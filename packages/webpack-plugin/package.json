@@ -23,15 +23,14 @@
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "extracted.js",
       "virtualFileLoader.ts"
     ]
   },
   "files": [
     "/dist",
     "/loader",
-    "/extracted",
-    "/virtualFileLoader"
+    "/virtualFileLoader",
+    "extracted.js"
   ],
   "repository": {
     "type": "git",
