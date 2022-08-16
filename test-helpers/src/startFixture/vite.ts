@@ -1,7 +1,7 @@
 import path from 'path';
 import http from 'http';
 
-import { createServer, build, InlineConfig } from 'vite';
+import type { InlineConfig } from 'vite';
 import handler from 'serve-handler';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
@@ -53,6 +53,7 @@ export const startViteFixture = async (
   };
 
   if (mode === 'development') {
+    const { createServer } = await import('vite');
     const server = await createServer(config);
 
     await server.listen();
@@ -66,6 +67,7 @@ export const startViteFixture = async (
     };
   }
 
+  const { build } = await import('vite');
   const result = await build(config);
   const closeServer = await serveAssets({ port, dir: path.join(root, 'dist') });
 

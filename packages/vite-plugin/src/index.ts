@@ -1,7 +1,6 @@
 import path from 'path';
 
 import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
-import { normalizePath } from 'vite';
 import outdent from 'outdent';
 import {
   cssFileFilter,
@@ -33,8 +32,10 @@ export function vanillaExtractPlugin({
   let virtualExt: string;
   let packageName: string;
 
-  const getAbsoluteVirtualFileId = (source: string) =>
-    normalizePath(path.join(config.root, source));
+  // Because of module nonsense in vite 3, we need to put vite behind a dynamic import
+  // To avoid the whole plugin having to go async, vite's normalizePath is imported in configResolved
+  let normalizePath: (id: string) => string;
+  let getAbsoluteVirtualFileId: (source: string) => string;
 
   return {
     name: 'vanilla-extract',
@@ -60,6 +61,12 @@ export function vanillaExtractPlugin({
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
+
+      const { normalizePath: viteNormalizePath } = await import('vite');
+      normalizePath = viteNormalizePath;
+
+      getAbsoluteVirtualFileId = (source: string) =>
+        normalizePath(path.join(config.root, source));
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);

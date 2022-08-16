@@ -12,7 +12,7 @@
     "start": "pnpm start-fixture themed",
     "start-site": "manypkg run site start",
     "build-site": "manypkg run site build",
-    "test:jest": "jest",
+    "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
@@ -23,7 +23,10 @@
   "preconstruct": {
     "packages": [
       "packages/*"
-    ]
+    ],
+    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
+      "keepDynamicImportAsDynamicImportInCommonJS": true
+    }
   },
   "volta": {
     "node": "14.16.0"
