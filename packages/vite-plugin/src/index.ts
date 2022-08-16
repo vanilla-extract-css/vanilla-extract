@@ -104,6 +104,10 @@ export function vanillaExtractPlugin({
         return css;
       }
 
+      // This is required because vite's define plugin will replace it when we build the plugin with crackle
+      // https://github.com/vitejs/vite/blob/b1bbc5bcc01bfc9b5923e9e58d744c594799a873/packages/vite/src/node/plugins/define.ts#L54
+      const importKeyword = 'import';
+
       return outdent`
         import { injectStyles } from '@vanilla-extract/css/injectStyles';
 
@@ -114,8 +118,10 @@ export function vanillaExtractPlugin({
 
         inject(${JSON.stringify(css)});
 
-        if (import.meta.hot) {
-          import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
+        if (${importKeyword}.meta.hot) {
+          ${importKeyword}.meta.hot.on('${styleUpdateEvent(
+        validId,
+      )}', (css) => {
             inject(css);
           });
         }
