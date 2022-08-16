@@ -3,7 +3,7 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
-const headerHeight = '90px';
+const headerHeight = '145px';
 const sidebarWidth = '300px';
 
 export const bodyLock = style({
@@ -18,16 +18,9 @@ export const homeLink = style({
   },
 });
 
-export const header = style(
-  responsiveStyle({
-    mobile: {
-      height: '136px',
-    },
-    desktop: {
-      height: headerHeight,
-    },
-  }),
-);
+export const header = style({
+  height: headerHeight,
+});
 
 export const headerBg = style({
   ...responsiveStyle({
@@ -36,9 +29,10 @@ export const headerBg = style({
       clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
     },
     desktop: {
-      width: sidebarWidth,
-      height: '100vh',
-      clipPath: 'initial',
+      width: '100vw',
+      clipPath: 'polygon(0 0, 45% 0, 45% 0, 0 100%)',
+      opacity: 0.9,
+      backdropFilter: 'blur(4px)',
     },
   }),
 });
@@ -54,16 +48,25 @@ export const container = style(
 export const sidebar = style({
   ...responsiveStyle({
     mobile: {
-      width: `clamp(270px, 40vw, 400px)`,
+      width: `clamp(300px, 40vw, 400px)`,
       transition: 'transform .15s ease, opacity .15s ease',
       top: 0,
       bottom: 0,
+      overflow: 'auto',
     },
     desktop: {
       width: sidebarWidth,
       top: `${calc(headerHeight).add(vars.spacing.large)}`,
     },
   }),
+});
+
+export const showOnWideScreens = style({
+  '@media': {
+    [`screen and (max-width: 1500px)`]: {
+      display: 'none',
+    },
+  },
 });
 
 export const active = style({});
@@ -98,7 +101,7 @@ export const primaryNav = style({
   },
   ...responsiveStyle({
     mobile: {
-      width: `clamp(270px, 40vw, 400px)`,
+      width: `clamp(300px, 40vw, 400px)`,
       transition: 'transform .15s ease, opacity .15s ease',
       top: 0,
       bottom: 0,
@@ -125,14 +128,20 @@ export const scrollContainer = style({
   height: '100%',
 });
 
-export const main = style(
+export const main = style([
   responsiveStyle({
     desktop: {
       marginLeft: sidebarWidth,
-      marginRight: sidebarWidth,
     },
   }),
-);
+  {
+    '@media': {
+      [`screen and (min-width: 1500px)`]: {
+        marginRight: sidebarWidth,
+      },
+    },
+  },
+]);
 
 export const backdrop = style({
   transition: 'opacity 0.1s ease',

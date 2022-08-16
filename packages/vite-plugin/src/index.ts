@@ -121,9 +121,11 @@ export function vanillaExtractPlugin({
 
         inject(${JSON.stringify(css)});
 
-        import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
-          inject(css);
-        });
+        if (import.meta.hot) {
+          import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
+            inject(css);
+          });
+        }
       `;
     },
     async transform(code, id, ssrParam) {

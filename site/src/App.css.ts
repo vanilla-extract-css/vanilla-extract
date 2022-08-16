@@ -12,6 +12,7 @@ globalStyle(`.${darkMode}`, {
   color: vars.palette.gray50,
   colorScheme: 'dark',
 });
+
 globalStyle('html', {
   background: vars.palette.white,
   color: vars.palette.coolGray900,

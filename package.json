@@ -18,7 +18,8 @@
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",
     "version": "changeset version && pnpm install --lockfile-only",
-    "release": "pnpm copy-readme-to-packages && pnpm build && changeset publish"
+    "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
+    "release": "pnpm prepare-release && changeset publish"
   },
   "preconstruct": {
     "packages": [

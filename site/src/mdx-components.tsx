@@ -5,15 +5,18 @@ import {
   createElement,
   Children,
 } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
-import Code from './Code/Code';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
+import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
+import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
+import { vars } from './themes.css';
 
 interface Children {
   children: ReactNode;
@@ -25,14 +28,34 @@ interface HeadingProps {
   id: string;
 }
 
-const P = (props: Children) => (
-  <Box component="p" paddingBottom="xlarge">
-    <Text>{props.children}</Text>
+const Block = ({
+  component,
+  children,
+  maxWidth = 'large',
+  style,
+  ...restProps
+}: Omit<BoxProps, 'paddingBottom'>) => (
+  <Box
+    component={component}
+    paddingBottom="xxlarge"
+    {...restProps}
+    maxWidth={maxWidth}
+    style={{
+      margin: '0 auto',
+      ...style,
+    }}
+  >
+    {children}
   </Box>
 );
 
-const Pre = ({ color, width, ...props }: AllHTMLAttributes<HTMLPreElement>) => (
-  <Box component="pre" paddingBottom="large" {...props} />
+const RemoveNestedParagraphs = (p: Children) => (
+  <MDXProvider
+    {...p}
+    components={{
+      p: ({ children }) => <Text>{children}</Text>,
+    }}
+  />
 );
 
 const Th = (props: Children) => (
@@ -115,24 +138,31 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
 
 export default {
   hr: () => (
-    <Box paddingTop="small" paddingBottom="xxlarge">
+    <Block>
       <Divider />
-    </Box>
+    </Block>
   ),
-  p: P,
+  p: ({ children }: Children) => (
+    <Block component="p">
+      <Text>{children}</Text>
+    </Block>
+  ),
   h1: ({ component, ...props }: HeadingProps) => (
-    <Box component="h1" marginBottom="xxlarge">
+    <Block component="h1">
       <Heading component="span" {...props} level="1" />
-    </Box>
+    </Block>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
-    <Box
-      component="h2"
-      paddingTop={{ mobile: 'xxlarge', desktop: 'xxlarge' }}
-      paddingBottom="xxlarge"
-    >
-      <Box position="relative" paddingLeft="large">
+    <Block component="h2" paddingTop="xxlarge">
+      <Box
+        position="relative"
+        component="span"
+        display="block"
+        paddingLeft="large"
+      >
         <Box
+          component="span"
+          display="block"
           position="absolute"
           top={0}
           left={0}
@@ -147,19 +177,26 @@ export default {
         />
         <Heading component="span" {...props} level="3" />
       </Box>
-    </Box>
+    </Block>
   ),
   h3: ({ component, ...props }: HeadingProps) => (
-    <Box component="h3" paddingTop="xlarge" paddingBottom="xxlarge">
-      <Box position="relative" paddingLeft="large">
+    <Block component="h3" paddingTop="xlarge">
+      <Box
+        position="relative"
+        component="span"
+        display="block"
+        paddingLeft="large"
+      >
         <Box
+          component="span"
+          display="block"
           position="absolute"
           top={0}
           left={0}
           paddingLeft="xsmall"
           marginTop="-xsmall"
           borderRadius="medium"
-          background={{ lightMode: 'green400', darkMode: 'green500' }}
+          background={{ lightMode: 'blue400', darkMode: 'blue500' }}
           style={{
             height: 28,
             transform: 'skew(15deg)',
@@ -167,61 +204,90 @@ export default {
         />
         <Heading component="span" {...props} level="3" />
       </Box>
-    </Box>
+    </Block>
   ),
-  pre: Pre,
+  pre: ({ children }: Children) => (
+    <Block maxWidth="xlarge" component="pre">
+      {children}
+    </Block>
+  ),
+  compiledcode: (props: CompiledCodeProps) => (
+    <Block maxWidth="xlarge">
+      <Box paddingY="large">
+        <CompiledCode {...props} />
+      </Box>
+    </Block>
+  ),
   code: ({
     'data-language': language,
     dangerouslySetInnerHTML,
   }: {
     'data-language': string;
     dangerouslySetInnerHTML: { __html: string };
-  }) => (
-    <Box marginBottom={{ mobile: 'small', tablet: 'medium', desktop: 'large' }}>
-      <Code
-        language={language}
-        background={{ lightMode: 'coolGray800', darkMode: 'gray900' }}
-      >
-        {dangerouslySetInnerHTML}
-      </Code>
-    </Box>
-  ),
+  }) => {
+    let resolvedTitle = '';
+    let resolvedChildren = dangerouslySetInnerHTML.__html;
+    const matches = resolvedChildren.match(
+      /^(?<node>\<span class=\".*\"\>(?:\/[\/*])(?:\s)?(?<title>[^*\/]*)(?:\*\/)?\<\/span\>)/,
+    );
+
+    if (matches && matches.groups) {
+      resolvedTitle = matches.groups.title;
+      resolvedChildren = resolvedChildren
+        .replace(`${matches.groups.node}`, '')
+        .trim();
+    }
+
+    return (
+      <CompiledCode
+        code={[
+          {
+            fileName: resolvedTitle,
+            contents: resolvedChildren,
+            language,
+            tokenized: true,
+          },
+        ]}
+      />
+    );
+  },
   inlineCode: InlineCode,
   th: Th,
   td: Td,
   a: A,
-  blockquote: Blockquote,
+  blockquote: ({ children }: Children) => (
+    <Block component="blockquote">
+      <RemoveNestedParagraphs>
+        <Blockquote>{children}</Blockquote>
+      </RemoveNestedParagraphs>
+    </Block>
+  ),
   ul: (props: Children) => (
-    <Box
+    <Block
       component="ul"
-      paddingBottom="xlarge"
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'disc',
-        paddingLeft: '1em',
+        paddingLeft: '2em',
         paddingRight: '1em',
+        margin: `calc(${vars.spacing.xlarge} * -1) auto 0`,
       }}
     >
       {props.children}
-    </Box>
+    </Block>
   ),
   ol: (props: Children) => (
-    <Box
+    <Block
       component="ol"
-      paddingBottom="xlarge"
       className={useTextStyles({ baseline: false })}
       style={{
         listStyle: 'decimal',
-        paddingLeft: '1em',
+        paddingLeft: '2em',
         paddingRight: '1em',
+        margin: `calc(${vars.spacing.xlarge} * -1) auto 0`,
       }}
     >
       {props.children}
-    </Box>
-  ),
-  li: (props: Children) => (
-    <Box component="li" paddingBottom="large">
-      {props.children}
-    </Box>
+    </Block>
   ),
 };

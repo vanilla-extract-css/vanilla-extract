@@ -7,7 +7,7 @@ import { sprinkles } from '../system/styles/sprinkles.css';
 
 interface Props extends LinkProps {
   baseline?: boolean;
-  size?: 'standard' | 'small';
+  size?: 'standard' | 'small' | 'xsmall';
   underline?: 'always' | 'hover' | 'never';
   variant?: 'link' | 'button';
   weight?: TextProps['weight'];
