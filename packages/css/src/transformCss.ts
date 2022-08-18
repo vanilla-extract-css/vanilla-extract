@@ -50,6 +50,7 @@ const UNITLESS: Record<string, boolean> = {
   opacity: true,
   order: true,
   orphans: true,
+  scale: true,
   tabSize: true,
   WebkitLineClamp: true,
   widows: true,
