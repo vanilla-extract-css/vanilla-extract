@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.3.1
+
+### Patch Changes
+
+- [#781](https://github.com/seek-oss/vanilla-extract/pull/781) [`4fb9a2c`](https://github.com/seek-oss/vanilla-extract/commit/4fb9a2c544165dbc3bfbc8d0687b7589cd53e391) Thanks [@benjervis](https://github.com/benjervis)! - Adds a check for the existence of import.meta.hot before attempting to add an event listener to inject styles
+
 ## 3.3.0
 
 ### Minor Changes

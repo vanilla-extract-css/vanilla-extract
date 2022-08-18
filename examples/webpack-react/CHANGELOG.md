@@ -1,5 +1,13 @@
 # vanilla-extract-example-webpack-react
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies [[`21afc23`](https://github.com/seek-oss/vanilla-extract/commit/21afc23ae552b8071fbe5d7b0c3dce07fc016ee7), [`2e9d21c`](https://github.com/seek-oss/vanilla-extract/commit/2e9d21c718ba57daa83c5ee323871ffa6ced5d47)]:
+  - @vanilla-extract/webpack-plugin@2.1.12
+  - @vanilla-extract/css@1.7.3
+
 ## 0.0.10
 
 ### Patch Changes
