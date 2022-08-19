@@ -17,6 +17,9 @@ import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
 
+const virtualExtCss = '.vanilla.css';
+const virtualExtJs = '.vanilla.js';
+
 interface Options {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
@@ -31,6 +34,7 @@ export function vanillaExtractPlugin({
   const cssMap = new Map<string, string>();
 
   let virtualExt: string;
+  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
   let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
@@ -65,11 +69,15 @@ export function vanillaExtractPlugin({
         postCssConfig = await resolvePostcssConfig(config);
       }
 
-      virtualExt = `.vanilla.${config.command === 'serve' ? 'js' : 'css'}`;
+      virtualExt = config.command === 'serve' ? virtualExtJs : virtualExtCss;
+
+      if (config.plugins.find((p) => p.name === 'astro:build')) {
+        forceEmitCssInSsrBuild = true;
+      }
     },
     resolveId(source) {
       const [validId, query] = source.split('?');
-      if (!validId.endsWith(virtualExt)) {
+      if (!validId.endsWith(virtualExtCss) && !validId.endsWith(virtualExtJs)) {
         return;
       }
 
@@ -100,7 +108,11 @@ export function vanillaExtractPlugin({
         return;
       }
 
-      if (!server || server.config.isProduction) {
+      if (
+        !server ||
+        server.config.isProduction ||
+        validId.endsWith(virtualExtCss)
+      ) {
         return css;
       }
 
@@ -136,7 +148,7 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
-      if (ssr && !process.env.VITE_RSC_BUILD) {
+      if (ssr && !forceEmitCssInSsrBuild) {
         return addFileScope({
           source: code,
           filePath: normalizePath(validId),
@@ -165,7 +177,9 @@ export function vanillaExtractPlugin({
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${virtualExt}`;
+          const rootRelativeId = `${fileScope.filePath}${
+            ssr && forceEmitCssInSsrBuild ? virtualExtCss : virtualExt
+          }`;
           const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
           let cssSource = source;
