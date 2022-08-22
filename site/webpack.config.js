@@ -6,12 +6,13 @@ const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { pages } = require('./docs-manifest.json');
+const legacyRoutes = require('./legacy-routes.json');
 const targetDirectory = join(__dirname, 'dist');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const htmlRenderPlugin = new HtmlRenderPlugin({
-  routes: ['', ...pages],
+  routes: ['', ...pages, ...legacyRoutes.map(({ from }) => from)],
   renderConcurrency: 'parallel',
   renderDirectory: targetDirectory,
   mapStatsToParams: ({ webpackStats }) => {
