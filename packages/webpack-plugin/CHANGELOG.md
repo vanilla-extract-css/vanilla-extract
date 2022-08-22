@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.1.12
+
+### Patch Changes
+
+- [#783](https://github.com/seek-oss/vanilla-extract/pull/783) [`21afc23`](https://github.com/seek-oss/vanilla-extract/commit/21afc23ae552b8071fbe5d7b0c3dce07fc016ee7) Thanks [@benjervis](https://github.com/benjervis)! - Remove the `extracted` entrypoint from the webpack plugin.
+
 ## 2.1.11
 
 ### Patch Changes

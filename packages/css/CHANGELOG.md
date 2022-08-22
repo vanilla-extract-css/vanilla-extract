@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.7.3
+
+### Patch Changes
+
+- [#788](https://github.com/seek-oss/vanilla-extract/pull/788) [`2e9d21c`](https://github.com/seek-oss/vanilla-extract/commit/2e9d21c718ba57daa83c5ee323871ffa6ced5d47) Thanks [@Dremora](https://github.com/Dremora)! - Add `scale` to the list of unitless properties.
+
 ## 1.7.2
 
 ### Patch Changes

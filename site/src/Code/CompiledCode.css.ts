@@ -104,7 +104,7 @@ const belowSideBySideStyles = (styles: StyleRule): StyleRule => ({
 export const showCssOnMobile = style({});
 
 export const maxHeight = style({
-  maxHeight: 800,
+  maxHeight: 'min(65vh, 800px)',
   overflow: 'auto',
 });
 

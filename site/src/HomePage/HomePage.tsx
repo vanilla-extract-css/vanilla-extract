@@ -266,7 +266,7 @@ export const HomePage = () => {
                 <Feature title="Built for extension">
                   Use libraries like{' '}
                   <Link
-                    to="/documentation/sprinkles-api"
+                    to="/documentation/packages/sprinkles"
                     size="small"
                     underline="always"
                     inline
@@ -275,7 +275,7 @@ export const HomePage = () => {
                   </Link>
                   ,{' '}
                   <Link
-                    to="/documentation/recipes-api"
+                    to="/documentation/packages/recipes"
                     size="small"
                     underline="always"
                     inline
