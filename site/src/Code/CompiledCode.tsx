@@ -26,6 +26,7 @@ export interface CompiledCodeProps {
 export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
   const [activeFileName, setActiveFileName] = useState(code[0].fileName);
   const [showCss, setShowCss] = useState(false);
+  const showOutputPanel = css && activeFileName?.endsWith('.css.ts');
 
   const activeFile = code.filter(
     ({ fileName }) => fileName === activeFileName,
@@ -126,7 +127,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
             })}
           </Box>
         ) : null}
-        <Box padding="large" margin="-large">
+        <Box padding="large" margin="-large" overflow="hidden">
           <Box
             display="flex"
             className={showCss ? styles.showCssOnMobile : undefined}
@@ -146,7 +147,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                 {activeFile.contents}
               </SyntaxHighlighter>
             </Box>
-            {css && activeFileName?.endsWith('.css.ts') ? (
+            {showOutputPanel ? (
               <Box
                 id="outputContainer"
                 width="full"
@@ -179,7 +180,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
         </Box>
       </Stack>
 
-      {css ? (
+      {showOutputPanel ? (
         <Box
           display="flex"
           justifyContent="flex-end"
