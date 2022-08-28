@@ -16,7 +16,7 @@ importers:
       '@changesets/changelog-github': ^0.4.0
       '@changesets/cli': ^2.17.0
       '@manypkg/cli': ^0.19.1
-      '@playwright/test': ^1.14.1
+      '@playwright/test': ^1.25.1
       '@preconstruct/cli': ^2.0.1
       '@swc/core': ^1.2.112
       '@testing-library/jest-dom': ^5.11.9
@@ -37,7 +37,7 @@ importers:
       '@changesets/changelog-github': 0.4.1
       '@changesets/cli': 2.18.0
       '@manypkg/cli': 0.19.1
-      '@playwright/test': 1.16.3
+      '@playwright/test': 1.25.1
       '@preconstruct/cli': 2.1.5
       '@swc/core': 1.2.112
       '@testing-library/jest-dom': 5.15.1
@@ -420,7 +420,7 @@ importers:
       file-loader: 6.2.0_webpack@5.64.2
       github-slugger: 1.4.0
       gray-matter: 4.0.3
-      html-render-webpack-plugin: 3.0.1
+      html-render-webpack-plugin: 3.0.1_nzd6q2tbbwu7trnkwxj2tz54fy
       mdx-loader: 3.0.2_react@17.0.2
       mini-css-extract-plugin: 1.6.2_webpack@5.64.2
       remove-markdown: 0.3.0
@@ -3442,6 +3442,15 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@playwright/test/1.25.1:
+    resolution: {integrity: sha512-IJ4X0yOakXtwkhbnNzKkaIgXe6df7u3H3FnuhI9Jqh+CdO0e/lYQlDLYiyI9cnXK8E7UAppAWP+VqAv6VX7HQg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 16.11.10
+      playwright-core: 1.25.1
+    dev: false
+
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
@@ -3488,6 +3497,7 @@ packages:
       terser: 5.10.0
       v8-compile-cache: 2.3.0
     transitivePeerDependencies:
+      - acorn
       - supports-color
     dev: false
 
@@ -7652,7 +7662,7 @@ packages:
       terser: 5.10.0
     dev: false
 
-  /html-render-webpack-plugin/3.0.1:
+  /html-render-webpack-plugin/3.0.1_nzd6q2tbbwu7trnkwxj2tz54fy:
     resolution: {integrity: sha512-CKA9H5J781k0RRVc0tH3Rjc2aWtdHZTOBqL67u/Ws94KQ03RyHInep6Nk5lWEPHQM8jRiwp8snvZX8mEzKoiLA==}
     peerDependencies:
       express: '>=4.0.0'
@@ -7662,6 +7672,7 @@ packages:
       exception-formatter: 2.1.2
       schema-utils: 3.1.1
     dev: true
+    patched: true
 
   /html-tags/3.1.0:
     resolution: {integrity: sha512-1qYz89hW3lFDEazhjW0yVAV87lw8lVkrJocr72XmBkMKsoSVJCQx3W8BXsC7hO2qAt8BoVjYjtAcZ9perqGnNg==}
@@ -10490,6 +10501,12 @@ packages:
       - utf-8-validate
     dev: false
 
+  /playwright-core/1.25.1:
+    resolution: {integrity: sha512-lSvPCmA2n7LawD2Hw7gSCLScZ+vYRkhU8xH0AapMyzwN+ojoDqhkH/KIEUxwNu2PjPoE/fcE0wLAksdOhJ2O5g==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: false
+
   /pngjs/4.0.1:
     resolution: {integrity: sha512-rf5+2/ioHeQxR6IxuYNYGFytUyG3lma/WW1nsmjeHlWwtb2aByla6dkVc8pmJ9nplzkTA0q2xx7mMWrOTqT4Gg==}
     engines: {node: '>=8.0.0'}
@@ -12635,6 +12652,8 @@ packages:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
     engines: {node: '>=10'}
     hasBin: true
+    peerDependencies:
+      acorn: ^8.5.0
     peerDependenciesMeta:
       acorn:
         optional: true
