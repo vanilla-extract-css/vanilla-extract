@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  html-render-webpack-plugin@3.0.1:
+    hash: nzd6q2tbbwu7trnkwxj2tz54fy
+    path: patches/html-render-webpack-plugin@3.0.1.patch
+
 importers:
 
   .:
