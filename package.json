@@ -27,7 +27,7 @@
     ]
   },
   "volta": {
-    "node": "14.16.0"
+    "node": "16.17.0"
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
@@ -37,10 +37,12 @@
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.17.0",
     "@manypkg/cli": "^0.19.1",
-    "@playwright/test": "^1.14.1",
+    "@playwright/test": "^1.25.1",
     "@preconstruct/cli": "^2.0.1",
     "@swc/core": "^1.2.112",
+    "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^27.0.3",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "@vanilla-extract/babel-plugin": "*",
     "babel-jest": "^27.3.1",
     "fast-glob": "^3.2.7",
@@ -48,5 +50,10 @@
     "prettier": "^2.3.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.5.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
+    }
   }
 }
