@@ -42,13 +42,14 @@ describe('stringifyExports', () => {
     const value = {
       string: `keep remove-me and-me dont-remove-me`,
       other: `keep remove-me and-me`,
+      another: `keep remove-me dont-remove-me oh-no`,
     };
 
     expect(
       stringifyExports(recipeImports, value, /(remove-me|and-me)\s/g),
     ).toMatchInlineSnapshot(
-      `"{string:'keep dont-remove-me',other:'keep and-me'}"`,
-      //                                            ^ this could be a problem
+      `"{string:'keep dont-remove-me',other:'keep and-me',another:'keep dont-oh-no'}"`,
+      //                                            ^ these could be a problem ^
     );
   });
 });
