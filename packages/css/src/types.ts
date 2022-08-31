@@ -1,15 +1,31 @@
 import type { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
-import type { PropertiesFallback, AtRule, Properties } from 'csstype';
+import type { PropertiesFallback, AtRule } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
-type CSSTypeProperties = PropertiesFallback<number | (string & {})>;
+// csstype is yet to ship container property types as they are not in
+// the output MDN spec files yet. Remove this once that's done.
+interface ContainerProperties {
+  container?: string;
+  containerType?: 'size' | 'inline-size' | 'block-size' | (string & {});
+  containerName?: string;
+}
+
+type CSSTypeProperties = {
+  [Key in
+    | keyof ContainerProperties
+    | keyof PropertiesFallback]: Key extends keyof PropertiesFallback
+    ? PropertiesFallback<number | (string & {})>[Key]
+    : Key extends keyof ContainerProperties
+    ? ContainerProperties[Key]
+    : never;
+};
 
 export type CSSProperties = {
   [Property in keyof CSSTypeProperties]:
     | CSSTypeProperties[Property]
     | CSSVarFunction
-    | Array<CSSVarFunction | Properties[Property]>;
+    | Array<CSSVarFunction | CSSTypeProperties[Property]>;
 };
 
 export interface CSSKeyframes {
@@ -28,14 +44,6 @@ type PseudoProperties = {
 
 type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
-interface SelectorMap {
-  [selector: string]: CSSPropertiesWithVars &
-    MediaQueries<
-      CSSPropertiesWithVars & FeatureQueries<CSSPropertiesWithVars>
-    > &
-    FeatureQueries<CSSPropertiesWithVars & MediaQueries<CSSPropertiesWithVars>>;
-}
-
 export interface MediaQueries<StyleType> {
   '@media'?: {
     [query: string]: StyleType;
@@ -48,17 +56,42 @@ export interface FeatureQueries<StyleType> {
   };
 }
 
+export interface ContainerQueries<StyleType> {
+  '@container'?: {
+    [query: string]: StyleType;
+  };
+}
+
+export type WithQueries<StyleType> = MediaQueries<
+  StyleType &
+    FeatureQueries<StyleType & ContainerQueries<StyleType>> &
+    ContainerQueries<StyleType & FeatureQueries<StyleType>>
+> &
+  FeatureQueries<
+    StyleType &
+      MediaQueries<StyleType & ContainerQueries<StyleType>> &
+      ContainerQueries<StyleType & MediaQueries<StyleType>>
+  > &
+  ContainerQueries<
+    StyleType &
+      StyleType &
+      MediaQueries<StyleType & FeatureQueries<StyleType>> &
+      FeatureQueries<StyleType & MediaQueries<StyleType>>
+  >;
+
+interface SelectorMap {
+  [selector: string]: CSSPropertiesWithVars &
+    WithQueries<CSSPropertiesWithVars>;
+}
+
 export interface StyleWithSelectors extends CSSPropertiesAndPseudos {
   selectors?: SelectorMap;
 }
 
-export type StyleRule = StyleWithSelectors &
-  MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>> &
-  FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>;
+export type StyleRule = StyleWithSelectors & WithQueries<StyleWithSelectors>;
 
 export type GlobalStyleRule = CSSPropertiesWithVars &
-  MediaQueries<CSSPropertiesWithVars & FeatureQueries<CSSPropertiesWithVars>> &
-  FeatureQueries<CSSPropertiesWithVars & MediaQueries<CSSPropertiesWithVars>>;
+  WithQueries<CSSPropertiesWithVars>;
 
 export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
   Required<Pick<AtRule.FontFaceFallback, 'src'>>;

@@ -961,6 +961,40 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle @container queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              containerName: 'sidebar',
+              '@container': {
+                'sidebar (min-width: 700px)': {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        display: flex;
+        container-name: sidebar;
+      }
+      @container sidebar (min-width: 700px) {
+        .testClass {
+          display: grid;
+        }
+      }"
+    `);
+  });
+
   it('should handle nested @supports and @media queries', () => {
     expect(
       transformCss({
