@@ -6,5 +6,6 @@ CHANGELOG.md
 README.md
 .github/ISSUE_TEMPLATE
 site/docs-manifest.json
+.changeset
 .next
 pnpm-lock.yaml
