@@ -1,3 +1,6 @@
+// @ts-expect-error
+import evalCode from 'eval';
+
 import { stringifyExports } from './processVanillaFile';
 
 describe('stringifyExports', () => {
@@ -40,16 +43,49 @@ describe('stringifyExports', () => {
   test('with unusedCompositionRegex', () => {
     const recipeImports = new Set<string>();
     const value = {
-      string: `keep remove-me and-me dont-remove-me`,
-      other: `keep remove-me and-me`,
-      another: `keep remove-me dont-remove-me oh-no`,
+      compositionOnly:
+        'features_compositionOnly__1o6ek504 features_mergedStyle__1o6ek500 features_styleWithComposition__1o6ek501',
+      mergedStyle: 'features_mergedStyle__1o6ek500',
+      styleCompositionInSelector:
+        'features_styleCompositionInSelector__1o6ek507 features__1o6ek505 features__1o6ek506',
+      styleVariantsCompositionInSelector: {
+        variant:
+          'features_styleVariantsCompositionInSelector_variant__1o6ek50a features__1o6ek508 features__1o6ek509',
+      },
+      styleVariantsWithComposition: {
+        variant:
+          'features_styleVariantsWithComposition_variant__1o6ek502 features_mergedStyle__1o6ek500',
+      },
+      styleVariantsWithMappedComposition: {
+        variant:
+          'features_styleVariantsWithMappedComposition_variant__1o6ek503 features_mergedStyle__1o6ek500',
+      },
+      styleWithComposition:
+        'features_styleWithComposition__1o6ek501 features_mergedStyle__1o6ek500',
     };
 
-    expect(
-      stringifyExports(recipeImports, value, /(remove-me|and-me)\s/g),
-    ).toMatchInlineSnapshot(
-      `"{string:'keep dont-remove-me',other:'keep and-me',another:'keep dont-oh-no'}"`,
-      //                                            ^ these could be a problem ^
+    const exports = stringifyExports(
+      recipeImports,
+      value,
+      /(features_compositionOnly__1o6ek504|features_styleCompositionInSelector__1o6ek507|features_styleVariantsCompositionInSelector_variant__1o6ek50a)\s/g,
     );
+    const exportsObject = evalCode(`module.exports = ${exports}`, 'dummy.js');
+    expect(exportsObject).toMatchInlineSnapshot(`
+      Object {
+        "compositionOnly": "features_mergedStyle__1o6ek500 features_styleWithComposition__1o6ek501",
+        "mergedStyle": "features_mergedStyle__1o6ek500",
+        "styleCompositionInSelector": "features__1o6ek505 features__1o6ek506",
+        "styleVariantsCompositionInSelector": Object {
+          "variant": "features__1o6ek508 features__1o6ek509",
+        },
+        "styleVariantsWithComposition": Object {
+          "variant": "features_styleVariantsWithComposition_variant__1o6ek502 features_mergedStyle__1o6ek500",
+        },
+        "styleVariantsWithMappedComposition": Object {
+          "variant": "features_styleVariantsWithMappedComposition_variant__1o6ek503 features_mergedStyle__1o6ek500",
+        },
+        "styleWithComposition": "features_styleWithComposition__1o6ek501 features_mergedStyle__1o6ek500",
+      }
+    `);
   });
 });
