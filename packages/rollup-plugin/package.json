@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^5.0.0"
+    "@vanilla-extract/integration": "^5.0.1"
   },
   "devDependencies": {
     "@fixtures/themed": "*",

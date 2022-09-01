@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/core": "^7.13.10",
     "@babel/template": "^7.12.13",
-    "@vanilla-extract/integration": "^5.0.0"
+    "@vanilla-extract/integration": "^5.0.1"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.19",
