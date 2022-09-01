@@ -995,7 +995,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle nested @supports and @media queries', () => {
+  it('should handle nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1012,16 +1012,27 @@ describe('transformCss', () => {
                   '@media': {
                     'screen and (min-width: 700px)': {
                       display: 'grid',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
               },
+
               '@media': {
                 'screen and (min-width: 700px)': {
                   color: 'green',
                   '@supports': {
                     '(display: grid)': {
                       borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
@@ -1042,6 +1053,11 @@ describe('transformCss', () => {
           .testClass {
             border-color: blue;
           }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
         }
       }
       @supports (display: grid) {
@@ -1052,12 +1068,17 @@ describe('transformCss', () => {
           .testClass {
             display: grid;
           }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
         }
       }"
     `);
   });
 
-  it('should merge nested @supports and @media queries', () => {
+  it('should merge nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1072,12 +1093,18 @@ describe('transformCss', () => {
                   '@supports': {
                     '(display: grid)': {
                       borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
               },
             },
           },
+
           {
             type: 'local',
             selector: 'otherClass',
@@ -1087,6 +1114,11 @@ describe('transformCss', () => {
                   '@supports': {
                     '(display: grid)': {
                       backgroundColor: 'yellow',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
@@ -1103,6 +1135,14 @@ describe('transformCss', () => {
           }
           .otherClass {
             background-color: yellow;
+          }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+            .otherClass {
+              display: grid;
+            }
           }
         }
       }"

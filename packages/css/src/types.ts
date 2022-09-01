@@ -1,5 +1,5 @@
 import type { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
-import type { PropertiesFallback, AtRule } from 'csstype';
+import type { Properties, AtRule } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
@@ -11,15 +11,8 @@ interface ContainerProperties {
   containerName?: string;
 }
 
-type CSSTypeProperties = {
-  [Key in
-    | keyof ContainerProperties
-    | keyof PropertiesFallback]: Key extends keyof PropertiesFallback
-    ? PropertiesFallback<number | (string & {})>[Key]
-    : Key extends keyof ContainerProperties
-    ? ContainerProperties[Key]
-    : never;
-};
+type CSSTypeProperties = Properties<number | (string & {})> &
+  ContainerProperties;
 
 export type CSSProperties = {
   [Property in keyof CSSTypeProperties]:

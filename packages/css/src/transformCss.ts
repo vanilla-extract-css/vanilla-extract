@@ -373,8 +373,6 @@ class Stylesheet {
       forEach(rules, (containerRule, query) => {
         const containerQuery = `@container ${query}`;
 
-        // validateMediaQuery(mediaQuery);
-
         const conditions = [...parentConditions, containerQuery];
 
         this.addConditionalRule(

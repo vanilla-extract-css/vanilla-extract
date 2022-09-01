@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`low-level - esbuild should create valid stylesheet 1`] = `
+"._1amv5mo1 {
+  container-type: size;
+  container-name: container;
+  width: 500px;
+}
+._1amv5mo2 {
+  --_1amv5mo0: blue;
+  background-color: var(--_1amv5mo0);
+  padding: 20px;
+}
+@container container (min-width: 400px) {
+  ._1amv5mo2 {
+    color: #fff;
+  }
+}
+"
+`;
+
+exports[`low-level - mini-css-extract should create valid stylesheet 1`] = `
+".cj5d031 {
+  container-type: size;
+  container-name: container;
+  width: 500px;
+}
+.cj5d032 {
+  --cj5d030: blue;
+  background-color: var(--cj5d030);
+  padding: 20px;
+}
+@container container (min-width: 400px) {
+  .cj5d032 {
+    color: #fff;
+  }
+}
+"
+`;
+
+exports[`low-level - vite should create valid stylesheet 1`] = `
+"._1amv5mo1 {
+  container-type: size;
+  container-name: container;
+  width: 500px;
+}
+._1amv5mo2 {
+  --_1amv5mo0: blue;
+  background-color: var(--_1amv5mo0);
+  padding: 20px;
+}
+@container container (min-width: 400px) {
+  ._1amv5mo2 {
+    color: #fff;
+  }
+}
+"
+`;
