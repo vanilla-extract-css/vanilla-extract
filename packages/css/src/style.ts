@@ -137,9 +137,9 @@ export function globalKeyframes(name: string, rule: CSSKeyframes) {
 export function styleVariants<
   StyleMap extends Record<string | number, ComplexStyleRule>,
 >(styleMap: StyleMap, debugId?: string): Record<keyof StyleMap, string>;
-export function styleVariants<Data extends Record<string | number, unknown>>(
+export function styleVariants<Data extends Record<string | number, unknown>, Key extends keyof Data>(
   data: Data,
-  mapData: <Key extends keyof Data>(
+  mapData: (
     value: Data[Key],
     key: Key,
   ) => ComplexStyleRule,
