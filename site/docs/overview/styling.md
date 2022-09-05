@@ -241,7 +241,7 @@ globalStyle(`${parent} a[href]`, {
 
 Container queries work the same as [Media queries] and are nested inside the `@container` key.
 
-> 🚧 Ensure your target browsers support container queries
+> 🚧 Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
 
 ```ts compiled
 // styles.css.ts
@@ -249,7 +249,28 @@ import { style } from '@vanilla-extract/css';
 
 const myStyle = style({
   '@container': {
-    'sidebar (min-width: 768px)': {
+    '(min-width: 768px)': {
+      padding: 10
+    }
+  }
+});
+```
+
+You can also create scoped containers using [createContainer].
+
+```ts compiled
+// styles.css.ts
+import {
+  style,
+  createContainer
+} from '@vanilla-extract/css';
+
+const sidebar = createContainer();
+
+const myStyle = style({
+  containerName: sidebar,
+  '@container': {
+    [`${sidebar} (min-width: 768px)`]: {
       padding: 10
     }
   }
@@ -294,7 +315,10 @@ export const myStyle = style({
 [csstype]: https://github.com/frenic/csstype
 [unitless properties]: https://github.com/seek-oss/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
 [createvar]: /documentation/api/create-var/
+[createcontainer]: /documentation/api/create-container/
 [css properties]: #css-properties
 [css variables]: #css-variables
 [globalstyle]: /documentation/global-api/global-style
 [media queries]: #media-queries
+[support container queries]: https://caniuse.com/css-container-queries
+[container query syntax]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
