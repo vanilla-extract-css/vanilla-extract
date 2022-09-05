@@ -1,5 +1,12 @@
 # @fixtures/unused-modules
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [[`412962f`](https://github.com/seek-oss/vanilla-extract/commit/412962fff737a6f7c80f26d347076c31cbd5905b)]:
+  - @vanilla-extract/css@1.7.4
+
 ## 1.0.9
 
 ### Patch Changes
