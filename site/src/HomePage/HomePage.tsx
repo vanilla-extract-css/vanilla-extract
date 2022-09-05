@@ -316,8 +316,8 @@ export const HomePage = () => {
                   <Box color={{ lightMode: 'blue800', darkMode: 'gray400' }}>
                     Write maintainable CSS at scale without sacrificing platform
                     features. Variables, selectors, pseudo&#8209;classes,
-                    media/feature queries, keyframes, font&#8209;face rules and
-                    global styles are all supported.
+                    media/feature/container queries, keyframes, font&#8209;face
+                    and global styles are all supported.
                   </Box>
                 </Text>
               </Box>

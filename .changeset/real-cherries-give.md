@@ -4,7 +4,7 @@
 
 Add `createContainer` API
 
-`createContainer` creates a single scoped container for use with CSS Container Queries. This avoids potential naming collisions with other containers.
+`createContainer` creates a single scoped container name for use with CSS Container Queries. This avoids potential naming collisions with other containers.
 
 ```ts
 import {

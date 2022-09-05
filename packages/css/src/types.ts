@@ -5,9 +5,10 @@ import type { SimplePseudos } from './simplePseudos';
 
 // csstype is yet to ship container property types as they are not in
 // the output MDN spec files yet. Remove this once that's done.
+// https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
 interface ContainerProperties {
   container?: string;
-  containerType?: 'size' | 'inline-size' | 'block-size' | (string & {});
+  containerType?: 'size' | 'inline-size' | (string & {});
   containerName?: string;
 }
 
@@ -67,7 +68,6 @@ export type WithQueries<StyleType> = MediaQueries<
   > &
   ContainerQueries<
     StyleType &
-      StyleType &
       MediaQueries<StyleType & FeatureQueries<StyleType>> &
       FeatureQueries<StyleType & MediaQueries<StyleType>>
   >;
