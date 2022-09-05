@@ -269,6 +269,25 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle createContainer assigned to const', () => {
+    const source = `
+      import { createContainer } from '@vanilla-extract/css';
+
+      const myContainer = createContainer();
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      "import * as __vanilla_filescope__ from '@vanilla-extract/css/fileScope';
+
+      __vanilla_filescope__.setFileScope(\\"src/dir/mockFilename.css.ts\\", \\"@vanilla-extract/babel-plugin\\");
+
+      import { createContainer } from '@vanilla-extract/css';
+      const myContainer = createContainer(\\"myContainer\\");
+
+      __vanilla_filescope__.endFileScope();"
+    `);
+  });
+
   it('should handle fontFace assigned to const', () => {
     const source = `
       import { fontFace } from '@vanilla-extract/css';
