@@ -114,7 +114,7 @@ const myStyle = style({
 
 When processing your code into CSS, vanilla-extract will always render your media queries **at the end of the file**. This means styles inside the `@media` key will always have higher precedence than other styles due to CSS rule order precedence.
 
-> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media` (and `@supports`) condition blocks together to create the smallest possible CSS output.
+> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media`, `@supports`, and `@container` condition blocks together to create the smallest possible CSS output.
 
 ## Selectors
 
@@ -234,6 +234,25 @@ export const parent = style({});
 
 globalStyle(`${parent} a[href]`, {
   color: 'pink'
+});
+```
+
+## Container Queries
+
+Container queries work the same as [Media queries] and are nested inside the `@container` key.
+
+> 🚧 Ensure your target browsers support container queries
+
+```ts compiled
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+const myStyle = style({
+  '@container': {
+    'sidebar (min-width: 768px)': {
+      padding: 10
+    }
+  }
 });
 ```
 
