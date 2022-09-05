@@ -239,7 +239,7 @@ globalStyle(`${parent} a[href]`, {
 
 ## Container Queries
 
-Container queries work the same as [Media queries] and are nested inside the `@container` key.
+Container queries work the same as [media queries] and are nested inside the `@container` key.
 
 > 🚧 Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
 
