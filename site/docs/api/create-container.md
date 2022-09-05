@@ -7,7 +7,8 @@ parent: api
 
 Creates a single scoped container for use with [CSS Container Queries]. This avoids potential naming collisions with other containers.
 
-> 🚧 Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
+> 🚧 Ensure your target browsers [support container queries].
+> Vanilla-extract supports the [container query syntax][css container queries] but does not polyfill the feature in unsupported browsers.
 
 ```ts compiled
 // sidebar.css.ts
