@@ -1,5 +1,18 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba)]:
+  - @vanilla-extract/babel-plugin@1.2.0
+  - @fixtures/features@0.0.11
+  - @fixtures/low-level@0.0.11
+  - @fixtures/recipes@0.0.12
+  - @fixtures/sprinkles@0.0.13
+  - @fixtures/themed@0.0.11
+  - @fixtures/unused-modules@1.0.11
+
 ## 0.0.23
 
 ### Patch Changes
