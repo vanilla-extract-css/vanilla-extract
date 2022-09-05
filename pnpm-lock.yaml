@@ -79,7 +79,7 @@ importers:
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
       '@vanilla-extract/babel-plugin': ^1.1.7
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
       '@vanilla-extract/sprinkles': ^1.3.3
       '@vanilla-extract/webpack-plugin': ^2.1.12
       babel-loader: ^8.2.2
@@ -119,7 +119,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
       '@vanilla-extract/dynamic': 2.0.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -127,13 +127,13 @@ importers:
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
       '@vanilla-extract/recipes': 0.2.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -141,7 +141,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
       '@vanilla-extract/sprinkles': 1.4.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -149,7 +149,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
       '@vanilla-extract/dynamic': 2.0.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -157,7 +157,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.7.3
+      '@vanilla-extract/css': 1.7.4
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -268,7 +268,7 @@ importers:
     specifiers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
-      '@vanilla-extract/css': ^1.7.3
+      '@vanilla-extract/css': ^1.7.4
       '@vanilla-extract/integration': ^5.0.0
       esbuild: ^0.11.16
       rollup: ^2.7.0
