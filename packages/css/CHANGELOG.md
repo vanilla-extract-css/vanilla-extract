@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.7.4
+
+### Patch Changes
+
+- [#804](https://github.com/seek-oss/vanilla-extract/pull/804) [`412962f`](https://github.com/seek-oss/vanilla-extract/commit/412962fff737a6f7c80f26d347076c31cbd5905b) Thanks [@m7yue](https://github.com/m7yue)! - Fix `styleVariants` type when using the map data function
+
 ## 1.7.3
 
 ### Patch Changes
