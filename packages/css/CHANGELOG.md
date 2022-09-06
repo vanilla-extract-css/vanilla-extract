@@ -1,5 +1,28 @@
 # @vanilla-extract/css
 
+## 1.9.0
+
+### Minor Changes
+
+- [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support excluding file names from `generateIdentifier` output. This is available by passing a newly-added options object rather than a string.
+
+  **Example usage**
+
+  ```ts
+  import { generateIdentifier } from '@vanilla-extract/css';
+
+  const identifier = generateIdentifier({
+    debugId,
+    debugFileName: false,
+  });
+  ```
+
+### Patch Changes
+
+- [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix spaces in debug IDs for variable names.
+
+* [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix file name prefix in debug names when file extension is `.cjs` or `.mjs`.
+
 ## 1.8.0
 
 ### Minor Changes
