@@ -212,7 +212,7 @@ const Container = ({
 );
 
 const App = () => (
-  <Container brand="pink" body="Arial">
+  <Container brandColor="pink" fontFamily="Arial">
     ...
   </Container>
 );
