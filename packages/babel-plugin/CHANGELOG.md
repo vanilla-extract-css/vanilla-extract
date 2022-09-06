@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin
 
+## 1.2.0
+
+### Minor Changes
+
+- [#807](https://github.com/seek-oss/vanilla-extract/pull/807) [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add support for the new `createContainer` API
+
 ## 1.1.7
 
 ### Patch Changes

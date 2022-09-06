@@ -1,5 +1,45 @@
 # @vanilla-extract/css
 
+## 1.8.0
+
+### Minor Changes
+
+- [#807](https://github.com/seek-oss/vanilla-extract/pull/807) [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `createContainer` API
+
+  `createContainer` creates a single scoped container name for use with CSS Container Queries. This avoids potential naming collisions with other containers.
+
+  ```ts
+  import { style, createContainer } from '@vanilla-extract/css';
+
+  export const sidebarContainer = createContainer();
+
+  export const sidebar = style({
+    containerName: sidebarContainer,
+  });
+
+  export const navigation = style({
+    '@container': {
+      [`${sidebarContainer} (min-width: 400px)`]: {
+        display: 'flex',
+      },
+    },
+  });
+  ```
+
+* [#807](https://github.com/seek-oss/vanilla-extract/pull/807) [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add support for container queries via the new `@container` key.
+
+  ```ts
+  import { style } from '@vanilla-extract/css';
+
+  export const myStyle = style({
+    '@container': {
+      '(min-width: 400px)': {
+        display: 'flex',
+      },
+    },
+  });
+  ```
+
 ## 1.7.4
 
 ### Patch Changes
