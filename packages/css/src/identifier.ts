@@ -16,7 +16,7 @@ function getDevPrefix({
     const { filePath } = getFileScope();
 
     const matches = filePath.match(
-      /(?<dir>[^\/\\]*)?[\/\\]?(?<file>[^\/\\]*)\.css\.(ts|js|tsx|jsx)$/,
+      /(?<dir>[^\/\\]*)?[\/\\]?(?<file>[^\/\\]*)\.css\.(ts|js|tsx|jsx|cjs|mjs)$/,
     );
 
     if (matches && matches.groups) {
