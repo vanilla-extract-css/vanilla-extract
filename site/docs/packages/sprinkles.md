@@ -772,3 +772,4 @@ const e: ResponsiveAlign = { desktop: 'center' };
 [tailwind]: https://tailwindcss.com
 [styled system]: https://styled-system.com
 [support container queries]: https://caniuse.com/css-container-queries
+[container query syntax]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
