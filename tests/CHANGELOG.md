@@ -1,5 +1,13 @@
 # @vanilla-extract-private/tests
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba), [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba)]:
+  - @vanilla-extract/css@1.8.0
+  - @vanilla-extract-private/test-helpers@0.0.24
+
 ## 0.0.23
 
 ### Patch Changes

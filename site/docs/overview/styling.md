@@ -114,7 +114,7 @@ const myStyle = style({
 
 When processing your code into CSS, vanilla-extract will always render your media queries **at the end of the file**. This means styles inside the `@media` key will always have higher precedence than other styles due to CSS rule order precedence.
 
-> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media` (and `@supports`) condition blocks together to create the smallest possible CSS output.
+> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media`, `@supports`, and `@container` condition blocks together to create the smallest possible CSS output.
 
 ## Selectors
 
@@ -237,6 +237,46 @@ globalStyle(`${parent} a[href]`, {
 });
 ```
 
+## Container Queries
+
+Container queries work the same as [media queries] and are nested inside the `@container` key.
+
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
+
+```ts compiled
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+const myStyle = style({
+  '@container': {
+    '(min-width: 768px)': {
+      padding: 10
+    }
+  }
+});
+```
+
+You can also create scoped containers using [createContainer].
+
+```ts compiled
+// styles.css.ts
+import {
+  style,
+  createContainer
+} from '@vanilla-extract/css';
+
+const sidebar = createContainer();
+
+const myStyle = style({
+  containerName: sidebar,
+  '@container': {
+    [`${sidebar} (min-width: 768px)`]: {
+      padding: 10
+    }
+  }
+});
+```
+
 ## Supports Queries
 
 Supports queries work the same as [Media queries] and are nested inside the `@supports` key.
@@ -275,7 +315,10 @@ export const myStyle = style({
 [csstype]: https://github.com/frenic/csstype
 [unitless properties]: https://github.com/seek-oss/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
 [createvar]: /documentation/api/create-var/
+[createcontainer]: /documentation/api/create-container/
 [css properties]: #css-properties
 [css variables]: #css-variables
 [globalstyle]: /documentation/global-api/global-style
 [media queries]: #media-queries
+[support container queries]: https://caniuse.com/css-container-queries
+[container query syntax]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
