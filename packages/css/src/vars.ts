@@ -15,7 +15,7 @@ export function createVar(debugId?: string): CSSVarFunction {
   const cssVarName = cssesc(
     generateIdentifier({
       debugId,
-      includeFilePath: false,
+      debugFileName: false,
     }),
     { isIdentifier: true },
   );

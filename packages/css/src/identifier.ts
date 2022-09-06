@@ -5,14 +5,14 @@ import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 
 function getDevPrefix({
   debugId,
-  includeFilePath,
+  debugFileName,
 }: {
   debugId?: string;
-  includeFilePath: boolean;
+  debugFileName: boolean;
 }) {
   const parts = debugId ? [debugId.replace(/\s/g, '_')] : [];
 
-  if (includeFilePath) {
+  if (debugFileName) {
     const { filePath } = getFileScope();
 
     const matches = filePath.match(
@@ -30,7 +30,7 @@ function getDevPrefix({
 
 interface GenerateIdentifierOptions {
   debugId?: string;
-  includeFilePath?: boolean;
+  debugFileName?: boolean;
 }
 
 export function generateIdentifier(debugId?: string): string;
@@ -38,7 +38,7 @@ export function generateIdentifier(options?: GenerateIdentifierOptions): string;
 export function generateIdentifier(
   arg?: string | GenerateIdentifierOptions,
 ): string {
-  const { debugId, includeFilePath = true } = {
+  const { debugId, debugFileName = true } = {
     ...(typeof arg === 'string' ? { debugId: arg } : null),
     ...(typeof arg === 'object' ? arg : null),
   };
@@ -54,7 +54,7 @@ export function generateIdentifier(
   let identifier = `${fileScopeHash}${refCount}`;
 
   if (getIdentOption() === 'debug') {
-    const devPrefix = getDevPrefix({ debugId, includeFilePath });
+    const devPrefix = getDevPrefix({ debugId, debugFileName });
 
     if (devPrefix) {
       identifier = `${devPrefix}__${identifier}`;

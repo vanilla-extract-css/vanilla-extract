@@ -2,7 +2,7 @@
 '@vanilla-extract/css': minor
 ---
 
-Support excluding file paths from `generateIdentifier` output. This is available by passing a newly-added options object rather than a string.
+Support excluding file names from `generateIdentifier` output. This is available by passing a newly-added options object rather than a string.
 
 **Example usage**
 
@@ -11,6 +11,6 @@ import { generateIdentifier } from '@vanilla-extract/css';
 
 const identifier = generateIdentifier({
   debugId,
-  includeFilePath: false,
+  debugFileName: false,
 });
 ```
