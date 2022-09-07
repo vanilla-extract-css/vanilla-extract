@@ -1,5 +1,13 @@
 # @vanilla-extract-private/tests
 
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies [[`009e122`](https://github.com/seek-oss/vanilla-extract/commit/009e122693b92834125b6ca14b30fee5e626e245)]:
+  - @vanilla-extract/sprinkles@1.5.0
+  - @vanilla-extract-private/test-helpers@0.0.26
+
 ## 0.0.25
 
 ### Patch Changes

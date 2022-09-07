@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/sprinkles",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
