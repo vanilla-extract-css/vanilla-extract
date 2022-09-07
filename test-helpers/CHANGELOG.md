@@ -1,5 +1,12 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/sprinkles@0.0.15
+
 ## 0.0.25
 
 ### Patch Changes
