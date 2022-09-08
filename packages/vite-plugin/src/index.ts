@@ -33,7 +33,6 @@ export function vanillaExtractPlugin({
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let virtualExt: string;
   let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
   let packageName: string;
 
@@ -178,7 +177,9 @@ export function vanillaExtractPlugin({
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
-            ssr && forceEmitCssInSsrBuild ? virtualExtCss : virtualExt
+            config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
+              ? virtualExtCss
+              : virtualExtJs
           }`;
           const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
