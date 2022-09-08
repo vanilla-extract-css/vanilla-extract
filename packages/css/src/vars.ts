@@ -5,29 +5,20 @@ import {
   MapLeafNodes,
   CSSVarFunction,
 } from '@vanilla-extract/private';
-import hash from '@emotion/hash';
 import cssesc from 'cssesc';
 
 import { Tokens, NullableTokens, ThemeVars } from './types';
-import { getAndIncrementRefCounter, getFileScope } from './fileScope';
 import { validateContract } from './validateContract';
-import { getIdentOption } from './adapter';
+import { generateIdentifier } from './identifier';
 
 export function createVar(debugId?: string): CSSVarFunction {
-  // Convert ref count to base 36 for optimal hash lengths
-  const refCount = getAndIncrementRefCounter().toString(36);
-  const { filePath, packageName } = getFileScope();
-  const fileScopeHash = hash(
-    packageName ? `${packageName}${filePath}` : filePath,
+  const cssVarName = cssesc(
+    generateIdentifier({
+      debugId,
+      debugFileName: false,
+    }),
+    { isIdentifier: true },
   );
-  const varName =
-    getIdentOption() === 'debug' && debugId
-      ? `${debugId}__${fileScopeHash}${refCount}`
-      : `${fileScopeHash}${refCount}`;
-
-  const cssVarName = cssesc(varName.match(/^[0-9]/) ? `_${varName}` : varName, {
-    isIdentifier: true,
-  });
 
   return `var(--${cssVarName})` as const;
 }

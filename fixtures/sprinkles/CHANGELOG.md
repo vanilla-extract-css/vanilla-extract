@@ -1,5 +1,33 @@
 # @fixtures/sprinkles
 
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`009e122`](https://github.com/seek-oss/vanilla-extract/commit/009e122693b92834125b6ca14b30fee5e626e245)]:
+  - @vanilla-extract/sprinkles@1.5.0
+
+## 0.0.14
+
+### Patch Changes
+
+- Updated dependencies [[`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb), [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb), [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb)]:
+  - @vanilla-extract/css@1.9.0
+
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba), [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba)]:
+  - @vanilla-extract/css@1.8.0
+
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`412962f`](https://github.com/seek-oss/vanilla-extract/commit/412962fff737a6f7c80f26d347076c31cbd5905b)]:
+  - @vanilla-extract/css@1.7.4
+
 ## 0.0.11
 
 ### Patch Changes

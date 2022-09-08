@@ -383,7 +383,9 @@ const responsiveProperties = defineProperties({
 
 ### conditions
 
-Define a set of media/feature queries for the provided properties.
+Define a set of media/feature/container queries for the provided properties.
+
+For example, properties can be scoped to media queries.
 
 ```ts
 // sprinkles.css.ts
@@ -413,6 +415,40 @@ const properties = defineProperties({
     focus: { selector: '&:focus' }
   },
   defaultCondition: 'default'
+  // etc.
+});
+```
+
+Properties can also be scoped to container queries.
+
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
+
+```ts
+// sprinkles.css.ts
+import {
+  createContainer,
+  style
+} from '@vanilla-extract/css';
+import { defineProperties } from '@vanilla-extract/sprinkles';
+
+const containerName = createContainer();
+
+export const container = style({
+  containerName,
+  containerType: 'size'
+});
+
+const containerProperties = defineProperties({
+  conditions: {
+    small: {},
+    medium: {
+      '@container': `${containerName} (min-width: 768px)`
+    },
+    large: {
+      '@container': `${containerName} (min-width: 1024px)`
+    }
+  },
+  defaultCondition: 'small'
   // etc.
 });
 ```
@@ -735,3 +771,5 @@ const e: ResponsiveAlign = { desktop: 'center' };
 
 [tailwind]: https://tailwindcss.com
 [styled system]: https://styled-system.com
+[support container queries]: https://caniuse.com/css-container-queries
+[container query syntax]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries

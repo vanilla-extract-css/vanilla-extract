@@ -1,4 +1,9 @@
-import { globalStyle, createVar } from '@vanilla-extract/css';
+import {
+  globalStyle,
+  createVar,
+  createContainer,
+  style,
+} from '@vanilla-extract/css';
 import {
   defineProperties,
   createSprinkles,
@@ -9,14 +14,23 @@ import {
 const alpha = createVar();
 const textAlpha = createVar();
 
+const containerName = createContainer();
+
+export const container = style({
+  containerName,
+  containerType: 'size',
+});
+
 const responsiveProperties = defineProperties({
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},
     tablet: {
+      '@container': `${containerName} (min-width: 768px)`,
       '@media': 'screen and (min-width: 768px)',
     },
     desktop: {
+      '@container': `${containerName} (min-width: 1024px)`,
       '@media': 'screen and (min-width: 1024px)',
     },
     darkDesktop: {
@@ -87,6 +101,10 @@ export const preComposedSprinklesUsedInSelector = sprinkles({
   paddingTop: 'medium',
 });
 
-globalStyle(`body > ${preComposedSprinklesUsedInSelector}`, {
+globalStyle('body', {
+  margin: 0,
+});
+
+globalStyle(`body ${preComposedSprinklesUsedInSelector}`, {
   background: 'red',
 });

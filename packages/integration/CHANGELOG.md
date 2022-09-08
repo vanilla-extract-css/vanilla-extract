@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 5.0.1
+
+### Patch Changes
+
+- [#801](https://github.com/seek-oss/vanilla-extract/pull/801) [`bb48520`](https://github.com/seek-oss/vanilla-extract/commit/bb485203f85e01272e44fc26df78581f3b8b4da0) Thanks [@mrm007](https://github.com/mrm007)! - Omit [`Symbol.toStringTag`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag) when serializing module exports.
+
 ## 5.0.0
 
 ### Major Changes
