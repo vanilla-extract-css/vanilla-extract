@@ -68,8 +68,6 @@ export function vanillaExtractPlugin({
         postCssConfig = await resolvePostcssConfig(config);
       }
 
-      virtualExt = config.command === 'serve' ? virtualExtJs : virtualExtCss;
-
       if (config.plugins.some((p) => p.name === 'astro:build')) {
         forceEmitCssInSsrBuild = true;
       }
