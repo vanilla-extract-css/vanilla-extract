@@ -107,11 +107,7 @@ export function vanillaExtractPlugin({
         return;
       }
 
-      if (
-        !server ||
-        server.config.isProduction ||
-        validId.endsWith(virtualExtCss)
-      ) {
+      if (validId.endsWith(virtualExtCss)) {
         return css;
       }
 
