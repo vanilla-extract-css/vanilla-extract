@@ -1,5 +1,12 @@
 # @vanilla-extract-private/tests
 
+## 0.0.27
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.27
+
 ## 0.0.26
 
 ### Patch Changes
