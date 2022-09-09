@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.4.0
+
+### Minor Changes
+
+- [#796](https://github.com/seek-oss/vanilla-extract/pull/796) [`ee83020`](https://github.com/seek-oss/vanilla-extract/commit/ee830206ab493b7bc08bb629eafdae841256a177) Thanks [@mechairoi](https://github.com/mechairoi)! - Add experimental support for [Astro](https://astro.build/)
+
 ## 3.3.1
 
 ### Patch Changes
