@@ -5,13 +5,13 @@ import {
   IdentifierOption,
   processVanillaFile,
   addFileScope,
-  serializeCss,
   getPackageInfo,
 } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
+import { virtualCssFiles } from './virtualModules';
 
 const virtualLoader = require.resolve(
   path.join(
@@ -82,16 +82,16 @@ export function pitch(this: LoaderContext) {
         filePath: this.resourcePath,
         identOption:
           identifiers ?? (this.mode === 'production' ? 'short' : 'debug'),
-        serializeVirtualCssPath: async ({ fileName, source }) => {
-          const serializedCss = await serializeCss(source);
-          const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
-            fileName,
-            source: serializedCss,
-          })}`;
+        serializeVirtualCssPath: async ({ fileName, source, fileScope }) => {
+          const virtualCssFilePath = path.join(
+            this.rootContext,
+            fileScope.filePath,
+          );
+          virtualCssFiles.set(virtualCssFilePath, source);
 
           const request = loaderUtils.stringifyRequest(
             this,
-            `${fileName}!=!${virtualResourceLoader}!${emptyCssExtractionFile}`,
+            `${fileName}!=!${virtualLoader}!${virtualCssFilePath}`,
           );
 
           return `import ${request}`;

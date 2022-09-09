@@ -1,12 +1,7 @@
-import { deserializeCss } from '@vanilla-extract/integration';
 // @ts-expect-error
 import { getOptions } from 'loader-utils';
+import { virtualCssFiles } from './virtualModules';
 
 export default function (this: any) {
-  const { source } = getOptions(this);
-  const callback = this.async();
-
-  deserializeCss(source).then((deserializedCss) => {
-    callback(null, deserializedCss);
-  });
+  return virtualCssFiles.get(this.resourcePath);
 }
