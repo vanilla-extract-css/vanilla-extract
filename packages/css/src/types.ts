@@ -131,6 +131,7 @@ export interface Composition {
 
 type IdentOption = 'short' | 'debug';
 export interface Adapter {
+  projectRoot?: string;
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string) => void;
   registerComposition: (composition: Composition) => void;

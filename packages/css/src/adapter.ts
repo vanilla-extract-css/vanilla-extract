@@ -72,3 +72,9 @@ export const getIdentOption: Adapter['getIdentOption'] = (...props) => {
 
   return adapter.getIdentOption(...props);
 };
+
+export const getProjectRoot = (): Adapter['projectRoot'] => {
+  const adapter = currentAdapter();
+
+  return adapter.projectRoot;
+};

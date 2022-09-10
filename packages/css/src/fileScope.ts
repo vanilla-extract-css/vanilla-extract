@@ -1,12 +1,27 @@
+import fileURLToPath from 'file-uri-to-path';
 import outdent from 'outdent';
-import { onEndFileScope } from './adapter';
+import { getProjectRoot, onEndFileScope } from './adapter';
 import type { FileScope } from './types';
 
 let refCounter = 0;
 
 const fileScopes: Array<FileScope> = [];
 
-export function setFileScope(filePath: string, packageName?: string) {
+export function setFileScope(fileScopePath: string, packageName?: string) {
+  let filePath = fileScopePath;
+
+  try {
+    filePath = fileURLToPath(fileScopePath);
+  } catch (e) {
+    // If fileURLToPath failed then fileScope is already a valid path
+  }
+
+  const projectRoot = getProjectRoot();
+
+  if (projectRoot && filePath.startsWith(projectRoot)) {
+    filePath = filePath.slice(projectRoot.length);
+  }
+
   refCounter = 0;
   fileScopes.unshift({
     filePath,
