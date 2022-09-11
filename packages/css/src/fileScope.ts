@@ -1,4 +1,4 @@
-import fileURLToPath from 'file-uri-to-path';
+import fileURIToPath from 'file-uri-to-path';
 import outdent from 'outdent';
 
 import { getProjectRoot, onEndFileScope } from './adapter';
@@ -13,9 +13,9 @@ export function setFileScope(fileScopePath: string, packageName?: string) {
   let filePath = fileScopePath;
 
   try {
-    filePath = fileURLToPath(fileScopePath);
+    filePath = fileURIToPath(fileScopePath);
   } catch (e) {
-    // If fileURLToPath failed then fileScope is already a valid path
+    // If fileURIToPath failed then fileScope is already a valid path
   }
 
   const projectRoot = getProjectRoot();
