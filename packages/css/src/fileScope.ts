@@ -1,6 +1,8 @@
 import fileURLToPath from 'file-uri-to-path';
 import outdent from 'outdent';
+
 import { getProjectRoot, onEndFileScope } from './adapter';
+import { relativePath } from './relativePath';
 import type { FileScope } from './types';
 
 let refCounter = 0;
@@ -18,13 +20,14 @@ export function setFileScope(fileScopePath: string, packageName?: string) {
 
   const projectRoot = getProjectRoot();
 
-  if (projectRoot && filePath.startsWith(projectRoot)) {
-    filePath = filePath.slice(projectRoot.length);
+  if (projectRoot) {
+    filePath = relativePath(projectRoot, filePath);
   }
 
   refCounter = 0;
   fileScopes.unshift({
-    filePath,
+    // Remove extra extensions
+    filePath: filePath.replace(/\.[^.]*$/, ''),
     packageName,
   });
 }
