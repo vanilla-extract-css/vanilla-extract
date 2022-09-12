@@ -1,34 +1,22 @@
-import fileURIToPath from 'file-uri-to-path';
 import outdent from 'outdent';
 
-import { getProjectRoot, onEndFileScope } from './adapter';
-import { relativePath } from './relativePath';
+import { onEndFileScope } from './adapter';
 import type { FileScope } from './types';
 
 let refCounter = 0;
 
 const fileScopes: Array<FileScope> = [];
 
-export function setFileScope(fileScopePath: string, packageName?: string) {
-  let filePath = fileScopePath;
-
-  try {
-    filePath = fileURIToPath(fileScopePath);
-  } catch (e) {
-    // If fileURIToPath failed then fileScope is already a valid path
-  }
-
-  const projectRoot = getProjectRoot();
-
-  if (projectRoot) {
-    filePath = relativePath(projectRoot, filePath);
-  }
-
+export function setFileScope(
+  filePath: string,
+  packageName?: string,
+  url?: string,
+) {
   refCounter = 0;
   fileScopes.unshift({
-    // Remove extra extensions
-    filePath: filePath.replace(/\.[^.]*$/, ''),
+    filePath,
     packageName,
+    url,
   });
 }
 

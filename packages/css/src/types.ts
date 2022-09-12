@@ -120,6 +120,7 @@ export type CSS =
   | CSSSelectorBlock;
 
 export type FileScope = {
+  url?: string;
   packageName?: string;
   filePath: string;
 };

@@ -34,7 +34,6 @@ export function vanillaExtractPlugin({
   const cssMap = new Map<string, string>();
 
   let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
-  let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -62,7 +61,6 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      packageName = getPackageInfo(config.root).name;
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -146,7 +144,7 @@ export function vanillaExtractPlugin({
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,
-          packageName,
+          packageName: '',
         });
       }
 
