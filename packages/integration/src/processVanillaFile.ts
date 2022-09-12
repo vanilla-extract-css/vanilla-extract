@@ -14,16 +14,18 @@ const originalNodeEnv = process.env.NODE_ENV;
 export function stringifyFileScope({
   packageName,
   filePath,
+  url,
 }: FileScope): string {
-  return packageName ? `${filePath}$$$${packageName}` : filePath;
+  return packageName ? `${filePath}$$$${packageName}$$$${url}` : filePath;
 }
 
 export function parseFileScope(serialisedFileScope: string): FileScope {
-  const [filePath, packageName] = serialisedFileScope.split('$$$');
+  const [filePath, packageName, url] = serialisedFileScope.split('$$$');
 
   return {
     filePath,
     packageName,
+    url,
   };
 }
 

@@ -1,4 +1,5 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
 import { normalizePath } from 'vite';
@@ -34,6 +35,7 @@ export function vanillaExtractPlugin({
   const cssMap = new Map<string, string>();
 
   let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
+  let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -61,6 +63,7 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
+      packageName = getPackageInfo(config.root).name;
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -144,7 +147,7 @@ export function vanillaExtractPlugin({
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,
-          packageName: '',
+          packageName: packageName,
         });
       }
 
@@ -168,12 +171,12 @@ export function vanillaExtractPlugin({
         identOption:
           identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${
+          const absoluteFilePath = fileURLToPath(fileScope.url!);
+          const absoluteId = `${absoluteFilePath}${
             config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
               ? virtualExtCss
               : virtualExtJs
           }`;
-          const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
           let cssSource = source;
 
@@ -218,7 +221,9 @@ export function vanillaExtractPlugin({
 
           // We use the root relative id here to ensure file contents (content-hashes)
           // are consistent across build machines
-          return `import "${rootRelativeId}";`;
+          return `import "${normalizePath(
+            path.relative(config.root, absoluteId),
+          )}";`;
         },
       });
 
