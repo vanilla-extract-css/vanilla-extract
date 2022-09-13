@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.5.0
+
+### Minor Changes
+
+- [#825](https://github.com/seek-oss/vanilla-extract/pull/825) [`ef905c3`](https://github.com/seek-oss/vanilla-extract/commit/ef905c32765232bf2e4a64c3bc193853a3c3ba4d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add experimental support for [SolidStart](https://github.com/solidjs/solid-start)
+
 ## 3.4.0
 
 ### Minor Changes
