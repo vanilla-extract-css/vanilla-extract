@@ -68,7 +68,11 @@ export function vanillaExtractPlugin({
         postCssConfig = await resolvePostcssConfig(config);
       }
 
-      if (config.plugins.some((p) => p.name === 'astro:build')) {
+      if (
+        config.plugins.some((plugin) =>
+          ['astro:build', 'solid-start-server'].includes(plugin.name),
+        )
+      ) {
         forceEmitCssInSsrBuild = true;
       }
     },
