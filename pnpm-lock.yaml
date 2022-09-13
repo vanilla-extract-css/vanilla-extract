@@ -164,17 +164,13 @@ importers:
   packages/babel-plugin:
     specifiers:
       '@babel/core': ^7.13.10
-      '@babel/template': ^7.12.13
       '@types/babel__core': ^7.1.19
-      '@types/babel__template': ^7.4.1
       '@vanilla-extract/integration': ^5.0.0
     dependencies:
       '@babel/core': 7.16.0
-      '@babel/template': 7.16.0
       '@vanilla-extract/integration': link:../integration
     devDependencies:
       '@types/babel__core': 7.1.19
-      '@types/babel__template': 7.4.1
 
   packages/css:
     specifiers:
