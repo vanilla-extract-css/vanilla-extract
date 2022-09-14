@@ -1,5 +1,5 @@
 import * as babel from '@babel/core';
-import vanillaBabelPlugin from '@vanilla-extract/babel-plugin';
+import vanillaBabelPlugin from '@vanilla-extract/babel-plugin-debug-ids';
 // @ts-expect-error
 import typescriptSynxtax from '@babel/plugin-syntax-typescript';
 
