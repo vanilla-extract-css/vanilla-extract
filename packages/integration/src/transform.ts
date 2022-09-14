@@ -1,7 +1,7 @@
 import * as babel from '@babel/core';
 import vanillaBabelPlugin from '@vanilla-extract/babel-plugin-debug-ids';
 // @ts-expect-error
-import typescriptSynxtax from '@babel/plugin-syntax-typescript';
+import typescriptSyntax from '@babel/plugin-syntax-typescript';
 
 import { addFileScope } from './addFileScope';
 import type { IdentifierOption } from './types';
@@ -26,7 +26,7 @@ export const transformSync = ({
     const result = babel.transformSync(source, {
       filename: filePath,
       cwd: rootPath,
-      plugins: [vanillaBabelPlugin, typescriptSynxtax],
+      plugins: [vanillaBabelPlugin, typescriptSyntax],
       configFile: false,
     });
 
