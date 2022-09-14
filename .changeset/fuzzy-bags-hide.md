@@ -4,4 +4,4 @@
 
 Add `transform` and `transformSync` functions
 
-The transform APIs can be used to append filescopes and automatic debug Ids to `.css.ts` files.
+The transform APIs can be used to append filescopes and automatic debug IDs to `.css.ts` files.
