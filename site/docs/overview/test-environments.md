@@ -19,7 +19,7 @@ Install the [Jest] transformer
 npm install @vanilla-extract/jest
 ```
 
-Add the transformer to your Jest configuration.
+Add the transform to your Jest configuration.
 
 ```json
 // jest.config.js
