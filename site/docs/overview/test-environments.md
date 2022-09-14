@@ -7,28 +7,30 @@ title: Test Environments
 Typically in test environments CSS files are mocked due to node being unable to import or understand non-JavaScript code.
 This is not the case with vanilla-extract, where the stylesheets themselves are in fact valid code that can be executed in a node environment.
 
-When executing a `.css.ts` file, class name identifiers will be returned as expected, and if running in a browser-like environment, such as [jsdom], then real styles will be injected into the document.
+When executing a `.css.ts` file, class name identifiers will be returned as expected, and if running in a browser-like environment, such as [jsdom], then real styles will be injected into the document. However for vanilla-extract styles to work in a test environment, a transform needs to be applied to the code.
 
-However for this to work, a transform needs to be applied to the code which can be done via the [Babel] plugin.
+Currently, [Jest] is the only officially supported test runner. Please reach out in the [Discord] or [Discussions] for help with other setups.
 
-## Babel Plugin
+## Jest
 
-Install the Babel plugin
+Install the [Jest] transformer
 
 ```bash
-npm install @vanilla-extract/babel-plugin
+npm install @vanilla-extract/jest
 ```
 
-Add the plugin to your Babel configuration.
+Add the transformer to your Jest configuration.
 
 ```json
-// .babelrc
+// jest.config.js
 {
-  "plugins": ["@vanilla-extract/babel-plugin"]
+  "transform": {
+    "\\.css\\.ts$": "@vanilla-extract/jest"
+  }
 }
 ```
 
-## Remove Style Mocking
+### Remove Style Mocking
 
 It is very common in Jest setups to have a mock file returned for all `.css` files. This clashes with vanilla-extract as Jest can't differentiate between `.css` and `.css.ts` imports.
 
@@ -60,7 +62,7 @@ Ideally, remove this mock from your setup. However, if you need to support both 
 }
 ```
 
-## Disabling Runtime Styles
+### Disabling Runtime Styles
 
 While testing against actual styles is often desirable, it can be a major slowdown in your tests. If your tests don’t require styles to be available, importing `disableRuntimeStyles` will prevent all style creation.
 
@@ -70,4 +72,6 @@ import '@vanilla-extract/css/disableRuntimeStyles';
 ```
 
 [jsdom]: https://github.com/jsdom/jsdom
-[babel]: https://babeljs.io/
+[jest]: https://jestjs.io/
+[discord]: https://discord.gg/6nCfPwwz6w
+[discussions]: https://github.com/seek-oss/vanilla-extract/discussions
