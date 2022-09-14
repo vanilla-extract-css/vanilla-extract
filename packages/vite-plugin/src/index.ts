@@ -10,7 +10,7 @@ import {
   IdentifierOption,
   getPackageInfo,
   CompileOptions,
-  transformSync,
+  transform,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
@@ -145,7 +145,7 @@ export function vanillaExtractPlugin({
       }
 
       if (ssr && !forceEmitCssInSsrBuild) {
-        return transformSync({
+        return transform({
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,

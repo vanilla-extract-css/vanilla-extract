@@ -9,7 +9,7 @@ import {
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
-import { transformSync } from './transform';
+import { transform } from './transform';
 import { getPackageInfo } from './packageInfo';
 
 interface VanillaExtractTransformPluginParams {
@@ -25,7 +25,7 @@ export const vanillaExtractTransformPlugin = ({
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      const source = transformSync({
+      const source = await transform({
         source: originalSource,
         filePath: path,
         rootPath: build.initialOptions.absWorkingDir!,

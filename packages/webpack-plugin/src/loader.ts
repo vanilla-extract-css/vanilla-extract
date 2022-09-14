@@ -4,7 +4,7 @@ import loaderUtils from 'loader-utils';
 import {
   IdentifierOption,
   processVanillaFile,
-  transformSync,
+  transform,
   serializeCss,
   getPackageInfo,
 } from '@vanilla-extract/integration';
@@ -45,13 +45,21 @@ export default function (this: LoaderContext, source: string) {
 
   const { name } = getPackageInfo(this.rootContext);
 
-  return transformSync({
+  const callback = this.async();
+
+  transform({
     source,
     filePath: this.resourcePath,
     rootPath: this.rootContext,
     packageName: name,
     identOption: defaultIdentifierOption(this.mode, identifiers),
-  });
+  })
+    .then((code) => {
+      callback(null, code);
+    })
+    .catch((e) => {
+      callback(e);
+    });
 }
 
 export function pitch(this: LoaderContext) {

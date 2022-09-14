@@ -44,3 +44,35 @@ export const transformSync = ({
     packageName,
   });
 };
+
+export const transform = async ({
+  source,
+  filePath,
+  rootPath,
+  packageName,
+  identOption,
+}: TransformParams): Promise<string> => {
+  let code = source;
+
+  if (identOption === 'debug') {
+    const result = await babel.transform(source, {
+      filename: filePath,
+      cwd: rootPath,
+      plugins: [vanillaBabelPlugin, typescriptSynxtax],
+      configFile: false,
+    });
+
+    if (!result || !result.code) {
+      throw new Error('Error adding debug IDs');
+    }
+
+    code = result.code;
+  }
+
+  return addFileScope({
+    source: code,
+    filePath,
+    rootPath,
+    packageName,
+  });
+};

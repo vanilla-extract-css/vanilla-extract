@@ -9,7 +9,7 @@ export { compile, vanillaExtractTransformPlugin } from './compile';
 export { hash } from './hash';
 export { addFileScope } from './addFileScope';
 export { serializeCss, deserializeCss } from './serialize';
-export { transformSync } from './transform';
+export { transformSync, transform } from './transform';
 
 export * from './filters';
 
