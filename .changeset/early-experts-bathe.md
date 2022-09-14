@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/babel-plugin': minor
+'@vanilla-extract/esbuild-plugin': minor
 '@vanilla-extract/vite-plugin': minor
 '@vanilla-extract/rollup-plugin': minor
 ---
