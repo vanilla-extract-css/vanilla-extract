@@ -54,7 +54,7 @@ export function vanillaExtractPlugin({
       const output = await processVanillaFile({
         source,
         filePath,
-        identOption: identOption,
+        identOption,
       });
       return {
         code: output,
