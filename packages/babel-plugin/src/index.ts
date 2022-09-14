@@ -1,6 +1,4 @@
-import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
-import { cssFileFilter, getPackageInfo } from '@vanilla-extract/integration';
 
 const packageIdentifiers = new Set([
   '@vanilla-extract/css',
@@ -155,32 +153,16 @@ const getRelevantCall = (
 type Context = PluginPass & {
   namespaceImport: string;
   importIdentifiers: Map<string, StyleFunction>;
-  packageIdentifiers: Set<string>;
-  filePath: string;
-  packageName: string;
-  isCssFile: boolean;
 };
 
 export default function (): PluginObj<Context> {
   return {
-    pre({ opts }) {
-      if (!opts.filename) {
-        // TODO Make error better
-        throw new Error('Filename must be available');
-      }
-
-      this.isCssFile = cssFileFilter.test(opts.filename);
-
+    pre() {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
     },
     visitor: {
       ImportDeclaration(path) {
-        if (!this.isCssFile) {
-          // Bail early if file isn't a .css.ts file
-          return;
-        }
-
         if (packageIdentifiers.has(path.node.source.value)) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
@@ -200,11 +182,6 @@ export default function (): PluginObj<Context> {
         }
       },
       CallExpression(path) {
-        if (!this.isCssFile) {
-          // Bail early if file isn't a .css.ts file
-          return;
-        }
-
         const { node } = path;
 
         const usedExport = getRelevantCall(

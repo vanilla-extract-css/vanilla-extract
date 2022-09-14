@@ -1,0 +1,29 @@
+{
+  "name": "@vanilla-extract/jest",
+  "version": "1.0.0",
+  "description": "Jest transformer for vanilla-extract",
+  "main": "dist/vanilla-extract-jest.cjs.js",
+  "module": "dist/vanilla-extract-jest.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/jest"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@vanilla-extract/integration": "^5.0.0",
+    "esbuild": "^0.11.16"
+  },
+  "devDependencies": {
+    "@jest/transform": "^29.0.3"
+  }
+}

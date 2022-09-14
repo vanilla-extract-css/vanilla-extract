@@ -1,16 +1,11 @@
 import { transformSync } from '@babel/core';
-import { Options } from './types';
 import plugin from './';
 
-const transform = (
-  source: string,
-  options: Options = {},
-  filename = './dir/mockFilename.css.ts',
-) => {
+const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
   const result = transformSync(source, {
     filename,
     cwd: __dirname,
-    plugins: [[plugin, options]],
+    plugins: [plugin],
     configFile: false,
   });
 
@@ -434,24 +429,6 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { style } from 'some-other-package';
-      const three = style({
-        zIndex: 2
-      });"
-    `);
-  });
-
-  it('should only apply to .css.ts files', () => {
-    const source = `
-      import { style } from '@vanilla-extract/css';
-
-      const three = style({
-        zIndex: 2,  
-      });
-    `;
-
-    expect(transform(source, {}, './dir/mockFilename.ts'))
-      .toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
       const three = style({
         zIndex: 2
       });"
