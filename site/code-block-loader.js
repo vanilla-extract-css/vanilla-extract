@@ -1,5 +1,4 @@
-const { transform } = require('@babel/core');
-const { compile } = require('@vanilla-extract/integration');
+const { compile, transform } = require('@vanilla-extract/integration');
 const evalCode = require('eval');
 
 const { transformCss } = require('@vanilla-extract/css/transformCss');
@@ -94,18 +93,16 @@ async function getCss(entrypointFile, files, rootContext) {
                 );
 
                 if (file) {
-                  const babelResult = await transform(file.contents, {
-                    filename: file.fileName,
-                    cwd: rootContext,
-                    plugins: [
-                      require('@babel/plugin-syntax-typescript'),
-                      require('@vanilla-extract/babel-plugin'),
-                    ],
-                    configFile: false,
+                  const contents = await transform({
+                    source: file.contents,
+                    filePath: file.fileName,
+                    rootPath: rootContext,
+                    packageName: 'vanilla-extract-site',
+                    identOption: 'debug',
                   });
 
                   return {
-                    contents: babelResult.code,
+                    contents,
                     loader: 'ts',
                     resolveDir: rootContext,
                   };
