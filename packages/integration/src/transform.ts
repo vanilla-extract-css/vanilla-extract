@@ -58,7 +58,7 @@ export const transform = async ({
     const result = await babel.transform(source, {
       filename: filePath,
       cwd: rootPath,
-      plugins: [vanillaBabelPlugin, typescriptSynxtax],
+      plugins: [vanillaBabelPlugin, typescriptSyntax],
       configFile: false,
     });
 
