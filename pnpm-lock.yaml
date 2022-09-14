@@ -22,7 +22,7 @@ importers:
       '@testing-library/jest-dom': ^5.11.9
       '@types/jest': ^27.0.3
       '@types/testing-library__jest-dom': ^5.14.5
-      '@vanilla-extract/jest': '*'
+      '@vanilla-extract/jest-transform': '*'
       babel-jest: ^27.3.1
       fast-glob: ^3.2.7
       jest: ^27.3.1
@@ -43,7 +43,7 @@ importers:
       '@testing-library/jest-dom': 5.15.1
       '@types/jest': 27.0.3
       '@types/testing-library__jest-dom': 5.14.5
-      '@vanilla-extract/jest': link:packages/jest
+      '@vanilla-extract/jest-transform': link:packages/jest-transform
       babel-jest: 27.3.1_@babel+core@7.19.0
       fast-glob: 3.2.7
       jest: 27.3.1_ts-node@10.4.0
@@ -242,7 +242,7 @@ importers:
       '@types/babel__core': 7.1.19
       '@types/lodash': 4.14.177
 
-  packages/jest:
+  packages/jest-transform:
     specifiers:
       '@jest/transform': ^29.0.3
       '@vanilla-extract/integration': ^5.0.0
@@ -12493,7 +12493,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0
-      webpack: 5.64.2
+      webpack: 5.64.2_webpack-cli@4.9.1
 
   /terser/5.10.0:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
@@ -13512,6 +13512,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpack/5.64.2_esbuild@0.11.23:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}

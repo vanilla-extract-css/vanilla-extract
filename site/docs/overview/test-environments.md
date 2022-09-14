@@ -16,7 +16,7 @@ Currently, [Jest] is the only officially supported test runner. Please reach out
 Install the [Jest] transformer
 
 ```bash
-npm install @vanilla-extract/jest
+npm install @vanilla-extract/jest-transform
 ```
 
 Add the transform to your Jest configuration.
@@ -25,7 +25,7 @@ Add the transform to your Jest configuration.
 // jest.config.js
 {
   "transform": {
-    "\\.css\\.ts$": "@vanilla-extract/jest"
+    "\\.css\\.ts$": "@vanilla-extract/jest-transform"
   }
 }
 ```
