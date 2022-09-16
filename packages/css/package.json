@@ -2,13 +2,14 @@
   "name": "@vanilla-extract/css",
   "version": "1.9.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "sideEffects": true,
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "browser": {
-    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
-    "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/css"
   },
+  "license": "MIT",
+  "author": "SEEK",
+  "sideEffects": true,
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -23,77 +24,80 @@
     },
     "./adapter": {
       "import": {
-        "types": "./adapter/dist/index.cjs.d.ts",
-        "default": "./adapter/dist/index.mjs"
+        "types": "./adapter/index.cjs.d.ts",
+        "default": "./adapter/index.mjs"
       },
       "require": {
-        "types": "./adapter/dist/index.cjs.d.ts",
-        "default": "./adapter/dist/index.cjs"
+        "types": "./adapter/index.cjs.d.ts",
+        "default": "./adapter/index.cjs"
       }
     },
     "./disableRuntimeStyles": {
       "import": {
-        "types": "./disableRuntimeStyles/dist/index.cjs.d.ts",
-        "default": "./disableRuntimeStyles/dist/index.mjs"
+        "types": "./disableRuntimeStyles/index.cjs.d.ts",
+        "default": "./disableRuntimeStyles/index.mjs"
       },
       "require": {
-        "types": "./disableRuntimeStyles/dist/index.cjs.d.ts",
-        "default": "./disableRuntimeStyles/dist/index.cjs"
+        "types": "./disableRuntimeStyles/index.cjs.d.ts",
+        "default": "./disableRuntimeStyles/index.cjs"
       }
     },
     "./fileScope": {
       "import": {
-        "types": "./fileScope/dist/index.cjs.d.ts",
-        "default": "./fileScope/dist/index.mjs"
+        "types": "./fileScope/index.cjs.d.ts",
+        "default": "./fileScope/index.mjs"
       },
       "require": {
-        "types": "./fileScope/dist/index.cjs.d.ts",
-        "default": "./fileScope/dist/index.cjs"
+        "types": "./fileScope/index.cjs.d.ts",
+        "default": "./fileScope/index.cjs"
       }
     },
     "./functionSerializer": {
       "import": {
-        "types": "./functionSerializer/dist/index.cjs.d.ts",
-        "default": "./functionSerializer/dist/index.mjs"
+        "types": "./functionSerializer/index.cjs.d.ts",
+        "default": "./functionSerializer/index.mjs"
       },
       "require": {
-        "types": "./functionSerializer/dist/index.cjs.d.ts",
-        "default": "./functionSerializer/dist/index.cjs"
+        "types": "./functionSerializer/index.cjs.d.ts",
+        "default": "./functionSerializer/index.cjs"
       }
     },
     "./injectStyles": {
       "import": {
-        "types": "./injectStyles/dist/index.cjs.d.ts",
-        "default": "./injectStyles/dist/index.mjs"
+        "types": "./injectStyles/index.cjs.d.ts",
+        "default": "./injectStyles/index.mjs"
       },
       "require": {
-        "types": "./injectStyles/dist/index.cjs.d.ts",
-        "default": "./injectStyles/dist/index.cjs"
+        "types": "./injectStyles/index.cjs.d.ts",
+        "default": "./injectStyles/index.cjs"
       }
     },
     "./recipe": {
       "import": {
-        "types": "./recipe/dist/index.cjs.d.ts",
-        "default": "./recipe/dist/index.mjs"
+        "types": "./recipe/index.cjs.d.ts",
+        "default": "./recipe/index.mjs"
       },
       "require": {
-        "types": "./recipe/dist/index.cjs.d.ts",
-        "default": "./recipe/dist/index.cjs"
+        "types": "./recipe/index.cjs.d.ts",
+        "default": "./recipe/index.cjs"
       }
     },
     "./transformCss": {
       "import": {
-        "types": "./transformCss/dist/index.cjs.d.ts",
-        "default": "./transformCss/dist/index.mjs"
+        "types": "./transformCss/index.cjs.d.ts",
+        "default": "./transformCss/index.mjs"
       },
       "require": {
-        "types": "./transformCss/dist/index.cjs.d.ts",
-        "default": "./transformCss/dist/index.cjs"
+        "types": "./transformCss/index.cjs.d.ts",
+        "default": "./transformCss/index.cjs"
       }
     }
   },
-  "scripts": {
-    "build": "crackle package"
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "browser": {
+    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
+    "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
   },
   "files": [
     "/adapter",
@@ -105,13 +109,9 @@
     "/recipe",
     "/transformCss"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/css"
+  "scripts": {
+    "build": "crackle package"
   },
-  "author": "SEEK",
-  "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.8.0",
     "@vanilla-extract/private": "^1.0.3",

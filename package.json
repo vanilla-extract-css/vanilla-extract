@@ -42,6 +42,7 @@
     "@swc/core": "^1.2.112",
     "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.59",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@vanilla-extract/babel-plugin": "*",
     "babel-jest": "^27.3.1",
@@ -50,7 +51,7 @@
     "nx": "14.5.4",
     "prettier": "^2.3.2",
     "ts-node": "^10.0.0",
-    "typescript": "^4.5.0"
+    "typescript": "~4.7.4"
   },
   "packageManager": "pnpm@7.9.5",
   "pnpm": {

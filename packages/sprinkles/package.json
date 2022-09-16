@@ -2,9 +2,14 @@
   "name": "@vanilla-extract/sprinkles",
   "version": "1.5.0",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/sprinkles"
+  },
+  "license": "MIT",
+  "author": "SEEK",
   "sideEffects": false,
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -19,25 +24,27 @@
     },
     "./createRuntimeSprinkles": {
       "import": {
-        "types": "./createRuntimeSprinkles/dist/index.cjs.d.ts",
-        "default": "./createRuntimeSprinkles/dist/index.mjs"
+        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/index.mjs"
       },
       "require": {
-        "types": "./createRuntimeSprinkles/dist/index.cjs.d.ts",
-        "default": "./createRuntimeSprinkles/dist/index.cjs"
+        "types": "./createRuntimeSprinkles/index.cjs.d.ts",
+        "default": "./createRuntimeSprinkles/index.cjs"
       }
     },
     "./createUtils": {
       "import": {
-        "types": "./createUtils/dist/index.cjs.d.ts",
-        "default": "./createUtils/dist/index.mjs"
+        "types": "./createUtils/index.cjs.d.ts",
+        "default": "./createUtils/index.mjs"
       },
       "require": {
-        "types": "./createUtils/dist/index.cjs.d.ts",
-        "default": "./createUtils/dist/index.cjs"
+        "types": "./createUtils/index.cjs.d.ts",
+        "default": "./createUtils/index.cjs"
       }
     }
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "files": [
     "/createRuntimeSprinkles",
     "/createUtils",
@@ -46,18 +53,11 @@
   "scripts": {
     "build": "crackle package"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/sprinkles"
-  },
-  "author": "SEEK",
-  "license": "MIT",
-  "peerDependencies": {
-    "@vanilla-extract/css": "^1.0.0"
-  },
   "devDependencies": {
     "@crackle/cli": "^0.8.0",
     "@vanilla-extract/css": "^1.6.8"
+  },
+  "peerDependencies": {
+    "@vanilla-extract/css": "^1.0.0"
   }
 }

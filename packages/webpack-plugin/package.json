@@ -2,8 +2,13 @@
   "name": "@vanilla-extract/webpack-plugin",
   "version": "2.1.12",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/webpack-plugin"
+  },
+  "license": "MIT",
+  "author": "SEEK",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -18,43 +23,35 @@
     },
     "./loader": {
       "import": {
-        "types": "./loader/dist/index.cjs.d.ts",
-        "default": "./loader/dist/index.mjs"
+        "types": "./loader/index.cjs.d.ts",
+        "default": "./loader/index.mjs"
       },
       "require": {
-        "types": "./loader/dist/index.cjs.d.ts",
-        "default": "./loader/dist/index.cjs"
+        "types": "./loader/index.cjs.d.ts",
+        "default": "./loader/index.cjs"
       }
     },
     "./virtualFileLoader": {
       "import": {
-        "types": "./virtualFileLoader/dist/index.cjs.d.ts",
-        "default": "./virtualFileLoader/dist/index.mjs"
+        "types": "./virtualFileLoader/index.cjs.d.ts",
+        "default": "./virtualFileLoader/index.mjs"
       },
       "require": {
-        "types": "./virtualFileLoader/dist/index.cjs.d.ts",
-        "default": "./virtualFileLoader/dist/index.cjs"
+        "types": "./virtualFileLoader/index.cjs.d.ts",
+        "default": "./virtualFileLoader/index.cjs"
       }
     }
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "files": [
     "/dist",
     "/loader",
     "/virtualFileLoader",
     "extracted.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/webpack-plugin"
-  },
   "scripts": {
     "build": "crackle package"
-  },
-  "author": "SEEK",
-  "license": "MIT",
-  "peerDependencies": {
-    "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
     "@vanilla-extract/integration": "^5.0.0",
@@ -65,6 +62,10 @@
   "devDependencies": {
     "@crackle/cli": "^0.8.0",
     "@types/debug": "^4.1.5",
+    "@types/tapable": "~2.2.1",
     "webpack": "^5.36.1"
+  },
+  "peerDependencies": {
+    "webpack": "^4.30.0 || ^5.20.2"
   }
 }

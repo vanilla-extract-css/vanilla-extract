@@ -2,30 +2,14 @@
   "name": "@vanilla-extract/recipes",
   "version": "0.2.5",
   "description": "Create multi-variant styles with a type-safe runtime API, heavily inspired by https://stitches.dev",
-  "sideEffects": false,
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "files": [
-    "/createRuntimeFn",
-    "/dist"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/seek-oss/vanilla-extract.git",
     "directory": "packages/recipes"
   },
-  "scripts": {
-    "build": "crackle package"
-  },
-  "author": "SEEK",
   "license": "MIT",
-  "peerDependencies": {
-    "@vanilla-extract/css": "^1.0.0"
-  },
-  "devDependencies": {
-    "@crackle/cli": "^0.8.0",
-    "@vanilla-extract/css": "^1.7.1"
-  },
+  "author": "SEEK",
+  "sideEffects": false,
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -40,13 +24,29 @@
     },
     "./createRuntimeFn": {
       "import": {
-        "types": "./createRuntimeFn/dist/index.cjs.d.ts",
-        "default": "./createRuntimeFn/dist/index.mjs"
+        "types": "./createRuntimeFn/index.cjs.d.ts",
+        "default": "./createRuntimeFn/index.mjs"
       },
       "require": {
-        "types": "./createRuntimeFn/dist/index.cjs.d.ts",
-        "default": "./createRuntimeFn/dist/index.cjs"
+        "types": "./createRuntimeFn/index.cjs.d.ts",
+        "default": "./createRuntimeFn/index.cjs"
       }
     }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "files": [
+    "/createRuntimeFn",
+    "/dist"
+  ],
+  "scripts": {
+    "build": "crackle package"
+  },
+  "devDependencies": {
+    "@crackle/cli": "^0.8.0",
+    "@vanilla-extract/css": "^1.7.1"
+  },
+  "peerDependencies": {
+    "@vanilla-extract/css": "^1.0.0"
   }
 }
