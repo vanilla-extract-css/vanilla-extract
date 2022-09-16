@@ -21,7 +21,7 @@
     "@vanilla-extract/integration": "^5.0.0"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "@fixtures/themed": "*",
     "@rollup/plugin-json": "^4.1.0",
     "@vanilla-extract/css": "^1.9.0",

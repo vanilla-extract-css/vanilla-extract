@@ -35,7 +35,7 @@
     "@vanilla-extract/private": "^1.0.3"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "@vanilla-extract/css": "*"
   }
 }

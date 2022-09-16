@@ -63,7 +63,7 @@
     "loader-utils": "^2.0.0"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "@types/debug": "^4.1.5",
     "webpack": "^5.36.1"
   }

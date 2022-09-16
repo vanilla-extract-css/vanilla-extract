@@ -26,7 +26,7 @@
     "outdent": "^0.8.0"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "@types/lodash": "^4.14.168"
   },
   "module": "dist/index.mjs",

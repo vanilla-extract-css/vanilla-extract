@@ -19,7 +19,7 @@
   "author": "SEEK",
   "license": "MIT",
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot"
+    "@crackle/cli": "^0.8.0"
   },
   "exports": {
     "./package.json": "./package.json",

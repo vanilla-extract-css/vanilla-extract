@@ -25,7 +25,7 @@
     "next": ">=12.0.5"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "next": "^12.0.5"
   },
   "exports": {

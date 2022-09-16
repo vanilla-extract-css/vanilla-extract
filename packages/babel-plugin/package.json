@@ -23,7 +23,7 @@
     "@vanilla-extract/integration": "^5.0.0"
   },
   "devDependencies": {
-    "@crackle/cli": "publish-snapshot",
+    "@crackle/cli": "^0.8.0",
     "@types/babel__core": "^7.1.19",
     "@types/babel__template": "^7.4.1"
   },
