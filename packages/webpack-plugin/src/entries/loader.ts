@@ -13,16 +13,14 @@ import type { LoaderContext } from '../types';
 import { debug, formatResourcePath } from '../logger';
 import { ChildCompiler } from '../compiler';
 
+const pluginRoot = path.dirname(require.resolve('../package.json'));
+
 const virtualLoader = require.resolve(
-  path.join(
-    path.dirname(require.resolve('../../package.json')),
-    'virtualFileLoader',
-  ),
+  path.join(pluginRoot, 'virtualFileLoader'),
 );
 
-const emptyCssExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
-  'extracted.js',
+const emptyCssExtractionFile = require.resolve(
+  path.join(pluginRoot, 'extracted.js'),
 );
 
 interface LoaderOptions {

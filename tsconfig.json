@@ -20,6 +20,7 @@
   },
   "exclude": ["node_modules", "**/dist/**"],
   "include": [
+    "@types/node",
     "@types/testing-library__jest-dom",
     "./jest.setup.ts",
     "packages/**/*",
