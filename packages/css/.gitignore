@@ -1,7 +1,10 @@
+# managed by crackle
 /adapter
 /disableRuntimeStyles
+/dist
 /fileScope
 /functionSerializer
 /injectStyles
 /recipe
 /transformCss
+# end managed by crackle

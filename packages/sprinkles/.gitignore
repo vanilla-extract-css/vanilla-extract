@@ -1,2 +1,5 @@
+# managed by crackle
 /createRuntimeSprinkles
 /createUtils
+/dist
+# end managed by crackle
