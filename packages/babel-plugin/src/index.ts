@@ -43,6 +43,9 @@ const debuggableFunctionConfig = {
   recipe: {
     maxParams: 2,
   },
+  createContainer: {
+    maxParams: 1,
+  },
 };
 
 const styleFunctions = [

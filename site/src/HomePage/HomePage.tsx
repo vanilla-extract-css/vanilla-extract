@@ -266,7 +266,7 @@ export const HomePage = () => {
                 <Feature title="Built for extension">
                   Use libraries like{' '}
                   <Link
-                    to="/documentation/sprinkles-api"
+                    to="/documentation/packages/sprinkles"
                     size="small"
                     underline="always"
                     inline
@@ -275,7 +275,7 @@ export const HomePage = () => {
                   </Link>
                   ,{' '}
                   <Link
-                    to="/documentation/recipes-api"
+                    to="/documentation/packages/recipes"
                     size="small"
                     underline="always"
                     inline
@@ -316,8 +316,8 @@ export const HomePage = () => {
                   <Box color={{ lightMode: 'blue800', darkMode: 'gray400' }}>
                     Write maintainable CSS at scale without sacrificing platform
                     features. Variables, selectors, pseudo&#8209;classes,
-                    media/feature queries, keyframes, font&#8209;face rules and
-                    global styles are all supported.
+                    media/feature/container queries, keyframes, font&#8209;face
+                    and global styles are all supported.
                   </Box>
                 </Text>
               </Box>

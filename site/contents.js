@@ -23,6 +23,7 @@ const contents = [
       'assign-vars',
       'font-face',
       'keyframes',
+      'create-container',
     ],
   },
   {

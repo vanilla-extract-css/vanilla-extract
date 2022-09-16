@@ -1,11 +1,11 @@
 {
   "name": "@vanilla-extract-private/tests",
   "private": true,
-  "version": "0.0.21",
+  "version": "0.0.28",
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@playwright/test": "^1.14.1",
+    "@playwright/test": "^1.25.1",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@vanilla-extract-private/test-helpers": "*",

@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/vite-plugin",
-  "version": "3.3.0",
+  "version": "3.5.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",

@@ -1,5 +1,77 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.28
+
+### Patch Changes
+
+- Updated dependencies [[`ef905c3`](https://github.com/seek-oss/vanilla-extract/commit/ef905c32765232bf2e4a64c3bc193853a3c3ba4d)]:
+  - @vanilla-extract/vite-plugin@3.5.0
+
+## 0.0.27
+
+### Patch Changes
+
+- Updated dependencies [[`ee83020`](https://github.com/seek-oss/vanilla-extract/commit/ee830206ab493b7bc08bb629eafdae841256a177)]:
+  - @vanilla-extract/vite-plugin@3.4.0
+
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/sprinkles@0.0.15
+
+## 0.0.25
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.12
+  - @fixtures/low-level@0.0.12
+  - @fixtures/recipes@0.0.13
+  - @fixtures/sprinkles@0.0.14
+  - @fixtures/themed@0.0.12
+  - @fixtures/unused-modules@1.0.12
+
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba)]:
+  - @vanilla-extract/babel-plugin@1.2.0
+  - @fixtures/features@0.0.11
+  - @fixtures/low-level@0.0.11
+  - @fixtures/recipes@0.0.12
+  - @fixtures/sprinkles@0.0.13
+  - @fixtures/themed@0.0.11
+  - @fixtures/unused-modules@1.0.11
+
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.10
+  - @fixtures/low-level@0.0.10
+  - @fixtures/recipes@0.0.11
+  - @fixtures/sprinkles@0.0.12
+  - @fixtures/themed@0.0.10
+  - @fixtures/unused-modules@1.0.10
+
+## 0.0.22
+
+### Patch Changes
+
+- Updated dependencies [[`4fb9a2c`](https://github.com/seek-oss/vanilla-extract/commit/4fb9a2c544165dbc3bfbc8d0687b7589cd53e391), [`21afc23`](https://github.com/seek-oss/vanilla-extract/commit/21afc23ae552b8071fbe5d7b0c3dce07fc016ee7)]:
+  - @vanilla-extract/vite-plugin@3.3.1
+  - @vanilla-extract/webpack-plugin@2.1.12
+  - @fixtures/features@0.0.9
+  - @fixtures/low-level@0.0.9
+  - @fixtures/recipes@0.0.10
+  - @fixtures/sprinkles@0.0.11
+  - @fixtures/themed@0.0.9
+  - @fixtures/unused-modules@1.0.9
+
 ## 0.0.21
 
 ### Patch Changes

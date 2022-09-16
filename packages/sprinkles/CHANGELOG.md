@@ -1,5 +1,39 @@
 # @vanilla-extract/sprinkles
 
+## 1.5.0
+
+### Minor Changes
+
+- [#812](https://github.com/seek-oss/vanilla-extract/pull/812) [`009e122`](https://github.com/seek-oss/vanilla-extract/commit/009e122693b92834125b6ca14b30fee5e626e245) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add support for container query conditions
+
+  **Example usage**
+
+  ```ts
+  import { createContainer, style } from '@vanilla-extract/css';
+  import { defineProperties } from '@vanilla-extract/sprinkles';
+
+  const containerName = createContainer();
+
+  export const container = style({
+    containerName,
+    containerType: 'size',
+  });
+
+  const containerProperties = defineProperties({
+    conditions: {
+      small: {},
+      medium: {
+        '@container': `${containerName} (min-width: 768px)`,
+      },
+      large: {
+        '@container': `${containerName} (min-width: 1024px)`,
+      },
+    },
+    defaultCondition: 'small',
+    // etc.
+  });
+  ```
+
 ## 1.4.1
 
 ### Patch Changes

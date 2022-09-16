@@ -1,5 +1,80 @@
 # @vanilla-extract/css
 
+## 1.9.0
+
+### Minor Changes
+
+- [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support excluding file names from `generateIdentifier` output. This is available by passing a newly-added options object rather than a string.
+
+  **Example usage**
+
+  ```ts
+  import { generateIdentifier } from '@vanilla-extract/css';
+
+  const identifier = generateIdentifier({
+    debugId,
+    debugFileName: false,
+  });
+  ```
+
+### Patch Changes
+
+- [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix spaces in debug IDs for variable names.
+
+* [#810](https://github.com/seek-oss/vanilla-extract/pull/810) [`c38b152`](https://github.com/seek-oss/vanilla-extract/commit/c38b152ff6dbcf0f2b4226fc167d67314ecebabb) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix file name prefix in debug names when file extension is `.cjs` or `.mjs`.
+
+## 1.8.0
+
+### Minor Changes
+
+- [#807](https://github.com/seek-oss/vanilla-extract/pull/807) [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `createContainer` API
+
+  `createContainer` creates a single scoped container name for use with CSS Container Queries. This avoids potential naming collisions with other containers.
+
+  ```ts
+  import { style, createContainer } from '@vanilla-extract/css';
+
+  export const sidebarContainer = createContainer();
+
+  export const sidebar = style({
+    containerName: sidebarContainer,
+  });
+
+  export const navigation = style({
+    '@container': {
+      [`${sidebarContainer} (min-width: 400px)`]: {
+        display: 'flex',
+      },
+    },
+  });
+  ```
+
+* [#807](https://github.com/seek-oss/vanilla-extract/pull/807) [`b0b3662`](https://github.com/seek-oss/vanilla-extract/commit/b0b36626de328a8dcc5c0301d50099fbe77a5cba) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add support for container queries via the new `@container` key.
+
+  ```ts
+  import { style } from '@vanilla-extract/css';
+
+  export const myStyle = style({
+    '@container': {
+      '(min-width: 400px)': {
+        display: 'flex',
+      },
+    },
+  });
+  ```
+
+## 1.7.4
+
+### Patch Changes
+
+- [#804](https://github.com/seek-oss/vanilla-extract/pull/804) [`412962f`](https://github.com/seek-oss/vanilla-extract/commit/412962fff737a6f7c80f26d347076c31cbd5905b) Thanks [@m7yue](https://github.com/m7yue)! - Fix `styleVariants` type when using the map data function
+
+## 1.7.3
+
+### Patch Changes
+
+- [#788](https://github.com/seek-oss/vanilla-extract/pull/788) [`2e9d21c`](https://github.com/seek-oss/vanilla-extract/commit/2e9d21c718ba57daa83c5ee323871ffa6ced5d47) Thanks [@Dremora](https://github.com/Dremora)! - Add `scale` to the list of unitless properties.
+
 ## 1.7.2
 
 ### Patch Changes

@@ -22,21 +22,14 @@ export type {
   RequiredConditionalValue,
 } from './entries/createUtils';
 
-interface Condition {
-  '@media'?: string;
-  '@supports'?: string;
-  selector?: string;
-}
+type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
+type Condition = Partial<Record<ConditionKey, string>>;
 
 type BaseConditions = { [conditionName: string]: Condition };
 
 type AtomicProperties = {
   [Property in keyof CSSProperties]?:
-    | Record<
-        string,
-        | CSSProperties[Property]
-        | Omit<StyleRule, 'selectors' | '@media' | '@supports'>
-      >
+    | Record<string, CSSProperties[Property] | Omit<StyleRule, ConditionKey>>
     | ReadonlyArray<CSSProperties[Property]>;
 };
 
@@ -264,6 +257,14 @@ export function defineProperties(options: any): any {
             styleValue = {
               '@supports': {
                 [condition['@supports']]: styleValue,
+              },
+            };
+          }
+
+          if (condition['@container']) {
+            styleValue = {
+              '@container': {
+                [condition['@container']]: styleValue,
               },
             };
           }

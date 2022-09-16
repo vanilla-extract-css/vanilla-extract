@@ -1,5 +1,23 @@
 # @vanilla-extract/vite-plugin
 
+## 3.5.0
+
+### Minor Changes
+
+- [#825](https://github.com/seek-oss/vanilla-extract/pull/825) [`ef905c3`](https://github.com/seek-oss/vanilla-extract/commit/ef905c32765232bf2e4a64c3bc193853a3c3ba4d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add experimental support for [SolidStart](https://github.com/solidjs/solid-start)
+
+## 3.4.0
+
+### Minor Changes
+
+- [#796](https://github.com/seek-oss/vanilla-extract/pull/796) [`ee83020`](https://github.com/seek-oss/vanilla-extract/commit/ee830206ab493b7bc08bb629eafdae841256a177) Thanks [@mechairoi](https://github.com/mechairoi)! - Add experimental support for [Astro](https://astro.build/)
+
+## 3.3.1
+
+### Patch Changes
+
+- [#781](https://github.com/seek-oss/vanilla-extract/pull/781) [`4fb9a2c`](https://github.com/seek-oss/vanilla-extract/commit/4fb9a2c544165dbc3bfbc8d0687b7589cd53e391) Thanks [@benjervis](https://github.com/benjervis)! - Adds a check for the existence of import.meta.hot before attempting to add an event listener to inject styles
+
 ## 3.3.0
 
 ### Minor Changes

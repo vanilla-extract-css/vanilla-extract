@@ -7,13 +7,12 @@ import type {
   CSSStyleBlock,
   CSSKeyframesBlock,
   CSSPropertiesWithVars,
-  FeatureQueries,
-  MediaQueries,
   StyleRule,
   StyleWithSelectors,
   GlobalFontFaceRule,
   CSSSelectorBlock,
   Composition,
+  WithQueries,
 } from '../types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from '../utils';
@@ -50,6 +49,7 @@ const UNITLESS: Record<string, boolean> = {
   opacity: true,
   order: true,
   orphans: true,
+  scale: true,
   tabSize: true,
   WebkitLineClamp: true,
   widows: true,
@@ -80,7 +80,13 @@ function dashify(str: string) {
 
 const DOUBLE_SPACE = '  ';
 
-const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
+const specialKeys = [
+  ...simplePseudos,
+  '@media',
+  '@supports',
+  '@container',
+  'selectors',
+];
 
 interface CSSRule {
   conditions?: Array<string>;
@@ -143,6 +149,7 @@ class Stylesheet {
 
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
+    this.transformContainer(root, root.rule['@container']);
 
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
@@ -317,9 +324,7 @@ class Stylesheet {
 
   transformMedia(
     root: CSSStyleBlock | CSSSelectorBlock,
-    rules:
-      | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
-      | undefined,
+    rules: WithQueries<StyleWithSelectors>['@media'],
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
@@ -349,15 +354,49 @@ class Stylesheet {
         }
 
         this.transformSupports(root, mediaRule!['@supports'], conditions);
+        this.transformContainer(root, mediaRule!['@container'], conditions);
+      });
+    }
+  }
+
+  transformContainer(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@container'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((query) => `@container ${query}`),
+      );
+
+      forEach(rules, (containerRule, query) => {
+        const containerQuery = `@container ${query}`;
+
+        const conditions = [...parentConditions, containerQuery];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(containerRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePseudos(root, containerRule!, conditions);
+          this.transformSelectors(root, containerRule!, conditions);
+        }
+
+        this.transformSupports(root, containerRule!['@supports'], conditions);
+        this.transformMedia(root, containerRule!['@media'], conditions);
       });
     }
   }
 
   transformSupports(
     root: CSSStyleBlock | CSSSelectorBlock,
-    rules:
-      | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
-      | undefined,
+    rules: WithQueries<StyleWithSelectors>['@supports'],
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
@@ -382,6 +421,7 @@ class Stylesheet {
           this.transformSelectors(root, supportsRule!, conditions);
         }
         this.transformMedia(root, supportsRule!['@media'], conditions);
+        this.transformContainer(root, supportsRule!['@container'], conditions);
       });
     }
   }

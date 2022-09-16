@@ -24,7 +24,7 @@
     "@crackle/cli": "publish-snapshot",
     "@fixtures/themed": "*",
     "@rollup/plugin-json": "^4.1.0",
-    "@vanilla-extract/css": "^1.7.2",
+    "@vanilla-extract/css": "^1.9.0",
     "esbuild": "^0.11.16",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
