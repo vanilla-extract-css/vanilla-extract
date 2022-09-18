@@ -5,4 +5,4 @@
 
 Remove requirement for `@vanilla-extract/babel-plugin`
 
-Previously, to get automatic debug IDs you needed to use babel with the `@vanilla-extract/babel-plugin` in your config. This is no longer the case so babel is no longer required. 
+Previously, to get automatic debug IDs you needed to use Babel with the `@vanilla-extract/babel-plugin` in your config. This is no longer the case so Babel is no longer required. 
