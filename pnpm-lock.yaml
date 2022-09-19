@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@crackle/core': 0.0.0-dts-options-20220919005849
+  '@crackle/core': 0.0.0-dts-options-20220919010816
 
 patchedDependencies:
   html-render-webpack-plugin@3.0.1:
@@ -3181,7 +3181,7 @@ packages:
     resolution: {integrity: sha512-Mffu8jS9yegy2Cb1BkCgxMj0ogBrBDRYkjtL3KR13DKutZDXKE18jSO5DW8nc2RRHGz15HTx6alzuOEKolBh2w==}
     hasBin: true
     dependencies:
-      '@crackle/core': 0.0.0-dts-options-20220919005849
+      '@crackle/core': 0.0.0-dts-options-20220919010816
       yargs: 17.5.1
     transitivePeerDependencies:
       - '@types/react'
@@ -3196,8 +3196,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@crackle/core/0.0.0-dts-options-20220919005849:
-    resolution: {integrity: sha512-dJHyqPPA2bReAdkKrUo6d1uV7xTNI5ruW4Fu7NDYmpft9l9/Dst9YzCef0Rq6KL2SPwCsOPghwUZWBYg/b4tFw==}
+  /@crackle/core/0.0.0-dts-options-20220919010816:
+    resolution: {integrity: sha512-hAHHOipBHkYevduz4n+nC5g61bJbQqlFYV4NIi007RNDQhDvAJXJi/671E1bWLydiWrwwk05Asa9aTaXaek/5Q==}
     peerDependencies:
       typescript: ~4.7.4
     dependencies:
