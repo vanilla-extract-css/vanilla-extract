@@ -13,6 +13,8 @@ import {
 } from './createSprinkles';
 import { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
+export type { ResponsiveArray } from './types';
+
 export {
   createNormalizeValueFn,
   createMapValueFn,

@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@crackle/core': 0.0.0-dts-options-20220919010816
+  '@crackle/core': 0.0.0-dts-options-20220919033902
 
 patchedDependencies:
   html-render-webpack-plugin@3.0.1:
@@ -3180,7 +3180,7 @@ packages:
     resolution: {integrity: sha512-Mffu8jS9yegy2Cb1BkCgxMj0ogBrBDRYkjtL3KR13DKutZDXKE18jSO5DW8nc2RRHGz15HTx6alzuOEKolBh2w==}
     hasBin: true
     dependencies:
-      '@crackle/core': 0.0.0-dts-options-20220919010816
+      '@crackle/core': 0.0.0-dts-options-20220919033902
       yargs: 17.5.1
     transitivePeerDependencies:
       - '@types/react'
@@ -3195,8 +3195,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@crackle/core/0.0.0-dts-options-20220919010816:
-    resolution: {integrity: sha512-hAHHOipBHkYevduz4n+nC5g61bJbQqlFYV4NIi007RNDQhDvAJXJi/671E1bWLydiWrwwk05Asa9aTaXaek/5Q==}
+  /@crackle/core/0.0.0-dts-options-20220919033902:
+    resolution: {integrity: sha512-vKYlG5F5skUi4jXdfldIwjaoMiJxMDnqwDmDRULUfOa6Ts2UaYI2yXIE3au5RLErB3Mxyfxmxcziw0OOSGV/kA==}
     peerDependencies:
       typescript: ~4.7.4
     dependencies:
@@ -5280,7 +5280,7 @@ packages:
       loader-utils: 1.4.0
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.64.2_esbuild@0.11.23
+      webpack: 5.64.2_webpack-cli@4.9.1
 
   /babel-loader/8.2.3_webpack@5.64.2:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
@@ -13926,6 +13926,7 @@ packages:
       source-map: 0.6.1
       terser: 5.10.0
       webpack: 5.64.2_esbuild@0.11.23
+    dev: false
 
   /terser-webpack-plugin/5.2.5_webpack@5.64.2:
     resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
@@ -15071,6 +15072,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: false
 
   /webpack/5.64.2_webpack-cli@4.9.1:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}
