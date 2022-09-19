@@ -2,6 +2,9 @@
 .vscode/
 node_modules
 dist
+packages/**/*.mjs
+packages/**/*.cjs
+packages/**/*.cjs.d.ts
 CHANGELOG.md
 README.md
 .github/ISSUE_TEMPLATE
