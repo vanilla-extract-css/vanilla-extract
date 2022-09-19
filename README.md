@@ -125,7 +125,8 @@ There are currently a few integrations to choose from.
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/css
+npm install --save-dev @vanilla-extract/webpack-plugin
 ```
 
 2. Add the [webpack](https://webpack.js.org) plugin.
@@ -178,7 +179,7 @@ module.exports = {
 3. If you'd like automatic debuggable identifiers, you can add the [Babel](https://babeljs.io) plugin.
    
 ```bash
-$ npm install @vanilla-extract/babel-plugin
+$ npm install --save-dev @vanilla-extract/babel-plugin
 ```
 
 ```json
@@ -192,7 +193,8 @@ $ npm install @vanilla-extract/babel-plugin
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/esbuild-plugin
+npm install @vanilla-extract/css
+npm install --save-dev @vanilla-extract/esbuild-plugin
 ```
 
 2. Add the [esbuild](https://esbuild.github.io/) plugin to your build script.
@@ -255,7 +257,8 @@ require('esbuild')
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/vite-plugin
+npm install @vanilla-extract/css
+npm install --save-dev @vanilla-extract/vite-plugin
 ```
 
 2. Add the [Vite](https://vitejs.dev/) plugin to your Vite config.
@@ -278,7 +281,8 @@ export default {
 1. Install the dependencies.
 
 ```bash
-npm install @vanilla-extract/css @vanilla-extract/babel-plugin @vanilla-extract/next-plugin
+npm install @vanilla-extract/css
+npm install --save-dev @vanilla-extract/babel-plugin @vanilla-extract/next-plugin
 ```
 
 2. If you don't have a `next.config.js` file in the root of your project, create one. Add the [Next.js](https://nextjs.org) plugin to your `next.config.js` file.
@@ -363,7 +367,7 @@ export default {
 1. Install the dependencies.
 
 ```bash
-$ npm install @vanilla-extract/babel-plugin
+$ npm install --save-dev @vanilla-extract/babel-plugin
 ```
 
 2. Add the [Babel](https://babeljs.io) plugin.
