@@ -31,11 +31,9 @@
   },
   "author": "SEEK",
   "license": "MIT",
-  "dependencies": {
-    "@vanilla-extract/private": "^1.0.3"
-  },
   "devDependencies": {
     "@crackle/cli": "^0.8.0",
-    "@vanilla-extract/css": "*"
+    "@vanilla-extract/css": "*",
+    "@vanilla-extract/private": "^1.0.3"
   }
 }
