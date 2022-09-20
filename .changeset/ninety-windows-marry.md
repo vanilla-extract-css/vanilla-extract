@@ -4,4 +4,4 @@
 
 Improve performance of selector transforms
 
-This issue was especially prevalent on M1 Macs. 
+This issue occured on M1 Macs due to performance issues with large regex patterns. 
