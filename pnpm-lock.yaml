@@ -181,7 +181,7 @@ importers:
       '@emotion/hash': ^0.8.0
       '@types/cssesc': ^3.0.0
       '@vanilla-extract/private': ^1.0.3
-      ahocorasick: ^1.0.2
+      ahocorasick: 1.0.2
       chalk: ^4.1.1
       css-what: ^5.0.1
       cssesc: ^3.0.0
@@ -4628,7 +4628,7 @@ packages:
       loader-utils: 1.4.0
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.64.2_webpack-cli@4.9.1
+      webpack: 5.64.2_esbuild@0.11.23
 
   /babel-loader/8.2.3_webpack@5.64.2:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
@@ -12394,7 +12394,6 @@ packages:
       source-map: 0.6.1
       terser: 5.10.0
       webpack: 5.64.2_esbuild@0.11.23
-    dev: false
 
   /terser-webpack-plugin/5.2.5_webpack@5.64.2:
     resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
@@ -13475,7 +13474,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: false
 
   /webpack/5.64.2_webpack-cli@4.9.1:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}
