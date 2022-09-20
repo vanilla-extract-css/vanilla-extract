@@ -294,7 +294,7 @@ class Stylesheet {
       if (lastReplace <= startIndex) {
         // Class names can be substrings of other class names
         // e.g. '_1g1ptzo1' and '_1g1ptzo10'
-        // If the last replcaed index is > startIndex, then
+        // If the last replaced index is > startIndex, then
         // this is the case and this replace should be skipped
         continue;
       }
