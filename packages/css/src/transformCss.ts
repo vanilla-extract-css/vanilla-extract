@@ -1,6 +1,7 @@
+import './ahocorasick';
+
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-// @ts-expect-error
 import AhoCorasick from 'ahocorasick';
 
 import type {
@@ -21,25 +22,6 @@ import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 import { validateMediaQuery } from './validateMediaQuery';
-
-// const replaceAll = (
-//   value: string,
-//   query: string,
-//   replacer: (index: number) => string,
-// ) => {
-//   let finalValue = value;
-//   let index = finalValue.indexOf(query);
-
-//   while (index !== -1) {
-//     const nextIndex = index + query.length;
-//     finalValue = `${finalValue.slice(0, index)}${replacer(
-//       index,
-//     )}${finalValue.slice(nextIndex)}`;
-//     index = finalValue.indexOf(query, nextIndex);
-//   }
-
-//   return finalValue;
-// };
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -123,7 +105,7 @@ class Stylesheet {
   localClassNames: Array<string>;
   localClassNamesMap: Map<string, string>;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
-  ac: any;
+  ac: AhoCorasick;
 
   constructor(
     localClassNames: Array<string>,

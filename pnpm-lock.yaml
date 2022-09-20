@@ -188,7 +188,6 @@ importers:
       csstype: ^3.0.7
       deep-object-diff: ^1.1.0
       deepmerge: ^4.2.2
-      escape-string-regexp: ^4.0.0
       media-query-parser: ^2.0.2
       outdent: ^0.8.0
     dependencies:
@@ -201,7 +200,6 @@ importers:
       csstype: 3.0.10
       deep-object-diff: 1.1.0
       deepmerge: 4.2.2
-      escape-string-regexp: 4.0.0
       media-query-parser: 2.0.2
       outdent: 0.8.0
     devDependencies:
@@ -6573,11 +6571,6 @@ packages:
   /escape-string-regexp/2.0.0:
     resolution: {integrity: sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==}
     engines: {node: '>=8'}
-    dev: false
-
-  /escape-string-regexp/4.0.0:
-    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
-    engines: {node: '>=10'}
     dev: false
 
   /escodegen/2.0.0:
