@@ -102,10 +102,9 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
-  localClassNames: Array<string>;
   localClassNamesMap: Map<string, string>;
+  localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
-  ac: AhoCorasick;
 
   constructor(
     localClassNames: Array<string>,
@@ -115,11 +114,10 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
-    this.localClassNames = localClassNames;
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
-    this.ac = new AhoCorasick(localClassNames);
+    this.localClassNamesSearch = new AhoCorasick(localClassNames);
 
     // Class list compositions should be priortized by Newer > Older
     // Therefore we reverse the array as they are added in sequence
@@ -272,7 +270,7 @@ class Stylesheet {
       return `.${cssesc(transformedSelector, { isIdentifier: true })}`;
     }
 
-    const results = this.ac.search(transformedSelector);
+    const results = this.localClassNamesSearch.search(transformedSelector);
 
     let lastReplace = transformedSelector.length;
 
