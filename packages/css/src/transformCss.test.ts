@@ -1571,7 +1571,7 @@ it('should handle multiple references to the same locally scoped selector', () =
   expect(
     transformCss({
       composedClassLists: [],
-      localClassNames: [style1, style2, '_1g1ptzo10', '_1g1ptzo1'],
+      localClassNames: [style1, style2, '_1g1ptzo1', '_1g1ptzo10'],
       cssObjs: [
         {
           type: 'local',
@@ -1585,6 +1585,10 @@ it('should handle multiple references to the same locally scoped selector', () =
               [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
                 background: 'blue',
               },
+
+              [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
+                background: 'blue',
+              },
             },
           },
         },
@@ -1595,6 +1599,9 @@ it('should handle multiple references to the same locally scoped selector', () =
       background: black;
     }
     ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      background: blue;
+    }
+    ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
       background: blue;
     }"
   `);
