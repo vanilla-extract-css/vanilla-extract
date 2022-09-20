@@ -181,6 +181,7 @@ importers:
       '@emotion/hash': ^0.8.0
       '@types/cssesc': ^3.0.0
       '@vanilla-extract/private': ^1.0.3
+      ahocorasick: ^1.0.2
       chalk: ^4.1.1
       css-what: ^5.0.1
       cssesc: ^3.0.0
@@ -193,6 +194,7 @@ importers:
     dependencies:
       '@emotion/hash': 0.8.0
       '@vanilla-extract/private': link:../private
+      ahocorasick: 1.0.2
       chalk: 4.1.2
       css-what: 5.1.0
       cssesc: 3.0.0
@@ -4376,6 +4378,10 @@ packages:
       debug: 4.3.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /ahocorasick/1.0.2:
+    resolution: {integrity: sha512-hCOfMzbFx5IDutmWLAt6MZwOUjIfSM9G9FyVxytmE4Rs/5YDPWQrD/+IR1w+FweD9H2oOZEnv36TmkjhNURBVA==}
     dev: false
 
   /ajv-errors/1.0.1_ajv@6.12.6:

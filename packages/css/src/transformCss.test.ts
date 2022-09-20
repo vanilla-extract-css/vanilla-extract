@@ -1564,4 +1564,30 @@ describe('transformCss', () => {
   });
 });
 
+it('should handle multiple references to the same locally scoped selector', () => {
+  expect(
+    transformCss({
+      composedClassLists: [],
+      localClassNames: ['testClass', 'parentClass'],
+      cssObjs: [
+        {
+          type: 'local',
+          selector: 'testClass',
+          rule: {
+            selectors: {
+              'parentClass &:before, parentClass &:after': {
+                background: 'black',
+              },
+            },
+          },
+        },
+      ],
+    }).join('\n'),
+  ).toMatchInlineSnapshot(`
+    ".parentClass .testClass:before, .parentClass .testClass:after {
+      background: black;
+    }"
+  `);
+});
+
 endFileScope();

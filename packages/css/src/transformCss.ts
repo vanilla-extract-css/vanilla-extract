@@ -1,6 +1,7 @@
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-import escapeStringRegexp from 'escape-string-regexp';
+// @ts-expect-error
+import AhoCorasick from 'ahocorasick';
 
 import type {
   CSS,
@@ -20,6 +21,25 @@ import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 import { validateMediaQuery } from './validateMediaQuery';
+
+// const replaceAll = (
+//   value: string,
+//   query: string,
+//   replacer: (index: number) => string,
+// ) => {
+//   let finalValue = value;
+//   let index = finalValue.indexOf(query);
+
+//   while (index !== -1) {
+//     const nextIndex = index + query.length;
+//     finalValue = `${finalValue.slice(0, index)}${replacer(
+//       index,
+//     )}${finalValue.slice(nextIndex)}`;
+//     index = finalValue.indexOf(query, nextIndex);
+//   }
+
+//   return finalValue;
+// };
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -100,8 +120,10 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
-  localClassNameRegex: RegExp | null;
+  localClassNames: Array<string>;
+  localClassNamesMap: Map<string, string>;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
+  ac: any;
 
   constructor(
     localClassNames: Array<string>,
@@ -111,10 +133,11 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
-    this.localClassNameRegex =
-      localClassNames.length > 0
-        ? RegExp(`(${localClassNames.map(escapeStringRegexp).join('|')})`, 'g')
-        : null;
+    this.localClassNames = localClassNames;
+    this.localClassNamesMap = new Map(
+      localClassNames.map((localClassName) => [localClassName, localClassName]),
+    );
+    this.ac = new AhoCorasick(localClassNames);
 
     // Class list compositions should be priortized by Newer > Older
     // Therefore we reverse the array as they are added in sequence
@@ -263,18 +286,41 @@ class Stylesheet {
       });
     }
 
-    return this.localClassNameRegex
-      ? transformedSelector.replace(
-          this.localClassNameRegex,
-          (_, className, index) => {
-            if (index > 0 && transformedSelector[index - 1] === '.') {
-              return className;
-            }
+    if (this.localClassNamesMap.has(transformedSelector)) {
+      return `.${cssesc(transformedSelector, { isIdentifier: true })}`;
+    }
 
-            return `.${cssesc(className, { isIdentifier: true })}`;
-          },
-        )
-      : transformedSelector;
+    const results = this.ac.search(transformedSelector);
+
+    for (let i = results.length - 1; i >= 0; i--) {
+      const [endIndex, [firstMatch]] = results[i];
+      const startIndex = endIndex - firstMatch.length + 1;
+
+      if (transformedSelector[startIndex - 1] !== '.') {
+        transformedSelector = `${transformedSelector.slice(
+          0,
+          startIndex,
+        )}.${cssesc(firstMatch, {
+          isIdentifier: true,
+        })}${transformedSelector.slice(endIndex + 1)}`;
+      }
+    }
+
+    // for (const localClassName of this.localClassNames) {
+    //   transformedSelector = replaceAll(
+    //     transformedSelector,
+    //     localClassName,
+    //     (index) => {
+    //       if (transformedSelector[index - 1] === '.') {
+    //         return localClassName;
+    //       }
+
+    //       return `.${cssesc(localClassName, { isIdentifier: true })}`;
+    //     },
+    //   );
+    // }
+
+    return transformedSelector;
   }
 
   transformSelectors(
