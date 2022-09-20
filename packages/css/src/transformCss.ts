@@ -1,4 +1,4 @@
-import './ahocorasick';
+import './ahocorasick.d';
 
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
@@ -78,6 +78,18 @@ function dashify(str: string) {
     .replace(/([A-Z])/g, '-$1')
     .replace(/^ms-/, '-ms-')
     .toLowerCase();
+}
+
+function replaceBetweenIndexes(
+  target: string,
+  startIndex: number,
+  endIndex: number,
+  replacement: string,
+) {
+  const start = target.slice(0, startIndex);
+  const end = target.slice(endIndex);
+
+  return `${start}${replacement}${end}`;
 }
 
 const DOUBLE_SPACE = '  ';
@@ -274,12 +286,14 @@ class Stylesheet {
 
     let lastReplace = transformedSelector.length;
 
+    // Perform replacements backwards to simplify index handling
     for (let i = results.length - 1; i >= 0; i--) {
       const [endIndex, [firstMatch]] = results[i];
       const startIndex = endIndex - firstMatch.length + 1;
 
       if (lastReplace <= startIndex) {
         // Class names can be substrings of other class names
+        // e.g. '_1g1ptzo1' and '_1g1ptzo10'
         // If the last replcaed index is > startIndex, then
         // this is the case and this replace should be skipped
         continue;
@@ -287,13 +301,16 @@ class Stylesheet {
 
       lastReplace = startIndex;
 
+      // If class names already starts with a '.' then skip
       if (transformedSelector[startIndex - 1] !== '.') {
-        transformedSelector = `${transformedSelector.slice(
-          0,
+        transformedSelector = replaceBetweenIndexes(
+          transformedSelector,
           startIndex,
-        )}.${cssesc(firstMatch, {
-          isIdentifier: true,
-        })}${transformedSelector.slice(endIndex + 1)}`;
+          endIndex + 1,
+          `.${cssesc(firstMatch, {
+            isIdentifier: true,
+          })}`,
+        );
       }
     }
 
