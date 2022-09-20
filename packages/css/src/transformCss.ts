@@ -292,9 +292,20 @@ class Stylesheet {
 
     const results = this.ac.search(transformedSelector);
 
+    let lastReplace = transformedSelector.length;
+
     for (let i = results.length - 1; i >= 0; i--) {
       const [endIndex, [firstMatch]] = results[i];
       const startIndex = endIndex - firstMatch.length + 1;
+
+      if (lastReplace <= startIndex) {
+        // Class names can be substrings of other class names
+        // If the last replcaed index is > startIndex, then
+        // this is the case and this replace should be skipped
+        continue;
+      }
+
+      lastReplace = startIndex;
 
       if (transformedSelector[startIndex - 1] !== '.') {
         transformedSelector = `${transformedSelector.slice(
@@ -305,20 +316,6 @@ class Stylesheet {
         })}${transformedSelector.slice(endIndex + 1)}`;
       }
     }
-
-    // for (const localClassName of this.localClassNames) {
-    //   transformedSelector = replaceAll(
-    //     transformedSelector,
-    //     localClassName,
-    //     (index) => {
-    //       if (transformedSelector[index - 1] === '.') {
-    //         return localClassName;
-    //       }
-
-    //       return `.${cssesc(localClassName, { isIdentifier: true })}`;
-    //     },
-    //   );
-    // }
 
     return transformedSelector;
   }

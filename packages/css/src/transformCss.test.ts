@@ -1,10 +1,13 @@
 import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
+import { style } from './style';
 
 setFileScope('test');
 
 const testVar = createVar();
+const style1 = style({});
+const style2 = style({});
 
 describe('transformCss', () => {
   it('should escape class names', () => {
@@ -1568,15 +1571,19 @@ it('should handle multiple references to the same locally scoped selector', () =
   expect(
     transformCss({
       composedClassLists: [],
-      localClassNames: ['testClass', 'parentClass'],
+      localClassNames: [style1, style2, '_1g1ptzo10', '_1g1ptzo1'],
       cssObjs: [
         {
           type: 'local',
-          selector: 'testClass',
+          selector: style1,
           rule: {
             selectors: {
-              'parentClass &:before, parentClass &:after': {
+              [`${style2} &:before, ${style2} &:after`]: {
                 background: 'black',
+              },
+
+              [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
+                background: 'blue',
               },
             },
           },
@@ -1584,8 +1591,11 @@ it('should handle multiple references to the same locally scoped selector', () =
       ],
     }).join('\n'),
   ).toMatchInlineSnapshot(`
-    ".parentClass .testClass:before, .parentClass .testClass:after {
+    ".skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
       background: black;
+    }
+    ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      background: blue;
     }"
   `);
 });
