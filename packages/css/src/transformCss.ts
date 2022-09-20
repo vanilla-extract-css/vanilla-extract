@@ -267,6 +267,12 @@ class Stylesheet {
     };
   }
 
+  transformClassname(identifier: string) {
+    return `.${cssesc(identifier, {
+      isIdentifier: true,
+    })}`;
+  }
+
   transformSelector(selector: string) {
     // Map class list compositions to single identifiers
     let transformedSelector = selector;
@@ -279,7 +285,7 @@ class Stylesheet {
     }
 
     if (this.localClassNamesMap.has(transformedSelector)) {
-      return `.${cssesc(transformedSelector, { isIdentifier: true })}`;
+      return this.transformClassname(transformedSelector);
     }
 
     const results = this.localClassNamesSearch.search(transformedSelector);
@@ -307,9 +313,7 @@ class Stylesheet {
           transformedSelector,
           startIndex,
           endIndex + 1,
-          `.${cssesc(firstMatch, {
-            isIdentifier: true,
-          })}`,
+          this.transformClassname(firstMatch),
         );
       }
     }
