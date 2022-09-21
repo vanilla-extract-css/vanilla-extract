@@ -74,7 +74,7 @@ npm install --save-dev @vanilla-extract/vite-plugin
 
 Add the plugin to your Vitest configuration.
 
-```typescript
+```ts
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
