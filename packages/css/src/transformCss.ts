@@ -290,22 +290,22 @@ class Stylesheet {
 
     const results = this.localClassNamesSearch.search(transformedSelector);
 
-    let lastReplace = transformedSelector.length;
+    let lastReplaceIndex = transformedSelector.length;
 
     // Perform replacements backwards to simplify index handling
     for (let i = results.length - 1; i >= 0; i--) {
       const [endIndex, [firstMatch]] = results[i];
       const startIndex = endIndex - firstMatch.length + 1;
 
-      if (lastReplace <= startIndex) {
+      if (startIndex >= lastReplaceIndex) {
         // Class names can be substrings of other class names
         // e.g. '_1g1ptzo1' and '_1g1ptzo10'
-        // If the last replaced index is <= startIndex, then
+        // If the startIndex >= lastReplaceIndex, then
         // this is the case and this replace should be skipped
         continue;
       }
 
-      lastReplace = startIndex;
+      lastReplaceIndex = startIndex;
 
       // If class names already starts with a '.' then skip
       if (transformedSelector[startIndex - 1] !== '.') {
