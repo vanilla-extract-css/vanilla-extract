@@ -1,5 +1,27 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.2.0
+
+### Minor Changes
+
+- [#827](https://github.com/seek-oss/vanilla-extract/pull/827) [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add automatic debug IDs
+
+  Automatic debug IDs allow your styles and other identifiers (e.g. CSS Vars, keyframes, etc) to have names that more closely reflect your source code when in development. This makes it easier to understand how the CSS output links to your source code.
+
+  ```ts
+  // styles.css.ts
+
+  // redBox ~= 'styles_redBox_asdfgj'
+  const redBox = style({
+    background: 'red',
+  });
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0), [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0), [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0)]:
+  - @vanilla-extract/integration@6.0.0
+
 ## 1.1.0
 
 ### Minor Changes
