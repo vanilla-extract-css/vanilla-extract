@@ -16,7 +16,7 @@ Currently, [Jest] and [Vitest] have official integrations. Please reach out in t
 Install the [Jest] transformer
 
 ```bash
-npm install --dev @vanilla-extract/jest-transform
+npm install --save-dev @vanilla-extract/jest-transform
 ```
 
 Add the transform to your Jest configuration.
@@ -69,7 +69,7 @@ If you are already using vanilla-extract with [Vite] then no setup should be req
 If using [Vitest] in other environments, install the `@vanilla-extract/vite-plugin`:
 
 ```bash
-npm install --dev @vanilla-extract/vite-plugin
+npm install --save-dev @vanilla-extract/vite-plugin
 ```
 
 Add the plugin to your Vitest configuration.
