@@ -1,10 +1,13 @@
 import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
+import { style } from './style';
 
 setFileScope('test');
 
 const testVar = createVar();
+const style1 = style({});
+const style2 = style({});
 
 describe('transformCss', () => {
   it('should escape class names', () => {
@@ -1562,6 +1565,46 @@ describe('transformCss', () => {
       }"
     `);
   });
+});
+
+it('should handle multiple references to the same locally scoped selector', () => {
+  expect(
+    transformCss({
+      composedClassLists: [],
+      localClassNames: [style1, style2, '_1g1ptzo1', '_1g1ptzo10'],
+      cssObjs: [
+        {
+          type: 'local',
+          selector: style1,
+          rule: {
+            selectors: {
+              [`${style2} &:before, ${style2} &:after`]: {
+                background: 'black',
+              },
+
+              [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
+                background: 'blue',
+              },
+
+              [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
+                background: 'blue',
+              },
+            },
+          },
+        },
+      ],
+    }).join('\n'),
+  ).toMatchInlineSnapshot(`
+    ".skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+      background: black;
+    }
+    ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      background: blue;
+    }
+    ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
+      background: blue;
+    }"
+  `);
 });
 
 endFileScope();
