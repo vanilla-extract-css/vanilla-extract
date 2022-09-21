@@ -1,5 +1,24 @@
 # @vanilla-extract/integration
 
+## 6.0.0
+
+### Major Changes
+
+- [#827](https://github.com/seek-oss/vanilla-extract/pull/827) [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - `vanillaExtractFilescopePlugin` has been renamed to `vanillaExtractTransformPlugin`
+
+* [#827](https://github.com/seek-oss/vanilla-extract/pull/827) [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - `compile` now expects a valid `identOption` parameter
+
+### Minor Changes
+
+- [#827](https://github.com/seek-oss/vanilla-extract/pull/827) [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Add `transform` and `transformSync` functions
+
+  The transform APIs can be used to append filescopes and automatic debug IDs to `.css.ts` files.
+
+### Patch Changes
+
+- Updated dependencies [[`9191d5a`](https://github.com/seek-oss/vanilla-extract/commit/9191d5adcdd4d129affdf5482659120e03a3d003), [`b53558a`](https://github.com/seek-oss/vanilla-extract/commit/b53558a3872987282b23d62b0063e4d789a379f9)]:
+  - @vanilla-extract/css@1.9.1
+
 ## 5.0.1
 
 ### Patch Changes

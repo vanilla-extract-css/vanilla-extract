@@ -1,5 +1,15 @@
 # @vanilla-extract/css
 
+## 1.9.1
+
+### Patch Changes
+
+- [#837](https://github.com/seek-oss/vanilla-extract/pull/837) [`9191d5a`](https://github.com/seek-oss/vanilla-extract/commit/9191d5adcdd4d129affdf5482659120e03a3d003) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve performance of selector transforms
+
+  This issue occured on M1 Macs due to performance issues with large regex patterns.
+
+* [#833](https://github.com/seek-oss/vanilla-extract/pull/833) [`b53558a`](https://github.com/seek-oss/vanilla-extract/commit/b53558a3872987282b23d62b0063e4d789a379f9) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix entrypoint resolving in Vitest
+
 ## 1.9.0
 
 ### Minor Changes
