@@ -4,9 +4,6 @@ title: Test Environments
 
 # Test Environments
 
-Typically in test environments CSS files are mocked due to node being unable to import or understand non-JavaScript code.
-This is not the case with vanilla-extract, where the stylesheets themselves are in fact valid code that can be executed in a node environment.
-
 When executing a `.css.ts` file, class name identifiers will be returned as expected, and if running in a browser-like environment, such as [jsdom], then real styles will be injected into the document. However for vanilla-extract styles to work in a test environment, a transform needs to be applied to the code.
 
 Currently, [Jest] and [Vitest] have official integrations. Please reach out in the [Discord] or [Discussions] for help with other setups.
