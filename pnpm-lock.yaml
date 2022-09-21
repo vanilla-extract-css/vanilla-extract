@@ -220,7 +220,7 @@ importers:
       '@types/babel__core': ^7.1.19
       '@types/lodash': ^4.14.168
       '@vanilla-extract/babel-plugin-debug-ids': ^1.0.0
-      '@vanilla-extract/css': ^1.9.1
+      '@vanilla-extract/css': ^1.7.2
       esbuild: ^0.11.16
       eval: 0.1.6
       find-up: ^5.0.0
