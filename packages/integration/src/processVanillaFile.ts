@@ -8,6 +8,7 @@ import outdent from 'outdent';
 
 import { hash } from './hash';
 import { serializeCss } from './serialize';
+import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
@@ -28,8 +29,6 @@ export function parseFileScope(serialisedFileScope: string): FileScope {
     url,
   };
 }
-
-export type IdentifierOption = ReturnType<Adapter['getIdentOption']>;
 
 interface ProcessVanillaFileOptions {
   source: string;

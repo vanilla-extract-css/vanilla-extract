@@ -1,5 +1,18 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.2.0
+
+### Minor Changes
+
+- [#827](https://github.com/seek-oss/vanilla-extract/pull/827) [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Remove requirement for `@vanilla-extract/babel-plugin`
+
+  Previously, to get automatic debug IDs you needed to use Babel with the `@vanilla-extract/babel-plugin` in your config. As this is no longer the case, the `@vanilla-extract/babel-plugin` should be removed completely from your project.
+
+### Patch Changes
+
+- Updated dependencies [[`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0), [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0), [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0)]:
+  - @vanilla-extract/integration@6.0.0
+
 ## 2.1.12
 
 ### Patch Changes

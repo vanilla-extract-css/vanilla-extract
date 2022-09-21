@@ -38,10 +38,13 @@ export function vanillaExtractPlugin({
       const index = id.indexOf('?');
       const filePath = index === -1 ? id : id.substring(0, index);
 
+      const identOption = identifiers ?? (isProduction ? 'short' : 'debug');
+
       const { source, watchFiles } = await compile({
         filePath,
         cwd,
         esbuildOptions,
+        identOption,
       });
 
       for (const file of watchFiles) {
@@ -51,7 +54,7 @@ export function vanillaExtractPlugin({
       const output = await processVanillaFile({
         source,
         filePath,
-        identOption: identifiers ?? (isProduction ? 'short' : 'debug'),
+        identOption,
       });
       return {
         code: output,

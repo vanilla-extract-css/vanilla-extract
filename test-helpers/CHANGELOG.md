@@ -1,5 +1,27 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.29
+
+### Patch Changes
+
+- Updated dependencies [[`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0), [`9cfb9a1`](https://github.com/seek-oss/vanilla-extract/commit/9cfb9a196fb84bd9d7984c1370488fd68e7ea1d0)]:
+  - @vanilla-extract/esbuild-plugin@2.2.0
+  - @vanilla-extract/vite-plugin@3.6.0
+  - @vanilla-extract/webpack-plugin@2.2.0
+  - @fixtures/features@0.0.13
+  - @fixtures/low-level@0.0.13
+  - @fixtures/recipes@0.0.14
+  - @fixtures/sprinkles@0.0.16
+  - @fixtures/themed@0.0.13
+  - @fixtures/unused-modules@1.0.13
+
+## 0.0.28
+
+### Patch Changes
+
+- Updated dependencies [[`ef905c3`](https://github.com/seek-oss/vanilla-extract/commit/ef905c32765232bf2e4a64c3bc193853a3c3ba4d)]:
+  - @vanilla-extract/vite-plugin@3.5.0
+
 ## 0.0.27
 
 ### Patch Changes

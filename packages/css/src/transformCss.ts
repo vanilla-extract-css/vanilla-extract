@@ -1,6 +1,8 @@
+import './ahocorasick.d';
+
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-import escapeStringRegexp from 'escape-string-regexp';
+import AhoCorasick from 'ahocorasick';
 
 import type {
   CSS,
@@ -78,6 +80,18 @@ function dashify(str: string) {
     .toLowerCase();
 }
 
+function replaceBetweenIndexes(
+  target: string,
+  startIndex: number,
+  endIndex: number,
+  replacement: string,
+) {
+  const start = target.slice(0, startIndex);
+  const end = target.slice(endIndex);
+
+  return `${start}${replacement}${end}`;
+}
+
 const DOUBLE_SPACE = '  ';
 
 const specialKeys = [
@@ -100,7 +114,8 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
-  localClassNameRegex: RegExp | null;
+  localClassNamesMap: Map<string, string>;
+  localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
 
   constructor(
@@ -111,10 +126,10 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
-    this.localClassNameRegex =
-      localClassNames.length > 0
-        ? RegExp(`(${localClassNames.map(escapeStringRegexp).join('|')})`, 'g')
-        : null;
+    this.localClassNamesMap = new Map(
+      localClassNames.map((localClassName) => [localClassName, localClassName]),
+    );
+    this.localClassNamesSearch = new AhoCorasick(localClassNames);
 
     // Class list compositions should be priortized by Newer > Older
     // Therefore we reverse the array as they are added in sequence
@@ -252,6 +267,12 @@ class Stylesheet {
     };
   }
 
+  transformClassname(identifier: string) {
+    return `.${cssesc(identifier, {
+      isIdentifier: true,
+    })}`;
+  }
+
   transformSelector(selector: string) {
     // Map class list compositions to single identifiers
     let transformedSelector = selector;
@@ -263,18 +284,41 @@ class Stylesheet {
       });
     }
 
-    return this.localClassNameRegex
-      ? transformedSelector.replace(
-          this.localClassNameRegex,
-          (_, className, index) => {
-            if (index > 0 && transformedSelector[index - 1] === '.') {
-              return className;
-            }
+    if (this.localClassNamesMap.has(transformedSelector)) {
+      return this.transformClassname(transformedSelector);
+    }
 
-            return `.${cssesc(className, { isIdentifier: true })}`;
-          },
-        )
-      : transformedSelector;
+    const results = this.localClassNamesSearch.search(transformedSelector);
+
+    let lastReplaceIndex = transformedSelector.length;
+
+    // Perform replacements backwards to simplify index handling
+    for (let i = results.length - 1; i >= 0; i--) {
+      const [endIndex, [firstMatch]] = results[i];
+      const startIndex = endIndex - firstMatch.length + 1;
+
+      if (startIndex >= lastReplaceIndex) {
+        // Class names can be substrings of other class names
+        // e.g. '_1g1ptzo1' and '_1g1ptzo10'
+        // If the startIndex >= lastReplaceIndex, then
+        // this is the case and this replace should be skipped
+        continue;
+      }
+
+      lastReplaceIndex = startIndex;
+
+      // If class names already starts with a '.' then skip
+      if (transformedSelector[startIndex - 1] !== '.') {
+        transformedSelector = replaceBetweenIndexes(
+          transformedSelector,
+          startIndex,
+          endIndex + 1,
+          this.transformClassname(firstMatch),
+        );
+      }
+    }
+
+    return transformedSelector;
   }
 
   transformSelectors(

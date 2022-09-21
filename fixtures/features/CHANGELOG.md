@@ -1,5 +1,12 @@
 # @fixtures/features
 
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`9191d5a`](https://github.com/seek-oss/vanilla-extract/commit/9191d5adcdd4d129affdf5482659120e03a3d003), [`b53558a`](https://github.com/seek-oss/vanilla-extract/commit/b53558a3872987282b23d62b0063e4d789a379f9)]:
+  - @vanilla-extract/css@1.9.1
+
 ## 0.0.12
 
 ### Patch Changes
