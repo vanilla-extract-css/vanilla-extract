@@ -1,0 +1,28 @@
+{
+  "name": "@vanilla-extract/babel-plugin-debug-ids",
+  "version": "1.0.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
+  "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "directory": "packages/babel-plugin-debug-ids"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.13.10"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.19"
+  }
+}

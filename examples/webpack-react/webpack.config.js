@@ -28,7 +28,6 @@ module.exports = {
                   { targets: { node: 14 }, modules: false },
                 ],
               ],
-              plugins: ['@vanilla-extract/babel-plugin'],
             },
           },
         ],

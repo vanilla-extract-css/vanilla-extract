@@ -15,7 +15,6 @@
     "@fixtures/unused-modules": "*",
     "@types/mini-css-extract-plugin": "^1.2.2",
     "@types/webpack-dev-server": "^3.11.1",
-    "@vanilla-extract/babel-plugin": "*",
     "@vanilla-extract/esbuild-plugin": "*",
     "@vanilla-extract/vite-plugin": "*",
     "@vanilla-extract/webpack-plugin": "*",

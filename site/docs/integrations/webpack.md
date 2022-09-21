@@ -65,22 +65,6 @@ module.exports = {
 };
 ```
 
-## Debug identifiers
-
-If you'd like automatic debuggable identifiers, you can install the [Babel](https://babeljs.io) plugin.
-
-```bash
-npm install @vanilla-extract/babel-plugin
-```
-
-The plugin should be added to the `plugins` array in your babel config.
-
-```json
-{
-  "plugins": ["@vanilla-extract/babel-plugin"]
-}
-```
-
 ## Configuration
 
 ```js
