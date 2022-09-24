@@ -93,7 +93,7 @@ const myStyle = style({
 
 ## Media Queries
 
-Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style definitions using the `@media` key.
+Unlike in regular CSS, vanilla-extract lets you embed media queries **within** your style definitions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
 ```ts compiled
