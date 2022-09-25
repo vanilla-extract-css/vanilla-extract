@@ -1,4 +1,4 @@
-# vanilla-extract-example-webpack-react
+# stylust-example-webpack-react
 
 ## 0.0.15
 

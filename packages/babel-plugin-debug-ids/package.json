@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/babel-plugin-debug-ids",
+  "name": "@stylust/babel-plugin-debug-ids",
   "version": "1.0.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
-  "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
+  "main": "dist/stylust-babel-plugin-debug-ids.cjs.js",
+  "module": "dist/stylust-babel-plugin-debug-ids.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"

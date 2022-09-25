@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/next-plugin",
+  "name": "@stylust/next-plugin",
   "version": "2.1.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-next-plugin.cjs.js",
-  "module": "dist/vanilla-extract-next-plugin.esm.js",
+  "main": "dist/stylust-next-plugin.cjs.js",
+  "module": "dist/stylust-next-plugin.esm.js",
   "files": [
     "/dist"
   ],

@@ -1,10 +1,10 @@
 {
-  "name": "@vanilla-extract/css-utils",
+  "name": "@stylust/css-utils",
   "version": "0.1.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-css-utils.cjs.js",
-  "module": "dist/vanilla-extract-css-utils.esm.js",
+  "main": "dist/stylust-css-utils.cjs.js",
+  "module": "dist/stylust-css-utils.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"

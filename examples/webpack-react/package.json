@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-extract-example-webpack-react",
+  "name": "stylust-example-webpack-react",
   "description": "Example React project using vanilla-extract and Sprinkles, compiling with webpack",
   "keywords": [
     "vanilla-extract",

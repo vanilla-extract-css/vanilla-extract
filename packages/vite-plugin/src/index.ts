@@ -15,7 +15,7 @@ import {
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const styleUpdateEvent = (fileId: string) =>
-  `vanilla-extract-style-update:${fileId}`;
+  `stylust-style-update:${fileId}`;
 
 const virtualExtCss = '.vanilla.css';
 const virtualExtJs = '.vanilla.js';

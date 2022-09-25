@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import {
   startFixture,
   TestServer,
-} from '@vanilla-extract-private/test-helpers';
+} from '@stylust-private/test-helpers';
 
 import test from './fixture';
 

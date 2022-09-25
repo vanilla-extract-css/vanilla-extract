@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/esbuild-plugin",
+  "name": "@stylust/esbuild-plugin",
   "version": "2.2.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
+  "main": "dist/stylust-esbuild-plugin.cjs.js",
+  "module": "dist/stylust-esbuild-plugin.esm.js",
   "files": [
     "/dist"
   ],

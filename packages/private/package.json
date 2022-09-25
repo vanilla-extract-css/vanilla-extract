@@ -1,10 +1,10 @@
 {
-  "name": "@vanilla-extract/private",
+  "name": "@stylust/private",
   "version": "1.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-private.cjs.js",
-  "module": "dist/vanilla-extract-private.esm.js",
+  "main": "dist/stylust-private.cjs.js",
+  "module": "dist/stylust-private.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"

@@ -1,4 +1,4 @@
-# @vanilla-extract-private/test-helpers
+# @stylust-private/test-helpers
 
 ## 0.0.29
 

@@ -1,4 +1,4 @@
 {
-  "main": "dist/vanilla-extract-webpack-plugin-loader.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin-loader.esm.js"
+  "main": "dist/stylust-webpack-plugin-loader.cjs.js",
+  "module": "dist/stylust-webpack-plugin-loader.esm.js"
 }

@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/vite-plugin",
+  "name": "@stylust/vite-plugin",
   "version": "3.6.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-vite-plugin.cjs.js",
-  "module": "dist/vanilla-extract-vite-plugin.esm.js",
+  "main": "dist/stylust-vite-plugin.cjs.js",
+  "module": "dist/stylust-vite-plugin.esm.js",
   "files": [
     "/dist"
   ],

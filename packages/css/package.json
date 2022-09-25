@@ -1,80 +1,80 @@
 {
-  "name": "@vanilla-extract/css",
+  "name": "@stylust/css",
   "version": "1.9.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
-  "main": "dist/vanilla-extract-css.cjs.js",
-  "module": "dist/vanilla-extract-css.esm.js",
+  "main": "dist/stylust-css.cjs.js",
+  "module": "dist/stylust-css.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
-    "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
+    "./dist/stylust-css.cjs.js": "./dist/stylust-css.browser.cjs.js",
+    "./dist/stylust-css.esm.js": "./dist/stylust-css.browser.esm.js"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css.browser.esm.js",
-        "default": "./dist/vanilla-extract-css.browser.cjs.js"
+        "module": "./dist/stylust-css.browser.esm.js",
+        "default": "./dist/stylust-css.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css.esm.js",
-      "default": "./dist/vanilla-extract-css.cjs.js"
+      "module": "./dist/stylust-css.esm.js",
+      "default": "./dist/stylust-css.cjs.js"
     },
     "./recipe": {
       "browser": {
-        "module": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
-        "default": "./recipe/dist/vanilla-extract-css-recipe.browser.cjs.js"
+        "module": "./recipe/dist/stylust-css-recipe.browser.esm.js",
+        "default": "./recipe/dist/stylust-css-recipe.browser.cjs.js"
       },
-      "module": "./recipe/dist/vanilla-extract-css-recipe.esm.js",
-      "default": "./recipe/dist/vanilla-extract-css-recipe.cjs.js"
+      "module": "./recipe/dist/stylust-css-recipe.esm.js",
+      "default": "./recipe/dist/stylust-css-recipe.cjs.js"
     },
     "./functionSerializer": {
       "browser": {
-        "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
-        "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
+        "module": "./functionSerializer/dist/stylust-css-functionSerializer.browser.esm.js",
+        "default": "./functionSerializer/dist/stylust-css-functionSerializer.browser.cjs.js"
       },
-      "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.esm.js",
-      "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.js"
+      "module": "./functionSerializer/dist/stylust-css-functionSerializer.esm.js",
+      "default": "./functionSerializer/dist/stylust-css-functionSerializer.cjs.js"
     },
     "./adapter": {
       "browser": {
-        "module": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
-        "default": "./adapter/dist/vanilla-extract-css-adapter.browser.cjs.js"
+        "module": "./adapter/dist/stylust-css-adapter.browser.esm.js",
+        "default": "./adapter/dist/stylust-css-adapter.browser.cjs.js"
       },
-      "module": "./adapter/dist/vanilla-extract-css-adapter.esm.js",
-      "default": "./adapter/dist/vanilla-extract-css-adapter.cjs.js"
+      "module": "./adapter/dist/stylust-css-adapter.esm.js",
+      "default": "./adapter/dist/stylust-css-adapter.cjs.js"
     },
     "./transformCss": {
       "browser": {
-        "module": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
-        "default": "./transformCss/dist/vanilla-extract-css-transformCss.browser.cjs.js"
+        "module": "./transformCss/dist/stylust-css-transformCss.browser.esm.js",
+        "default": "./transformCss/dist/stylust-css-transformCss.browser.cjs.js"
       },
-      "module": "./transformCss/dist/vanilla-extract-css-transformCss.esm.js",
-      "default": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.js"
+      "module": "./transformCss/dist/stylust-css-transformCss.esm.js",
+      "default": "./transformCss/dist/stylust-css-transformCss.cjs.js"
     },
     "./fileScope": {
       "browser": {
-        "module": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
-        "default": "./fileScope/dist/vanilla-extract-css-fileScope.browser.cjs.js"
+        "module": "./fileScope/dist/stylust-css-fileScope.browser.esm.js",
+        "default": "./fileScope/dist/stylust-css-fileScope.browser.cjs.js"
       },
-      "module": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
-      "default": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.js"
+      "module": "./fileScope/dist/stylust-css-fileScope.esm.js",
+      "default": "./fileScope/dist/stylust-css-fileScope.cjs.js"
     },
     "./fileScope/package.json": "./fileScope/package.json",
     "./injectStyles": {
       "browser": {
-        "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
-        "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.cjs.js"
+        "module": "./injectStyles/dist/stylust-css-injectStyles.browser.esm.js",
+        "default": "./injectStyles/dist/stylust-css-injectStyles.browser.cjs.js"
       },
-      "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.esm.js",
-      "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.js"
+      "module": "./injectStyles/dist/stylust-css-injectStyles.esm.js",
+      "default": "./injectStyles/dist/stylust-css-injectStyles.cjs.js"
     },
     "./disableRuntimeStyles": {
       "browser": {
-        "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
-        "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"
+        "module": "./disableRuntimeStyles/dist/stylust-css-disableRuntimeStyles.browser.esm.js",
+        "default": "./disableRuntimeStyles/dist/stylust-css-disableRuntimeStyles.browser.cjs.js"
       },
-      "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
-      "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
+      "module": "./disableRuntimeStyles/dist/stylust-css-disableRuntimeStyles.esm.js",
+      "default": "./disableRuntimeStyles/dist/stylust-css-disableRuntimeStyles.cjs.js"
     }
   },
   "preconstruct": {

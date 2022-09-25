@@ -1,22 +1,22 @@
 {
-  "name": "@vanilla-extract/webpack-plugin",
+  "name": "@stylust/webpack-plugin",
   "version": "2.2.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin.esm.js",
+  "main": "dist/stylust-webpack-plugin.cjs.js",
+  "module": "dist/stylust-webpack-plugin.esm.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
-      "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
+      "module": "./dist/stylust-webpack-plugin.esm.js",
+      "default": "./dist/stylust-webpack-plugin.cjs.js"
     },
     "./loader": {
-      "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
-      "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
+      "module": "./loader/dist/stylust-webpack-plugin-loader.esm.js",
+      "default": "./loader/dist/stylust-webpack-plugin-loader.cjs.js"
     },
     "./virtualFileLoader": {
-      "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
-      "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
+      "module": "./virtualFileLoader/dist/stylust-webpack-plugin-virtualFileLoader.esm.js",
+      "default": "./virtualFileLoader/dist/stylust-webpack-plugin-virtualFileLoader.cjs.js"
     }
   },
   "preconstruct": {

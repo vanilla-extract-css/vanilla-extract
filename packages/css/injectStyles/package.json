@@ -1,19 +1,19 @@
 {
-  "main": "dist/vanilla-extract-css-injectStyles.cjs.js",
-  "module": "dist/vanilla-extract-css-injectStyles.esm.js",
+  "main": "dist/stylust-css-injectStyles.cjs.js",
+  "module": "dist/stylust-css-injectStyles.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css-injectStyles.cjs.js": "./dist/vanilla-extract-css-injectStyles.browser.cjs.js",
-    "./dist/vanilla-extract-css-injectStyles.esm.js": "./dist/vanilla-extract-css-injectStyles.browser.esm.js"
+    "./dist/stylust-css-injectStyles.cjs.js": "./dist/stylust-css-injectStyles.browser.cjs.js",
+    "./dist/stylust-css-injectStyles.esm.js": "./dist/stylust-css-injectStyles.browser.esm.js"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css-injectStyles.browser.esm.js",
-        "default": "./dist/vanilla-extract-css-injectStyles.browser.cjs.js"
+        "module": "./dist/stylust-css-injectStyles.browser.esm.js",
+        "default": "./dist/stylust-css-injectStyles.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css-injectStyles.esm.js",
-      "default": "./dist/vanilla-extract-css-injectStyles.cjs.js"
+      "module": "./dist/stylust-css-injectStyles.esm.js",
+      "default": "./dist/stylust-css-injectStyles.cjs.js"
     }
   }
 }

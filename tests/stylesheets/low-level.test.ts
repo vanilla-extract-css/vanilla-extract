@@ -2,7 +2,7 @@ import {
   getStylesheet,
   startFixture,
   TestServer,
-} from '@vanilla-extract-private/test-helpers';
+} from '@stylust-private/test-helpers';
 
 const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
 let testCounter = 0;

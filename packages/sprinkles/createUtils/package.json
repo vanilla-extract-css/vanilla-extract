@@ -1,4 +1,4 @@
 {
-  "main": "dist/vanilla-extract-sprinkles-createUtils.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles-createUtils.esm.js"
+  "main": "dist/stylust-sprinkles-createUtils.cjs.js",
+  "module": "dist/stylust-sprinkles-createUtils.esm.js"
 }

@@ -1,20 +1,20 @@
 {
-  "main": "dist/vanilla-extract-css-adapter.cjs.js",
-  "module": "dist/vanilla-extract-css-adapter.esm.js",
+  "main": "dist/stylust-css-adapter.cjs.js",
+  "module": "dist/stylust-css-adapter.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css-adapter.cjs.js": "./dist/vanilla-extract-css-adapter.browser.cjs.js",
-    "./dist/vanilla-extract-css-adapter.esm.js": "./dist/vanilla-extract-css-adapter.browser.esm.js"
+    "./dist/stylust-css-adapter.cjs.js": "./dist/stylust-css-adapter.browser.cjs.js",
+    "./dist/stylust-css-adapter.esm.js": "./dist/stylust-css-adapter.browser.esm.js"
   },
   "sideEffects": false,
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css-adapter.browser.esm.js",
-        "default": "./dist/vanilla-extract-css-adapter.browser.cjs.js"
+        "module": "./dist/stylust-css-adapter.browser.esm.js",
+        "default": "./dist/stylust-css-adapter.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css-adapter.esm.js",
-      "default": "./dist/vanilla-extract-css-adapter.cjs.js"
+      "module": "./dist/stylust-css-adapter.esm.js",
+      "default": "./dist/stylust-css-adapter.cjs.js"
     }
   }
 }

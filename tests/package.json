@@ -1,5 +1,5 @@
 {
-  "name": "@vanilla-extract-private/tests",
+  "name": "@stylust-private/tests",
   "private": true,
   "version": "0.0.29",
   "author": "SEEK",
@@ -8,7 +8,7 @@
     "@playwright/test": "^1.25.1",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
-    "@vanilla-extract-private/test-helpers": "*",
+    "@stylust-private/test-helpers": "*",
     "@vanilla-extract/css": "*",
     "@vanilla-extract/dynamic": "*",
     "@vanilla-extract/recipes": "*",

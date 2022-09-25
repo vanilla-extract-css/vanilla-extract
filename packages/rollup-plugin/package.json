@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/rollup-plugin",
+  "name": "@stylust/rollup-plugin",
   "version": "1.2.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
-  "module": "dist/vanilla-extract-rollup-plugin.esm.js",
+  "main": "dist/stylust-rollup-plugin.cjs.js",
+  "module": "dist/stylust-rollup-plugin.esm.js",
   "files": [
     "/dist"
   ],

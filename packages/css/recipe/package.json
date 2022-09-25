@@ -1,19 +1,19 @@
 {
-  "main": "dist/vanilla-extract-css-recipe.cjs.js",
-  "module": "dist/vanilla-extract-css-recipe.esm.js",
+  "main": "dist/stylust-css-recipe.cjs.js",
+  "module": "dist/stylust-css-recipe.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css-recipe.cjs.js": "./dist/vanilla-extract-css-recipe.browser.cjs.js",
-    "./dist/vanilla-extract-css-recipe.esm.js": "./dist/vanilla-extract-css-recipe.browser.esm.js"
+    "./dist/stylust-css-recipe.cjs.js": "./dist/stylust-css-recipe.browser.cjs.js",
+    "./dist/stylust-css-recipe.esm.js": "./dist/stylust-css-recipe.browser.esm.js"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css-recipe.browser.esm.js",
-        "default": "./dist/vanilla-extract-css-recipe.browser.cjs.js"
+        "module": "./dist/stylust-css-recipe.browser.esm.js",
+        "default": "./dist/stylust-css-recipe.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css-recipe.esm.js",
-      "default": "./dist/vanilla-extract-css-recipe.cjs.js"
+      "module": "./dist/stylust-css-recipe.esm.js",
+      "default": "./dist/stylust-css-recipe.cjs.js"
     }
   }
 }

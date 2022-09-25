@@ -12,7 +12,7 @@ import {
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
-const vanillaCssNamespace = 'vanilla-extract-css-ns';
+const vanillaCssNamespace = 'stylust-css-ns';
 
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;

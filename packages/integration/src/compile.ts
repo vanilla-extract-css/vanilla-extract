@@ -18,7 +18,7 @@ interface VanillaExtractTransformPluginParams {
 export const vanillaExtractTransformPlugin = ({
   identOption,
 }: VanillaExtractTransformPluginParams): Plugin => ({
-  name: 'vanilla-extract-filescope',
+  name: 'stylust-filescope',
   setup(build) {
     const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
 

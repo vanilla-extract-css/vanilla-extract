@@ -1,19 +1,19 @@
 {
-  "main": "dist/vanilla-extract-css-functionSerializer.cjs.js",
-  "module": "dist/vanilla-extract-css-functionSerializer.esm.js",
+  "main": "dist/stylust-css-functionSerializer.cjs.js",
+  "module": "dist/stylust-css-functionSerializer.esm.js",
   "browser": {
-    "./dist/vanilla-extract-css-functionSerializer.cjs.js": "./dist/vanilla-extract-css-functionSerializer.browser.cjs.js",
-    "./dist/vanilla-extract-css-functionSerializer.esm.js": "./dist/vanilla-extract-css-functionSerializer.browser.esm.js"
+    "./dist/stylust-css-functionSerializer.cjs.js": "./dist/stylust-css-functionSerializer.browser.cjs.js",
+    "./dist/stylust-css-functionSerializer.esm.js": "./dist/stylust-css-functionSerializer.browser.esm.js"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css-functionSerializer.browser.esm.js",
-        "default": "./dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
+        "module": "./dist/stylust-css-functionSerializer.browser.esm.js",
+        "default": "./dist/stylust-css-functionSerializer.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css-functionSerializer.esm.js",
-      "default": "./dist/vanilla-extract-css-functionSerializer.cjs.js"
+      "module": "./dist/stylust-css-functionSerializer.esm.js",
+      "default": "./dist/stylust-css-functionSerializer.cjs.js"
     }
   }
 }

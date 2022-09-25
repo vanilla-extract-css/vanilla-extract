@@ -11,7 +11,7 @@ interface CompilationResult {
 }
 
 const getCompilerName = (resource: string) =>
-  `vanilla-extract-compiler:${resource}`;
+  `stylust-compiler:${resource}`;
 
 export class ChildCompiler {
   externals: Externals | undefined;
@@ -22,7 +22,7 @@ export class ChildCompiler {
 
   isChildCompiler(name: string | undefined) {
     return (
-      typeof name === 'string' && name.startsWith('vanilla-extract-compiler')
+      typeof name === 'string' && name.startsWith('stylust-compiler')
     );
   }
 

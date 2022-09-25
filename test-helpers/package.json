@@ -1,5 +1,5 @@
 {
-  "name": "@vanilla-extract-private/test-helpers",
+  "name": "@stylust-private/test-helpers",
   "private": true,
   "version": "0.0.29",
   "main": "src/index.ts",

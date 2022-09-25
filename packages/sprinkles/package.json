@@ -1,23 +1,23 @@
 {
-  "name": "@vanilla-extract/sprinkles",
+  "name": "@stylust/sprinkles",
   "version": "1.5.0",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-sprinkles.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles.esm.js",
+  "main": "dist/stylust-sprinkles.cjs.js",
+  "module": "dist/stylust-sprinkles.esm.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-sprinkles.esm.js",
-      "default": "./dist/vanilla-extract-sprinkles.cjs.js"
+      "module": "./dist/stylust-sprinkles.esm.js",
+      "default": "./dist/stylust-sprinkles.cjs.js"
     },
     "./createRuntimeSprinkles": {
-      "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
-      "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
+      "module": "./createRuntimeSprinkles/dist/stylust-sprinkles-createRuntimeSprinkles.esm.js",
+      "default": "./createRuntimeSprinkles/dist/stylust-sprinkles-createRuntimeSprinkles.cjs.js"
     },
     "./createUtils": {
-      "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
-      "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
+      "module": "./createUtils/dist/stylust-sprinkles-createUtils.esm.js",
+      "default": "./createUtils/dist/stylust-sprinkles-createUtils.cjs.js"
     }
   },
   "files": [

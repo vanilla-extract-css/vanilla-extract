@@ -1,4 +1,4 @@
 {
-  "main": "dist/vanilla-extract-recipes-createRuntimeFn.cjs.js",
-  "module": "dist/vanilla-extract-recipes-createRuntimeFn.esm.js"
+  "main": "dist/stylust-recipes-createRuntimeFn.cjs.js",
+  "module": "dist/stylust-recipes-createRuntimeFn.esm.js"
 }

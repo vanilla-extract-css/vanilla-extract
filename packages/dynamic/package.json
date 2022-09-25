@@ -1,15 +1,15 @@
 {
-  "name": "@vanilla-extract/dynamic",
+  "name": "@stylust/dynamic",
   "version": "2.0.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-dynamic.cjs.js",
-  "module": "dist/vanilla-extract-dynamic.esm.js",
+  "main": "dist/stylust-dynamic.cjs.js",
+  "module": "dist/stylust-dynamic.esm.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-dynamic.esm.js",
-      "default": "./dist/vanilla-extract-dynamic.cjs.js"
+      "module": "./dist/stylust-dynamic.esm.js",
+      "default": "./dist/stylust-dynamic.cjs.js"
     }
   },
   "files": [

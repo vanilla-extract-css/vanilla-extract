@@ -97,7 +97,7 @@ async function getCss(entrypointFile, files, rootContext) {
                     source: file.contents,
                     filePath: file.fileName,
                     rootPath: rootContext,
-                    packageName: 'vanilla-extract-site',
+                    packageName: 'stylust-site',
                     identOption: 'debug',
                   });
 

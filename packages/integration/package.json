@@ -1,8 +1,8 @@
 {
-  "name": "@vanilla-extract/integration",
+  "name": "@stylust/integration",
   "version": "6.0.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-integration.cjs.js",
+  "main": "dist/stylust-integration.cjs.js",
   "files": [
     "/dist"
   ],
