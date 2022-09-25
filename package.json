@@ -24,7 +24,10 @@
   "preconstruct": {
     "packages": [
       "packages/*"
-    ]
+    ],
+    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
+      "keepDynamicImportAsDynamicImportInCommonJS": true
+    }
   },
   "volta": {
     "node": "16.17.0"

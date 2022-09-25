@@ -2,6 +2,7 @@ export {
   processVanillaFile,
   parseFileScope,
   stringifyFileScope,
+  serializeVanillaModule,
 } from './processVanillaFile';
 export { getSourceFromVirtualCssFile } from './virtualFile';
 export { getPackageInfo } from './packageInfo';

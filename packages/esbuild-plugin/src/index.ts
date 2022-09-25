@@ -1,11 +1,9 @@
-import { dirname, join } from 'path';
+import { dirname, posix } from 'path';
 
+import { createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
   virtualCssFileFilter,
-  processVanillaFile,
-  getSourceFromVirtualCssFile,
-  compile,
   vanillaExtractTransformPlugin,
   IdentifierOption,
   CompileOptions,
@@ -40,8 +38,26 @@ export function vanillaExtractPlugin({
 
   return {
     name: 'vanilla-extract',
-    setup(build) {
-      build.onResolve({ filter: virtualCssFileFilter }, (args) => {
+    async setup(build) {
+      let compiler;
+
+      console.log('Running setup...');
+
+      const root = build.initialOptions.absWorkingDir;
+
+      compiler = await createCompiler({
+        root,
+        toCssImport(filePath) {
+          return posix.relative(root, filePath) + '.vanilla.css';
+        },
+        fromCssImport(virtualCssSource) {
+          const [relativeFilePath] = virtualCssSource.split('.vanilla.css');
+
+          return posix.join(root, relativeFilePath);
+        },
+      });
+
+      build.onResolve({ filter: /\.vanilla\.css/ }, (args) => {
         return {
           path: args.path,
           namespace: vanillaCssNamespace,
@@ -51,57 +67,28 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          let { source, fileName } = await getSourceFromVirtualCssFile(path);
+          const { css, filePath } = compiler.getCssForFile(path);
 
-          if (typeof processCss === 'function') {
-            source = await processCss(source);
-          }
+          console.log('onLoad', filePath);
 
-          const rootDir = build.initialOptions.absWorkingDir ?? process.cwd();
-
-          const resolveDir = dirname(join(rootDir, fileName));
+          // if (typeof processCss === 'function') {
+          //   source = await processCss(source);
+          // }
 
           return {
-            contents: source,
+            contents: css,
             loader: 'css',
-            resolveDir,
+            resolveDir: dirname(filePath),
           };
         },
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const combinedEsbuildOptions = { ...esbuildOptions } ?? {};
-        const identOption =
-          identifiers ?? (build.initialOptions.minify ? 'short' : 'debug');
-
-        // To avoid a breaking change this combines the `external` option from
-        // esbuildOptions with the pre-existing externals option.
-        if (externals) {
-          if (combinedEsbuildOptions.external) {
-            combinedEsbuildOptions.external.push(...externals);
-          } else {
-            combinedEsbuildOptions.external = externals;
-          }
-        }
-
-        const { source, watchFiles } = await compile({
-          filePath: path,
-          cwd: build.initialOptions.absWorkingDir,
-          esbuildOptions: combinedEsbuildOptions,
-          identOption,
-        });
-
-        const contents = await processVanillaFile({
-          source,
-          filePath: path,
-          outputCss,
-          identOption,
-        });
+        const contents = await compiler.processVanillaFile(path);
 
         return {
           contents,
           loader: 'js',
-          watchFiles,
         };
       });
     },

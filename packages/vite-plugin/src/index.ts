@@ -178,8 +178,7 @@ export function vanillaExtractPlugin({
         source,
         filePath: validId,
         identOption,
-        serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const absoluteFilePath = fileURLToPath(fileScope.url!);
+        serializeVirtualCssPath: async ({ source, absoluteFilePath }) => {
           const absoluteId = `${absoluteFilePath}${
             config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
               ? virtualExtCss

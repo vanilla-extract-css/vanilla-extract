@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url';
+
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 // @ts-expect-error
@@ -7,7 +9,6 @@ import isPlainObject from 'lodash/isPlainObject';
 import outdent from 'outdent';
 
 import { hash } from './hash';
-import { serializeCss } from './serialize';
 import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
@@ -35,8 +36,8 @@ interface ProcessVanillaFileOptions {
   filePath: string;
   outputCss?: boolean;
   identOption?: IdentifierOption;
-  serializeVirtualCssPath?: (file: {
-    fileName: string;
+  serializeVirtualCssPath: (file: {
+    absoluteFilePath: string;
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
@@ -111,28 +112,25 @@ export async function processVanillaFile({
       cssObjs: fileScopeCss,
     }).join('\n');
 
-    const fileName = `${fileScope.filePath}.vanilla.css`;
+    if (!fileScope.url) {
+      throw new Error(`vanilla-extract: Filescope missing URL property`);
+    }
+
+    const absoluteFilePath = fileURLToPath(fileScope.url);
 
     let virtualCssFilePath: string;
 
-    if (serializeVirtualCssPath) {
-      const serializedResult = serializeVirtualCssPath({
-        fileName,
-        fileScope,
-        source: css,
-      });
+    const serializedResult = serializeVirtualCssPath({
+      absoluteFilePath,
+      fileScope,
+      source: css,
+    });
 
-      if (typeof serializedResult === 'string') {
-        virtualCssFilePath = serializedResult;
-      } else {
-        virtualCssFilePath = await serializedResult;
-      }
+    if (typeof serializedResult === 'string') {
+      virtualCssFilePath = serializedResult;
     } else {
-      const serializedCss = await serializeCss(css);
-
-      virtualCssFilePath = `import '${fileName}?source=${serializedCss}';`;
+      virtualCssFilePath = await serializedResult;
     }
-
     cssImports.push(virtualCssFilePath);
   }
 
@@ -248,7 +246,7 @@ export function stringifyExports(
   );
 }
 
-function serializeVanillaModule(
+export function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
   unusedCompositionRegex: RegExp | null,

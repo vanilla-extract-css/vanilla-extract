@@ -95,16 +95,19 @@ export function pitch(this: LoaderContext) {
         outputCss,
         filePath: this.resourcePath,
         identOption: defaultIdentifierOption(this.mode, identifiers),
-        serializeVirtualCssPath: async ({ fileName, source }) => {
+        serializeVirtualCssPath: async ({ absoluteFilePath, source }) => {
+          const rootRelativePath =
+            path.relative(this.rootContext, absoluteFilePath) + '.vanilla.css';
+
           const serializedCss = await serializeCss(source);
           const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
-            fileName,
+            fileName: rootRelativePath,
             source: serializedCss,
           })}`;
 
           const request = loaderUtils.stringifyRequest(
             this,
-            `${fileName}!=!${virtualResourceLoader}!${emptyCssExtractionFile}`,
+            `${rootRelativePath}!=!${virtualResourceLoader}!${emptyCssExtractionFile}`,
           );
 
           return `import ${request}`;
