@@ -151,60 +151,60 @@ export const createCompiler = async ({
         getIdentOption: () => 'debug',
       };
 
-      const result = await lock(async () => {
+      const { fileExports, cssImports } = await lock(async () => {
         setAdapter(cssAdapter);
 
-        const result = await runner.executeFile(filePath);
+        const fileExports = await runner.executeFile(filePath);
+
+        const moduleNode = server.moduleGraph.getModuleById(filePath);
+
+        if (!moduleNode) {
+          throw new Error(`Can't find ModuleNode for ${filePath}`);
+        }
+
+        const cssImports = [];
+
+        for (const moduleId of getCssDeps(moduleNode, cssCache)) {
+          const cssEntry = cssCache.get(moduleId);
+
+          if (!cssEntry) {
+            throw new Error(`No CSS Entry in cache for ${moduleId}`);
+          }
+
+          cssImports.push(`import '${toCssImport(filePath)}';`);
+
+          cssEntry.localClassNames.forEach((localClassName) => {
+            localClassNames.add(localClassName);
+          });
+          cssEntry.usedCompositions.forEach((usedComposition) => {
+            usedCompositions.add(usedComposition);
+          });
+          composedClassLists.push(...cssEntry.composedClassLists);
+        }
+
+        for (const url of executedUrls) {
+          const css = transformCss({
+            localClassNames: Array.from(localClassNames),
+            composedClassLists,
+            cssObjs: cssByFileScope.get(url)!,
+          }).join('\n');
+
+          const moduleId = fileURLToPath(url);
+
+          cssImports.push(`import '${toCssImport(moduleId)}';`);
+
+          cssCache.set(moduleId, {
+            localClassNames,
+            composedClassLists,
+            usedCompositions,
+            css,
+          });
+        }
 
         removeAdapter();
 
-        return result;
+        return { fileExports, cssImports };
       });
-
-      const moduleNode = server.moduleGraph.getModuleById(filePath);
-
-      if (!moduleNode) {
-        throw new Error(`Can't find ModuleNode for ${filePath}`);
-      }
-
-      const cssImports = [];
-
-      for (const moduleId of getCssDeps(moduleNode, cssCache)) {
-        const cssEntry = cssCache.get(moduleId);
-
-        if (!cssEntry) {
-          throw new Error(`No CSS Entry in cache for ${moduleId}`);
-        }
-
-        cssImports.push(`import '${toCssImport(filePath)}';`);
-
-        cssEntry.localClassNames.forEach((localClassName) => {
-          localClassNames.add(localClassName);
-        });
-        cssEntry.usedCompositions.forEach((usedComposition) => {
-          usedCompositions.add(usedComposition);
-        });
-        composedClassLists.push(...cssEntry.composedClassLists);
-      }
-
-      for (const url of executedUrls) {
-        const css = transformCss({
-          localClassNames: Array.from(localClassNames),
-          composedClassLists,
-          cssObjs: cssByFileScope.get(url)!,
-        }).join('\n');
-
-        const moduleId = fileURLToPath(url);
-
-        cssImports.push(`import '${toCssImport(moduleId)}';`);
-
-        cssCache.set(moduleId, {
-          localClassNames,
-          composedClassLists,
-          usedCompositions,
-          css,
-        });
-      }
 
       const unusedCompositions = composedClassLists
         .filter(({ identifier }) => !usedCompositions.has(identifier))
@@ -215,7 +215,11 @@ export const createCompiler = async ({
           ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
           : null;
 
-      return serializeVanillaModule(cssImports, result, unusedCompositionRegex);
+      return serializeVanillaModule(
+        cssImports,
+        fileExports,
+        unusedCompositionRegex,
+      );
     },
     getCssForFile(virtualCssFilePath: string) {
       const filePath = fromCssImport(virtualCssFilePath);

@@ -39,13 +39,11 @@ export function vanillaExtractPlugin({
   return {
     name: 'vanilla-extract',
     async setup(build) {
-      let compiler;
-
       console.log('Running setup...');
 
-      const root = build.initialOptions.absWorkingDir;
+      const root = build.initialOptions.absWorkingDir!;
 
-      compiler = await createCompiler({
+      const compiler = await createCompiler({
         root,
         toCssImport(filePath) {
           return posix.relative(root, filePath) + '.vanilla.css';
@@ -68,8 +66,6 @@ export function vanillaExtractPlugin({
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
           const { css, filePath } = compiler.getCssForFile(path);
-
-          console.log('onLoad', filePath);
 
           // if (typeof processCss === 'function') {
           //   source = await processCss(source);
