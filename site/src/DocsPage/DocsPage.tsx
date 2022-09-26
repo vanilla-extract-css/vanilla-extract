@@ -250,7 +250,7 @@ const PrimaryNav = ({
                   paddingLeft="xsmall"
                   marginLeft="xsmall"
                 >
-                  Github
+                  GitHub
                 </Box>
               </Box>
             </Link>
