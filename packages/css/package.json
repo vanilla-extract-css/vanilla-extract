@@ -126,7 +126,7 @@
   },
   "devDependencies": {
     "@crackle/cli": "^0.8.0",
-    "@vanilla-extract/private": "^1.0.3",
-    "@types/cssesc": "^3.0.0"
+    "@types/cssesc": "^3.0.0",
+    "@vanilla-extract/private": "^1.0.3"
   }
 }
