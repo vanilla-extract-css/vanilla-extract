@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./makeDocsManifest && webpack serve",
     "build": "node ./makeDocsManifest && NODE_ENV=production webpack",
-    "deploy:prod": "netlify deploy --site vanilla-extract-css --prod",
-    "deploy:branch": "netlify deploy --site vanilla-extract-css"
+    "deploy:prod": "netlify deploy --site vanilla-extract-css --dir dist --prod",
+    "deploy:branch": "netlify deploy --site vanilla-extract-css --dir dist"
   },
   "dependencies": {
     "@capsizecss/vanilla-extract": "^1.0.0",
