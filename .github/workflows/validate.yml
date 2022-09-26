@@ -9,10 +9,10 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: pnpm/action-setup@v2.2.2
-
       - name: Checkout Repo
         uses: actions/checkout@main
+
+      - uses: pnpm/action-setup@v2.2.2
 
       - name: Set up Node.js
         uses: actions/setup-node@main
