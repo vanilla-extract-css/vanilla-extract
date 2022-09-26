@@ -32,13 +32,13 @@ jobs:
         run: pnpm --filter "./site" build
 
       - name: Draft deploy site to Netlify
-        run: pnpm --filter "./site" deploy-dev
+        run: pnpm --filter "./site" deploy:branch
         if: github.ref != 'refs/heads/master'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
       - name: Deploy site to Netlify
-        run: pnpm --filter "./site" deploy-prod
+        run: pnpm --filter "./site" deploy:prod
         if: github.ref == 'refs/heads/master'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
