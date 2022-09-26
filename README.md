@@ -34,7 +34,7 @@ Basically, it’s [“CSS Modules](https://github.com/css-modules/css-modules)-i
 
 ---
 
-🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/App.css.ts)
+🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/vanilla-extract-css/vanilla-extract/tree/master/examples/webpack-react?file=/src/App.css.ts)
 
 ---
 

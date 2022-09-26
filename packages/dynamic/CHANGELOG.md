@@ -4,24 +4,24 @@
 
 ### Patch Changes
 
-- [#520](https://github.com/seek-oss/vanilla-extract/pull/520) [`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Transpile code to meet [esmodules target](https://babeljs.io/docs/en/babel-preset-env#targetsesmodules)
+- [#520](https://github.com/vanilla-extract-css/vanilla-extract/pull/520) [`b294764`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Transpile code to meet [esmodules target](https://babeljs.io/docs/en/babel-preset-env#targetsesmodules)
 
   This should allow code that runs in the browser to conform to most browser policies. If you need to support browsers prior to the esmodules target (e.g. IE 11) then you'll need to configure custom transpilation in your projects.
 
-- Updated dependencies [[`b294764`](https://github.com/seek-oss/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
+- Updated dependencies [[`b294764`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b294764b7f3401cec88760894ff19c60ca1d4d1d)]:
   - @vanilla-extract/private@1.0.3
 
 ## 2.0.1
 
 ### Patch Changes
 
-- [#508](https://github.com/seek-oss/vanilla-extract/pull/508) [`d15e783`](https://github.com/seek-oss/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `exports` field to `package.json` so nested package paths can be imported in a Node.js ESM context
+- [#508](https://github.com/vanilla-extract-css/vanilla-extract/pull/508) [`d15e783`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d15e783c960144e3b3ca74128cb2d04fbbc16df1) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `exports` field to `package.json` so nested package paths can be imported in a Node.js ESM context
 
 ## 2.0.0
 
 ### Major Changes
 
-- [#276](https://github.com/seek-oss/vanilla-extract/pull/276) [`4bcbd6f`](https://github.com/seek-oss/vanilla-extract/commit/4bcbd6f4ac0170a09553ce8d44ca84361782cce5) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `assignInlineVars` and `setElementVars` functions
+- [#276](https://github.com/vanilla-extract-css/vanilla-extract/pull/276) [`4bcbd6f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4bcbd6f4ac0170a09553ce8d44ca84361782cce5) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `assignInlineVars` and `setElementVars` functions
 
   **assignInlineVars**
 
@@ -148,9 +148,9 @@
 
 ### Major Changes
 
-- [#171](https://github.com/seek-oss/vanilla-extract/pull/171) [`84a8611`](https://github.com/seek-oss/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Release v1
+- [#171](https://github.com/vanilla-extract-css/vanilla-extract/pull/171) [`84a8611`](https://github.com/vanilla-extract-css/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Release v1
 
 ### Patch Changes
 
-- Updated dependencies [[`84a8611`](https://github.com/seek-oss/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869)]:
+- Updated dependencies [[`84a8611`](https://github.com/vanilla-extract-css/vanilla-extract/commit/84a8611972f32a00a6cbd85267a01dd2d31be869)]:
   - @vanilla-extract/private@1.0.0

@@ -21,7 +21,7 @@ export const GitHubStars = () => {
   useEffect(() => {
     const getCount = async () => {
       const res = await fetch(
-        `https://api.github.com/repos/seek-oss/vanilla-extract`,
+        `https://api.github.com/repos/vanilla-extract-css/vanilla-extract`,
       );
       const { stargazers_count: count } = await res.json();
 
