@@ -4,7 +4,7 @@ on: push
 
 jobs:
   deploy-site:
-    name: Publish & Deploy
+    name: Deploy site
     runs-on: ubuntu-latest
     env:
       CI: true
