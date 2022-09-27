@@ -166,18 +166,6 @@ importers:
     devDependencies:
       '@types/babel__core': 7.1.19
 
-  packages/compiler:
-    specifiers:
-      '@vanilla-extract/integration': '*'
-      mlly: 0.5.16
-      vite: ^2.9.15
-      vite-node: ^0.23.4
-    dependencies:
-      '@vanilla-extract/integration': link:../integration
-      mlly: 0.5.16
-      vite: 2.9.15
-      vite-node: 0.23.4
-
   packages/css:
     specifiers:
       '@emotion/hash': ^0.8.0
@@ -220,11 +208,9 @@ importers:
 
   packages/esbuild-plugin:
     specifiers:
-      '@vanilla-extract/compiler': 0.0.1
       '@vanilla-extract/integration': ^6.0.0
       esbuild: ^0.11.16
     dependencies:
-      '@vanilla-extract/compiler': link:../compiler
       '@vanilla-extract/integration': link:../integration
     devDependencies:
       esbuild: 0.11.23
@@ -242,6 +228,7 @@ importers:
       find-up: ^5.0.0
       javascript-stringify: ^2.0.1
       lodash: ^4.17.21
+      mlly: 0.5.16
       outdent: ^0.8.0
       vite: ^2.9.15
       vite-node: ^0.23.4
@@ -255,6 +242,7 @@ importers:
       find-up: 5.0.0
       javascript-stringify: 2.1.0
       lodash: 4.17.21
+      mlly: 0.5.16
       outdent: 0.8.0
       vite: 2.9.15
       vite-node: 0.23.4

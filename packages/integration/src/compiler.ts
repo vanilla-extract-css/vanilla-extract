@@ -2,12 +2,6 @@ import { pathToFileURL, fileURLToPath } from 'url';
 
 import { setAdapter, removeAdapter } from '@vanilla-extract/css/adapter';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import {
-  transform,
-  cssFileFilter,
-  getPackageInfo,
-  serializeVanillaModule,
-} from '@vanilla-extract/integration';
 import { resolvePath } from 'mlly';
 import { createServer, ModuleNode } from 'vite';
 import { ViteNodeRunner } from 'vite-node/client';
@@ -15,36 +9,40 @@ import { ViteNodeServer } from 'vite-node/server';
 import type { Adapter } from '@vanilla-extract/css';
 
 import { lock } from './lock';
+import { getPackageInfo } from './packageInfo';
+import { cssFileFilter } from './filters';
+import { serializeVanillaModule } from './processVanillaFile';
+import { transform } from './transform';
 
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];
 
-const getCssDeps = (
-  module: ModuleNode,
+const scanModule = (
+  enrtyModule: ModuleNode,
   cssCache: Map<string, unknown>,
-  cssDeps: Array<string> = [],
 ) => {
-  if (module.id && cssCache.has(module.id)) {
-    cssDeps.push(module.id!);
+  const queue = [enrtyModule];
+  const cssDeps = new Set<string>();
+  const watchFiles = new Set<string>();
+
+  for (const moduleNode of queue) {
+    if (moduleNode.id && cssCache.has(moduleNode.id)) {
+      cssDeps.add(moduleNode.id!);
+    }
+
+    if (moduleNode.file) {
+      watchFiles.add(moduleNode.file);
+    }
+
+    for (const importedModule of moduleNode.importedModules) {
+      queue.push(importedModule);
+    }
   }
 
-  for (const importedModule of module.importedModules) {
-    getCssDeps(importedModule, cssCache, cssDeps);
-  }
-
-  return cssDeps;
+  return { cssDeps, watchFiles };
 };
 
-interface CreateCompilerParams {
-  root: string;
-  toCssImport: (filePath: string) => string;
-  fromCssImport: (source: string) => string;
-}
-export const createCompiler = async ({
-  root,
-  toCssImport,
-  fromCssImport,
-}: CreateCompilerParams) => {
+const createViteServer = async (root: string) => {
   const pkg = getPackageInfo(root);
 
   const server = await createServer({
@@ -88,20 +86,9 @@ export const createCompiler = async ({
     ],
   });
 
-  const cssCache = new Map<
-    string,
-    {
-      css: string;
-      localClassNames: Set<string>;
-      composedClassLists: Array<Composition>;
-      usedCompositions: Set<string>;
-    }
-  >();
-
   // this is need to initialize the plugins
   await server.pluginContainer.buildStart({});
 
-  // @ts-expect-error Types not lining up 🤷
   const node = new ViteNodeServer(server);
 
   const runner = new ViteNodeRunner({
@@ -120,7 +107,43 @@ export const createCompiler = async ({
   });
 
   return {
+    server,
+    runner,
+  };
+};
+
+export interface Compiler {
+  processVanillaFile(
+    filePath: string,
+  ): Promise<{ source: string; watchFiles: Set<string> }>;
+  getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
+  close(): Promise<void>;
+}
+
+export interface CreateCompilerParams {
+  root: string;
+  toCssImport: (filePath: string) => string;
+}
+export const createCompiler = ({
+  root,
+  toCssImport,
+}: CreateCompilerParams): Compiler => {
+  const vitePromise = createViteServer(root);
+
+  const cssCache = new Map<
+    string,
+    {
+      css: string;
+      localClassNames: Set<string>;
+      composedClassLists: Array<Composition>;
+      usedCompositions: Set<string>;
+    }
+  >();
+
+  return {
     async processVanillaFile(filePath: string) {
+      const { server, runner } = await vitePromise;
+
       const cssByFileScope = new Map<string, Array<Css>>();
       const localClassNames = new Set<string>();
       const composedClassLists: Array<Composition> = [];
@@ -151,7 +174,7 @@ export const createCompiler = async ({
         getIdentOption: () => 'debug',
       };
 
-      const { fileExports, cssImports } = await lock(async () => {
+      const { fileExports, cssImports, watchFiles } = await lock(async () => {
         setAdapter(cssAdapter);
 
         const fileExports = await runner.executeFile(filePath);
@@ -164,7 +187,9 @@ export const createCompiler = async ({
 
         const cssImports = [];
 
-        for (const moduleId of getCssDeps(moduleNode, cssCache)) {
+        const { cssDeps, watchFiles } = scanModule(moduleNode, cssCache);
+
+        for (const moduleId of cssDeps) {
           const cssEntry = cssCache.get(moduleId);
 
           if (!cssEntry) {
@@ -203,7 +228,7 @@ export const createCompiler = async ({
 
         removeAdapter();
 
-        return { fileExports, cssImports };
+        return { fileExports, cssImports, watchFiles };
       });
 
       const unusedCompositions = composedClassLists
@@ -215,25 +240,30 @@ export const createCompiler = async ({
           ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
           : null;
 
-      return serializeVanillaModule(
-        cssImports,
-        fileExports,
-        unusedCompositionRegex,
-      );
+      return {
+        source: serializeVanillaModule(
+          cssImports,
+          fileExports,
+          unusedCompositionRegex,
+        ),
+        watchFiles,
+      };
     },
-    getCssForFile(virtualCssFilePath: string) {
-      const filePath = fromCssImport(virtualCssFilePath);
-
+    getCssForFile(filePath: string) {
       const result = cssCache.get(filePath);
 
-      if (result) {
-        return {
-          css: result.css,
-          filePath,
-        };
+      if (!result) {
+        throw new Error(`No CSS for file: ${filePath}`);
       }
+
+      return {
+        css: result.css,
+        filePath,
+      };
     },
     async close() {
+      const { server } = await vitePromise;
+
       await server.close();
     },
   };

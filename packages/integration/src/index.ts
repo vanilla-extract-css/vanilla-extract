@@ -11,9 +11,11 @@ export { hash } from './hash';
 export { addFileScope } from './addFileScope';
 export { serializeCss, deserializeCss } from './serialize';
 export { transformSync, transform } from './transform';
+export { createCompiler } from './compiler';
 
 export * from './filters';
 
 export type { IdentifierOption } from './types';
 export type { PackageInfo } from './packageInfo';
 export type { CompileOptions } from './compile';
+export type { Compiler, CreateCompilerParams } from './compiler';

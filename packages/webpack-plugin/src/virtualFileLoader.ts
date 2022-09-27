@@ -1,12 +1,7 @@
-import { deserializeCss } from '@vanilla-extract/integration';
-// @ts-expect-error
-import { getOptions } from 'loader-utils';
+import { compiler } from './compiler';
 
 export default function (this: any) {
-  const { source } = getOptions(this);
-  const callback = this.async();
+  const { css } = compiler.getCssForFile(this.resourcePath);
 
-  deserializeCss(source).then((deserializedCss) => {
-    callback(null, deserializedCss);
-  });
+  return css;
 }

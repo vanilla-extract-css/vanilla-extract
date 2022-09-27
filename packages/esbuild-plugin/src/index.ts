@@ -1,9 +1,8 @@
 import { dirname, posix } from 'path';
 
-import { createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
-  virtualCssFileFilter,
+  createCompiler,
   vanillaExtractTransformPlugin,
   IdentifierOption,
   CompileOptions,
@@ -39,19 +38,12 @@ export function vanillaExtractPlugin({
   return {
     name: 'vanilla-extract',
     async setup(build) {
-      console.log('Running setup...');
-
       const root = build.initialOptions.absWorkingDir!;
 
-      const compiler = await createCompiler({
+      const compiler = createCompiler({
         root,
         toCssImport(filePath) {
           return posix.relative(root, filePath) + '.vanilla.css';
-        },
-        fromCssImport(virtualCssSource) {
-          const [relativeFilePath] = virtualCssSource.split('.vanilla.css');
-
-          return posix.join(root, relativeFilePath);
         },
       });
 
@@ -65,7 +57,11 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          const { css, filePath } = compiler.getCssForFile(path);
+          const [relativeFilePath] = path.split('.vanilla.css');
+
+          const { css, filePath } = compiler.getCssForFile(
+            posix.join(root, relativeFilePath),
+          );
 
           // if (typeof processCss === 'function') {
           //   source = await processCss(source);
@@ -80,11 +76,12 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const contents = await compiler.processVanillaFile(path);
+        const { source, watchFiles } = await compiler.processVanillaFile(path);
 
         return {
-          contents,
+          contents: source,
           loader: 'js',
+          watchFiles: Array.from(watchFiles),
         };
       });
     },

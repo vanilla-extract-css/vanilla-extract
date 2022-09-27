@@ -1,10 +1,16 @@
+import { join, dirname, posix } from 'path';
+
 import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
 
-import { ChildCompiler } from './compiler';
 import createCompat, { WebpackCompat } from './compat';
+import { initializeCompiler } from './compiler';
 
 const pluginName = 'VanillaExtractPlugin';
+
+const virtualLoader = require.resolve(
+  join(dirname(require.resolve('../package.json')), 'virtualFileLoader'),
+);
 
 function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
   compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
@@ -56,7 +62,6 @@ export class VanillaExtractPlugin {
   test: RuleSetRule['test'];
   outputCss: boolean;
   allowRuntime: boolean;
-  childCompiler: ChildCompiler;
   identifiers?: IdentifierOption;
 
   constructor(options: PluginOptions = {}) {
@@ -75,7 +80,6 @@ export class VanillaExtractPlugin {
     this.test = test;
     this.outputCss = outputCss;
     this.allowRuntime = allowRuntime ?? false;
-    this.childCompiler = new ChildCompiler(externals);
     this.identifiers = identifiers;
   }
 
@@ -86,6 +90,16 @@ export class VanillaExtractPlugin {
 
     markCSSFilesAsSideEffects(compiler, compat);
 
+    const root = compiler.context;
+    initializeCompiler({
+      root,
+      toCssImport(filePath) {
+        const virtualCssPath = posix.relative(root, filePath) + '.vanilla.css';
+
+        return `${virtualCssPath}!=!${virtualLoader}!${filePath}`;
+      },
+    });
+
     compiler.options.module?.rules.splice(0, 0, {
       test: this.test,
       use: [
@@ -93,7 +107,6 @@ export class VanillaExtractPlugin {
           loader: require.resolve('../loader'),
           options: {
             outputCss: this.outputCss,
-            childCompiler: this.childCompiler,
             identifiers: this.identifiers,
           },
         },
