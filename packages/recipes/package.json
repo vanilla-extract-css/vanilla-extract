@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/seek-oss/vanilla-extract.git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/recipes"
   },
   "author": "SEEK",

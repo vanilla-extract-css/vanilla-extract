@@ -1,6 +1,6 @@
 # 🍨 Sprinkles
 
-**Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)**
+**Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/vanilla-extract-css/vanilla-extract)**
 
 Generate a static set of custom utility classes and compose them either statically at build time, or dynamically at runtime, without the usual style generation overhead of CSS-in-JS.
 
@@ -63,13 +63,13 @@ document.write(`
 
 ---
 
-🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/sprinkles.css.ts)
+🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/vanilla-extract-css/vanilla-extract/tree/master/examples/webpack-react?file=/src/sprinkles.css.ts)
 
 ---
 
 ## Setup
 
-> 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
+> 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/vanilla-extract-css/vanilla-extract)
 
 Install Sprinkles.
 
