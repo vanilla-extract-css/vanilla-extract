@@ -7,6 +7,7 @@ import { createServer, ModuleNode } from 'vite';
 import { ViteNodeRunner } from 'vite-node/client';
 import { ViteNodeServer } from 'vite-node/server';
 import type { Adapter } from '@vanilla-extract/css';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { lock } from './lock';
 import { getPackageInfo } from './packageInfo';
@@ -83,6 +84,7 @@ const createViteServer = async (root: string) => {
           }
         },
       },
+      tsconfigPaths({ root }),
     ],
   });
 
