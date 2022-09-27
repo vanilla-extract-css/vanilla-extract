@@ -59,7 +59,7 @@ const createViteServer = async (root: string) => {
         name: 'vanilla-extract-externalize',
         enforce: 'pre',
         async resolveId(source, importer) {
-          if (source.includes('@vanilla-extract/')) {
+          if (source.startsWith('@vanilla-extract/')) {
             return {
               external: true,
               id: await resolvePath(source, { url: pathToFileURL(importer!) }),
