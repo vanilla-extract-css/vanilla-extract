@@ -95,4 +95,4 @@ import '@vanilla-extract/css/disableRuntimeStyles';
 [jsdom]: https://github.com/jsdom/jsdom
 [jest]: https://jestjs.io/
 [discord]: https://discord.gg/6nCfPwwz6w
-[discussions]: https://github.com/seek-oss/vanilla-extract/discussions
+[discussions]: https://github.com/vanilla-extract-css/vanilla-extract/discussions

@@ -232,7 +232,7 @@ const PrimaryNav = ({
           </Box>
           <>
             <Link
-              to="https://github.com/seek-oss/vanilla-extract"
+              to="https://github.com/vanilla-extract-css/vanilla-extract"
               highlightOnFocus={false}
               underline="never"
               size="small"
@@ -256,7 +256,7 @@ const PrimaryNav = ({
             </Link>
 
             <Link
-              to="https://github.com/seek-oss/vanilla-extract/discussions"
+              to="https://github.com/vanilla-extract-css/vanilla-extract/discussions"
               highlightOnFocus={false}
               underline="never"
               size="small"

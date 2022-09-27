@@ -14,7 +14,7 @@ jobs:
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
-          token: ${{ secrets.SEEK_OSS_CI_GITHUB_TOKEN }}
+          token: ${{ secrets.VANILLA_EXTRACT_CI_GITHUB_TOKEN }}
 
       - uses: pnpm/action-setup@v2.2.2
 
@@ -32,5 +32,5 @@ jobs:
         with:
           pre-publish: pnpm prepare-release
         env:
-          NPM_TOKEN: ${{ secrets.SEEK_OSS_CI_NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
