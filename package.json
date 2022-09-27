@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "preconstruct dev",
-    "build": "nx run-many --target=build --exclude=vanilla-extract-example-next",
+    "build": "pnpm --recursive --filter='@vanilla-extract/*' build",
     "watch": "preconstruct watch",
     "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
     "start": "pnpm start-fixture themed",
@@ -48,7 +48,6 @@
     "babel-jest": "^27.3.1",
     "fast-glob": "^3.2.7",
     "jest": "^27.3.1",
-    "nx": "14.5.4",
     "prettier": "^2.3.2",
     "ts-node": "^10.0.0",
     "typescript": "~4.7.4"
