@@ -1,0 +1,42 @@
+name: Deploy site
+
+on: push
+
+jobs:
+  deploy-site:
+    name: Deploy site
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - uses: pnpm/action-setup@v2.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Build packages
+        run: pnpm run build
+
+      - name: Build site
+        run: pnpm --filter "./site" build
+
+      - name: Draft deploy site to Netlify
+        run: pnpm --filter "./site" deploy:branch
+        if: github.ref != 'refs/heads/master'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: Deploy site to Netlify
+        run: pnpm --filter "./site" deploy:prod
+        if: github.ref == 'refs/heads/master'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
