@@ -1,25 +1,9 @@
-import { relative, posix, sep } from 'path';
 import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
-import template from '@babel/template';
-import { cssFileFilter, getPackageInfo } from '@vanilla-extract/integration';
 
 const packageIdentifiers = new Set([
   '@vanilla-extract/css',
   '@vanilla-extract/recipes',
 ]);
-const filescopePackageIdentifier = '@vanilla-extract/css/fileScope';
-
-const buildSetFileScopeESM = template(`
-  import * as __vanilla_filescope__ from '${filescopePackageIdentifier}'
-  __vanilla_filescope__.setFileScope(%%filePath%%, %%packageName%%)
-`);
-
-const buildSetFileScopeCJS = template(`
-  const __vanilla_filescope__ = require('${filescopePackageIdentifier}');
-  __vanilla_filescope__.setFileScope(%%filePath%%, %%packageName%%)
-`);
-
-const buildEndFileScope = template(`__vanilla_filescope__.endFileScope()`);
 
 const debuggableFunctionConfig = {
   style: {
@@ -169,74 +153,17 @@ const getRelevantCall = (
 type Context = PluginPass & {
   namespaceImport: string;
   importIdentifiers: Map<string, StyleFunction>;
-  packageIdentifiers: Set<string>;
-  filePath: string;
-  packageName: string;
-  isCssFile: boolean;
-  alreadyCompiled: boolean;
-  isESM: boolean;
 };
 
 export default function (): PluginObj<Context> {
   return {
-    pre({ opts }) {
-      if (!opts.filename) {
-        // TODO Make error better
-        throw new Error('Filename must be available');
-      }
-
-      this.isESM = false;
-      this.isCssFile = cssFileFilter.test(opts.filename);
-      this.alreadyCompiled = false;
-
+    pre() {
       this.importIdentifiers = new Map();
       this.namespaceImport = '';
-
-      const packageInfo = getPackageInfo(opts.cwd);
-
-      if (!packageInfo.name) {
-        throw new Error(
-          `Closest package.json (${packageInfo.path}) must specify name`,
-        );
-      }
-      this.packageName = packageInfo.name;
-      // Encode windows file paths as posix
-      this.filePath = posix.join(
-        ...relative(packageInfo.dirname, opts.filename).split(sep),
-      );
     },
     visitor: {
-      Program: {
-        exit(path) {
-          if (this.isCssFile && !this.alreadyCompiled) {
-            // Wrap module with file scope calls
-            const buildSetFileScope = this.isESM
-              ? buildSetFileScopeESM
-              : buildSetFileScopeCJS;
-            path.unshiftContainer(
-              'body',
-              buildSetFileScope({
-                filePath: t.stringLiteral(this.filePath),
-                packageName: t.stringLiteral(this.packageName),
-              }),
-            );
-
-            path.pushContainer('body', buildEndFileScope());
-          }
-        },
-      },
       ImportDeclaration(path) {
-        this.isESM = true;
-        if (!this.isCssFile || this.alreadyCompiled) {
-          // Bail early if file isn't a .css.ts file or the file has already been compiled
-          return;
-        }
-
-        if (path.node.source.value === filescopePackageIdentifier) {
-          // If file scope import is found it means the file has already been compiled
-          this.alreadyCompiled = true;
-          return;
-        } else if (packageIdentifiers.has(path.node.source.value)) {
+        if (packageIdentifiers.has(path.node.source.value)) {
           path.node.specifiers.forEach((specifier) => {
             if (t.isImportNamespaceSpecifier(specifier)) {
               this.namespaceImport = specifier.local.name;
@@ -254,27 +181,8 @@ export default function (): PluginObj<Context> {
           });
         }
       },
-      ExportDeclaration() {
-        this.isESM = true;
-      },
       CallExpression(path) {
-        if (!this.isCssFile || this.alreadyCompiled) {
-          // Bail early if file isn't a .css.ts file or the file has already been compiled
-          return;
-        }
-
         const { node } = path;
-
-        if (
-          t.isIdentifier(node.callee, { name: 'require' }) &&
-          t.isStringLiteral(node.arguments[0], {
-            value: filescopePackageIdentifier,
-          })
-        ) {
-          // If file scope import is found it means the file has already been compiled
-          this.alreadyCompiled = true;
-          return;
-        }
 
         const usedExport = getRelevantCall(
           node,

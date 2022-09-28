@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./makeDocsManifest && webpack serve",
-    "build": "node ./makeDocsManifest && NODE_ENV=production webpack"
+    "build": "node ./makeDocsManifest && NODE_ENV=production webpack",
+    "deploy:prod": "netlify deploy --site vanilla-extract-css --dir dist --prod",
+    "deploy:branch": "netlify deploy --site vanilla-extract-css --dir dist"
   },
   "dependencies": {
     "@capsizecss/vanilla-extract": "^1.0.0",
@@ -22,7 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
-    "@babel/plugin-syntax-typescript": "^7.17.12",
+    "@babel/plugin-syntax-typescript": "^7.18.6",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
@@ -53,6 +55,7 @@
     "html-render-webpack-plugin": "^3.0.1",
     "mdx-loader": "^3.0.2",
     "mini-css-extract-plugin": "^1.5.1",
+    "netlify-cli": "^11.8.3",
     "remove-markdown": "^0.3.0",
     "tailwindcss": "^2.1.2",
     "webpack": "^5.36.1",

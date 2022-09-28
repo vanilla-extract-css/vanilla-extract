@@ -176,7 +176,7 @@ export const HomePage = () => {
                         </ButtonLink>
                       </Box>
                       <ButtonLink
-                        to="https://github.com/seek-oss/vanilla-extract"
+                        to="https://github.com/vanilla-extract-css/vanilla-extract"
                         variant="transparent"
                       >
                         <GitHubStars />
@@ -645,7 +645,7 @@ export const HomePage = () => {
                       Community
                     </Text>
                     <Link
-                      to="https://github.com/seek-oss/vanilla-extract"
+                      to="https://github.com/vanilla-extract-css/vanilla-extract"
                       size="xsmall"
                       color="secondary"
                       baseline
@@ -653,7 +653,7 @@ export const HomePage = () => {
                       GitHub
                     </Link>
                     <Link
-                      to="https://github.com/seek-oss/vanilla-extract/discussions"
+                      to="https://github.com/vanilla-extract-css/vanilla-extract/discussions"
                       size="xsmall"
                       color="secondary"
                       baseline

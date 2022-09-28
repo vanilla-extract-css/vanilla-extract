@@ -93,7 +93,7 @@ const myStyle = style({
 
 ## Media Queries
 
-Unlike in regular CSS, vanilla-extract let’s you embed media queries **within** your style definitions using the `@media` key.
+Unlike in regular CSS, vanilla-extract lets you embed media queries **within** your style definitions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
 ```ts compiled
@@ -313,7 +313,7 @@ export const myStyle = style({
 ```
 
 [csstype]: https://github.com/frenic/csstype
-[unitless properties]: https://github.com/seek-oss/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
+[unitless properties]: https://github.com/vanilla-extract-css/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
 [createvar]: /documentation/api/create-var/
 [createcontainer]: /documentation/api/create-container/
 [css properties]: #css-properties

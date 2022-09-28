@@ -8,9 +8,9 @@ import {
   processVanillaFile,
   compile,
   IdentifierOption,
-  addFileScope,
   getPackageInfo,
   CompileOptions,
+  transform,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
@@ -137,6 +137,9 @@ export function vanillaExtractPlugin({
         return null;
       }
 
+      const identOption =
+        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
+
       let ssr: boolean | undefined;
 
       if (typeof ssrParam === 'boolean') {
@@ -146,11 +149,12 @@ export function vanillaExtractPlugin({
       }
 
       if (ssr && !forceEmitCssInSsrBuild) {
-        return addFileScope({
+        return transform({
           source: code,
           filePath: normalizePath(validId),
           rootPath: config.root,
           packageName,
+          identOption,
         });
       }
 
@@ -158,6 +162,7 @@ export function vanillaExtractPlugin({
         filePath: validId,
         cwd: config.root,
         esbuildOptions,
+        identOption,
       });
 
       for (const file of watchFiles) {
@@ -171,8 +176,7 @@ export function vanillaExtractPlugin({
       const output = await processVanillaFile({
         source,
         filePath: validId,
-        identOption:
-          identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
+        identOption,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
             config.command === 'build' || (ssr && forceEmitCssInSsrBuild)

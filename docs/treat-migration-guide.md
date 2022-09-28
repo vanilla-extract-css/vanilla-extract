@@ -22,7 +22,7 @@ This wasn't possible in treat with `*.treat.ts` files. If you've had to work aro
 
 In treat, we automatically handled all generated CSS files for you. With vanilla-extract we've taken a more lightweight approach. Instead, we generate regular global CSS files and assume you've configured webpack to handle this. This makes things a lot simpler, but also a lot more configurable.
 
-For more detail, check out the [webpack setup guide.](https://github.com/seek-oss/vanilla-extract#webpack)
+For more detail, check out the [webpack setup guide.](https://github.com/vanilla-extract-css/vanilla-extract#webpack)
 
 ## Autoprefixer is no longer included
 
@@ -81,7 +81,7 @@ export const vars = createGlobalTheme(':root', {
 });
 ```
 
-If you have multiple themes, or if you want to avoid the global scope, use the [`createTheme`](https://github.com/seek-oss/vanilla-extract#createtheme) function instead.
+If you have multiple themes, or if you want to avoid the global scope, use the [`createTheme`](https://github.com/vanilla-extract-css/vanilla-extract#createtheme) function instead.
 
 ```ts
 // vars.css.ts
@@ -97,7 +97,7 @@ export const themeB = createTheme(vars, {
 });
 ```
 
-If you're bundle-splitting your themes, you'll probably want the [`createThemeContract`](https://github.com/seek-oss/vanilla-extract#createthemecontract) function.
+If you're bundle-splitting your themes, you'll probably want the [`createThemeContract`](https://github.com/vanilla-extract-css/vanilla-extract#createthemecontract) function.
 
 ## `TreatProvider`
 
@@ -251,7 +251,7 @@ Note that this means the theme is no longer global! You don't need to worry abou
 
 Theme variables are now opaque CSS Variables (i.e. `"var(--g7vce91)"`) rather than actual token values that differ per theme, which means you can't perform JavaScript calculations on them.
 
-Simple calculations (addition, subtraction, multiplication, division) are covered by CSS's `calc` function. To make this a bit easier in TypeScript, we provide a [`calc`](https://github.com/seek-oss/vanilla-extract#calc) function in the `@vanilla-extract/css-utils` package.
+Simple calculations (addition, subtraction, multiplication, division) are covered by CSS's `calc` function. To make this a bit easier in TypeScript, we provide a [`calc`](https://github.com/vanilla-extract-css/vanilla-extract#calc) function in the `@vanilla-extract/css-utils` package.
 
 ```diff
 -import { style } from 'treat';
@@ -318,7 +318,7 @@ You would then update your styles to use this new CSS Variable instead.
 
 ## `styleMap`
 
-You can use [`styleVariants`](https://github.com/seek-oss/vanilla-extract#stylevariants) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
+You can use [`styleVariants`](https://github.com/vanilla-extract-css/vanilla-extract#stylevariants) as a drop-in replacement. Note that it now accepts a map function as the second argument, so there may be some opportunities to simplify your code if you were mapping over objects before passing them to `styleMap`.
 
 ## `styleTree`
 
@@ -346,4 +346,4 @@ The `@keyframes` property is no longer supported on style objects. Instead, you 
 
 ## Did we forget anything?
 
-[Please let us know.](https://github.com/seek-oss/vanilla-extract/issues/new)
+[Please let us know.](https://github.com/vanilla-extract-css/vanilla-extract/issues/new)
