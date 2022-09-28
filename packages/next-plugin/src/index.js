@@ -50,7 +50,9 @@ export const createVanillaExtractPlugin =
           ),
         });
 
-        config.plugins.push(new VanillaExtractPlugin(pluginOptions));
+        config.plugins.push(
+          new VanillaExtractPlugin({ outputCss: !isServer, ...pluginOptions }),
+        );
 
         if (typeof nextConfig.webpack === 'function') {
           return nextConfig.webpack(config, options);
