@@ -33,7 +33,7 @@ export function vanillaExtractPlugin({
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
+  let forceEmitCssInSsrBuild: boolean;
   let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
@@ -74,6 +74,8 @@ export function vanillaExtractPlugin({
         )
       ) {
         forceEmitCssInSsrBuild = true;
+      } else {
+        forceEmitCssInSsrBuild = !process.env.VITE_RSC_BUILD;
       }
     },
     resolveId(source) {
