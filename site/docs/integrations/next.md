@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [Next.js](https://nextjs.org).
 ## Installation
 
 ```bash
-npm install @vanilla-extract/next-plugin
+npm install --save-dev @vanilla-extract/next-plugin
 ```
 
 ## Setup
@@ -52,7 +52,7 @@ module.exports = withVanillaExtract(withMDX(nextConfig));
 If you want to automatically generate debug IDs during development, you can add the [Babel](https://babeljs.io) plugin.
 
 ```bash
-npm install @vanilla-extract/babel-plugin
+npm install --save-dev @vanilla-extract/babel-plugin
 ```
 
 Note that this step will cause Next.js to switch from [SWC](https://github.com/swc-project/swc) to Babel, increasing build times. This may or may not be an issue depending on the size of your project.

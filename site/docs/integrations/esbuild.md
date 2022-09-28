@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [esbuild](https://esbuild.github.i
 ## Installation
 
 ```bash
-npm install @vanilla-extract/esbuild-plugin
+npm install --save-dev @vanilla-extract/esbuild-plugin
 ```
 
 ## Setup

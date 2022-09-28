@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [webpack](https://webpack.js.org).
 ## Installation
 
 ```bash
-npm install @vanilla-extract/webpack-plugin
+npm install --save-dev @vanilla-extract/webpack-plugin
 ```
 
 ## Setup
@@ -70,7 +70,7 @@ module.exports = {
 If you'd like automatic debuggable identifiers, you can install the [Babel](https://babeljs.io) plugin.
 
 ```bash
-npm install @vanilla-extract/babel-plugin
+npm --save-dev install @vanilla-extract/babel-plugin
 ```
 
 The plugin should be added to the `plugins` array in your babel config.

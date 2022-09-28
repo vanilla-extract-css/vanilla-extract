@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [Vite](https://vitejs.dev/).
 ## Installation
 
 ```bash
-npm install @vanilla-extract/vite-plugin
+npm install --save-dev @vanilla-extract/vite-plugin
 ```
 
 ## Setup
