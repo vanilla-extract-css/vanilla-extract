@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [webpack](https://webpack.js.org).
 ## Installation
 
 ```bash
-npm install @vanilla-extract/webpack-plugin
+npm install --save-dev @vanilla-extract/webpack-plugin
 ```
 
 ## Setup

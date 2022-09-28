@@ -16,7 +16,7 @@ For applications we instead recommend to use Vite
 ## Installation
 
 ```bash
-npm install @vanilla-extract/rollup-plugin
+npm install --save-dev @vanilla-extract/rollup-plugin
 ```
 
 ## Setup

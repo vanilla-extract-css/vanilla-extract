@@ -10,7 +10,7 @@ A plugin for integrating vanilla-extract with [Next.js](https://nextjs.org).
 ## Installation
 
 ```bash
-npm install @vanilla-extract/next-plugin
+npm install --save-dev @vanilla-extract/next-plugin
 ```
 
 ## Setup

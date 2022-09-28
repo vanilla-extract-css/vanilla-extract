@@ -10,7 +10,8 @@ A plugin for integrating vanilla-extract with [Gatsby](https://www.gatsbyjs.com)
 ## Installation
 
 ```bash
-npm install gatsby-plugin-vanilla-extract @vanilla-extract/babel-plugin @vanilla-extract/css @vanilla-extract/webpack-plugin
+npm install @vanilla-extract/css
+npm install --save-dev gatsby-plugin-vanilla-extract @vanilla-extract/babel-plugin @vanilla-extract/webpack-plugin
 ```
 
 ## Setup
