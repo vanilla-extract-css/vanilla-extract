@@ -12,8 +12,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/seek-oss/vanilla-extract.git",
-    "directory": "packages/rollup-plugin"
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/parcel-transformer"
   },
   "author": "SEEK",
   "license": "MIT",
