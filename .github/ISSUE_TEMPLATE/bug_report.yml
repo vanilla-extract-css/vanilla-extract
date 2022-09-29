@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please note issues should only be used for actual issues. Any feature requests or general feedback should be raised in Github Discussions (https://github.com/seek-oss/vanilla-extract/discussions) or Discord (https://discord.gg/6nCfPwwz6w)
+        Please note issues should only be used for actual issues. Any feature requests or general feedback should be raised in Github Discussions (https://github.com/vanilla-extract-css/vanilla-extract/discussions) or Discord (https://discord.gg/6nCfPwwz6w)
   - type: textarea
     id: bug-description
     attributes:
@@ -55,7 +55,7 @@ body:
       label: Validations
       description: Before submitting the issue, please make sure you do the following
       options:
-        - label: Check that there isn't [already an issue](https://github.com/seek-oss/vanilla-extract/issues) that reports the same bug to avoid creating a duplicate.
+        - label: Check that there isn't [already an issue](https://github.com/vanilla-extract-css/vanilla-extract/issues) that reports the same bug to avoid creating a duplicate.
           required: true
         - label: The provided reproduction is a [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) of the bug.
           required: true

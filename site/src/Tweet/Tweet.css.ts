@@ -45,4 +45,5 @@ export const avatar = style({
   height: 60,
   width: 60,
   overflow: 'hidden',
+  clipPath: 'polygon(3% 2%, 100% 0, 94% 94%, 0 100%)',
 });

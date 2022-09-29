@@ -6,11 +6,12 @@ import { Chevron } from '../Chevron/Chevron';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 import Logo from '../Logo/Logo';
-import Code from '../Code/Code';
 import { Tweet } from '../Tweet/Tweet';
-import docsStore from '../docs-store';
+import { groups, pages } from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
+import { CompiledCode } from '../Code/CompiledCode';
+import { ErrorHighlighter } from '../Code/ErrorHighlighter';
 import * as styles from './HomePage.css';
 
 const InstallPrompt = () => {
@@ -26,8 +27,6 @@ const InstallPrompt = () => {
         lightMode: 'teal200',
         darkMode: 'gray800',
       }}
-      aria-label="npm install @vanilla-extract/css. Click to copy to clipboard"
-      title="Copy to clipboard"
       className={styles.installBlock}
     >
       <Box display={{ mobile: 'none', tablet: 'block' }}>
@@ -92,7 +91,7 @@ export const HomePage = () => {
         className={styles.skewedContainer}
       >
         <ContentBlock
-          size={{ mobile: 'standard', desktop: 'large' }}
+          size={{ mobile: 'standard', desktop: 'xxlarge' }}
           withGutters
         >
           <Box position="relative">
@@ -166,7 +165,7 @@ export const HomePage = () => {
                     >
                       <Box paddingRight={{ mobile: 'small', tablet: 'xlarge' }}>
                         <ButtonLink
-                          to="/documentation"
+                          to="/documentation/getting-started"
                           icon={
                             <Box display={{ mobile: 'none', desktop: 'block' }}>
                               <Chevron direction="right" />
@@ -177,7 +176,7 @@ export const HomePage = () => {
                         </ButtonLink>
                       </Box>
                       <ButtonLink
-                        to="https://github.com/seek-oss/vanilla-extract"
+                        to="https://github.com/vanilla-extract-css/vanilla-extract"
                         variant="transparent"
                       >
                         <GitHubStars />
@@ -185,31 +184,35 @@ export const HomePage = () => {
                     </Box>
                   </Stack>
                 </Box>
-                <Code
-                  language="tsx"
-                  errorTokens={['brandd', 'large']}
-                  title="styles.css.ts"
-                >
-                  {outdent`
-                  import { createTheme, style } from '@vanilla-extract/css';
+                <ErrorHighlighter tokens={['brandd', 'large']}>
+                  <CompiledCode
+                    background={{ lightMode: 'teal50', darkMode: 'black' }}
+                    code={[
+                      {
+                        fileName: 'styles.css.ts',
+                        contents: outdent`
+                        import { createTheme, style } from '@vanilla-extract/css';
 
-                  export const [themeClass, vars] = createTheme({
-                    color: {
-                      brand: 'blue',
-                      white: '#fff'
-                    },
-                    space: {
-                      small: '4px',
-                      medium: '8px',
-                    }
-                  });
+                        export const [themeClass, vars] = createTheme({
+                          color: {
+                            brand: 'blue',
+                            white: '#fff'
+                          },
+                          space: {
+                            small: '4px',
+                            medium: '8px',
+                          }
+                        });
 
-                  export const hero = style({
-                    backgroundColor: vars.color.brandd,
-                    color: vars.color.white,
-                    padding: vars.space.large
-                  });`}
-                </Code>
+                        export const hero = style({
+                          backgroundColor: vars.color.brandd,
+                          color: vars.color.white,
+                          padding: vars.space.large
+                        });`,
+                      },
+                    ]}
+                  />
+                </ErrorHighlighter>
               </Columns>
             </Box>
           </Box>
@@ -219,7 +222,7 @@ export const HomePage = () => {
       <Stack space="xxxlarge">
         <ContentBlock
           withGutters
-          size={{ mobile: 'standard', desktop: 'large' }}
+          size={{ mobile: 'standard', desktop: 'xxlarge' }}
         >
           <Box
             paddingY="xxxlarge"
@@ -263,7 +266,7 @@ export const HomePage = () => {
                 <Feature title="Built for extension">
                   Use libraries like{' '}
                   <Link
-                    to="/documentation/sprinkles-api"
+                    to="/documentation/packages/sprinkles"
                     size="small"
                     underline="always"
                     inline
@@ -272,7 +275,7 @@ export const HomePage = () => {
                   </Link>
                   ,{' '}
                   <Link
-                    to="/documentation/recipes-api"
+                    to="/documentation/packages/recipes"
                     size="small"
                     underline="always"
                     inline
@@ -313,36 +316,38 @@ export const HomePage = () => {
                   <Box color={{ lightMode: 'blue800', darkMode: 'gray400' }}>
                     Write maintainable CSS at scale without sacrificing platform
                     features. Variables, selectors, pseudo&#8209;classes,
-                    media/feature queries, keyframes, font&#8209;face rules and
-                    global styles are all supported.
+                    media/feature/container queries, keyframes, font&#8209;face
+                    and global styles are all supported.
                   </Box>
                 </Text>
               </Box>
 
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray800', darkMode: 'black' }}
-              >
-                {outdent`
-                import { style } from '@vanilla-extract/css';
-
-                export const className = style({
-                  display: 'flex',
-                  flexDirection: 'column',
-                  selectors: {
-                    '&:nth-child(2n)': {
-                      background: 'aliceblue'
-                    }
+              <CompiledCode
+                background={{ lightMode: 'blue50', darkMode: 'black' }}
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`
+                    import { style } from '@vanilla-extract/css';
+    
+                    export const className = style({
+                      display: 'flex',
+                      flexDirection: 'column',
+                      selectors: {
+                        '&:nth-child(2n)': {
+                          background: 'aliceblue'
+                        }
+                      },
+                      '@media': {
+                        'screen and (min-width: 768px)': {
+                          flexDirection: 'row'
+                        }
+                      }
+                    });
+                  `,
                   },
-                  '@media': {
-                    'screen and (min-width: 768px)': {
-                      flexDirection: 'row'
-                    }
-                  }
-                });
-              `}
-              </Code>
+                ]}
+              />
             </Stack>
           </ContentBlock>
         </Box>
@@ -351,7 +356,7 @@ export const HomePage = () => {
           <Box paddingTop="xxxlarge">
             <ContentBlock
               withGutters
-              size={{ mobile: 'standard', desktop: 'large' }}
+              size={{ mobile: 'standard', desktop: 'xxlarge' }}
             >
               <Columns space="xlarge" collapseOnTablet alignY="center">
                 <Stack space="xxlarge">
@@ -365,34 +370,35 @@ export const HomePage = () => {
                   </Text>
                 </Stack>
 
-                <Code
-                  language="tsx"
-                  errorTokens={['brandd']}
-                  title="styles.css.ts"
-                  background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-                >
-                  {outdent`
-                    import { createTheme, style } from '@vanilla-extract/css';
-                      
-                    export const [themeClass, vars] = createTheme({
-                      color: {
-                        brand: 'aquamarine',
-                        accent: 'honeydew',
-                      },
-                    });
+                <ErrorHighlighter tokens={['brandd']}>
+                  <CompiledCode
+                    code={[
+                      {
+                        fileName: 'styles.css.ts',
+                        contents: outdent`
+                        import { createTheme, style } from '@vanilla-extract/css';
+                          
+                        export const [themeClass, vars] = createTheme({
+                          color: {
+                            brand: 'aquamarine',
+                            accent: 'honeydew',
+                          },
+                        });
 
-                    export const brandedSection = style({
-                      backgroundColor: vars.color.brandd,
-                    });
-                  `}
-                </Code>
+                        export const brandedSection = style({
+                          backgroundColor: vars.color.brandd,
+                      `,
+                      },
+                    ]}
+                  />
+                </ErrorHighlighter>
               </Columns>
             </ContentBlock>
           </Box>
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
@@ -405,33 +411,34 @@ export const HomePage = () => {
                   vanilla-extract.
                 </Text>
               </Stack>
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`import { style, createVar } from '@vanilla-extract/css';
+              <CompiledCode
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`import { style, createVar } from '@vanilla-extract/css';
 
-      const shadowColor = createVar();
-
-      export const shadow = style({
-        boxShadow: ${'`0 0 10px ${shadowColor}`'},
-        selectors: {
-          '.light &': {
-            vars: { [shadowColor]: 'black' }
-          },
-          '.dark &': {
-            vars: { [shadowColor]: 'white' }
-          },
-        }
-      });`}
-              </Code>
+                  const shadowColor = createVar();
+            
+                  export const shadow = style({
+                    boxShadow: ${'`0 0 10px ${shadowColor}`'},
+                    selectors: {
+                      '.light &': {
+                        vars: { [shadowColor]: 'black' }
+                      },
+                      '.dark &': {
+                        vars: { [shadowColor]: 'white' }
+                      },
+                    }
+                  });`,
+                  },
+                ]}
+              />
             </Columns>
           </ContentBlock>
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xlarge" collapseOnTablet alignY="center">
               <Stack space="xxlarge">
@@ -443,34 +450,34 @@ export const HomePage = () => {
                   up by name. No awkward naming conventions required.
                 </Text>
               </Stack>
-
-              <Code
-                language="tsx"
-                title="styles.css.ts"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`
-                import { styleVariants } from '@vanilla-extract/css';
-
-                export const background = styleVariants({
-                  primary: { background: 'navy' },
-                  secondary: { background: 'blue' },
-                  tertiary: { background: 'aqua' },
-                });
-
-                export const color = styleVariants({
-                  neutral: { color: 'black' },
-                  secondary: { color: 'gray' },
-                  link: { color: 'blue' },
-                });
-              `}
-              </Code>
+              <CompiledCode
+                code={[
+                  {
+                    fileName: 'styles.css.ts',
+                    contents: outdent`
+                  import { styleVariants } from '@vanilla-extract/css';
+  
+                  export const background = styleVariants({
+                    primary: { background: 'navy' },
+                    secondary: { background: 'blue' },
+                    tertiary: { background: 'aqua' },
+                  });
+  
+                  export const color = styleVariants({
+                    neutral: { color: 'black' },
+                    secondary: { color: 'gray' },
+                    link: { color: 'blue' },
+                  });
+                `,
+                  },
+                ]}
+              />
             </Columns>
           </ContentBlock>
 
           <ContentBlock
             withGutters
-            size={{ mobile: 'standard', desktop: 'large' }}
+            size={{ mobile: 'standard', desktop: 'xxlarge' }}
           >
             <Columns space="xxlarge" collapseOnTablet alignY="center" reverseX>
               <Stack space="xxlarge">
@@ -483,12 +490,12 @@ export const HomePage = () => {
                   CSS.
                 </Text>
               </Stack>
-              <Code
-                language="css"
-                title="output.css"
-                background={{ lightMode: 'coolGray900', darkMode: 'gray900' }}
-              >
-                {outdent`
+              <CompiledCode
+                code={[
+                  {
+                    fileName: 'output.css',
+                    language: 'css',
+                    contents: outdent`
                   :root {
                     --space-none__ya5b7b0: 0;
                     --space-small__ya5b7b1: 4px;
@@ -499,8 +506,10 @@ export const HomePage = () => {
                   .Hero_container__1ldw6lo0 {
                     padding: var(--space-medium__ya5b7b2);
                   }
-                `}
-              </Code>
+                `,
+                  },
+                ]}
+              />
             </Columns>
           </ContentBlock>
         </Stack>
@@ -512,7 +521,7 @@ export const HomePage = () => {
             background={{ lightMode: 'blue100', darkMode: 'gray900' }}
             className={styles.skewedContainerSecondary}
           >
-            <ContentBlock size="large" withGutters>
+            <ContentBlock size="xxlarge" withGutters>
               <Stack space="xxlarge" align="center">
                 <Columns space="xxlarge" collapseOnMobile alignY="center">
                   <Tweet
@@ -586,92 +595,129 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
 
-        <ContentBlock withGutters>
+        <ContentBlock size="xxlarge" withGutters>
           <Box component="footer" paddingBottom="xxxlarge">
-            <Stack space="xxlarge" align="center">
+            <Stack space="xxxlarge" align="center">
               <Logo height={60} />
-              <Columns space="xxxlarge" collapseOnMobile>
-                <Stack space="xlarge" align="center">
-                  <Heading level="4">Documentation</Heading>
-                  {docsStore.map(({ title, route }) => (
+              <Box display="flex" flexWrap="wrap">
+                {groups.map((label) => {
+                  const groupPages = pages.filter(
+                    (page) => label === page.label,
+                  );
+
+                  return (
+                    <Box
+                      key={label}
+                      flexGrow={0}
+                      flexShrink={0}
+                      paddingX="xlarge"
+                      paddingBottom="xxlarge"
+                      className={styles.footerLayout}
+                    >
+                      <Stack space="large">
+                        <Text size="small" component="h4">
+                          {label}
+                        </Text>
+                        {groupPages.map(({ route, title }) => (
+                          <Link
+                            to={route}
+                            key={title}
+                            size="xsmall"
+                            color="secondary"
+                            baseline
+                          >
+                            {title}
+                          </Link>
+                        ))}
+                      </Stack>
+                    </Box>
+                  );
+                })}
+                <Box
+                  flexGrow={0}
+                  flexShrink={0}
+                  paddingX="xlarge"
+                  paddingBottom="xxlarge"
+                  className={styles.footerLayout}
+                >
+                  <Stack space="large">
+                    <Text size="small" component="h4">
+                      Community
+                    </Text>
                     <Link
-                      to={route}
-                      key={title}
-                      size="small"
+                      to="https://github.com/vanilla-extract-css/vanilla-extract"
+                      size="xsmall"
                       color="secondary"
                       baseline
                     >
-                      {title}
+                      GitHub
                     </Link>
-                  ))}
-                </Stack>
-
-                <Stack space="xlarge" align="center">
-                  <Heading level="4">Community</Heading>
-                  <Link
-                    to="https://github.com/seek-oss/vanilla-extract"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    GitHub
-                  </Link>
-                  <Link
-                    to="https://github.com/seek-oss/vanilla-extract/discussions"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Discussions
-                  </Link>
-                  <Link
-                    to="https://discord.gg/6nCfPwwz6w"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Discord
-                  </Link>
-                </Stack>
-
-                <Stack space="xlarge" align="center">
-                  <Heading level="4">Related work</Heading>
-                  <Link
-                    to="https://seek-oss.github.io/braid-design-system/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      Braid Design System
-                    </span>
-                  </Link>
-                  <Link
-                    to="https://seek-oss.github.io/capsize/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Capsize
-                  </Link>
-                  <Link
-                    to="https://github.com/seek-oss/playroom"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Playroom
-                  </Link>
-                  <Link
-                    to="https://seek-oss.github.io/treat/"
-                    size="small"
-                    color="secondary"
-                    baseline
-                  >
-                    Treat
-                  </Link>
-                </Stack>
-              </Columns>
+                    <Link
+                      to="https://github.com/vanilla-extract-css/vanilla-extract/discussions"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Discussions
+                    </Link>
+                    <Link
+                      to="https://discord.gg/6nCfPwwz6w"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Discord
+                    </Link>
+                  </Stack>
+                </Box>
+                <Box
+                  flexGrow={0}
+                  flexShrink={0}
+                  paddingX="xlarge"
+                  paddingBottom="xxlarge"
+                  className={styles.footerLayout}
+                >
+                  <Stack space="large">
+                    <Text size="small" component="h4">
+                      Related work
+                    </Text>
+                    <Link
+                      to="https://seek-oss.github.io/braid-design-system/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      <span style={{ whiteSpace: 'nowrap' }}>
+                        Braid Design System
+                      </span>
+                    </Link>
+                    <Link
+                      to="https://seek-oss.github.io/capsize/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Capsize
+                    </Link>
+                    <Link
+                      to="https://github.com/seek-oss/playroom"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Playroom
+                    </Link>
+                    <Link
+                      to="https://seek-oss.github.io/treat/"
+                      size="xsmall"
+                      color="secondary"
+                      baseline
+                    >
+                      Treat
+                    </Link>
+                  </Stack>
+                </Box>
+              </Box>
             </Stack>
           </Box>
         </ContentBlock>

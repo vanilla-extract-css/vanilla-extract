@@ -1,9 +1,9 @@
 {
   "name": "@fixtures/low-level",
-  "version": "0.0.8",
+  "version": "0.0.13",
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.7.2"
+    "@vanilla-extract/css": "1.9.1"
   }
 }

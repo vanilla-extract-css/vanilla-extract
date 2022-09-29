@@ -8,6 +8,7 @@ import outdent from 'outdent';
 
 import { hash } from './hash';
 import { serializeCss } from './serialize';
+import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
@@ -26,8 +27,6 @@ export function parseFileScope(serialisedFileScope: string): FileScope {
     packageName,
   };
 }
-
-export type IdentifierOption = ReturnType<Adapter['getIdentOption']>;
 
 interface ProcessVanillaFileOptions {
   source: string;
@@ -161,7 +160,7 @@ export async function processVanillaFile({
   return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
 }
 
-function stringifyExports(
+export function stringifyExports(
   recipeImports: Set<string>,
   value: any,
   unusedCompositionRegex: RegExp | null,
@@ -170,6 +169,7 @@ function stringifyExports(
     value,
     (value, _indent, next) => {
       const valueType = typeof value;
+
       if (
         valueType === 'boolean' ||
         valueType === 'number' ||
@@ -179,6 +179,11 @@ function stringifyExports(
         isPlainObject(value)
       ) {
         return next(value);
+      }
+
+      if (Symbol.toStringTag in Object(value)) {
+        const { [Symbol.toStringTag]: _tag, ...valueWithoutTag } = value;
+        return next(valueWithoutTag);
       }
 
       if (valueType === 'string') {

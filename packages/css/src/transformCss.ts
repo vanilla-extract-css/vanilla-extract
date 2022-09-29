@@ -1,19 +1,20 @@
+import './ahocorasick.d';
+
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-import escapeStringRegexp from 'escape-string-regexp';
+import AhoCorasick from 'ahocorasick';
 
 import type {
   CSS,
   CSSStyleBlock,
   CSSKeyframesBlock,
   CSSPropertiesWithVars,
-  FeatureQueries,
-  MediaQueries,
   StyleRule,
   StyleWithSelectors,
   GlobalFontFaceRule,
   CSSSelectorBlock,
   Composition,
+  WithQueries,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
@@ -50,6 +51,7 @@ const UNITLESS: Record<string, boolean> = {
   opacity: true,
   order: true,
   orphans: true,
+  scale: true,
   tabSize: true,
   WebkitLineClamp: true,
   widows: true,
@@ -78,9 +80,27 @@ function dashify(str: string) {
     .toLowerCase();
 }
 
+function replaceBetweenIndexes(
+  target: string,
+  startIndex: number,
+  endIndex: number,
+  replacement: string,
+) {
+  const start = target.slice(0, startIndex);
+  const end = target.slice(endIndex);
+
+  return `${start}${replacement}${end}`;
+}
+
 const DOUBLE_SPACE = '  ';
 
-const specialKeys = [...simplePseudos, '@media', '@supports', 'selectors'];
+const specialKeys = [
+  ...simplePseudos,
+  '@media',
+  '@supports',
+  '@container',
+  'selectors',
+];
 
 interface CSSRule {
   conditions?: Array<string>;
@@ -94,7 +114,8 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
-  localClassNameRegex: RegExp | null;
+  localClassNamesMap: Map<string, string>;
+  localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
 
   constructor(
@@ -105,10 +126,10 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
-    this.localClassNameRegex =
-      localClassNames.length > 0
-        ? RegExp(`(${localClassNames.map(escapeStringRegexp).join('|')})`, 'g')
-        : null;
+    this.localClassNamesMap = new Map(
+      localClassNames.map((localClassName) => [localClassName, localClassName]),
+    );
+    this.localClassNamesSearch = new AhoCorasick(localClassNames);
 
     // Class list compositions should be priortized by Newer > Older
     // Therefore we reverse the array as they are added in sequence
@@ -143,6 +164,7 @@ class Stylesheet {
 
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
+    this.transformContainer(root, root.rule['@container']);
 
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
@@ -245,6 +267,12 @@ class Stylesheet {
     };
   }
 
+  transformClassname(identifier: string) {
+    return `.${cssesc(identifier, {
+      isIdentifier: true,
+    })}`;
+  }
+
   transformSelector(selector: string) {
     // Map class list compositions to single identifiers
     let transformedSelector = selector;
@@ -256,18 +284,41 @@ class Stylesheet {
       });
     }
 
-    return this.localClassNameRegex
-      ? transformedSelector.replace(
-          this.localClassNameRegex,
-          (_, className, index) => {
-            if (index > 0 && transformedSelector[index - 1] === '.') {
-              return className;
-            }
+    if (this.localClassNamesMap.has(transformedSelector)) {
+      return this.transformClassname(transformedSelector);
+    }
 
-            return `.${cssesc(className, { isIdentifier: true })}`;
-          },
-        )
-      : transformedSelector;
+    const results = this.localClassNamesSearch.search(transformedSelector);
+
+    let lastReplaceIndex = transformedSelector.length;
+
+    // Perform replacements backwards to simplify index handling
+    for (let i = results.length - 1; i >= 0; i--) {
+      const [endIndex, [firstMatch]] = results[i];
+      const startIndex = endIndex - firstMatch.length + 1;
+
+      if (startIndex >= lastReplaceIndex) {
+        // Class names can be substrings of other class names
+        // e.g. '_1g1ptzo1' and '_1g1ptzo10'
+        // If the startIndex >= lastReplaceIndex, then
+        // this is the case and this replace should be skipped
+        continue;
+      }
+
+      lastReplaceIndex = startIndex;
+
+      // If class names already starts with a '.' then skip
+      if (transformedSelector[startIndex - 1] !== '.') {
+        transformedSelector = replaceBetweenIndexes(
+          transformedSelector,
+          startIndex,
+          endIndex + 1,
+          this.transformClassname(firstMatch),
+        );
+      }
+    }
+
+    return transformedSelector;
   }
 
   transformSelectors(
@@ -317,9 +368,7 @@ class Stylesheet {
 
   transformMedia(
     root: CSSStyleBlock | CSSSelectorBlock,
-    rules:
-      | MediaQueries<StyleWithSelectors & FeatureQueries<StyleWithSelectors>>
-      | undefined,
+    rules: WithQueries<StyleWithSelectors>['@media'],
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
@@ -349,15 +398,49 @@ class Stylesheet {
         }
 
         this.transformSupports(root, mediaRule!['@supports'], conditions);
+        this.transformContainer(root, mediaRule!['@container'], conditions);
+      });
+    }
+  }
+
+  transformContainer(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@container'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((query) => `@container ${query}`),
+      );
+
+      forEach(rules, (containerRule, query) => {
+        const containerQuery = `@container ${query}`;
+
+        const conditions = [...parentConditions, containerQuery];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(containerRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePseudos(root, containerRule!, conditions);
+          this.transformSelectors(root, containerRule!, conditions);
+        }
+
+        this.transformSupports(root, containerRule!['@supports'], conditions);
+        this.transformMedia(root, containerRule!['@media'], conditions);
       });
     }
   }
 
   transformSupports(
     root: CSSStyleBlock | CSSSelectorBlock,
-    rules:
-      | FeatureQueries<StyleWithSelectors & MediaQueries<StyleWithSelectors>>
-      | undefined,
+    rules: WithQueries<StyleWithSelectors>['@supports'],
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
@@ -382,6 +465,7 @@ class Stylesheet {
           this.transformSelectors(root, supportsRule!, conditions);
         }
         this.transformMedia(root, supportsRule!['@media'], conditions);
+        this.transformContainer(root, supportsRule!['@container'], conditions);
       });
     }
   }

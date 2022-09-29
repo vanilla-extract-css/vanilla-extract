@@ -9,14 +9,12 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.23.1
-
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - name: Setup Node.js
+      - uses: pnpm/action-setup@v2.2.2
+
+      - name: Set up Node.js
         uses: actions/setup-node@main
         with:
           node-version-file: '.nvmrc'
@@ -39,14 +37,12 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.23.1
-
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - name: Setup Node.js
+      - uses: pnpm/action-setup@v2.2.2
+
+      - name: Set up Node.js
         uses: actions/setup-node@main
         with:
           node-version-file: '.nvmrc'

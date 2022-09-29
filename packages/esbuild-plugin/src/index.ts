@@ -6,7 +6,7 @@ import {
   processVanillaFile,
   getSourceFromVirtualCssFile,
   compile,
-  vanillaExtractFilescopePlugin,
+  vanillaExtractTransformPlugin,
   IdentifierOption,
   CompileOptions,
 } from '@vanilla-extract/integration';
@@ -34,8 +34,8 @@ export function vanillaExtractPlugin({
   esbuildOptions,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
-    // If using runtime CSS then just apply fileScopes to code
-    return vanillaExtractFilescopePlugin();
+    // If using runtime CSS then just apply fileScopes and debug IDs to code
+    return vanillaExtractTransformPlugin({ identOption: identifiers });
   }
 
   return {
@@ -71,6 +71,8 @@ export function vanillaExtractPlugin({
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
         const combinedEsbuildOptions = { ...esbuildOptions } ?? {};
+        const identOption =
+          identifiers ?? (build.initialOptions.minify ? 'short' : 'debug');
 
         // To avoid a breaking change this combines the `external` option from
         // esbuildOptions with the pre-existing externals option.
@@ -86,14 +88,14 @@ export function vanillaExtractPlugin({
           filePath: path,
           cwd: build.initialOptions.absWorkingDir,
           esbuildOptions: combinedEsbuildOptions,
+          identOption,
         });
 
         const contents = await processVanillaFile({
           source,
           filePath: path,
           outputCss,
-          identOption:
-            identifiers ?? (build.initialOptions.minify ? 'short' : 'debug'),
+          identOption,
         });
 
         return {

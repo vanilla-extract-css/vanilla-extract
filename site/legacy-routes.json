@@ -1,0 +1,23 @@
+[
+  { "from": "/documentation/styling-api", "to": "/documentation/styling/" },
+  {
+    "from": "/documentation/sprinkles-api/",
+    "to": "/documentation/packages/sprinkles/"
+  },
+  {
+    "from": "/documentation/recipes-api/",
+    "to": "/documentation/packages/recipes/"
+  },
+  {
+    "from": "/documentation/dynamic-api/",
+    "to": "/documentation/packages/dynamic/"
+  },
+  {
+    "from": "/documentation/utility-functions/",
+    "to": "/documentation/packages/css-utils/"
+  },
+  {
+    "from": "/documentation/setup/",
+    "to": "/documentation/getting-started/#bundler-integration"
+  }
+]

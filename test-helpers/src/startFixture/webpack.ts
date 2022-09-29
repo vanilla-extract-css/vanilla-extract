@@ -83,11 +83,6 @@ export const startWebpackFixture = (
                       { targets: { node: 14 }, modules: false },
                     ],
                   ],
-                  plugins: [
-                    type !== 'mini-css-extract'
-                      ? require.resolve('@vanilla-extract/babel-plugin')
-                      : null,
-                  ].filter(Boolean),
                 },
               },
             ],

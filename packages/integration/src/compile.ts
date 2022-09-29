@@ -7,11 +7,17 @@ import {
   BuildOptions as EsbuildOptions,
 } from 'esbuild';
 
+import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
-import { addFileScope } from './addFileScope';
+import { transform } from './transform';
 import { getPackageInfo } from './packageInfo';
 
-export const vanillaExtractFilescopePlugin = (): Plugin => ({
+interface VanillaExtractTransformPluginParams {
+  identOption?: IdentifierOption;
+}
+export const vanillaExtractTransformPlugin = ({
+  identOption,
+}: VanillaExtractTransformPluginParams): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
     const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
@@ -19,11 +25,13 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
-      const source = addFileScope({
+      const source = await transform({
         source: originalSource,
         filePath: path,
         rootPath: build.initialOptions.absWorkingDir!,
         packageName: packageInfo.name,
+        identOption:
+          identOption ?? (build.initialOptions.minify ? 'short' : 'debug'),
       });
 
       return {
@@ -37,6 +45,7 @@ export const vanillaExtractFilescopePlugin = (): Plugin => ({
 
 export interface CompileOptions {
   filePath: string;
+  identOption: IdentifierOption;
   cwd?: string;
   esbuildOptions?: Pick<
     EsbuildOptions,
@@ -45,6 +54,7 @@ export interface CompileOptions {
 }
 export async function compile({
   filePath,
+  identOption,
   cwd = process.cwd(),
   esbuildOptions,
 }: CompileOptions) {
@@ -56,7 +66,7 @@ export async function compile({
     platform: 'node',
     write: false,
     plugins: [
-      vanillaExtractFilescopePlugin(),
+      vanillaExtractTransformPlugin({ identOption }),
       ...(esbuildOptions?.plugins ?? []),
     ],
     absWorkingDir: cwd,

@@ -5,13 +5,14 @@ const CopyPlugin = require('copy-webpack-plugin');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const docs = require('./docs-manifest.json');
+const { pages } = require('./docs-manifest.json');
+const legacyRoutes = require('./legacy-routes.json');
 const targetDirectory = join(__dirname, 'dist');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const htmlRenderPlugin = new HtmlRenderPlugin({
-  routes: ['', ...docs],
+  routes: ['', ...pages, ...legacyRoutes.map(({ from }) => from)],
   renderConcurrency: 'parallel',
   renderDirectory: targetDirectory,
   mapStatsToParams: ({ webpackStats }) => {
@@ -40,7 +41,7 @@ module.exports = [
     },
     entry: require.resolve('./src/client.tsx'),
     devServer: {
-      open: !isProduction,
+      open: false,
     },
     mode,
     resolve: {
@@ -63,7 +64,6 @@ module.exports = [
                   ],
                   ['@babel/preset-react', { runtime: 'automatic' }],
                 ],
-                plugins: ['@vanilla-extract/babel-plugin'],
               },
             },
           ],
@@ -74,7 +74,7 @@ module.exports = [
         },
         {
           test: /\.mdx?$/,
-          use: ['mdx-loader'],
+          use: ['mdx-loader', './code-block-loader'],
         },
         {
           test: /\.(png?)$/,
@@ -141,7 +141,6 @@ module.exports = [
                   ],
                   ['@babel/preset-react', { runtime: 'automatic' }],
                 ],
-                plugins: ['@vanilla-extract/babel-plugin'],
               },
             },
           ],
@@ -152,7 +151,7 @@ module.exports = [
         },
         {
           test: /\.mdx?$/,
-          use: ['mdx-loader'],
+          use: ['mdx-loader', './code-block-loader'],
         },
         {
           test: /\.(png?)$/,

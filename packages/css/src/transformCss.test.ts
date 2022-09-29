@@ -1,10 +1,13 @@
 import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
+import { style } from './style';
 
 setFileScope('test');
 
 const testVar = createVar();
+const style1 = style({});
+const style2 = style({});
 
 describe('transformCss', () => {
   it('should escape class names', () => {
@@ -961,7 +964,41 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle nested @supports and @media queries', () => {
+  it('should handle @container queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              containerName: 'sidebar',
+              '@container': {
+                'sidebar (min-width: 700px)': {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      ".testClass {
+        display: flex;
+        container-name: sidebar;
+      }
+      @container sidebar (min-width: 700px) {
+        .testClass {
+          display: grid;
+        }
+      }"
+    `);
+  });
+
+  it('should handle nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -978,16 +1015,27 @@ describe('transformCss', () => {
                   '@media': {
                     'screen and (min-width: 700px)': {
                       display: 'grid',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
               },
+
               '@media': {
                 'screen and (min-width: 700px)': {
                   color: 'green',
                   '@supports': {
                     '(display: grid)': {
                       borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
@@ -1008,6 +1056,11 @@ describe('transformCss', () => {
           .testClass {
             border-color: blue;
           }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
         }
       }
       @supports (display: grid) {
@@ -1018,12 +1071,17 @@ describe('transformCss', () => {
           .testClass {
             display: grid;
           }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
         }
       }"
     `);
   });
 
-  it('should merge nested @supports and @media queries', () => {
+  it('should merge nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1038,12 +1096,18 @@ describe('transformCss', () => {
                   '@supports': {
                     '(display: grid)': {
                       borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
               },
             },
           },
+
           {
             type: 'local',
             selector: 'otherClass',
@@ -1053,6 +1117,11 @@ describe('transformCss', () => {
                   '@supports': {
                     '(display: grid)': {
                       backgroundColor: 'yellow',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
                     },
                   },
                 },
@@ -1069,6 +1138,14 @@ describe('transformCss', () => {
           }
           .otherClass {
             background-color: yellow;
+          }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+            .otherClass {
+              display: grid;
+            }
           }
         }
       }"
@@ -1488,6 +1565,46 @@ describe('transformCss', () => {
       }"
     `);
   });
+});
+
+it('should handle multiple references to the same locally scoped selector', () => {
+  expect(
+    transformCss({
+      composedClassLists: [],
+      localClassNames: [style1, style2, '_1g1ptzo1', '_1g1ptzo10'],
+      cssObjs: [
+        {
+          type: 'local',
+          selector: style1,
+          rule: {
+            selectors: {
+              [`${style2} &:before, ${style2} &:after`]: {
+                background: 'black',
+              },
+
+              [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
+                background: 'blue',
+              },
+
+              [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
+                background: 'blue',
+              },
+            },
+          },
+        },
+      ],
+    }).join('\n'),
+  ).toMatchInlineSnapshot(`
+    ".skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+      background: black;
+    }
+    ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      background: blue;
+    }
+    ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
+      background: blue;
+    }"
+  `);
 });
 
 endFileScope();

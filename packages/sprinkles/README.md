@@ -1,6 +1,6 @@
 # 🍨 Sprinkles
 
-**Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)**
+**Zero-runtime atomic CSS framework for [vanilla-extract.](https://github.com/vanilla-extract-css/vanilla-extract)**
 
 Generate a static set of custom utility classes and compose them either statically at build time, or dynamically at runtime, without the usual style generation overhead of CSS-in-JS.
 
@@ -53,7 +53,7 @@ document.write(`
 
 🏃‍♂️ &nbsp; Compose sprinkles statically in `.css.ts` files, or dynamically at runtime (<0.5KB Gzip)
 
-🎨 &nbsp; Generate theme-based scales with CSS Variables using [vanilla-extract themes.](https://vanilla-extract.style/documentation/styling-api/#createtheme)
+🎨 &nbsp; Generate theme-based scales with CSS Variables using [vanilla-extract themes.](https://vanilla-extract.style/documentation/api/create-theme)
 
 ✍️ &nbsp; Configure shorthands for common property combinations, e.g. `paddingX` / `paddingY`.
 
@@ -63,13 +63,13 @@ document.write(`
 
 ---
 
-🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/seek-oss/vanilla-extract/tree/master/examples/webpack-react?file=/src/sprinkles.css.ts)
+🖥 &nbsp; [Try it out for yourself in CodeSandbox.](https://codesandbox.io/s/github/vanilla-extract-css/vanilla-extract/tree/master/examples/webpack-react?file=/src/sprinkles.css.ts)
 
 ---
 
 ## Setup
 
-> 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/seek-oss/vanilla-extract)
+> 💡 Before starting, ensure you've set up [vanilla-extract.](https://github.com/vanilla-extract-css/vanilla-extract)
 
 Install Sprinkles.
 
@@ -191,7 +191,7 @@ document.write(`
 
 > 💡 Although you don’t need to use this library at runtime, it’s designed to be as small and performant as possible. The runtime is only used to look up pre-existing class names. All styles are still generated at build time!
 
-Within `.css.ts` files, combine with any custom styles by providing an array to vanilla-extract’s [`style`](https://vanilla-extract.style/documentation/styling-api/#style) function.
+Within `.css.ts` files, combine with any custom styles by providing an array to vanilla-extract’s [`style`](https://vanilla-extract.style/documentation/api/style) function.
 
 ```ts
 // styles.css.ts
@@ -364,7 +364,7 @@ const responsiveProperties = defineProperties({
 });
 ```
 
-You can also use [vanilla-extract themes](/documentation/styling-api/#createtheme) to configure themed values.
+You can also use [vanilla-extract themes](/documentation/api/create-theme) to configure themed values.
 
 ```ts
 import { defineProperties } from '@vanilla-extract/sprinkles';

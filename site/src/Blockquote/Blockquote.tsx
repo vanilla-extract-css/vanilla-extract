@@ -5,12 +5,9 @@ import * as styles from './Blockquote.css';
 export default (props: { children: ReactNode }) => {
   return (
     <Box
-      component="blockquote"
       paddingX={{ mobile: 'large', tablet: 'xlarge' }}
-      paddingTop="xlarge"
-      marginBottom="xlarge"
-      borderRadius="small"
-      background={{ lightMode: 'blue100', darkMode: 'gray800' }}
+      paddingY="xxlarge"
+      position="relative"
       className={styles.root}
     >
       {props.children}

@@ -16,14 +16,13 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
   <Link to={url} className={styles.tweetLink}>
     <Box
       padding="xlarge"
-      borderRadius="large"
       background={{ lightMode: 'white', darkMode: 'black' }}
       className={styles.tweet}
     >
       <Stack space="xlarge">
         <Box display="flex" alignItems="center" style={{ gap: 10 }}>
           <Box
-            borderRadius="full"
+            // borderRadius="full"
             className={styles.avatar}
             background={{ lightMode: 'coolGray100', darkMode: 'black' }}
             style={{

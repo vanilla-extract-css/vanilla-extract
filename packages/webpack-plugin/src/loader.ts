@@ -4,7 +4,7 @@ import loaderUtils from 'loader-utils';
 import {
   IdentifierOption,
   processVanillaFile,
-  addFileScope,
+  transform,
   serializeCss,
   getPackageInfo,
 } from '@vanilla-extract/integration';
@@ -20,8 +20,9 @@ const virtualLoader = require.resolve(
   ),
 );
 
-const emptyCssExtractionFile = require.resolve(
-  path.join(path.dirname(require.resolve('../../package.json')), 'extracted'),
+const emptyCssExtractionFile = path.join(
+  path.dirname(require.resolve('../../package.json')),
+  'extracted.js',
 );
 
 interface LoaderOptions {
@@ -33,21 +34,35 @@ interface InternalLoaderOptions extends LoaderOptions {
   childCompiler: ChildCompiler;
 }
 
+const defaultIdentifierOption = (
+  mode: LoaderContext['mode'],
+  identifiers?: IdentifierOption,
+): IdentifierOption =>
+  identifiers ?? (mode === 'production' ? 'short' : 'debug');
+
 export default function (this: LoaderContext, source: string) {
-  this.cacheable(true);
+  const { identifiers } = loaderUtils.getOptions(this) as InternalLoaderOptions;
 
   const { name } = getPackageInfo(this.rootContext);
 
-  return addFileScope({
+  const callback = this.async();
+
+  transform({
     source,
     filePath: this.resourcePath,
     rootPath: this.rootContext,
     packageName: name,
-  });
+    identOption: defaultIdentifierOption(this.mode, identifiers),
+  })
+    .then((code) => {
+      callback(null, code);
+    })
+    .catch((e) => {
+      callback(e);
+    });
 }
 
 export function pitch(this: LoaderContext) {
-  this.cacheable(true);
   const { childCompiler, outputCss, identifiers } = loaderUtils.getOptions(
     this,
   ) as InternalLoaderOptions;
@@ -79,8 +94,7 @@ export function pitch(this: LoaderContext) {
         source,
         outputCss,
         filePath: this.resourcePath,
-        identOption:
-          identifiers ?? (this.mode === 'production' ? 'short' : 'debug'),
+        identOption: defaultIdentifierOption(this.mode, identifiers),
         serializeVirtualCssPath: async ({ fileName, source }) => {
           const serializedCss = await serializeCss(source);
           const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({

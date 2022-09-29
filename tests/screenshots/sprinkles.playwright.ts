@@ -7,7 +7,6 @@ import {
 import test from './fixture';
 
 const buildTypes = [
-  'browser',
   'mini-css-extract',
   'style-loader',
   'esbuild',

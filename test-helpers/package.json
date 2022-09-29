@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract-private/test-helpers",
   "private": true,
-  "version": "0.0.21",
+  "version": "0.0.29",
   "main": "src/index.ts",
   "author": "SEEK",
   "license": "MIT",
@@ -17,7 +17,6 @@
     "@parcel/core": "^2.7.0",
     "@types/mini-css-extract-plugin": "^1.2.2",
     "@types/webpack-dev-server": "^3.11.1",
-    "@vanilla-extract/babel-plugin": "*",
     "@vanilla-extract/esbuild-plugin": "*",
     "@vanilla-extract/parcel-transformer": "*",
     "@vanilla-extract/vite-plugin": "*",

@@ -18,7 +18,8 @@
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",
     "version": "changeset version && pnpm install --lockfile-only",
-    "release": "pnpm copy-readme-to-packages && pnpm build && changeset publish"
+    "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
+    "release": "pnpm prepare-release && changeset publish"
   },
   "preconstruct": {
     "packages": [
@@ -26,7 +27,7 @@
     ]
   },
   "volta": {
-    "node": "14.16.0"
+    "node": "16.17.0"
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
@@ -36,11 +37,13 @@
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.17.0",
     "@manypkg/cli": "^0.19.1",
-    "@playwright/test": "^1.14.1",
+    "@playwright/test": "^1.25.1",
     "@preconstruct/cli": "^2.0.1",
     "@swc/core": "^1.2.112",
+    "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^27.0.3",
-    "@vanilla-extract/babel-plugin": "*",
+    "@types/testing-library__jest-dom": "^5.14.5",
+    "@vanilla-extract/jest-transform": "*",
     "babel-jest": "^27.3.1",
     "fast-glob": "^3.2.7",
     "jest": "^27.3.1",
@@ -50,5 +53,11 @@
   },
   "devDependencies": {
     "@parcel/packager-ts": "2.7.0"
+  },
+  "packageManager": "pnpm@7.9.5",
+  "pnpm": {
+    "patchedDependencies": {
+      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
+    }
   }
 }
