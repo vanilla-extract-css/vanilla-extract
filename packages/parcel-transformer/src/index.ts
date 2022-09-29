@@ -3,9 +3,11 @@ import { compile, processVanillaFile } from '@vanilla-extract/integration';
 
 export default new Transformer({
   async transform({ asset, options }) {
+    const identOption = options.mode === 'development' ? 'debug' : 'short';
     const { source, watchFiles } = await compile({
       filePath: asset.filePath,
       cwd: options.projectRoot,
+      identOption,
     });
 
     for (const watchFile of watchFiles) {
@@ -22,7 +24,7 @@ export default new Transformer({
       source,
       filePath: asset.filePath,
       outputCss: asset.env.isBrowser(),
-      identOption: options.mode === 'development' ? 'debug' : 'short',
+      identOption,
       serializeVirtualCssPath: ({ fileName, source: cssSource }) => {
         const uniqueKey = fileName;
 
