@@ -21,6 +21,7 @@ Install your integration of preference:
 - [esbuild]
 - [webpack]
 - [next]
+- [parcel]
 - [rollup]
 - [gatsby]
 
@@ -76,3 +77,4 @@ As a side effect of this import, the CSS is also processed by the selected bundl
 [next]: /documentation/integrations/next/
 [rollup]: /documentation/integrations/rollup/
 [gatsby]: /documentation/integrations/gatsby/
+[parcel]: /documentation/integrations/parcel/
