@@ -76,7 +76,10 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const { source, watchFiles } = await compiler.processVanillaFile(path);
+        const { source, watchFiles } = await compiler.processVanillaFile(
+          path,
+          build.initialOptions.platform === 'browser',
+        );
 
         return {
           contents: source,

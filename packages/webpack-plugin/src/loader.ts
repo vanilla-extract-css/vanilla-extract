@@ -5,7 +5,7 @@ export function pitch(this: LoaderContext) {
   const callback = this.async();
 
   compiler
-    .processVanillaFile(this.resourcePath)
+    .processVanillaFile(this.resourcePath, this.target !== 'node')
     .then(({ source, watchFiles }) => {
       for (const watchFile of watchFiles) {
         this.addDependency(watchFile);

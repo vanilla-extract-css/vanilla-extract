@@ -117,6 +117,7 @@ const createViteServer = async (root: string) => {
 export interface Compiler {
   processVanillaFile(
     filePath: string,
+    outputCss: boolean,
   ): Promise<{ source: string; watchFiles: Set<string> }>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
@@ -143,7 +144,7 @@ export const createCompiler = ({
   >();
 
   return {
-    async processVanillaFile(filePath: string) {
+    async processVanillaFile(filePath, outputCss) {
       const { server, runner } = await vitePromise;
 
       const cssByFileScope = new Map<string, Array<Css>>();
@@ -210,10 +211,15 @@ export const createCompiler = ({
         }
 
         for (const url of executedUrls) {
+          const cssObjs = cssByFileScope.get(url);
+          if (!cssObjs) {
+            continue;
+          }
+
           const css = transformCss({
             localClassNames: Array.from(localClassNames),
             composedClassLists,
-            cssObjs: cssByFileScope.get(url)!,
+            cssObjs,
           }).join('\n');
 
           const moduleId = fileURLToPath(url);
@@ -230,7 +236,11 @@ export const createCompiler = ({
 
         removeAdapter();
 
-        return { fileExports, cssImports, watchFiles };
+        return {
+          fileExports,
+          cssImports: outputCss ? cssImports : [],
+          watchFiles,
+        };
       });
 
       const unusedCompositions = composedClassLists
