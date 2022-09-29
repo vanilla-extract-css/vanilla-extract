@@ -1,5 +1,13 @@
 # @vanilla-extract/next-plugin
 
+## 2.1.1
+
+### Patch Changes
+
+- [#852](https://github.com/vanilla-extract-css/vanilla-extract/pull/852) [`dfc6405`](https://github.com/vanilla-extract-css/vanilla-extract/commit/dfc640593b5c627364c5423c3110b048f51844e4) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix `Cannot find module *.css.ts.vanilla.css` issue
+
+  Previously, CSS was being output on both the client and server builds. This fix ensure CSS is only output on the client build.
+
 ## 2.1.0
 
 ### Minor Changes
