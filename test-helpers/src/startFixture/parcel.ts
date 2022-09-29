@@ -32,10 +32,11 @@ export const startParcelFixture = async (
     logLevel: 'verbose',
   });
 
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     const subscription = await bundler.watch((err, buildEvent) => {
       if (err) {
         console.error(err);
+        return reject(err);
       }
 
       if (buildEvent?.type === 'buildSuccess') {

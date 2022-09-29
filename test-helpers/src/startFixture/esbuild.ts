@@ -19,13 +19,13 @@ export const startEsbuildFixture = async (
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
-  const outdir = path.join(absWorkingDir, 'dist');
+  const outdir = path.join(absWorkingDir, 'dist', type, fixtureName);
 
   if (existsSync(outdir)) {
     await fs.rm(outdir, { recursive: true });
   }
 
-  await fs.mkdir(outdir);
+  await fs.mkdir(outdir, { recursive: true });
 
   const server = await serve(
     { servedir: outdir, port },
