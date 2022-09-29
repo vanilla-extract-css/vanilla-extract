@@ -15,7 +15,7 @@
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/parcel-transformer"
   },
-  "author": "SEEK",
+  "author": "mattcompiles",
   "license": "MIT",
   "dependencies": {
     "@parcel/plugin": "^2.7.0",
