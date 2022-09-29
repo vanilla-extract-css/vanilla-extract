@@ -1,10 +1,12 @@
-import { build } from 'tsup';
+import { existsSync } from 'fs';
 import fs from 'fs/promises';
 import path from 'path';
 
-import { legacy, resolve } from 'resolve.exports';
-
 import glob from 'fast-glob';
+import { legacy, resolve } from 'resolve.exports';
+import { rollup } from 'rollup';
+import dts from 'rollup-plugin-dts';
+import { externals } from 'rollup-plugin-node-externals';
 
 function resolveEntry<PackageJson>(pkg: PackageJson, entryName?: string) {
   const entryPath = entryName
@@ -18,19 +20,59 @@ function resolveEntry<PackageJson>(pkg: PackageJson, entryName?: string) {
   return entryPath;
 }
 
-async function buildEntry(entryPath: string) {
-  await build({
-    dts: {
-      only: true,
-      compilerOptions: { incremental: false },
-    },
-    entry: [entryPath],
-    outDir: path.dirname(entryPath),
-  });
+async function buildEntry(packageDir: string, entryPath: string) {
+  const entryPathAbsolute = path.join(packageDir, entryPath);
+  const entryPathRelative = path.relative(process.cwd(), entryPathAbsolute);
+  const outDir = path.dirname(entryPathAbsolute);
+  const dtsEntryPathAbsolute = entryPathAbsolute.replace(
+    path.extname(entryPathAbsolute),
+    '.d.ts',
+  );
+  const dtsEntryPathRelative = path.relative(
+    process.cwd(),
+    dtsEntryPathAbsolute,
+  );
+
+  if (!existsSync(dtsEntryPathAbsolute)) return;
+
+  console.log('Bundling', dtsEntryPathRelative);
+
+  try {
+    const bundle = await rollup({
+      input: dtsEntryPathAbsolute,
+      plugins: [
+        externals({
+          packagePath: path.resolve(packageDir, 'package.json'),
+          deps: true,
+          devDeps: false,
+          exclude: ['@vanilla-extract/private'], // always bundle
+          include: ['@jest/transform'], // don't bundle
+        }),
+        dts({
+          compilerOptions: {
+            incremental: false,
+            noEmitOnError: false,
+          },
+          respectExternal: true,
+        }),
+      ],
+    });
+
+    await bundle.write({
+      dir: outDir,
+      entryFileNames: '[name].ts',
+      minifyInternalExports: false,
+    });
+
+    await bundle.close();
+  } catch (e: any) {
+    console.error('Error bundling', entryPathRelative);
+    console.error(e);
+  }
 }
 
-async function removeOldDeclarations(entryPath: string) {
-  await fs.rm(path.join(entryPath, '../declarations'), {
+async function removeOldDeclarations(packageDir: string, entryPath: string) {
+  await fs.rm(path.join(packageDir, entryPath, '../declarations'), {
     force: true,
     recursive: true,
   });
@@ -42,10 +84,10 @@ async function removeOldDeclarations(entryPath: string) {
     absolute: true,
   });
 
-  const entryPaths: string[] = [];
+  const entryPaths: [string, string][] = [];
 
   for (const packageDir of packages) {
-    const pkg = require(path.join(packageDir, 'package.json'));
+    const pkg = require(path.resolve(packageDir, 'package.json'));
 
     if (pkg.exports) {
       const pkgExports = Object.keys(pkg.exports);
@@ -53,16 +95,24 @@ async function removeOldDeclarations(entryPath: string) {
       for (const entryName of pkgExports) {
         if (entryName.endsWith('package.json')) continue;
 
-        entryPaths.push(path.join(packageDir, resolveEntry(pkg, entryName)));
+        entryPaths.push([packageDir, resolveEntry(pkg, entryName)]);
       }
     } else {
-      entryPaths.push(path.join(packageDir, resolveEntry(pkg)));
+      entryPaths.push([packageDir, resolveEntry(pkg)]);
     }
   }
 
-  await Promise.all(entryPaths.map(buildEntry));
+  await Promise.all(
+    entryPaths.map(([packageDir, entryPath]) =>
+      buildEntry(packageDir, entryPath),
+    ),
+  );
 
   // Entry points might reference each other so remove old declaration files
   // after we're done with everything
-  await Promise.all(entryPaths.map(removeOldDeclarations));
+  await Promise.all(
+    entryPaths.map(([packageDir, entryPath]) =>
+      removeOldDeclarations(packageDir, entryPath),
+    ),
+  );
 })();
