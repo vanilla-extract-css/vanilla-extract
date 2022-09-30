@@ -21,25 +21,19 @@ function resolveEntry<PackageJson>(pkg: PackageJson, entryName?: string) {
 }
 
 async function buildEntry(packageDir: string, entryPath: string) {
-  const entryPathAbsolute = path.join(packageDir, entryPath);
-  const entryPathRelative = path.relative(process.cwd(), entryPathAbsolute);
-  const outDir = path.dirname(entryPathAbsolute);
-  const dtsEntryPathAbsolute = entryPathAbsolute.replace(
-    path.extname(entryPathAbsolute),
-    '.d.ts',
-  );
-  const dtsEntryPathRelative = path.relative(
-    process.cwd(),
-    dtsEntryPathAbsolute,
-  );
+  const dtsEntryPathAbsolute = path
+    .join(packageDir, entryPath)
+    .replace(path.extname(entryPath), '.d.ts');
+  const dtsEntryPath = path.relative(process.cwd(), dtsEntryPathAbsolute);
+  const outDir = path.dirname(dtsEntryPath);
 
-  if (!existsSync(dtsEntryPathAbsolute)) return;
+  if (!existsSync(dtsEntryPath)) return;
 
-  console.log('Bundling', dtsEntryPathRelative);
+  console.log('Bundling', dtsEntryPath);
 
   try {
     const bundle = await rollup({
-      input: dtsEntryPathAbsolute,
+      input: dtsEntryPath,
       plugins: [
         externals({
           packagePath: path.resolve(packageDir, 'package.json'),
@@ -66,12 +60,16 @@ async function buildEntry(packageDir: string, entryPath: string) {
 
     await bundle.close();
   } catch (e: any) {
-    console.error('Error bundling', entryPathRelative);
+    console.error('Error bundling', dtsEntryPath);
     console.error(e);
+    throw e;
   }
 }
 
-async function removeOldDeclarations(packageDir: string, entryPath: string) {
+async function removePreconstructDeclarations(
+  packageDir: string,
+  entryPath: string,
+) {
   await fs.rm(path.join(packageDir, entryPath, '../declarations'), {
     force: true,
     recursive: true,
@@ -112,7 +110,7 @@ async function removeOldDeclarations(packageDir: string, entryPath: string) {
   // after we're done with everything
   await Promise.all(
     entryPaths.map(([packageDir, entryPath]) =>
-      removeOldDeclarations(packageDir, entryPath),
+      removePreconstructDeclarations(packageDir, entryPath),
     ),
   );
 })();
