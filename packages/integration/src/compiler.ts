@@ -57,7 +57,7 @@ const createViteServer = async (root: string) => {
     },
     // @ts-expect-error Vite's types for SSR are bad
     ssr: {
-      noExternal: false,
+      noExternal: true,
     },
     plugins: [
       {
