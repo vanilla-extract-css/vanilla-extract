@@ -1,9 +1,9 @@
 ---
-title: Webpack
+title: webpack
 parent: integrations
 ---
 
-# Webpack
+# webpack
 
 A plugin for integrating vanilla-extract with [webpack](https://webpack.js.org).
 
