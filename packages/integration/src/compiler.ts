@@ -203,7 +203,7 @@ export const createCompiler = ({
             throw new Error(`No CSS Entry in cache for ${moduleId}`);
           }
 
-          cssImports.push(`import '${toCssImport(filePath)}';`);
+          cssImports.push(`import '${toCssImport(moduleId)}';`);
 
           cssEntry.localClassNames.forEach((localClassName) => {
             localClassNames.add(localClassName);
