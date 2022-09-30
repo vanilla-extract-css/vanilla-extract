@@ -39,7 +39,6 @@ async function buildEntry(packageDir: string, entryPath: string) {
           packagePath: path.resolve(packageDir, 'package.json'),
           deps: true,
           devDeps: false,
-          exclude: ['@vanilla-extract/private'], // always bundle
           include: ['@jest/transform'], // don't bundle
         }),
         dts({
