@@ -55,6 +55,10 @@ const createViteServer = async (root: string) => {
     optimizeDeps: {
       disabled: true,
     },
+    // @ts-expect-error Vite's types for SSR are bad
+    ssr: {
+      noExternal: false,
+    },
     plugins: [
       {
         name: 'vanilla-extract-externalize',
