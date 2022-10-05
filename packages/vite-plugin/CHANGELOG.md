@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.6.1
+
+### Patch Changes
+
+- [#845](https://github.com/vanilla-extract-css/vanilla-extract/pull/845) [`b6aa8b6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b6aa8b628a8c0a4ac3833b2e27a40aed729845da) Thanks [@tom-sherman](https://github.com/tom-sherman)! - Adds vite v3 to peer dependencies
+
 ## 3.6.0
 
 ### Minor Changes
