@@ -38,11 +38,13 @@ interface ProcessVanillaFileOptions {
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
+  onFileCompiled?: (path: string, identifiers: Record<string, string>) => void;
 }
 export async function processVanillaFile({
   source,
   filePath,
   outputCss = true,
+  onFileCompiled,
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
 }: ProcessVanillaFileOptions) {
@@ -96,6 +98,7 @@ export async function processVanillaFile({
     { console, process, __adapter__: cssAdapter },
     true,
   );
+  onFileCompiled?.(filePath, evalResult)
 
   process.env.NODE_ENV = currentNodeEnv;
 
