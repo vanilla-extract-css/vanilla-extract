@@ -37,7 +37,6 @@
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.17.0",
     "@manypkg/cli": "^0.19.1",
-    "@parcel/packager-ts": "2.7.0",
     "@playwright/test": "^1.25.1",
     "@preconstruct/cli": "^2.0.1",
     "@swc/core": "^1.2.112",
