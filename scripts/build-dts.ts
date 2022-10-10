@@ -52,13 +52,17 @@ async function buildEntry(packageDir: string, entryPath: string) {
       ],
     });
 
-    await bundle.write({
-      dir: outDir,
-      entryFileNames: '[name].ts',
-      minifyInternalExports: false,
-    });
-
-    await bundle.close();
+    // There is a chance that two `buildEntry`s  will run at the same time
+    // and one will attempt to read while the other is writing. To fix that,
+    // we'll defer the overwrite until all the bundles are ready
+    return async () => {
+      await bundle.write({
+        dir: outDir,
+        entryFileNames: '[name].ts',
+        minifyInternalExports: false,
+      });
+      await bundle.close();
+    };
   } catch (e: any) {
     console.error('Error bundling', dtsEntryPath);
     console.error(e);
@@ -104,7 +108,7 @@ async function removePreconstructDeclarations(
     entryPaths.map(([packageDir, entryPath]) =>
       buildEntry(packageDir, entryPath),
     ),
-  );
+  ).then((writes) => writes.map((write) => write?.()));
 
   // Entry points might reference each other so remove old declaration files
   // after we're done with everything
