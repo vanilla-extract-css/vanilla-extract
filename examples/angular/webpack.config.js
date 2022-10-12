@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (config) => {
   // Add the Vanilla Extract plugin as per the docs
   config.plugins.push(new VanillaExtractPlugin());
+  config.plugins.push(new MiniCssExtractPlugin());
 
   config.module.rules = config.module?.rules?.map((rule) => {
     // Modify angular loader so it doesn't error out on vanilla extract files
