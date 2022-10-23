@@ -116,6 +116,132 @@ When processing your code into CSS, vanilla-extract will always render your medi
 
 > 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media`, `@supports`, and `@container` condition blocks together to create the smallest possible CSS output.
 
+## Layers
+
+```ts compiled
+// styles.css.ts
+import {
+  style,
+  globalStyle,
+  createLayers,
+  createLayer
+} from '@vanilla-extract/css';
+
+const [resetLayer, baseLayer, themeLayer, utilitiesLayer] =
+  createLayers('reset', 'base', 'theme', 'utilities');
+
+const heading = style({
+  '@layer': {
+    [themeLayer]: {
+      color: 'rebeccapurple'
+    }
+  }
+});
+globalStyle('*', {
+  '@layer': {
+    [resetLayer]: {
+      margin: 0,
+      padding: 0
+    }
+  }
+});
+
+// these will be hoisted
+const some = createLayer();
+const more = createLayer();
+const layers = createLayer();
+```
+
+```ts compiled
+// nesting.css.ts
+import { style, createLayer } from '@vanilla-extract/css';
+
+const baseLayer = createLayer();
+const themeLayer = createLayer();
+
+const list = style({
+  '@layer': {
+    [baseLayer]: {
+      listStyle: 'none'
+    }
+  }
+});
+const text = style({
+  '@layer': {
+    [baseLayer]: {
+      color: 'yellow',
+      '@layer': {
+        more_nesting: {
+          color: 'magenta',
+          textDecoration: 'underline'
+        }
+      },
+      '@media': {
+        'screen and (min-width: 200px)': {
+          color: 'green'
+        }
+      }
+    }
+  }
+});
+const headingTheme = style({
+  '@layer': {
+    [themeLayer]: {
+      color: 'rebeccapurple',
+      '@layer': {
+        apac: {
+          color: '#0066ff'
+        }
+      }
+    }
+  }
+});
+const headingBase = style({
+  '@layer': {
+    [baseLayer]: {
+      color: 'papayawhip'
+    }
+  }
+});
+```
+
+```ts compiled
+// collapsing.css.ts
+import { style, createLayer } from '@vanilla-extract/css';
+
+const baseLayer = createLayer();
+const themeLayer = createLayer();
+
+const list = style({
+  '@layer': {
+    [baseLayer]: {
+      listStyle: 'none'
+    }
+  }
+});
+const text = style({
+  '@layer': {
+    [baseLayer]: {
+      color: 'yellow'
+    }
+  }
+});
+const headingTheme = style({
+  '@layer': {
+    [themeLayer]: {
+      color: 'rebeccapurple'
+    }
+  }
+});
+const headingBase = style({
+  '@layer': {
+    [baseLayer]: {
+      color: 'papayawhip'
+    }
+  }
+});
+```
+
 ## Selectors
 
 There are two methods of specifying selectors for a given style, simple pseudo selectors that can be used alongside all other CSS properties, and the `selectors` option which allows construction of more complex rules.

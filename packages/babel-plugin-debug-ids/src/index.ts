@@ -30,6 +30,9 @@ const debuggableFunctionConfig = {
   createContainer: {
     maxParams: 1,
   },
+  createLayer: {
+    maxParams: 1,
+  },
 };
 
 const styleFunctions = [
@@ -42,6 +45,7 @@ const styleFunctions = [
   'globalFontFace',
   'globalKeyframes',
   'recipe',
+  'createLayers',
 ];
 
 type StyleFunction = typeof styleFunctions[number];

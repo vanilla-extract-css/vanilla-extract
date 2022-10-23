@@ -56,20 +56,36 @@ export interface ContainerQueries<StyleType> {
   };
 }
 
+export interface Layer<StyleType> {
+  '@layer'?: {
+    [name: string]: StyleType;
+  };
+}
+
 export type WithQueries<StyleType> = MediaQueries<
   StyleType &
     FeatureQueries<StyleType & ContainerQueries<StyleType>> &
-    ContainerQueries<StyleType & FeatureQueries<StyleType>>
+    ContainerQueries<StyleType & FeatureQueries<StyleType>> &
+    Layer<StyleType & FeatureQueries<StyleType>>
 > &
   FeatureQueries<
     StyleType &
       MediaQueries<StyleType & ContainerQueries<StyleType>> &
-      ContainerQueries<StyleType & MediaQueries<StyleType>>
+      ContainerQueries<StyleType & MediaQueries<StyleType>> &
+      Layer<StyleType & MediaQueries<StyleType>>
   > &
   ContainerQueries<
     StyleType &
       MediaQueries<StyleType & FeatureQueries<StyleType>> &
-      FeatureQueries<StyleType & MediaQueries<StyleType>>
+      FeatureQueries<StyleType & MediaQueries<StyleType>> &
+      Layer<StyleType & MediaQueries<StyleType>>
+  > &
+  Layer<
+    StyleType &
+      MediaQueries<StyleType & FeatureQueries<StyleType>> &
+      FeatureQueries<StyleType & MediaQueries<StyleType>> &
+      ContainerQueries<StyleType & FeatureQueries<StyleType>> &
+      WithQueries<StyleType>
   >;
 
 interface SelectorMap {
@@ -113,11 +129,17 @@ export type CSSSelectorBlock = {
   rule: GlobalStyleRule;
 };
 
+export type CSSLayerDeclaration = {
+  type: 'layer';
+  name: string;
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
-  | CSSSelectorBlock;
+  | CSSSelectorBlock
+  | CSSLayerDeclaration;
 
 export type FileScope = {
   packageName?: string;

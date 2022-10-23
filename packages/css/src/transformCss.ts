@@ -15,6 +15,7 @@ import type {
   CSSSelectorBlock,
   Composition,
   WithQueries,
+  CSSLayerDeclaration,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
@@ -93,12 +94,14 @@ function replaceBetweenIndexes(
 }
 
 const DOUBLE_SPACE = '  ';
+const EMPTY = Symbol('empty');
 
 const specialKeys = [
   ...simplePseudos,
   '@media',
   '@supports',
   '@container',
+  '@layer',
   'selectors',
 ];
 
@@ -114,6 +117,7 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
+  layerDeclarations: Array<CSSLayerDeclaration>;
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
@@ -126,6 +130,7 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
+    this.layerDeclarations = [];
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
@@ -153,6 +158,12 @@ class Stylesheet {
       return;
     }
 
+    if (root.type === 'layer') {
+      this.layerDeclarations.push(root);
+
+      return;
+    }
+
     // Add main styles
     const mainRule = omit(root.rule, specialKeys);
     this.addRule({
@@ -165,6 +176,7 @@ class Stylesheet {
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
     this.transformContainer(root, root.rule['@container']);
+    this.transformLayer(root, root.rule['@layer']);
 
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
@@ -399,6 +411,7 @@ class Stylesheet {
 
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
+        this.transformLayer(root, mediaRule!['@layer'], conditions);
       });
     }
   }
@@ -438,6 +451,43 @@ class Stylesheet {
     }
   }
 
+  transformLayer(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@layer'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((name) => `@layer ${name}`),
+      );
+
+      forEach(rules, (layerRule, name) => {
+        const layerDeclaration = `@layer ${name}`;
+
+        const conditions = [...parentConditions, layerDeclaration];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(layerRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePseudos(root, layerRule!, conditions);
+          this.transformSelectors(root, layerRule!, conditions);
+        }
+
+        this.transformLayer(root, layerRule!['@layer'], conditions);
+        this.transformSupports(root, layerRule!['@supports'], conditions);
+        this.transformMedia(root, layerRule!['@media'], conditions);
+        this.transformContainer(root, layerRule!['@container'], conditions);
+      });
+    }
+  }
+
   transformSupports(
     root: CSSStyleBlock | CSSSelectorBlock,
     rules: WithQueries<StyleWithSelectors>['@supports'],
@@ -466,6 +516,7 @@ class Stylesheet {
         }
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
+        this.transformLayer(root, supportsRule!['@layer'], conditions);
       });
     }
   }
@@ -518,6 +569,11 @@ class Stylesheet {
       css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
     }
 
+    // Render layer declarations
+    for (const layerDeclaration of this.layerDeclarations) {
+      css.push(renderCss({ [`@layer ${layerDeclaration.name}`]: EMPTY }));
+    }
+
     // Render unconditional rules
     for (const rule of this.rules) {
       css.push(renderCss({ [rule.selector]: rule.rule }));
@@ -553,6 +609,8 @@ function renderCss(v: any, indent: string = '') {
           )}\n${indent}}`,
         );
       }
+    } else if (value === EMPTY) {
+      rules.push(`${indent}${key};`);
     } else {
       rules.push(
         `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
