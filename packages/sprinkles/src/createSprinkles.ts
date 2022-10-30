@@ -60,11 +60,24 @@ type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
       SprinkleProps<R>
   : {};
 
+type SprinkleConditions<Args extends ReadonlyArray<any>> = Args extends [
+  infer L,
+  ...infer R
+]
+  ? L extends SprinklesProperties
+    ? [
+        keyof L['conditions'],
+        ...SprinkleConditions<[ChildSprinkleProps<L['styles']>]>,
+        ...SprinkleConditions<R>
+      ]
+    : []
+  : [];
+
 export type SprinklesFn<Args extends ReadonlyArray<SprinklesProperties>> = ((
   props: SprinkleProps<Args>,
 ) => string) & {
   properties: Set<keyof SprinkleProps<Args>>;
-  conditions: Set<string>;
+  conditions: Set<SprinkleConditions<Args>>;
 };
 
 export const createSprinkles =
