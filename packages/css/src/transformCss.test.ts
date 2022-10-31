@@ -474,6 +474,75 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should combine nested media queries if safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1024px)': {
+                  padding: '50px',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1200px)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 768px)': {
+                  background: 'blue',
+                },
+
+                'screen and (min-width: 1024px)': {
+                  background: 'green',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 768px) {
+        .otherOtherClass {
+          background: blue;
+        }
+      }
+      @media screen and (min-width: 1024px) {
+        .testClass {
+          padding: 50px;
+        }
+        .otherOtherClass {
+          background: green;
+        }
+      }
+      @media screen and (min-width: 1200px) {
+        .otherClass {
+          color: red;
+        }
+      }"
+    `);
+  });
+
   it('should handle simple pseudos', () => {
     expect(
       transformCss({
