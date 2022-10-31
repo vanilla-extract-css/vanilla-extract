@@ -1,5 +1,3 @@
-import type { Condition } from './';
-
 export interface ResponsiveArray<Length extends number, Value>
   extends ReadonlyArray<Value> {
   0: Value;
@@ -75,6 +73,9 @@ export type UnconditionalProperty = {
 export type ShorthandProperty = {
   mappings: Array<string>;
 };
+
+export type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
+export type Condition = Partial<Record<ConditionKey, string>>;
 
 export type SprinklesProperties = {
   conditions?: { [conditionName: string]: Condition };

@@ -11,15 +11,17 @@ import {
   SprinklesFn,
   createSprinkles as internalCreateSprinkles,
 } from './createSprinkles';
-import { SprinklesProperties, ResponsiveArrayConfig } from './types';
+import {
+  SprinklesProperties,
+  ResponsiveArrayConfig,
+  Condition,
+  ConditionKey,
+} from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 
 export type { ResponsiveArray } from './types';
-
-type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
-export type Condition = Partial<Record<ConditionKey, string>>;
 
 type BaseConditions = { [conditionName: string]: Condition };
 
