@@ -2,6 +2,7 @@ import { addRecipe } from '@vanilla-extract/css/recipe';
 import {
   ResponsiveArrayByMaxLength,
   RequiredResponsiveArrayByMaxLength,
+  Conditions,
 } from './types';
 
 type ExtractValue<
@@ -19,14 +20,6 @@ type ExtractValue<
   : Value extends Partial<Record<string, string | number | boolean>>
   ? NonNullable<Value[keyof Value]>
   : Value;
-
-type Conditions<ConditionName extends string> = {
-  conditions: {
-    defaultCondition: ConditionName | false;
-    conditionNames: Array<ConditionName>;
-    responsiveArray?: Array<ConditionName>;
-  };
-};
 
 type ExtractDefaultCondition<SprinklesProperties extends Conditions<string>> =
   SprinklesProperties['conditions']['defaultCondition'];

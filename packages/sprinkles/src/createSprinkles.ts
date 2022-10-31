@@ -82,8 +82,10 @@ export const createSprinkles =
   ) =>
   (...args: Args): SprinklesFn<Args> => {
     const sprinklesStyles = Object.assign({}, ...args.map((a) => a.styles));
-    const sprinklesConditions = new Set<any>(
-      args.flatMap((a) => a.conditions?.conditionNames).filter(Boolean),
+    const sprinklesConditions = new Set(
+      args.flatMap((a) => a.conditions?.conditionNames).filter(Boolean) as [
+        SprinkleConditions<Args>,
+      ],
     );
     const sprinklesKeys = Object.keys(sprinklesStyles) as Array<
       keyof SprinkleProps<Args>

@@ -284,17 +284,9 @@ const noop = (...args: Array<any>) => {};
 
   noop(invalidRequiredValue);
 
-  const conditionalSprinkle = createSprinkles({
-    styles: {},
-    conditions: {
-      mobile: { selector: 'xxx mobile' },
-      tablet: { selector: 'xxx tablet' },
-      desktop: { selector: 'xxx desktop' },
-    },
-  });
-  conditionalSprinkle.conditions.has('mobile');
-  conditionalSprinkle.conditions.has('tablet');
-  conditionalSprinkle.conditions.has('desktop');
+  conditionalProperties.conditions.conditionNames.includes('mobile');
+  conditionalProperties.conditions.conditionNames.includes('tablet');
+  conditionalProperties.conditions.conditionNames.includes('desktop');
   // @ts-expect-error
-  conditionalSprinkle.conditions.has('missingCondition');
+  conditionalProperties.conditions.conditionNames.includes('missingCondition');
 };

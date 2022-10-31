@@ -74,11 +74,16 @@ export type ShorthandProperty = {
   mappings: Array<string>;
 };
 
-export type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
-export type Condition = Partial<Record<ConditionKey, string>>;
+export type Conditions<ConditionName extends string> = {
+  conditions: {
+    defaultCondition: ConditionName | false;
+    conditionNames: Array<ConditionName>;
+    responsiveArray?: Array<ConditionName>;
+  };
+};
 
 export type SprinklesProperties = {
-  conditions?: { [conditionName: string]: Condition };
+  conditions: Conditions<string>['conditions'];
   styles: {
     [property: string]:
       | ConditionalWithResponsiveArrayProperty
