@@ -65,7 +65,7 @@ type SprinkleConditions<Args extends ReadonlyArray<any>> = Args extends [
   ...infer R
 ]
   ? L extends SprinklesProperties
-    ? keyof L['conditions'] | SprinkleConditions<R>
+    ? L['conditions']['conditionNames'][number] | SprinkleConditions<R>
     : never
   : never;
 
