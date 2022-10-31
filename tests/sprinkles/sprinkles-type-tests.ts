@@ -284,9 +284,9 @@ const noop = (...args: Array<any>) => {};
 
   noop(invalidRequiredValue);
 
-  conditionalProperties.conditions.conditionNames.includes('mobile');
-  conditionalProperties.conditions.conditionNames.includes('tablet');
-  conditionalProperties.conditions.conditionNames.includes('desktop');
+  sprinkles.conditions.has('mobile');
+  sprinkles.conditions.has('tablet');
+  sprinkles.conditions.has('desktop');
   // @ts-expect-error
-  conditionalProperties.conditions.conditionNames.includes('missingCondition');
+  sprinkles.conditions.has('missingCondition');
 };
