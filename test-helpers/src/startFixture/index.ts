@@ -3,21 +3,7 @@ import portfinder from 'portfinder';
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
-
-type BuildType =
-  | 'browser'
-  | 'mini-css-extract'
-  | 'style-loader'
-  | 'esbuild'
-  | 'esbuild-runtime'
-  | 'vite';
-
-export interface TestServer {
-  type: BuildType;
-  url: string;
-  close: () => Promise<void>;
-  stylesheet?: string;
-}
+import { TestServer } from './types';
 
 type SharedOptions = {
   basePort: number;
