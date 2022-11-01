@@ -7,7 +7,7 @@
 
 The main problem cascade layers solve is providing a guaranteed way to write CSS without worrying about specificity and source order.
 
-<video autoplay="" loop="" muted=""><source src="https://storage.googleapis.com/web-dev-uploads/video/vS06HQ1YTsbMKSFTIPl2iogUQP73/MQJ5WhdqY78qTwIU2Bt6.mp4" type="video/mp4"></video>
+<!-- <video autoplay="" loop="" muted=""><source src="https://storage.googleapis.com/web-dev-uploads/video/vS06HQ1YTsbMKSFTIPl2iogUQP73/MQJ5WhdqY78qTwIU2Bt6.mp4" type="video/mp4"></video> -->
 
 ```css
 @layer reset, base, theme;
@@ -37,32 +37,60 @@ The main problem cascade layers solve is providing a guaranteed way to write CSS
 
 ## Proposed API
 
+### Discarded
+
 ```ts
 // all-in-one
 const [resetLayer, baseLayer, themeLayer, utilitiesLayer] =
   createLayers('reset', 'base', 'theme', 'utilities');
-
-// one by one
-const resetLayer = createLayer('reset'); // optional debug id
-const baseLayer = createLayer();
-const themeLayer = createLayer();
-const utilitiesLayer = createLayer();
 
 // iterable style (no debug ids)
 const [resetLayer, baseLayer, themeLayer, utilitiesLayer] =
   createLayers();
 ```
 
+### Kept
+
 ```ts
+// one by one
+const resetLayer = layer('reset'); // optional debug id
+const baseLayer = layer({ parent: resetLayer }, 'base'); // maybe?
+const themeLayer = layer({ sideEffect: false }); // maybe next step?
+const utilitiesLayer = layer();
+
+///
+
+export const braidLayer = globalLayer('braid'); // not hashed name
+export const utilitiesLayer = layer({ parent: braidLayer }); // hashed name
+// @layer braid.styles_utilities__1hiof575;
+
+// in my app
+globalLayer(braidLayer);
+layer({ parent: braidLayer }, 'myStuff');
+globalLayer(utilitiesLayer);
+// then import/execute braid code
+```
+
+```ts
+// alt
+const layers = layerTree({
+  reset: null,
+  theme: {
+    apac: null
+  }
+});
+
+// alt
+const resetLayer = layer('reset');
+const themeLayer = layer('theme.apac');
+
 const headingTheme = style({
   '@layer': {
-    [themeLayer]: {
-      color: 'rebeccapurple',
-      '@layer': {
-        apac: {
-          color: '#0066ff'
-        }
-      }
+    [layers.theme]: {
+      color: 'rebeccapurple'
+    },
+    [layers.theme.apac]: {
+      color: '#0066ff'
     }
   }
 });

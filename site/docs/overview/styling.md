@@ -123,12 +123,15 @@ When processing your code into CSS, vanilla-extract will always render your medi
 import {
   style,
   globalStyle,
-  createLayers,
-  createLayer
+  layer,
+  globalLayer
 } from '@vanilla-extract/css';
 
-const [resetLayer, baseLayer, themeLayer, utilitiesLayer] =
-  createLayers('reset', 'base', 'theme', 'utilities');
+const unhashed = globalLayer('unhashed');
+const resetLayer = layer('reset');
+const baseLayer = layer('base');
+const themeLayer = layer('theme');
+const utilitiesLayer = layer('utilities');
 
 const heading = style({
   '@layer': {
@@ -147,17 +150,19 @@ globalStyle('*', {
 });
 
 // these will be hoisted
-const some = createLayer();
-const more = createLayer();
-const layers = createLayer();
+const some = layer();
+const more = layer();
+const layers = layer();
 ```
+
+### Nesting
 
 ```ts compiled
 // nesting.css.ts
-import { style, createLayer } from '@vanilla-extract/css';
+import { style, layer } from '@vanilla-extract/css';
 
-const baseLayer = createLayer();
-const themeLayer = createLayer();
+const baseLayer = layer();
+const themeLayer = layer();
 
 const list = style({
   '@layer': {
@@ -205,12 +210,14 @@ const headingBase = style({
 });
 ```
 
-```ts compiled
-// collapsing.css.ts
-import { style, createLayer } from '@vanilla-extract/css';
+### Merging
 
-const baseLayer = createLayer();
-const themeLayer = createLayer();
+```ts compiled
+// merging.css.ts
+import { style, layer } from '@vanilla-extract/css';
+
+const baseLayer = layer();
+const themeLayer = layer();
 
 const list = style({
   '@layer': {
@@ -240,6 +247,53 @@ const headingBase = style({
     }
   }
 });
+```
+
+### Advanced
+
+```ts compiled
+// advanced.css.ts
+import {
+  style,
+  layer,
+  globalLayer,
+  commitLayers
+} from '@vanilla-extract/css';
+
+export const libLayer = globalLayer(
+  { commit: false },
+  'lib'
+); // uses the provided name
+export const utilitiesLayer = layer({
+  parent: libLayer,
+  commit: false
+}); // creates a hashed name
+
+const text = style({
+  '@layer': {
+    [libLayer]: {
+      color: 'yellow'
+    }
+  }
+});
+
+// later, in my app...
+
+const myStuff = layer(
+  { parent: libLayer, commit: false },
+  'myStuff'
+);
+
+const myText = style({
+  '@layer': {
+    [myStuff]: {
+      color: 'purple'
+    }
+  }
+});
+
+// insert my new layer in between library layers
+commitLayers([libLayer, myStuff, utilitiesLayer]);
 ```
 
 ## Selectors
