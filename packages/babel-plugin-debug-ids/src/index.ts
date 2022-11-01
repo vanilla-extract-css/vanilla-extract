@@ -58,6 +58,8 @@ const extractName = (node: t.Node) => {
     t.isIdentifier(node.id)
   ) {
     return node.id.name;
+  } else if (t.isAssignmentExpression(node) && t.isIdentifier(node.left)) {
+    return node.left.name;
   } else if (t.isExportDefaultDeclaration(node)) {
     return 'default';
   } else if (
