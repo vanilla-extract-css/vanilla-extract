@@ -42,10 +42,12 @@ export function getPackageInfo(cwd?: string | null): PackageInfo {
     );
   }
 
-  if (!packageInfo || !packageInfo.name) {
-    throw new Error(
-      `Couldn't find parent package.json with a name field from '${resolvedCwd}'`,
-    );
+  if (!packageInfo) {
+    throw new Error(`Couldn't find parent package.json from '${resolvedCwd}'`);
+  }
+
+  if (!packageInfo.name) {
+    throw new Error(`Please, Set the name field in package.json`);
   }
 
   packageInfoCache.set(resolvedCwd, packageInfo);
