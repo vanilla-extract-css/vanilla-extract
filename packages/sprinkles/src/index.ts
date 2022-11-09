@@ -14,6 +14,7 @@ import {
 import { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
+export type { SprinklesFn } from './createSprinkles';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 
 export type { ResponsiveArray } from './types';

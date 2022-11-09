@@ -11,6 +11,8 @@ import { Tokens, NullableTokens, ThemeVars } from './types';
 import { validateContract } from './validateContract';
 import { generateIdentifier } from './identifier';
 
+export type { Contract, MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
+
 export function createVar(debugId?: string): CSSVarFunction {
   const cssVarName = cssesc(
     generateIdentifier({
