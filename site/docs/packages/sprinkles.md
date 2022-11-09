@@ -643,7 +643,7 @@ This function should be created and exported from your `sprinkles.css.ts` file u
 > 💡 You can name the generated function whatever you like, typically based on the name of your conditions.
 
 ```ts
-// app.ts
+// sprinkles.css.ts
 import {
   defineProperties,
   createSprinkles,
@@ -671,13 +671,13 @@ normalizeResponsiveValue('block');
 // -> { mobile: 'block' }
 
 normalizeResponsiveValue(['none', null, 'block']);
-// -> { mobile: 'block', desktop: 'block' }
+// -> { mobile: 'none', desktop: 'block' }
 
 normalizeResponsiveValue({
   mobile: 'none',
   desktop: 'block'
 });
-// -> { mobile: 'block', desktop: 'block' }
+// -> { mobile: 'none', desktop: 'block' }
 ```
 
 ## ConditionalValue
