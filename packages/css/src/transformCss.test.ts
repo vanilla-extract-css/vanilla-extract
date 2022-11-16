@@ -1150,7 +1150,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should merge nested @supports, @media and @container queries', () => {
+  it('should merge nested @supports, @media and @container queries when safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1169,6 +1169,10 @@ describe('transformCss', () => {
                         'sidebar (min-width: 700px)': {
                           display: 'grid',
                         },
+
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
                       },
                     },
                   },
@@ -1176,7 +1180,6 @@ describe('transformCss', () => {
               },
             },
           },
-
           {
             type: 'local',
             selector: 'otherClass',
@@ -1185,9 +1188,13 @@ describe('transformCss', () => {
                 'screen and (min-width: 700px)': {
                   '@supports': {
                     '(display: grid)': {
-                      backgroundColor: 'yellow',
+                      borderColor: 'blue',
                       '@container': {
                         'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 800px)': {
                           display: 'grid',
                         },
                       },
@@ -1206,12 +1213,114 @@ describe('transformCss', () => {
             border-color: blue;
           }
           .otherClass {
-            background-color: yellow;
+            border-color: blue;
           }
           @container sidebar (min-width: 700px) {
             .testClass {
               display: grid;
             }
+            .otherClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 800px) {
+            .testClass {
+              display: grid;
+            }
+            .otherClass {
+              display: grid;
+            }
+          }
+        }
+      }"
+    `);
+  });
+
+  it('should not merge nested @supports, @media and @container queries when not safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass', 'otherClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 700px) {
+        @supports (display: grid) {
+          .testClass {
+            border-color: blue;
+          }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 800px) {
+            .testClass {
+              display: grid;
+            }
+          }
+        }
+      }
+      @media screen and (min-width: 700px) {
+        @supports (display: grid) {
+          .otherClass {
+            border-color: blue;
+          }
+          @container sidebar (min-width: 800px) {
+            .otherClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 700px) {
             .otherClass {
               display: grid;
             }
