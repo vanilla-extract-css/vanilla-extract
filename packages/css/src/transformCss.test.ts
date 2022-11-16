@@ -158,7 +158,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should combine media queries', () => {
+  it('should merge media queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -234,7 +234,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should not combine media queries if not safe to do so', () => {
+  it('should not merge media queries if not safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -344,7 +344,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should not combine nested media queries if not safe to do so', () => {
+  it('should not merge nested media queries if not safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -474,7 +474,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should combine nested media queries if safe to do so', () => {
+  it('should merge nested media queries if safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
