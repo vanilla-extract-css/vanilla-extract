@@ -411,7 +411,6 @@ class Stylesheet {
 
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
-        this.transformLayer(root, mediaRule!['@layer'], conditions);
       });
     }
   }
@@ -463,9 +462,7 @@ class Stylesheet {
       );
 
       forEach(rules, (layerRule, name) => {
-        const layerDeclaration = `@layer ${name}`;
-
-        const conditions = [...parentConditions, layerDeclaration];
+        const conditions = [...parentConditions, `@layer ${name}`];
 
         this.addConditionalRule(
           {
@@ -559,6 +556,11 @@ class Stylesheet {
   toCss() {
     const css: Array<string> = [];
 
+    // Render layer declarations first
+    for (const layerDeclaration of this.layerDeclarations) {
+      css.push(renderCss({ [`@layer ${layerDeclaration.name}`]: EMPTY }));
+    }
+
     // Render font-face rules
     for (const fontFaceRule of this.fontFaceRules) {
       css.push(renderCss({ '@font-face': fontFaceRule }));
@@ -567,11 +569,6 @@ class Stylesheet {
     // Render keyframes
     for (const keyframe of this.keyframesRules) {
       css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
-    }
-
-    // Render layer declarations
-    for (const layerDeclaration of this.layerDeclarations) {
-      css.push(renderCss({ [`@layer ${layerDeclaration.name}`]: EMPTY }));
     }
 
     // Render unconditional rules

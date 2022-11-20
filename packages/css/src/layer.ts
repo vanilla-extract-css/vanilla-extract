@@ -11,8 +11,8 @@ const defaultLayerOptions: LayerOptions = {
   commit: true,
 };
 
-const getLayerArgs = (...args: any[]): [LayerOptions, string] => {
-  let options: LayerOptions = defaultLayerOptions;
+const getLayerArgs = <TOptions extends LayerOptions>(...args: any[]): [TOptions, string] => {
+  let options = defaultLayerOptions;
   let debugId: string = args[0];
 
   if (typeof args[0] === 'object') {
@@ -20,13 +20,13 @@ const getLayerArgs = (...args: any[]): [LayerOptions, string] => {
     debugId = args[1];
   }
 
-  return [options, debugId];
+  return [options as TOptions, debugId];
 };
 
 export function layer(options: LayerOptions, debugId?: string): string;
 export function layer(debugId?: string): string;
 export function layer(...args: any[]): string {
-  const [options, debugId] = getLayerArgs(...args);
+  const [options, debugId] = getLayerArgs<LayerOptions>(...args);
 
   let name = generateIdentifier(debugId);
   if (options.parent) {
@@ -40,13 +40,12 @@ export function layer(...args: any[]): string {
   return name;
 }
 
-export function globalLayer(
-  options: Omit<LayerOptions, 'parent'>,
-  name: string,
-): string;
+type GlobalLayerOptions = Omit<LayerOptions, 'parent'>;
+
+export function globalLayer(options: GlobalLayerOptions, name: string): string;
 export function globalLayer(name: string): string;
 export function globalLayer(...args: any[]): string {
-  const [options, name] = getLayerArgs(...args);
+  const [options, name] = getLayerArgs<GlobalLayerOptions>(...args);
 
   if (options.commit) {
     appendCss({ type: 'layer', name }, getFileScope());

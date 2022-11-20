@@ -998,6 +998,65 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle @layer declarations', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'layer',
+            name: 'reset',
+          },
+          {
+            type: 'layer',
+            name: 'foo.bar.baz',
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer reset;
+      @layer foo.bar.baz;"
+    `);
+  });
+
+  it('should handle @layer rules and declarations', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                'foo.bar.baz': {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'foo.bar.baz',
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer foo.bar.baz;
+      .testClass {
+        display: flex;
+      }
+      @layer foo.bar.baz {
+        .testClass {
+          display: grid;
+        }
+      }"
+    `);
+  });
+
   it('should handle nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
