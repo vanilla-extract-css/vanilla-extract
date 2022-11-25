@@ -25,11 +25,13 @@ interface Options {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
   onContextFilled?: ProcessVanillaFileOptions['onContextFilled'];
+  serializeVanillaModule?: ProcessVanillaFileOptions['serializeVanillaModule'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   esbuildOptions,
   onContextFilled,
+  serializeVanillaModule,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
@@ -183,6 +185,7 @@ export function vanillaExtractPlugin({
         filePath: validId,
         identOption,
         onContextFilled,
+        serializeVanillaModule,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
             config.command === 'build' || (ssr && forceEmitCssInSsrBuild)

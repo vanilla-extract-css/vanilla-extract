@@ -15,4 +15,5 @@ export * from './filters';
 
 export type { IdentifierOption } from './types';
 export type { PackageInfo } from './packageInfo';
+export type { AdapterContext } from './processVanillaFile';
 export type { CompileOptions } from './compile';

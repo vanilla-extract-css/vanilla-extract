@@ -42,9 +42,14 @@ export interface ProcessVanillaFileOptions {
     context: AdapterContext,
     evalResult: Record<string, unknown>,
   ) => void;
+  serializeVanillaModule?: (
+    cssImports: Array<string>,
+    exports: Record<string, unknown>,
+    context: AdapterContext,
+  ) => string;
 }
 
-interface AdapterContext {
+export interface AdapterContext {
   cssByFileScope: Map<string, Css[]>;
   localClassNames: Set<string>;
   composedClassLists: Composition[];
@@ -60,6 +65,7 @@ export async function processVanillaFile({
   outputCss = true,
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
+  serializeVanillaModule,
   onContextFilled,
 }: ProcessVanillaFileOptions) {
   const context: AdapterContext = {
@@ -165,16 +171,11 @@ export async function processVanillaFile({
     true,
   );
 
-  const unusedCompositions = context.composedClassLists
-    .filter(({ identifier }) => !context.usedCompositions.has(identifier))
-    .map(({ identifier }) => identifier);
-
-  const unusedCompositionRegex =
-    unusedCompositions.length > 0
-      ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
-      : null;
-
-  return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
+  return (serializeVanillaModule ?? defaultSerializeVanillaModule)(
+    cssImports,
+    evalResult,
+    context,
+  );
 }
 
 export function stringifyExports(
@@ -263,11 +264,20 @@ export function stringifyExports(
   );
 }
 
-function serializeVanillaModule(
+function defaultSerializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
-  unusedCompositionRegex: RegExp | null,
+  context: AdapterContext,
 ) {
+  const unusedCompositions = context.composedClassLists
+    .filter(({ identifier }) => !context.usedCompositions.has(identifier))
+    .map(({ identifier }) => identifier);
+
+  const unusedCompositionRegex =
+    unusedCompositions.length > 0
+      ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
+      : null;
+
   const recipeImports = new Set<string>();
 
   const moduleExports = Object.keys(exports).map((key) =>
