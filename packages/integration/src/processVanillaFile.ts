@@ -28,7 +28,7 @@ export function parseFileScope(serialisedFileScope: string): FileScope {
   };
 }
 
-interface ProcessVanillaFileOptions {
+export interface ProcessVanillaFileOptions {
   source: string;
   filePath: string;
   outputCss?: boolean;
@@ -38,41 +38,57 @@ interface ProcessVanillaFileOptions {
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
+  onContextFilled?: (
+    context: AdapterContext,
+    evalResult: Record<string, unknown>,
+  ) => void;
 }
+
+interface AdapterContext {
+  cssByFileScope: Map<string, Css[]>;
+  localClassNames: Set<string>;
+  composedClassLists: Composition[];
+  usedCompositions: Set<string>;
+}
+
+type Css = Parameters<Adapter['appendCss']>[0];
+type Composition = Parameters<Adapter['registerComposition']>[0];
+
 export async function processVanillaFile({
   source,
   filePath,
   outputCss = true,
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
+  onContextFilled,
 }: ProcessVanillaFileOptions) {
-  type Css = Parameters<Adapter['appendCss']>[0];
-  type Composition = Parameters<Adapter['registerComposition']>[0];
-
-  const cssByFileScope = new Map<string, Array<Css>>();
-  const localClassNames = new Set<string>();
-  const composedClassLists: Array<Composition> = [];
-  const usedCompositions = new Set<string>();
+  const context: AdapterContext = {
+    cssByFileScope: new Map<string, Array<Css>>(),
+    localClassNames: new Set<string>(),
+    composedClassLists: [],
+    usedCompositions: new Set<string>(),
+  };
 
   const cssAdapter: Adapter = {
     appendCss: (css, fileScope) => {
       if (outputCss) {
         const serialisedFileScope = stringifyFileScope(fileScope);
-        const fileScopeCss = cssByFileScope.get(serialisedFileScope) ?? [];
+        const fileScopeCss =
+          context.cssByFileScope.get(serialisedFileScope) ?? [];
 
         fileScopeCss.push(css);
 
-        cssByFileScope.set(serialisedFileScope, fileScopeCss);
+        context.cssByFileScope.set(serialisedFileScope, fileScopeCss);
       }
     },
     registerClassName: (className) => {
-      localClassNames.add(className);
+      context.localClassNames.add(className);
     },
     registerComposition: (composedClassList) => {
-      composedClassLists.push(composedClassList);
+      context.composedClassLists.push(composedClassList);
     },
     markCompositionUsed: (identifier) => {
-      usedCompositions.add(identifier);
+      context.usedCompositions.add(identifier);
     },
     onEndFileScope: () => {},
     getIdentOption: () => identOption,
@@ -96,16 +112,17 @@ export async function processVanillaFile({
     { console, process, __adapter__: cssAdapter },
     true,
   );
+  onContextFilled?.(context, evalResult);
 
   process.env.NODE_ENV = currentNodeEnv;
 
   const cssImports = [];
 
-  for (const [serialisedFileScope, fileScopeCss] of cssByFileScope) {
+  for (const [serialisedFileScope, fileScopeCss] of context.cssByFileScope) {
     const fileScope = parseFileScope(serialisedFileScope);
     const css = transformCss({
-      localClassNames: Array.from(localClassNames),
-      composedClassLists,
+      localClassNames: Array.from(context.localClassNames),
+      composedClassLists: context.composedClassLists,
       cssObjs: fileScopeCss,
     }).join('\n');
 
@@ -148,8 +165,8 @@ export async function processVanillaFile({
     true,
   );
 
-  const unusedCompositions = composedClassLists
-    .filter(({ identifier }) => !usedCompositions.has(identifier))
+  const unusedCompositions = context.composedClassLists
+    .filter(({ identifier }) => !context.usedCompositions.has(identifier))
     .map(({ identifier }) => identifier);
 
   const unusedCompositionRegex =

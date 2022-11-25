@@ -13,6 +13,7 @@ import {
   transform,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
+import type { ProcessVanillaFileOptions } from '@vanilla-extract/integration/src/processVanillaFile';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
@@ -23,10 +24,12 @@ const virtualExtJs = '.vanilla.js';
 interface Options {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  onContextFilled?: ProcessVanillaFileOptions['onContextFilled'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   esbuildOptions,
+  onContextFilled,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
@@ -179,6 +182,7 @@ export function vanillaExtractPlugin({
         source,
         filePath: validId,
         identOption,
+        onContextFilled,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
             config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
