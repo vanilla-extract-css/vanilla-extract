@@ -24,13 +24,13 @@ const virtualExtJs = '.vanilla.js';
 interface Options {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
-  onContextFilled?: ProcessVanillaFileOptions['onContextFilled'];
+  onEvaluated?: ProcessVanillaFileOptions['onEvaluated'];
   serializeVanillaModule?: ProcessVanillaFileOptions['serializeVanillaModule'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   esbuildOptions,
-  onContextFilled,
+  onEvaluated,
   serializeVanillaModule,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -184,7 +184,7 @@ export function vanillaExtractPlugin({
         source,
         filePath: validId,
         identOption,
-        onContextFilled,
+        onEvaluated,
         serializeVanillaModule,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${

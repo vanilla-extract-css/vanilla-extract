@@ -38,9 +38,10 @@ export interface ProcessVanillaFileOptions {
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
-  onContextFilled?: (
+  onEvaluated?: (
     context: AdapterContext,
     evalResult: Record<string, unknown>,
+    filePath: string,
   ) => void;
   serializeVanillaModule?: (
     cssImports: Array<string>,
@@ -66,7 +67,7 @@ export async function processVanillaFile({
   identOption = process.env.NODE_ENV === 'production' ? 'short' : 'debug',
   serializeVirtualCssPath,
   serializeVanillaModule,
-  onContextFilled,
+  onEvaluated,
 }: ProcessVanillaFileOptions) {
   const context: AdapterContext = {
     cssByFileScope: new Map<string, Array<Css>>(),
@@ -118,7 +119,7 @@ export async function processVanillaFile({
     { console, process, __adapter__: cssAdapter },
     true,
   );
-  onContextFilled?.(context, evalResult);
+  onEvaluated?.(context, evalResult, filePath);
 
   process.env.NODE_ENV = currentNodeEnv;
 
