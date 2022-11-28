@@ -39,10 +39,10 @@ export const container = style({
 });
 ```
 
-Importantly, this is does two things:
+Importantly, this does two things:
 
-1. Creates a locally scoped class,
-2. Exports the generated class name,
+1. Creates a locally scoped class.
+2. Exports the generated class name.
 
 ## Apply the style
 
