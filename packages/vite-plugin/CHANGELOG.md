@@ -1,5 +1,16 @@
 # @vanilla-extract/vite-plugin
 
+## 3.7.0
+
+### Minor Changes
+
+- [#895](https://github.com/vanilla-extract-css/vanilla-extract/pull/895) [`2eb89ae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2eb89aee99f6982b95fb823cea2c3adcb71a5798) Thanks [@wmertens](https://github.com/wmertens)! - Add support for Qwik
+
+### Patch Changes
+
+- Updated dependencies [[`2d08761`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2d08761598668c0e7066837ccb0be7b4d5637701)]:
+  - @vanilla-extract/integration@6.0.1
+
 ## 3.6.1
 
 ### Patch Changes
