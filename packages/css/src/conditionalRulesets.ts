@@ -1,32 +1,34 @@
+/** e.g. @media screen and (min-width: 500px) */
+type Query = string;
+
 interface Rule {
   selector: string;
   rule: any;
 }
 
 type Condition = {
-  query: string;
+  query: Query;
   rules: Array<Rule>;
   children: ConditionalRuleset;
 };
 
 export class ConditionalRuleset {
-  ruleset: Array<Condition>;
+  ruleset: Map<Query, Condition>;
+
   /**
-   * Stores information about where conditions must in relation to other conditions
+   * Stores information about where conditions must be in relation to other conditions
    *
    * e.g. mobile -> tablet, desktop
    */
-  precedenceLookup: Map<string, Set<String>>;
+  precedenceLookup: Map<Query, Set<String>>;
 
   constructor() {
-    this.ruleset = [];
+    this.ruleset = new Map();
     this.precedenceLookup = new Map();
   }
 
-  findOrCreateCondition(conditionQuery: string) {
-    let targetCondition = this.ruleset.find(
-      (cond) => cond.query === conditionQuery,
-    );
+  findOrCreateCondition(conditionQuery: Query) {
+    let targetCondition = this.ruleset.get(conditionQuery);
 
     if (!targetCondition) {
       // No target condition so create one
@@ -35,13 +37,13 @@ export class ConditionalRuleset {
         rules: [],
         children: new ConditionalRuleset(),
       };
-      this.ruleset.push(targetCondition);
+      this.ruleset.set(conditionQuery, targetCondition);
     }
 
     return targetCondition;
   }
 
-  getConditionalRulesetByPath(conditionPath: Array<string>) {
+  getConditionalRulesetByPath(conditionPath: Array<Query>) {
     let currRuleset: ConditionalRuleset = this;
 
     for (const query of conditionPath) {
@@ -53,7 +55,7 @@ export class ConditionalRuleset {
     return currRuleset;
   }
 
-  addRule(rule: Rule, conditionQuery: string, conditionPath: Array<string>) {
+  addRule(rule: Rule, conditionQuery: Query, conditionPath: Array<Query>) {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
     const targetCondition = ruleset.findOrCreateCondition(conditionQuery);
 
@@ -65,22 +67,22 @@ export class ConditionalRuleset {
   }
 
   addConditionPrecedence(
-    conditionPath: Array<string>,
-    conditionOrder: Array<string>,
+    conditionPath: Array<Query>,
+    conditionOrder: Array<Query>,
   ) {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
 
     for (let i = 0; i < conditionOrder.length; i++) {
-      const condition = conditionOrder[i];
+      const query = conditionOrder[i];
 
       const conditionPrecedence =
-        ruleset.precedenceLookup.get(condition) ?? new Set();
+        ruleset.precedenceLookup.get(query) ?? new Set();
 
       for (const lowerPrecedenceCondition of conditionOrder.slice(i + 1)) {
         conditionPrecedence.add(lowerPrecedenceCondition);
       }
 
-      ruleset.precedenceLookup.set(condition, conditionPrecedence);
+      ruleset.precedenceLookup.set(query, conditionPrecedence);
     }
   }
 
@@ -101,10 +103,8 @@ export class ConditionalRuleset {
     }
 
     // Check that children are compatible
-    for (const { query, children } of incomingRuleset.ruleset) {
-      const matchingCondition = this.ruleset.find(
-        (cond) => cond.query === query,
-      );
+    for (const { query, children } of incomingRuleset.ruleset.values()) {
+      const matchingCondition = this.ruleset.get(query);
 
       if (
         matchingCondition &&
@@ -119,17 +119,15 @@ export class ConditionalRuleset {
 
   merge(incomingRuleset: ConditionalRuleset) {
     // Merge rulesets into one array
-    for (const { query, rules, children } of incomingRuleset.ruleset) {
-      const matchingCondition = this.ruleset.find(
-        (cond) => cond.query === query,
-      );
+    for (const { query, rules, children } of incomingRuleset.ruleset.values()) {
+      const matchingCondition = this.ruleset.get(query);
 
       if (matchingCondition) {
         matchingCondition.rules.push(...rules);
 
         matchingCondition.children.merge(children);
       } else {
-        this.ruleset.push({ query, rules, children });
+        this.ruleset.set(query, { query, rules, children });
       }
     }
 
@@ -162,33 +160,39 @@ export class ConditionalRuleset {
     return true;
   }
 
-  sort() {
-    this.ruleset.sort((a, b) => {
-      const aWeights = this.precedenceLookup.get(a.query);
+  getSortedRuleset() {
+    const sortedRuleset: Array<Condition> = [];
 
-      if (aWeights?.has(b.query)) {
-        // A is higher precedence
-        return -1;
+    // Loop through all queries and add them to the sorted ruleset
+    for (const [query, dependents] of this.precedenceLookup.entries()) {
+      const conditionForQuery = this.ruleset.get(query);
+
+      if (!conditionForQuery) {
+        throw new Error(`Can't find condition for ${query}`);
       }
 
-      const bWeights = this.precedenceLookup.get(b.query);
+      // Find the location of the first dependent condition in the sortedRuleset
+      // A dependent condition is a condition that must be placed *after* the current one
+      const firstMatchingDependent = sortedRuleset.findIndex((condition) =>
+        dependents.has(condition.query),
+      );
 
-      if (bWeights?.has(a.query)) {
-        // B is higher precedence
-        return 1;
+      if (firstMatchingDependent > -1) {
+        // Insert the condition before the dependent one
+        sortedRuleset.splice(firstMatchingDependent, 0, conditionForQuery);
+      } else {
+        // No match, just insert at the end
+        sortedRuleset.push(conditionForQuery);
       }
+    }
 
-      return 0;
-    });
+    return sortedRuleset;
   }
 
   renderToArray() {
-    // Sort rulesets according to required rule order
-    this.sort();
-
     const arr: any = [];
 
-    for (const { query, rules, children } of this.ruleset) {
+    for (const { query, rules, children } of this.getSortedRuleset()) {
       const selectors: any = {};
 
       for (const rule of rules) {

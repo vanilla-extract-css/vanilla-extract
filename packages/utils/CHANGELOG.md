@@ -1,5 +1,11 @@
 # @vanilla-extract/css-utils
 
+## 0.1.3
+
+### Patch Changes
+
+- [#854](https://github.com/vanilla-extract-css/vanilla-extract/pull/854) [`98f8b03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/98f8b0387d661b77705d2cd83ab3095434e1223e) Thanks [@mrm007](https://github.com/mrm007)! - Bundle TypeScript declaration files (`.d.ts`) when building packages
+
 ## 0.1.2
 
 ### Patch Changes
