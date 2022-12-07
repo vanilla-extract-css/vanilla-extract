@@ -7,6 +7,7 @@ import {
   transform,
   serializeCss,
   getPackageInfo,
+  ProcessVanillaFileOptions,
 } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
@@ -25,7 +26,11 @@ const emptyCssExtractionFile = path.join(
   'extracted.js',
 );
 
-interface LoaderOptions {
+interface LoaderOptions
+  extends Pick<
+    ProcessVanillaFileOptions,
+    'onEvaluated' | 'serializeVanillaModule'
+  > {
   outputCss: boolean;
   identifiers?: IdentifierOption;
 }
@@ -63,9 +68,13 @@ export default function (this: LoaderContext, source: string) {
 }
 
 export function pitch(this: LoaderContext) {
-  const { childCompiler, outputCss, identifiers } = loaderUtils.getOptions(
-    this,
-  ) as InternalLoaderOptions;
+  const {
+    childCompiler,
+    outputCss,
+    identifiers,
+    onEvaluated,
+    serializeVanillaModule,
+  } = loaderUtils.getOptions(this) as InternalLoaderOptions;
 
   const log = debug(
     `vanilla-extract:loader:${formatResourcePath(this.resourcePath)}`,
@@ -95,6 +104,8 @@ export function pitch(this: LoaderContext) {
         outputCss,
         filePath: this.resourcePath,
         identOption: defaultIdentifierOption(this.mode, identifiers),
+        onEvaluated,
+        serializeVanillaModule,
         serializeVirtualCssPath: async ({ fileName, source }) => {
           const serializedCss = await serializeCss(source);
           const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({

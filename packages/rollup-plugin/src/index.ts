@@ -7,12 +7,17 @@ import {
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
   CompileOptions,
+  ProcessVanillaFileOptions,
 } from '@vanilla-extract/integration';
 import { posix } from 'path';
 
 const { relative, normalize, dirname } = posix;
 
-interface Options {
+interface Options
+  extends Pick<
+    ProcessVanillaFileOptions,
+    'onEvaluated' | 'serializeVanillaModule'
+  > {
   identifiers?: IdentifierOption;
   cwd?: string;
   esbuildOptions?: CompileOptions['esbuildOptions'];
@@ -21,6 +26,8 @@ export function vanillaExtractPlugin({
   identifiers,
   cwd = process.cwd(),
   esbuildOptions,
+  onEvaluated,
+  serializeVanillaModule,
 }: Options = {}): Plugin {
   const emittedFiles = new Map<string, string>();
   const isProduction = process.env.NODE_ENV === 'production';
@@ -55,6 +62,8 @@ export function vanillaExtractPlugin({
         source,
         filePath,
         identOption,
+        onEvaluated,
+        serializeVanillaModule,
       });
       return {
         code: output,

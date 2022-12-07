@@ -10,10 +10,10 @@ import {
   IdentifierOption,
   getPackageInfo,
   CompileOptions,
+  ProcessVanillaFileOptions,
   transform,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
-import type { ProcessVanillaFileOptions } from '@vanilla-extract/integration/src/processVanillaFile';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
@@ -21,24 +21,29 @@ const styleUpdateEvent = (fileId: string) =>
 const virtualExtCss = '.vanilla.css';
 const virtualExtJs = '.vanilla.js';
 
-interface Options {
+export interface VanillaExtractPluginOptions
+  extends Pick<
+    ProcessVanillaFileOptions,
+    'onEvaluated' | 'serializeVanillaModule'
+  > {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
-  onEvaluated?: ProcessVanillaFileOptions['onEvaluated'];
-  serializeVanillaModule?: ProcessVanillaFileOptions['serializeVanillaModule'];
+  forceEmitCssInSsrBuild?: boolean;
 }
 export function vanillaExtractPlugin({
   identifiers,
   esbuildOptions,
   onEvaluated,
   serializeVanillaModule,
-}: Options = {}): Plugin {
+  forceEmitCssInSsrBuild: _forceEmitCssInSsrBuild,
+}: VanillaExtractPluginOptions = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
+  let forceEmitCssInSsrBuild: boolean =
+    _forceEmitCssInSsrBuild || !!process.env.VITE_RSC_BUILD;
   let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>

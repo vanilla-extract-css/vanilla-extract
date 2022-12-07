@@ -47,6 +47,7 @@ export interface ProcessVanillaFileOptions {
     cssImports: Array<string>,
     exports: Record<string, unknown>,
     context: AdapterContext,
+    filePath: string,
   ) => string;
 }
 
@@ -176,6 +177,7 @@ export async function processVanillaFile({
     cssImports,
     evalResult,
     context,
+    filePath,
   );
 }
 

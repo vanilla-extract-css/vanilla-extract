@@ -1,4 +1,8 @@
-import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
+import {
+  cssFileFilter,
+  IdentifierOption,
+  ProcessVanillaFileOptions,
+} from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
 
 import { ChildCompiler } from './compiler';
@@ -58,6 +62,8 @@ export class VanillaExtractPlugin {
   allowRuntime: boolean;
   childCompiler: ChildCompiler;
   identifiers?: IdentifierOption;
+  onEvaluated?: ProcessVanillaFileOptions['onEvaluated'];
+  serializeVanillaModule?: ProcessVanillaFileOptions['onEvaluated'];
 
   constructor(options: PluginOptions = {}) {
     const {
@@ -95,6 +101,8 @@ export class VanillaExtractPlugin {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,
             identifiers: this.identifiers,
+            onEvaluated: this.onEvaluated,
+            serializeVanillaModule: this.serializeVanillaModule,
           },
         },
       ],
