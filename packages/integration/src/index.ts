@@ -1,4 +1,5 @@
 export {
+  defaultSerializeVanillaModule,
   processVanillaFile,
   parseFileScope,
   stringifyFileScope,

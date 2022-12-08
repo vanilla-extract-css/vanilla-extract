@@ -267,7 +267,7 @@ export function stringifyExports(
   );
 }
 
-function defaultSerializeVanillaModule(
+export function defaultSerializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
   context: AdapterContext,
