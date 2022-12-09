@@ -38,11 +38,12 @@ export interface ProcessVanillaFileOptions {
     fileScope: FileScope;
     source: string;
   }) => string | Promise<string>;
-  onEvaluated?: (
-    context: AdapterContext,
-    evalResult: Record<string, unknown>,
-    filePath: string,
-  ) => void;
+  onEvaluated?: (args: {
+    source: string;
+    context: AdapterContext;
+    evalResult: Record<string, unknown>;
+    filePath: string;
+  }) => void;
   serializeVanillaModule?: (
     cssImports: Array<string>,
     exports: Record<string, unknown>,
@@ -120,7 +121,7 @@ export async function processVanillaFile({
     { console, process, __adapter__: cssAdapter },
     true,
   );
-  onEvaluated?.(context, evalResult, filePath);
+  onEvaluated?.({ source, context, evalResult, filePath });
 
   process.env.NODE_ENV = currentNodeEnv;
 
