@@ -22,10 +22,13 @@ const virtualExtJs = '.vanilla.js';
 
 interface Options {
   identifiers?: IdentifierOption;
+  forceSSREmit?: boolean;
   esbuildOptions?: CompileOptions['esbuildOptions'];
 }
+
 export function vanillaExtractPlugin({
   identifiers,
+  forceSSREmit,
   esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -33,7 +36,8 @@ export function vanillaExtractPlugin({
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
+  let forceEmitCssInSsrBuild: boolean =
+    !!process.env.VITE_RSC_BUILD || !!forceSSREmit;
   let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
@@ -70,9 +74,12 @@ export function vanillaExtractPlugin({
 
       if (
         config.plugins.some((plugin) =>
-          ['astro:build', 'solid-start-server', 'vite-plugin-qwik'].includes(
-            plugin.name,
-          ),
+          [
+            'astro:build',
+            'solid-start-server',
+            'vite-plugin-qwik',
+            'vite-plugin-svelte',
+          ].includes(plugin.name),
         )
       ) {
         forceEmitCssInSsrBuild = true;
