@@ -45,7 +45,7 @@ export function vanillaExtractPlugin({
 
   let forceEmitCssInSsrBuild: boolean =
     _forceEmitCssInSsrBuild || !!process.env.VITE_RSC_BUILD;
-  let packageName: string;
+  let packageInfos: ReturnType<typeof getPackageInfo>;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -73,7 +73,7 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      packageName = getPackageInfo(config.root).name;
+      packageInfos = getPackageInfo(config.root);
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -113,11 +113,14 @@ export function vanillaExtractPlugin({
       }
     },
     // Convert .vanilla.(js|css) URLs to their absolute version
-    resolveId(source) {
+    resolveId(source, importer) {
       const [validId, query] = source.split('?');
       if (!validId.endsWith(virtualExtCss) && !validId.endsWith(virtualExtJs)) {
         return;
       }
+
+      // while source is .css.ts.vanilla.(js|css), the importer should always be a .css.ts or .html file
+      if (!importer) return;
 
       // Absolute paths seem to occur often in monorepos, where files are
       // imported from outside the config root.
@@ -192,19 +195,25 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
+      let filePackageInfos = packageInfos;
+      const fileDirectory = path.dirname(validId);
+      if (!isSubDir(packageInfos.dirname, fileDirectory)) {
+        filePackageInfos = getPackageInfo(fileDirectory);
+      }
+
       if (ssr && !forceEmitCssInSsrBuild) {
         return transform({
           source: code,
           filePath: normalizePath(validId),
-          rootPath: config.root,
-          packageName,
+          rootPath: filePackageInfos.dirname,
+          packageName: filePackageInfos.name,
           identOption,
         });
       }
 
       const { source, watchFiles } = await compile({
         filePath: validId,
-        cwd: config.root,
+        cwd: filePackageInfos.dirname,
         esbuildOptions,
         identOption,
       });
@@ -284,4 +293,11 @@ export function vanillaExtractPlugin({
       };
     },
   };
+}
+
+function isSubDir(parent: string, dir: string) {
+  const relative = path.relative(parent, dir);
+  return Boolean(
+    relative && !relative.startsWith('..') && !path.isAbsolute(relative),
+  );
 }
