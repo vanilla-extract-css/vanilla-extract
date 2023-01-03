@@ -79,8 +79,8 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        "color": Object {
+      {
+        "color": {
           "blue": "var(--color-blue)",
           "green": "var(--color-green)",
           "red": "var(--color-red)",
@@ -99,8 +99,8 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Object {
-        "color": Object {
+      {
+        "color": {
           "blue": "var(--color-blue)",
           "green": "var(--color-green)",
           "red": "var(--color-red)",
@@ -122,8 +122,8 @@ describe('createGlobalThemeContract', () => {
         (value) => `prefix-${value}`,
       ),
     ).toMatchInlineSnapshot(`
-      Object {
-        "color": Object {
+      {
+        "color": {
           "blue": "var(--prefix-color-blue)",
           "green": "var(--prefix-color-green)",
           "red": "var(--prefix-color-red)",
@@ -145,8 +145,8 @@ describe('createGlobalThemeContract', () => {
         (value) => `--prefix-${value}`,
       ),
     ).toMatchInlineSnapshot(`
-      Object {
-        "color": Object {
+      {
+        "color": {
           "blue": "var(--prefix-color-blue)",
           "green": "var(--prefix-color-green)",
           "red": "var(--prefix-color-red)",
@@ -168,8 +168,8 @@ describe('createGlobalThemeContract', () => {
         (_, path) => `prefix-${path.join('-')}`,
       ),
     ).toMatchInlineSnapshot(`
-      Object {
-        "color": Object {
+      {
+        "color": {
           "blue": "var(--prefix-color-blue)",
           "green": "var(--prefix-color-green)",
           "red": "var(--prefix-color-red)",
@@ -189,7 +189,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for \\"color.red\\": null"`,
+      `"Invalid variable name for "color.red": null"`,
     );
   });
 
@@ -203,7 +203,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for \\"color.blue\\": color'blue"`,
+      `"Invalid variable name for "color.blue": color'blue"`,
     );
   });
 
@@ -217,7 +217,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for \\"color.green\\": 123-color-green"`,
+      `"Invalid variable name for "color.green": 123-color-green"`,
     );
   });
 
@@ -235,7 +235,7 @@ describe('createGlobalThemeContract', () => {
         () => null,
       ),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for \\"color.red\\": null"`,
+      `"Invalid variable name for "color.red": null"`,
     );
   });
 });
