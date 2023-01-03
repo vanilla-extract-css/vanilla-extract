@@ -130,12 +130,10 @@ import {
 const unhashed = globalLayer('unhashed');
 const resetLayer = layer('reset');
 const baseLayer = layer('base');
-const themeLayer = layer('theme');
-const utilitiesLayer = layer('utilities');
 
 const heading = style({
   '@layer': {
-    [themeLayer]: {
+    [baseLayer]: {
       color: 'rebeccapurple'
     }
   }
@@ -162,49 +160,31 @@ const layers = layer();
 import { style, layer } from '@vanilla-extract/css';
 
 const baseLayer = layer();
-const themeLayer = layer();
 
-const list = style({
-  '@layer': {
-    [baseLayer]: {
-      listStyle: 'none'
-    }
-  }
-});
 const text = style({
   '@layer': {
     [baseLayer]: {
-      color: 'yellow',
-      '@layer': {
-        more_nesting: {
-          color: 'magenta',
-          textDecoration: 'underline'
+      color: 'red',
+      '@media': {
+        'screen and (min-width: 600px)': {
+          color: 'green',
+          '@container': {
+            '(min-width: 800px)': {
+              color: 'blue'
+            }
+          }
         }
       },
-      '@media': {
-        'screen and (min-width: 200px)': {
-          color: 'green'
+      '@supports': {
+        '(display: grid)': {
+          color: 'yellow'
+        }
+      },
+      '@container': {
+        '(min-width: 400px)': {
+          color: 'magenta'
         }
       }
-    }
-  }
-});
-const headingTheme = style({
-  '@layer': {
-    [themeLayer]: {
-      color: 'rebeccapurple',
-      '@layer': {
-        apac: {
-          color: '#0066ff'
-        }
-      }
-    }
-  }
-});
-const headingBase = style({
-  '@layer': {
-    [baseLayer]: {
-      color: 'papayawhip'
     }
   }
 });
@@ -256,8 +236,7 @@ const headingBase = style({
 import {
   style,
   layer,
-  globalLayer,
-  commitLayers
+  globalLayer
 } from '@vanilla-extract/css';
 
 export const libLayer = globalLayer('lib'); // uses the provided name
@@ -271,10 +250,7 @@ const text = style({
   }
 });
 
-const myStuff = layer(
-  { parent: libLayer, commit: false },
-  'myStuff'
-);
+const myStuff = layer({ parent: libLayer }, 'myStuff');
 
 const myText = style({
   '@layer': {
