@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`layers - esbuild should create valid stylesheet 1`] = `
+"@layer lib;
+@layer _1sqkzjx2 {
+  ._1sqkzjx3 {
+    background-color: indigo;
+    color: #fff;
+  }
+}
+@layer lib._1sqkzjx1 {
+  ._1sqkzjx4 {
+    background-color: orange;
+    color: #7fffd4;
+  }
+}
+@layer lib._1sqkzjx0 {
+  ._1sqkzjx5 {
+    color: #f0f;
+    text-decoration: underline;
+  }
+  p.reset {
+    color: orange;
+  }
+  @media screen and (min-width: 400px) {
+    ._1sqkzjx5 {
+      color: green;
+    }
+  }
+}
+"
+`;
+
+exports[`layers - mini-css-extract should create valid stylesheet 1`] = `
+"@layer lib;
+@layer _18onbx42 {
+  ._18onbx43 {
+    background-color: indigo;
+    color: #fff;
+  }
+}
+@layer lib._18onbx41 {
+  ._18onbx44 {
+    background-color: orange;
+    color: #7fffd4;
+  }
+}
+@layer lib._18onbx40 {
+  ._18onbx45 {
+    color: #f0f;
+    text-decoration: underline;
+  }
+  p.reset {
+    color: orange;
+  }
+  @media screen and (min-width: 400px) {
+    ._18onbx45 {
+      color: green;
+    }
+  }
+}
+"
+`;
+
+exports[`layers - vite should create valid stylesheet 1`] = `
+"@layer lib;
+@layer _1sqkzjx2 {
+  ._1sqkzjx3 {
+    background-color: indigo;
+    color: #fff;
+  }
+}
+@layer lib._1sqkzjx1 {
+  ._1sqkzjx4 {
+    background-color: orange;
+    color: #7fffd4;
+  }
+}
+@layer lib._1sqkzjx0 {
+  ._1sqkzjx5 {
+    color: #f0f;
+    text-decoration: underline;
+  }
+  p.reset {
+    color: orange;
+  }
+  @media screen and (min-width: 400px) {
+    ._1sqkzjx5 {
+      color: green;
+    }
+  }
+}
+"
+`;

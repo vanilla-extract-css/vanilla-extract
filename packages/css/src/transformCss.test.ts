@@ -25,14 +25,12 @@ describe('transformCss', () => {
                 'screen and (min-width: 700px)': {
                   color: 'green',
                 },
-
                 'screen and (min-width: 1000px)': {
                   color: 'purple',
                 },
               },
             },
           },
-
           {
             type: 'local',
             selector: '[test_with_brackets]',
@@ -682,12 +680,10 @@ describe('transformCss', () => {
                 '._04 &': {
                   content: 'image-set("image1x.png" 1x, "image2x.png" 2x)',
                 },
-
                 '._05 &': {
                   content:
                     'url("http://www.example.com/test.png") / "This is the alt text"',
                 },
-
                 '._06 &': { content: '"prefix"' },
                 '._07 &': { content: 'counter(chapter_counter)' },
                 '._08 &': { content: 'counter(chapter_counter, upper-roman)' },
@@ -696,7 +692,6 @@ describe('transformCss', () => {
                   content:
                     'counters(section_counter, ".", decimal-leading-zero)',
                 },
-
                 '._11 &': { content: 'attr(value string)' },
                 '._12 &': { content: 'open-quote' },
                 '._13 &': { content: 'close-quote' },
@@ -1126,7 +1121,6 @@ describe('transformCss', () => {
                   },
                 },
               },
-
               '@media': {
                 'screen and (min-width: 700px)': {
                   color: 'green',
@@ -1209,7 +1203,6 @@ describe('transformCss', () => {
               },
             },
           },
-
           {
             type: 'local',
             selector: 'otherClass',
@@ -1352,7 +1345,6 @@ describe('transformCss', () => {
               src: 'local("Comic Sans MS")',
             },
           },
-
           {
             type: 'fontFace',
             rule: {
@@ -1684,11 +1676,9 @@ it('should handle multiple references to the same locally scoped selector', () =
               [`${style2} &:before, ${style2} &:after`]: {
                 background: 'black',
               },
-
               [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
                 background: 'blue',
               },
-
               [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
                 background: 'blue',
               },

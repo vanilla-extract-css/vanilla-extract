@@ -5,6 +5,8 @@ import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
 import { TestServer } from './types';
 
+export * from './types';
+
 type SharedOptions = {
   basePort: number;
 };

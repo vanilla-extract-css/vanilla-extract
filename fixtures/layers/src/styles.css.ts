@@ -6,10 +6,11 @@ const typographyLayer = layer({ parent: lib });
 
 const appLayer = layer();
 
-export const textVariant = style({
+export const textApp = style({
   '@layer': {
     [appLayer]: {
-      color: 'indigo',
+      backgroundColor: 'indigo',
+      color: 'white',
     },
   },
 });
@@ -17,8 +18,8 @@ export const textVariant = style({
 export const textBase = style({
   '@layer': {
     [typographyLayer]: {
+      backgroundColor: 'orange',
       color: 'aquamarine',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto',
     },
   },
 });
@@ -26,18 +27,10 @@ export const textBase = style({
 export const textReset = style({
   '@layer': {
     [resetLayer]: {
-      '@layer': {
-        infinite: {
-          '@layer': {
-            nesting: {
-              color: 'magenta',
-              textDecoration: 'underline',
-            },
-          },
-        },
-      },
+      color: 'magenta',
+      textDecoration: 'underline',
       '@media': {
-        'screen and (min-width: 200px)': {
+        'screen and (min-width: 600px)': {
           color: 'green',
         },
       },
@@ -45,11 +38,10 @@ export const textReset = style({
   },
 });
 
-globalStyle('p', {
+globalStyle('p.reset', {
   '@layer': {
     [resetLayer]: {
-      color: 'yellow',
-      textDecoration: 'underline',
+      color: 'orange',
     },
   },
 });
