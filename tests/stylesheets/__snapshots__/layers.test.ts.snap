@@ -53,7 +53,7 @@ exports[`layers - mini-css-extract should create valid stylesheet 1`] = `
   p.reset {
     color: orange;
   }
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 600px) {
     ._18onbx45 {
       color: green;
     }
@@ -84,7 +84,7 @@ exports[`layers - vite should create valid stylesheet 1`] = `
   p.reset {
     color: orange;
   }
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 600px) {
     ._1sqkzjx5 {
       color: green;
     }
