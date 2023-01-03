@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.3.0
+
+### Minor Changes
+
+- [#890](https://github.com/vanilla-extract-css/vanilla-extract/pull/890) [`0906063`](https://github.com/vanilla-extract-css/vanilla-extract/commit/09060639099ec580ac90cac48c3b79f0177ecfcd) Thanks [@otaviomad](https://github.com/otaviomad)! - Add RuntimeFn as an export to recipes index
+
 ## 0.2.5
 
 ### Patch Changes
