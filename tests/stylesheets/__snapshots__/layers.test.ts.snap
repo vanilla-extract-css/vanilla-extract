@@ -2,30 +2,25 @@
 
 exports[`layers - esbuild should create valid stylesheet 1`] = `
 "@layer lib;
-@layer _1sqkzjx2 {
-  ._1sqkzjx3 {
-    background-color: indigo;
-    color: #fff;
-  }
-}
 @layer lib._1sqkzjx1 {
-  ._1sqkzjx4 {
-    background-color: orange;
-    color: #7fffd4;
+  @media screen and (min-width: 600px) {
+    a {
+      color: green;
+    }
   }
 }
 @layer lib._1sqkzjx0 {
-  ._1sqkzjx5 {
-    color: #f0f;
-    text-decoration: underline;
+  a {
+    color: red;
+    font-weight: 800;
   }
-  p.reset {
-    color: orange;
+  ._1sqkzjx3 {
+    color: blue;
   }
-  @media screen and (min-width: 400px) {
-    ._1sqkzjx5 {
-      color: green;
-    }
+}
+@layer lib._1sqkzjx2 {
+  ._1sqkzjx4 {
+    color: hotpink;
   }
 }
 "
@@ -33,30 +28,25 @@ exports[`layers - esbuild should create valid stylesheet 1`] = `
 
 exports[`layers - mini-css-extract should create valid stylesheet 1`] = `
 "@layer lib;
-@layer _18onbx42 {
-  ._18onbx43 {
-    background-color: indigo;
-    color: #fff;
-  }
-}
 @layer lib._18onbx41 {
-  ._18onbx44 {
-    background-color: orange;
-    color: #7fffd4;
+  @media screen and (min-width: 600px) {
+    a {
+      color: green;
+    }
   }
 }
 @layer lib._18onbx40 {
-  ._18onbx45 {
-    color: #f0f;
-    text-decoration: underline;
+  a {
+    color: red;
+    font-weight: 800;
   }
-  p.reset {
-    color: orange;
+  ._18onbx43 {
+    color: blue;
   }
-  @media screen and (min-width: 600px) {
-    ._18onbx45 {
-      color: green;
-    }
+}
+@layer lib._18onbx42 {
+  ._18onbx44 {
+    color: hotpink;
   }
 }
 "
@@ -64,30 +54,25 @@ exports[`layers - mini-css-extract should create valid stylesheet 1`] = `
 
 exports[`layers - vite should create valid stylesheet 1`] = `
 "@layer lib;
-@layer _1sqkzjx2 {
-  ._1sqkzjx3 {
-    background-color: indigo;
-    color: #fff;
-  }
-}
 @layer lib._1sqkzjx1 {
-  ._1sqkzjx4 {
-    background-color: orange;
-    color: #7fffd4;
+  @media screen and (min-width: 600px) {
+    a {
+      color: green;
+    }
   }
 }
 @layer lib._1sqkzjx0 {
-  ._1sqkzjx5 {
-    color: #f0f;
-    text-decoration: underline;
+  a {
+    color: red;
+    font-weight: 800;
   }
-  p.reset {
-    color: orange;
+  ._1sqkzjx3 {
+    color: blue;
   }
-  @media screen and (min-width: 600px) {
-    ._1sqkzjx5 {
-      color: green;
-    }
+}
+@layer lib._1sqkzjx2 {
+  ._1sqkzjx4 {
+    color: hotpink;
   }
 }
 "

@@ -1,47 +1,39 @@
 import { style, globalStyle, layer, globalLayer } from '@vanilla-extract/css';
 
 const lib = globalLayer('lib');
-const resetLayer = layer({ parent: lib }, 'reset');
-const typographyLayer = layer({ parent: lib });
 
-const appLayer = layer();
+const base = layer({ parent: lib });
+const typography = layer({ parent: lib });
+const utilities = layer({ parent: lib });
 
-export const textApp = style({
+globalStyle('a', {
   '@layer': {
-    [appLayer]: {
-      backgroundColor: 'indigo',
-      color: 'white',
-    },
-  },
-});
-
-export const textBase = style({
-  '@layer': {
-    [typographyLayer]: {
-      backgroundColor: 'orange',
-      color: 'aquamarine',
-    },
-  },
-});
-
-export const textReset = style({
-  '@layer': {
-    [resetLayer]: {
-      color: 'magenta',
-      textDecoration: 'underline',
+    [typography]: {
       '@media': {
         'screen and (min-width: 600px)': {
-          color: 'green',
+          color: 'green', // styles *all* links
         },
       },
     },
+    [base]: {
+      fontWeight: 800,
+      color: 'red',
+    },
   },
 });
 
-globalStyle('p.reset', {
+export const link = style({
   '@layer': {
-    [resetLayer]: {
-      color: 'orange',
+    [base]: {
+      color: 'blue',
+    },
+  },
+});
+
+export const pink = style({
+  '@layer': {
+    [utilities]: {
+      color: 'hotpink', // styles *all* .pink's
     },
   },
 });
