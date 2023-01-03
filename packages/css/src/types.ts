@@ -62,30 +62,28 @@ export interface Layer<StyleType> {
   };
 }
 
-export type WithQueries<StyleType> = MediaQueries<
+export type WithQueries<StyleType> = Layer<
   StyleType &
-    FeatureQueries<StyleType & ContainerQueries<StyleType>> &
-    ContainerQueries<StyleType & FeatureQueries<StyleType>> &
-    Layer<StyleType & FeatureQueries<StyleType>>
+    MediaQueries<
+      StyleType & FeatureQueries<StyleType> & ContainerQueries<StyleType>
+    > &
+    FeatureQueries<StyleType & MediaQueries<StyleType>> &
+    ContainerQueries<StyleType & FeatureQueries<StyleType>>
 > &
+  MediaQueries<
+    StyleType &
+      FeatureQueries<StyleType & ContainerQueries<StyleType>> &
+      ContainerQueries<StyleType & FeatureQueries<StyleType>>
+  > &
   FeatureQueries<
     StyleType &
       MediaQueries<StyleType & ContainerQueries<StyleType>> &
-      ContainerQueries<StyleType & MediaQueries<StyleType>> &
-      Layer<StyleType & MediaQueries<StyleType>>
+      ContainerQueries<StyleType & MediaQueries<StyleType>>
   > &
   ContainerQueries<
     StyleType &
       MediaQueries<StyleType & FeatureQueries<StyleType>> &
-      FeatureQueries<StyleType & MediaQueries<StyleType>> &
-      Layer<StyleType & MediaQueries<StyleType>>
-  > &
-  Layer<
-    StyleType &
-      MediaQueries<StyleType & FeatureQueries<StyleType>> &
-      FeatureQueries<StyleType & MediaQueries<StyleType>> &
-      ContainerQueries<StyleType & FeatureQueries<StyleType>> &
-      WithQueries<StyleType>
+      FeatureQueries<StyleType & MediaQueries<StyleType>>
   >;
 
 interface SelectorMap {

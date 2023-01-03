@@ -260,14 +260,8 @@ import {
   commitLayers
 } from '@vanilla-extract/css';
 
-export const libLayer = globalLayer(
-  { commit: false },
-  'lib'
-); // uses the provided name
-export const utilitiesLayer = layer({
-  parent: libLayer,
-  commit: false
-}); // creates a hashed name
+export const libLayer = globalLayer('lib'); // uses the provided name
+export const utilitiesLayer = layer({ parent: libLayer }); // creates a hashed name
 
 const text = style({
   '@layer': {
@@ -276,8 +270,6 @@ const text = style({
     }
   }
 });
-
-// later, in my app...
 
 const myStuff = layer(
   { parent: libLayer, commit: false },
@@ -291,9 +283,6 @@ const myText = style({
     }
   }
 });
-
-// insert my new layer in between library layers
-commitLayers([libLayer, myStuff, utilitiesLayer]);
 ```
 
 ## Selectors

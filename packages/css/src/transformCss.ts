@@ -98,10 +98,10 @@ const EMPTY = Symbol('empty');
 
 const specialKeys = [
   ...simplePseudos,
+  '@layer',
   '@media',
   '@supports',
   '@container',
-  '@layer',
   'selectors',
 ];
 
@@ -173,10 +173,10 @@ class Stylesheet {
 
     this.currConditionalRuleset = new ConditionalRuleset();
 
+    this.transformLayer(root, root.rule['@layer']);
     this.transformMedia(root, root.rule['@media']);
     this.transformSupports(root, root.rule['@supports']);
     this.transformContainer(root, root.rule['@container']);
-    this.transformLayer(root, root.rule['@layer']);
 
     this.transformSimplePseudos(root, root.rule);
     this.transformSelectors(root, root.rule);
@@ -369,12 +369,13 @@ class Stylesheet {
         rule: selectorRule,
       };
 
+      this.transformLayer(selectorRoot, selectorRule['@layer'], conditions);
       this.transformSupports(
         selectorRoot,
-        selectorRule!['@supports'],
+        selectorRule['@supports'],
         conditions,
       );
-      this.transformMedia(selectorRoot, selectorRule!['@media'], conditions);
+      this.transformMedia(selectorRoot, selectorRule['@media'], conditions);
     });
   }
 
@@ -477,9 +478,8 @@ class Stylesheet {
           this.transformSelectors(root, layerRule!, conditions);
         }
 
-        this.transformLayer(root, layerRule!['@layer'], conditions);
-        this.transformSupports(root, layerRule!['@supports'], conditions);
         this.transformMedia(root, layerRule!['@media'], conditions);
+        this.transformSupports(root, layerRule!['@supports'], conditions);
         this.transformContainer(root, layerRule!['@container'], conditions);
       });
     }
@@ -511,9 +511,9 @@ class Stylesheet {
           this.transformSimplePseudos(root, supportsRule!, conditions);
           this.transformSelectors(root, supportsRule!, conditions);
         }
+
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
-        this.transformLayer(root, supportsRule!['@layer'], conditions);
       });
     }
   }
