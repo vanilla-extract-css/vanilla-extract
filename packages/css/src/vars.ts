@@ -65,7 +65,6 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
   tokens: ThemeTokens,
 ): ThemeVars<ThemeTokens> {
   // TS is giving type impossibly deep error here. Ignoring for now as this shouldn't affect consumers.
-  // @ts-expect-error
   return walkObject(tokens, (_value, path) => {
     return createVar(path.join('-'));
   });
