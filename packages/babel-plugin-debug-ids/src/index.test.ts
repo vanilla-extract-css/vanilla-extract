@@ -127,7 +127,6 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { style } from '@vanilla-extract/css';
-
       const test = () => {
         return style({
           color: 'red'
@@ -147,7 +146,6 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { style } from '@vanilla-extract/css';
-
       const test = () => style({
         color: 'red'
       }, "test");"
@@ -167,7 +165,6 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { style } from '@vanilla-extract/css';
-
       function test() {
         return style({
           color: 'red'
@@ -335,11 +332,10 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createTheme } from '@vanilla-extract/css';
-
       var _createTheme = createTheme({}, "myThemeClass"),
-          _createTheme2 = _slicedToArray(_createTheme, 2),
-          myThemeClass = _createTheme2[0],
-          vars = _createTheme2[1];"
+        _createTheme2 = _slicedToArray(_createTheme, 2),
+        myThemeClass = _createTheme2[0],
+        vars = _createTheme2[1];"
     `);
   });
 
@@ -393,14 +389,18 @@ describe('babel plugin', () => {
       import { style, styleVariants } from '@vanilla-extract/css';
 
       const three = style({
-          testStyle: {
-            zIndex: 2,
-          }
+        testStyle: {
+          zIndex: 2,
+        }
       }, 'myDebugValue');
 
       const four = styleVariants({
         red: { color: 'red' }
       }, 'myDebugValue');
+
+      const fourTemplate = styleVariants({
+        red: { color: 'red' }
+      }, \`myDebugValue_\${i}\`);
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
@@ -414,7 +414,12 @@ describe('babel plugin', () => {
         red: {
           color: 'red'
         }
-      }, 'myDebugValue', "four");"
+      }, 'myDebugValue');
+      const fourTemplate = styleVariants({
+        red: {
+          color: 'red'
+        }
+      }, \`myDebugValue_\${i}\`);"
     `);
   });
 
@@ -423,7 +428,7 @@ describe('babel plugin', () => {
       import { style } from 'some-other-package';
 
       const three = style({
-        zIndex: 2,  
+        zIndex: 2,
       });
     `;
 
@@ -440,7 +445,7 @@ describe('babel plugin', () => {
       import { style as specialStyle } from '@vanilla-extract/css';
 
       const four = specialStyle({
-        zIndex: 2,  
+        zIndex: 2,
       });
     `;
 
@@ -458,7 +463,7 @@ describe('babel plugin', () => {
 
        export const height = [
         style({
-          zIndex: 2,  
+          zIndex: 2,
         })
       ];
     `;
@@ -477,7 +482,7 @@ describe('babel plugin', () => {
 
        export const height = {
         full: [style({
-          zIndex: 2,  
+          zIndex: 2,
         })]
        };
     `;
