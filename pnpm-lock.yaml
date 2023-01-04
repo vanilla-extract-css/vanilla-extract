@@ -346,7 +346,6 @@ importers:
   site:
     specifiers:
       '@babel/core': ^7.20.7
-      '@babel/plugin-syntax-typescript': ^7.20.0
       '@babel/preset-env': ^7.20.2
       '@babel/preset-react': ^7.18.6
       '@babel/preset-typescript': ^7.18.6
@@ -412,7 +411,6 @@ importers:
       use-react-router: 1.0.7_react@17.0.2
     devDependencies:
       '@babel/core': 7.20.7
-      '@babel/plugin-syntax-typescript': 7.20.0_@babel+core@7.20.7
       '@babel/preset-env': 7.20.2_@babel+core@7.20.7
       '@babel/preset-react': 7.18.6_@babel+core@7.20.7
       '@babel/preset-typescript': 7.18.6_@babel+core@7.20.7
@@ -5557,12 +5555,6 @@ packages:
     resolution: {integrity: sha512-yXbYeFy+jUuYd3/CDcg2NkIYE991XYX/bje7LmjJigUciaeO1JR4XxXgCIV1/Zc/dRuFEyw1L0pbA+qynJkW5Q==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  /acorn/8.6.0:
-    resolution: {integrity: sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-    dev: false
 
   /acorn/8.8.1:
     resolution: {integrity: sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==}
@@ -16995,7 +16987,7 @@ packages:
       acorn:
         optional: true
     dependencies:
-      acorn: 8.6.0
+      acorn: 8.8.1
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21

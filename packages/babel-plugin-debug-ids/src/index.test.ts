@@ -1,11 +1,13 @@
 import { transformSync } from '@babel/core';
+// @ts-expect-error
+import typescriptSyntax from '@babel/plugin-syntax-typescript';
 import plugin from './';
 
 const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
   const result = transformSync(source, {
     filename,
     cwd: __dirname,
-    plugins: [plugin],
+    plugins: [plugin, typescriptSyntax],
     configFile: false,
   });
 
@@ -17,12 +19,20 @@ const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
 };
 
 describe('babel plugin', () => {
+  it('should not crash when using `satisfies` operator', () => {
+    const source = `
+      const dummy = {} satisfies {};
+    `;
+
+    expect(() => transform(source)).not.toThrow();
+  });
+
   it('should handle style assigned to const', () => {
     const source = `
       import { style } from '@vanilla-extract/css';
 
       const one = style({
-          zIndex: 2,
+        zIndex: 2,
       });
     `;
 
