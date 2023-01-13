@@ -321,7 +321,7 @@ describe('sprinkles', () => {
           paddingLefty: 'small',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLefty\\" is not a valid sprinkle"`,
+        `""paddingLefty" is not a valid sprinkle"`,
       );
     });
 
@@ -334,7 +334,7 @@ describe('sprinkles', () => {
           paddingLeft: 'xsmall',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingLeft\\" is not a valid sprinkle"`,
+        `""paddingLeft" is not a valid sprinkle"`,
       );
     });
 
@@ -349,7 +349,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"color\\" is not a conditional property"`,
+        `""color" is not a conditional property"`,
       );
     });
 
@@ -364,7 +364,7 @@ describe('sprinkles', () => {
           marginTop: ['small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"marginTop\\" does not support responsive arrays"`,
+        `""marginTop" does not support responsive arrays"`,
       );
     });
 
@@ -377,7 +377,7 @@ describe('sprinkles', () => {
           paddingTop: ['xsmall'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+        `""paddingTop" has no value "xsmall". Possible values are "small", "medium", "large""`,
       );
     });
 
@@ -390,7 +390,7 @@ describe('sprinkles', () => {
           paddingTop: ['small', 'medium', 'large', 'small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingTop\\" only supports up to 3 breakpoints. You passed 4"`,
+        `""paddingTop" only supports up to 3 breakpoints. You passed 4"`,
       );
     });
 
@@ -405,7 +405,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""`,
+        `""paddingTop" has no value "xlarge". Possible values are "small", "medium", "large""`,
       );
     });
 
@@ -420,7 +420,7 @@ describe('sprinkles', () => {
           transform: 'shrink',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"transform\\" has no default condition. You must specify which conditions to target explicitly. Possible options are \\"active\\""`,
+        `""transform" has no default condition. You must specify which conditions to target explicitly. Possible options are "active""`,
       );
     });
 
@@ -435,7 +435,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"\\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""`,
+        `""paddingTop" has no condition named "ultraWide". Possible values are "mobile", "tablet", "desktop""`,
       );
     });
   });
@@ -445,7 +445,7 @@ describe('sprinkles', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue('foobar')).toMatchInlineSnapshot(`
-        Object {
+        {
           "mobile": "foobar",
         }
       `);
@@ -455,7 +455,7 @@ describe('sprinkles', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(false)).toMatchInlineSnapshot(`
-        Object {
+        {
           "mobile": false,
         }
       `);
@@ -465,7 +465,7 @@ describe('sprinkles', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue([false, true])).toMatchInlineSnapshot(`
-        Object {
+        {
           "mobile": false,
           "tablet": true,
         }
@@ -476,7 +476,7 @@ describe('sprinkles', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(['one', 'two', 'three'])).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three",
           "mobile": "one",
           "tablet": "two",
@@ -488,7 +488,7 @@ describe('sprinkles', () => {
       const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
       expect(normalizeValue(['mobile', null, true])).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": true,
           "mobile": "mobile",
         }
@@ -500,7 +500,7 @@ describe('sprinkles', () => {
 
       expect(normalizeValue({ mobile: 'one', desktop: 'three' }))
         .toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three",
           "mobile": "one",
         }
@@ -513,7 +513,7 @@ describe('sprinkles', () => {
       expect(
         normalizeValue({ mobile: 'one', tablet: undefined, desktop: 'three' }),
       ).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three",
           "mobile": "one",
           "tablet": undefined,
@@ -600,7 +600,7 @@ describe('sprinkles', () => {
       const value = map(['one'], (value, key) => `${value}_${key}` as const);
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "mobile": "one_mobile",
         }
       `);
@@ -614,7 +614,7 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "mobile": "one_mobile",
           "tablet": "two_tablet",
         }
@@ -629,7 +629,7 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "false_desktop",
           "mobile": "false_mobile",
           "tablet": "true_tablet",
@@ -645,7 +645,7 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three_desktop",
           "mobile": "one_mobile",
         }
@@ -659,7 +659,7 @@ describe('sprinkles', () => {
         (value, key) => `${value}_${key}` as const,
       );
 
-      expect(value).toMatchInlineSnapshot(`Object {}`);
+      expect(value).toMatchInlineSnapshot(`{}`);
     });
 
     it('should handle conditional objects', () => {
@@ -670,7 +670,7 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three_desktop",
           "mobile": "one_mobile",
         }
@@ -685,7 +685,7 @@ describe('sprinkles', () => {
       );
 
       expect(value).toMatchInlineSnapshot(`
-        Object {
+        {
           "desktop": "three_desktop",
           "mobile": "one_mobile",
         }
@@ -695,56 +695,56 @@ describe('sprinkles', () => {
 
   it('should create atomic styles', () => {
     expect(propertiesWithShorthands).toMatchInlineSnapshot(`
-      Object {
+      {
         "conditions": undefined,
-        "styles": Object {
-          "anotherPaddingX": Object {
-            "mappings": Array [
+        "styles": {
+          "anotherPaddingX": {
+            "mappings": [
               "paddingLeft",
               "paddingRight",
             ],
           },
-          "color": Object {
-            "values": Object {
-              "gray-500": Object {
+          "color": {
+            "values": {
+              "gray-500": {
                 "defaultClass": "sprinkles_color_gray-500__1kw4brea",
               },
-              "green-300": Object {
+              "green-300": {
                 "defaultClass": "sprinkles_color_green-300__1kw4brec",
               },
-              "red-500": Object {
+              "red-500": {
                 "defaultClass": "sprinkles_color_red-500__1kw4breb",
               },
             },
           },
-          "paddingLeft": Object {
-            "values": Object {
-              "large": Object {
+          "paddingLeft": {
+            "values": {
+              "large": {
                 "defaultClass": "sprinkles_paddingLeft_large__1kw4bref",
               },
-              "medium": Object {
+              "medium": {
                 "defaultClass": "sprinkles_paddingLeft_medium__1kw4bree",
               },
-              "small": Object {
+              "small": {
                 "defaultClass": "sprinkles_paddingLeft_small__1kw4bred",
               },
             },
           },
-          "paddingRight": Object {
-            "values": Object {
-              "large": Object {
+          "paddingRight": {
+            "values": {
+              "large": {
                 "defaultClass": "sprinkles_paddingRight_large__1kw4brei",
               },
-              "medium": Object {
+              "medium": {
                 "defaultClass": "sprinkles_paddingRight_medium__1kw4breh",
               },
-              "small": Object {
+              "small": {
                 "defaultClass": "sprinkles_paddingRight_small__1kw4breg",
               },
             },
           },
-          "paddingX": Object {
-            "mappings": Array [
+          "paddingX": {
+            "mappings": [
               "paddingLeft",
               "paddingRight",
             ],
@@ -756,46 +756,46 @@ describe('sprinkles', () => {
 
   it('should create conditional atomic styles', () => {
     expect(conditionalProperties).toMatchInlineSnapshot(`
-      Object {
-        "conditions": Object {
-          "conditionNames": Array [
+      {
+        "conditions": {
+          "conditionNames": [
             "mobile",
             "tablet",
             "desktop",
           ],
           "defaultCondition": "mobile",
-          "responsiveArray": Array [
+          "responsiveArray": [
             "mobile",
             "tablet",
             "desktop",
           ],
         },
-        "styles": Object {
-          "display": Object {
-            "responsiveArray": Array [
+        "styles": {
+          "display": {
+            "responsiveArray": [
               "mobile",
               "tablet",
               "desktop",
             ],
-            "values": Object {
-              "block": Object {
-                "conditions": Object {
+            "values": {
+              "block": {
+                "conditions": {
                   "desktop": "sprinkles_display_block_desktop__1kw4brel",
                   "mobile": "sprinkles_display_block_mobile__1kw4brej",
                   "tablet": "sprinkles_display_block_tablet__1kw4brek",
                 },
                 "defaultClass": "sprinkles_display_block_mobile__1kw4brej",
               },
-              "flex": Object {
-                "conditions": Object {
+              "flex": {
+                "conditions": {
                   "desktop": "sprinkles_display_flex_desktop__1kw4brer",
                   "mobile": "sprinkles_display_flex_mobile__1kw4brep",
                   "tablet": "sprinkles_display_flex_tablet__1kw4breq",
                 },
                 "defaultClass": "sprinkles_display_flex_mobile__1kw4brep",
               },
-              "none": Object {
-                "conditions": Object {
+              "none": {
+                "conditions": {
                   "desktop": "sprinkles_display_none_desktop__1kw4breo",
                   "mobile": "sprinkles_display_none_mobile__1kw4brem",
                   "tablet": "sprinkles_display_none_tablet__1kw4bren",
@@ -804,23 +804,23 @@ describe('sprinkles', () => {
               },
             },
           },
-          "opacity": Object {
-            "responsiveArray": Array [
+          "opacity": {
+            "responsiveArray": [
               "mobile",
               "tablet",
               "desktop",
             ],
-            "values": Object {
-              "0": Object {
-                "conditions": Object {
+            "values": {
+              "0": {
+                "conditions": {
                   "desktop": "sprinkles_opacity_0_desktop__1kw4bre1c",
                   "mobile": "sprinkles_opacity_0_mobile__1kw4bre1a",
                   "tablet": "sprinkles_opacity_0_tablet__1kw4bre1b",
                 },
                 "defaultClass": "sprinkles_opacity_0_mobile__1kw4bre1a",
               },
-              "1": Object {
-                "conditions": Object {
+              "1": {
+                "conditions": {
                   "desktop": "sprinkles_opacity_1_desktop__1kw4bre1f",
                   "mobile": "sprinkles_opacity_1_mobile__1kw4bre1d",
                   "tablet": "sprinkles_opacity_1_tablet__1kw4bre1e",
@@ -829,31 +829,31 @@ describe('sprinkles', () => {
               },
             },
           },
-          "paddingBottom": Object {
-            "responsiveArray": Array [
+          "paddingBottom": {
+            "responsiveArray": [
               "mobile",
               "tablet",
               "desktop",
             ],
-            "values": Object {
-              "large": Object {
-                "conditions": Object {
+            "values": {
+              "large": {
+                "conditions": {
                   "desktop": "sprinkles_paddingBottom_large_desktop__1kw4bre19",
                   "mobile": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
                   "tablet": "sprinkles_paddingBottom_large_tablet__1kw4bre18",
                 },
                 "defaultClass": "sprinkles_paddingBottom_large_mobile__1kw4bre17",
               },
-              "medium": Object {
-                "conditions": Object {
+              "medium": {
+                "conditions": {
                   "desktop": "sprinkles_paddingBottom_medium_desktop__1kw4bre16",
                   "mobile": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
                   "tablet": "sprinkles_paddingBottom_medium_tablet__1kw4bre15",
                 },
                 "defaultClass": "sprinkles_paddingBottom_medium_mobile__1kw4bre14",
               },
-              "small": Object {
-                "conditions": Object {
+              "small": {
+                "conditions": {
                   "desktop": "sprinkles_paddingBottom_small_desktop__1kw4bre13",
                   "mobile": "sprinkles_paddingBottom_small_mobile__1kw4bre11",
                   "tablet": "sprinkles_paddingBottom_small_tablet__1kw4bre12",
@@ -862,31 +862,31 @@ describe('sprinkles', () => {
               },
             },
           },
-          "paddingTop": Object {
-            "responsiveArray": Array [
+          "paddingTop": {
+            "responsiveArray": [
               "mobile",
               "tablet",
               "desktop",
             ],
-            "values": Object {
-              "large": Object {
-                "conditions": Object {
+            "values": {
+              "large": {
+                "conditions": {
                   "desktop": "sprinkles_paddingTop_large_desktop__1kw4bre10",
                   "mobile": "sprinkles_paddingTop_large_mobile__1kw4brey",
                   "tablet": "sprinkles_paddingTop_large_tablet__1kw4brez",
                 },
                 "defaultClass": "sprinkles_paddingTop_large_mobile__1kw4brey",
               },
-              "medium": Object {
-                "conditions": Object {
+              "medium": {
+                "conditions": {
                   "desktop": "sprinkles_paddingTop_medium_desktop__1kw4brex",
                   "mobile": "sprinkles_paddingTop_medium_mobile__1kw4brev",
                   "tablet": "sprinkles_paddingTop_medium_tablet__1kw4brew",
                 },
                 "defaultClass": "sprinkles_paddingTop_medium_mobile__1kw4brev",
               },
-              "small": Object {
-                "conditions": Object {
+              "small": {
+                "conditions": {
                   "desktop": "sprinkles_paddingTop_small_desktop__1kw4breu",
                   "mobile": "sprinkles_paddingTop_small_mobile__1kw4bres",
                   "tablet": "sprinkles_paddingTop_small_tablet__1kw4bret",
@@ -895,8 +895,8 @@ describe('sprinkles', () => {
               },
             },
           },
-          "paddingY": Object {
-            "mappings": Array [
+          "paddingY": {
+            "mappings": [
               "paddingBottom",
               "paddingTop",
             ],
@@ -909,37 +909,37 @@ describe('sprinkles', () => {
   it('should create conditional properties with multiple default condition classes in "defaultClass"', () => {
     expect(conditionalPropertiesWithMultipleDefaultConditions)
       .toMatchInlineSnapshot(`
-      Object {
-        "conditions": Object {
-          "conditionNames": Array [
+      {
+        "conditions": {
+          "conditionNames": [
             "lightMode",
             "darkMode",
           ],
-          "defaultCondition": Array [
+          "defaultCondition": [
             "lightMode",
             "darkMode",
           ],
           "responsiveArray": undefined,
         },
-        "styles": Object {
-          "background": Object {
-            "values": Object {
-              "blue": Object {
-                "conditions": Object {
+        "styles": {
+          "background": {
+            "values": {
+              "blue": {
+                "conditions": {
                   "darkMode": "sprinkles_background_blue_darkMode__1kw4bre1l",
                   "lightMode": "sprinkles_background_blue_lightMode__1kw4bre1k",
                 },
                 "defaultClass": "sprinkles_background_blue_lightMode__1kw4bre1k sprinkles_background_blue_darkMode__1kw4bre1l",
               },
-              "green": Object {
-                "conditions": Object {
+              "green": {
+                "conditions": {
                   "darkMode": "sprinkles_background_green_darkMode__1kw4bre1j",
                   "lightMode": "sprinkles_background_green_lightMode__1kw4bre1i",
                 },
                 "defaultClass": "sprinkles_background_green_lightMode__1kw4bre1i sprinkles_background_green_darkMode__1kw4bre1j",
               },
-              "red": Object {
-                "conditions": Object {
+              "red": {
+                "conditions": {
                   "darkMode": "sprinkles_background_red_darkMode__1kw4bre1h",
                   "lightMode": "sprinkles_background_red_lightMode__1kw4bre1g",
                 },
