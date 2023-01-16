@@ -539,23 +539,22 @@ function renderCss(v: any, indent: string = '') {
 
   for (const key of Object.keys(v)) {
     const value = v[key];
+    const rawValue: any = value && Array.isArray(value) ? value.join(','): value;
 
-    if (value && Array.isArray(value)) {
-      rules.push(...value.map((v) => renderCss({ [key]: v }, indent)));
-    } else if (value && typeof value === 'object') {
-      const isEmpty = Object.keys(value).length === 0;
+    if (rawValue && typeof rawValue === 'object') {
+      const isEmpty = Object.keys(rawValue).length === 0;
 
       if (!isEmpty) {
         rules.push(
           `${indent}${key} {\n${renderCss(
-            value,
+            rawValue,
             indent + DOUBLE_SPACE,
           )}\n${indent}}`,
         );
       }
     } else {
       rules.push(
-        `${indent}${key.startsWith('--') ? key : dashify(key)}: ${value};`,
+        `${indent}${key.startsWith('--') ? key : dashify(key)}: ${rawValue};`,
       );
     }
   }

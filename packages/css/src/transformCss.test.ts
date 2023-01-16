@@ -571,7 +571,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle property fallbacks', () => {
+  it('Multiple attributes for the same key', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -581,23 +581,14 @@ describe('transformCss', () => {
             type: 'local',
             selector: 'testClass',
             rule: {
-              color: ['red', 'blue'],
-              ':hover': {
-                color: ['blue', 'red', 'yellow'],
-              },
+              fontFamily: ['-apple-system', 'sans-serif'],
             },
           },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        color: red;
-        color: blue;
-      }
-      .testClass:hover {
-        color: blue;
-        color: red;
-        color: yellow;
+        font-family: -apple-system,sans-serif;
       }"
     `);
   });
@@ -675,29 +666,6 @@ describe('transformCss', () => {
         content: "hello";
       }
       .testClass {
-        content: "there";
-      }"
-    `);
-  });
-
-  it('should handle content with fallbacks', () => {
-    expect(
-      transformCss({
-        composedClassLists: [],
-        localClassNames: ['testClass'],
-        cssObjs: [
-          {
-            type: 'local',
-            selector: 'testClass',
-            rule: {
-              content: ['hello', 'there'],
-            },
-          },
-        ],
-      }).join('\n'),
-    ).toMatchInlineSnapshot(`
-      ".testClass {
-        content: "hello";
         content: "there";
       }"
     `);
