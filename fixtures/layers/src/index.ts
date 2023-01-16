@@ -1,4 +1,4 @@
-import {  link, pink } from './styles.css';
+import { link, pink } from './styles.css';
 
 const html = String.raw;
 
@@ -18,7 +18,9 @@ document.body.innerHTML = html`
       higher element-level specificity than <code>a</code>, I am setting a color
       style on <code>a</code> in a higher-precedence <code>@layer</code>.
     </p>
-    <div style="padding-left: 1rem; margin-left: 1rem; border-left: 4px solid hotpink;">
+    <div
+      style="padding-left: 1rem; margin-left: 1rem; border-left: 4px solid hotpink;"
+    >
       <p>
         The <em>layer</em> precedence beats the <em>element specificity</em>.
       </p>
