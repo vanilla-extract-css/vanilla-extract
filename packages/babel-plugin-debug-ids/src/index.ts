@@ -39,6 +39,8 @@ const debuggableFunctionConfig = {
   },
   layer: {
     maxParams: 2,
+    hasDebugId: ({ arguments: args }) =>
+      t.isStringLiteral(args.at(-1)) || t.isTemplateLiteral(args.at(-1)),
   },
 } satisfies Record<string, DebugConfig>;
 

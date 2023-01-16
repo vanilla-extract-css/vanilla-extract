@@ -314,12 +314,14 @@ describe('babel plugin', () => {
     const source = `
       import { layer } from '@vanilla-extract/css';
 
-      const reset = layer();
+      const autoDebugId = layer();
+      const providedDebugId = layer('utils');
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
       import { layer } from '@vanilla-extract/css';
-      const reset = layer("reset");
+      const autoDebugId = layer("autoDebugId");
+      const providedDebugId = layer('utils');
     `);
   });
 
@@ -343,6 +345,7 @@ describe('babel plugin', () => {
       import { layer } from '@vanilla-extract/css';
 
       const reset = layer({ parent: 'papa' });
+      const providedDebugId = layer({ parent: 'papa' }, 'utils');
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
@@ -350,6 +353,9 @@ describe('babel plugin', () => {
       const reset = layer({
         parent: 'papa'
       }, "reset");
+      const providedDebugId = layer({
+        parent: 'papa'
+      }, 'utils');
     `);
   });
 
