@@ -3,4 +3,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-Don't crash on [`satisfies` operator](https://devblogs.microsoft.com/typescript/announcing-typescript-4-9/#satisfies)
+Ensure support for new TypeScript language features by bumping the minimum required Babel dependency versions.
