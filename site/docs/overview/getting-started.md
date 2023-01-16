@@ -41,8 +41,8 @@ export const container = style({
 
 Importantly, this does two things:
 
-1. Creates a locally scoped class.
-2. Exports the generated class name.
+1. creates a locally scoped class
+2. exports the generated class name.
 
 ## Apply the style
 
