@@ -5,11 +5,10 @@ import {
 } from '@vanilla-extract-private/test-helpers';
 
 const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
-let testCounter = 0;
 
 const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
 
-buildTypes.forEach((buildType) => {
+buildTypes.forEach((buildType, index) => {
   describe(`features - ${buildType}`, () => {
     let server: TestServer;
 
@@ -19,7 +18,7 @@ buildTypes.forEach((buildType) => {
       server = await startFixture('features', {
         type: buildType,
         mode: 'production',
-        basePort: 12000 + portRange + testCounter++,
+        basePort: 12000 + portRange + index,
       });
     });
 

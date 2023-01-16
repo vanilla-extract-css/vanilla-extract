@@ -47,8 +47,7 @@ export const startEsbuildFixture = async (
 
   await fs.writeFile(
     path.join(outdir, 'index.html'),
-    `
-    <!DOCTYPE html>
+    `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="utf-8">
