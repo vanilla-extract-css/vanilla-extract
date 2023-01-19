@@ -22,10 +22,30 @@ export function addFileScope({
     );
   }
 
+  let isESM = false;
+  const importRegex = /^import ('|").*/gm;
+  const exportDefaultRegex = /^export default .*/gm;
+  const namedExportRegex = /^(export const | export \{)/gm;
+  if (
+    importRegex.test(source) ||
+    exportDefaultRegex.test(source) ||
+    namedExportRegex.test(source)
+  ) {
+    isESM = true;
+  }
+
+  if (isESM) {
+    return `
+      import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+      setFileScope("${normalizedPath}", "${packageName}");
+      ${source}
+      endFileScope();
+  `;
+  }
   return `
-    import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-    setFileScope("${normalizedPath}", "${packageName}");
+    const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+    __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
     ${source}
-    endFileScope();
+    __vanilla_filescope__.endFileScope();
   `;
 }
