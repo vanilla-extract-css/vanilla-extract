@@ -3,15 +3,6 @@
 exports[`unused-modules - esbuild should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
-  border: 5px solid #000;
-}
-.fbihc60 {
-  display: flex;
-}
-._36o3zb0 {
-  background: green;
-  height: 100px;
-  width: 100px;
 }
 ._1j78ztq0 {
   box-sizing: border-box;
