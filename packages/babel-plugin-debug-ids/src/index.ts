@@ -5,6 +5,11 @@ const packageIdentifiers = new Set([
   '@vanilla-extract/recipes',
 ]);
 
+type DebugConfig = {
+  maxParams: number;
+  hasDebugId?: (node: t.CallExpression) => boolean;
+};
+
 const debuggableFunctionConfig = {
   style: {
     maxParams: 2,
@@ -14,6 +19,8 @@ const debuggableFunctionConfig = {
   },
   styleVariants: {
     maxParams: 3,
+    hasDebugId: ({ arguments: args }) =>
+      t.isStringLiteral(args.at(-1)) || t.isTemplateLiteral(args.at(-1)),
   },
   fontFace: {
     maxParams: 2,
@@ -30,7 +37,7 @@ const debuggableFunctionConfig = {
   createContainer: {
     maxParams: 1,
   },
-};
+} satisfies Record<string, DebugConfig>;
 
 const styleFunctions = [
   ...(Object.keys(debuggableFunctionConfig) as Array<
@@ -42,7 +49,7 @@ const styleFunctions = [
   'globalFontFace',
   'globalKeyframes',
   'recipe',
-];
+] as const;
 
 type StyleFunction = typeof styleFunctions[number];
 
@@ -191,12 +198,11 @@ export default function (): PluginObj<Context> {
         );
 
         if (usedExport && usedExport in debuggableFunctionConfig) {
-          if (
-            node.arguments.length <
-            debuggableFunctionConfig[
-              usedExport as keyof typeof debuggableFunctionConfig
-            ].maxParams
-          ) {
+          const { maxParams, hasDebugId } = (
+            debuggableFunctionConfig as Record<string, DebugConfig>
+          )[usedExport];
+
+          if (node.arguments.length < maxParams && !hasDebugId?.(node)) {
             const debugIdent = getDebugId(path);
 
             if (debugIdent) {
