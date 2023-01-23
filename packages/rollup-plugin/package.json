@@ -15,12 +15,12 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.0.1"
+    "@vanilla-extract/integration": "^6.0.2"
   },
   "devDependencies": {
     "@fixtures/themed": "*",
     "@rollup/plugin-json": "^4.1.0",
-    "@vanilla-extract/css": "^1.9.2",
+    "@vanilla-extract/css": "^1.9.3",
     "esbuild": "^0.16.3",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
