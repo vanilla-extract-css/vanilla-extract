@@ -2,4 +2,4 @@
 '@vanilla-extract/css': patch
 ---
 
-Removed unused ahocorasick declaration reference
+Fix a `tsc` error caused by a dependency's type declarations being unnecessarily bundled
