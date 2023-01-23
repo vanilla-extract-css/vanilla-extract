@@ -18,8 +18,10 @@ const render = (route: string, headTags: HeadTags) =>
     </StaticRouter>,
   );
 
+const prodUrl = 'https://vanilla-extract.style';
+const devUrl = 'http://localhost:8080';
 const fullyQualifiedUrl = (path: string) =>
-  `${process.env.URL || 'http://localhost:8080'}${path}`;
+  `${process.env.CI ? prodUrl : devUrl}${path}`;
 
 interface RenderParams {
   route: string;
@@ -71,9 +73,7 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
       <meta name="theme-color" content="#fff"/>
       <link rel="manifest" href="${assetPath('site.webmanifest')}"/>
       <link rel="apple-touch-icon" href="${assetPath('apple-touch-icon.png')}"/>
-      <link rel="canonical" href="https://vanilla-extract.style${
-        route || '/'
-      }" />
+      <link rel="canonical" href="${fullyQualifiedUrl(route || '/')}" />
       ${favicon(16)}
       ${favicon(32)}
       ${favicon()}

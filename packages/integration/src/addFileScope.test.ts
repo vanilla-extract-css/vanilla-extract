@@ -17,8 +17,8 @@ test('should add missing fileScope', () => {
     }),
   ).toMatchInlineSnapshot(`
     "
-        import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-        setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
+        import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+        setFileScope("app/app.css.ts", "my-package");
         import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -45,8 +45,8 @@ test('should update existing fileScope', () => {
       packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
-    "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-    setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
+    "import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+    setFileScope("app/app.css.ts", "my-package");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -75,8 +75,8 @@ test('should update existing fileScope with newlines', () => {
       packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
-    "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
-    setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
+    "import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+    setFileScope("app/app.css.ts", "my-package");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -102,8 +102,8 @@ test('should handle namespaced filescope calls', () => {
       packageName: 'my-package',
     }),
   ).toMatchInlineSnapshot(`
-    "import * as vanillaFileScope from \\"@vanilla-extract/css/fileScope\\";
-    vanillaFileScope.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
+    "import * as vanillaFileScope from "@vanilla-extract/css/fileScope";
+    vanillaFileScope.setFileScope("app/app.css.ts", "my-package");
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});

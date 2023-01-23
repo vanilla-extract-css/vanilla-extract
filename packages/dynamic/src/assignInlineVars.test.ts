@@ -12,7 +12,7 @@ describe('assignInlineVars', () => {
 
     it('assigns vars', () => {
       expect(style).toMatchInlineSnapshot(`
-        Object {
+        {
           "--baz-qux__1byvgzh1": "2",
           "--foo-bar__1byvgzh0": "1",
           "--global-var-1": "3",
@@ -36,7 +36,7 @@ describe('assignInlineVars', () => {
 
     it('assigns contract vars', () => {
       expect(style).toMatchInlineSnapshot(`
-        Object {
+        {
           "--baz-qux__1byvgzh1": "2",
           "--foo-bar__1byvgzh0": "1",
         }
