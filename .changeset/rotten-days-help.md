@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/vite-plugin': minor
+'@vanilla-extract/vite-plugin': patch
 ---
 
-Whitelist `vite-plugin-svelte` and make `forceEmitCssiInSsrBuild` configurable.
+Whitelist `vite-plugin-svelte` to enable emitting CSS on the server
