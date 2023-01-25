@@ -1,5 +1,3 @@
-import './ahocorasick.d';
-
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
 import AhoCorasick from 'ahocorasick';

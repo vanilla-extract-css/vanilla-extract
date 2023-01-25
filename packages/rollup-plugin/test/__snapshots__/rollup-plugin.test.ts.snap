@@ -154,7 +154,9 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
     throw new Error("Dynamic vars container not found.");
   }
@@ -193,7 +195,7 @@ import './../assets/src/styles.css.ts.vanilla-1b9864b6.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
-var opacity = {"1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17"};
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 export { button, container, opacity };
 ",
@@ -205,7 +207,7 @@ export { button, container, opacity };
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";
 var theme = "themes_theme__cvta170";
-var vars = {colors: {backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)"}, space: {"1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)"}};
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
 export { altTheme, responsiveTheme, theme, vars };
 ",
@@ -309,7 +311,9 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
     throw new Error("Dynamic vars container not found.");
   }
@@ -357,7 +361,7 @@ import './styles.css.ts.vanilla.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
-var opacity = {"1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17"};
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 export { button, container, opacity };
 ",
@@ -456,7 +460,7 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";
 var theme = "themes_theme__cvta170";
-var vars = {colors: {backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)"}, space: {"1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)"}};
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
 export { altTheme, responsiveTheme, theme, vars };
 ",
@@ -510,7 +514,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
   ],
   [
     "src/index.js",
-    "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",
+    ";;;;;;AAKA,MAAM,WAAW,GAAG,gBAAgB,CAAC,IAAI,EAAE;AAC3C,EAAE,MAAM,EAAE;AACV,IAAI,eAAe,EAAE,QAAQ;AAC7B,IAAI,IAAI,EAAE,OAAO;AACjB,GAAG;AACH,EAAE,KAAK,EAAE;AACT,IAAI,CAAC,EAAE,KAAK;AACZ,IAAI,CAAC,EAAE,KAAK;AACZ,IAAI,CAAC,EAAE,MAAM;AACb,GAAG;AACH,CAAC,CAAC,CAAC;AACH,SAAS,MAAM,GAAG;AAClB,EAAE,QAAQ,CAAC,IAAI,CAAC,SAAS,GAAG,CAAC;AAC7B,WAAW,EAAE,SAAS,CAAC,IAAI,CAAC,SAAS,EAAE,MAAM,CAAC;AAC9C;AACA,aAAa,EAAE,SAAS,CAAC,aAAa,CAAC,SAAS,EAAE,SAAS,CAAC;AAC5D,kBAAkB,EAAE,SAAS,CAAC,UAAU,CAAC,SAAS,EAAE,MAAM,CAAC;AAC3D,kBAAkB,EAAE,QAAQ,CAAC;AAC7B;AACA,iBAAiB,EAAE,SAAS,CAAC,YAAY,CAAC,SAAS,EAAE,SAAS,CAAC;AAC/D,sBAAsB,EAAE,SAAS,CAAC,SAAS,CAAC,SAAS,EAAE,MAAM,CAAC;AAC9D,sBAAsB,EAAE,KAAK,CAAC;AAC9B;AACA,qBAAqB,EAAE,SAAS,CAAC,mBAAmB,CAAC,SAAS,EAAE,SAAS,CAAC;AAC1E,0BAA0B,EAAE,SAAS,CAAC,gBAAgB,CAAC,SAAS,EAAE,MAAM,CAAC;AACzE,wBAAwB,EAAE,WAAW,CAAC;AACtC;AACA,yBAAyB,EAAE,SAAS,CAAC,oBAAoB,CAAC,SAAS,EAAE,SAAS,CAAC;AAC/E,8BAA8B,EAAE,SAAS,CAAC,iBAAiB,CAAC,SAAS,EAAE,MAAM,CAAC,CAAC,EAAE,OAAO,CAAC,KAAK,CAAC,CAAC;AAChG;AACA;AACA,6BAA6B,EAAE,SAAS,CAAC,oBAAoB,CAAC,SAAS,EAAE,SAAS,CAAC;AACnF,kCAAkC,EAAE,SAAS,CAAC,iBAAiB,CAAC,SAAS,EAAE,MAAM,CAAC;AAClF,8BAA8B,EAAE,eAAe,CAAC;AAChD;AACA,yBAAyB,EAAE,SAAS,CAAC,wBAAwB,CAAC,SAAS,EAAE,SAAS,CAAC;AACnF,8BAA8B,EAAE,SAAS,CAAC,qBAAqB,CAAC,SAAS,EAAE,MAAM,CAAC;AAClF;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA,CAAC,CAAC;AACF,EAAE,MAAM,oBAAoB,GAAG,QAAQ,CAAC,cAAc;AACtD,IAAI,SAAS,CAAC,oBAAoB;AAClC,GAAG,CAAC;AACJ,EAAE,IAAI,CAAC,oBAAoB,EAAE;AAC7B,IAAI,MAAM,IAAI,KAAK,CAAC,mCAAmC,CAAC,CAAC;AACzD,GAAG;AACH,EAAE,cAAc,CAAC,oBAAoB,EAAE,IAAI,EAAE;AAC7C,IAAI,MAAM,EAAE;AACZ,MAAM,eAAe,EAAE,aAAa;AACpC,MAAM,IAAI,EAAE,YAAY;AACxB,KAAK;AACL,IAAI,KAAK,EAAE;AACX,MAAM,CAAC,EAAE,KAAK;AACd,MAAM,CAAC,EAAE,MAAM;AACf,MAAM,CAAC,EAAE,MAAM;AACf,KAAK;AACL,GAAG,CAAC,CAAC;AACL,EAAE,cAAc,CAAC,oBAAoB,EAAE;AACvC,IAAI,CAAC,IAAI,CAAC,MAAM,CAAC,eAAe,GAAG,YAAY;AAC/C,GAAG,CAAC,CAAC;AACL,CAAC;AACD,MAAM,EAAE",
   ],
   [
     "src/shared.css.js",
@@ -635,11 +639,11 @@ import './assets/src/styles.css.ts.vanilla-1b9864b6.css';
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";
 var theme = "themes_theme__cvta170";
-var vars = {colors: {backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)"}, space: {"1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)"}};
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
-var opacity = {"1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17"};
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 var shadow = "shared_shadow__4dtfen0";
 
@@ -724,7 +728,9 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
     throw new Error("Dynamic vars container not found.");
   }
