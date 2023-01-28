@@ -10,7 +10,7 @@ import type {
   VariantSelection,
 } from './types';
 
-export type { RecipeVariants, RuntimeFn } from './types';
+export type { RecipeVariants, RuntimeFn, VariantDefinitions } from './types';
 
 function mapValues<Input extends Record<string, any>, OutputValue>(
   input: Input,
