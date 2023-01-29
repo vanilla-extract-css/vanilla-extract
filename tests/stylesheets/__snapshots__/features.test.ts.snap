@@ -5,7 +5,7 @@ exports[`features - esbuild should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._1o6ek500:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._1o6ek501 {
@@ -49,7 +49,7 @@ body ._1o6ek50a {
     color: plum;
   }
   ._1o6ek500:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
   }
 }
 "
@@ -60,7 +60,7 @@ exports[`features - mini-css-extract should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._87f2ru0:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._87f2ru1 {
@@ -104,7 +104,7 @@ body ._87f2rua {
     color: plum;
   }
   ._87f2ru0:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
   }
 }
 "
@@ -170,7 +170,7 @@ exports[`features - vite should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._1o6ek500:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._1o6ek501 {
@@ -214,7 +214,7 @@ body ._1o6ek50a {
     color: plum;
   }
   ._1o6ek500:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
   }
 }
 "

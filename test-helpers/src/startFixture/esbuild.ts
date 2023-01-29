@@ -47,8 +47,7 @@ export const startEsbuildFixture = async (
 
   await fs.writeFile(
     path.join(outdir, 'index.html'),
-    `
-    <!DOCTYPE html>
+    `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="utf-8">
@@ -64,7 +63,7 @@ export const startEsbuildFixture = async (
 
   return {
     type: 'esbuild',
-    url: `http://localhost:${port}`,
+    url: `http://${server.host}:${port}`,
     stylesheet: 'index.css',
     close: () => {
       server.stop();

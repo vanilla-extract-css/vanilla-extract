@@ -1,5 +1,26 @@
 # @vanilla-extract/integration
 
+## 6.0.2
+
+### Patch Changes
+
+- [#956](https://github.com/vanilla-extract-css/vanilla-extract/pull/956) [`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101) Thanks [@mrm007](https://github.com/mrm007)! - Ensure support for new TypeScript language features by bumping the minimum required Babel dependency versions.
+
+* [#973](https://github.com/vanilla-extract-css/vanilla-extract/pull/973) [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a) Thanks [@cliffordfajardo](https://github.com/cliffordfajardo)! - Upgrade esbuild `^0.11.16` to `^0.16.3`
+
+* Updated dependencies [[`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101), [`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.1
+  - @vanilla-extract/css@1.9.3
+
+## 6.0.1
+
+### Patch Changes
+
+- [#869](https://github.com/vanilla-extract-css/vanilla-extract/pull/869) [`2d08761`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2d08761598668c0e7066837ccb0be7b4d5637701) Thanks [@mrm007](https://github.com/mrm007)! - Use correct async Babel transform method in integration transform
+
+- Updated dependencies [[`176c026`](https://github.com/vanilla-extract-css/vanilla-extract/commit/176c026fd72bda3fc969ba0d91494540f88488cb), [`98f8b03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/98f8b0387d661b77705d2cd83ab3095434e1223e), [`8ed77c2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8ed77c23ac004cd6e66b27f36100d5d5d014bc39)]:
+  - @vanilla-extract/css@1.9.2
+
 ## 6.0.0
 
 ### Major Changes

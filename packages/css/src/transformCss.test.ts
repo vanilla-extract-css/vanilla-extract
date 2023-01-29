@@ -41,19 +41,19 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".test_1\\\\/2_className {
+      ".test_1\\/2_className {
         color: red;
       }
-      .\\\\[test_with_brackets\\\\] {
+      .\\[test_with_brackets\\] {
         color: blue;
       }
       @media screen and (min-width: 700px) {
-        .test_1\\\\/2_className {
+        .test_1\\/2_className {
           color: green;
         }
       }
       @media screen and (min-width: 1000px) {
-        .test_1\\\\/2_className {
+        .test_1\\/2_className {
           color: purple;
         }
       }"
@@ -158,7 +158,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should combine media queries', () => {
+  it('should merge media queries', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -234,7 +234,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should not combine media queries if not safe to do so', () => {
+  it('should not merge media queries if not safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -344,7 +344,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should not combine nested media queries if not safe to do so', () => {
+  it('should not merge nested media queries if not safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -474,6 +474,75 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should merge nested media queries if safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1024px)': {
+                  padding: '50px',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 1200px)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 768px)': {
+                  background: 'blue',
+                },
+
+                'screen and (min-width: 1024px)': {
+                  background: 'green',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 768px) {
+        .otherOtherClass {
+          background: blue;
+        }
+      }
+      @media screen and (min-width: 1024px) {
+        .testClass {
+          padding: 50px;
+        }
+        .otherOtherClass {
+          background: green;
+        }
+      }
+      @media screen and (min-width: 1200px) {
+        .otherClass {
+          color: red;
+        }
+      }"
+    `);
+  });
+
   it('should handle simple pseudos', () => {
     expect(
       transformCss({
@@ -578,7 +647,7 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: \\"\\";
+        content: "";
       }"
     `);
   });
@@ -603,10 +672,10 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: \\"hello\\";
+        content: "hello";
       }
       .testClass {
-        content: \\"there\\";
+        content: "there";
       }"
     `);
   });
@@ -628,8 +697,8 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: \\"hello\\";
-        content: \\"there\\";
+        content: "hello";
+        content: "there";
       }"
     `);
   });
@@ -657,7 +726,7 @@ describe('transformCss', () => {
         content: 'hello there';
       }
       .testClass {
-        content: \\"hello there\\";
+        content: "hello there";
       }"
     `);
   });
@@ -715,19 +784,19 @@ describe('transformCss', () => {
         content: none;
       }
       ._02 .testClass {
-        content: url(\\"http://www.example.com/test.png\\");
+        content: url("http://www.example.com/test.png");
       }
       ._03 .testClass {
         content: linear-gradient(#e66465, #9198e5);
       }
       ._04 .testClass {
-        content: image-set(\\"image1x.png\\" 1x, \\"image2x.png\\" 2x);
+        content: image-set("image1x.png" 1x, "image2x.png" 2x);
       }
       ._05 .testClass {
-        content: url(\\"http://www.example.com/test.png\\") / \\"This is the alt text\\";
+        content: url("http://www.example.com/test.png") / "This is the alt text";
       }
       ._06 .testClass {
-        content: \\"prefix\\";
+        content: "prefix";
       }
       ._07 .testClass {
         content: counter(chapter_counter);
@@ -736,10 +805,10 @@ describe('transformCss', () => {
         content: counter(chapter_counter, upper-roman);
       }
       ._09 .testClass {
-        content: counters(section_counter, \\".\\");
+        content: counters(section_counter, ".");
       }
       ._10 .testClass {
-        content: counters(section_counter, \\".\\", decimal-leading-zero);
+        content: counters(section_counter, ".", decimal-leading-zero);
       }
       ._11 .testClass {
         content: attr(value string);
@@ -1081,7 +1150,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should merge nested @supports, @media and @container queries', () => {
+  it('should merge nested @supports, @media and @container queries when safe to do so', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1100,6 +1169,10 @@ describe('transformCss', () => {
                         'sidebar (min-width: 700px)': {
                           display: 'grid',
                         },
+
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
                       },
                     },
                   },
@@ -1107,7 +1180,6 @@ describe('transformCss', () => {
               },
             },
           },
-
           {
             type: 'local',
             selector: 'otherClass',
@@ -1116,9 +1188,13 @@ describe('transformCss', () => {
                 'screen and (min-width: 700px)': {
                   '@supports': {
                     '(display: grid)': {
-                      backgroundColor: 'yellow',
+                      borderColor: 'blue',
                       '@container': {
                         'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 800px)': {
                           display: 'grid',
                         },
                       },
@@ -1137,12 +1213,114 @@ describe('transformCss', () => {
             border-color: blue;
           }
           .otherClass {
-            background-color: yellow;
+            border-color: blue;
           }
           @container sidebar (min-width: 700px) {
             .testClass {
               display: grid;
             }
+            .otherClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 800px) {
+            .testClass {
+              display: grid;
+            }
+            .otherClass {
+              display: grid;
+            }
+          }
+        }
+      }"
+    `);
+  });
+
+  it('should not merge nested @supports, @media and @container queries when not safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass', 'otherClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'otherClass',
+            rule: {
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@supports': {
+                    '(display: grid)': {
+                      borderColor: 'blue',
+                      '@container': {
+                        'sidebar (min-width: 800px)': {
+                          display: 'grid',
+                        },
+
+                        'sidebar (min-width: 700px)': {
+                          display: 'grid',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@media screen and (min-width: 700px) {
+        @supports (display: grid) {
+          .testClass {
+            border-color: blue;
+          }
+          @container sidebar (min-width: 700px) {
+            .testClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 800px) {
+            .testClass {
+              display: grid;
+            }
+          }
+        }
+      }
+      @media screen and (min-width: 700px) {
+        @supports (display: grid) {
+          .otherClass {
+            border-color: blue;
+          }
+          @container sidebar (min-width: 800px) {
+            .otherClass {
+              display: grid;
+            }
+          }
+          @container sidebar (min-width: 700px) {
             .otherClass {
               display: grid;
             }
@@ -1232,7 +1410,7 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       "@font-face {
-        src: local(\\"Comic Sans MS\\");
+        src: local("Comic Sans MS");
       }"
     `);
   });
@@ -1262,11 +1440,11 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       "@font-face {
         font-family: MyFont1;
-        src: local(\\"Comic Sans MS\\");
+        src: local("Comic Sans MS");
       }
       @font-face {
         font-family: MyFont2;
-        src: local(\\"Impact\\");
+        src: local("Impact");
       }"
     `);
   });
@@ -1506,7 +1684,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Simple pseudos are not valid in \\"globalStyle\\""`,
+      `"Simple pseudos are not valid in "globalStyle""`,
     );
   });
 
@@ -1531,7 +1709,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Selectors are not allowed within \\"globalStyle\\""`,
+      `"Selectors are not allowed within "globalStyle""`,
     );
   });
 

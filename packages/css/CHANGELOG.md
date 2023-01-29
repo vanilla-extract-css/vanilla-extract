@@ -1,5 +1,21 @@
 # @vanilla-extract/css
 
+## 1.9.3
+
+### Patch Changes
+
+- [#943](https://github.com/vanilla-extract-css/vanilla-extract/pull/943) [`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Fix a `tsc` error caused by a dependency's type declarations being unnecessarily bundled
+
+## 1.9.2
+
+### Patch Changes
+
+- [#900](https://github.com/vanilla-extract-css/vanilla-extract/pull/900) [`176c026`](https://github.com/vanilla-extract-css/vanilla-extract/commit/176c026fd72bda3fc969ba0d91494540f88488cb) Thanks [@wobsoriano](https://github.com/wobsoriano)! - Bump `@emotion/hash` to 0.9.0
+
+* [#854](https://github.com/vanilla-extract-css/vanilla-extract/pull/854) [`98f8b03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/98f8b0387d661b77705d2cd83ab3095434e1223e) Thanks [@mrm007](https://github.com/mrm007)! - Bundle TypeScript declaration files (`.d.ts`) when building packages
+
+- [#893](https://github.com/vanilla-extract-css/vanilla-extract/pull/893) [`8ed77c2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8ed77c23ac004cd6e66b27f36100d5d5d014bc39) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix issue where conditional styles (e.g. `@media`, `@supports`, etc) could be ordered incorrectly
+
 ## 1.9.1
 
 ### Patch Changes

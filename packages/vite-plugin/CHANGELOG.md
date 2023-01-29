@@ -1,5 +1,27 @@
 # @vanilla-extract/vite-plugin
 
+## 3.7.1
+
+### Patch Changes
+
+- [#949](https://github.com/vanilla-extract-css/vanilla-extract/pull/949) [`2fc56e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2fc56e851934ad99de44de012910bca20b74da69) Thanks [@CXZ7720](https://github.com/CXZ7720)! - Adds vite v4 to peer dependencies
+
+* [#952](https://github.com/vanilla-extract-css/vanilla-extract/pull/952) [`a677c46`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a677c46217b7860bf0f3c1ace5d39463ce7b1914) Thanks [@endigma](https://github.com/endigma)! - Whitelist `vite-plugin-svelte` to enable emitting CSS on the server
+
+* Updated dependencies [[`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101), [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a)]:
+  - @vanilla-extract/integration@6.0.2
+
+## 3.7.0
+
+### Minor Changes
+
+- [#895](https://github.com/vanilla-extract-css/vanilla-extract/pull/895) [`2eb89ae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2eb89aee99f6982b95fb823cea2c3adcb71a5798) Thanks [@wmertens](https://github.com/wmertens)! - Add support for Qwik
+
+### Patch Changes
+
+- Updated dependencies [[`2d08761`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2d08761598668c0e7066837ccb0be7b4d5637701)]:
+  - @vanilla-extract/integration@6.0.1
+
 ## 3.6.1
 
 ### Patch Changes
