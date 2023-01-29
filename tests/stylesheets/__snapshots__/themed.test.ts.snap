@@ -224,7 +224,7 @@ exports[`themed - parcel should create valid stylesheet 1`] = `
   z-index: 1;
 }
 .blj6yb3 {
-  background-color: var(--cdwe0v1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  background-color: var(--cdwe0v1, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
   border-radius: 9999px;
   color: var(--cdwe0v2);
   font-family: blj6yb0;
@@ -234,7 +234,7 @@ exports[`themed - parcel should create valid stylesheet 1`] = `
   outline: 5px solid red;
 }
 body .blj6yb2:after {
-  content: \\"I am content\\";
+  content: "I am content";
 }
 html .blj6yb6 {
   opacity: var(--blj6yb4, 0.5);
