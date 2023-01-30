@@ -23,6 +23,7 @@
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
+    "mlly": "^1.1.0",
     "outdent": "^0.8.0"
   },
   "devDependencies": {
