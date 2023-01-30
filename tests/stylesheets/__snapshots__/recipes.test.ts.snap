@@ -108,6 +108,60 @@ exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
 "
 `;
 
+exports[`recipes - parcel should create valid stylesheet 1`] = `
+".spi1fr2 {
+  --spi1fr0: #b0e0e6;
+  --spi1fr1: #fff;
+}
+.spi1fr3 {
+  --spi1fr0: crimson;
+  --spi1fr1: #000;
+}
+.spi1fr4 {
+  border: 0;
+}
+.spi1fr5 {
+  background: var(--spi1fr0);
+  border-radius: 6px;
+  color: var(--spi1fr1);
+  transition: all 0.2s;
+}
+.spi1fr5:hover {
+  transform: translateY(-3px);
+}
+.spi1fr6 {
+  font-size: 16px;
+  line-height: 24px;
+}
+.spi1fr7 {
+  font-size: 24px;
+  line-height: 40px;
+}
+.spi1fr9:hover {
+  box-shadow: 0 10px 6px -6px #777;
+}
+.spi1fra {
+  font-weight: 700;
+}
+.spi1frc {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+.spi1frd {
+  gap: 20px;
+}
+@media only screen and (min-width: 600px) {
+  .spi1frb {
+    border: 2px solid green;
+  }
+  .spi1frd {
+    gap: 30px;
+  }
+}
+"
+`;
+
 exports[`recipes - vite should create valid stylesheet 1`] = `
 "._103pmpm2 {
   --_103pmpm0: #b0e0e6;
