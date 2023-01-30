@@ -1,22 +1,5 @@
 import { posix, relative, sep } from 'path';
-
-/**
- * Regex to capture ESM style imports
- * Greedily will capture any statement that starts with "import ..."
- */
-const esmImportRegex = /^ *import .*/gm;
-
-/**
- * Regex to capture ESM style imports
- * ' *' captures additional whitespace
- *
- * Captures
- * - export default Foo ...
- * - export const Foo ...
- * - export {Foo ...
- * - export { Foo ...
- */
-const esmExportRegex = /^ *export *(const *\w+|default *\w+|\{ *\w+)/gm;
+import { detectSyntax } from 'mlly';
 
 interface AddFileScopeParams {
   source: string;
@@ -40,12 +23,9 @@ export function addFileScope({
     );
   }
 
-  let isESM = false;
-  if (esmImportRegex.test(source) || esmExportRegex.test(source)) {
-    isESM = true;
-  }
+  const { hasESM, isMixed } = detectSyntax(source);
 
-  if (isESM) {
+  if (hasESM && !isMixed) {
     return `
       import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
       setFileScope("${normalizedPath}", "${packageName}");
@@ -53,6 +33,7 @@ export function addFileScope({
       endFileScope();
     `;
   }
+
   return `
     const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
     __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
