@@ -59,6 +59,54 @@ Ideally, remove this mock from your setup. However, if you need to support both 
 }
 ```
 
+If you can't separate the `.css` files from the `.css.ts` files, you can use a custom transformer to intercept the CSS files:
+
+```json
+// package.json
+{
+  "jest": {
+    "transformIgnorePatterns": [
+      // Ignore all node_modules (default setting), except for CSS files
+      "[/\\\\]node_modules[/\\\\].+\\.(?!css)$"
+    ],
+    "transform": {
+      // Send css files to our custom transformer
+      "\\.css(.ts)?$": "<rootDir>/cssTransformer.js",
+      // Jest default transform:
+      "\\.[jt]sx?$": "babel-jest"
+    }
+  }
+}
+```
+
+```javascript
+// cssTransformer.js
+const path = require('path');
+const transformer = require('@vanilla-extract/jest-transform');
+
+module.exports = {
+  process(sourceText, sourcePath, options) {
+    // if this is a vanilla-extract css.[jt]s file then pass it to the vanilla-extract transformer
+    if (/\.css\.[jt]s$/.test(sourcePath)) {
+      return transformer.default.process(
+        sourceText,
+        sourcePath,
+        { config: options }
+      );
+    }
+    // otherwise, we just return a simple string that exports the filename because
+    // we don't want any CSS being transformed in Jest
+    return {
+      code: `module.exports = ${JSON.stringify(
+        path.basename(sourcePath)
+      )};`
+    };
+  }
+};
+```
+
+(Transformer solution courtesy of [@jd-oconnor](https://github.com/jd-oconnor))
+
 ## Vitest
 
 If you are already using vanilla-extract with [Vite] then no setup should be required as [Vitest] references your existing vite config file.
