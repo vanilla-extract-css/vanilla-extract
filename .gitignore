@@ -5,7 +5,7 @@ packages/**/README.md
 !packages/sprinkles/README.md
 !packages/integration/README.md
 test-results
-
+.parcel-cache
 
 .pnp.*
 .next
