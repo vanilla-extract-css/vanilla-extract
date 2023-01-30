@@ -1,11 +1,11 @@
 ---
-title: parcel
+title: Parcel
 parent: integrations
 ---
 
-# parcel
+# Parcel
 
-A parcel transformer for integrating vanilla-extract with [parcel](https://parceljs.org/).
+A Parcel transformer for integrating vanilla-extract with [Parcel](https://parceljs.org/).
 
 ## Installation
 
@@ -15,7 +15,7 @@ npm install --save-dev @vanilla-extract/parcel-transformer
 
 ## Setup
 
-Add the transformer to your parcel configuration.
+Add the transformer to your Parcel configuration.
 
 ```json
 // .parcelrc
