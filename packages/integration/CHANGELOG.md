@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 6.0.3
+
+### Patch Changes
+
+- [#970](https://github.com/vanilla-extract-css/vanilla-extract/pull/970) [`16b9a71`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16b9a71e57cd2accf7a58d2bc92dd03cd33813b6) Thanks [@roginfarrer](https://github.com/roginfarrer)! - Updated addFileScope to work with CommonJS files
+
 ## 6.0.2
 
 ### Patch Changes
