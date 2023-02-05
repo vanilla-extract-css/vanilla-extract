@@ -1089,7 +1089,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle @layer rules and declarations', () => {
+  it('should not write layer declarations if not required', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1101,7 +1101,7 @@ describe('transformCss', () => {
             rule: {
               display: 'flex',
               '@layer': {
-                'foo.bar.baz': {
+                layer1: {
                   display: 'grid',
                 },
               },
@@ -1109,20 +1109,108 @@ describe('transformCss', () => {
           },
           {
             type: 'layer',
-            name: 'foo.bar.baz',
+            name: 'layer1',
+          },
+          {
+            type: 'layer',
+            name: 'layer2',
+          },
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                layer2: {
+                  display: 'grid',
+                },
+              },
+            },
           },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer foo.bar.baz;
+      ".testClass {
+        display: flex;
+      }
       .testClass {
         display: flex;
       }
-      @layer foo.bar.baz {
+      @layer layer1 {
+        .testClass {
+          display: grid;
+        }
+      }
+      @layer layer2 {
         .testClass {
           display: grid;
         }
       }"
+    `);
+  });
+
+  it('should handle nested layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA1',
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA2',
+          },
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      '@layer': {
+                        layerA2: {
+                          display: 'block',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer layerA {
+        @media (min-width: 700px) {
+          @layer layerA2 {
+            .testClass {
+              display: block;
+            }
+          }
+        }
+      }
+      @layer layerA.layerA1;
+      @layer layerA.layerA2;"
     `);
   });
 

@@ -38,53 +38,24 @@ type PseudoProperties = {
 
 type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
-export interface MediaQueries<StyleType> {
-  '@media'?: {
-    [query: string]: StyleType;
+type Query<Key extends string, StyleType> = {
+  [key in Key]?: {
+    [query: string]: Omit<StyleType, Key>;
   };
-}
+};
 
-export interface FeatureQueries<StyleType> {
-  '@supports'?: {
-    [query: string]: StyleType;
-  };
-}
+export type MediaQueries<StyleType> = Query<'@media', StyleType>;
+export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
+export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
+export type Layers<StyleType> = Query<'@layer', StyleType>;
 
-export interface ContainerQueries<StyleType> {
-  '@container'?: {
-    [query: string]: StyleType;
-  };
-}
+interface AllQueries<StyleType>
+  extends MediaQueries<StyleType & AllQueries<StyleType>>,
+    FeatureQueries<StyleType & AllQueries<StyleType>>,
+    ContainerQueries<StyleType & AllQueries<StyleType>>,
+    Layers<StyleType & AllQueries<StyleType>> {}
 
-export interface Layer<StyleType> {
-  '@layer'?: {
-    [name: string]: StyleType;
-  };
-}
-
-export type WithQueries<StyleType> = Layer<
-  StyleType &
-    MediaQueries<
-      StyleType & FeatureQueries<StyleType> & ContainerQueries<StyleType>
-    > &
-    FeatureQueries<StyleType & MediaQueries<StyleType>> &
-    ContainerQueries<StyleType & FeatureQueries<StyleType>>
-> &
-  MediaQueries<
-    StyleType &
-      FeatureQueries<StyleType & ContainerQueries<StyleType>> &
-      ContainerQueries<StyleType & FeatureQueries<StyleType>>
-  > &
-  FeatureQueries<
-    StyleType &
-      MediaQueries<StyleType & ContainerQueries<StyleType>> &
-      ContainerQueries<StyleType & MediaQueries<StyleType>>
-  > &
-  ContainerQueries<
-    StyleType &
-      MediaQueries<StyleType & FeatureQueries<StyleType>> &
-      FeatureQueries<StyleType & MediaQueries<StyleType>>
-  >;
+export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
 interface SelectorMap {
   [selector: string]: CSSPropertiesWithVars &

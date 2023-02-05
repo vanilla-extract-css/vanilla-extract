@@ -1,10 +1,15 @@
 /** e.g. @media screen and (min-width: 500px) */
 type Query = string;
 
-interface Rule {
+interface StandardRule {
   selector: string;
   rule: any;
 }
+
+export const DECLARATION = '__DECLARATION';
+type DeclarationRule = typeof DECLARATION;
+
+type Rule = StandardRule | DeclarationRule;
 
 type Condition = {
   query: Query;
@@ -64,6 +69,10 @@ export class ConditionalRuleset {
     }
 
     targetCondition.rules.push(rule);
+  }
+
+  addDeclarationRule(conditionQuery: Query, conditionPath: Array<Query>) {
+    this.addRule(DECLARATION, conditionQuery, conditionPath);
   }
 
   addConditionPrecedence(
@@ -165,7 +174,7 @@ export class ConditionalRuleset {
 
     // Loop through all queries and add them to the sorted ruleset
     for (const [query, dependents] of this.precedenceLookup.entries()) {
-      const conditionForQuery = this.ruleset.get(query);
+      let conditionForQuery = this.ruleset.get(query);
 
       if (!conditionForQuery) {
         throw new Error(`Can't find condition for ${query}`);
@@ -194,14 +203,23 @@ export class ConditionalRuleset {
 
     for (const { query, rules, children } of this.getSortedRuleset()) {
       const selectors: any = {};
+      let hasDeclaration = false;
 
       for (const rule of rules) {
-        selectors[rule.selector] = rule.rule;
+        if (rule !== DECLARATION) {
+          selectors[rule.selector] = rule.rule;
+        } else {
+          hasDeclaration = true;
+        }
       }
 
       Object.assign(selectors, ...children.renderToArray());
 
-      arr.push({ [query]: selectors });
+      if (hasDeclaration && Object.keys(selectors).length === 0) {
+        arr.push({ [query]: DECLARATION });
+      } else {
+        arr.push({ [query]: selectors });
+      }
     }
 
     return arr;

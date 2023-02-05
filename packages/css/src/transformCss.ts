@@ -15,12 +15,11 @@ import type {
   CSSSelectorBlock,
   Composition,
   WithQueries,
-  CSSLayerDeclaration,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
-import { ConditionalRuleset } from './conditionalRulesets';
+import { ConditionalRuleset, DECLARATION } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 import { validateMediaQuery } from './validateMediaQuery';
 
@@ -94,7 +93,6 @@ function replaceBetweenIndexes(
 }
 
 const DOUBLE_SPACE = '  ';
-const EMPTY = Symbol('empty');
 
 const specialKeys = [
   ...simplePseudos,
@@ -117,7 +115,6 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
-  layerDeclarations: Array<CSSLayerDeclaration>;
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
@@ -130,7 +127,6 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
-    this.layerDeclarations = [];
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
@@ -158,28 +154,28 @@ class Stylesheet {
       return;
     }
 
-    if (root.type === 'layer') {
-      this.layerDeclarations.push(root);
-
-      return;
-    }
-
-    // Add main styles
-    const mainRule = omit(root.rule, specialKeys);
-    this.addRule({
-      selector: root.selector,
-      rule: mainRule,
-    });
-
     this.currConditionalRuleset = new ConditionalRuleset();
 
-    this.transformLayer(root, root.rule['@layer']);
-    this.transformMedia(root, root.rule['@media']);
-    this.transformSupports(root, root.rule['@supports']);
-    this.transformContainer(root, root.rule['@container']);
+    if (root.type === 'layer') {
+      const layerDefinition = `@layer ${root.name}`;
+      this.currConditionalRuleset.addConditionPrecedence([], [layerDefinition]);
+      this.currConditionalRuleset.addDeclarationRule(layerDefinition, []);
+    } else {
+      // Add main styles
+      const mainRule = omit(root.rule, specialKeys);
+      this.addRule({
+        selector: root.selector,
+        rule: mainRule,
+      });
 
-    this.transformSimplePseudos(root, root.rule);
-    this.transformSelectors(root, root.rule);
+      this.transformLayer(root, root.rule['@layer']);
+      this.transformMedia(root, root.rule['@media']);
+      this.transformSupports(root, root.rule['@supports']);
+      this.transformContainer(root, root.rule['@container']);
+
+      this.transformSimplePseudos(root, root.rule);
+      this.transformSelectors(root, root.rule);
+    }
 
     const activeConditionalRuleset =
       this.conditionalRulesets[this.conditionalRulesets.length - 1];
@@ -390,7 +386,7 @@ class Stylesheet {
         Object.keys(rules).map((query) => `@media ${query}`),
       );
 
-      forEach(rules, (mediaRule, query) => {
+      for (const [query, mediaRule] of Object.entries(rules)) {
         const mediaQuery = `@media ${query}`;
 
         validateMediaQuery(mediaQuery);
@@ -410,9 +406,10 @@ class Stylesheet {
           this.transformSelectors(root, mediaRule!, conditions);
         }
 
+        this.transformLayer(root, mediaRule!['@layer'], conditions);
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
-      });
+      }
     }
   }
 
@@ -445,6 +442,7 @@ class Stylesheet {
           this.transformSelectors(root, containerRule!, conditions);
         }
 
+        this.transformLayer(root, containerRule!['@layer'], conditions);
         this.transformSupports(root, containerRule!['@supports'], conditions);
         this.transformMedia(root, containerRule!['@media'], conditions);
       });
@@ -512,6 +510,7 @@ class Stylesheet {
           this.transformSelectors(root, supportsRule!, conditions);
         }
 
+        this.transformLayer(root, supportsRule!['@layer'], conditions);
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
       });
@@ -555,11 +554,6 @@ class Stylesheet {
 
   toCss() {
     const css: Array<string> = [];
-
-    // Render layer declarations first
-    for (const layerDeclaration of this.layerDeclarations) {
-      css.push(renderCss({ [`@layer ${layerDeclaration.name}`]: EMPTY }));
-    }
 
     // Render font-face rules
     for (const fontFaceRule of this.fontFaceRules) {
@@ -606,7 +600,7 @@ function renderCss(v: any, indent: string = '') {
           )}\n${indent}}`,
         );
       }
-    } else if (value === EMPTY) {
+    } else if (value === DECLARATION) {
       rules.push(`${indent}${key};`);
     } else {
       rules.push(
