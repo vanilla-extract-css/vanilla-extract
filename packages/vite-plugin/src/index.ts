@@ -10,6 +10,7 @@ import {
   IdentifierOption,
   getPackageInfo,
   CompileOptions,
+  ProcessVanillaFileOptions,
   transform,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
@@ -19,22 +20,32 @@ const styleUpdateEvent = (fileId: string) =>
 
 const virtualExtCss = '.vanilla.css';
 const virtualExtJs = '.vanilla.js';
+const virtualRE = /.vanilla.(css|js)$/;
 
-interface Options {
+export interface VanillaExtractPluginOptions
+  extends Pick<
+    ProcessVanillaFileOptions,
+    'onEvaluated' | 'serializeVanillaModule'
+  > {
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  forceEmitCssInSsrBuild?: boolean;
 }
 export function vanillaExtractPlugin({
   identifiers,
   esbuildOptions,
-}: Options = {}): Plugin {
+  onEvaluated,
+  serializeVanillaModule,
+  forceEmitCssInSsrBuild: _forceEmitCssInSsrBuild,
+}: VanillaExtractPluginOptions = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
-  let packageName: string;
+  let forceEmitCssInSsrBuild: boolean =
+    _forceEmitCssInSsrBuild || !!process.env.VITE_RSC_BUILD;
+  let packageInfos: ReturnType<typeof getPackageInfo>;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -62,7 +73,7 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      packageName = getPackageInfo(config.root).name;
+      packageInfos = getPackageInfo(config.root);
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -81,11 +92,38 @@ export function vanillaExtractPlugin({
         forceEmitCssInSsrBuild = true;
       }
     },
-    resolveId(source) {
+    // Re-parse .css.ts files when they change
+    async handleHotUpdate({ file, modules }) {
+      if (!cssFileFilter.test(file)) return;
+      try {
+        const virtuals: any[] = [];
+        const invalidate = (type: string) => {
+          const found = server.moduleGraph.getModulesByFile(`${file}${type}`);
+          found?.forEach((m) => {
+            virtuals.push(m);
+            return server.moduleGraph.invalidateModule(m);
+          });
+        };
+        invalidate(virtualExtCss);
+        invalidate(virtualExtJs);
+        // load new CSS
+        await server.ssrLoadModule(file);
+        return [...modules, ...virtuals];
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        throw e;
+      }
+    },
+    // Convert .vanilla.(js|css) URLs to their absolute version
+    resolveId(source, importer) {
       const [validId, query] = source.split('?');
       if (!validId.endsWith(virtualExtCss) && !validId.endsWith(virtualExtJs)) {
         return;
       }
+
+      // while source is .css.ts.vanilla.(js|css), the importer should always be a .css.ts or .html file
+      if (!importer) return;
 
       // Absolute paths seem to occur often in monorepos, where files are
       // imported from outside the config root.
@@ -96,16 +134,23 @@ export function vanillaExtractPlugin({
       // There should always be an entry in the `cssMap` here.
       // The only valid scenario for a missing one is if someone had written
       // a file in their app using the .vanilla.js/.vanilla.css extension
-      if (cssMap.has(absoluteId)) {
-        // Keep the original query string for HMR.
-        return absoluteId + (query ? `?${query}` : '');
-      }
+      // Keep the original query string for HMR.
+      return absoluteId + (query ? `?${query}` : '');
     },
-    load(id) {
+    // Provide virtual CSS content
+    async load(id) {
       const [validId] = id.split('?');
 
-      if (!cssMap.has(validId)) {
+      if (!virtualRE.test(validId)) {
         return;
+      }
+
+      if (!cssMap.has(validId)) {
+        // Try to parse the parent
+        const parentId = validId.replace(virtualRE, '');
+        await server.ssrLoadModule(parentId);
+        // Now we should have the CSS
+        if (!cssMap.has(validId)) return;
       }
 
       const css = cssMap.get(validId);
@@ -153,19 +198,25 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
+      let filePackageInfos = packageInfos;
+      const fileDirectory = path.dirname(validId);
+      if (!isSubDir(packageInfos.dirname, fileDirectory)) {
+        filePackageInfos = getPackageInfo(fileDirectory);
+      }
+
       if (ssr && !forceEmitCssInSsrBuild) {
         return transform({
           source: code,
           filePath: normalizePath(validId),
-          rootPath: config.root,
-          packageName,
+          rootPath: filePackageInfos.dirname,
+          packageName: filePackageInfos.name,
           identOption,
         });
       }
 
       const { source, watchFiles } = await compile({
         filePath: validId,
-        cwd: config.root,
+        cwd: filePackageInfos.dirname,
         esbuildOptions,
         identOption,
       });
@@ -182,9 +233,11 @@ export function vanillaExtractPlugin({
         source,
         filePath: validId,
         identOption,
+        onEvaluated,
+        serializeVanillaModule,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
-            config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
+            config.command === 'build' || forceEmitCssInSsrBuild
               ? virtualExtCss
               : virtualExtJs
           }`;
@@ -207,7 +260,7 @@ export function vanillaExtractPlugin({
           if (
             server &&
             cssMap.has(absoluteId) &&
-            cssMap.get(absoluteId) !== source
+            cssMap.get(absoluteId) !== cssSource
           ) {
             const { moduleGraph } = server;
             const [module] = Array.from(
@@ -243,4 +296,11 @@ export function vanillaExtractPlugin({
       };
     },
   };
+}
+
+function isSubDir(parent: string, dir: string) {
+  const relative = path.relative(parent, dir);
+  return Boolean(
+    relative && !relative.startsWith('..') && !path.isAbsolute(relative),
+  );
 }

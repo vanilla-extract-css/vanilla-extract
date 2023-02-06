@@ -15,12 +15,12 @@ function getDevPrefix({
   if (debugFileName) {
     const { filePath } = getFileScope();
 
-    const matches = filePath.match(
-      /(?<dir>[^\/\\]*)?[\/\\]?(?<file>[^\/\\]*)\.css\.(ts|js|tsx|jsx|cjs|mjs)$/,
-    );
+    const pathParts = filePath.split('/');
+    const dir = pathParts[pathParts.length - 2];
+    const fileNameParts = pathParts[pathParts.length - 1].split('.');
+    const file = fileNameParts.length > 1 ? fileNameParts[0] : undefined;
 
-    if (matches && matches.groups) {
-      const { dir, file } = matches.groups;
+    if (dir || file) {
       parts.unshift(file && file !== 'index' ? file : dir);
     }
   }

@@ -9,12 +9,17 @@ import {
   vanillaExtractTransformPlugin,
   IdentifierOption,
   CompileOptions,
+  ProcessVanillaFileOptions,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
-interface VanillaExtractPluginOptions {
+interface VanillaExtractPluginOptions
+  extends Pick<
+    ProcessVanillaFileOptions,
+    'onEvaluated' | 'serializeVanillaModule'
+  > {
   outputCss?: boolean;
   /**
    * @deprecated Use `esbuildOptions.external` instead.
@@ -32,6 +37,8 @@ export function vanillaExtractPlugin({
   processCss,
   identifiers,
   esbuildOptions,
+  onEvaluated,
+  serializeVanillaModule,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes and debug IDs to code
@@ -96,6 +103,8 @@ export function vanillaExtractPlugin({
           filePath: path,
           outputCss,
           identOption,
+          onEvaluated,
+          serializeVanillaModule,
         });
 
         return {
