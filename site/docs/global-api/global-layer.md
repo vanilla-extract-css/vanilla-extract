@@ -10,7 +10,7 @@ Creates a globally scoped [layer].
 ```ts compiled
 // reset.css.ts
 
-import { globalLayer, style } from '@vanilla-extract/css';
+import { globalLayer } from '@vanilla-extract/css';
 
 globalLayer('reset');
 ```
@@ -20,7 +20,7 @@ This is useful for orchestrating the order of layers within the stylesheet.
 ```ts compiled
 // reset.css.ts
 
-import { globalLayer, style } from '@vanilla-extract/css';
+import { globalLayer } from '@vanilla-extract/css';
 
 globalLayer('reset');
 globalLayer('library');
@@ -71,7 +71,7 @@ This will generate the shorthand syntax, i.e. `parent.child`, while also making 
 ```ts compiled
 // reset.css.ts
 
-import { globalLayer, style } from '@vanilla-extract/css';
+import { globalLayer } from '@vanilla-extract/css';
 
 globalLayer('library');
 globalLayer({ parent: 'library' }, 'layout');
