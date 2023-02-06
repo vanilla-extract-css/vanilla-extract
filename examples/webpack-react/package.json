@@ -10,7 +10,7 @@
     "webpack",
     "react"
   ],
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "src/index.ts",
   "author": "SEEK",
   "scripts": {
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@vanilla-extract/css": "1.9.3",
+    "@vanilla-extract/css": "1.9.4",
     "@vanilla-extract/sprinkles": "^1.5.1",
     "@vanilla-extract/webpack-plugin": "^2.2.0",
     "babel-loader": "^8.2.2",

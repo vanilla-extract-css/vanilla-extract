@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.9.4
+
+### Patch Changes
+
+- [#938](https://github.com/vanilla-extract-css/vanilla-extract/pull/938) [`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9) Thanks [@adrianaferrugento](https://github.com/adrianaferrugento)! - Bump `deep-object-diff` to v1.1.9 in order to fix security vulnerability
+
 ## 1.9.3
 
 ### Patch Changes
