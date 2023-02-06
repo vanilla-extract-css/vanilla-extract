@@ -186,7 +186,7 @@ importers:
       css-what: ^5.0.1
       cssesc: ^3.0.0
       csstype: ^3.0.7
-      deep-object-diff: ^1.1.0
+      deep-object-diff: ^1.1.9
       deepmerge: ^4.2.2
       media-query-parser: ^2.0.2
       outdent: ^0.8.0
@@ -198,7 +198,7 @@ importers:
       css-what: 5.1.0
       cssesc: 3.0.0
       csstype: 3.0.10
-      deep-object-diff: 1.1.0
+      deep-object-diff: 1.1.9
       deepmerge: 4.2.2
       media-query-parser: 2.0.2
       outdent: 0.8.0
@@ -9000,8 +9000,8 @@ packages:
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
-  /deep-object-diff/1.1.0:
-    resolution: {integrity: sha512-b+QLs5vHgS+IoSNcUE4n9HP2NwcHj7aqnJWsjPtuG75Rh5TOaGt0OjAYInh77d5T16V5cRDC+Pw/6ZZZiETBGw==}
+  /deep-object-diff/1.1.9:
+    resolution: {integrity: sha512-Rn+RuwkmkDwCi2/oXOFS9Gsr5lJZu/yTGpK7wAaAIE75CC+LCGEZHpY6VQJa/RoJcrmaA/docWJZvYohlNkWPA==}
     dev: false
 
   /deepmerge/4.2.2:
