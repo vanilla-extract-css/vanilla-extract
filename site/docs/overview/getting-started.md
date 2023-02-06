@@ -21,6 +21,7 @@ Install your integration of preference:
 - [esbuild]
 - [webpack]
 - [next]
+- [parcel]
 - [rollup]
 - [gatsby]
 
@@ -39,10 +40,10 @@ export const container = style({
 });
 ```
 
-Importantly, this is does two things:
+Importantly, this does two things:
 
-1. Creates a locally scoped class,
-2. Exports the generated class name,
+1. creates a locally scoped class
+2. exports the generated class name.
 
 ## Apply the style
 
@@ -76,3 +77,4 @@ As a side effect of this import, the CSS is also processed by the selected bundl
 [next]: /documentation/integrations/next/
 [rollup]: /documentation/integrations/rollup/
 [gatsby]: /documentation/integrations/gatsby/
+[parcel]: /documentation/integrations/parcel/

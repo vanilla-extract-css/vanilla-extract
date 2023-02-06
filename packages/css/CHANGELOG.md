@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.9.3
+
+### Patch Changes
+
+- [#943](https://github.com/vanilla-extract-css/vanilla-extract/pull/943) [`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Fix a `tsc` error caused by a dependency's type declarations being unnecessarily bundled
+
 ## 1.9.2
 
 ### Patch Changes

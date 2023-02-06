@@ -54,7 +54,7 @@ type ChildSprinkleProps<Sprinkles extends SprinklesProperties['styles']> = {
 
 type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
   infer L,
-  ...infer R
+  ...infer R,
 ]
   ? (L extends SprinklesProperties ? ChildSprinkleProps<L['styles']> : never) &
       SprinkleProps<R>

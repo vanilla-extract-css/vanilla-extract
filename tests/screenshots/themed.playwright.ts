@@ -12,6 +12,7 @@ const buildTypes = [
   'esbuild',
   'esbuild-runtime',
   'vite',
+  'parcel',
 ] as const;
 
 buildTypes.forEach((buildType) => {

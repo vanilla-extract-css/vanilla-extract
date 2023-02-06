@@ -1,4 +1,5 @@
 import { posix, relative, sep } from 'path';
+import { detectSyntax } from 'mlly';
 
 interface AddFileScopeParams {
   source: string;
@@ -22,10 +23,21 @@ export function addFileScope({
     );
   }
 
+  const { hasESM, isMixed } = detectSyntax(source);
+
+  if (hasESM && !isMixed) {
+    return `
+      import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+      setFileScope("${normalizedPath}", "${packageName}");
+      ${source}
+      endFileScope();
+    `;
+  }
+
   return `
-    import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-    setFileScope("${normalizedPath}", "${packageName}");
+    const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+    __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
     ${source}
-    endFileScope();
+    __vanilla_filescope__.endFileScope();
   `;
 }

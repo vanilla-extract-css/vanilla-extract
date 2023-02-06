@@ -44,9 +44,11 @@ import { vanillaExtractPlugin } from '@vanilla-extract/rollup-plugin';
 
 export default {
   plugins: [vanillaExtractPlugin()],
-  preserveModules: true,
-  assetFileNames({ name }) {
-    return name?.replace(/^src\//, '') ?? '';
+  output: {
+    preserveModules: true,
+    assetFileNames({ name }) {
+      return name?.replace(/^src\//, '') ?? '';
+    }
   }
 };
 ```

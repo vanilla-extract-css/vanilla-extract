@@ -1,0 +1,24 @@
+{
+  "name": "@vanilla-extract/parcel-transformer",
+  "version": "1.0.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "main": "dist/vanilla-extract-parcel-transformer.cjs.js",
+  "module": "dist/vanilla-extract-parcel-transformer.esm.js",
+  "files": [
+    "/dist"
+  ],
+  "engines": {
+    "parcel": "2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/parcel-transformer"
+  },
+  "author": "mattcompiles",
+  "license": "MIT",
+  "dependencies": {
+    "@parcel/plugin": "^2.7.0",
+    "@vanilla-extract/integration": "^6.0.0"
+  }
+}

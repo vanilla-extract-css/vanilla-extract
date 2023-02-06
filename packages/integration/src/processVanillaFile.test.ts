@@ -71,17 +71,17 @@ describe('stringifyExports', () => {
     );
     const exportsObject = evalCode(`module.exports = ${exports}`, 'dummy.js');
     expect(exportsObject).toMatchInlineSnapshot(`
-      Object {
+      {
         "compositionOnly": "features_mergedStyle__1o6ek500 features_styleWithComposition__1o6ek501",
         "mergedStyle": "features_mergedStyle__1o6ek500",
         "styleCompositionInSelector": "features__1o6ek505 features__1o6ek506",
-        "styleVariantsCompositionInSelector": Object {
+        "styleVariantsCompositionInSelector": {
           "variant": "features__1o6ek508 features__1o6ek509",
         },
-        "styleVariantsWithComposition": Object {
+        "styleVariantsWithComposition": {
           "variant": "features_styleVariantsWithComposition_variant__1o6ek502 features_mergedStyle__1o6ek500",
         },
-        "styleVariantsWithMappedComposition": Object {
+        "styleVariantsWithMappedComposition": {
           "variant": "features_styleVariantsWithMappedComposition_variant__1o6ek503 features_mergedStyle__1o6ek500",
         },
         "styleWithComposition": "features_styleWithComposition__1o6ek501 features_mergedStyle__1o6ek500",

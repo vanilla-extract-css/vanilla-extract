@@ -5,7 +5,7 @@ exports[`features - esbuild should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._1o6ek500:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._1o6ek501 {
@@ -49,7 +49,7 @@ body ._1o6ek50a {
     color: plum;
   }
   ._1o6ek500:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
   }
 }
 "
@@ -60,7 +60,7 @@ exports[`features - mini-css-extract should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._87f2ru0:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._87f2ru1 {
@@ -104,7 +104,62 @@ body ._87f2rua {
     color: plum;
   }
   ._87f2ru0:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
+  }
+}
+"
+`;
+
+exports[`features - parcel should create valid stylesheet 1`] = `
+"._87f2ru0 {
+  height: 50px;
+}
+._87f2ru0:after {
+  content: "Below 700px";
+  display: block;
+}
+._87f2ru1 {
+  background-color: #b0e0e6;
+}
+._87f2ru1:hover {
+  background-color: #708090;
+}
+._87f2ru2 {
+  background-color: #b0e0e6;
+}
+._87f2ru2:hover {
+  background-color: #708090;
+}
+._87f2ru3 {
+  background-color: #b0e0e6;
+}
+._87f2ru3:hover {
+  background-color: #708090;
+}
+._87f2ru5 {
+  color: #fff;
+}
+._87f2ru6 {
+  background-color: #000;
+}
+body ._87f2ru7 {
+  font-size: 24px;
+}
+._87f2ru8 {
+  color: #fff;
+}
+._87f2ru9 {
+  background-color: #000;
+}
+body ._87f2rua {
+  font-size: 24px;
+}
+@media screen and (min-width: 700px) {
+  ._87f2ru0 {
+    color: plum;
+  }
+  ._87f2ru0:after {
+    content: "Above 700px";
   }
 }
 "
@@ -115,7 +170,7 @@ exports[`features - vite should create valid stylesheet 1`] = `
   height: 50px;
 }
 ._1o6ek500:after {
-  content: \\"Below 700px\\";
+  content: "Below 700px";
   display: block;
 }
 ._1o6ek501 {
@@ -159,7 +214,7 @@ body ._1o6ek50a {
     color: plum;
   }
   ._1o6ek500:after {
-    content: \\"Above 700px\\";
+    content: "Above 700px";
   }
 }
 "
