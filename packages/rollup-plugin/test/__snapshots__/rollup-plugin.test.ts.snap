@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`rollup-plugin should build with preserveModules 1`] = `
-Array [
-  Array [
+[
+  [
     "assets/src/shared.css.ts.vanilla-fc9198e4.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
@@ -11,14 +11,14 @@ body {
   background-color: skyblue;
 }",
   ],
-  Array [
+  [
     "assets/src/styles.css.ts.vanilla-1b9864b6.css",
     "@font-face {
-  src: local(\\"Impact\\");
-  font-family: \\"styles_impact__jteyb10\\";
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
 }
 @font-face {
-  src: local(\\"Comic Sans MS\\");
+  src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
 .styles_container__jteyb11 {
@@ -32,8 +32,8 @@ body {
   position: relative;
 }
 .styles_button__jteyb13 {
-  font-family: \\"styles_impact__jteyb10\\";
-  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
   color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
@@ -44,10 +44,10 @@ body {
 body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
-html .styles_opacity_1\\\\/2__jteyb16 {
+html .styles_opacity_1\\/2__jteyb16 {
   opacity: var(--blankVar1__jteyb14, 0.5);
 }
-html .styles_opacity_1\\\\/4__jteyb17 {
+html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
@@ -64,7 +64,7 @@ html .styles_opacity_1\\\\/4__jteyb17 {
   }
 }",
   ],
-  Array [
+  [
     "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
     ":root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
@@ -94,7 +94,7 @@ html .styles_opacity_1\\\\/4__jteyb17 {
   }
 }",
   ],
-  Array [
+  [
     "src/index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
@@ -104,41 +104,41 @@ import testNodes from '../test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
-    backgroundColor: \\"orange\\",
-    text: \\"black\\"
+    backgroundColor: "orange",
+    text: "black"
   },
   space: {
-    1: \\"4px\\",
-    2: \\"8px\\",
-    3: \\"12px\\"
+    1: "4px",
+    2: "8px",
+    3: "12px"
   }
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id="\${testNodes.root}" class="\${shadow}"> 
     Root theme
-    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
-      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+    <div id="\${testNodes.rootContainer}" class="\${container}">
+      <button id="\${testNodes.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
         Alt theme
-        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
-          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+        <div id="\${testNodes.altContainer}" class="\${container}">
+          <button id="\${testNodes.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
             Back to root theme
-            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
-              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
-            <div style=\\"\${inlineTheme}\\">
+            <div id="\${testNodes.nestedRootContainer}" class="\${container}">
+              <button id="\${testNodes.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
               Inline theme
-                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
                   <div>
                   Dynamic vars
-                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
-                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
-                  <div class=\\"\${responsiveTheme}\\">
+                    <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${testNodes.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
               Responsive theme
-                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                <div id="\${testNodes.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
                             </div>
                           </div>
                         </div>
@@ -154,77 +154,79 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
-    throw new Error(\\"Dynamic vars container not found.\\");
+    throw new Error("Dynamic vars container not found.");
   }
   setElementVars(dynamicVarsContainer, vars, {
     colors: {
-      backgroundColor: \\"transparent\\",
-      text: \\"papayawhip\\"
+      backgroundColor: "transparent",
+      text: "papayawhip"
     },
     space: {
-      1: \\"5px\\",
-      2: \\"10px\\",
-      3: \\"15px\\"
+      1: "5px",
+      2: "10px",
+      3: "15px"
     }
   });
   setElementVars(dynamicVarsContainer, {
-    [vars.colors.backgroundColor]: \\"darksalmon\\"
+    [vars.colors.backgroundColor]: "darksalmon"
   });
 }
 render();
 ",
   ],
-  Array [
+  [
     "src/shared.css.js",
     "import './../assets/src/shared.css.ts.vanilla-fc9198e4.css';
 
-var shadow = \\"shared_shadow__4dtfen0\\";
+var shadow = "shared_shadow__4dtfen0";
 
 export { shadow };
 ",
   ],
-  Array [
+  [
     "src/styles.css.js",
     "import './../assets/src/shared.css.ts.vanilla-fc9198e4.css';
 import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
 import './../assets/src/styles.css.ts.vanilla-1b9864b6.css';
 
-var button = \\"styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12\\";
-var container = \\"styles_container__jteyb11\\";
-var opacity = {\\"1/2\\": \\"styles_opacity_1/2__jteyb16\\", \\"1/4\\": \\"styles_opacity_1/4__jteyb17\\"};
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 export { button, container, opacity };
 ",
   ],
-  Array [
+  [
     "src/themes.css.js",
     "import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
 
-var altTheme = \\"themes_altTheme__cvta176\\";
-var responsiveTheme = \\"themes_responsiveTheme__cvta177\\";
-var theme = \\"themes_theme__cvta170\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta177";
+var theme = "themes_theme__cvta170";
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
 export { altTheme, responsiveTheme, theme, vars };
 ",
   ],
-  Array [
+  [
     "test-nodes.json.js",
-    "var root = \\"root\\";
-var rootContainer = \\"rootContainer\\";
-var rootButton = \\"rootButton\\";
-var altContainer = \\"altContainer\\";
-var altButton = \\"altButton\\";
-var nestedRootContainer = \\"nestedRootContainer\\";
-var nestedRootButton = \\"nestedRootButton\\";
-var inlineThemeContainer = \\"inlineThemeContainer\\";
-var inlineThemeButton = \\"inlineThemeButton\\";
-var dynamicVarsContainer = \\"dynamicVarsContainer\\";
-var dynamicVarsButton = \\"dynamicVarsButton\\";
-var responsiveThemeContainer = \\"responsiveThemeContainer\\";
-var responsiveThemeButton = \\"responsiveThemeButton\\";
+    "var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
 var testNodes = {
 	root: root,
 	rootContainer: rootContainer,
@@ -248,8 +250,8 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 `;
 
 exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
-Array [
-  Array [
+[
+  [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
@@ -259,41 +261,41 @@ import testNodes from './test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
-    backgroundColor: \\"orange\\",
-    text: \\"black\\"
+    backgroundColor: "orange",
+    text: "black"
   },
   space: {
-    1: \\"4px\\",
-    2: \\"8px\\",
-    3: \\"12px\\"
+    1: "4px",
+    2: "8px",
+    3: "12px"
   }
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id="\${testNodes.root}" class="\${shadow}"> 
     Root theme
-    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
-      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+    <div id="\${testNodes.rootContainer}" class="\${container}">
+      <button id="\${testNodes.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
         Alt theme
-        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
-          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+        <div id="\${testNodes.altContainer}" class="\${container}">
+          <button id="\${testNodes.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
             Back to root theme
-            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
-              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
-            <div style=\\"\${inlineTheme}\\">
+            <div id="\${testNodes.nestedRootContainer}" class="\${container}">
+              <button id="\${testNodes.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
               Inline theme
-                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
                   <div>
                   Dynamic vars
-                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
-                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
-                  <div class=\\"\${responsiveTheme}\\">
+                    <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${testNodes.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
               Responsive theme
-                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                <div id="\${testNodes.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
                             </div>
                           </div>
                         </div>
@@ -309,38 +311,40 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
-    throw new Error(\\"Dynamic vars container not found.\\");
+    throw new Error("Dynamic vars container not found.");
   }
   setElementVars(dynamicVarsContainer, vars, {
     colors: {
-      backgroundColor: \\"transparent\\",
-      text: \\"papayawhip\\"
+      backgroundColor: "transparent",
+      text: "papayawhip"
     },
     space: {
-      1: \\"5px\\",
-      2: \\"10px\\",
-      3: \\"15px\\"
+      1: "5px",
+      2: "10px",
+      3: "15px"
     }
   });
   setElementVars(dynamicVarsContainer, {
-    [vars.colors.backgroundColor]: \\"darksalmon\\"
+    [vars.colors.backgroundColor]: "darksalmon"
   });
 }
 render();
 ",
   ],
-  Array [
+  [
     "shared.css.js",
     "import './shared.css.ts.vanilla.css';
 
-var shadow = \\"shared_shadow__4dtfen0\\";
+var shadow = "shared_shadow__4dtfen0";
 
 export { shadow };
 ",
   ],
-  Array [
+  [
     "shared.css.ts.vanilla.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
@@ -349,27 +353,27 @@ body {
   background-color: skyblue;
 }",
   ],
-  Array [
+  [
     "styles.css.js",
     "import './shared.css.ts.vanilla.css';
 import './themes.css.ts.vanilla.css';
 import './styles.css.ts.vanilla.css';
 
-var button = \\"styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12\\";
-var container = \\"styles_container__jteyb11\\";
-var opacity = {\\"1/2\\": \\"styles_opacity_1/2__jteyb16\\", \\"1/4\\": \\"styles_opacity_1/4__jteyb17\\"};
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 export { button, container, opacity };
 ",
   ],
-  Array [
+  [
     "styles.css.ts.vanilla.css",
     "@font-face {
-  src: local(\\"Impact\\");
-  font-family: \\"styles_impact__jteyb10\\";
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
 }
 @font-face {
-  src: local(\\"Comic Sans MS\\");
+  src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
 .styles_container__jteyb11 {
@@ -383,8 +387,8 @@ export { button, container, opacity };
   position: relative;
 }
 .styles_button__jteyb13 {
-  font-family: \\"styles_impact__jteyb10\\";
-  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
   color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
@@ -395,10 +399,10 @@ export { button, container, opacity };
 body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
-html .styles_opacity_1\\\\/2__jteyb16 {
+html .styles_opacity_1\\/2__jteyb16 {
   opacity: var(--blankVar1__jteyb14, 0.5);
 }
-html .styles_opacity_1\\\\/4__jteyb17 {
+html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
@@ -415,21 +419,21 @@ html .styles_opacity_1\\\\/4__jteyb17 {
   }
 }",
   ],
-  Array [
+  [
     "test-nodes.json.js",
-    "var root = \\"root\\";
-var rootContainer = \\"rootContainer\\";
-var rootButton = \\"rootButton\\";
-var altContainer = \\"altContainer\\";
-var altButton = \\"altButton\\";
-var nestedRootContainer = \\"nestedRootContainer\\";
-var nestedRootButton = \\"nestedRootButton\\";
-var inlineThemeContainer = \\"inlineThemeContainer\\";
-var inlineThemeButton = \\"inlineThemeButton\\";
-var dynamicVarsContainer = \\"dynamicVarsContainer\\";
-var dynamicVarsButton = \\"dynamicVarsButton\\";
-var responsiveThemeContainer = \\"responsiveThemeContainer\\";
-var responsiveThemeButton = \\"responsiveThemeButton\\";
+    "var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
 var testNodes = {
 	root: root,
 	rootContainer: rootContainer,
@@ -449,19 +453,19 @@ var testNodes = {
 export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
   ],
-  Array [
+  [
     "themes.css.js",
     "import './themes.css.ts.vanilla.css';
 
-var altTheme = \\"themes_altTheme__cvta176\\";
-var responsiveTheme = \\"themes_responsiveTheme__cvta177\\";
-var theme = \\"themes_theme__cvta170\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta177";
+var theme = "themes_theme__cvta170";
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
 export { altTheme, responsiveTheme, theme, vars };
 ",
   ],
-  Array [
+  [
     "themes.css.ts.vanilla.css",
     ":root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
@@ -495,36 +499,36 @@ export { altTheme, responsiveTheme, theme, vars };
 `;
 
 exports[`rollup-plugin should build with sourcemaps 1`] = `
-Array [
-  Array [
+[
+  [
     "assets/src/shared.css.ts.vanilla-fc9198e4.css",
     "",
   ],
-  Array [
+  [
     "assets/src/styles.css.ts.vanilla-1b9864b6.css",
     "",
   ],
-  Array [
+  [
     "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
     "",
   ],
-  Array [
+  [
     "src/index.js",
-    ";;;;;;AAKA,MAAM,WAAW,GAAG,gBAAgB,CAAC,IAAI,EAAE;AAC3C,EAAE,MAAM,EAAE;AACV,IAAI,eAAe,EAAE,QAAQ;AAC7B,IAAI,IAAI,EAAE,OAAO;AACjB,GAAG;AACH,EAAE,KAAK,EAAE;AACT,IAAI,CAAC,EAAE,KAAK;AACZ,IAAI,CAAC,EAAE,KAAK;AACZ,IAAI,CAAC,EAAE,MAAM;AACb,GAAG;AACH,CAAC,CAAC,CAAC;AACH,SAAS,MAAM,GAAG;AAClB,EAAE,QAAQ,CAAC,IAAI,CAAC,SAAS,GAAG,CAAC;AAC7B,WAAW,EAAE,SAAS,CAAC,IAAI,CAAC,SAAS,EAAE,MAAM,CAAC;AAC9C;AACA,aAAa,EAAE,SAAS,CAAC,aAAa,CAAC,SAAS,EAAE,SAAS,CAAC;AAC5D,kBAAkB,EAAE,SAAS,CAAC,UAAU,CAAC,SAAS,EAAE,MAAM,CAAC;AAC3D,kBAAkB,EAAE,QAAQ,CAAC;AAC7B;AACA,iBAAiB,EAAE,SAAS,CAAC,YAAY,CAAC,SAAS,EAAE,SAAS,CAAC;AAC/D,sBAAsB,EAAE,SAAS,CAAC,SAAS,CAAC,SAAS,EAAE,MAAM,CAAC;AAC9D,sBAAsB,EAAE,KAAK,CAAC;AAC9B;AACA,qBAAqB,EAAE,SAAS,CAAC,mBAAmB,CAAC,SAAS,EAAE,SAAS,CAAC;AAC1E,0BAA0B,EAAE,SAAS,CAAC,gBAAgB,CAAC,SAAS,EAAE,MAAM,CAAC;AACzE,wBAAwB,EAAE,WAAW,CAAC;AACtC;AACA,yBAAyB,EAAE,SAAS,CAAC,oBAAoB,CAAC,SAAS,EAAE,SAAS,CAAC;AAC/E,8BAA8B,EAAE,SAAS,CAAC,iBAAiB,CAAC,SAAS,EAAE,MAAM,CAAC,CAAC,EAAE,OAAO,CAAC,KAAK,CAAC,CAAC;AAChG;AACA;AACA,6BAA6B,EAAE,SAAS,CAAC,oBAAoB,CAAC,SAAS,EAAE,SAAS,CAAC;AACnF,kCAAkC,EAAE,SAAS,CAAC,iBAAiB,CAAC,SAAS,EAAE,MAAM,CAAC;AAClF,8BAA8B,EAAE,eAAe,CAAC;AAChD;AACA,yBAAyB,EAAE,SAAS,CAAC,wBAAwB,CAAC,SAAS,EAAE,SAAS,CAAC;AACnF,8BAA8B,EAAE,SAAS,CAAC,qBAAqB,CAAC,SAAS,EAAE,MAAM,CAAC;AAClF;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA,CAAC,CAAC;AACF,EAAE,MAAM,oBAAoB,GAAG,QAAQ,CAAC,cAAc,CAAC,SAAS,CAAC,oBAAoB,CAAC,CAAC;AACvF,EAAE,IAAI,CAAC,oBAAoB,EAAE;AAC7B,IAAI,MAAM,IAAI,KAAK,CAAC,mCAAmC,CAAC,CAAC;AACzD,GAAG;AACH,EAAE,cAAc,CAAC,oBAAoB,EAAE,IAAI,EAAE;AAC7C,IAAI,MAAM,EAAE;AACZ,MAAM,eAAe,EAAE,aAAa;AACpC,MAAM,IAAI,EAAE,YAAY;AACxB,KAAK;AACL,IAAI,KAAK,EAAE;AACX,MAAM,CAAC,EAAE,KAAK;AACd,MAAM,CAAC,EAAE,MAAM;AACf,MAAM,CAAC,EAAE,MAAM;AACf,KAAK;AACL,GAAG,CAAC,CAAC;AACL,EAAE,cAAc,CAAC,oBAAoB,EAAE;AACvC,IAAI,CAAC,IAAI,CAAC,MAAM,CAAC,eAAe,GAAG,YAAY;AAC/C,GAAG,CAAC,CAAC;AACL,CAAC;AACD,MAAM,EAAE",
+    "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",
   ],
-  Array [
+  [
     "src/shared.css.js",
     ";;;;;;",
   ],
-  Array [
+  [
     "src/styles.css.js",
     ";;;;;;;;;;",
   ],
-  Array [
+  [
     "src/themes.css.js",
     ";;;;;;;;;",
   ],
-  Array [
+  [
     "test-nodes.json.js",
     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   ],
@@ -532,8 +536,8 @@ Array [
 `;
 
 exports[`rollup-plugin should build without preserveModules 1`] = `
-Array [
-  Array [
+[
+  [
     "assets/src/shared.css.ts.vanilla-fc9198e4.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
@@ -542,14 +546,14 @@ body {
   background-color: skyblue;
 }",
   ],
-  Array [
+  [
     "assets/src/styles.css.ts.vanilla-1b9864b6.css",
     "@font-face {
-  src: local(\\"Impact\\");
-  font-family: \\"styles_impact__jteyb10\\";
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
 }
 @font-face {
-  src: local(\\"Comic Sans MS\\");
+  src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
 .styles_container__jteyb11 {
@@ -563,8 +567,8 @@ body {
   position: relative;
 }
 .styles_button__jteyb13 {
-  font-family: \\"styles_impact__jteyb10\\";
-  background-color: var(--colors-backgroundColor__cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
   color: var(--colors-text__cvta172);
   border-radius: 9999px;
 }
@@ -575,10 +579,10 @@ body {
 body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
-html .styles_opacity_1\\\\/2__jteyb16 {
+html .styles_opacity_1\\/2__jteyb16 {
   opacity: var(--blankVar1__jteyb14, 0.5);
 }
-html .styles_opacity_1\\\\/4__jteyb17 {
+html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
 }
 @media only screen and (min-width: 500px) {
@@ -595,7 +599,7 @@ html .styles_opacity_1\\\\/4__jteyb17 {
   }
 }",
   ],
-  Array [
+  [
     "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
     ":root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
@@ -625,37 +629,37 @@ html .styles_opacity_1\\\\/4__jteyb17 {
   }
 }",
   ],
-  Array [
+  [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-3ad7ca47.css';
 import './assets/src/shared.css.ts.vanilla-fc9198e4.css';
 import './assets/src/styles.css.ts.vanilla-1b9864b6.css';
 
-var altTheme = \\"themes_altTheme__cvta176\\";
-var responsiveTheme = \\"themes_responsiveTheme__cvta177\\";
-var theme = \\"themes_theme__cvta170\\";
-var vars = {colors: {backgroundColor: \\"var(--colors-backgroundColor__cvta171)\\", text: \\"var(--colors-text__cvta172)\\"}, space: {\\"1\\": \\"var(--space-1__cvta173)\\", \\"2\\": \\"var(--space-2__cvta174)\\", \\"3\\": \\"var(--space-3__cvta175)\\"}};
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta177";
+var theme = "themes_theme__cvta170";
+var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
-var button = \\"styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12\\";
-var container = \\"styles_container__jteyb11\\";
-var opacity = {\\"1/2\\": \\"styles_opacity_1/2__jteyb16\\", \\"1/4\\": \\"styles_opacity_1/4__jteyb17\\"};
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
-var shadow = \\"shared_shadow__4dtfen0\\";
+var shadow = "shared_shadow__4dtfen0";
 
-var root = \\"root\\";
-var rootContainer = \\"rootContainer\\";
-var rootButton = \\"rootButton\\";
-var altContainer = \\"altContainer\\";
-var altButton = \\"altButton\\";
-var nestedRootContainer = \\"nestedRootContainer\\";
-var nestedRootButton = \\"nestedRootButton\\";
-var inlineThemeContainer = \\"inlineThemeContainer\\";
-var inlineThemeButton = \\"inlineThemeButton\\";
-var dynamicVarsContainer = \\"dynamicVarsContainer\\";
-var dynamicVarsButton = \\"dynamicVarsButton\\";
-var responsiveThemeContainer = \\"responsiveThemeContainer\\";
-var responsiveThemeButton = \\"responsiveThemeButton\\";
+var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
 var testNodes = {
 	root: root,
 	rootContainer: rootContainer,
@@ -674,41 +678,41 @@ var testNodes = {
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
-    backgroundColor: \\"orange\\",
-    text: \\"black\\"
+    backgroundColor: "orange",
+    text: "black"
   },
   space: {
-    1: \\"4px\\",
-    2: \\"8px\\",
-    3: \\"12px\\"
+    1: "4px",
+    2: "8px",
+    3: "12px"
   }
 });
 function render() {
   document.body.innerHTML = \`
-  <div id=\\"\${testNodes.root}\\" class=\\"\${shadow}\\"> 
+  <div id="\${testNodes.root}" class="\${shadow}"> 
     Root theme
-    <div id=\\"\${testNodes.rootContainer}\\" class=\\"\${container}\\">
-      <button id=\\"\${testNodes.rootButton}\\" class=\\"\${button}\\">Main theme button</button>
-      <div class=\\"\${altTheme}\\"> 
+    <div id="\${testNodes.rootContainer}" class="\${container}">
+      <button id="\${testNodes.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
         Alt theme
-        <div id=\\"\${testNodes.altContainer}\\" class=\\"\${container}\\">
-          <button id=\\"\${testNodes.altButton}\\" class=\\"\${button}\\">Alt theme button</button>
-          <div class=\\"\${theme}\\"> 
+        <div id="\${testNodes.altContainer}" class="\${container}">
+          <button id="\${testNodes.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
             Back to root theme
-            <div id=\\"\${testNodes.nestedRootContainer}\\" class=\\"\${container}\\">
-              <button id=\\"\${testNodes.nestedRootButton}\\" class=\\"\${button}\\">Main theme button</button>
-            <div style=\\"\${inlineTheme}\\">
+            <div id="\${testNodes.nestedRootContainer}" class="\${container}">
+              <button id="\${testNodes.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
               Inline theme
-                <div id=\\"\${testNodes.inlineThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.inlineThemeButton}\\" class=\\"\${button} \${opacity[\\"1/2\\"]}\\">Inline theme button</button>
+                <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
                   <div>
                   Dynamic vars
-                    <div id=\\"\${testNodes.dynamicVarsContainer}\\" class=\\"\${container}\\">
-                      <button id=\\"\${testNodes.dynamicVarsButton}\\" class=\\"\${button}\\">Dynamic vars button</button>
-                  <div class=\\"\${responsiveTheme}\\">
+                    <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${testNodes.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
               Responsive theme
-                <div id=\\"\${testNodes.responsiveThemeContainer}\\" class=\\"\${container}\\">
-                  <button id=\\"\${testNodes.responsiveThemeButton}\\" class=\\"\${button}\\">Responsive theme button</button>
+                <div id="\${testNodes.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
                             </div>
                           </div>
                         </div>
@@ -724,23 +728,25 @@ function render() {
     </div>
   </div>
 \`;
-  const dynamicVarsContainer = document.getElementById(testNodes.dynamicVarsContainer);
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
   if (!dynamicVarsContainer) {
-    throw new Error(\\"Dynamic vars container not found.\\");
+    throw new Error("Dynamic vars container not found.");
   }
   setElementVars(dynamicVarsContainer, vars, {
     colors: {
-      backgroundColor: \\"transparent\\",
-      text: \\"papayawhip\\"
+      backgroundColor: "transparent",
+      text: "papayawhip"
     },
     space: {
-      1: \\"5px\\",
-      2: \\"10px\\",
-      3: \\"15px\\"
+      1: "5px",
+      2: "10px",
+      3: "15px"
     }
   });
   setElementVars(dynamicVarsContainer, {
-    [vars.colors.backgroundColor]: \\"darksalmon\\"
+    [vars.colors.backgroundColor]: "darksalmon"
   });
 }
 render();

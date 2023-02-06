@@ -277,10 +277,9 @@ const noop = (...args: Array<any>) => {};
       Value
     >;
 
-  const invalidRequiredValue: InvalidRequiredResponsiveValue<
-    'row' | 'column'
-    // @ts-expect-error
-  > = ['row'];
+  // @ts-expect-error
+  const invalidRequiredValue: InvalidRequiredResponsiveValue<'row' | 'column'> =
+    ['row'];
 
   noop(invalidRequiredValue);
 };

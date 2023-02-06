@@ -7,7 +7,7 @@ import {
 const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
 let testCounter = 0;
 
-const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
+const buildTypes = ['vite', 'esbuild', 'mini-css-extract', 'parcel'] as const;
 
 buildTypes.forEach((buildType) => {
   describe(`sprinkles - ${buildType}`, () => {

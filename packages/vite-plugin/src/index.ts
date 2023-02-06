@@ -70,9 +70,12 @@ export function vanillaExtractPlugin({
 
       if (
         config.plugins.some((plugin) =>
-          ['astro:build', 'solid-start-server', 'vite-plugin-qwik'].includes(
-            plugin.name,
-          ),
+          [
+            'astro:build',
+            'solid-start-server',
+            'vite-plugin-qwik',
+            'vite-plugin-svelte',
+          ].includes(plugin.name),
         )
       ) {
         forceEmitCssInSsrBuild = true;
