@@ -72,7 +72,7 @@ export async function compile({
     absWorkingDir: cwd,
     loader: esbuildOptions?.loader,
     define: esbuildOptions?.define,
-    tsconfig: esbuildOptions?.tsconfig
+    tsconfig: esbuildOptions?.tsconfig,
   });
 
   const { outputFiles, metafile } = result;
