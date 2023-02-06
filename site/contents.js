@@ -35,6 +35,7 @@ const contents = [
       'create-global-theme-contract',
       'global-font-face',
       'global-keyframes',
+      'global-layer',
     ],
   },
   {
