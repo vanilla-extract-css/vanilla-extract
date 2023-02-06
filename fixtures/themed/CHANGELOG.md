@@ -1,5 +1,12 @@
 # @fixtures/themed
 
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies [[`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9)]:
+  - @vanilla-extract/css@1.9.4
+
 ## 0.0.15
 
 ### Patch Changes

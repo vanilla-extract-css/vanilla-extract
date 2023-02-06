@@ -1,5 +1,16 @@
 # @vanilla-extract/integration
 
+## 6.1.0
+
+### Minor Changes
+
+- [#926](https://github.com/vanilla-extract-css/vanilla-extract/pull/926) [`7074969`](https://github.com/vanilla-extract-css/vanilla-extract/commit/70749697eb281086913ba7a2ec170a375832ed1c) Thanks [@ericmatthys](https://github.com/ericmatthys)! - Allow tsconfig option to be passed through to esbuild
+
+### Patch Changes
+
+- Updated dependencies [[`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9)]:
+  - @vanilla-extract/css@1.9.4
+
 ## 6.0.3
 
 ### Patch Changes

@@ -86,7 +86,7 @@ importers:
       '@types/react': ^17
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
       '@vanilla-extract/sprinkles': ^1.5.1
       '@vanilla-extract/webpack-plugin': ^2.2.0
       babel-loader: ^8.2.2
@@ -125,7 +125,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -133,13 +133,13 @@ importers:
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
       '@vanilla-extract/recipes': 0.3.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -147,7 +147,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
       '@vanilla-extract/sprinkles': 1.5.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -155,7 +155,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -163,7 +163,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.9.3
+      '@vanilla-extract/css': 1.9.4
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -230,7 +230,7 @@ importers:
       '@types/babel__core': ^7.1.20
       '@types/lodash': ^4.14.168
       '@vanilla-extract/babel-plugin-debug-ids': ^1.0.1
-      '@vanilla-extract/css': ^1.9.3
+      '@vanilla-extract/css': ^1.9.4
       esbuild: ^0.16.3
       eval: 0.1.6
       find-up: ^5.0.0
@@ -297,8 +297,8 @@ importers:
     specifiers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
-      '@vanilla-extract/css': ^1.9.3
-      '@vanilla-extract/integration': ^6.0.2
+      '@vanilla-extract/css': ^1.9.4
+      '@vanilla-extract/integration': ^6.1.0
       esbuild: ^0.16.3
       rollup: ^2.7.0
       rollup-plugin-esbuild: ^4.9.1
@@ -18345,7 +18345,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0
-      webpack: 5.64.2_webpack-cli@4.9.1
+      webpack: 5.64.2
 
   /terser/5.10.0:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
@@ -19606,7 +19606,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.64.2_esbuild@0.16.17:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}
