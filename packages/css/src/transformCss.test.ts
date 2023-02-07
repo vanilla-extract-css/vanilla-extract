@@ -1375,10 +1375,12 @@ describe('transformCss', () => {
               from: {
                 opacity: 0,
                 content: 'none',
+                padding: 0,
               },
               to: {
                 opacity: 1,
                 content: 'foo',
+                padding: 10,
               },
             },
           },
@@ -1389,10 +1391,12 @@ describe('transformCss', () => {
         from {
           content: none;
           opacity: 0;
+          padding: 0;
         }
         to {
           content: "foo";
           opacity: 1;
+          padding: 10px;
         }
       }"
     `);
