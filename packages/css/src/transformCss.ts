@@ -184,7 +184,7 @@ class Stylesheet {
   }
 
   addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
-    // Run `normalizeProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    // Run `transformProperties` before `transformVars` as we don't want to pixelify CSS Vars
     const rule = this.transformVars(this.transformProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
@@ -206,7 +206,7 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    // Run `normalizeProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    // Run `transformProperties` before `transformVars` as we don't want to pixelify CSS Vars
     const rule = this.transformVars(this.transformProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
