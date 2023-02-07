@@ -146,6 +146,11 @@ class Stylesheet {
       return;
     }
     if (root.type === 'keyframes') {
+      root.rule = Object.fromEntries(
+        Object.entries(root.rule).map(([keyframe, rule]) => {
+          return [keyframe, this.transformProperties(rule)];
+        }),
+      );
       this.keyframesRules.push(root);
 
       return;
@@ -179,10 +184,8 @@ class Stylesheet {
   }
 
   addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
-    // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
-    const rule = this.transformVars(
-      this.transformContent(this.pixelifyProperties(cssRule.rule)),
-    );
+    // Run `transformProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    const rule = this.transformVars(this.transformProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
     if (!this.currConditionalRuleset) {
@@ -203,16 +206,18 @@ class Stylesheet {
   }
 
   addRule(cssRule: CSSRule) {
-    // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
-    const rule = this.transformVars(
-      this.transformContent(this.pixelifyProperties(cssRule.rule)),
-    );
+    // Run `transformProperties` before `transformVars` as we don't want to pixelify CSS Vars
+    const rule = this.transformVars(this.transformProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
 
     this.rules.push({
       selector,
       rule,
     });
+  }
+
+  transformProperties(cssRule: CSSPropertiesWithVars) {
+    return this.transformContent(this.pixelifyProperties(cssRule));
   }
 
   pixelifyProperties(cssRule: CSSPropertiesWithVars) {
