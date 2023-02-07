@@ -66,7 +66,7 @@ export const noMargin = style({
 ## Nesting layers
 
 To facilitate organisation of styles, [layer nesting] is supported by providing a `parent` layer name via the options object.
-This will generate the shorthand syntax, i.e. `parent.child`, while also making the relationship explicit.
+This will generate the shorthand syntax, i.e. `parent.child`, while also making the relationship between layers explicit.
 
 ```ts compiled
 // reset.css.ts
