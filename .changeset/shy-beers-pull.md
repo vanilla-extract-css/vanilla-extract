@@ -2,9 +2,9 @@
 '@vanilla-extract/vite-plugin': minor
 ---
 
-Add `forceEmitCss` option
+Add `emitCssInSsr` option
 
-Provides the ability to force the plugin to emit CSS for a particular build.
+Provides the ability to opt in to emitting CSS during SSR.
 
 ```js
 // vite.config.js
@@ -14,7 +14,7 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 export default {
   plugins: [
     vanillaExtractPlugin({
-      forceEmitCss: true
+      emitCssInSsr: true
     })
   ]
 };
