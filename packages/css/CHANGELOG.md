@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.9.5
+
+### Patch Changes
+
+- [#990](https://github.com/vanilla-extract-css/vanilla-extract/pull/990) [`3b724b9`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3b724b973a79d85cd4b5ab3e34fe312610c5b2da) Thanks [@askoufis](https://github.com/askoufis)! - Align transformation of `@keyframes` rules with other rules
+
+  This fixes a bug where invalid CSS could be generated inside `@keyframes` rules.
+
 ## 1.9.4
 
 ### Patch Changes

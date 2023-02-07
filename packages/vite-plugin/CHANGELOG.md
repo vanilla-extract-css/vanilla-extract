@@ -1,5 +1,27 @@
 # @vanilla-extract/vite-plugin
 
+## 3.8.0
+
+### Minor Changes
+
+- [#989](https://github.com/vanilla-extract-css/vanilla-extract/pull/989) [`669a61f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/669a61f08cff6be69f8d0be7a270b4d9f151b8f1) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Add `emitCssInSsr` option
+
+  Provides the ability to opt in to emitting CSS during SSR.
+
+  ```js
+  // vite.config.js
+
+  import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+
+  export default {
+    plugins: [
+      vanillaExtractPlugin({
+        emitCssInSsr: true,
+      }),
+    ],
+  };
+  ```
+
 ## 3.7.1
 
 ### Patch Changes

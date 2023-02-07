@@ -1,5 +1,18 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.34
+
+### Patch Changes
+
+- Updated dependencies [[`669a61f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/669a61f08cff6be69f8d0be7a270b4d9f151b8f1)]:
+  - @vanilla-extract/vite-plugin@3.8.0
+  - @fixtures/features@0.0.17
+  - @fixtures/low-level@0.0.17
+  - @fixtures/recipes@0.0.18
+  - @fixtures/sprinkles@0.0.20
+  - @fixtures/themed@0.0.17
+  - @fixtures/unused-modules@1.0.17
+
 ## 0.0.33
 
 ### Patch Changes
