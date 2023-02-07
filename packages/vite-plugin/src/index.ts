@@ -22,10 +22,12 @@ const virtualExtJs = '.vanilla.js';
 
 interface Options {
   identifiers?: IdentifierOption;
+  emitCssInSsr?: boolean;
   esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
+  emitCssInSsr,
   esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -33,7 +35,10 @@ export function vanillaExtractPlugin({
   let postCssConfig: PostCSSConfigResult | null;
   const cssMap = new Map<string, string>();
 
-  let forceEmitCssInSsrBuild: boolean = !!process.env.VITE_RSC_BUILD;
+  const hasEmitCssOverride = typeof emitCssInSsr === 'boolean';
+  let resolvedEmitCssInSsr: boolean = hasEmitCssOverride
+    ? emitCssInSsr
+    : !!process.env.VITE_RSC_BUILD;
   let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
@@ -69,6 +74,7 @@ export function vanillaExtractPlugin({
       }
 
       if (
+        !hasEmitCssOverride &&
         config.plugins.some((plugin) =>
           [
             'astro:build',
@@ -78,7 +84,7 @@ export function vanillaExtractPlugin({
           ].includes(plugin.name),
         )
       ) {
-        forceEmitCssInSsrBuild = true;
+        resolvedEmitCssInSsr = true;
       }
     },
     resolveId(source) {
@@ -153,7 +159,7 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
-      if (ssr && !forceEmitCssInSsrBuild) {
+      if (ssr && !resolvedEmitCssInSsr) {
         return transform({
           source: code,
           filePath: normalizePath(validId),
@@ -184,7 +190,7 @@ export function vanillaExtractPlugin({
         identOption,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
           const rootRelativeId = `${fileScope.filePath}${
-            config.command === 'build' || (ssr && forceEmitCssInSsrBuild)
+            config.command === 'build' || (ssr && resolvedEmitCssInSsr)
               ? virtualExtCss
               : virtualExtJs
           }`;
