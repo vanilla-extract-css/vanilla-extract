@@ -86,7 +86,7 @@ importers:
       '@types/react': ^17
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
       '@vanilla-extract/sprinkles': ^1.5.1
       '@vanilla-extract/webpack-plugin': ^2.2.0
       babel-loader: ^8.2.2
@@ -125,7 +125,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -133,13 +133,13 @@ importers:
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
       '@vanilla-extract/recipes': 0.3.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -147,7 +147,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
       '@vanilla-extract/sprinkles': 1.5.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -155,7 +155,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -163,7 +163,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.9.4
+      '@vanilla-extract/css': 1.9.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -297,7 +297,7 @@ importers:
     specifiers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
-      '@vanilla-extract/css': ^1.9.4
+      '@vanilla-extract/css': ^1.9.5
       '@vanilla-extract/integration': ^6.1.0
       esbuild: ^0.16.3
       rollup: ^2.7.0

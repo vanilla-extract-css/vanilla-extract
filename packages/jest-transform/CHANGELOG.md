@@ -1,5 +1,11 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.0
+
+### Minor Changes
+
+- [#982](https://github.com/vanilla-extract-css/vanilla-extract/pull/982) [`a9fd1c3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a9fd1c3fd950d33343eb28c6224b7f263a7ad20b) Thanks [@roginfarrer](https://github.com/roginfarrer)! - If a regular CSS file is sent through to the transform, return a module that exports the filename.
+
 ## 1.0.2
 
 ### Patch Changes
