@@ -160,10 +160,12 @@ export async function processVanillaFile({
   return serializeVanillaModule(cssImports, evalResult, unusedCompositionRegex);
 }
 
-export function stringifyExports(
-  recipeImports: Set<string>,
+function stringifyExports(
+  functionSerializationImports: Set<string>,
   value: any,
   unusedCompositionRegex: RegExp | null,
+  key: string,
+  exportLookup: Map<any, string>,
 ): any {
   return stringify(
     value,
@@ -174,10 +176,17 @@ export function stringifyExports(
         valueType === 'boolean' ||
         valueType === 'number' ||
         valueType === 'undefined' ||
-        value === null ||
-        Array.isArray(value) ||
-        isPlainObject(value)
+        value === null
       ) {
+        return next(value);
+      }
+
+      if (Array.isArray(value) || isPlainObject(value)) {
+        const reusedExport = exportLookup.get(value);
+
+        if (reusedExport && reusedExport !== key) {
+          return reusedExport;
+        }
         return next(value);
       }
 
@@ -206,7 +215,7 @@ export function stringifyExports(
           typeof importName !== 'string' ||
           !Array.isArray(args)
         ) {
-          throw new Error('Invalid recipe');
+          throw new Error('Invalid function serialization params');
         }
 
         try {
@@ -215,19 +224,25 @@ export function stringifyExports(
             5,
           )}`;
 
-          recipeImports.add(
+          functionSerializationImports.add(
             `import { ${importName} as ${hashedImportName} } from '${importPath}';`,
           );
 
           return `${hashedImportName}(${args
             .map((arg) =>
-              stringifyExports(recipeImports, arg, unusedCompositionRegex),
+              stringifyExports(
+                functionSerializationImports,
+                arg,
+                unusedCompositionRegex,
+                key,
+                exportLookup,
+              ),
             )
             .join(',')})`;
         } catch (err) {
           console.error(err);
 
-          throw new Error('Invalid recipe.');
+          throw new Error('Invalid function serialization params');
         }
       }
 
@@ -246,28 +261,45 @@ export function stringifyExports(
   );
 }
 
-function serializeVanillaModule(
+const defaultExportName = '__default__';
+
+export function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
   unusedCompositionRegex: RegExp | null,
 ) {
-  const recipeImports = new Set<string>();
-
-  const moduleExports = Object.keys(exports).map((key) =>
-    key === 'default'
-      ? `export default ${stringifyExports(
-          recipeImports,
-          exports[key],
-          unusedCompositionRegex,
-        )};`
-      : `export var ${key} = ${stringifyExports(
-          recipeImports,
-          exports[key],
-          unusedCompositionRegex,
-        )};`,
+  const functionSerializationImports = new Set<string>();
+  const exportLookup = new Map(
+    Object.entries(exports).map(([key, value]) => [
+      value,
+      key === 'default' ? defaultExportName : key,
+    ]),
   );
 
-  const outputCode = [...cssImports, ...recipeImports, ...moduleExports];
+  const moduleExports = Object.keys(exports).map((key) => {
+    const serializedExport = stringifyExports(
+      functionSerializationImports,
+      exports[key],
+      unusedCompositionRegex,
+      key === 'default' ? defaultExportName : key,
+      exportLookup,
+    );
+
+    if (key === 'default') {
+      return [
+        `var ${defaultExportName} = ${serializedExport};`,
+        `export default ${defaultExportName};`,
+      ].join('\n');
+    }
+
+    return `export var ${key} = ${serializedExport};`;
+  });
+
+  const outputCode = [
+    ...cssImports,
+    ...functionSerializationImports,
+    ...moduleExports,
+  ];
 
   return outputCode.join('\n');
 }
