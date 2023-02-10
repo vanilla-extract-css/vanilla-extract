@@ -100,10 +100,15 @@ describe('serializeVanillaModule', () => {
     const a = {
       style: 'the-style',
     };
+    const b = {
+      style: 'another-style',
+    };
     const exports = {
       a,
-      b: {
+      default: b,
+      c: {
         a,
+        b,
       },
     };
 
@@ -111,7 +116,9 @@ describe('serializeVanillaModule', () => {
       .toMatchInlineSnapshot(`
       "import "./styles.css"
       export var a = {style:'the-style'};
-      export var b = {a:a};"
+      var __default__ = {style:'another-style'};
+      export default __default__;
+      export var c = {a:a,b:__default__};"
     `);
   });
 
@@ -145,14 +152,21 @@ describe('serializeVanillaModule', () => {
       },
     };
 
+    const otherComplexExport = {
+      other: {
+        complex: [1, 2, 3],
+      },
+    };
+
     const sprinkles = () => {};
     sprinkles.__function_serializer__ = {
       importPath: 'my-package',
       importName: 'myFunction',
-      args: [complexExport],
+      args: [complexExport, otherComplexExport],
     };
     const exports = {
       default: complexExport,
+      otherComplexExport,
       sprinkles,
     };
 
@@ -162,7 +176,8 @@ describe('serializeVanillaModule', () => {
       import { myFunction as _86bce } from 'my-package';
       var __default__ = {my:{very:{complex:{arg:true}}}};
       export default __default__;
-      export var sprinkles = _86bce(__default__);"
+      export var otherComplexExport = {other:{complex:[1,2,3]}};
+      export var sprinkles = _86bce(__default__,otherComplexExport);"
     `);
   });
 });
