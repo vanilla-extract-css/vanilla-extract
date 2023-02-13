@@ -69,13 +69,8 @@ module.exports = [
           ],
         },
         {
-          test: /\.vanilla\.css$/i,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
-        },
-        {
           test: /\.css$/i,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
-          exclude: /\.vanilla\.css$/i,
         },
         {
           test: /\.mdx?$/,
@@ -113,7 +108,7 @@ module.exports = [
     target: 'node',
     externals: [
       nodeExternals({
-        allowlist: [/^react-syntax-highlighter\/dist\/esm/],
+        allowlist: [/^react-syntax-highlighter\/dist\/esm/, /^@docsearch\/css/],
       }),
     ],
     output: {
@@ -151,8 +146,8 @@ module.exports = [
           ],
         },
         {
-          test: /\.vanilla\.css$/i,
-          use: ['css-loader'],
+          test: /\.css$/i,
+          use: ['null-loader'],
         },
         {
           test: /\.mdx?$/,

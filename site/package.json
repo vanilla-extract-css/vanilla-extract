@@ -57,6 +57,7 @@
     "mdx-loader": "^3.0.2",
     "mini-css-extract-plugin": "^1.5.1",
     "netlify-cli": "^11.8.3",
+    "null-loader": "^4.0.1",
     "remove-markdown": "^0.3.0",
     "tailwindcss": "^2.1.2",
     "webpack": "^5.36.1",
