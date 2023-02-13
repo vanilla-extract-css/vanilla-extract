@@ -13,6 +13,7 @@ import { GitHubStars } from '../GitHubStars/GitHubStars';
 import { CompiledCode } from '../Code/CompiledCode';
 import { ErrorHighlighter } from '../Code/ErrorHighlighter';
 import * as styles from './HomePage.css';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 const InstallPrompt = () => {
   return (
@@ -98,12 +99,14 @@ export const HomePage = () => {
             <Box
               display="flex"
               justifyContent="flex-end"
+              alignItems="center"
               paddingBottom={{
                 mobile: 'large',
                 tablet: 'none',
                 desktop: 'xxlarge',
               }}
             >
+              <SearchInput />
               <ColorModeToggle />
             </Box>
             <Box>

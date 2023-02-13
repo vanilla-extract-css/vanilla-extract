@@ -20,6 +20,7 @@ import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 
 import mapKeys from 'lodash/mapKeys';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 interface DocsRouteProps {
   component: (props: any) => JSX.Element;
@@ -414,7 +415,10 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'block' }}>
-          <ColorModeToggle />
+          <Box display="flex" alignItems="center">
+            <SearchInput />
+            <ColorModeToggle />
+          </Box>
         </Box>
         <Box display={{ desktop: 'none' }}>
           <Fab open={menuOpen} onClick={toggleMenu} />

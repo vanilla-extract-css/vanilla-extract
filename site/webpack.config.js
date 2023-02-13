@@ -73,6 +73,11 @@ module.exports = [
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
+          test: /\.css$/i,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          exclude: /\.vanilla\.css$/i,
+        },
+        {
           test: /\.mdx?$/,
           use: ['mdx-loader', './code-block-loader'],
         },
