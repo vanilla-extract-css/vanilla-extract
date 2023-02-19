@@ -105,8 +105,6 @@ export class ConditionalRuleset {
 
       ruleset.precedenceLookup.set(query, conditionPrecedence);
     }
-
-    console.log(ruleset.precedenceLookup);
   }
 
   isCompatible(incomingRuleset: ConditionalRuleset) {
@@ -218,8 +216,6 @@ export class ConditionalRuleset {
 
   renderToArray() {
     const arr: any = [];
-
-    console.log('Render', this.ruleset);
 
     for (const { query, rules, children } of this.getSortedRuleset()) {
       const selectors: any = {};
