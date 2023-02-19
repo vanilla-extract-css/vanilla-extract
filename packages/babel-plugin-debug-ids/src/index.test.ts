@@ -376,14 +376,14 @@ describe('babel plugin', () => {
     const source = `
       import { globalLayer } from '@vanilla-extract/css';
 
-      const reset = globalLayer({ parent: 'papa' });
+      const reset = globalLayer({ parent: 'papa' }, 'my-reset');
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
       import { globalLayer } from '@vanilla-extract/css';
       const reset = globalLayer({
         parent: 'papa'
-      });
+      }, 'my-reset');
     `);
   });
 

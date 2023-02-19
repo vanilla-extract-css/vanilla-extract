@@ -1,4 +1,3 @@
-import deepmerge from 'deepmerge';
 import { appendCss } from './adapter';
 import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
@@ -8,6 +7,8 @@ type LayerOptions = {
 };
 const defaultLayerOptions: LayerOptions = {};
 
+const merge = <T>(obj1: Partial<T>, obj2: Partial<T>) => ({ ...obj1, ...obj2 });
+
 const getLayerArgs = <Options extends LayerOptions>(
   ...args: any[]
 ): [Options, string] => {
@@ -15,7 +16,7 @@ const getLayerArgs = <Options extends LayerOptions>(
   let debugId: string = args[0];
 
   if (typeof args[0] === 'object') {
-    options = deepmerge(defaultLayerOptions, args[0]);
+    options = merge(defaultLayerOptions, args[0]);
     debugId = args[1];
   }
 
