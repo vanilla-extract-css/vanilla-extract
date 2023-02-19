@@ -19,6 +19,7 @@ type Condition = {
 
 export class ConditionalRuleset {
   ruleset: Map<Query, Condition>;
+  includesLayer: boolean;
 
   /**
    * Stores information about where conditions must be in relation to other conditions
@@ -30,6 +31,7 @@ export class ConditionalRuleset {
   constructor() {
     this.ruleset = new Map();
     this.precedenceLookup = new Map();
+    this.includesLayer = false;
   }
 
   findOrCreateCondition(conditionQuery: Query) {
@@ -60,7 +62,12 @@ export class ConditionalRuleset {
     return currRuleset;
   }
 
-  addRule(rule: Rule, conditionQuery: Query, conditionPath: Array<Query>) {
+  addRule(
+    rule: Rule,
+    conditionQuery: Query,
+    conditionPath: Array<Query>,
+    { isLayer }: { isLayer?: boolean } = {},
+  ) {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
     const targetCondition = ruleset.findOrCreateCondition(conditionQuery);
 
@@ -68,10 +75,15 @@ export class ConditionalRuleset {
       throw new Error('Failed to add conditional rule');
     }
 
+    if (isLayer) {
+      ruleset.includesLayer = true;
+    }
+
     targetCondition.rules.push(rule);
   }
 
-  addDeclarationRule(conditionQuery: Query, conditionPath: Array<Query>) {
+  addLayerDeclaration(conditionQuery: Query, conditionPath: Array<Query>) {
+    this.includesLayer = true;
     this.addRule(DECLARATION, conditionQuery, conditionPath);
   }
 
@@ -93,6 +105,8 @@ export class ConditionalRuleset {
 
       ruleset.precedenceLookup.set(query, conditionPrecedence);
     }
+
+    console.log(ruleset.precedenceLookup);
   }
 
   isCompatible(incomingRuleset: ConditionalRuleset) {
@@ -117,7 +131,9 @@ export class ConditionalRuleset {
 
       if (
         matchingCondition &&
-        !matchingCondition.children.isCompatible(children)
+        (matchingCondition.children.includesLayer ||
+          children.includesLayer ||
+          !matchingCondition.children.isCompatible(children))
       ) {
         return false;
       }
@@ -152,6 +168,8 @@ export class ConditionalRuleset {
         new Set([...orderPrecedence, ...incomingOrderPrecedence]),
       );
     }
+
+    this.includesLayer = this.includesLayer || incomingRuleset.includesLayer;
   }
 
   /**
@@ -200,6 +218,8 @@ export class ConditionalRuleset {
 
   renderToArray() {
     const arr: any = [];
+
+    console.log('Render', this.ruleset);
 
     for (const { query, rules, children } of this.getSortedRuleset()) {
       const selectors: any = {};

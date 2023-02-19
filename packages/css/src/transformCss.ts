@@ -159,7 +159,7 @@ class Stylesheet {
     if (root.type === 'layer') {
       const layerDefinition = `@layer ${root.name}`;
       this.currConditionalRuleset.addConditionPrecedence([], [layerDefinition]);
-      this.currConditionalRuleset.addDeclarationRule(layerDefinition, []);
+      this.currConditionalRuleset.addLayerDeclaration(layerDefinition, []);
     } else {
       // Add main styles
       const mainRule = omit(root.rule, specialKeys);
@@ -188,7 +188,11 @@ class Stylesheet {
     }
   }
 
-  addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
+  addConditionalRule(
+    cssRule: CSSRule,
+    conditions: Array<string>,
+    { isLayer }: { isLayer?: boolean } = {},
+  ) {
     // Run `pixelifyProperties` before `transformVars` as we don't want to pixelify CSS Vars
     const rule = this.transformVars(
       this.transformContent(this.pixelifyProperties(cssRule.rule)),
@@ -209,6 +213,7 @@ class Stylesheet {
       },
       conditionQuery,
       parentConditions,
+      { isLayer },
     );
   }
 
@@ -469,6 +474,7 @@ class Stylesheet {
             rule: omit(layerRule, specialKeys),
           },
           conditions,
+          { isLayer: true },
         );
 
         if (root.type === 'local') {

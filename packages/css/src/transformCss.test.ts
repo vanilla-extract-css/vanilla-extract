@@ -1149,11 +1149,11 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle nested layers', () => {
+  it.only('should bailout merging for nested layers', () => {
     expect(
       transformCss({
         composedClassLists: [],
-        localClassNames: ['testClass'],
+        localClassNames: ['testClass', 'otherTestClass'],
         cssObjs: [
           {
             type: 'local',
@@ -1180,7 +1180,7 @@ describe('transformCss', () => {
           },
           {
             type: 'local',
-            selector: 'testClass',
+            selector: 'otherTestClass',
             rule: {
               '@layer': {
                 layerA: {
@@ -1202,15 +1202,22 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       "@layer layerA {
         @media (min-width: 700px) {
-          @layer layerA2 {
-            .testClass {
-              display: block;
-            }
+          .testClass {
+            display: grid;
           }
         }
       }
       @layer layerA.layerA1;
-      @layer layerA.layerA2;"
+      @layer layerA.layerA2;
+      @layer layerA {
+        @media (min-width: 700px) {
+          @layer layerA2 {
+            .otherTestClass {
+              display: block;
+            }
+          }
+        }
+      }"
     `);
   });
 
