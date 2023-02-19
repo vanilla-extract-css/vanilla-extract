@@ -1149,7 +1149,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it.only('should bailout merging for nested layers', () => {
+  it('should bailout merging for nested layers', () => {
     expect(
       transformCss({
         composedClassLists: [],
