@@ -414,11 +414,9 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
       <SecondaryNav onClick={closeMenu} pathname={normalisedPath} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
-        <Box display={{ mobile: 'none', desktop: 'block' }}>
-          <Box display="flex" alignItems="center">
-            <SearchInput />
-            <ColorModeToggle />
-          </Box>
+        <Box display={{ mobile: 'none', desktop: 'flex' }} alignItems="center">
+          <SearchInput />
+          <ColorModeToggle />
         </Box>
         <Box display={{ desktop: 'none' }}>
           <Fab open={menuOpen} onClick={toggleMenu} />
