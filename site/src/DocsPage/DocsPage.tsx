@@ -418,7 +418,14 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           <SearchInput />
           <ColorModeToggle />
         </Box>
-        <Box display={{ desktop: 'none' }}>
+        <Box
+          display={{ mobile: 'flex', desktop: 'none' }}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Box display={menuOpen ? 'none' : undefined}>
+            <SearchInput />
+          </Box>
           <Fab open={menuOpen} onClick={toggleMenu} />
         </Box>
       </Box>
