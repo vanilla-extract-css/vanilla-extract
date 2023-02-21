@@ -1,9 +1,13 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { createVar, fallbackVar, globalStyle } from '@vanilla-extract/css';
 import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
+const searchInputMinSize = 44;
+
 globalStyle('.DocSearch', {
   fontFamily: vars.fonts.body,
+  minHeight: searchInputMinSize,
+  minWidth: searchInputMinSize,
 });
 
 globalStyle(`.${darkMode} .DocSearch`, {
@@ -20,4 +24,59 @@ globalStyle(`.${darkMode} .DocSearch`, {
     '--docsearch-hit-background': vars.palette.gray900,
     '--docsearch-hit-shadow': 'none',
   },
+});
+
+const docsearchButton = `.DocSearch.DocSearch-Button`;
+const focusColorVar = createVar();
+
+globalStyle(docsearchButton, {
+  boxShadow: `0 4px 8px rgba(14, 14, 33, 0.2), 0px 0px 0px 3px ${fallbackVar(
+    focusColorVar,
+    'transparent',
+  )}`,
+  WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
+  justifyContent: 'space-around',
+});
+
+globalStyle(`${docsearchButton}:focus-visible`, {
+  vars: {
+    [focusColorVar]: vars.palette.pink300,
+  },
+});
+
+globalStyle(`.${darkMode} ${docsearchButton}:focus-visible`, {
+  vars: {
+    [focusColorVar]: vars.palette.pink600,
+  },
+});
+
+const pseudos = [':hover', ':active'];
+const docsearchButtonAndPseudos = [
+  docsearchButton,
+  ...pseudos.map((pseudo) => `${docsearchButton}${pseudo}`),
+];
+
+globalStyle(docsearchButtonAndPseudos.join(','), {
+  vars: {
+    '--docsearch-searchbox-background': vars.palette.white,
+    '--docsearch-searchbox-focus-background': vars.palette.white,
+    '--docsearch-text-color': vars.palette.coolGray900,
+  },
+});
+
+globalStyle(
+  docsearchButtonAndPseudos
+    .map((className) => `.${darkMode} ${className}`)
+    .join(','),
+  {
+    vars: {
+      '--docsearch-searchbox-background': vars.palette.gray300,
+      '--docsearch-searchbox-focus-background': vars.palette.gray300,
+      '--docsearch-text-color': vars.palette.gray800,
+    },
+  },
+);
+
+globalStyle('.DocSearch .DocSearch-Search-Icon', {
+  strokeWidth: 3.0,
 });
