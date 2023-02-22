@@ -148,12 +148,12 @@ export default {
     </Block>
   ),
   h1: ({ component, ...props }: HeadingProps) => (
-    <Block component="h1">
+    <Block component="h1" name={props.id}>
       <Heading component="span" {...props} level="1" />
     </Block>
   ),
   h2: ({ component, ...props }: HeadingProps) => (
-    <Block component="h2" paddingTop="xxlarge">
+    <Block component="h2" paddingTop="xxlarge" name={props.id}>
       <Box
         position="relative"
         component="span"
@@ -180,7 +180,7 @@ export default {
     </Block>
   ),
   h3: ({ component, ...props }: HeadingProps) => (
-    <Block component="h3" paddingTop="xlarge">
+    <Block component="h3" paddingTop="xlarge" name={props.id}>
       <Box
         position="relative"
         component="span"
