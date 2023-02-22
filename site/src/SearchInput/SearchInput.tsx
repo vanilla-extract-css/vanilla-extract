@@ -3,7 +3,6 @@ import '@docsearch/css';
 import { ComponentProps } from 'react';
 
 import './SearchInput.css';
-import { Box } from '../system';
 
 type DocSearchProps = ComponentProps<typeof DocSearch>;
 
@@ -26,13 +25,12 @@ const getMissingResultsUrl: DocSearchProps['getMissingResultsUrl'] = ({
   )}\` should return search results.`;
 
 export const SearchInput = () => (
-  <Box paddingRight="medium">
-    <DocSearch
-      appId="ABPL1AJSFN"
-      apiKey="d0d2252fbd30f7cb523a50c5a7780078"
-      indexName="vanilla-extract"
-      transformItems={transformSearchResultItems}
-      getMissingResultsUrl={getMissingResultsUrl}
-    />
-  </Box>
+  <DocSearch
+    appId="ABPL1AJSFN"
+    apiKey="d0d2252fbd30f7cb523a50c5a7780078"
+    indexName="vanilla-extract"
+    transformItems={transformSearchResultItems}
+    getMissingResultsUrl={getMissingResultsUrl}
+    placeholder="Search"
+  />
 );
