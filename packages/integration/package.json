@@ -24,7 +24,9 @@
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
     "mlly": "^1.1.0",
-    "outdent": "^0.8.0"
+    "outdent": "^0.8.0",
+    "vite-node": "^0.28.5",
+    "vite": "^4.1.1"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.20",

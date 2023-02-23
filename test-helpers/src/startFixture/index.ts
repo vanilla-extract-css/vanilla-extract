@@ -11,6 +11,8 @@ type BuildType =
   | 'style-loader'
   | 'esbuild'
   | 'esbuild-runtime'
+  | 'esbuild-next'
+  | 'esbuild-next-runtime'
   | 'vite'
   | 'parcel';
 
@@ -50,7 +52,12 @@ export async function startFixture(
     ].join('\n'),
   );
 
-  if (type === 'esbuild' || type === 'esbuild-runtime') {
+  if (
+    type === 'esbuild' ||
+    type === 'esbuild-runtime' ||
+    type === 'esbuild-next' ||
+    type === 'esbuild-next-runtime'
+  ) {
     return startEsbuildFixture(fixtureName, {
       type,
       port,
