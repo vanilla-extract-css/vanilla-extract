@@ -1,3 +1,4 @@
+import { test, describe, expect } from 'vitest';
 import { outdent } from 'outdent';
 import { addFileScope } from './addFileScope';
 
@@ -18,8 +19,8 @@ describe('ESM', () => {
       }),
     ).toMatchInlineSnapshot(`
       "
-            import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-            setFileScope("app/app.css.ts", "my-package");
+            import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+            setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
             import {style} from '@vanilla-extract/css';
 
       export const myStyle = style({});
@@ -46,8 +47,8 @@ describe('ESM', () => {
         packageName: 'my-package',
       }),
     ).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-      setFileScope("app/app.css.ts", "my-package");
+      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
       import {style} from '@vanilla-extract/css';
 
       export const myStyle = style({});
@@ -76,8 +77,8 @@ describe('ESM', () => {
         packageName: 'my-package',
       }),
     ).toMatchInlineSnapshot(`
-      "import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-      setFileScope("app/app.css.ts", "my-package");
+      "import { setFileScope, endFileScope } from \\"@vanilla-extract/css/fileScope\\";
+      setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
       import {style} from '@vanilla-extract/css';
 
       export const myStyle = style({});
@@ -103,13 +104,13 @@ describe('ESM', () => {
         packageName: 'my-package',
       }),
     ).toMatchInlineSnapshot(`
-          "import * as vanillaFileScope from "@vanilla-extract/css/fileScope";
-          vanillaFileScope.setFileScope("app/app.css.ts", "my-package");
-          import {style} from '@vanilla-extract/css';
+      "import * as vanillaFileScope from \\"@vanilla-extract/css/fileScope\\";
+      vanillaFileScope.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
+      import {style} from '@vanilla-extract/css';
 
-          export const myStyle = style({});
-          vanillaFileScope.endFileScope();"
-      `);
+      export const myStyle = style({});
+      vanillaFileScope.endFileScope();"
+    `);
   });
 });
 
@@ -131,8 +132,8 @@ describe('CJS', () => {
       }),
     ).toMatchInlineSnapshot(`
       "
-          const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
-          __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
+          const __vanilla_filescope__ = require(\\"@vanilla-extract/css/fileScope\\");
+          __vanilla_filescope__.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
           const _css require('@vanilla-extract/css');
 
       var myStyle = _css.style({});
@@ -161,8 +162,8 @@ describe('CJS', () => {
         packageName: 'my-package',
       }),
     ).toMatchInlineSnapshot(`
-      "const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
-      __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
+      "const __vanilla_filescope__ = require(\\"@vanilla-extract/css/fileScope\\");
+      __vanilla_filescope__.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
       const _css = require('@vanilla-extract/css');
 
       var myStyle = _css.style({});
@@ -193,8 +194,8 @@ describe('CJS', () => {
         packageName: 'my-package',
       }),
     ).toMatchInlineSnapshot(`
-      "const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
-      __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
+      "const __vanilla_filescope__ = require(\\"@vanilla-extract/css/fileScope\\");
+      __vanilla_filescope__.setFileScope(\\"app/app.css.ts\\", \\"my-package\\");
       const _css = require('@vanilla-extract/css');
 
       const myStyle = _css.style({});

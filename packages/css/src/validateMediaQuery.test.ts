@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { validateMediaQuery } from './validateMediaQuery';
 
 describe('validateMediaQuery', () => {
@@ -25,53 +26,53 @@ describe('validateMediaQuery', () => {
     it('empty query', () => {
       expect(() => validateMediaQuery('@media '))
         .toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media "
+          "Invalid media query: \\"@media \\"
 
-        Query is empty
+          Query is empty
 
-        Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
-      `);
+          Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
+        `);
     });
 
     it('random query', () => {
       expect(() => validateMediaQuery('@media random query'))
         .toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media random query"
+          "Invalid media query: \\"@media random query\\"
 
-        Unknown ident 'random' in media query
+          Unknown ident 'random' in media query
 
-        Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
-      `);
+          Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
+        `);
     });
 
     it('(min-height: 600px', () => {
       expect(() => validateMediaQuery('@media (min-height: 600px'))
         .toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media (min-height: 600px"
+          "Invalid media query: \\"@media (min-height: 600px\\"
 
-        Invalid media condition
-        Expected media condition after '('
+          Invalid media condition
+          Expected media condition after '('
 
-        Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
-      `);
+          Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
+        `);
     });
 
     it('min-width: 600px)', () => {
       expect(() => validateMediaQuery('@media min-width: 600px)'))
         .toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media min-width: 600px)"
+          "Invalid media query: \\"@media min-width: 600px)\\"
 
-        Unknown ident 'min-width' in media query
+          Unknown ident 'min-width' in media query
 
-        Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
-      `);
+          Read more on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
+        `);
     });
 
     it('prefers-reduced-motion: no-preference', () => {
       expect(() =>
         validateMediaQuery('@media prefers-reduced-motion: no-preference'),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media prefers-reduced-motion: no-preference"
+        "Invalid media query: \\"@media prefers-reduced-motion: no-preference\\"
 
         Unknown ident 'prefers-reduced-motion' in media query
 
@@ -83,7 +84,7 @@ describe('validateMediaQuery', () => {
       expect(() =>
         validateMediaQuery('@media @media screen and (min-width: 640px)'),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid media query: "@media @media screen and (min-width: 640px)"
+        "Invalid media query: \\"@media @media screen and (min-width: 640px)\\"
 
         Expected media condition or media prefix
 

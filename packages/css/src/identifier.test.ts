@@ -1,3 +1,4 @@
+import { it, describe, expect, beforeAll, afterAll } from 'vitest';
 import { setFileScope, endFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 

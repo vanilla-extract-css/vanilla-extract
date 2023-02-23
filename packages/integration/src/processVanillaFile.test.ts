@@ -1,3 +1,4 @@
+import { test, describe, expect } from 'vitest';
 // @ts-expect-error
 import evalCode from 'eval';
 
@@ -89,7 +90,7 @@ describe('serializeVanillaModule', () => {
         null,
       ),
     ).toMatchInlineSnapshot(`
-      "import "./styles.css"
+      "import \\"./styles.css\\"
       var __default__ = 'some-style';
       export default __default__;
       export var otherStyles = 'some-style other-style';"
@@ -114,12 +115,12 @@ describe('serializeVanillaModule', () => {
 
     expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
       .toMatchInlineSnapshot(`
-      "import "./styles.css"
-      export var a = {style:'the-style'};
-      var __default__ = {style:'another-style'};
-      export default __default__;
-      export var c = {a:a,b:__default__};"
-    `);
+        "import \\"./styles.css\\"
+        export var a = {style:'the-style'};
+        var __default__ = {style:'another-style'};
+        export default __default__;
+        export var c = {a:a,b:__default__};"
+      `);
   });
 
   test('should handle function serialization', () => {
@@ -135,10 +136,10 @@ describe('serializeVanillaModule', () => {
 
     expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
       .toMatchInlineSnapshot(`
-      "import "./styles.css"
-      import { myFunction as _86bce } from 'my-package';
-      export var sprinkles = _86bce('arg1','arg2');"
-    `);
+        "import \\"./styles.css\\"
+        import { myFunction as _86bce } from 'my-package';
+        export var sprinkles = _86bce('arg1','arg2');"
+      `);
   });
 
   test('should re-use exports in handle serialized function args', () => {
@@ -172,12 +173,12 @@ describe('serializeVanillaModule', () => {
 
     expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
       .toMatchInlineSnapshot(`
-      "import "./styles.css"
-      import { myFunction as _86bce } from 'my-package';
-      var __default__ = {my:{very:{complex:{arg:true}}}};
-      export default __default__;
-      export var otherComplexExport = {other:{complex:[1,2,3]}};
-      export var sprinkles = _86bce(__default__,otherComplexExport);"
-    `);
+        "import \\"./styles.css\\"
+        import { myFunction as _86bce } from 'my-package';
+        var __default__ = {my:{very:{complex:{arg:true}}}};
+        export default __default__;
+        export var otherComplexExport = {other:{complex:[1,2,3]}};
+        export var sprinkles = _86bce(__default__,otherComplexExport);"
+      `);
   });
 });

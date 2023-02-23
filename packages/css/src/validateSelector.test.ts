@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { validateSelector } from './validateSelector';
 
 describe('validateSelector', () => {

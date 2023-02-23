@@ -23,6 +23,7 @@
     "@babel/core": "^7.20.7"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-typescript": "^7.20.0",
     "@types/babel__core": "^7.1.20"
   }
 }

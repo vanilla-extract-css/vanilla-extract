@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
@@ -41,19 +42,19 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".test_1\\/2_className {
+      ".test_1\\\\/2_className {
         color: red;
       }
-      .\\[test_with_brackets\\] {
+      .\\\\[test_with_brackets\\\\] {
         color: blue;
       }
       @media screen and (min-width: 700px) {
-        .test_1\\/2_className {
+        .test_1\\\\/2_className {
           color: green;
         }
       }
       @media screen and (min-width: 1000px) {
-        .test_1\\/2_className {
+        .test_1\\\\/2_className {
           color: purple;
         }
       }"
@@ -647,7 +648,7 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: "";
+        content: \\"\\";
       }"
     `);
   });
@@ -672,10 +673,10 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: "hello";
+        content: \\"hello\\";
       }
       .testClass {
-        content: "there";
+        content: \\"there\\";
       }"
     `);
   });
@@ -697,8 +698,8 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       ".testClass {
-        content: "hello";
-        content: "there";
+        content: \\"hello\\";
+        content: \\"there\\";
       }"
     `);
   });
@@ -726,7 +727,7 @@ describe('transformCss', () => {
         content: 'hello there';
       }
       .testClass {
-        content: "hello there";
+        content: \\"hello there\\";
       }"
     `);
   });
@@ -784,19 +785,19 @@ describe('transformCss', () => {
         content: none;
       }
       ._02 .testClass {
-        content: url("http://www.example.com/test.png");
+        content: url(\\"http://www.example.com/test.png\\");
       }
       ._03 .testClass {
         content: linear-gradient(#e66465, #9198e5);
       }
       ._04 .testClass {
-        content: image-set("image1x.png" 1x, "image2x.png" 2x);
+        content: image-set(\\"image1x.png\\" 1x, \\"image2x.png\\" 2x);
       }
       ._05 .testClass {
-        content: url("http://www.example.com/test.png") / "This is the alt text";
+        content: url(\\"http://www.example.com/test.png\\") / \\"This is the alt text\\";
       }
       ._06 .testClass {
-        content: "prefix";
+        content: \\"prefix\\";
       }
       ._07 .testClass {
         content: counter(chapter_counter);
@@ -805,10 +806,10 @@ describe('transformCss', () => {
         content: counter(chapter_counter, upper-roman);
       }
       ._09 .testClass {
-        content: counters(section_counter, ".");
+        content: counters(section_counter, \\".\\");
       }
       ._10 .testClass {
-        content: counters(section_counter, ".", decimal-leading-zero);
+        content: counters(section_counter, \\".\\", decimal-leading-zero);
       }
       ._11 .testClass {
         content: attr(value string);
@@ -1394,7 +1395,7 @@ describe('transformCss', () => {
           padding: 0;
         }
         to {
-          content: "foo";
+          content: \\"foo\\";
           opacity: 1;
           padding: 10px;
         }
@@ -1418,7 +1419,7 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       "@font-face {
-        src: local("Comic Sans MS");
+        src: local(\\"Comic Sans MS\\");
       }"
     `);
   });
@@ -1448,11 +1449,11 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       "@font-face {
         font-family: MyFont1;
-        src: local("Comic Sans MS");
+        src: local(\\"Comic Sans MS\\");
       }
       @font-face {
         font-family: MyFont2;
-        src: local("Impact");
+        src: local(\\"Impact\\");
       }"
     `);
   });
@@ -1692,7 +1693,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Simple pseudos are not valid in "globalStyle""`,
+      '"Simple pseudos are not valid in \\"globalStyle\\""',
     );
   });
 
@@ -1717,7 +1718,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Selectors are not allowed within "globalStyle""`,
+      '"Selectors are not allowed within \\"globalStyle\\""',
     );
   });
 

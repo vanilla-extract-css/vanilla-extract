@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`unused-modules - esbuild should create valid stylesheet 1`] = `
+exports[`unused-modules - esbuild > should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
 }
@@ -10,7 +10,7 @@ exports[`unused-modules - esbuild should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`unused-modules - mini-css-extract should create valid stylesheet 1`] = `
+exports[`unused-modules - mini-css-extract > should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
 }
@@ -31,32 +31,7 @@ body {
 "
 `;
 
-exports[`unused-modules - parcel should create valid stylesheet 1`] = `
-"body {
-  background-color: #e6e6fa;
-}
-.ej6spg0 {
-  background-color: #00f;
-  color: red;
-}
-body {
-  border: 5px solid #000;
-}
-._1mtonhh0 {
-  display: flex;
-}
-.plqi3i0 {
-  background: green;
-  height: 100px;
-  width: 100px;
-}
-._13dn9qt0 {
-  box-sizing: border-box;
-}
-"
-`;
-
-exports[`unused-modules - vite should create valid stylesheet 1`] = `
+exports[`unused-modules - vite > should create valid stylesheet 1`] = `
 "body {
   background-color: #e6e6fa;
   border: 5px solid #000;

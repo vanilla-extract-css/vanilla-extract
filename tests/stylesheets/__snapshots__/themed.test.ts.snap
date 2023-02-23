@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`themed - esbuild should create valid stylesheet 1`] = `
+exports[`themed - esbuild > should create valid stylesheet 1`] = `
 ".cvta170,
 :root {
   --cvta171: blue;
@@ -37,11 +37,11 @@ body {
 }
 @font-face {
   font-family: jteyb10;
-  src: local("Impact");
+  src: local(\\"Impact\\");
 }
 @font-face {
   font-family: MyGlobalComicSans;
-  src: local("Comic Sans MS");
+  src: local(\\"Comic Sans MS\\");
 }
 .jteyb11 {
   display: flex;
@@ -54,7 +54,7 @@ body {
   z-index: 1;
 }
 .jteyb13 {
-  background-color: var(--cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  background-color: var(--cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
   border-radius: 9999px;
   color: var(--cvta172);
   font-family: jteyb10;
@@ -64,7 +64,7 @@ body {
   outline: 5px solid red;
 }
 body .jteyb12:after {
-  content: "I am content";
+  content: \\"I am content\\";
 }
 html .jteyb16 {
   opacity: var(--jteyb14, 0.5);
@@ -88,7 +88,7 @@ html .jteyb17 {
 "
 `;
 
-exports[`themed - mini-css-extract should create valid stylesheet 1`] = `
+exports[`themed - mini-css-extract > should create valid stylesheet 1`] = `
 ".cdwe0v0,
 :root {
   --cdwe0v1: blue;
@@ -125,11 +125,11 @@ body {
 }
 @font-face {
   font-family: blj6yb0;
-  src: local("Impact");
+  src: local(\\"Impact\\");
 }
 @font-face {
   font-family: MyGlobalComicSans;
-  src: local("Comic Sans MS");
+  src: local(\\"Comic Sans MS\\");
 }
 .blj6yb1 {
   display: flex;
@@ -142,7 +142,7 @@ body {
   z-index: 1;
 }
 .blj6yb3 {
-  background-color: var(--cdwe0v1, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  background-color: var(--cdwe0v1, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
   border-radius: 9999px;
   color: var(--cdwe0v2);
   font-family: blj6yb0;
@@ -152,7 +152,7 @@ body {
   outline: 5px solid red;
 }
 body .blj6yb2:after {
-  content: "I am content";
+  content: \\"I am content\\";
 }
 html .blj6yb6 {
   opacity: var(--blj6yb4, 0.5);
@@ -176,95 +176,7 @@ html .blj6yb7 {
 "
 `;
 
-exports[`themed - parcel should create valid stylesheet 1`] = `
-".cdwe0v0,
-:root {
-  --cdwe0v1: blue;
-  --cdwe0v2: #fff;
-  --cdwe0v3: 4px;
-  --cdwe0v4: 8px;
-  --cdwe0v5: 12px;
-}
-.cdwe0v6 {
-  --cdwe0v1: green;
-  --cdwe0v2: #fff;
-  --cdwe0v3: 8px;
-  --cdwe0v4: 12px;
-  --cdwe0v5: 16px;
-}
-.cdwe0v7 {
-  --cdwe0v1: pink;
-  --cdwe0v2: purple;
-  --cdwe0v3: 6px;
-  --cdwe0v4: 12px;
-  --cdwe0v5: 18px;
-}
-@media screen and (min-width: 768px) {
-  .cdwe0v7 {
-    --cdwe0v1: purple;
-    --cdwe0v2: pink;
-  }
-}
-@font-face {
-  font-family: blj6yb0;
-  src: local(Impact);
-}
-@font-face {
-  font-family: MyGlobalComicSans;
-  src: local(Comic Sans MS);
-}
-.blj6yb1 {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cdwe0v4);
-  padding: var(--cdwe0v5);
-}
-.blj6yb2 {
-  position: relative;
-  z-index: 1;
-}
-.blj6yb3 {
-  background-color: var(--cdwe0v1, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
-  border-radius: 9999px;
-  color: var(--cdwe0v2);
-  font-family: blj6yb0;
-}
-.cdwe0v6 .cdwe0v0 .blj6yb1 .blj6yb3 {
-  font-family: MyGlobalComicSans;
-  outline: 5px solid red;
-}
-body .blj6yb2:after {
-  content: "I am content";
-}
-html .blj6yb6 {
-  opacity: var(--blj6yb4, 0.5);
-}
-html .blj6yb7 {
-  opacity: var(--blj6yb4, var(--blj6yb5, 0.25));
-}
-@media only screen and (min-width: 500px) {
-  .blj6yb1 {
-    border: 1px solid var(--cdwe0v1);
-  }
-  .blj6yb3 {
-    padding: var(--cdwe0v3);
-  }
-}
-@media only screen and (min-width: 1000px) {
-  .blj6yb3 {
-    padding: var(--cdwe0v4);
-  }
-}
-._5iqv0q0 {
-  box-shadow: 0 0 5px red;
-}
-body {
-  background-color: #87ceeb;
-}
-"
-`;
-
-exports[`themed - vite should create valid stylesheet 1`] = `
+exports[`themed - vite > should create valid stylesheet 1`] = `
 ".cvta170,
 :root {
   --cvta171: blue;
@@ -301,11 +213,11 @@ body {
 }
 @font-face {
   font-family: jteyb10;
-  src: local("Impact");
+  src: local(\\"Impact\\");
 }
 @font-face {
   font-family: MyGlobalComicSans;
-  src: local("Comic Sans MS");
+  src: local(\\"Comic Sans MS\\");
 }
 .jteyb11 {
   display: flex;
@@ -318,7 +230,7 @@ body {
   z-index: 1;
 }
 .jteyb13 {
-  background-color: var(--cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  background-color: var(--cvta171, \\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\");
   border-radius: 9999px;
   color: var(--cvta172);
   font-family: jteyb10;
@@ -328,7 +240,7 @@ body {
   outline: 5px solid red;
 }
 body .jteyb12:after {
-  content: "I am content";
+  content: \\"I am content\\";
 }
 html .jteyb16 {
   opacity: var(--jteyb14, 0.5);

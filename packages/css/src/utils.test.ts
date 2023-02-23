@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { isEqual, dudupeAndJoinClassList } from './utils';
 
 describe('isEqual', () => {

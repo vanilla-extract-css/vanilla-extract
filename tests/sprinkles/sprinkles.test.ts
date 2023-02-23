@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import {
   createMapValueFn,
   createNormalizeValueFn,
@@ -321,7 +322,7 @@ describe('sprinkles', () => {
           paddingLefty: 'small',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingLefty" is not a valid sprinkle"`,
+        '"\\"paddingLefty\\" is not a valid sprinkle"',
       );
     });
 
@@ -334,7 +335,7 @@ describe('sprinkles', () => {
           paddingLeft: 'xsmall',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingLeft" is not a valid sprinkle"`,
+        '"\\"paddingLeft\\" is not a valid sprinkle"',
       );
     });
 
@@ -349,7 +350,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""color" is not a conditional property"`,
+        '"\\"color\\" is not a conditional property"',
       );
     });
 
@@ -364,7 +365,7 @@ describe('sprinkles', () => {
           marginTop: ['small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""marginTop" does not support responsive arrays"`,
+        '"\\"marginTop\\" does not support responsive arrays"',
       );
     });
 
@@ -377,7 +378,7 @@ describe('sprinkles', () => {
           paddingTop: ['xsmall'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingTop" has no value "xsmall". Possible values are "small", "medium", "large""`,
+        '"\\"paddingTop\\" has no value \\"xsmall\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""',
       );
     });
 
@@ -390,7 +391,7 @@ describe('sprinkles', () => {
           paddingTop: ['small', 'medium', 'large', 'small'],
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingTop" only supports up to 3 breakpoints. You passed 4"`,
+        '"\\"paddingTop\\" only supports up to 3 breakpoints. You passed 4"',
       );
     });
 
@@ -405,7 +406,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingTop" has no value "xlarge". Possible values are "small", "medium", "large""`,
+        '"\\"paddingTop\\" has no value \\"xlarge\\". Possible values are \\"small\\", \\"medium\\", \\"large\\""',
       );
     });
 
@@ -420,7 +421,7 @@ describe('sprinkles', () => {
           transform: 'shrink',
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""transform" has no default condition. You must specify which conditions to target explicitly. Possible options are "active""`,
+        '"\\"transform\\" has no default condition. You must specify which conditions to target explicitly. Possible options are \\"active\\""',
       );
     });
 
@@ -435,7 +436,7 @@ describe('sprinkles', () => {
           },
         }),
       ).toThrowErrorMatchingInlineSnapshot(
-        `""paddingTop" has no condition named "ultraWide". Possible values are "mobile", "tablet", "desktop""`,
+        '"\\"paddingTop\\" has no condition named \\"ultraWide\\". Possible values are \\"mobile\\", \\"tablet\\", \\"desktop\\""',
       );
     });
   });

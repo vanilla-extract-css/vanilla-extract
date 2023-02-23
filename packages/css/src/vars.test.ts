@@ -1,3 +1,4 @@
+import { it, describe, expect } from 'vitest';
 import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {
@@ -189,7 +190,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.red": null"`,
+      '"Invalid variable name for \\"color.red\\": null"',
     );
   });
 
@@ -203,7 +204,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.blue": color'blue"`,
+      '"Invalid variable name for \\"color.blue\\": color\'blue"',
     );
   });
 
@@ -217,7 +218,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.green": 123-color-green"`,
+      '"Invalid variable name for \\"color.green\\": 123-color-green"',
     );
   });
 
@@ -235,7 +236,7 @@ describe('createGlobalThemeContract', () => {
         () => null,
       ),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.red": null"`,
+      '"Invalid variable name for \\"color.red\\": null"',
     );
   });
 });

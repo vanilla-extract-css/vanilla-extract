@@ -1,3 +1,4 @@
+// import { it, describe, expect } from 'vitest';
 import { transformSync } from '@babel/core';
 // @ts-expect-error
 import typescriptSyntax from '@babel/plugin-syntax-typescript';
@@ -40,7 +41,7 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       const one = style({
         zIndex: 2
-      }, "one");"
+      }, \\"one\\");"
     `);
   });
 
@@ -59,7 +60,7 @@ describe('babel plugin', () => {
         red: {
           color: 'red'
         }
-      }, "colors");"
+      }, \\"colors\\");"
     `);
   });
 
@@ -78,7 +79,7 @@ describe('babel plugin', () => {
         red: 'red'
       }, color => ({
         color
-      }), "colors");"
+      }), \\"colors\\");"
     `);
   });
 
@@ -95,7 +96,7 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       export default style({
         zIndex: 2
-      }, "default");"
+      }, \\"default\\");"
     `);
   });
 
@@ -118,7 +119,7 @@ describe('babel plugin', () => {
         one: {
           two: style({
             zIndex: 2
-          }, "test_one_two")
+          }, \\"test_one_two\\")
         }
       };"
     `);
@@ -140,7 +141,7 @@ describe('babel plugin', () => {
       const test = () => {
         return style({
           color: 'red'
-        }, "test");
+        }, \\"test\\");
       };"
     `);
   });
@@ -158,7 +159,7 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       const test = () => style({
         color: 'red'
-      }, "test");"
+      }, \\"test\\");"
     `);
   });
 
@@ -178,7 +179,7 @@ describe('babel plugin', () => {
       function test() {
         return style({
           color: 'red'
-        }, "test");
+        }, \\"test\\");
       }"
     `);
   });
@@ -207,7 +208,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createVar } from '@vanilla-extract/css';
-      const myVar = createVar("myVar");"
+      const myVar = createVar(\\"myVar\\");"
     `);
   });
 
@@ -220,7 +221,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createContainer } from '@vanilla-extract/css';
-      const myContainer = createContainer("myContainer");"
+      const myContainer = createContainer(\\"myContainer\\");"
     `);
   });
 
@@ -236,8 +237,8 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { fontFace } from '@vanilla-extract/css';
       const myFont = fontFace({
-        src: 'local("Comic Sans MS")'
-      }, "myFont");"
+        src: 'local(\\"Comic Sans MS\\")'
+      }, \\"myFont\\");"
     `);
   });
 
@@ -253,7 +254,7 @@ describe('babel plugin', () => {
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { globalFontFace } from '@vanilla-extract/css';
       globalFontFace('myFont', {
-        src: 'local("Comic Sans MS")'
+        src: 'local(\\"Comic Sans MS\\")'
       });"
     `);
   });
@@ -277,7 +278,7 @@ describe('babel plugin', () => {
         to: {
           transform: 'rotate(360deg)'
         }
-      }, "myAnimation");"
+      }, \\"myAnimation\\");"
     `);
   });
 
@@ -313,7 +314,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createTheme } from '@vanilla-extract/css';
-      const darkTheme = createTheme({}, {}, "darkTheme");"
+      const darkTheme = createTheme({}, {}, \\"darkTheme\\");"
     `);
   });
 
@@ -326,7 +327,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createTheme } from '@vanilla-extract/css';
-      const [theme, vars] = createTheme({}, {}, "theme");"
+      const [theme, vars] = createTheme({}, {}, \\"theme\\");"
     `);
   });
 
@@ -342,7 +343,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { createTheme } from '@vanilla-extract/css';
-      var _createTheme = createTheme({}, "myThemeClass"),
+      var _createTheme = createTheme({}, \\"myThemeClass\\"),
         _createTheme2 = _slicedToArray(_createTheme, 2),
         myThemeClass = _createTheme2[0],
         vars = _createTheme2[1];"
@@ -390,7 +391,7 @@ describe('babel plugin', () => {
 
     expect(transform(source)).toMatchInlineSnapshot(`
       "import { recipe } from '@vanilla-extract/recipes';
-      const button = recipe({}, "button");"
+      const button = recipe({}, \\"button\\");"
     `);
   });
 
@@ -463,7 +464,7 @@ describe('babel plugin', () => {
       "import { style as specialStyle } from '@vanilla-extract/css';
       const four = specialStyle({
         zIndex: 2
-      }, "four");"
+      }, \\"four\\");"
     `);
   });
 
@@ -482,7 +483,7 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       export const height = [style({
         zIndex: 2
-      }, "height")];"
+      }, \\"height\\")];"
     `);
   });
 
@@ -502,7 +503,7 @@ describe('babel plugin', () => {
       export const height = {
         full: [style({
           zIndex: 2
-        }, "height_full")]
+        }, \\"height_full\\")]
       };"
     `);
   });
@@ -520,7 +521,7 @@ describe('babel plugin', () => {
       "import * as css from '@vanilla-extract/css';
       const one = css.style({
         zIndex: 2
-      }, "one");"
+      }, \\"one\\");"
     `);
   });
 
@@ -545,13 +546,13 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       const one = instrument(style({
         zIndex: 1
-      }, "one"));
+      }, \\"one\\"));
       const two = instrument(instrument(style({
         zIndex: 2
-      }, "two")));
+      }, \\"two\\")));
       const three = instrument(instrument(instrument(style({
         zIndex: 3
-      }, "three"))));"
+      }, \\"three\\"))));"
     `);
   });
 
@@ -568,7 +569,7 @@ describe('babel plugin', () => {
       "import { style } from '@vanilla-extract/css';
       const one = (something++, style({
         zIndex: 1
-      }, "one"));"
+      }, \\"one\\"));"
     `);
   });
 });
