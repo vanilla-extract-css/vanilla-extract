@@ -1,9 +1,9 @@
 import type { ResolvedConfig } from 'vite';
-import type { ProcessOptions, AcceptedPlugin } from 'postcss';
+import type { ProcessOptions, Plugin } from 'postcss';
 
 export interface PostCSSConfigResult {
   options: ProcessOptions;
-  plugins: AcceptedPlugin[];
+  plugins: Plugin[];
 }
 
 // Mostly copied from vite's implementation
@@ -34,6 +34,7 @@ export const resolvePostcssConfig = async (
 
       return {
         options: postCssConfig.options,
+        // @ts-expect-error - The postcssrc options don't agree with real postcss, but it should be ok
         plugins: postCssConfig.plugins,
       };
     } catch (e: any) {
