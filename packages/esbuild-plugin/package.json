@@ -3,7 +3,6 @@
   "version": "2.2.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
   "files": [
     "/dist"
   ],

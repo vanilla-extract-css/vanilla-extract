@@ -1,13 +1,16 @@
 import path from 'path';
 import { existsSync, promises as fs } from 'fs';
 
-import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
+import {
+  vanillaExtractPlugin,
+  unstable_vanillaExtractPluginNext,
+} from '@vanilla-extract/esbuild-plugin';
 import { serve } from 'esbuild';
 
 import { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
-  type: 'esbuild' | 'esbuild-runtime';
+  type: 'esbuild' | 'esbuild-runtime' | 'esbuild-next' | 'esbuild-next-runtime';
   mode?: 'development' | 'production';
   port: number;
 }
@@ -15,6 +18,9 @@ export const startEsbuildFixture = async (
   fixtureName: string,
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
+  const plugin = type.includes('next')
+    ? unstable_vanillaExtractPluginNext
+    : vanillaExtractPlugin;
   const entry = require.resolve(`@fixtures/${fixtureName}/src/index.ts`);
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
@@ -36,8 +42,8 @@ export const startEsbuildFixture = async (
       bundle: true,
       minify: mode === 'production',
       plugins: [
-        vanillaExtractPlugin({
-          runtime: type === 'esbuild-runtime',
+        plugin({
+          runtime: type.includes('runtime'),
         }),
       ],
       absWorkingDir,
