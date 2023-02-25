@@ -11,6 +11,8 @@ Generate a static set of custom utility classes and compose them either statical
 
 Basically, it’s like building your own zero-runtime, type-safe version of [Tailwind], [Styled System], etc.
 
+> 💡 Sprinkles is an optional package built on top of vanilla-extract using its [function serialization API.](../../api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations, e.g. [Rainbow Sprinkles.](https://github.com/wayfair/rainbow-sprinkles)
+
 ## Setup
 
 ```bash
