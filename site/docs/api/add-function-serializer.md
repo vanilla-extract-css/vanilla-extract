@@ -56,7 +56,7 @@ export function styledDiv(styles) {
 }
 ```
 
-This is a pretty simple implementation, but it has a couple of major problems that prevent it from working. Firstly, there's no way to convert this function to a string so it can be added to your runtime JavaScript bundle. Secondly, even if it could be serialized somehow, it relies on `@vanilla-extract/css` which can't be used in the browser.
+This is a pretty simple implementation, but it has a couple of major problems that prevent it from working. Firstly, there's no way to convert this function to a string so it can be added to your runtime JavaScript bundle. Secondly, even if it could be serialized somehow, it relies on `@vanilla-extract/css` which can't generate static CSS files at runtime.
 
 To fix this, we need to start by splitting the runtime code out into its own module and avoid using `@vanilla-extract/css`. In this case we'll create a `runtime.tsx` file. It must be available as a separate entry point from the library so that it can be imported within runtime code, for example:
 
@@ -97,6 +97,7 @@ We then need to annotate the generated component within `styledDiv` using `addFu
 // index.css.ts
 
 import { addFunctionSerializer } from '@vanilla-extract/css/functionSerializer';
+import { style } from '@vanilla-extract/css';
 import { runtimeStyledDiv } from './runtime';
 
 export function styledDiv(styles) {
