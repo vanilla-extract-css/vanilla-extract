@@ -33,7 +33,7 @@ Luckily `addFunctionSerializer` can help us!
 To understand how we could make this API work, we'll first look at what you might expect the implementation of `styledDiv` to look like.
 
 ```tsx
-// index.css.tsx
+// index.tsx
 
 import React from 'react';
 import { style } from '@vanilla-extract/css';
@@ -94,7 +94,7 @@ We then need to annotate the generated component within `styledDiv` using `addFu
 > ✋&nbsp;&nbsp;All arguments passed to the runtime function must be serializable!
 
 ```ts
-// index.css.ts
+// index.ts
 
 import { addFunctionSerializer } from '@vanilla-extract/css/functionSerializer';
 import { style } from '@vanilla-extract/css';
