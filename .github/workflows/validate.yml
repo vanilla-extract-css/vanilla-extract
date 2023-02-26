@@ -4,7 +4,12 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Lint & Test
+    strategy:
+      matrix:
+        # Blank string allows us to test against version in nvmrc file
+        # configured in 'Set up Node.js' down below.
+        node: [14, ''] # Add 'lts/*' to this list when ready
+    name: Lint & Test (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -12,12 +17,13 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@main
         with:
-          node-version-file: '.nvmrc'
+          node-version: ${{ matrix.node }}
+          node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -40,7 +46,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@main
