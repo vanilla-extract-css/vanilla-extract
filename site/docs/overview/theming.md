@@ -113,7 +113,9 @@ It couples the definition of our theme contract to a specific theme implementati
 It also means all your alternative themes must import the original theme to access the theme contract.
 This causes you to unintentionally import the original theme's CSS as well, making it impossible to CSS code-split your themes.
 
-This is where [createThemeContract] comes in. Remember before when we said themes comprise of a theme contract and a CSS class implementing the theme? Well [createThemeContract] lets us define the contract without generating any CSS!
+This is where [createThemeContract] comes in.
+Remember before when we said themes are comprised of a theme contract and a CSS class implementing the theme?
+Well [createThemeContract] lets us define the contract without generating any CSS!
 
 Implementing the above scenario with [createThemeContract] would look something like the following:
 
