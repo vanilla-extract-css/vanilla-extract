@@ -17,6 +17,7 @@ import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
 import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
+import * as styles from './mdx-components.css';
 
 interface Children {
   children: ReactNode;
@@ -25,7 +26,8 @@ interface HeadingProps {
   children: ReactNode;
   component: ElementType;
   level: HeadingLevel;
-  id: string;
+  href?: string;
+  id?: string;
 }
 
 const Block = ({
@@ -106,7 +108,7 @@ const A = ({
   );
 };
 
-const Heading = ({ level, component, children, id }: HeadingProps) => {
+const Heading = ({ level, component, children, href }: HeadingProps) => {
   const headingElement = createElement(
     Box,
     {
@@ -116,21 +118,17 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
     children,
   );
 
-  return id ? (
-    <>
-      <Box
-        component="a"
-        display="block"
-        id={id}
-        style={{
-          visibility: 'hidden',
-          scrollMarginTop: 120,
-        }}
-      />
-      <a style={{ textDecoration: 'none' }} href={`#${id}`}>
-        {headingElement}
-      </a>
-    </>
+  return href ? (
+    <Box
+      component="a"
+      href={`#${href}`}
+      display="block"
+      style={{
+        textDecoration: 'none',
+      }}
+    >
+      {headingElement}
+    </Box>
   ) : (
     headingElement
   );
@@ -147,17 +145,18 @@ export default {
       <Text>{children}</Text>
     </Block>
   ),
-  h1: ({ component, ...props }: HeadingProps) => (
-    <Block component="h1" name={props.id}>
-      <Heading component="span" {...props} level="1" />
+  h1: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h1" id={id} className={styles.headingScrollTop}>
+      <Heading component="span" {...props} href={id} level="1" />
     </Block>
   ),
-  h2: ({ component, ...props }: HeadingProps) => (
-    <Block component="h2" paddingTop="xxlarge" name={props.id}>
+  h2: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h2" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
         component="span"
         display="block"
+        marginTop="xxlarge"
         paddingLeft="large"
       >
         <Box
@@ -175,16 +174,17 @@ export default {
             transform: 'skew(-15deg)',
           }}
         />
-        <Heading component="span" {...props} level="3" />
+        <Heading component="span" {...props} href={id} level="3" />
       </Box>
     </Block>
   ),
-  h3: ({ component, ...props }: HeadingProps) => (
-    <Block component="h3" paddingTop="xlarge" name={props.id}>
+  h3: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h3" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
         component="span"
         display="block"
+        marginTop="xlarge"
         paddingLeft="large"
       >
         <Box
@@ -202,7 +202,7 @@ export default {
             transform: 'skew(15deg)',
           }}
         />
-        <Heading component="span" {...props} level="3" />
+        <Heading component="span" {...props} href={id} level="3" />
       </Box>
     </Block>
   ),

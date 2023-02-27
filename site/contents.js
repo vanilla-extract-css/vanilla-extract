@@ -24,6 +24,7 @@ const contents = [
       'font-face',
       'keyframes',
       'create-container',
+      'add-function-serializer',
     ],
   },
   {
