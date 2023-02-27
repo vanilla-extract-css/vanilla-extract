@@ -19,8 +19,10 @@ const debuggableFunctionConfig = {
   },
   styleVariants: {
     maxParams: 3,
-    hasDebugId: ({ arguments: args }) =>
-      t.isStringLiteral(args.at(-1)) || t.isTemplateLiteral(args.at(-1)),
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
   },
   fontFace: {
     maxParams: 2,
