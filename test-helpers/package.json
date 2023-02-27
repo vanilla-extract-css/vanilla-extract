@@ -24,7 +24,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "cssnano": "^5.0.8",
-    "esbuild": "^0.17.10",
+    "esbuild": "0.17.6",
     "got": "^11.8.2",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.5.1",

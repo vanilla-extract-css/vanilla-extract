@@ -64,6 +64,7 @@ export async function compile({
     bundle: true,
     external: ['@vanilla-extract', ...(esbuildOptions?.external ?? [])],
     platform: 'node',
+    treeShaking: true,
     write: false,
     plugins: [
       vanillaExtractTransformPlugin({ identOption }),
