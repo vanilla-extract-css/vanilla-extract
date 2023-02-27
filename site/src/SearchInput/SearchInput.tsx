@@ -13,7 +13,7 @@ const transformSearchResultItems: DocSearchProps['transformItems'] = (items) =>
 
     return {
       ...item,
-      url: url.pathname,
+      url: `${url.pathname}${url.hash}`,
     };
   });
 
