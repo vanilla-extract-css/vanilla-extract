@@ -6,7 +6,7 @@ import mapValues from 'lodash/mapValues';
 
 export const breakpoints = {
   mobile: 0,
-  tablet: 769,
+  tablet: 769, // aligning breakpoint with the SearchInput, which uses a `max-width: 768px`. Ref: https://github.com/algolia/docsearch/blob/d81016b110aa0818231b6e4b7b96d2007d345b05/packages/docsearch-css/src/button.css#L66
   desktop: 1200,
 };
 
