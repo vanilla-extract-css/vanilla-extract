@@ -43,13 +43,13 @@ describe('ESM', () => {
         rootPath: '/the-root',
         filePath: '/the-root/app/app.css.ts',
         packageName: 'my-package',
-        globalCssAdapterKey: 'myGlobalCssAdapter__',
+        globalCssAdapterKey: '__myGlobalCssAdapter__',
       }),
     ).toMatchInlineSnapshot(`
       "
             
               import * as __vanilla_css_adapter__ from "@vanilla-extract/css/adapter";
-              __vanilla_css_adapter__.setAdapter(global.myGlobalCssAdapter__);
+              __vanilla_css_adapter__.setAdapter(__myGlobalCssAdapter__);
             
             import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
             setFileScope("app/app.css.ts", "my-package");
@@ -198,7 +198,7 @@ describe('CJS', () => {
       "
           
             const __vanilla_css_adapter__ = require("@vanilla-extract/css/adapter");
-            __vanilla_css_adapter__.setAdapter(global.MY_GLOBAL_CSS_ADAPTER);
+            __vanilla_css_adapter__.setAdapter(MY_GLOBAL_CSS_ADAPTER);
           
           const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
           __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
