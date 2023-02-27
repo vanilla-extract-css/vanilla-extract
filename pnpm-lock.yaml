@@ -551,6 +551,7 @@ importers:
       '@vanilla-extract-private/test-helpers': '*'
       '@vanilla-extract/css': '*'
       '@vanilla-extract/dynamic': '*'
+      '@vanilla-extract/integration': '*'
       '@vanilla-extract/recipes': '*'
       '@vanilla-extract/sprinkles': '*'
     dependencies:
@@ -560,6 +561,7 @@ importers:
       '@vanilla-extract-private/test-helpers': link:../test-helpers
       '@vanilla-extract/css': link:../packages/css
       '@vanilla-extract/dynamic': link:../packages/dynamic
+      '@vanilla-extract/integration': link:../packages/integration
       '@vanilla-extract/recipes': link:../packages/recipes
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
 
@@ -2887,7 +2889,7 @@ packages:
       '@changesets/types': 4.0.1
       '@manypkg/get-packages': 1.1.3
       fs-extra: 7.0.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
     dev: false
 
   /@changesets/errors/0.1.4:
@@ -3276,7 +3278,7 @@ packages:
       jest-util: 29.4.3
       jest-validate: 29.4.3
       jest-watcher: 29.4.3
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pretty-format: 29.4.3
       slash: 3.0.0
       strip-ansi: 6.0.1
@@ -3429,7 +3431,7 @@ packages:
       jest-haste-map: 27.3.1
       jest-regex-util: 27.0.6
       jest-util: 27.3.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pirates: 4.0.5
       slash: 3.0.0
       source-map: 0.6.1
@@ -6935,7 +6937,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /aproba/2.0.0:
     resolution: {integrity: sha512-lYe4Gx7QT+MKGbDsA+Z+he/Wtef0BiwDOlK/XkBrdfsh9J/jPPXbX0tE9x9cl27Tmu5gg3QUbUrQYa/y+KOHPQ==}
@@ -11703,7 +11705,7 @@ packages:
       http-proxy: 1.18.1
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
-      micromatch: 4.0.4
+      micromatch: 4.0.5
     transitivePeerDependencies:
       - debug
     dev: false
@@ -11721,7 +11723,7 @@ packages:
       http-proxy: 1.18.1_debug@4.3.4
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
-      micromatch: 4.0.4
+      micromatch: 4.0.5
     transitivePeerDependencies:
       - debug
     dev: true
@@ -13056,7 +13058,7 @@ packages:
       chalk: 4.1.2
       ci-info: 3.3.0
       graceful-fs: 4.2.10
-      picomatch: 2.3.0
+      picomatch: 2.3.1
 
   /jest-validate/25.5.0:
     resolution: {integrity: sha512-okUFKqhZIpo3jDdtUXUZ2LxGUZJIlfdYBvZb1aczzxrlyMlqdnnws9MOxezoLGhSaFc2XYaHNReNQfj5zPIWyQ==}

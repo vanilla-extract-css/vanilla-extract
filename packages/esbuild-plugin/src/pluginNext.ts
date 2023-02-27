@@ -49,6 +49,10 @@ export function vanillaExtractPlugin({
         vitePlugins: compilerVitePlugins,
       });
 
+      build.onEnd(async () => {
+        await compiler.close();
+      });
+
       build.onResolve({ filter: virtualCssFileFilter }, (args) => {
         return {
           path: args.path,

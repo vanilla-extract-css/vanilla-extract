@@ -2,6 +2,7 @@ import { relative } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
+import type { ViteNodeRunner } from 'vite-node/client';
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
@@ -156,10 +157,16 @@ export const createCompiler = ({
   toCssImport,
   vitePlugins,
 }: CreateCompilerOptions): Compiler => {
+  let originalPrepareContext: ViteNodeRunner['prepareContext'];
+
   let vitePromise = createViteServer({
     root,
     identifiers,
     vitePlugins,
+  }).then(({ server, runner }) => {
+    // Store the original method so we can monkey patch it on demand
+    originalPrepareContext = runner.prepareContext;
+    return { server, runner };
   });
 
   let adapterResultCache = new Map<
@@ -224,10 +231,15 @@ export const createCompiler = ({
 
       let { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
-          // @ts-expect-error We're adding this to the global context so it's
-          // available during the eval step, regardless of which
-          // `@vanilla-extract/css` package is used
-          global[globalCssAdapterKey] = cssAdapter;
+          // Monkey patch the prepareContext method to inject the adapter
+          runner.prepareContext = function (...args) {
+            return {
+              ...originalPrepareContext.apply(this, args),
+              [globalCssAdapterKey]: cssAdapter,
+            };
+          };
+
+          runner.prepareContext({ [globalCssAdapterKey]: cssAdapter });
 
           let fileExports = await runner.executeFile(filePath);
 

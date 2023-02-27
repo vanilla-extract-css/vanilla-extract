@@ -31,7 +31,7 @@ export function addFileScope({
     const setAdapterSnippet = globalCssAdapterKey
       ? `
         import * as __vanilla_css_adapter__ from "@vanilla-extract/css/adapter";
-        __vanilla_css_adapter__.setAdapter(global.${globalCssAdapterKey});
+        __vanilla_css_adapter__.setAdapter(${globalCssAdapterKey});
       `
       : '';
     const removeAdapterSnippet = setAdapterSnippet
@@ -51,7 +51,7 @@ export function addFileScope({
   const setAdapterSnippet = globalCssAdapterKey
     ? `
       const __vanilla_css_adapter__ = require("@vanilla-extract/css/adapter");
-      __vanilla_css_adapter__.setAdapter(global.${globalCssAdapterKey});
+      __vanilla_css_adapter__.setAdapter(${globalCssAdapterKey});
     `
     : '';
   const removeAdapterSnippet = setAdapterSnippet

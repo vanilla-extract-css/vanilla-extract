@@ -29,6 +29,10 @@ export const setAdapterIfNotSet = (newAdapter: Adapter) => {
 };
 
 export const setAdapter = (newAdapter: Adapter) => {
+  if (!newAdapter) {
+    throw new Error('No adapter provided when calling "setAdapter"');
+  }
+
   hasConfiguredAdapter = true;
 
   adapterStack.push(newAdapter);

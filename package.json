@@ -13,7 +13,7 @@
     "start": "pnpm start-fixture themed",
     "start-site": "pnpm --filter=site start",
     "build-site": "pnpm --filter=site build",
-    "test:jest": "jest",
+    "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
