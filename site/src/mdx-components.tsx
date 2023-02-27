@@ -25,7 +25,8 @@ interface HeadingProps {
   children: ReactNode;
   component: ElementType;
   level: HeadingLevel;
-  id: string;
+  href?: string;
+  id?: string;
 }
 
 const Block = ({
@@ -106,7 +107,7 @@ const A = ({
   );
 };
 
-const Heading = ({ level, component, children, id }: HeadingProps) => {
+const Heading = ({ level, component, children, href }: HeadingProps) => {
   const headingElement = createElement(
     Box,
     {
@@ -116,21 +117,17 @@ const Heading = ({ level, component, children, id }: HeadingProps) => {
     children,
   );
 
-  return id ? (
-    <>
-      <Box
-        component="a"
-        display="block"
-        id={id}
-        style={{
-          visibility: 'hidden',
-          scrollMarginTop: 120,
-        }}
-      />
-      <a style={{ textDecoration: 'none' }} href={`#${id}`}>
-        {headingElement}
-      </a>
-    </>
+  return href ? (
+    <Box
+      component="a"
+      href={`#${href}`}
+      display="block"
+      style={{
+        textDecoration: 'none',
+      }}
+    >
+      {headingElement}
+    </Box>
   ) : (
     headingElement
   );
@@ -147,13 +144,13 @@ export default {
       <Text>{children}</Text>
     </Block>
   ),
-  h1: ({ component, ...props }: HeadingProps) => (
-    <Block component="h1" name={props.id}>
+  h1: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h1" id={id}>
       <Heading component="span" {...props} level="1" />
     </Block>
   ),
-  h2: ({ component, ...props }: HeadingProps) => (
-    <Block component="h2" paddingTop="xxlarge" name={props.id}>
+  h2: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h2" paddingTop="xxlarge" id={id}>
       <Box
         position="relative"
         component="span"
@@ -175,12 +172,12 @@ export default {
             transform: 'skew(-15deg)',
           }}
         />
-        <Heading component="span" {...props} level="3" />
+        <Heading component="span" {...props} href={id} level="3" />
       </Box>
     </Block>
   ),
-  h3: ({ component, ...props }: HeadingProps) => (
-    <Block component="h3" paddingTop="xlarge" name={props.id}>
+  h3: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h3" paddingTop="xlarge" id={id}>
       <Box
         position="relative"
         component="span"
@@ -202,7 +199,7 @@ export default {
             transform: 'skew(15deg)',
           }}
         />
-        <Heading component="span" {...props} level="3" />
+        <Heading component="span" {...props} href={id} level="3" />
       </Box>
     </Block>
   ),
