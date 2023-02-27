@@ -6,5 +6,6 @@ export const errorUnderline = style({
   textDecorationColor: vars.palette.red,
   textDecorationThickness: '3px',
   textDecorationLine: 'underline',
+  textDecorationSkipInk: 'none',
   textUnderlineOffset: '2px',
 });
