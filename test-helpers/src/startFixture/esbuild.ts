@@ -5,7 +5,7 @@ import {
   vanillaExtractPlugin,
   unstable_vanillaExtractPluginNext,
 } from '@vanilla-extract/esbuild-plugin';
-import { serve } from 'esbuild';
+import * as esbuild from 'esbuild';
 
 import { TestServer } from './types';
 
@@ -33,23 +33,22 @@ export const startEsbuildFixture = async (
 
   await fs.mkdir(outdir, { recursive: true });
 
-  const server = await serve(
-    { servedir: outdir, port },
-    {
-      entryPoints: [entry],
-      metafile: true,
-      platform: 'browser',
-      bundle: true,
-      minify: mode === 'production',
-      plugins: [
-        plugin({
-          runtime: type.includes('runtime'),
-        }),
-      ],
-      absWorkingDir,
-      outdir,
-    },
-  );
+  const ctx = await esbuild.context({
+    entryPoints: [entry],
+    metafile: true,
+    platform: 'browser',
+    bundle: true,
+    minify: mode === 'production',
+    plugins: [
+      plugin({
+        runtime: type.includes('runtime'),
+      }),
+    ],
+    absWorkingDir,
+    outdir,
+  });
+
+  const server = await ctx.serve({ servedir: outdir, port });
 
   await fs.writeFile(
     path.join(outdir, 'index.html'),
@@ -72,7 +71,7 @@ export const startEsbuildFixture = async (
     url: `http://${server.host}:${port}`,
     stylesheet: 'index.css',
     close: () => {
-      server.stop();
+      ctx.dispose();
 
       return Promise.resolve();
     },

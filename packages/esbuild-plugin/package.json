@@ -17,6 +17,6 @@
     "@vanilla-extract/integration": "^6.0.2"
   },
   "devDependencies": {
-    "esbuild": "^0.16.3"
+    "esbuild": "^0.17.10"
   }
 }
