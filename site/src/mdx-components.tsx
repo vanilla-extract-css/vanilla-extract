@@ -17,6 +17,7 @@ import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
 import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
+import { headerHeight } from './DocsPage/DocsPage.css';
 
 interface Children {
   children: ReactNode;
@@ -150,7 +151,14 @@ export default {
     </Block>
   ),
   h2: ({ component, id, ...props }: HeadingProps) => (
-    <Block component="h2" paddingTop="xxlarge" id={id}>
+    <Block
+      component="h2"
+      paddingTop="xxlarge"
+      id={id}
+      style={{
+        scrollMarginTop: headerHeight,
+      }}
+    >
       <Box
         position="relative"
         component="span"
@@ -177,7 +185,14 @@ export default {
     </Block>
   ),
   h3: ({ component, id, ...props }: HeadingProps) => (
-    <Block component="h3" paddingTop="xlarge" id={id}>
+    <Block
+      component="h3"
+      paddingTop="xlarge"
+      id={id}
+      style={{
+        scrollMarginTop: headerHeight,
+      }}
+    >
       <Box
         position="relative"
         component="span"

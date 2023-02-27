@@ -3,7 +3,7 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
-const headerHeight = '145px';
+export const headerHeight = '145px';
 const sidebarWidth = '300px';
 
 export const bodyLock = style({
