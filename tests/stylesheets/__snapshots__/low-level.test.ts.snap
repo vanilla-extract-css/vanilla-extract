@@ -21,6 +21,27 @@ exports[`low-level - esbuild should create valid stylesheet 1`] = `
 "
 `;
 
+exports[`low-level - esbuild-next should create valid stylesheet 1`] = `
+"._1amv5mo2 {
+  container-type: size;
+  container-name: _1amv5mo1;
+  width: 500px;
+}
+._1amv5mo3 {
+  --_1amv5mo0: blue;
+  background-color: var(--_1amv5mo0);
+  padding: 20px;
+}
+@media screen and (min-width: 200px) {
+  @container _1amv5mo1 (min-width: 400px) {
+    ._1amv5mo3 {
+      color: #fff;
+    }
+  }
+}
+"
+`;
+
 exports[`low-level - mini-css-extract should create valid stylesheet 1`] = `
 ".cj5d032 {
   container-type: size;

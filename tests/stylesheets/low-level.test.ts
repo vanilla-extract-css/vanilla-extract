@@ -7,7 +7,12 @@ import {
 const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
 let testCounter = 0;
 
-const buildTypes = ['vite', 'esbuild', 'mini-css-extract'] as const;
+const buildTypes = [
+  'vite',
+  'esbuild',
+  'esbuild-next',
+  'mini-css-extract',
+] as const;
 
 buildTypes.forEach((buildType) => {
   describe(`low-level - ${buildType}`, () => {

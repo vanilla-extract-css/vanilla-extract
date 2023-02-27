@@ -55,6 +55,61 @@ body ._1o6ek50a {
 "
 `;
 
+exports[`features - esbuild-next should create valid stylesheet 1`] = `
+"._1o6ek500 {
+  height: 50px;
+}
+._1o6ek500:after {
+  content: "Below 700px";
+  display: block;
+}
+._1o6ek501 {
+  background-color: #b0e0e6;
+}
+._1o6ek501:hover {
+  background-color: #708090;
+}
+._1o6ek502 {
+  background-color: #b0e0e6;
+}
+._1o6ek502:hover {
+  background-color: #708090;
+}
+._1o6ek503 {
+  background-color: #b0e0e6;
+}
+._1o6ek503:hover {
+  background-color: #708090;
+}
+._1o6ek505 {
+  color: #fff;
+}
+._1o6ek506 {
+  background-color: #000;
+}
+body ._1o6ek507 {
+  font-size: 24px;
+}
+._1o6ek508 {
+  color: #fff;
+}
+._1o6ek509 {
+  background-color: #000;
+}
+body ._1o6ek50a {
+  font-size: 24px;
+}
+@media screen and (min-width: 700px) {
+  ._1o6ek500 {
+    color: plum;
+  }
+  ._1o6ek500:after {
+    content: "Above 700px";
+  }
+}
+"
+`;
+
 exports[`features - mini-css-extract should create valid stylesheet 1`] = `
 "._87f2ru0 {
   height: 50px;
