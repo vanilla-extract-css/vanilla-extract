@@ -17,7 +17,7 @@ import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
 import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
-import { headerHeight } from './DocsPage/DocsPage.css';
+import * as styles from './mdx-components.css';
 
 interface Children {
   children: ReactNode;
@@ -146,23 +146,17 @@ export default {
     </Block>
   ),
   h1: ({ component, id, ...props }: HeadingProps) => (
-    <Block component="h1" id={id}>
-      <Heading component="span" {...props} level="1" />
+    <Block component="h1" id={id} className={styles.headingScrollTop}>
+      <Heading component="span" {...props} href={id} level="1" />
     </Block>
   ),
   h2: ({ component, id, ...props }: HeadingProps) => (
-    <Block
-      component="h2"
-      paddingTop="xxlarge"
-      id={id}
-      style={{
-        scrollMarginTop: headerHeight,
-      }}
-    >
+    <Block component="h2" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
         component="span"
         display="block"
+        marginTop="xxlarge"
         paddingLeft="large"
       >
         <Box
@@ -185,18 +179,12 @@ export default {
     </Block>
   ),
   h3: ({ component, id, ...props }: HeadingProps) => (
-    <Block
-      component="h3"
-      paddingTop="xlarge"
-      id={id}
-      style={{
-        scrollMarginTop: headerHeight,
-      }}
-    >
+    <Block component="h3" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
         component="span"
         display="block"
+        marginTop="xlarge"
         paddingLeft="large"
       >
         <Box
