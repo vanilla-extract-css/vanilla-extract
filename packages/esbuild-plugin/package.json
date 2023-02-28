@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "esbuild": "^0.16.3"
+  },
+  "peerDependencies": {
+    "esbuild": ">=0.16.0"
   }
 }
