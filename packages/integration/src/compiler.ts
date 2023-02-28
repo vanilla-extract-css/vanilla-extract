@@ -244,8 +244,6 @@ export const createCompiler = ({
             };
           };
 
-          runner.prepareContext({ [globalCssAdapterKey]: cssAdapter });
-
           let fileExports = await runner.executeFile(filePath);
 
           let moduleNode = server.moduleGraph.getModuleById(filePath);
