@@ -549,6 +549,7 @@ importers:
       '@vanilla-extract-private/test-helpers': '*'
       '@vanilla-extract/css': '*'
       '@vanilla-extract/dynamic': '*'
+      '@vanilla-extract/integration': '*'
       '@vanilla-extract/recipes': '*'
       '@vanilla-extract/sprinkles': '*'
     dependencies:
@@ -558,6 +559,7 @@ importers:
       '@vanilla-extract-private/test-helpers': link:../test-helpers
       '@vanilla-extract/css': link:../packages/css
       '@vanilla-extract/dynamic': link:../packages/dynamic
+      '@vanilla-extract/integration': link:../packages/integration
       '@vanilla-extract/recipes': link:../packages/recipes
       '@vanilla-extract/sprinkles': link:../packages/sprinkles
 

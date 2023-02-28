@@ -82,10 +82,9 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const { source, watchFiles } = await compiler.processVanillaFile(
-          path,
+        const { source, watchFiles } = await compiler.processVanillaFile(path, {
           outputCss,
-        );
+        });
 
         return {
           contents: source,

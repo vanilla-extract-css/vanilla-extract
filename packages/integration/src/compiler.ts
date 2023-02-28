@@ -1,4 +1,4 @@
-import { relative } from 'path';
+import { join, relative, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
@@ -134,7 +134,9 @@ const createViteServer = async ({
 export interface Compiler {
   processVanillaFile(
     filePath: string,
-    outputCss: boolean,
+    options?: {
+      outputCss?: boolean;
+    },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
@@ -147,14 +149,14 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
-  toCssImport: (filePath: string) => string;
+  toCssImport?: (filePath: string) => string;
   identifiers?: IdentifierOption;
   vitePlugins?: Array<VitePlugin>;
 }
 export const createCompiler = ({
   root,
   identifiers = 'debug',
-  toCssImport,
+  toCssImport = (filePath) => filePath + '.vanilla.css',
   vitePlugins,
 }: CreateCompilerOptions): Compiler => {
   let originalPrepareContext: ViteNodeRunner['prepareContext'];
@@ -190,9 +192,12 @@ export const createCompiler = ({
   return {
     async processVanillaFile(
       filePath,
-      outputCss,
+      options = {},
     ): Promise<ProcessedVanillaFile> {
       let { server, runner } = await vitePromise;
+
+      filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
+      const outputCss = options.outputCss ?? true;
 
       let cachedFile = processVanillaFileCache.get(filePath);
       if (cachedFile) {
@@ -325,6 +330,7 @@ export const createCompiler = ({
       return result;
     },
     getCssForFile(filePath: string) {
+      filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       let rootRelativePath = relative(root, filePath);
       let result = adapterResultCache.get(rootRelativePath);
 
