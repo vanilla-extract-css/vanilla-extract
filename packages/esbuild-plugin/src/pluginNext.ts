@@ -1,4 +1,4 @@
-import { dirname, posix } from 'path';
+import { dirname } from 'path';
 
 import {
   cssFileFilter,
@@ -10,9 +10,6 @@ import {
 import type { Plugin } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
-
-let virtualCssFileSuffix = '.vanilla.css';
-let virtualCssFileFilter = /\.vanilla\.css/;
 
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
@@ -26,7 +23,7 @@ export function vanillaExtractPlugin({
   runtime = false,
   processCss,
   identifiers: identOption,
-  compilerVitePlugins,
+  compilerVitePlugins: vitePlugins,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes and debug IDs to code
@@ -40,20 +37,13 @@ export function vanillaExtractPlugin({
       const identifiers =
         identOption || (build.initialOptions.minify ? 'short' : 'debug');
 
-      const compiler = createCompiler({
-        root,
-        toCssImport(filePath) {
-          return filePath + virtualCssFileSuffix;
-        },
-        identifiers,
-        vitePlugins: compilerVitePlugins,
-      });
+      const compiler = createCompiler({ root, identifiers, vitePlugins });
 
       build.onEnd(async () => {
         await compiler.close();
       });
 
-      build.onResolve({ filter: virtualCssFileFilter }, (args) => {
+      build.onResolve({ filter: /\.vanilla\.css/ }, (args) => {
         return {
           path: args.path,
           namespace: vanillaCssNamespace,
@@ -63,11 +53,9 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          const [relativeFilePath] = path.split('.vanilla.css');
+          const [rootRelativePath] = path.split('.vanilla.css');
 
-          let { css, filePath } = compiler.getCssForFile(
-            posix.join(root, relativeFilePath),
-          );
+          let { css, filePath } = compiler.getCssForFile(rootRelativePath);
 
           if (typeof processCss === 'function') {
             css = await processCss(css);

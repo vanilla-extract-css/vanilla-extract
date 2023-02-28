@@ -14,7 +14,7 @@ function getLocalFiles(files: Set<string>) {
 
 describe('compiler', () => {
   let compilers: Record<
-    'default' | 'toCssImport' | 'shortIdentifiers',
+    'default' | 'cssImportSpecifier' | 'shortIdentifiers',
     ReturnType<typeof createCompiler>
   >;
 
@@ -27,9 +27,9 @@ describe('compiler', () => {
         root: __dirname,
       }),
 
-      toCssImport: createCompiler({
+      cssImportSpecifier: createCompiler({
         root: __dirname,
-        toCssImport: (filePath) => filePath + '.custom-extension.css',
+        cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
       }),
 
       shortIdentifiers: createCompiler({
@@ -199,8 +199,8 @@ describe('compiler', () => {
     `);
   });
 
-  test('custom toCssImport', async () => {
-    const compiler = compilers.toCssImport;
+  test('custom cssImportSpecifier', async () => {
+    const compiler = compilers.cssImportSpecifier;
 
     const cssPath = path.join(__dirname, 'compiler-test.css.ts');
     const output = await compiler.processVanillaFile(cssPath);

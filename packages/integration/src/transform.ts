@@ -12,7 +12,7 @@ interface TransformParams {
   rootPath: string;
   packageName: string;
   identOption: IdentifierOption;
-  globalCssAdapterKey?: string;
+  globalAdapterIdentifier?: string;
 }
 export const transformSync = ({
   source,
@@ -52,7 +52,7 @@ export const transform = async ({
   rootPath,
   packageName,
   identOption,
-  globalCssAdapterKey,
+  globalAdapterIdentifier,
 }: TransformParams): Promise<string> => {
   let code = source;
 
@@ -76,6 +76,6 @@ export const transform = async ({
     filePath,
     rootPath,
     packageName,
-    globalCssAdapterKey,
+    globalAdapterIdentifier,
   });
 };

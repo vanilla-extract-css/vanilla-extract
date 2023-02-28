@@ -30,7 +30,7 @@ describe('ESM', () => {
     `);
   });
 
-  test('should add global CSS adapter setup', () => {
+  test('should add global adapter setup when "globalAdapterIdentifier" is provided', () => {
     const source = outdent`
     import {style} from '@vanilla-extract/css';
 
@@ -43,13 +43,13 @@ describe('ESM', () => {
         rootPath: '/the-root',
         filePath: '/the-root/app/app.css.ts',
         packageName: 'my-package',
-        globalCssAdapterKey: '__myGlobalCssAdapter__',
+        globalAdapterIdentifier: 'MY_GLOBAL_ADAPTER',
       }),
     ).toMatchInlineSnapshot(`
       "
             
               import * as __vanilla_css_adapter__ from "@vanilla-extract/css/adapter";
-              __vanilla_css_adapter__.setAdapter(__myGlobalCssAdapter__);
+              __vanilla_css_adapter__.setAdapter(MY_GLOBAL_ADAPTER);
             
             import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
             setFileScope("app/app.css.ts", "my-package");
@@ -178,7 +178,7 @@ describe('CJS', () => {
     `);
   });
 
-  test('should add global CSS adapter setup', () => {
+  test('should add global adapter setup when "globalAdapterIdentifier" is provided', () => {
     const source = outdent`
     const _css = require('@vanilla-extract/css');
 
@@ -192,13 +192,13 @@ describe('CJS', () => {
         rootPath: '/the-root',
         filePath: '/the-root/app/app.css.ts',
         packageName: 'my-package',
-        globalCssAdapterKey: 'MY_GLOBAL_CSS_ADAPTER',
+        globalAdapterIdentifier: 'MY_GLOBAL_ADAPTER',
       }),
     ).toMatchInlineSnapshot(`
       "
           
             const __vanilla_css_adapter__ = require("@vanilla-extract/css/adapter");
-            __vanilla_css_adapter__.setAdapter(MY_GLOBAL_CSS_ADAPTER);
+            __vanilla_css_adapter__.setAdapter(MY_GLOBAL_ADAPTER);
           
           const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
           __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");

@@ -14,7 +14,7 @@ import { serializeVanillaModule } from './processVanillaFile';
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];
 
-const globalCssAdapterKey = '__vanilla_globalCssAdapter__';
+const globalAdapterIdentifier = '__vanilla_globalCssAdapter__';
 
 const scanModule = (entryModule: ModuleNode, root: string) => {
   let queue = [entryModule];
@@ -91,7 +91,7 @@ const createViteServer = async ({
               filePath: id,
               packageName: pkg.name,
               identOption: identifiers,
-              globalCssAdapterKey,
+              globalAdapterIdentifier,
             });
 
             return filescopedCode;
@@ -149,14 +149,14 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
-  toCssImport?: (filePath: string) => string;
+  cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
   vitePlugins?: Array<VitePlugin>;
 }
 export const createCompiler = ({
   root,
   identifiers = 'debug',
-  toCssImport = (filePath) => filePath + '.vanilla.css',
+  cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
   vitePlugins,
 }: CreateCompilerOptions): Compiler => {
   let originalPrepareContext: ViteNodeRunner['prepareContext'];
@@ -240,7 +240,7 @@ export const createCompiler = ({
           runner.prepareContext = function (...args) {
             return {
               ...originalPrepareContext.apply(this, args),
-              [globalCssAdapterKey]: cssAdapter,
+              [globalAdapterIdentifier]: cssAdapter,
             };
           };
 
@@ -291,7 +291,7 @@ export const createCompiler = ({
               );
             }
 
-            cssImports.push(`import '${toCssImport(cssDepModuleId)}';`);
+            cssImports.push(`import '${cssImportSpecifier(cssDepModuleId)}';`);
           }
 
           return {
