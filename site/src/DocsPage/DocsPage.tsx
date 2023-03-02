@@ -20,6 +20,7 @@ import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 
 import mapKeys from 'lodash/mapKeys';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 interface DocsRouteProps {
   component: (props: any) => JSX.Element;
@@ -413,10 +414,20 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
       <SecondaryNav onClick={closeMenu} pathname={normalisedPath} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
-        <Box display={{ mobile: 'none', desktop: 'block' }}>
+        <Box display={{ mobile: 'none', desktop: 'flex' }} alignItems="center">
+          <Box paddingRight="medium">
+            <SearchInput />
+          </Box>
           <ColorModeToggle />
         </Box>
-        <Box display={{ desktop: 'none' }}>
+        <Box
+          display={{ mobile: 'flex', desktop: 'none' }}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Box display={menuOpen ? 'none' : undefined} paddingRight="medium">
+            <SearchInput />
+          </Box>
           <Fab open={menuOpen} onClick={toggleMenu} />
         </Box>
       </Box>

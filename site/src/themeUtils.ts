@@ -1,16 +1,17 @@
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import { StyleRule } from '@vanilla-extract/css';
-import { Properties, SimplePseudos } from 'csstype';
+import { Properties } from 'csstype';
 import mapValues from 'lodash/mapValues';
 
 export const breakpoints = {
   mobile: 0,
-  tablet: 768,
+  tablet: 769, // aligning breakpoint with the SearchInput, which uses a `max-width: 768px`. Ref: https://github.com/algolia/docsearch/blob/d81016b110aa0818231b6e4b7b96d2007d345b05/packages/docsearch-css/src/button.css#L66
   desktop: 1200,
 };
 
 export type Breakpoint = keyof typeof breakpoints;
+type CSSProps = Omit<StyleRule, '@media' | '@supports'>;
 
 export const queries = mapValues(
   omit(breakpoints, 'mobile'),
@@ -18,7 +19,7 @@ export const queries = mapValues(
 );
 
 const makeMediaQuery =
-  (breakpoint: keyof typeof queries) => (styles: Properties<string | number>) =>
+  (breakpoint: keyof typeof queries) => (styles: CSSProps) =>
     !styles || Object.keys(styles).length === 0
       ? {}
       : {
@@ -28,10 +29,6 @@ const makeMediaQuery =
 const mediaQuery = {
   tablet: makeMediaQuery('tablet'),
   desktop: makeMediaQuery('desktop'),
-};
-
-type CSSProps = Properties<string | number> & {
-  [P in SimplePseudos]?: Properties<string | number>;
 };
 
 interface ResponsiveStyle {

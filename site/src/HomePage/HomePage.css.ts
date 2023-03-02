@@ -1,17 +1,11 @@
 import { createVar, style } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 
-export const shadowColorVar = createVar();
+// Used for overridding search box background
+export const homePage = style({});
 
-export const installBlock = style({
-  selectors: {
-    [`:not(.${darkMode}) &`]: {
-      filter: 'saturate(0.6)',
-    },
-  },
-});
+export const shadowColorVar = createVar();
 
 export const featureKeyLine = style({
   transform: 'skew(15deg)',
