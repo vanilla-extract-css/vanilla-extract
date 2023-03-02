@@ -284,7 +284,7 @@ importers:
 
   packages/parcel-transformer:
     specifiers:
-      '@parcel/plugin': ^2.8.3
+      '@parcel/plugin': ^2.7.0
       '@vanilla-extract/integration': ^6.0.0
     dependencies:
       '@parcel/plugin': 2.8.3
@@ -481,8 +481,8 @@ importers:
       '@fixtures/sprinkles': '*'
       '@fixtures/themed': '*'
       '@fixtures/unused-modules': '*'
-      '@parcel/config-default': ^2.8.3
-      '@parcel/core': ^2.8.3
+      '@parcel/config-default': ^2.7.0
+      '@parcel/core': ^2.7.0
       '@types/mini-css-extract-plugin': ^1.2.2
       '@types/minimist': ^1
       '@types/prettier': ^2
@@ -7537,7 +7537,7 @@ packages:
       loader-utils: 1.4.0
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.64.2_webpack-cli@4.9.1
+      webpack: 5.64.2_esbuild@0.17.6
 
   /babel-loader/8.2.3_webpack@5.64.2:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
@@ -7852,7 +7852,7 @@ packages:
       multicast-dns-service-types: 1.1.0
 
   /boolbase/1.0.0:
-    resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=}
+    resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
     dev: false
 
   /boxen/1.3.0:
@@ -8209,7 +8209,7 @@ packages:
     resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
     dependencies:
       pascal-case: 3.1.2
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
 
   /camelcase-css/2.0.1:
@@ -9858,7 +9858,7 @@ packages:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
 
   /dot-prop/5.3.0:
@@ -15350,7 +15350,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
 
   /node-addon-api/3.2.1:
@@ -15999,7 +15999,7 @@ packages:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
 
   /parent-module/1.0.1:
@@ -16101,7 +16101,7 @@ packages:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
 
   /pascalcase/0.1.1:
@@ -16318,7 +16318,7 @@ packages:
     dependencies:
       postcss: 8.4.21
       postcss-selector-parser: 6.0.6
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-colormin/5.2.1_postcss@8.4.21:
@@ -16331,7 +16331,7 @@ packages:
       caniuse-api: 3.0.0
       colord: 2.9.1
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-convert-values/5.0.2_postcss@8.4.21:
@@ -16341,7 +16341,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-discard-comments/5.0.1_postcss@8.4.21:
@@ -16424,7 +16424,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
       stylehacks: 5.0.1_postcss@8.4.21
     dev: false
 
@@ -16448,7 +16448,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-minify-gradients/5.0.3_postcss@8.4.21:
@@ -16460,7 +16460,7 @@ packages:
       colord: 2.9.1
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-minify-params/5.0.2_postcss@8.4.21:
@@ -16473,7 +16473,7 @@ packages:
       browserslist: 4.21.4
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-minify-selectors/5.1.0_postcss@8.4.21:
@@ -16549,7 +16549,7 @@ packages:
     dependencies:
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-positions/5.0.1_postcss@8.4.21:
@@ -16559,7 +16559,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-repeat-style/5.0.1_postcss@8.4.21:
@@ -16570,7 +16570,7 @@ packages:
     dependencies:
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-string/5.0.1_postcss@8.4.21:
@@ -16580,7 +16580,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-timing-functions/5.0.1_postcss@8.4.21:
@@ -16591,7 +16591,7 @@ packages:
     dependencies:
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-unicode/5.0.1_postcss@8.4.21:
@@ -16602,7 +16602,7 @@ packages:
     dependencies:
       browserslist: 4.21.4
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-url/5.0.3_postcss@8.4.21:
@@ -16614,7 +16614,7 @@ packages:
       is-absolute-url: 3.0.3
       normalize-url: 6.1.0
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-normalize-whitespace/5.0.1_postcss@8.4.21:
@@ -16624,7 +16624,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-ordered-values/5.0.2_postcss@8.4.21:
@@ -16635,7 +16635,7 @@ packages:
     dependencies:
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-reduce-initial/5.0.1_postcss@8.4.21:
@@ -16657,7 +16657,7 @@ packages:
     dependencies:
       cssnano-utils: 2.0.1_postcss@8.4.21
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
     dev: false
 
   /postcss-selector-parser/6.0.6:
@@ -16674,7 +16674,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.21
-      postcss-value-parser: 4.1.0
+      postcss-value-parser: 4.2.0
       svgo: 2.8.0
     dev: false
 
@@ -19025,7 +19025,6 @@ packages:
       source-map: 0.6.1
       terser: 5.10.0
       webpack: 5.64.2_esbuild@0.17.6
-    dev: false
 
   /terser-webpack-plugin/5.2.5_webpack@5.64.2:
     resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
@@ -19124,7 +19123,7 @@ packages:
       setimmediate: 1.0.5
 
   /timsort/0.3.0:
-    resolution: {integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=}
+    resolution: {integrity: sha512-qsdtZH+vMoCARQtyod4imc2nIJwg9Cc7lPRrw9CzF8ZKR0khdr8+2nX80PBhET3tcyTtJDxAffGh2rXH4tyU8A==}
     dev: false
 
   /tiny-invariant/1.2.0:
@@ -19370,10 +19369,6 @@ packages:
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
-
-  /tslib/2.3.1:
-    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
-    dev: false
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
@@ -20531,7 +20526,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: false
 
   /webpack/5.64.2_webpack-cli@4.9.1:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}

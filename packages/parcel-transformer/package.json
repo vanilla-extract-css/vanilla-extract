@@ -18,7 +18,7 @@
   "author": "mattcompiles",
   "license": "MIT",
   "dependencies": {
-    "@parcel/plugin": "^2.8.3",
+    "@parcel/plugin": "^2.7.0",
     "@vanilla-extract/integration": "^6.0.0"
   }
 }
