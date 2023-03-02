@@ -11,6 +11,8 @@ const buildTypes = [
   'style-loader',
   'esbuild',
   'esbuild-runtime',
+  'esbuild-next',
+  'esbuild-next-runtime',
   'vite',
   'parcel',
 ] as const;
