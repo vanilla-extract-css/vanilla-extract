@@ -11,35 +11,12 @@ Creates a single scoped [layer]. This avoids potential naming collisions with ot
 > Vanilla Extract supports the [layers syntax][layer] but does not polyfill the feature in unsupported browsers.
 
 ```ts compiled
-// framework.css.ts
+// layers.css.ts
 import { layer } from '@vanilla-extract/css';
 
-export const resetLayer = layer('reset');
-export const libraryLayer = layer('library');
-export const appLayer = layer('app');
-```
-
-Styles can then be assigned a specific layer by using the reference within the `@layer` key.
-
-```ts compiled
-// reset.css.ts
-import { style } from '@vanilla-extract/css';
-import { resetLayer } from './framework.css.ts';
-
-export const noMargin = style({
-  '@layer': {
-    [resetLayer]: {
-      margin: 0
-    }
-  }
-});
-
-// framework.css.ts
-import { layer } from '@vanilla-extract/css';
-
-export const resetLayer = layer('reset');
-export const libraryLayer = layer('library');
-export const appLayer = layer('app');
+export const reset = layer('reset');
+export const framework = layer('framework');
+export const app = layer('app');
 ```
 
 ## Nesting layers
@@ -52,13 +29,80 @@ This will generate the shorthand syntax, i.e. `parent.child`, while also making 
 
 import { layer } from '@vanilla-extract/css';
 
-export const frameworkLayer = layer('framework');
-export const layoutLayer = layer(
-  { parent: frameworkLayer },
-  'layout'
+export const reset = layer('reset');
+export const framework = layer('framework');
+export const typography = layer(
+  { parent: framework },
+  'typography'
 );
 ```
 
+## Assigning styles
+
+Styles can be assigned to a layer by name, using the `@layer` key in the style object.
+
+In this example, we first import the `layers.css.ts` stylesheet, setting up the order of the layers, then create a style within the `reset` layer.
+
+```ts compiled
+// reset.css.ts
+import { style } from '@vanilla-extract/css';
+import { reset } from './layers.css.ts';
+
+export const noMargin = style({
+  '@layer': {
+    [reset]: {
+      margin: 0
+    }
+  }
+});
+
+// layers.css.ts
+import { layer } from '@vanilla-extract/css';
+
+export const reset = layer('reset');
+export const framework = layer('framework');
+export const typography = layer(
+  { parent: 'framework' },
+  'typography'
+);
+```
+
+## Layer merging
+
+In order to generate the smallest possible CSS output, Vanilla Extract will merge styles that are assigned to the same layer, if it can be done without impacting the precedence of the rules.
+
+Notice in this example, while the `themedHeading` style is created before the other styles, it appears later in the stylesheet. This is due to it being assigned to the `theme` layer — which is declared after the `base` layer.
+
+```ts compiled
+// typography.css.ts
+import { style, layer } from '@vanilla-extract/css';
+
+const base = layer();
+const theme = layer();
+
+const themedHeading = style({
+  '@layer': {
+    [theme]: {
+      color: 'rebeccapurple'
+    }
+  }
+});
+const text = style({
+  '@layer': {
+    [base]: {
+      fontSize: '1rem'
+    }
+  }
+});
+const heading = style({
+  '@layer': {
+    [base]: {
+      fontSize: '2.4rem'
+    }
+  }
+});
+```
+
 [layer]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
-[support layers]: https://caniuse.com/css-cascade-layers
 [layer nesting]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer#nesting_layers
+[support layers]: https://caniuse.com/css-cascade-layers
