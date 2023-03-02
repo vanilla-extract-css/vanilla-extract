@@ -12,6 +12,7 @@ const buildTypes = [
   'esbuild',
   // 'esbuild-next',
   'mini-css-extract',
+  'parcel',
 ] as const;
 
 buildTypes.forEach((buildType) => {
