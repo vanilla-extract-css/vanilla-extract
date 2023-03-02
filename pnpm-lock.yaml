@@ -133,7 +133,7 @@ importers:
 
   fixtures/layers:
     specifiers:
-      '@vanilla-extract/css': 1.9.2
+      '@vanilla-extract/css': 1.9.5
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
