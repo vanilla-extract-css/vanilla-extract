@@ -15,12 +15,12 @@ exports[`layers - esbuild should create valid stylesheet 1`] = `
     font-weight: 800;
   }
   ._1sqkzjx3 {
-    color: blue;
+    color: #00f;
   }
 }
 @layer lib._1sqkzjx2 {
   ._1sqkzjx4 {
-    color: hotpink;
+    color: #ff69b4;
   }
 }
 "
