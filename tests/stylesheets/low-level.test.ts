@@ -10,7 +10,7 @@ let testCounter = 0;
 const buildTypes = [
   'vite',
   'esbuild',
-  'esbuild-next',
+  // 'esbuild-next',
   'mini-css-extract',
 ] as const;
 

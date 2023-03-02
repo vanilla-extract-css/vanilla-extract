@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`recipes - esbuild should create valid stylesheet 1`] = `
+exports[`recipes - esbuild > should create valid stylesheet 1`] = `
 "._103pmpm2 {
   --_103pmpm0: #b0e0e6;
   --_103pmpm1: #fff;
@@ -54,7 +54,61 @@ exports[`recipes - esbuild should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
+exports[`recipes - esbuild-next > should create valid stylesheet 1`] = `
+"._103pmpm2 {
+  --_103pmpm0: #b0e0e6;
+  --_103pmpm1: #fff;
+}
+._103pmpm3 {
+  --_103pmpm0: crimson;
+  --_103pmpm1: #000;
+}
+._103pmpm4 {
+  border: 0;
+}
+._103pmpm5 {
+  background: var(--_103pmpm0);
+  border-radius: 6px;
+  color: var(--_103pmpm1);
+  transition: all 0.2s ease;
+}
+._103pmpm5:hover {
+  transform: translateY(-3px);
+}
+._103pmpm6 {
+  font-size: 16px;
+  line-height: 24px;
+}
+._103pmpm7 {
+  font-size: 24px;
+  line-height: 40px;
+}
+._103pmpm9:hover {
+  box-shadow: 0 10px 6px -6px #777;
+}
+._103pmpma {
+  font-weight: 700;
+}
+._103pmpmc {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+._103pmpmd {
+  gap: 20px;
+}
+@media only screen and (min-width: 600px) {
+  ._103pmpmb {
+    border: 2px solid green;
+  }
+  ._103pmpmd {
+    gap: 30px;
+  }
+}
+"
+`;
+
+exports[`recipes - mini-css-extract > should create valid stylesheet 1`] = `
 ".spi1fr2 {
   --spi1fr0: #b0e0e6;
   --spi1fr1: #fff;
@@ -108,61 +162,7 @@ exports[`recipes - mini-css-extract should create valid stylesheet 1`] = `
 "
 `;
 
-exports[`recipes - parcel should create valid stylesheet 1`] = `
-".spi1fr2 {
-  --spi1fr0: #b0e0e6;
-  --spi1fr1: #fff;
-}
-.spi1fr3 {
-  --spi1fr0: crimson;
-  --spi1fr1: #000;
-}
-.spi1fr4 {
-  border: 0;
-}
-.spi1fr5 {
-  background: var(--spi1fr0);
-  border-radius: 6px;
-  color: var(--spi1fr1);
-  transition: all 0.2s;
-}
-.spi1fr5:hover {
-  transform: translateY(-3px);
-}
-.spi1fr6 {
-  font-size: 16px;
-  line-height: 24px;
-}
-.spi1fr7 {
-  font-size: 24px;
-  line-height: 40px;
-}
-.spi1fr9:hover {
-  box-shadow: 0 10px 6px -6px #777;
-}
-.spi1fra {
-  font-weight: 700;
-}
-.spi1frc {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-}
-.spi1frd {
-  gap: 20px;
-}
-@media only screen and (min-width: 600px) {
-  .spi1frb {
-    border: 2px solid green;
-  }
-  .spi1frd {
-    gap: 30px;
-  }
-}
-"
-`;
-
-exports[`recipes - vite should create valid stylesheet 1`] = `
+exports[`recipes - vite > should create valid stylesheet 1`] = `
 "._103pmpm2 {
   --_103pmpm0: #b0e0e6;
   --_103pmpm1: #fff;

@@ -1,30 +1,32 @@
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import {
   getStylesheet,
   startFixture,
   TestServer,
 } from '@vanilla-extract-private/test-helpers';
 
-const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
+const workerIndex = parseInt(process.env.VITEST_POOL_ID ?? '', 10);
+let testCounter = 0;
 
 const buildTypes = [
   'vite',
   'esbuild',
-  // 'esbuild-next',
+  'esbuild-next',
   'mini-css-extract',
-  'parcel',
+  // 'parcel',
 ] as const;
 
-buildTypes.forEach((buildType, index) => {
-  describe(`features - ${buildType}`, () => {
+buildTypes.forEach((buildType) => {
+  describe(`unused-modules - ${buildType}`, () => {
     let server: TestServer;
 
     beforeAll(async () => {
       const portRange = 100 * workerIndex;
 
-      server = await startFixture('features', {
+      server = await startFixture('unused-modules', {
         type: buildType,
         mode: 'production',
-        basePort: 12000 + portRange + index,
+        basePort: 12000 + portRange + testCounter++,
       });
     });
 

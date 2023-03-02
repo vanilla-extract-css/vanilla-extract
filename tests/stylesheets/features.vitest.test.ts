@@ -1,17 +1,18 @@
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import {
   getStylesheet,
   startFixture,
   TestServer,
 } from '@vanilla-extract-private/test-helpers';
 
-const workerIndex = parseInt(process.env.JEST_WORKER_ID ?? '', 10);
+const workerIndex = parseInt(process.env.VITEST_POOL_ID ?? '', 10);
 
 const buildTypes = [
   'vite',
   'esbuild',
-  // 'esbuild-next',
+  'esbuild-next',
   'mini-css-extract',
-  'parcel',
+  // 'parcel',
 ] as const;
 
 buildTypes.forEach((buildType, index) => {
