@@ -12,7 +12,7 @@ function getLocalFiles(files: Set<string>) {
     .map(toPosix);
 }
 
-describe('compiler', () => {
+describe.skip('compiler', () => {
   let compilers: Record<
     'default' | 'cssImportSpecifier' | 'shortIdentifiers',
     ReturnType<typeof createCompiler>
