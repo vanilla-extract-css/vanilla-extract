@@ -10,7 +10,7 @@ export const fab = style({
   height: fabSize,
   width: fabSize,
   zIndex: 3,
-  boxShadow: `0px 0px 0px 5px ${fallbackVar(focusColorVar, 'transparent')}`,
+  boxShadow: `0px 0px 0px 3px ${fallbackVar(focusColorVar, 'transparent')}`,
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
   ':focus-visible': {
     vars: {

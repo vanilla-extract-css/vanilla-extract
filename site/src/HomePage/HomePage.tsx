@@ -13,6 +13,7 @@ import { GitHubStars } from '../GitHubStars/GitHubStars';
 import { CompiledCode } from '../Code/CompiledCode';
 import { ErrorHighlighter } from '../Code/ErrorHighlighter';
 import * as styles from './HomePage.css';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 const InstallPrompt = () => {
   return (
@@ -24,10 +25,9 @@ const InstallPrompt = () => {
       borderRadius="small"
       padding="large"
       background={{
-        lightMode: 'teal200',
+        lightMode: 'teal200muted',
         darkMode: 'gray800',
       }}
-      className={styles.installBlock}
     >
       <Box display={{ mobile: 'none', tablet: 'block' }}>
         <Text type="code" size="small" color="secondary">
@@ -46,7 +46,7 @@ const InstallPrompt = () => {
 
 export const HomePage = () => {
   return (
-    <>
+    <Box className={styles.homePage}>
       {/* <Box
         margin="large"
         paddingY="xxxlarge"
@@ -98,12 +98,16 @@ export const HomePage = () => {
             <Box
               display="flex"
               justifyContent="flex-end"
+              alignItems="center"
               paddingBottom={{
                 mobile: 'large',
                 tablet: 'none',
                 desktop: 'xxlarge',
               }}
             >
+              <Box paddingRight="xsmall">
+                <SearchInput />
+              </Box>
               <ColorModeToggle />
             </Box>
             <Box>
@@ -722,7 +726,7 @@ export const HomePage = () => {
           </Box>
         </ContentBlock>
       </Stack>
-    </>
+    </Box>
   );
 };
 

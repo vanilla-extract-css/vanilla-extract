@@ -1,5 +1,14 @@
 # @vanilla-extract/esbuild-plugin
 
+## 2.2.1
+
+### Patch Changes
+
+- [#973](https://github.com/vanilla-extract-css/vanilla-extract/pull/973) [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a) Thanks [@cliffordfajardo](https://github.com/cliffordfajardo)! - Upgrade esbuild `^0.11.16` to `^0.16.3`
+
+- Updated dependencies [[`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101), [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a)]:
+  - @vanilla-extract/integration@6.0.2
+
 ## 2.2.0
 
 ### Minor Changes

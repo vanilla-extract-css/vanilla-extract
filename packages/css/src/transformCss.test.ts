@@ -1565,9 +1565,13 @@ describe('transformCss', () => {
             rule: {
               from: {
                 opacity: 0,
+                content: 'none',
+                padding: 0,
               },
               to: {
                 opacity: 1,
+                content: 'foo',
+                padding: 10,
               },
             },
           },
@@ -1576,10 +1580,14 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       "@keyframes myAnimation {
         from {
+          content: none;
           opacity: 0;
+          padding: 0;
         }
         to {
+          content: "foo";
           opacity: 1;
+          padding: 10px;
         }
       }"
     `);

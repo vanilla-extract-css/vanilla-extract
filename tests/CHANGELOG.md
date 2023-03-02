@@ -1,5 +1,29 @@
 # @vanilla-extract-private/tests
 
+## 0.0.34
+
+### Patch Changes
+
+- Updated dependencies [[`3b724b9`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3b724b973a79d85cd4b5ab3e34fe312610c5b2da)]:
+  - @vanilla-extract/css@1.9.5
+  - @vanilla-extract-private/test-helpers@0.0.34
+
+## 0.0.33
+
+### Patch Changes
+
+- Updated dependencies [[`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9)]:
+  - @vanilla-extract/css@1.9.4
+  - @vanilla-extract-private/test-helpers@0.0.33
+
+## 0.0.32
+
+### Patch Changes
+
+- Updated dependencies [[`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b)]:
+  - @vanilla-extract/css@1.9.3
+  - @vanilla-extract-private/test-helpers@0.0.32
+
 ## 0.0.31
 
 ### Patch Changes

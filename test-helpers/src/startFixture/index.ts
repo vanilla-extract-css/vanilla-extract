@@ -3,6 +3,8 @@ import portfinder from 'portfinder';
 import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
+import { startParcelFixture, ParcelFixtureOptions } from './parcel';
+
 import { TestServer } from './types';
 
 export * from './types';
@@ -13,7 +15,10 @@ type SharedOptions = {
 
 type FixtureOptions = SharedOptions &
   Omit<
-    EsbuildFixtureOptions | WebpackFixtureOptions | ViteFixtureOptions,
+    | EsbuildFixtureOptions
+    | WebpackFixtureOptions
+    | ViteFixtureOptions
+    | ParcelFixtureOptions,
     'port'
   >;
 export async function startFixture(
@@ -49,5 +54,12 @@ export async function startFixture(
     });
   }
 
+  if (type === 'parcel') {
+    return startParcelFixture(fixtureName, {
+      type,
+      port,
+      mode: options.mode,
+    });
+  }
   return startWebpackFixture(fixtureName, { type, ...options, port });
 }

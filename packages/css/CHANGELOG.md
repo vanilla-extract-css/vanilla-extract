@@ -1,5 +1,25 @@
 # @vanilla-extract/css
 
+## 1.9.5
+
+### Patch Changes
+
+- [#990](https://github.com/vanilla-extract-css/vanilla-extract/pull/990) [`3b724b9`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3b724b973a79d85cd4b5ab3e34fe312610c5b2da) Thanks [@askoufis](https://github.com/askoufis)! - Align transformation of `@keyframes` rules with other rules
+
+  This fixes a bug where invalid CSS could be generated inside `@keyframes` rules.
+
+## 1.9.4
+
+### Patch Changes
+
+- [#938](https://github.com/vanilla-extract-css/vanilla-extract/pull/938) [`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9) Thanks [@adrianaferrugento](https://github.com/adrianaferrugento)! - Bump `deep-object-diff` to v1.1.9 in order to fix security vulnerability
+
+## 1.9.3
+
+### Patch Changes
+
+- [#943](https://github.com/vanilla-extract-css/vanilla-extract/pull/943) [`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b) Thanks [@AndrewLeedham](https://github.com/AndrewLeedham)! - Fix a `tsc` error caused by a dependency's type declarations being unnecessarily bundled
+
 ## 1.9.2
 
 ### Patch Changes

@@ -1,5 +1,44 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.34
+
+### Patch Changes
+
+- Updated dependencies [[`669a61f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/669a61f08cff6be69f8d0be7a270b4d9f151b8f1)]:
+  - @vanilla-extract/vite-plugin@3.8.0
+  - @fixtures/features@0.0.17
+  - @fixtures/low-level@0.0.17
+  - @fixtures/recipes@0.0.18
+  - @fixtures/sprinkles@0.0.20
+  - @fixtures/themed@0.0.17
+  - @fixtures/unused-modules@1.0.17
+
+## 0.0.33
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.16
+  - @fixtures/low-level@0.0.16
+  - @fixtures/recipes@0.0.17
+  - @fixtures/sprinkles@0.0.19
+  - @fixtures/themed@0.0.16
+  - @fixtures/unused-modules@1.0.16
+
+## 0.0.32
+
+### Patch Changes
+
+- Updated dependencies [[`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a), [`2fc56e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2fc56e851934ad99de44de012910bca20b74da69), [`a677c46`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a677c46217b7860bf0f3c1ace5d39463ce7b1914)]:
+  - @vanilla-extract/esbuild-plugin@2.2.1
+  - @vanilla-extract/vite-plugin@3.7.1
+  - @fixtures/features@0.0.15
+  - @fixtures/low-level@0.0.15
+  - @fixtures/recipes@0.0.16
+  - @fixtures/sprinkles@0.0.18
+  - @fixtures/themed@0.0.15
+  - @fixtures/unused-modules@1.0.15
+
 ## 0.0.31
 
 ### Patch Changes

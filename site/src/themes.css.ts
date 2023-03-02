@@ -79,6 +79,7 @@ const tailwindPalette = {
   teal50: colors.teal['50'],
   teal100: colors.teal['100'],
   teal200: colors.teal['200'],
+  teal200muted: '#b6eee3',
   teal300: colors.teal['300'],
   teal400: colors.teal['400'],
   teal500: colors.teal['500'],

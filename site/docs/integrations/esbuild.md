@@ -106,4 +106,4 @@ Each integration will set a default value based on the configuration options pas
 ### esbuildOptions
 
 esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
-Accepts a subset of esbuild build options (`plugins`, `external`, `define` and `loader`), see the [build API](https://esbuild.github.io/api/#build-api) documentation.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader` and `tsconfig`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.

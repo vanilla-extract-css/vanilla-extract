@@ -9,6 +9,10 @@ Create multi-variant styles with a type-safe runtime API, heavily inspired by [S
 
 As with the rest of vanilla-extract, all styles are generated at build time.
 
+> 💡 Recipes is an optional package built on top of vanilla-extract using its [function serialization API.](../../api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations.
+
+## Setup
+
 ```bash
 npm install @vanilla-extract/recipes
 ```

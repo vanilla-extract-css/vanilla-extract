@@ -1,5 +1,38 @@
 # @vanilla-extract/vite-plugin
 
+## 3.8.0
+
+### Minor Changes
+
+- [#989](https://github.com/vanilla-extract-css/vanilla-extract/pull/989) [`669a61f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/669a61f08cff6be69f8d0be7a270b4d9f151b8f1) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Add `emitCssInSsr` option
+
+  Provides the ability to opt in to emitting CSS during SSR.
+
+  ```js
+  // vite.config.js
+
+  import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+
+  export default {
+    plugins: [
+      vanillaExtractPlugin({
+        emitCssInSsr: true,
+      }),
+    ],
+  };
+  ```
+
+## 3.7.1
+
+### Patch Changes
+
+- [#949](https://github.com/vanilla-extract-css/vanilla-extract/pull/949) [`2fc56e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2fc56e851934ad99de44de012910bca20b74da69) Thanks [@CXZ7720](https://github.com/CXZ7720)! - Adds vite v4 to peer dependencies
+
+* [#952](https://github.com/vanilla-extract-css/vanilla-extract/pull/952) [`a677c46`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a677c46217b7860bf0f3c1ace5d39463ce7b1914) Thanks [@endigma](https://github.com/endigma)! - Whitelist `vite-plugin-svelte` to enable emitting CSS on the server
+
+* Updated dependencies [[`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101), [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a)]:
+  - @vanilla-extract/integration@6.0.2
+
 ## 3.7.0
 
 ### Minor Changes

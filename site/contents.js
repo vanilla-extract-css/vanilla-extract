@@ -25,6 +25,7 @@ const contents = [
       'keyframes',
       'create-container',
       'layer',
+      'add-function-serializer',
     ],
   },
   {
@@ -47,7 +48,7 @@ const contents = [
   {
     group: 'integrations',
     label: 'Integrations',
-    pages: ['vite', 'esbuild', 'webpack', 'next', 'rollup', 'gatsby'],
+    pages: ['vite', 'esbuild', 'webpack', 'next', 'parcel', 'rollup', 'gatsby'],
   },
 ];
 

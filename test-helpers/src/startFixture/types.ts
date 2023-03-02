@@ -4,7 +4,8 @@ export type BuildType =
   | 'style-loader'
   | 'esbuild'
   | 'esbuild-runtime'
-  | 'vite';
+  | 'vite'
+  | 'parcel';
 
 export interface TestServer {
   type: BuildType;

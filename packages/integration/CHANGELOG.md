@@ -1,5 +1,34 @@
 # @vanilla-extract/integration
 
+## 6.1.0
+
+### Minor Changes
+
+- [#926](https://github.com/vanilla-extract-css/vanilla-extract/pull/926) [`7074969`](https://github.com/vanilla-extract-css/vanilla-extract/commit/70749697eb281086913ba7a2ec170a375832ed1c) Thanks [@ericmatthys](https://github.com/ericmatthys)! - Allow tsconfig option to be passed through to esbuild
+
+### Patch Changes
+
+- Updated dependencies [[`d02684e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d02684e1bf0e8b4f51ab2a273233ada9df57ebc9)]:
+  - @vanilla-extract/css@1.9.4
+
+## 6.0.3
+
+### Patch Changes
+
+- [#970](https://github.com/vanilla-extract-css/vanilla-extract/pull/970) [`16b9a71`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16b9a71e57cd2accf7a58d2bc92dd03cd33813b6) Thanks [@roginfarrer](https://github.com/roginfarrer)! - Updated addFileScope to work with CommonJS files
+
+## 6.0.2
+
+### Patch Changes
+
+- [#956](https://github.com/vanilla-extract-css/vanilla-extract/pull/956) [`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101) Thanks [@mrm007](https://github.com/mrm007)! - Ensure support for new TypeScript language features by bumping the minimum required Babel dependency versions.
+
+* [#973](https://github.com/vanilla-extract-css/vanilla-extract/pull/973) [`cc60aa8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cc60aa81bbb51e5b6bd3d0241ad68f3deb3b1b9a) Thanks [@cliffordfajardo](https://github.com/cliffordfajardo)! - Upgrade esbuild `^0.11.16` to `^0.16.3`
+
+* Updated dependencies [[`eea3c7d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/eea3c7d1595cd881e68cfbb279c641dc2fdd9101), [`4ecdcd7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ecdcd727302a51d2428031e96bd48011d387c8b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.1
+  - @vanilla-extract/css@1.9.3
+
 ## 6.0.1
 
 ### Patch Changes
