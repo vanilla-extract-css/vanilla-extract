@@ -229,7 +229,7 @@ importers:
       '@babel/plugin-syntax-typescript': ^7.20.0
       '@types/babel__core': ^7.1.20
       '@types/lodash': ^4.14.168
-      '@vanilla-extract/babel-plugin-debug-ids': ^1.0.1
+      '@vanilla-extract/babel-plugin-debug-ids': ^1.0.2
       '@vanilla-extract/css': ^1.9.4
       esbuild: ^0.16.3
       eval: 0.1.6
@@ -18518,7 +18518,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0
-      webpack: 5.64.2_webpack-cli@4.9.1
+      webpack: 5.64.2
 
   /terser/5.10.0:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
@@ -19779,7 +19779,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.64.2_esbuild@0.16.17:
     resolution: {integrity: sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==}
