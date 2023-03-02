@@ -29,8 +29,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Test
-        run: pnpm test:jest
+      - name: Unit Test
+        run: pnpm test:unit
   playwright:
     name: Playwright tests
     runs-on: macos-11

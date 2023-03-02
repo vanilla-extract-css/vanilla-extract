@@ -1,3 +1,4 @@
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import path from 'path';
 import { unstable_createCompiler as createCompiler } from '@vanilla-extract/integration';
 
@@ -12,7 +13,7 @@ function getLocalFiles(files: Set<string>) {
     .map(toPosix);
 }
 
-describe.skip('compiler', () => {
+describe('compiler', () => {
   let compilers: Record<
     'default' | 'cssImportSpecifier' | 'shortIdentifiers',
     ReturnType<typeof createCompiler>

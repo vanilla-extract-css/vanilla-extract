@@ -13,7 +13,9 @@
     "start": "pnpm start-fixture themed",
     "start-site": "pnpm --filter=site start",
     "build-site": "pnpm --filter=site build",
+    "test:unit": "pnpm test:jest && pnpm test:vitest",
     "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:vitest": "vitest --watch=false",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
@@ -55,7 +57,8 @@
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-node-externals": "^5.0.0",
     "ts-node": "^10.0.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vitest": "^0.28.5"
   },
   "packageManager": "pnpm@7.9.5",
   "pnpm": {
