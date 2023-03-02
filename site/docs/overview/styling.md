@@ -358,7 +358,7 @@ export const myStyle = style({
 [unitless properties]: https://github.com/vanilla-extract-css/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
 [createvar]: /documentation/api/create-var/
 [layer api]: /documentation/api/layer/
-[global layer api]: /documentation/global-api/globalLayer/
+[global layer api]: /documentation/global-api/global-layer/
 [createcontainer]: /documentation/api/create-container/
 [css properties]: #css-properties
 [css variables]: #css-variables

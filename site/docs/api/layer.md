@@ -69,7 +69,7 @@ export const typography = layer(
 
 ## Layer merging
 
-In order to generate the smallest possible CSS output, Vanilla Extract will merge styles that are assigned to the same layer, if it can be done without impacting the precedence of the rules.
+In order to generate the smallest possible CSS output, Vanilla Extract will merge styles that are assigned to the same layer within the same file, if it can be done without impacting the precedence of the rules.
 
 Notice in this example, while the `themedHeading` style is created before the other styles, it appears later in the stylesheet. This is due to it being assigned to the `theme` layer — which is declared after the `base` layer.
 
