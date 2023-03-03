@@ -1,0 +1,154 @@
+.styles_container__1j5zl923 {
+  container-name: styles_containerName__1j5zl922;
+  container-type: size;
+}
+.styles_display_flex_mobile__1j5zl924 {
+  display: flex;
+}
+.styles_display_none_mobile__1j5zl928 {
+  display: none;
+}
+.styles_display_block_mobile__1j5zl92c {
+  display: block;
+}
+.styles_paddingTop_small_mobile__1j5zl92g {
+  padding-top: 10px;
+}
+.styles_paddingTop_medium_mobile__1j5zl92k {
+  padding-top: 20px;
+}
+.styles_background_red_mobile__1j5zl92o {
+  --alpha__1j5zl920: 1;
+  background: rgba(255, 0, 0, var(--alpha__1j5zl920));
+}
+.styles_backgroundOpacity_1_mobile__1j5zl92s {
+  --alpha__1j5zl920: 1;
+}
+.styles_backgroundOpacity_0\.1_mobile__1j5zl92w {
+  --alpha__1j5zl920: 0.1;
+}
+.styles_backgroundOpacity_0\.2_mobile__1j5zl9210 {
+  --alpha__1j5zl920: 0.2;
+}
+.styles_backgroundOpacity_0\.3_mobile__1j5zl9214 {
+  --alpha__1j5zl920: 0.3;
+}
+.styles_color_red__1j5zl9218 {
+  --textAlpha__1j5zl921: 1;
+  color: rgba(255, 0, 0, var(--textAlpha__1j5zl921));
+}
+.styles_textOpacity_1__1j5zl9219 {
+  --textAlpha__1j5zl921: 1;
+}
+.styles_textOpacity_0\.8__1j5zl921a {
+  --textAlpha__1j5zl921: 0.8;
+}
+body {
+  margin: 0;
+}
+body .styles__1j5zl921c {
+  background: red;
+}
+@media screen and (min-width: 768px) {
+  @container styles_containerName__1j5zl922 (min-width: 768px) {
+    .styles_display_flex_tablet__1j5zl925 {
+      display: flex;
+    }
+    .styles_display_none_tablet__1j5zl929 {
+      display: none;
+    }
+    .styles_display_block_tablet__1j5zl92d {
+      display: block;
+    }
+    .styles_paddingTop_small_tablet__1j5zl92h {
+      padding-top: 10px;
+    }
+    .styles_paddingTop_medium_tablet__1j5zl92l {
+      padding-top: 20px;
+    }
+    .styles_background_red_tablet__1j5zl92p {
+      --alpha__1j5zl920: 1;
+      background: rgba(255, 0, 0, var(--alpha__1j5zl920));
+    }
+    .styles_backgroundOpacity_1_tablet__1j5zl92t {
+      --alpha__1j5zl920: 1;
+    }
+    .styles_backgroundOpacity_0\.1_tablet__1j5zl92x {
+      --alpha__1j5zl920: 0.1;
+    }
+    .styles_backgroundOpacity_0\.2_tablet__1j5zl9211 {
+      --alpha__1j5zl920: 0.2;
+    }
+    .styles_backgroundOpacity_0\.3_tablet__1j5zl9215 {
+      --alpha__1j5zl920: 0.3;
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  @container styles_containerName__1j5zl922 (min-width: 1024px) {
+    .styles_display_flex_desktop__1j5zl926 {
+      display: flex;
+    }
+    .styles_display_none_desktop__1j5zl92a {
+      display: none;
+    }
+    .styles_display_block_desktop__1j5zl92e {
+      display: block;
+    }
+    .styles_paddingTop_small_desktop__1j5zl92i {
+      padding-top: 10px;
+    }
+    .styles_paddingTop_medium_desktop__1j5zl92m {
+      padding-top: 20px;
+    }
+    .styles_background_red_desktop__1j5zl92q {
+      --alpha__1j5zl920: 1;
+      background: rgba(255, 0, 0, var(--alpha__1j5zl920));
+    }
+    .styles_backgroundOpacity_1_desktop__1j5zl92u {
+      --alpha__1j5zl920: 1;
+    }
+    .styles_backgroundOpacity_0\.1_desktop__1j5zl92y {
+      --alpha__1j5zl920: 0.1;
+    }
+    .styles_backgroundOpacity_0\.2_desktop__1j5zl9212 {
+      --alpha__1j5zl920: 0.2;
+    }
+    .styles_backgroundOpacity_0\.3_desktop__1j5zl9216 {
+      --alpha__1j5zl920: 0.3;
+    }
+  }
+  @supports not (display: grid) {
+    [data-dark-mode] .styles_display_flex_darkDesktop__1j5zl927 {
+      display: flex;
+    }
+    [data-dark-mode] .styles_display_none_darkDesktop__1j5zl92b {
+      display: none;
+    }
+    [data-dark-mode] .styles_display_block_darkDesktop__1j5zl92f {
+      display: block;
+    }
+    [data-dark-mode] .styles_paddingTop_small_darkDesktop__1j5zl92j {
+      padding-top: 10px;
+    }
+    [data-dark-mode] .styles_paddingTop_medium_darkDesktop__1j5zl92n {
+      padding-top: 20px;
+    }
+    [data-dark-mode] .styles_background_red_darkDesktop__1j5zl92r {
+      --alpha__1j5zl920: 1;
+      background: rgba(255, 0, 0, var(--alpha__1j5zl920));
+    }
+    [data-dark-mode] .styles_backgroundOpacity_1_darkDesktop__1j5zl92v {
+      --alpha__1j5zl920: 1;
+    }
+    [data-dark-mode] .styles_backgroundOpacity_0\.1_darkDesktop__1j5zl92z {
+      --alpha__1j5zl920: 0.1;
+    }
+    [data-dark-mode] .styles_backgroundOpacity_0\.2_darkDesktop__1j5zl9213 {
+      --alpha__1j5zl920: 0.2;
+    }
+    [data-dark-mode] .styles_backgroundOpacity_0\.3_darkDesktop__1j5zl9217 {
+      --alpha__1j5zl920: 0.3;
+    }
+  }
+}
