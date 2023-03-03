@@ -62,7 +62,7 @@ jobs:
       - name: Build packages
         run: pnpm build
 
-      - name: Screenshot tests
+      - name: Playwright tests
         run: pnpm test:playwright
 
       - uses: actions/upload-artifact@v2

@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 6.1.1
+
+### Patch Changes
+
+- [#996](https://github.com/vanilla-extract-css/vanilla-extract/pull/996) [`bd6ed30`](https://github.com/vanilla-extract-css/vanilla-extract/commit/bd6ed30e0301d77ab21152e6d4a708e8ff491b74) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve Vanilla module serialization by allowing shared variables between exports
+
+- Updated dependencies [[`8a1751c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8a1751c8fcbeaa0cfb8d894a8050535372516dd4)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.2
+
 ## 6.1.0
 
 ### Minor Changes
