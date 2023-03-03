@@ -8,26 +8,26 @@ import {
 import test from './fixture';
 
 const testCases = [
-  { buildType: 'mini-css-extract', mode: 'development', snapshotCss: true },
-  { buildType: 'mini-css-extract', mode: 'production', snapshotCss: true },
-  { buildType: 'style-loader', mode: 'development', snapshotCss: false },
-  { buildType: 'esbuild', mode: 'development', snapshotCss: true },
-  { buildType: 'esbuild', mode: 'production', snapshotCss: true },
-  { buildType: 'esbuild-runtime', mode: 'development', snapshotCss: false },
-  { buildType: 'esbuild-runtime', mode: 'production', snapshotCss: false },
-  { buildType: 'vite', mode: 'development', snapshotCss: false },
-  { buildType: 'vite', mode: 'production', snapshotCss: true },
-  { buildType: 'parcel', mode: 'development', snapshotCss: true },
-  { buildType: 'parcel', mode: 'production', snapshotCss: true },
+  { type: 'mini-css-extract', mode: 'development', snapshotCss: true },
+  { type: 'mini-css-extract', mode: 'production', snapshotCss: true },
+  { type: 'style-loader', mode: 'development', snapshotCss: false },
+  { type: 'esbuild', mode: 'development', snapshotCss: true },
+  { type: 'esbuild', mode: 'production', snapshotCss: true },
+  { type: 'esbuild-runtime', mode: 'development', snapshotCss: false },
+  { type: 'esbuild-runtime', mode: 'production', snapshotCss: false },
+  { type: 'vite', mode: 'development', snapshotCss: false },
+  { type: 'vite', mode: 'production', snapshotCss: true },
+  { type: 'parcel', mode: 'development', snapshotCss: true },
+  { type: 'parcel', mode: 'production', snapshotCss: true },
 ] as const;
 
-testCases.forEach(({ buildType, mode, snapshotCss = true }) => {
-  test.describe(`themed - ${buildType} (${mode})`, () => {
+testCases.forEach(({ type, mode, snapshotCss = true }) => {
+  test.describe(`themed - ${type} (${mode})`, () => {
     let server: TestServer;
 
     test.beforeAll(async ({ port }) => {
       server = await startFixture('themed', {
-        type: buildType,
+        type,
         mode,
         basePort: port,
       });
@@ -43,7 +43,7 @@ testCases.forEach(({ buildType, mode, snapshotCss = true }) => {
       test('CSS @agnostic', async () => {
         expect(
           await getStylesheet(server.url, server.stylesheet),
-        ).toMatchSnapshot(`themed-${buildType}--${mode}.css`);
+        ).toMatchSnapshot(`themed-${type}--${mode}.css`);
       });
     }
 
