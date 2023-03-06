@@ -9,3 +9,5 @@ site/docs-manifest.json
 .changeset
 .next
 pnpm-lock.yaml
+*-snapshots
+test-results

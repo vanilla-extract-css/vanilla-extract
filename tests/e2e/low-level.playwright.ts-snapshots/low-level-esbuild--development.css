@@ -1,0 +1,17 @@
+.styles_container__1amv5mo2 {
+  container-type: size;
+  container-name: styles_my-container__1amv5mo1;
+  width: 500px;
+}
+.styles_block__1amv5mo3 {
+  --color__1amv5mo0: blue;
+  background-color: var(--color__1amv5mo0);
+  padding: 20px;
+}
+@media screen and (min-width: 200px) {
+  @container styles_my-container__1amv5mo1 (min-width: 400px) {
+    .styles_block__1amv5mo3 {
+      color: #fff;
+    }
+  }
+}

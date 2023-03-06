@@ -1,0 +1,22 @@
+@layer lib;
+@layer lib.styles_typography__1sqkzjx1 {
+  @media screen and (min-width: 600px) {
+    a {
+      color: green;
+    }
+  }
+}
+@layer lib.styles_base__1sqkzjx0 {
+  a {
+    color: red;
+    font-weight: 800;
+  }
+  .styles_link__1sqkzjx3 {
+    color: blue;
+  }
+}
+@layer lib.styles_utilities__1sqkzjx2 {
+  .styles_pink__1sqkzjx4 {
+    color: hotpink;
+  }
+}
