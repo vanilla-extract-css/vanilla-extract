@@ -199,7 +199,10 @@ export const createCompiler = ({
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const outputCss = options.outputCss ?? true;
 
-      let cachedFile = processVanillaFileCache.get(filePath);
+      const cacheKey = Object.entries({ filePath, outputCss })
+        .map((entry) => entry.join('='))
+        .join('|');
+      let cachedFile = processVanillaFileCache.get(cacheKey);
       if (cachedFile) {
         let moduleNode = server.moduleGraph.getModuleById(filePath);
         if (
@@ -320,7 +323,7 @@ export const createCompiler = ({
         watchFiles,
       };
 
-      processVanillaFileCache.set(filePath, {
+      processVanillaFileCache.set(cacheKey, {
         lastInvalidationTimestamp,
         result,
       });
