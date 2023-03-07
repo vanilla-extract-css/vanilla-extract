@@ -20,9 +20,6 @@ describe('compiler', () => {
   >;
 
   beforeAll(async () => {
-    // We get a segfault if we split these into separate describe blocks, so we
-    // need to run them in the same top-level block. Not sure why but it seems
-    // to be related to the way tests are run in parallel.
     compilers = {
       default: createCompiler({
         root: __dirname,
