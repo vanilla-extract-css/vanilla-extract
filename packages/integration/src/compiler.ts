@@ -1,6 +1,6 @@
 import { join, relative, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
-import { transformCssToStylesheet } from '@vanilla-extract/css/transformCss';
+import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
 
@@ -175,7 +175,6 @@ export const createCompiler = ({
     string,
     {
       css: string;
-      usedCompositions: Set<string>;
     }
   >();
 
@@ -222,7 +221,6 @@ export const createCompiler = ({
       let cssByFileScope = new Map<string, Array<Css>>();
       let localClassNames = new Set<string>();
       let composedClassLists: Array<Composition> = [];
-      let usedCompositions = new Set<string>();
 
       function getClassRegistrations(filePath: string) {
         let registrations = classRegistrationCache.get(filePath);
@@ -254,8 +252,8 @@ export const createCompiler = ({
           );
           composedClassLists.push(composedClassList);
         },
-        markCompositionUsed: (identifier) => {
-          usedCompositions.add(identifier);
+        markCompositionUsed: () => {
+          // This compiler currently retains all composition classes
         },
         onEndFileScope: (fileScope) => {
           // This ensures we always have an updated cache entry for the file
@@ -304,38 +302,22 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              let stylesheet = transformCssToStylesheet({
+              let css = transformCss({
                 localClassNames: Array.from(localClassNames),
                 composedClassLists,
                 cssObjs,
-              });
+              }).join('\n');
 
-              stylesheet.usedCompositions.forEach((usedComposition) => {
-                usedCompositions.add(usedComposition);
-              });
-
-              adapterResultCache.set(cssDepModuleId, {
-                usedCompositions: new Set(stylesheet.usedCompositions),
-                css: stylesheet.toCss().join('\n'),
-              });
-            } else {
-              if (cachedAdapterResult) {
-                cachedAdapterResult.usedCompositions.forEach(
-                  (usedComposition) => {
-                    usedCompositions.add(usedComposition);
-                  },
-                );
-              }
-              if (cachedClassRegistrations) {
-                cachedClassRegistrations.localClassNames.forEach(
-                  (localClassName) => {
-                    localClassNames.add(localClassName);
-                  },
-                );
-                composedClassLists.push(
-                  ...cachedClassRegistrations.composedClassLists,
-                );
-              }
+              adapterResultCache.set(cssDepModuleId, { css });
+            } else if (cachedClassRegistrations) {
+              cachedClassRegistrations.localClassNames.forEach(
+                (localClassName) => {
+                  localClassNames.add(localClassName);
+                },
+              );
+              composedClassLists.push(
+                ...cachedClassRegistrations.composedClassLists,
+              );
             }
 
             if (cssObjs || cachedAdapterResult?.css) {
@@ -353,20 +335,11 @@ export const createCompiler = ({
           };
         });
 
-      let unusedCompositions = composedClassLists
-        .filter(({ identifier }) => !usedCompositions.has(identifier))
-        .map(({ identifier }) => identifier);
-
-      let unusedCompositionRegex =
-        unusedCompositions.length > 0
-          ? RegExp(`(${unusedCompositions.join('|')})\\s`, 'g')
-          : null;
-
       let result: ProcessedVanillaFile = {
         source: serializeVanillaModule(
           cssImports,
           fileExports,
-          unusedCompositionRegex,
+          null, // This compiler currently retains all composition classes
         ),
         watchFiles,
       };

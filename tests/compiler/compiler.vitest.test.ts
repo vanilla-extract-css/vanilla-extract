@@ -221,7 +221,7 @@ describe('compiler', () => {
     `);
   });
 
-  test('removes unused composition classes', async () => {
+  test('does not remove unused composition classes', async () => {
     const compiler = compilers.default;
 
     const cssPathA = './fixtures/unused-compositions/styles_a.css.ts';
@@ -232,20 +232,20 @@ describe('compiler', () => {
     await compiler.processVanillaFile(cssPathA, { outputCss: false });
     const outputA = await compiler.processVanillaFile(cssPathA);
 
-    // The `root` className string should only contain the shared class:
+    // The `root` className string should be a composition of multiple classes:
     expect(outputA.source).toMatchInlineSnapshot(`
       "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'shared_shared__5i7sy00';"
+      export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';"
     `);
 
     // Process the file multiple times with different args to test caching
     await compiler.processVanillaFile(cssPathB, { outputCss: false });
     const outputB = await compiler.processVanillaFile(cssPathB);
 
-    // The `root` className string should only contain the shared class:
+    // The `root` className string should be a composition of multiple classes:
     expect(outputB.source).toMatchInlineSnapshot(`
       "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'shared_shared__5i7sy00';"
+      export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
     `);
 
     const { css } = await compiler.getCssForFile(sharedCssPath);
@@ -255,48 +255,6 @@ describe('compiler', () => {
         background: peachpuff;
       }"
     `);
-  });
-
-  test('retains used composition classes', async () => {
-    const compiler = compilers.default;
-
-    const cssPath = './fixtures/used-compositions/styles.css.ts';
-    const sharedCssPath = './fixtures/used-compositions/shared.css.ts';
-
-    // Process the file multiple times with different args to test caching
-    await compiler.processVanillaFile(cssPath, { outputCss: false });
-    const cssOutput = await compiler.processVanillaFile(cssPath);
-
-    // The `sharedComposition` class should be the local class + shared class
-    expect(cssOutput.source).toMatchInlineSnapshot(`
-      "import 'fixtures/used-compositions/shared.css.ts.vanilla.css';
-      import 'fixtures/used-compositions/styles.css.ts.vanilla.css';
-      export var sharedComposition = 'shared_sharedComposition__4a65v91 shared_shared__4a65v90';
-      export var sharedCompositionBeingUsed = 'styles_sharedCompositionBeingUsed__1otm6n90';"
-    `);
-
-    // The `sharedComposition` class should be referenced in the selector:
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".shared_sharedComposition__4a65v91 .styles_sharedCompositionBeingUsed__1otm6n90 {
-          color: red;
-        }"
-      `);
-      expect(filePath).toBe('fixtures/used-compositions/styles.css.ts');
-    })();
-
-    // The `shared` class should be the only style in the output for the shared CSS file:
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__4a65v90 {
-          padding: 20px;
-          background: peachpuff;
-        }"
-      `);
-      expect(filePath).toBe('fixtures/used-compositions/shared.css.ts');
-    })();
   });
 
   afterAll(async () => {

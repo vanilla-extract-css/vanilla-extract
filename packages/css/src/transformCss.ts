@@ -115,7 +115,6 @@ class Stylesheet {
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
-  usedCompositions: Set<string>;
 
   constructor(
     localClassNames: Array<string>,
@@ -138,8 +137,6 @@ class Stylesheet {
         regex: RegExp(`(${classList})`, 'g'),
       }))
       .reverse();
-
-    this.usedCompositions = new Set();
   }
 
   processCssObj(root: CSS) {
@@ -285,7 +282,6 @@ class Stylesheet {
     for (const { identifier, regex } of this.composedClassLists) {
       transformedSelector = transformedSelector.replace(regex, () => {
         markCompositionUsed(identifier);
-        this.usedCompositions.add(identifier);
 
         return identifier;
       });
@@ -575,25 +571,6 @@ interface TransformCSSParams {
   composedClassLists: Array<Composition>;
   cssObjs: Array<CSS>;
 }
-export function transformCssToStylesheet({
-  localClassNames,
-  cssObjs,
-  composedClassLists,
-}: TransformCSSParams) {
-  const stylesheet = new Stylesheet(localClassNames, composedClassLists);
-
-  for (const root of cssObjs) {
-    stylesheet.processCssObj(root);
-  }
-
-  return stylesheet;
-}
-
-interface TransformCSSParams {
-  localClassNames: Array<string>;
-  composedClassLists: Array<Composition>;
-  cssObjs: Array<CSS>;
-}
 export function transformCss({
   localClassNames,
   cssObjs,
@@ -605,9 +582,5 @@ export function transformCss({
     stylesheet.processCssObj(root);
   }
 
-  return transformCssToStylesheet({
-    localClassNames,
-    cssObjs,
-    composedClassLists,
-  }).toCss();
+  return stylesheet.toCss();
 }
