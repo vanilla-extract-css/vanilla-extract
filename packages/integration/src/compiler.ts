@@ -257,7 +257,17 @@ export const createCompiler = ({
         markCompositionUsed: (identifier) => {
           usedCompositions.add(identifier);
         },
-        onEndFileScope: () => {},
+        onEndFileScope: (fileScope) => {
+          // This ensures we always have an updated cache entry for the file
+          // scope, even if the latest run didn't generate any CSS. If we didn't
+          // do this, modifying a .css.ts file so that it no longer generates
+          // any CSS (e.g. because it only composes styles from other files)
+          // would cause the cache to return the CSS from the last run. This is
+          // because we rely on `appendCss` to update the cache, but that method
+          // is only run when CSS is generated.
+          const cssObjs = cssByFileScope.get(fileScope.filePath) ?? [];
+          cssByFileScope.set(fileScope.filePath, cssObjs);
+        },
         getIdentOption: () => identifiers,
       };
 
