@@ -1,6 +1,6 @@
 import { join, relative, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
-import { transformCss } from '@vanilla-extract/css/transformCss';
+import { transformCssToStylesheet } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
 
@@ -304,15 +304,19 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              let css = transformCss({
+              let stylesheet = transformCssToStylesheet({
                 localClassNames: Array.from(localClassNames),
                 composedClassLists,
                 cssObjs,
-              }).join('\n');
+              });
+
+              stylesheet.usedCompositions.forEach((usedComposition) => {
+                usedCompositions.add(usedComposition);
+              });
 
               adapterResultCache.set(cssDepModuleId, {
-                usedCompositions,
-                css,
+                usedCompositions: new Set(stylesheet.usedCompositions),
+                css: stylesheet.toCss().join('\n'),
               });
             } else {
               if (cachedAdapterResult) {
