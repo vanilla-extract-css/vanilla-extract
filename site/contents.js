@@ -8,6 +8,7 @@ const contents = [
       'theming',
       'style-composition',
       'test-environments',
+      'release-notes',
     ],
   },
   {

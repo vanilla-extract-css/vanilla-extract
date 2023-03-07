@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./makeDocsManifest && webpack serve",
-    "build": "node ./makeDocsManifest && NODE_ENV=production webpack",
+    "prepare-nav": "ts-node ./build-release-notes.ts && node ./makeDocsManifest",
+    "start": "pnpm prepare-nav && webpack serve",
+    "build": "pnpm prepare-nav && NODE_ENV=production webpack",
     "deploy:prod": "netlify deploy --site vanilla-extract-css --dir dist --prod",
     "deploy:branch": "netlify deploy --site vanilla-extract-css --dir dist"
   },

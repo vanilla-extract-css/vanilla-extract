@@ -26,7 +26,7 @@ const parseContents = (rawContent) => {
 
   const { content, data } = matter(rawContent);
 
-  const headings = content.match(/#{1,}( [ -\w\(\)\.]*)/g).map((heading) => {
+  const headings = content.match(/#{1,}( [ -\w\(\)\.@\/]*)/g).map((heading) => {
     const split = heading.split('#');
 
     return {

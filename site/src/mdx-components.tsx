@@ -206,6 +206,18 @@ export default {
       </Box>
     </Block>
   ),
+  h4: ({ component, id, ...props }: HeadingProps) => (
+    <Block component="h4" id={id} className={styles.headingScrollTop}>
+      <Box
+        position="relative"
+        component="span"
+        display="block"
+        paddingLeft="large"
+      >
+        <Heading component="span" {...props} href={id} level="4" />
+      </Box>
+    </Block>
+  ),
   pre: ({ children }: Children) => (
     <Block maxWidth="xlarge" component="pre">
       {children}
