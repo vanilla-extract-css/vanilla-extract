@@ -1,5 +1,4 @@
 ---
-'@vanilla-extract/esbuild-plugin': minor
 '@vanilla-extract/integration': minor
 ---
 

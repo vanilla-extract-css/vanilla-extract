@@ -2,10 +2,10 @@ import { dirname } from 'path';
 
 import {
   cssFileFilter,
-  unstable_createCompiler as createCompiler,
+  createCompiler,
   vanillaExtractTransformPlugin,
   IdentifierOption,
-  Unstable_CreateCompilerOptions as CreateCompilerOptions,
+  CreateCompilerOptions,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 

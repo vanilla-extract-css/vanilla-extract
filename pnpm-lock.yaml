@@ -225,6 +225,15 @@ importers:
     devDependencies:
       esbuild: 0.17.6
 
+  packages/esbuild-plugin-next:
+    specifiers:
+      '@vanilla-extract/integration': ^6.0.2
+      esbuild: 0.17.6
+    dependencies:
+      '@vanilla-extract/integration': link:../integration
+    devDependencies:
+      esbuild: 0.17.6
+
   packages/integration:
     specifiers:
       '@babel/core': ^7.20.7
@@ -489,6 +498,7 @@ importers:
       '@types/serve-handler': ^6
       '@types/webpack-dev-server': ^3.11.1
       '@vanilla-extract/esbuild-plugin': '*'
+      '@vanilla-extract/esbuild-plugin-next': '*'
       '@vanilla-extract/parcel-transformer': '*'
       '@vanilla-extract/vite-plugin': '*'
       '@vanilla-extract/webpack-plugin': '*'
@@ -523,6 +533,7 @@ importers:
       '@types/mini-css-extract-plugin': 1.4.3_esbuild@0.17.6
       '@types/webpack-dev-server': 3.11.6
       '@vanilla-extract/esbuild-plugin': link:../packages/esbuild-plugin
+      '@vanilla-extract/esbuild-plugin-next': link:../packages/esbuild-plugin-next
       '@vanilla-extract/parcel-transformer': link:../packages/parcel-transformer
       '@vanilla-extract/vite-plugin': link:../packages/vite-plugin
       '@vanilla-extract/webpack-plugin': link:../packages/webpack-plugin

@@ -1,10 +1,8 @@
 import path from 'path';
 import { existsSync, promises as fs } from 'fs';
 
-import {
-  vanillaExtractPlugin,
-  unstable_vanillaExtractPluginNext,
-} from '@vanilla-extract/esbuild-plugin';
+import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
+import { vanillaExtractPlugin as vanillaExtractPluginNext } from '@vanilla-extract/esbuild-plugin-next';
 import * as esbuild from 'esbuild';
 
 import { TestServer } from './types';
@@ -19,7 +17,7 @@ export const startEsbuildFixture = async (
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
   const plugin = type.includes('next')
-    ? unstable_vanillaExtractPluginNext
+    ? vanillaExtractPluginNext
     : vanillaExtractPlugin;
   const entry = require.resolve(`@fixtures/${fixtureName}/src/index.ts`);
   const absWorkingDir = path.dirname(
