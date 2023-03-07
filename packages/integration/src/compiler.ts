@@ -175,8 +175,6 @@ export const createCompiler = ({
     string,
     {
       css: string;
-      localClassNames: Set<string>;
-      composedClassLists: Array<Composition>;
       usedCompositions: Set<string>;
     }
   >();
@@ -186,6 +184,14 @@ export const createCompiler = ({
     {
       lastInvalidationTimestamp: number;
       result: ProcessedVanillaFile;
+    }
+  >();
+
+  const classRegistrationCache = new Map<
+    string,
+    {
+      localClassNames: Set<string>;
+      composedClassLists: Array<Composition>;
     }
   >();
 
@@ -218,16 +224,34 @@ export const createCompiler = ({
       let composedClassLists: Array<Composition> = [];
       let usedCompositions = new Set<string>();
 
+      function getClassRegistrations(filePath: string) {
+        let registrations = classRegistrationCache.get(filePath);
+        if (!registrations) {
+          registrations = {
+            localClassNames: new Set(),
+            composedClassLists: [],
+          };
+          classRegistrationCache.set(filePath, registrations);
+        }
+        return registrations;
+      }
+
       let cssAdapter: Adapter = {
         appendCss: (css, fileScope) => {
           let fileScopeCss = cssByFileScope.get(fileScope.filePath) ?? [];
           fileScopeCss.push(css);
           cssByFileScope.set(fileScope.filePath, fileScopeCss);
         },
-        registerClassName: (className) => {
+        registerClassName: (className, fileScope) => {
+          getClassRegistrations(fileScope.filePath).localClassNames.add(
+            className,
+          );
           localClassNames.add(className);
         },
-        registerComposition: (composedClassList) => {
+        registerComposition: (composedClassList, fileScope) => {
+          getClassRegistrations(fileScope.filePath).composedClassLists.push(
+            composedClassList,
+          );
           composedClassLists.push(composedClassList);
         },
         markCompositionUsed: (identifier) => {
@@ -262,8 +286,10 @@ export const createCompiler = ({
           for (let cssDepModuleId of cssDeps) {
             let cssObjs = cssByFileScope.get(cssDepModuleId);
             let cachedAdapterResult = adapterResultCache.get(cssDepModuleId);
+            let cachedClassRegistrations =
+              classRegistrationCache.get(cssDepModuleId);
 
-            if (!cssObjs && !cachedAdapterResult) {
+            if (!cssObjs && !cachedAdapterResult && !cachedClassRegistrations) {
               continue;
             }
 
@@ -275,26 +301,34 @@ export const createCompiler = ({
               }).join('\n');
 
               adapterResultCache.set(cssDepModuleId, {
-                localClassNames,
-                composedClassLists,
                 usedCompositions,
                 css,
               });
-            } else if (cachedAdapterResult) {
-              cachedAdapterResult.localClassNames.forEach((localClassName) => {
-                localClassNames.add(localClassName);
-              });
-              cachedAdapterResult.usedCompositions.forEach(
-                (usedComposition) => {
-                  usedCompositions.add(usedComposition);
-                },
-              );
-              composedClassLists.push(
-                ...cachedAdapterResult.composedClassLists,
-              );
+            } else {
+              if (cachedAdapterResult) {
+                cachedAdapterResult.usedCompositions.forEach(
+                  (usedComposition) => {
+                    usedCompositions.add(usedComposition);
+                  },
+                );
+              }
+              if (cachedClassRegistrations) {
+                cachedClassRegistrations.localClassNames.forEach(
+                  (localClassName) => {
+                    localClassNames.add(localClassName);
+                  },
+                );
+                composedClassLists.push(
+                  ...cachedClassRegistrations.composedClassLists,
+                );
+              }
             }
 
-            cssImports.push(`import '${cssImportSpecifier(cssDepModuleId)}';`);
+            if (cssObjs || cachedAdapterResult?.css) {
+              cssImports.push(
+                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+              );
+            }
           }
 
           return {
