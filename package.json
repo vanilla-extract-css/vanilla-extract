@@ -14,7 +14,7 @@
     "start-site": "pnpm --filter=site start",
     "build-site": "pnpm --filter=site build",
     "test:unit": "pnpm test:jest && pnpm test:vitest",
-    "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:jest": "jest",
     "test:vitest": "vitest --watch=false",
     "test:playwright": "playwright test",
     "format": "prettier --write .",
