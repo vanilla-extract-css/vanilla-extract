@@ -17,12 +17,12 @@ type Composition = Parameters<Adapter['registerComposition']>[0];
 const globalAdapterIdentifier = '__vanilla_globalCssAdapter__';
 
 const scanModule = (entryModule: ModuleNode, root: string) => {
-  let queue = [entryModule];
-  let cssDeps = new Set<string>();
-  let watchFiles = new Set<string>();
+  const queue = [entryModule];
+  const cssDeps = new Set<string>();
+  const watchFiles = new Set<string>();
 
-  for (let moduleNode of queue) {
-    let relativePath = moduleNode.id && relative(root, moduleNode.id);
+  for (const moduleNode of queue) {
+    const relativePath = moduleNode.id && relative(root, moduleNode.id);
 
     if (relativePath) {
       cssDeps.add(relativePath);
@@ -32,13 +32,13 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
       watchFiles.add(moduleNode.file);
     }
 
-    for (let importedModule of moduleNode.importedModules) {
+    for (const importedModule of moduleNode.importedModules) {
       queue.push(importedModule);
     }
   }
 
   // This ensures the root module's styles are last in terms of CSS ordering
-  let [head, ...tail] = cssDeps;
+  const [head, ...tail] = cssDeps;
 
   return { cssDeps: [...tail, head], watchFiles };
 };
@@ -52,10 +52,10 @@ const createViteServer = async ({
   identifiers: IdentifierOption;
   vitePlugins?: Array<VitePlugin>;
 }) => {
-  let pkg = getPackageInfo(root);
-  let { createServer } = await import('vite');
+  const pkg = getPackageInfo(root);
+  const { createServer } = await import('vite');
 
-  let server = await createServer({
+  const server = await createServer({
     root,
     server: {
       hmr: false,
@@ -73,7 +73,7 @@ const createViteServer = async ({
         enforce: 'pre',
         async resolveId(source, importer) {
           if (source.startsWith('@vanilla-extract/')) {
-            let result = await this.resolve(source, importer, {
+            const result = await this.resolve(source, importer, {
               skipSelf: true,
             });
 
@@ -85,7 +85,7 @@ const createViteServer = async ({
         name: 'vanilla-extract-transform',
         async transform(code, id) {
           if (cssFileFilter.test(id)) {
-            let filescopedCode = await transform({
+            const filescopedCode = await transform({
               source: code,
               rootPath: root,
               filePath: id,
@@ -105,12 +105,12 @@ const createViteServer = async ({
   // this is need to initialize the plugins
   await server.pluginContainer.buildStart({});
 
-  let { ViteNodeRunner } = await import('vite-node/client');
-  let { ViteNodeServer } = await import('vite-node/server');
+  const { ViteNodeRunner } = await import('vite-node/client');
+  const { ViteNodeServer } = await import('vite-node/server');
 
-  let node = new ViteNodeServer(server);
+  const node = new ViteNodeServer(server);
 
-  let runner = new ViteNodeRunner({
+  const runner = new ViteNodeRunner({
     root,
     base: server.config.base,
     fetchModule(id) {
@@ -161,7 +161,7 @@ export const createCompiler = ({
 }: CreateCompilerOptions): Compiler => {
   let originalPrepareContext: ViteNodeRunner['prepareContext'];
 
-  let vitePromise = createViteServer({
+  const vitePromise = createViteServer({
     root,
     identifiers,
     vitePlugins,
@@ -171,9 +171,9 @@ export const createCompiler = ({
     return { server, runner };
   });
 
-  let cssCache = new Map<string, { css: string }>();
+  const cssCache = new Map<string, { css: string }>();
 
-  let processVanillaFileCache = new Map<
+  const processVanillaFileCache = new Map<
     string,
     {
       lastInvalidationTimestamp: number;
@@ -194,7 +194,7 @@ export const createCompiler = ({
       filePath,
       options = {},
     ): Promise<ProcessedVanillaFile> {
-      let { server, runner } = await vitePromise;
+      const { server, runner } = await vitePromise;
 
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const outputCss = options.outputCss ?? true;
@@ -202,9 +202,9 @@ export const createCompiler = ({
       const cacheKey = Object.entries({ filePath, outputCss })
         .map((entry) => entry.join('='))
         .join('|');
-      let cachedFile = processVanillaFileCache.get(cacheKey);
+      const cachedFile = processVanillaFileCache.get(cacheKey);
       if (cachedFile) {
-        let moduleNode = server.moduleGraph.getModuleById(filePath);
+        const moduleNode = server.moduleGraph.getModuleById(filePath);
         if (
           cachedFile.lastInvalidationTimestamp ===
           moduleNode?.lastInvalidationTimestamp
@@ -213,11 +213,11 @@ export const createCompiler = ({
         }
       }
 
-      let cssByFileScope = new Map<string, Array<Css>>();
-      let localClassNames = new Set<string>();
-      let composedClassLists: Array<Composition> = [];
+      const cssByFileScope = new Map<string, Array<Css>>();
+      const localClassNames = new Set<string>();
+      const composedClassLists: Array<Composition> = [];
 
-      let cssAdapter: Adapter = {
+      const cssAdapter: Adapter = {
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
           // Before evaluating a file, reset the cache for it
@@ -246,13 +246,13 @@ export const createCompiler = ({
           // This compiler currently retains all composition classes
         },
         appendCss: (css, fileScope) => {
-          let fileScopeCss = cssByFileScope.get(fileScope.filePath) ?? [];
+          const fileScopeCss = cssByFileScope.get(fileScope.filePath) ?? [];
           fileScopeCss.push(css);
           cssByFileScope.set(fileScope.filePath, fileScopeCss);
         },
       };
 
-      let { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
+      const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
           // Monkey patch the prepareContext method to inject the adapter
           runner.prepareContext = function (...args) {
@@ -262,22 +262,22 @@ export const createCompiler = ({
             };
           };
 
-          let fileExports = await runner.executeFile(filePath);
+          const fileExports = await runner.executeFile(filePath);
 
-          let moduleNode = server.moduleGraph.getModuleById(filePath);
+          const moduleNode = server.moduleGraph.getModuleById(filePath);
 
           if (!moduleNode) {
             throw new Error(`Can't find ModuleNode for ${filePath}`);
           }
 
-          let cssImports = [];
+          const cssImports = [];
 
-          let { cssDeps, watchFiles } = scanModule(moduleNode, root);
+          const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
-          for (let cssDepModuleId of cssDeps) {
-            let cssObjs = cssByFileScope.get(cssDepModuleId);
-            let cachedCss = cssCache.get(cssDepModuleId);
-            let cachedClassRegistrations =
+          for (const cssDepModuleId of cssDeps) {
+            const cssObjs = cssByFileScope.get(cssDepModuleId);
+            const cachedCss = cssCache.get(cssDepModuleId);
+            const cachedClassRegistrations =
               classRegistrationsByFileScope.get(cssDepModuleId);
 
             if (!cssObjs && !cachedCss && !cachedClassRegistrations) {
@@ -285,7 +285,7 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              let css = transformCss({
+              const css = transformCss({
                 localClassNames: Array.from(localClassNames),
                 composedClassLists,
                 cssObjs,
@@ -318,7 +318,7 @@ export const createCompiler = ({
           };
         });
 
-      let result: ProcessedVanillaFile = {
+      const result: ProcessedVanillaFile = {
         source: serializeVanillaModule(
           cssImports,
           fileExports,
@@ -336,8 +336,8 @@ export const createCompiler = ({
     },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
-      let rootRelativePath = relative(root, filePath);
-      let result = cssCache.get(rootRelativePath);
+      const rootRelativePath = relative(root, filePath);
+      const result = cssCache.get(rootRelativePath);
 
       if (!result) {
         throw new Error(`No CSS for file: ${filePath}`);
@@ -350,7 +350,7 @@ export const createCompiler = ({
       };
     },
     async close() {
-      let { server } = await vitePromise;
+      const { server } = await vitePromise;
 
       await server.close();
     },
