@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 6.1.2
+
+### Patch Changes
+
+- [#1031](https://github.com/vanilla-extract-css/vanilla-extract/pull/1031) [`316658f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/316658fc29341286fc14287eeeed44a36545b0c7) Thanks [@mrm007](https://github.com/mrm007)! - Add `.css.cjs` extension to the Vanilla Extract file filter
+
 ## 6.1.1
 
 ### Patch Changes
