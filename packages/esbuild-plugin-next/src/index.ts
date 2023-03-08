@@ -39,7 +39,7 @@ export function vanillaExtractPlugin({
 
       const compiler = createCompiler({ root, identifiers, vitePlugins });
 
-      build.onEnd(async () => {
+      build.onDispose(async () => {
         await compiler.close();
       });
 
