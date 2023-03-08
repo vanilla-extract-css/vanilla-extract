@@ -17,4 +17,4 @@ export * from './filters';
 export type { IdentifierOption } from './types';
 export type { PackageInfo } from './packageInfo';
 export type { CompileOptions } from './compile';
-export type { CreateCompilerOptions } from './compiler';
+export type { Compiler, CreateCompilerOptions } from './compiler';
