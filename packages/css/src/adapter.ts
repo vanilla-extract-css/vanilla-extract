@@ -62,6 +62,12 @@ export const markCompositionUsed: Adapter['markCompositionUsed'] = (
   return currentAdapter().markCompositionUsed(...props);
 };
 
+export const onBeginFileScope: NonNullable<Adapter['onBeginFileScope']> = (
+  ...props
+) => {
+  return currentAdapter().onBeginFileScope?.(...props);
+};
+
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {
   return currentAdapter().onEndFileScope(...props);
 };

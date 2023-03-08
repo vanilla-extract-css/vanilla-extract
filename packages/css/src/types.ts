@@ -135,6 +135,7 @@ export interface Adapter {
   registerClassName: (className: string, fileScope: FileScope) => void;
   registerComposition: (composition: Composition, fileScope: FileScope) => void;
   markCompositionUsed: (identifier: string) => void;
+  onBeginFileScope?: (fileScope: FileScope) => void;
   onEndFileScope: (fileScope: FileScope) => void;
   getIdentOption: () => IdentOption;
 }

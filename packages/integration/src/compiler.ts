@@ -171,12 +171,7 @@ export const createCompiler = ({
     return { server, runner };
   });
 
-  let adapterResultCache = new Map<
-    string,
-    {
-      css: string;
-    }
-  >();
+  let cssCache = new Map<string, { css: string }>();
 
   let processVanillaFileCache = new Map<
     string,
@@ -186,7 +181,7 @@ export const createCompiler = ({
     }
   >();
 
-  const classRegistrationCache = new Map<
+  const classRegistrationsByFileScope = new Map<
     string,
     {
       localClassNames: Set<string>;
@@ -222,51 +217,39 @@ export const createCompiler = ({
       let localClassNames = new Set<string>();
       let composedClassLists: Array<Composition> = [];
 
-      function getClassRegistrations(filePath: string) {
-        let registrations = classRegistrationCache.get(filePath);
-        if (!registrations) {
-          registrations = {
+      let cssAdapter: Adapter = {
+        getIdentOption: () => identifiers,
+        onBeginFileScope: (fileScope) => {
+          // Before evaluating a file, reset the cache for it
+          cssByFileScope.set(fileScope.filePath, []);
+          classRegistrationsByFileScope.set(fileScope.filePath, {
             localClassNames: new Set(),
             composedClassLists: [],
-          };
-          classRegistrationCache.set(filePath, registrations);
-        }
-        return registrations;
-      }
+          });
+        },
+        onEndFileScope: () => {},
+        registerClassName: (className, fileScope) => {
+          localClassNames.add(className);
 
-      let cssAdapter: Adapter = {
+          classRegistrationsByFileScope
+            .get(fileScope.filePath)!
+            .localClassNames.add(className);
+        },
+        registerComposition: (composedClassList, fileScope) => {
+          composedClassLists.push(composedClassList);
+
+          classRegistrationsByFileScope
+            .get(fileScope.filePath)!
+            .composedClassLists.push(composedClassList);
+        },
+        markCompositionUsed: () => {
+          // This compiler currently retains all composition classes
+        },
         appendCss: (css, fileScope) => {
           let fileScopeCss = cssByFileScope.get(fileScope.filePath) ?? [];
           fileScopeCss.push(css);
           cssByFileScope.set(fileScope.filePath, fileScopeCss);
         },
-        registerClassName: (className, fileScope) => {
-          getClassRegistrations(fileScope.filePath).localClassNames.add(
-            className,
-          );
-          localClassNames.add(className);
-        },
-        registerComposition: (composedClassList, fileScope) => {
-          getClassRegistrations(fileScope.filePath).composedClassLists.push(
-            composedClassList,
-          );
-          composedClassLists.push(composedClassList);
-        },
-        markCompositionUsed: () => {
-          // This compiler currently retains all composition classes
-        },
-        onEndFileScope: (fileScope) => {
-          // This ensures we always have an updated cache entry for the file
-          // scope, even if the latest run didn't generate any CSS. If we didn't
-          // do this, modifying a .css.ts file so that it no longer generates
-          // any CSS (e.g. because it only composes styles from other files)
-          // would cause the cache to return the CSS from the last run. This is
-          // because we rely on `appendCss` to update the cache, but that method
-          // is only run when CSS is generated.
-          const cssObjs = cssByFileScope.get(fileScope.filePath) ?? [];
-          cssByFileScope.set(fileScope.filePath, cssObjs);
-        },
-        getIdentOption: () => identifiers,
       };
 
       let { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
@@ -293,11 +276,11 @@ export const createCompiler = ({
 
           for (let cssDepModuleId of cssDeps) {
             let cssObjs = cssByFileScope.get(cssDepModuleId);
-            let cachedAdapterResult = adapterResultCache.get(cssDepModuleId);
+            let cachedCss = cssCache.get(cssDepModuleId);
             let cachedClassRegistrations =
-              classRegistrationCache.get(cssDepModuleId);
+              classRegistrationsByFileScope.get(cssDepModuleId);
 
-            if (!cssObjs && !cachedAdapterResult && !cachedClassRegistrations) {
+            if (!cssObjs && !cachedCss && !cachedClassRegistrations) {
               continue;
             }
 
@@ -308,7 +291,7 @@ export const createCompiler = ({
                 cssObjs,
               }).join('\n');
 
-              adapterResultCache.set(cssDepModuleId, { css });
+              cssCache.set(cssDepModuleId, { css });
             } else if (cachedClassRegistrations) {
               cachedClassRegistrations.localClassNames.forEach(
                 (localClassName) => {
@@ -320,7 +303,7 @@ export const createCompiler = ({
               );
             }
 
-            if (cssObjs || cachedAdapterResult?.css) {
+            if (cssObjs || cachedCss?.css) {
               cssImports.push(
                 `import '${cssImportSpecifier(cssDepModuleId)}';`,
               );
@@ -354,7 +337,7 @@ export const createCompiler = ({
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       let rootRelativePath = relative(root, filePath);
-      let result = adapterResultCache.get(rootRelativePath);
+      let result = cssCache.get(rootRelativePath);
 
       if (!result) {
         throw new Error(`No CSS for file: ${filePath}`);
