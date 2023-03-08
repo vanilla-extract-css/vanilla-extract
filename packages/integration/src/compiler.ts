@@ -227,8 +227,20 @@ export const createCompiler = ({
             composedClassLists: [],
           });
         },
-        onEndFileScope: () => {},
+        onEndFileScope: ({ filePath }) => {
+          // For backwards compatibility, ensure the cache is populated even if
+          // a file didn't contain any CSS. This is to ensure that the only
+          // error messages shown in older versions are the ones below.
+          const cssObjs = cssByFileScope.get(filePath) ?? [];
+          cssByFileScope.set(filePath, cssObjs);
+        },
         registerClassName: (className, fileScope) => {
+          if (!fileScope) {
+            throw new Error(
+              'Your version of @vanilla-extract/css must be at least v1.10.0. Please update to a compatible version.',
+            );
+          }
+
           localClassNames.add(className);
 
           classRegistrationsByFileScope
@@ -236,6 +248,12 @@ export const createCompiler = ({
             .localClassNames.add(className);
         },
         registerComposition: (composedClassList, fileScope) => {
+          if (!fileScope) {
+            throw new Error(
+              'Your version of @vanilla-extract/css must be at least v1.10.0. Please update to a compatible version.',
+            );
+          }
+
           composedClassLists.push(composedClassList);
 
           classRegistrationsByFileScope
