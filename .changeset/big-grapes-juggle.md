@@ -2,4 +2,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-Add `.css.cjs` as a matching Vanilla Extract file
+Add `.css.cjs` extension to the Vanilla Extract file filter
