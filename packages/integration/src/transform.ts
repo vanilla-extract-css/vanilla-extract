@@ -62,7 +62,7 @@ export const transform = async ({
       configFile: false,
     });
 
-    if (!result || result.code === null) {
+    if (!result || result.code == null) {
       throw new Error('Error adding debug IDs');
     }
 
