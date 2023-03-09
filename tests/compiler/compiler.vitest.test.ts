@@ -72,7 +72,9 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/styles.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/styles.css.ts',
+      );
     })();
 
     await (async () => {
@@ -82,7 +84,9 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/shared.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/shared.css.ts',
+      );
     })();
   });
 
@@ -114,7 +118,9 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/styles.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/styles.css.ts',
+      );
     })();
 
     await (async () => {
@@ -124,7 +130,9 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/shared.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/shared.css.ts',
+      );
     })();
   });
 
@@ -156,7 +164,9 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/styles.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/styles.css.ts',
+      );
     })();
 
     await (async () => {
@@ -166,7 +176,9 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(filePath).toBe('fixtures/class-composition/shared.css.ts');
+      expect(toPosix(filePath)).toBe(
+        'fixtures/class-composition/shared.css.ts',
+      );
     })();
   });
 
