@@ -282,7 +282,8 @@ export const createCompiler = ({
 
           const fileExports = await runner.executeFile(filePath);
 
-          const moduleNode = server.moduleGraph.getModuleById(filePath);
+          const moduleId = runner.moduleCache.normalizePath(filePath);
+          const moduleNode = server.moduleGraph.getModuleById(moduleId);
 
           if (!moduleNode) {
             throw new Error(`Can't find ModuleNode for ${filePath}`);
