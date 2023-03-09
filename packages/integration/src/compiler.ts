@@ -303,8 +303,11 @@ export const createCompiler = ({
 
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
-          for (const cssDepModuleId of cssDeps) {
-            console.log('cssByModuleId.get(cssDepModuleId)', cssDepModuleId);
+          for (const cssDep of cssDeps) {
+            const cssDepModuleId = normalizeModuleId(cssDep);
+            if (!cssDepModuleId.includes('node_modules')) {
+              console.log('cssByModuleId.get(cssDepModuleId)', cssDepModuleId);
+            }
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
