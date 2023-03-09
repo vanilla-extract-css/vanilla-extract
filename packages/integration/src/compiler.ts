@@ -3,7 +3,6 @@ import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
-import { normalizeModuleId } from 'vite-node/utils';
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
@@ -44,6 +43,9 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
   return { cssDeps: [...tail, head], watchFiles };
 };
 
+// We lazily load this utility from Vite
+let normalizeModuleId: (fsPath: string) => string;
+
 const createViteServer = async ({
   root,
   identifiers,
@@ -54,9 +56,11 @@ const createViteServer = async ({
   vitePlugins?: Array<VitePlugin>;
 }) => {
   const pkg = getPackageInfo(root);
-  const { createServer } = await import('vite');
+  const vite = await import('vite');
 
-  const server = await createServer({
+  normalizeModuleId = vite.normalizePath;
+
+  const server = await vite.createServer({
     root,
     server: {
       hmr: false,
@@ -362,6 +366,12 @@ export const createCompiler = ({
       return result;
     },
     getCssForFile(filePath: string) {
+      if (!normalizeModuleId) {
+        throw new Error(
+          `Compiler is still loading. No CSS for file: ${filePath}`,
+        );
+      }
+
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const rootRelativePath = relative(root, filePath);
 
