@@ -179,7 +179,7 @@ describe('compiler', () => {
     }
 
     expect(
-      error?.message.replace(__dirname, '{{__dirname}}'),
+      toPosix(error?.message.replace(__dirname, '{{__dirname}}') ?? ''),
     ).toMatchInlineSnapshot(
       `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
     );
