@@ -3,6 +3,7 @@ import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
+import { normalizeModuleId } from 'vite-node/utils';
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
@@ -221,7 +222,8 @@ export const createCompiler = ({
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
           // Before evaluating a file, reset the cache for it
-          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          const moduleId = normalizeModuleId(fileScope.filePath);
+          console.log('cssByModuleId.set(moduleId, [])', moduleId);
           cssByModuleId.set(moduleId, []);
           classRegistrationsByModuleId.set(moduleId, {
             localClassNames: new Set(),
@@ -232,8 +234,9 @@ export const createCompiler = ({
           // For backwards compatibility, ensure the cache is populated even if
           // a file didn't contain any CSS. This is to ensure that the only
           // error messages shown in older versions are the ones below.
-          const moduleId = runner.moduleCache.normalizePath(filePath);
+          const moduleId = normalizeModuleId(filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
+          console.log('cssByModuleId.set(moduleId, cssObjs)', moduleId);
           cssByModuleId.set(moduleId, cssObjs);
         },
         registerClassName: (className, fileScope) => {
@@ -245,7 +248,7 @@ export const createCompiler = ({
 
           localClassNames.add(className);
 
-          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          const moduleId = normalizeModuleId(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .localClassNames.add(className);
@@ -259,7 +262,7 @@ export const createCompiler = ({
 
           composedClassLists.push(composedClassList);
 
-          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          const moduleId = normalizeModuleId(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .composedClassLists.push(composedClassList);
@@ -268,9 +271,11 @@ export const createCompiler = ({
           // This compiler currently retains all composition classes
         },
         appendCss: (css, fileScope) => {
-          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          const moduleId = normalizeModuleId(fileScope.filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssObjs.push(css);
+
+          console.log('cssByModuleId.set(moduleId, cssObjs)', moduleId);
           cssByModuleId.set(moduleId, cssObjs);
         },
       };
@@ -287,7 +292,7 @@ export const createCompiler = ({
 
           const fileExports = await runner.executeFile(filePath);
 
-          const moduleId = runner.moduleCache.normalizePath(filePath);
+          const moduleId = normalizeModuleId(filePath);
           const moduleNode = server.moduleGraph.getModuleById(moduleId);
 
           if (!moduleNode) {
@@ -299,6 +304,7 @@ export const createCompiler = ({
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
           for (const cssDepModuleId of cssDeps) {
+            console.log('cssByModuleId.get(cssDepModuleId)', cssDepModuleId);
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
@@ -361,7 +367,10 @@ export const createCompiler = ({
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const rootRelativePath = relative(root, filePath);
-      const result = cssCache.get(rootRelativePath);
+
+      const moduleId = normalizeModuleId(rootRelativePath);
+      console.log('cssCache.get(moduleId)', moduleId);
+      const result = cssCache.get(moduleId);
 
       if (!result) {
         throw new Error(`No CSS for file: ${filePath}`);
