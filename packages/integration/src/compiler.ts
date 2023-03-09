@@ -220,6 +220,11 @@ export const createCompiler = ({
       const cssAdapter: Adapter = {
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
+          console.log(
+            'cssByFileScope.set(fileScope.filePath, [])',
+            fileScope.filePath,
+          );
+
           // Before evaluating a file, reset the cache for it
           cssByFileScope.set(fileScope.filePath, []);
           classRegistrationsByFileScope.set(fileScope.filePath, {
@@ -294,6 +299,7 @@ export const createCompiler = ({
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
           for (const cssDepModuleId of cssDeps) {
+            console.log('cssByFileScope.get(cssDepModuleId)', cssDepModuleId);
             const cssObjs = cssByFileScope.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
