@@ -181,7 +181,7 @@ export const createCompiler = ({
     }
   >();
 
-  const classRegistrationsByFileScope = new Map<
+  const classRegistrationsByModuleId = new Map<
     string,
     {
       localClassNames: Set<string>;
@@ -213,21 +213,17 @@ export const createCompiler = ({
         }
       }
 
-      const cssByFileScope = new Map<string, Array<Css>>();
+      const cssByModuleId = new Map<string, Array<Css>>();
       const localClassNames = new Set<string>();
       const composedClassLists: Array<Composition> = [];
 
       const cssAdapter: Adapter = {
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
-          console.log(
-            'cssByFileScope.set(fileScope.filePath, [])',
-            fileScope.filePath,
-          );
-
           // Before evaluating a file, reset the cache for it
-          cssByFileScope.set(fileScope.filePath, []);
-          classRegistrationsByFileScope.set(fileScope.filePath, {
+          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          cssByModuleId.set(moduleId, []);
+          classRegistrationsByModuleId.set(moduleId, {
             localClassNames: new Set(),
             composedClassLists: [],
           });
@@ -236,8 +232,9 @@ export const createCompiler = ({
           // For backwards compatibility, ensure the cache is populated even if
           // a file didn't contain any CSS. This is to ensure that the only
           // error messages shown in older versions are the ones below.
-          const cssObjs = cssByFileScope.get(filePath) ?? [];
-          cssByFileScope.set(filePath, cssObjs);
+          const moduleId = runner.moduleCache.normalizePath(filePath);
+          const cssObjs = cssByModuleId.get(moduleId) ?? [];
+          cssByModuleId.set(moduleId, cssObjs);
         },
         registerClassName: (className, fileScope) => {
           if (!fileScope) {
@@ -248,8 +245,9 @@ export const createCompiler = ({
 
           localClassNames.add(className);
 
-          classRegistrationsByFileScope
-            .get(fileScope.filePath)!
+          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          classRegistrationsByModuleId
+            .get(moduleId)!
             .localClassNames.add(className);
         },
         registerComposition: (composedClassList, fileScope) => {
@@ -261,17 +259,19 @@ export const createCompiler = ({
 
           composedClassLists.push(composedClassList);
 
-          classRegistrationsByFileScope
-            .get(fileScope.filePath)!
+          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          classRegistrationsByModuleId
+            .get(moduleId)!
             .composedClassLists.push(composedClassList);
         },
         markCompositionUsed: () => {
           // This compiler currently retains all composition classes
         },
         appendCss: (css, fileScope) => {
-          const fileScopeCss = cssByFileScope.get(fileScope.filePath) ?? [];
-          fileScopeCss.push(css);
-          cssByFileScope.set(fileScope.filePath, fileScopeCss);
+          const moduleId = runner.moduleCache.normalizePath(fileScope.filePath);
+          const cssObjs = cssByModuleId.get(moduleId) ?? [];
+          cssObjs.push(css);
+          cssByModuleId.set(moduleId, cssObjs);
         },
       };
 
@@ -299,11 +299,10 @@ export const createCompiler = ({
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
           for (const cssDepModuleId of cssDeps) {
-            console.log('cssByFileScope.get(cssDepModuleId)', cssDepModuleId);
-            const cssObjs = cssByFileScope.get(cssDepModuleId);
+            const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
-              classRegistrationsByFileScope.get(cssDepModuleId);
+              classRegistrationsByModuleId.get(cssDepModuleId);
 
             if (!cssObjs && !cachedCss && !cachedClassRegistrations) {
               continue;
