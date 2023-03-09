@@ -42,7 +42,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: [14, ''] # Add 'lts/*' to this list when ready
+        node: [''] # Add 'lts/*' to this list when ready
     name: Windows Compiler Test (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: windows-latest
     env:
@@ -66,7 +66,7 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Unit Test
+      - name: Test Compiler
         run: pnpm test:vitest compiler
   playwright:
     name: Playwright tests
