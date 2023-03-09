@@ -7,10 +7,12 @@ function toPosix(filePath: string) {
 }
 
 function getLocalFiles(files: Set<string>) {
+  const posixDirname = toPosix(__dirname);
+
   return [...files]
-    .filter((file) => file.startsWith(__dirname))
-    .map((file) => file.replace(__dirname, ''))
-    .map(toPosix);
+    .map(toPosix)
+    .filter((file) => file.startsWith(posixDirname))
+    .map((file) => file.replace(posixDirname, ''));
 }
 
 describe('compiler', () => {
