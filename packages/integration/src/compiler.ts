@@ -32,9 +32,7 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
       watchFiles.add(moduleNode.file);
     }
 
-    for (const importedModule of moduleNode.importedModules) {
-      queue.push(importedModule);
-    }
+    queue.push(...moduleNode.importedModules);
   }
 
   // This ensures the root module's styles are last in terms of CSS ordering
