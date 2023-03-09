@@ -37,6 +37,37 @@ jobs:
 
       - name: Unit Test
         run: pnpm test:unit
+  windows-compiler:
+    strategy:
+      matrix:
+        # Blank string allows us to test against version in nvmrc file
+        # configured in 'Set up Node.js' down below.
+        node: [14, ''] # Add 'lts/*' to this list when ready
+    name: Windows Compiler Test (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
+    runs-on: windows-latest
+    env:
+      CI: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - uses: pnpm/action-setup@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: ${{ matrix.node }}
+          node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Build
+        run: pnpm build
+
+      - name: Unit Test
+        run: pnpm test:vitest compiler
   playwright:
     name: Playwright tests
     runs-on: macos-11
