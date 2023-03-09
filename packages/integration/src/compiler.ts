@@ -223,7 +223,6 @@ export const createCompiler = ({
         onBeginFileScope: (fileScope) => {
           // Before evaluating a file, reset the cache for it
           const moduleId = normalizeModuleId(fileScope.filePath);
-          console.log('cssByModuleId.set(moduleId, [])', moduleId);
           cssByModuleId.set(moduleId, []);
           classRegistrationsByModuleId.set(moduleId, {
             localClassNames: new Set(),
@@ -236,7 +235,6 @@ export const createCompiler = ({
           // error messages shown in older versions are the ones below.
           const moduleId = normalizeModuleId(filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
-          console.log('cssByModuleId.set(moduleId, cssObjs)', moduleId);
           cssByModuleId.set(moduleId, cssObjs);
         },
         registerClassName: (className, fileScope) => {
@@ -275,7 +273,6 @@ export const createCompiler = ({
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssObjs.push(css);
 
-          console.log('cssByModuleId.set(moduleId, cssObjs)', moduleId);
           cssByModuleId.set(moduleId, cssObjs);
         },
       };
@@ -305,9 +302,6 @@ export const createCompiler = ({
 
           for (const cssDep of cssDeps) {
             const cssDepModuleId = normalizeModuleId(cssDep);
-            if (!cssDepModuleId.includes('node_modules')) {
-              console.log('cssByModuleId.get(cssDepModuleId)', cssDepModuleId);
-            }
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
@@ -372,7 +366,6 @@ export const createCompiler = ({
       const rootRelativePath = relative(root, filePath);
 
       const moduleId = normalizeModuleId(rootRelativePath);
-      console.log('cssCache.get(moduleId)', moduleId);
       const result = cssCache.get(moduleId);
 
       if (!result) {
