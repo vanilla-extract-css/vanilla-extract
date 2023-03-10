@@ -166,6 +166,7 @@ function stringifyExports(
   unusedCompositionRegex: RegExp | null,
   key: string,
   exportLookup: Map<any, string>,
+  exportDependencyGraph: DependencyGraph,
 ): any {
   return stringify(
     value,
@@ -185,6 +186,7 @@ function stringifyExports(
         const reusedExport = exportLookup.get(value);
 
         if (reusedExport && reusedExport !== key) {
+          exportDependencyGraph.addDependency(key, reusedExport);
           return reusedExport;
         }
         return next(value);
@@ -236,6 +238,7 @@ function stringifyExports(
                 unusedCompositionRegex,
                 key,
                 exportLookup,
+                exportDependencyGraph,
               ),
             )
             .join(',')})`;
@@ -263,6 +266,48 @@ function stringifyExports(
 
 const defaultExportName = '__default__';
 
+class DependencyGraph {
+  graph: Map<string, Set<string>>;
+
+  public constructor() {
+    this.graph = new Map();
+  }
+
+  /**
+   * Creates a "depends on" relationship between `key` and `dependency`
+   */
+  public addDependency(key: string, dependency: string) {
+    const dependencies = this.graph.get(key);
+
+    if (dependencies) {
+      dependencies.add(dependency);
+    } else {
+      this.graph.set(key, new Set([dependency]));
+    }
+  }
+
+  /**
+   * Whether or not `key` depends on `dependency`
+   */
+  public dependsOn(key: string, dependency: string): boolean {
+    const dependencies = this.graph.get(key);
+
+    if (dependencies) {
+      if (dependencies?.has(dependency)) {
+        return true;
+      }
+
+      for (const [dep] of dependencies.entries()) {
+        if (this.dependsOn(dep, dependency)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+}
+
 export function serializeVanillaModule(
   cssImports: Array<string>,
   exports: Record<string, unknown>,
@@ -276,29 +321,49 @@ export function serializeVanillaModule(
     ]),
   );
 
-  const moduleExports = Object.keys(exports).map((key) => {
+  const exportDependencyGraph = new DependencyGraph();
+
+  const moduleExports = Object.entries(exports).map(([key, value]) => {
     const serializedExport = stringifyExports(
       functionSerializationImports,
-      exports[key],
+      value,
       unusedCompositionRegex,
       key === 'default' ? defaultExportName : key,
       exportLookup,
+      exportDependencyGraph,
     );
 
     if (key === 'default') {
       return [
-        `var ${defaultExportName} = ${serializedExport};`,
-        `export default ${defaultExportName};`,
-      ].join('\n');
+        defaultExportName,
+        [
+          `var ${defaultExportName} = ${serializedExport};`,
+          `export default ${defaultExportName};`,
+        ].join('\n'),
+      ];
     }
 
-    return `export var ${key} = ${serializedExport};`;
+    return [key, `export var ${key} = ${serializedExport};`];
   });
+
+  const sortedModuleExports = moduleExports
+    .sort(([key1], [key2]) => {
+      if (exportDependencyGraph.dependsOn(key1, key2)) {
+        return 1;
+      }
+
+      if (exportDependencyGraph.dependsOn(key2, key1)) {
+        return -1;
+      }
+
+      return 0;
+    })
+    .map(([, s]) => s);
 
   const outputCode = [
     ...cssImports,
     ...functionSerializationImports,
-    ...moduleExports,
+    ...sortedModuleExports,
   ];
 
   return outputCode.join('\n');
