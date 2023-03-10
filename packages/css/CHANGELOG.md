@@ -1,5 +1,15 @@
 # @vanilla-extract/css
 
+## 1.10.0
+
+### Minor Changes
+
+- [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Provide current file scope as an additional argument to the adapter methods `registerClassName` and `registerComposition`. This is to allow fine-grained caching of registered class names and class compositions per file.
+
+### Patch Changes
+
+- [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Throw when `setAdapter` is called with a falsy value
+
 ## 1.9.5
 
 ### Patch Changes
