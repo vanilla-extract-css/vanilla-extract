@@ -1,16 +1,17 @@
 {
-  "name": "@vanilla-extract/esbuild-plugin",
-  "version": "2.2.1",
+  "private": true,
+  "name": "@vanilla-extract/esbuild-plugin-next",
+  "version": "0.0.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
+  "main": "dist/vanilla-extract-esbuild-plugin-next.cjs.js",
+  "module": "dist/vanilla-extract-esbuild-plugin-next.esm.js",
   "files": [
     "/dist"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
-    "directory": "packages/esbuild-plugin"
+    "directory": "packages/esbuild-plugin-next"
   },
   "author": "SEEK",
   "license": "MIT",

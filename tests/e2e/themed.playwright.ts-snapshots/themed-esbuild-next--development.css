@@ -1,0 +1,90 @@
+.themes_theme__cvta170,
+:root {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: #fff;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes_altTheme__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: #fff;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes_responsiveTheme__cvta177 {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__cvta177 {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}
+.shared_shadow__4dtfen0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+@font-face {
+  font-family: styles_impact__jteyb10;
+  src: local("Impact");
+}
+@font-face {
+  font-family: MyGlobalComicSans;
+  src: local("Comic Sans MS");
+}
+.styles_container__jteyb11 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
+}
+.styles_iDunno__jteyb12 {
+  position: relative;
+  z-index: 1;
+}
+.styles_button__jteyb13 {
+  background-color: var(
+    --colors-backgroundColor__cvta171,
+    "THIS FALLBACK VALUE SHOULD NEVER BE USED"
+  );
+  border-radius: 9999px;
+  color: var(--colors-text__cvta172);
+  font-family: styles_impact__jteyb10;
+}
+.themes_altTheme__cvta176
+  .themes_theme__cvta170
+  .styles_container__jteyb11
+  .styles_button__jteyb13 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles_iDunno__jteyb12:after {
+  content: "I am content";
+}
+html .styles_opacity_1\/2__jteyb16 {
+  opacity: var(--blankVar1__jteyb14, 0.5);
+}
+html .styles_opacity_1\/4__jteyb17 {
+  opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
+  }
+  .styles_button__jteyb13 {
+    padding: var(--space-1__cvta173);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles_button__jteyb13 {
+    padding: var(--space-2__cvta174);
+  }
+}

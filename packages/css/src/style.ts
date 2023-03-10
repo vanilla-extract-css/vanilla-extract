@@ -22,7 +22,7 @@ import { dudupeAndJoinClassList } from './utils';
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
-  registerClassName(className);
+  registerClassName(className, getFileScope());
 
   const classList = [];
   const styleRules = [];
@@ -40,10 +40,13 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   if (classList.length > 0) {
     result = `${className} ${dudupeAndJoinClassList(classList)}`;
 
-    registerComposition({
-      identifier: className,
-      classList: result,
-    });
+    registerComposition(
+      {
+        identifier: className,
+        classList: result,
+      },
+      getFileScope(),
+    );
 
     if (styleRules.length > 0) {
       // If there are styles attached to this composition then it is
@@ -71,7 +74,7 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
 
   const className = generateIdentifier(debugId);
 
-  registerClassName(className);
+  registerClassName(className, getFileScope());
   appendCss({ type: 'local', selector: className, rule }, getFileScope());
 
   return className;
