@@ -1,5 +1,13 @@
 # @vanilla-extract/integration
 
+## 6.2.1
+
+### Patch Changes
+
+- [#1036](https://github.com/vanilla-extract-css/vanilla-extract/pull/1036) [`7e876b6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7e876b6f114e700c91734d79579863b83147231e) Thanks [@askoufis](https://github.com/askoufis)! - Sort serialized module exports
+
+  Fixes a Vanilla module serialization bug that sometimes resulted in variables being used before they were declared
+
 ## 6.2.0
 
 ### Minor Changes
