@@ -176,6 +176,19 @@ importers:
     devDependencies:
       '@types/babel__core': 7.1.20
 
+  packages/babel-plugin-split-file:
+    specifiers:
+      '@babel/core': ^7.20.7
+      '@babel/traverse': ^7.20.7
+      '@types/babel__core': ^7.1.20
+      '@types/babel__traverse': ^7.1.20
+    dependencies:
+      '@babel/core': 7.20.7
+      '@babel/traverse': 7.20.10
+    devDependencies:
+      '@types/babel__core': 7.1.20
+      '@types/babel__traverse': 7.14.2
+
   packages/css:
     specifiers:
       '@emotion/hash': ^0.9.0
@@ -241,7 +254,7 @@ importers:
     dependencies:
       '@babel/core': 7.20.7
       '@babel/plugin-syntax-typescript': 7.20.0_@babel+core@7.20.7
-      '@vanilla-extract/babel-plugin-debug-ids': link:../babel-plugin-debug-ids
+      '@vanilla-extract/babel-plugin-debug-ids': link:../babel-plugin-split-file
       '@vanilla-extract/css': link:../css
       esbuild: 0.16.17
       eval: 0.1.6
@@ -6003,16 +6016,6 @@ packages:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
     dev: false
 
-  /@types/babel__core/7.1.19:
-    resolution: {integrity: sha512-WEOTgRsbYkvA/KCsDwVEGkd7WAr1e3g31VHQ8zy5gul/V1qKullU/BU5I68X5v7V3GnB9eotmom4v5a5gjxorw==}
-    dependencies:
-      '@babel/parser': 7.20.7
-      '@babel/types': 7.20.7
-      '@types/babel__generator': 7.6.3
-      '@types/babel__template': 7.4.1
-      '@types/babel__traverse': 7.14.2
-    dev: false
-
   /@types/babel__core/7.1.20:
     resolution: {integrity: sha512-PVb6Bg2QuscZ30FvOU7z4guG6c926D9YRvOxEaelzndpMsvP+YM74Q/dAFASpg2l6+XLalxSGxcq/lrgYWZtyQ==}
     dependencies:
@@ -6021,7 +6024,6 @@ packages:
       '@types/babel__generator': 7.6.3
       '@types/babel__template': 7.4.1
       '@types/babel__traverse': 7.14.2
-    dev: true
 
   /@types/babel__generator/7.6.3:
     resolution: {integrity: sha512-/GWCmzJWqV7diQW54smJZzWbSFf4QYtF71WCKhcx6Ru/tFyQIY2eiiITcCAeuPbNSvT9YCGkVMqqvSk2Z0mXiA==}
@@ -7200,7 +7202,7 @@ packages:
       '@babel/core': 7.20.7
       '@jest/transform': 27.3.1
       '@jest/types': 27.5.1
-      '@types/babel__core': 7.1.19
+      '@types/babel__core': 7.1.20
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 27.2.0_@babel+core@7.20.7
       chalk: 4.1.2
@@ -7218,7 +7220,7 @@ packages:
     dependencies:
       '@babel/core': 7.20.7
       '@jest/transform': 29.3.1
-      '@types/babel__core': 7.1.19
+      '@types/babel__core': 7.1.20
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 29.2.0_@babel+core@7.20.7
       chalk: 4.1.2
@@ -7290,7 +7292,7 @@ packages:
     dependencies:
       '@babel/template': 7.20.7
       '@babel/types': 7.20.7
-      '@types/babel__core': 7.1.19
+      '@types/babel__core': 7.1.20
       '@types/babel__traverse': 7.14.2
     dev: false
 
@@ -7300,7 +7302,7 @@ packages:
     dependencies:
       '@babel/template': 7.20.7
       '@babel/types': 7.20.7
-      '@types/babel__core': 7.1.19
+      '@types/babel__core': 7.1.20
       '@types/babel__traverse': 7.14.2
     dev: false
 
@@ -11055,11 +11057,11 @@ packages:
     dev: true
 
   /globals/11.12.0:
-    resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==, tarball: https://packages.atlassian.com/api/npm/npm-remote/globals/-/globals-11.12.0.tgz}
+    resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
     engines: {node: '>=4'}
 
   /globals/13.20.0:
-    resolution: {integrity: sha512-Qg5QtVkCy/kv3FUSlu4ukeZDVf9ee0iXLAUYX13gbR17bnejFTzr4iS9bY7kwCf1NztRNm1t91fjOiyx4CSwPQ==, tarball: https://packages.atlassian.com/api/npm/npm-remote/globals/-/globals-13.20.0.tgz}
+    resolution: {integrity: sha512-Qg5QtVkCy/kv3FUSlu4ukeZDVf9ee0iXLAUYX13gbR17bnejFTzr4iS9bY7kwCf1NztRNm1t91fjOiyx4CSwPQ==}
     engines: {node: '>=8'}
     dependencies:
       type-fest: 0.20.2

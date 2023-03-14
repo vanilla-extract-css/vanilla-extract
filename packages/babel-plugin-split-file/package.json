@@ -1,9 +1,9 @@
 {
-  "name": "@vanilla-extract/babel-plugin-split-file",
+  "name": "@vanilla-extract/babel-plugin-debug-ids",
   "version": "1.0.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-babel-plugin-split-file.cjs.js",
-  "module": "dist/vanilla-extract-babel-plugin-split-file.esm.js",
+  "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
+  "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
@@ -15,14 +15,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
-    "directory": "packages/babel-plugin-split-file"
+    "directory": "packages/babel-plugin-debug-ids"
   },
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.20.7"
+    "@babel/core": "^7.20.7",
+    "@babel/traverse": "^7.20.7"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.20"
+    "@types/babel__core": "^7.1.20",
+    "@types/babel__traverse": "^7.1.20"
   }
 }
