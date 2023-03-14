@@ -1,5 +1,30 @@
 # @vanilla-extract/integration
 
+## 6.2.1
+
+### Patch Changes
+
+- [#1036](https://github.com/vanilla-extract-css/vanilla-extract/pull/1036) [`7e876b6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7e876b6f114e700c91734d79579863b83147231e) Thanks [@askoufis](https://github.com/askoufis)! - Sort serialized module exports
+
+  Fixes a Vanilla module serialization bug that sometimes resulted in variables being used before they were declared
+
+## 6.2.0
+
+### Minor Changes
+
+- [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add `createCompiler` function for creating a compiler instance that can be re-used between builds. This is a low-level function intended for use by bundler plugins and, as such, is currently undocumented. Note that in order to use the new compiler you must also update `@vanilla-extract/css` to v1.10.0.
+
+* [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Add support for `onBeginFileScope` adapter lifecycle hook
+
+### Patch Changes
+
+- [#1024](https://github.com/vanilla-extract-css/vanilla-extract/pull/1024) [`45d3b86`](https://github.com/vanilla-extract-css/vanilla-extract/commit/45d3b86960027cdfa81989f8e2036a6768cc1e1d) Thanks [@huw](https://github.com/huw)! - Don’t throw when failing to add debug objects to an empty file
+
+* [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Bump esbuild to v0.17.6
+
+* Updated dependencies [[`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d), [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d)]:
+  - @vanilla-extract/css@1.10.0
+
 ## 6.1.2
 
 ### Patch Changes

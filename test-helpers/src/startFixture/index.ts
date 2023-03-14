@@ -38,7 +38,12 @@ export async function startFixture(
     ].join('\n'),
   );
 
-  if (type === 'esbuild' || type === 'esbuild-runtime') {
+  if (
+    type === 'esbuild' ||
+    type === 'esbuild-runtime' ||
+    type === 'esbuild-next' ||
+    type === 'esbuild-next-runtime'
+  ) {
     return startEsbuildFixture(fixtureName, {
       type,
       port,
