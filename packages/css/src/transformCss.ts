@@ -17,9 +17,11 @@ import type {
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
 import { validateSelector } from './validateSelector';
-import { ConditionalRuleset, DECLARATION } from './conditionalRulesets';
+import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 import { validateMediaQuery } from './validateMediaQuery';
+
+const DECLARATION = '__DECLARATION';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
@@ -116,6 +118,7 @@ class Stylesheet {
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
+  layers: Map<string, Array<string>>;
 
   constructor(
     localClassNames: Array<string>,
@@ -129,6 +132,7 @@ class Stylesheet {
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
     this.localClassNamesSearch = new AhoCorasick(localClassNames);
+    this.layers = new Map();
 
     // Class list compositions should be priortized by Newer > Older
     // Therefore we reverse the array as they are added in sequence
@@ -161,8 +165,7 @@ class Stylesheet {
 
     if (root.type === 'layer') {
       const layerDefinition = `@layer ${root.name}`;
-      this.currConditionalRuleset.addConditionPrecedence([], [layerDefinition]);
-      this.currConditionalRuleset.addLayerDeclaration(layerDefinition, []);
+      this.addLayer([layerDefinition]);
     } else {
       // Add main styles
       const mainRule = omit(root.rule, specialKeys);
@@ -191,11 +194,7 @@ class Stylesheet {
     }
   }
 
-  addConditionalRule(
-    cssRule: CSSRule,
-    conditions: Array<string>,
-    { isLayer }: { isLayer?: boolean } = {},
-  ) {
+  addConditionalRule(cssRule: CSSRule, conditions: Array<string>) {
     // Run `transformProperties` before `transformVars` as we don't want to pixelify CSS Vars
     const rule = this.transformVars(this.transformProperties(cssRule.rule));
     const selector = this.transformSelector(cssRule.selector);
@@ -214,7 +213,6 @@ class Stylesheet {
       },
       conditionQuery,
       parentConditions,
-      { isLayer },
     );
   }
 
@@ -227,6 +225,12 @@ class Stylesheet {
       selector,
       rule,
     });
+  }
+
+  addLayer(layer: Array<string>) {
+    const uniqueLayerKey = layer.join(' - ');
+
+    this.layers.set(uniqueLayerKey, layer);
   }
 
   transformProperties(cssRule: CSSPropertiesWithVars) {
@@ -470,6 +474,7 @@ class Stylesheet {
 
       forEach(rules, (layerRule, name) => {
         const conditions = [...parentConditions, `@layer ${name}`];
+        this.addLayer(conditions);
 
         this.addConditionalRule(
           {
@@ -477,7 +482,6 @@ class Stylesheet {
             rule: omit(layerRule, specialKeys),
           },
           conditions,
-          { isLayer: true },
         );
 
         if (root.type === 'local') {
@@ -572,6 +576,22 @@ class Stylesheet {
     // Render keyframes
     for (const keyframe of this.keyframesRules) {
       css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
+    }
+
+    // Render layer definitions
+    for (const layer of this.layers.values()) {
+      const [definition, ...nesting] = layer.reverse();
+      let cssObj: Record<string, any> = {
+        [definition]: DECLARATION,
+      };
+
+      for (const part of nesting) {
+        cssObj = {
+          [part]: cssObj,
+        };
+      }
+
+      css.push(renderCss(cssObj));
     }
 
     // Render unconditional rules

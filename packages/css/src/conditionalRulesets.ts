@@ -1,15 +1,10 @@
 /** e.g. @media screen and (min-width: 500px) */
 type Query = string;
 
-interface StandardRule {
+interface Rule {
   selector: string;
   rule: any;
 }
-
-export const DECLARATION = '__DECLARATION';
-type DeclarationRule = typeof DECLARATION;
-
-type Rule = StandardRule | DeclarationRule;
 
 type Condition = {
   query: Query;
@@ -19,7 +14,6 @@ type Condition = {
 
 export class ConditionalRuleset {
   ruleset: Map<Query, Condition>;
-  includesLayer: boolean;
 
   /**
    * Stores information about where conditions must be in relation to other conditions
@@ -31,7 +25,6 @@ export class ConditionalRuleset {
   constructor() {
     this.ruleset = new Map();
     this.precedenceLookup = new Map();
-    this.includesLayer = false;
   }
 
   findOrCreateCondition(conditionQuery: Query) {
@@ -62,12 +55,7 @@ export class ConditionalRuleset {
     return currRuleset;
   }
 
-  addRule(
-    rule: Rule,
-    conditionQuery: Query,
-    conditionPath: Array<Query>,
-    { isLayer }: { isLayer?: boolean } = {},
-  ) {
+  addRule(rule: Rule, conditionQuery: Query, conditionPath: Array<Query>) {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
     const targetCondition = ruleset.findOrCreateCondition(conditionQuery);
 
@@ -75,16 +63,7 @@ export class ConditionalRuleset {
       throw new Error('Failed to add conditional rule');
     }
 
-    if (isLayer) {
-      ruleset.includesLayer = true;
-    }
-
     targetCondition.rules.push(rule);
-  }
-
-  addLayerDeclaration(conditionQuery: Query, conditionPath: Array<Query>) {
-    this.includesLayer = true;
-    this.addRule(DECLARATION, conditionQuery, conditionPath);
   }
 
   addConditionPrecedence(
@@ -129,9 +108,7 @@ export class ConditionalRuleset {
 
       if (
         matchingCondition &&
-        (matchingCondition.children.includesLayer ||
-          children.includesLayer ||
-          !matchingCondition.children.isCompatible(children))
+        !matchingCondition.children.isCompatible(children)
       ) {
         return false;
       }
@@ -166,8 +143,6 @@ export class ConditionalRuleset {
         new Set([...orderPrecedence, ...incomingOrderPrecedence]),
       );
     }
-
-    this.includesLayer = this.includesLayer || incomingRuleset.includesLayer;
   }
 
   /**
@@ -190,7 +165,7 @@ export class ConditionalRuleset {
 
     // Loop through all queries and add them to the sorted ruleset
     for (const [query, dependents] of this.precedenceLookup.entries()) {
-      let conditionForQuery = this.ruleset.get(query);
+      const conditionForQuery = this.ruleset.get(query);
 
       if (!conditionForQuery) {
         throw new Error(`Can't find condition for ${query}`);
@@ -219,23 +194,14 @@ export class ConditionalRuleset {
 
     for (const { query, rules, children } of this.getSortedRuleset()) {
       const selectors: any = {};
-      let hasDeclaration = false;
 
       for (const rule of rules) {
-        if (rule !== DECLARATION) {
-          selectors[rule.selector] = rule.rule;
-        } else {
-          hasDeclaration = true;
-        }
+        selectors[rule.selector] = rule.rule;
       }
 
       Object.assign(selectors, ...children.renderToArray());
 
-      if (hasDeclaration && Object.keys(selectors).length === 0) {
-        arr.push({ [query]: DECLARATION });
-      } else {
-        arr.push({ [query]: selectors });
-      }
+      arr.push({ [query]: selectors });
     }
 
     return arr;

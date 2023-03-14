@@ -1130,7 +1130,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      "@layer layer1;
+      @layer layer2;
+      .testClass {
         display: flex;
       }
       .testClass {
@@ -1204,6 +1206,16 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       "@layer lib;
+      @layer lib.base;
+      @layer lib.typography;
+      @layer lib.utilities;
+      @layer lib.typography {
+        @media screen and (min-width: 600px) {
+          a {
+            color: green;
+          }
+        }
+      }
       @layer lib.base {
         a {
           font-weight: 800;
@@ -1213,16 +1225,78 @@ describe('transformCss', () => {
           color: blue;
         }
       }
-      @layer lib.typography {
+      @layer lib.utilities {
+        .pink {
+          color: hotpink;
+        }
+      }"
+    `);
+  });
+
+  it('should merge styles from the same layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@layer': {
+                lib: {
+                  fontWeight: 800,
+                  color: 'red',
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'green',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer lib;
+      @layer lib {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+        .pink {
+          color: hotpink;
+        }
         @media screen and (min-width: 600px) {
           a {
             color: green;
           }
-        }
-      }
-      @layer lib.utilities {
-        .pink {
-          color: hotpink;
         }
       }"
     `);
@@ -1279,17 +1353,19 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer layerA {
-        @media (min-width: 700px) {
-          .testClass {
-            display: grid;
-          }
-        }
-      }
+      "@layer layerA;
       @layer layerA.layerA1;
       @layer layerA.layerA2;
       @layer layerA {
         @media (min-width: 700px) {
+          @layer layerA2;
+        }
+      }
+      @layer layerA {
+        @media (min-width: 700px) {
+          .testClass {
+            display: grid;
+          }
           @layer layerA2 {
             .otherTestClass {
               display: block;
@@ -1327,7 +1403,8 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer foo {
+      "@layer foo;
+      @layer foo {
         .testClass:hover {
           color: purple;
         }
