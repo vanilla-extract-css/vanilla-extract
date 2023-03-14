@@ -1149,6 +1149,85 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should bailout merging for layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          { type: 'layer', name: 'lib' },
+          { type: 'layer', name: 'lib.base' },
+          { type: 'layer', name: 'lib.typography' },
+          { type: 'layer', name: 'lib.utilities' },
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@layer': {
+                'lib.typography': {
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'green',
+                    },
+                  },
+                },
+                'lib.base': {
+                  fontWeight: 800,
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                'lib.base': {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                'lib.utilities': {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer lib;
+      @layer lib.base {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+      }
+      @layer lib.typography {
+        @media screen and (min-width: 600px) {
+          a {
+            color: green;
+          }
+        }
+      }
+      @layer lib.utilities {
+        .pink {
+          color: hotpink;
+        }
+      }"
+    `);
+  });
+
   it('should bailout merging for nested layers', () => {
     expect(
       transformCss({
