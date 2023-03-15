@@ -1,17 +1,17 @@
 .styles_calm__spi1fr2 {
-  --bg__spi1fr0: #b0e0e6;
-  --fg__spi1fr1: #fff;
+  --bg__spi1fr0: powderblue;
+  --fg__spi1fr1: white;
 }
 .styles_angry__spi1fr3 {
   --bg__spi1fr0: crimson;
-  --fg__spi1fr1: #000;
+  --fg__spi1fr1: black;
 }
 .styles_reset__spi1fr4 {
   border: 0;
 }
 .styles_button__spi1fr5 {
-  background: var(--bg__spi1fr0);
   border-radius: 6px;
+  background: var(--bg__spi1fr0);
   color: var(--fg__spi1fr1);
   transition: all 0.2s ease;
 }
@@ -30,19 +30,19 @@
   box-shadow: 0 10px 6px -6px #777;
 }
 .styles_button_bold_true__spi1fra {
-  font-weight: 700;
+  font-weight: bold;
 }
 .styles_stack__spi1frc {
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 .styles_stack_space_medium__spi1frd {
   gap: 20px;
 }
 @media only screen and (min-width: 600px) {
   .styles_button_compound_0__spi1frb {
-    border: 2px solid green;
+    border: 2px green solid;
   }
   .styles_stack_space_medium__spi1frd {
     gap: 30px;
