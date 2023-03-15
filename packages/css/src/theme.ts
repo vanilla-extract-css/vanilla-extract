@@ -55,7 +55,7 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
     typeof arg2 === 'object' ? arg3 : arg2,
   );
 
-  registerClassName(themeClassName);
+  registerClassName(themeClassName, getFileScope());
 
   const vars =
     typeof arg2 === 'object'
