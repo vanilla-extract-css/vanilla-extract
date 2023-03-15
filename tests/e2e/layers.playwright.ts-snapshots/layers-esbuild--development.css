@@ -1,22 +1,28 @@
 @layer lib;
-@layer lib.styles_typography__1sqkzjx1 {
-  @media screen and (min-width: 600px) {
+@layer lib.styles_base__1sqkzjx0;
+@media screen and (min-width: 600px) {
+  @layer typography;
+}
+@layer lib.styles_utilities__1sqkzjx2;
+@layer typography;
+@layer lib.styles_base__1sqkzjx0 {
+  a {
+    font-weight: 800;
+    color: red;
+  }
+  .styles_link__1sqkzjx1 {
+    color: blue;
+  }
+}
+@media screen and (min-width: 600px) {
+  @layer typography {
     a {
       color: green;
     }
   }
 }
-@layer lib.styles_base__1sqkzjx0 {
-  a {
-    color: red;
-    font-weight: 800;
-  }
-  .styles_link__1sqkzjx3 {
-    color: blue;
-  }
-}
 @layer lib.styles_utilities__1sqkzjx2 {
-  .styles_pink__1sqkzjx4 {
+  .styles_pink__1sqkzjx3 {
     color: hotpink;
   }
 }

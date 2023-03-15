@@ -1,22 +1,28 @@
 @layer lib;
-@layer lib._1sqkzjx1 {
-  @media screen and (min-width: 600px) {
+@layer lib._1sqkzjx0;
+@media screen and (min-width: 600px) {
+  @layer typography;
+}
+@layer lib._1sqkzjx2;
+@layer typography;
+@layer lib._1sqkzjx0 {
+  a {
+    font-weight: 800;
+    color: red;
+  }
+  ._1sqkzjx1 {
+    color: #00f;
+  }
+}
+@media screen and (min-width: 600px) {
+  @layer typography {
     a {
       color: green;
     }
   }
 }
-@layer lib._1sqkzjx0 {
-  a {
-    color: red;
-    font-weight: 800;
-  }
-  ._1sqkzjx3 {
-    color: #00f;
-  }
-}
 @layer lib._1sqkzjx2 {
-  ._1sqkzjx4 {
+  ._1sqkzjx3 {
     color: #ff69b4;
   }
 }

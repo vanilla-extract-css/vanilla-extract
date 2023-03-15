@@ -1,22 +1,28 @@
 @layer lib;
-@layer lib._18onbx41 {
-  @media screen and (min-width: 600px) {
+@layer lib._18onbx40;
+@media screen and (min-width: 600px) {
+  @layer typography;
+}
+@layer lib._18onbx42;
+@layer typography;
+@layer lib._18onbx40 {
+  a {
+    font-weight: 800;
+    color: red;
+  }
+  ._18onbx41 {
+    color: blue;
+  }
+}
+@media screen and (min-width: 600px) {
+  @layer typography {
     a {
       color: green;
     }
   }
 }
-@layer lib._18onbx40 {
-  a {
-    color: red;
-    font-weight: 800;
-  }
-  ._18onbx43 {
-    color: blue;
-  }
-}
 @layer lib._18onbx42 {
-  ._18onbx44 {
+  ._18onbx43 {
     color: hotpink;
   }
 }
