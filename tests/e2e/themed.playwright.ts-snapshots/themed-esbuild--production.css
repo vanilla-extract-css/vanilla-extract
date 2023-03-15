@@ -1,14 +1,14 @@
-.cvta170,
-:root {
+:root,
+.cvta170 {
   --cvta171: blue;
-  --cvta172: #fff;
+  --cvta172: white;
   --cvta173: 4px;
   --cvta174: 8px;
   --cvta175: 12px;
 }
 .cvta176 {
   --cvta171: green;
-  --cvta172: #fff;
+  --cvta172: white;
   --cvta173: 8px;
   --cvta174: 12px;
   --cvta175: 16px;
@@ -33,12 +33,12 @@ body {
   background-color: #87ceeb;
 }
 @font-face {
-  font-family: jteyb10;
   src: local("Impact");
+  font-family: jteyb10;
 }
 @font-face {
-  font-family: MyGlobalComicSans;
   src: local("Comic Sans MS");
+  font-family: MyGlobalComicSans;
 }
 .jteyb11 {
   display: flex;
@@ -47,14 +47,14 @@ body {
   padding: var(--cvta175);
 }
 .jteyb12 {
-  position: relative;
   z-index: 1;
+  position: relative;
 }
 .jteyb13 {
-  background-color: var(--cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
-  border-radius: 9999px;
-  color: var(--cvta172);
   font-family: jteyb10;
+  background-color: var(--cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  color: var(--cvta172);
+  border-radius: 9999px;
 }
 .cvta176 .cvta170 .jteyb11 .jteyb13 {
   font-family: MyGlobalComicSans;
