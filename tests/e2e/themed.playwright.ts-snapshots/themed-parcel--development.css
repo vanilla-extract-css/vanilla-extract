@@ -1,14 +1,48 @@
-.themes_theme__cdwe0v0,
-:root {
+:root,
+.themes_theme__cdwe0v0 {
   --colors-backgroundColor__cdwe0v1: blue;
-  --colors-text__cdwe0v2: #fff;
+  --colors-text__cdwe0v2: white;
   --space-1__cdwe0v3: 4px;
   --space-2__cdwe0v4: 8px;
   --space-3__cdwe0v5: 12px;
 }
 .themes_altTheme__cdwe0v6 {
   --colors-backgroundColor__cdwe0v1: green;
-  --colors-text__cdwe0v2: #fff;
+  --colors-text__cdwe0v2: white;
+  --space-1__cdwe0v3: 8px;
+  --space-2__cdwe0v4: 12px;
+  --space-3__cdwe0v5: 16px;
+}
+.themes_responsiveTheme__cdwe0v7 {
+  --colors-backgroundColor__cdwe0v1: pink;
+  --colors-text__cdwe0v2: purple;
+  --space-1__cdwe0v3: 6px;
+  --space-2__cdwe0v4: 12px;
+  --space-3__cdwe0v5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__cdwe0v7 {
+    --colors-backgroundColor__cdwe0v1: purple;
+    --colors-text__cdwe0v2: pink;
+  }
+}
+.shared_shadow__5iqv0q0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: #87ceeb;
+}
+:root,
+.themes_theme__cdwe0v0 {
+  --colors-backgroundColor__cdwe0v1: blue;
+  --colors-text__cdwe0v2: white;
+  --space-1__cdwe0v3: 4px;
+  --space-2__cdwe0v4: 8px;
+  --space-3__cdwe0v5: 12px;
+}
+.themes_altTheme__cdwe0v6 {
+  --colors-backgroundColor__cdwe0v1: green;
+  --colors-text__cdwe0v2: white;
   --space-1__cdwe0v3: 8px;
   --space-2__cdwe0v4: 12px;
   --space-3__cdwe0v5: 16px;
@@ -27,38 +61,38 @@
   }
 }
 @font-face {
-  font-family: styles_impact__blj6yb0;
   src: local(Impact);
+  font-family: styles_impact__blj6yb0;
 }
 @font-face {
-  font-family: MyGlobalComicSans;
   src: local(Comic Sans MS);
+  font-family: MyGlobalComicSans;
 }
 .styles_container__blj6yb1 {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-2__cdwe0v4);
   padding: var(--space-3__cdwe0v5);
+  flex-direction: column;
+  display: flex;
 }
 .styles_iDunno__blj6yb2 {
-  position: relative;
   z-index: 1;
+  position: relative;
 }
 .styles_button__blj6yb3 {
   background-color: var(
     --colors-backgroundColor__cdwe0v1,
     "THIS FALLBACK VALUE SHOULD NEVER BE USED"
   );
-  border-radius: 9999px;
   color: var(--colors-text__cdwe0v2);
+  border-radius: 9999px;
   font-family: styles_impact__blj6yb0;
 }
 .themes_altTheme__cdwe0v6
   .themes_theme__cdwe0v0
   .styles_container__blj6yb1
   .styles_button__blj6yb3 {
-  font-family: MyGlobalComicSans;
   outline: 5px solid red;
+  font-family: MyGlobalComicSans;
 }
 body .styles_iDunno__blj6yb2:after {
   content: "I am content";
