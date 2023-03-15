@@ -6,10 +6,9 @@ const config: PlaywrightTestConfig = {
   expect: {
     toMatchSnapshot: {
       threshold: 0.3,
-      maxDiffPixelRatio: 0.05,
+      maxDiffPixels: 10,
     },
   },
-
   projects: [
     {
       name: 'Desktop - Chromium',
@@ -51,4 +50,5 @@ const config: PlaywrightTestConfig = {
     },
   ],
 };
+
 export default config;
