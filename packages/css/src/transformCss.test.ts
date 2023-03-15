@@ -1151,7 +1151,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should merge layers if possible', () => {
+  it('should handle conditional declaration of layers', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1159,20 +1159,20 @@ describe('transformCss', () => {
         cssObjs: [
           { type: 'layer', name: 'lib' },
           { type: 'layer', name: 'lib.base' },
-          { type: 'layer', name: 'lib.typography' },
-          { type: 'layer', name: 'lib.utilities' },
           {
             type: 'global',
             selector: 'a',
             rule: {
-              '@layer': {
-                'lib.typography': {
-                  '@media': {
-                    'screen and (min-width: 600px)': {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  '@layer': {
+                    'lib.typography': {
                       color: 'green',
                     },
                   },
                 },
+              },
+              '@layer': {
                 'lib.base': {
                   fontWeight: 800,
                   color: 'red',
@@ -1191,6 +1191,7 @@ describe('transformCss', () => {
               },
             },
           },
+          { type: 'layer', name: 'lib.utilities' },
           {
             type: 'local',
             selector: 'pink',
@@ -1202,20 +1203,17 @@ describe('transformCss', () => {
               },
             },
           },
+          { type: 'layer', name: 'lib.typography' },
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       "@layer lib;
       @layer lib.base;
-      @layer lib.typography;
-      @layer lib.utilities;
-      @layer lib.typography {
-        @media screen and (min-width: 600px) {
-          a {
-            color: green;
-          }
-        }
+      @media screen and (min-width: 600px) {
+        @layer lib.typography;
       }
+      @layer lib.utilities;
+      @layer lib.typography;
       @layer lib.base {
         a {
           font-weight: 800;
@@ -1223,6 +1221,13 @@ describe('transformCss', () => {
         }
         .link {
           color: blue;
+        }
+      }
+      @media screen and (min-width: 600px) {
+        @layer lib.typography {
+          a {
+            color: green;
+          }
         }
       }
       @layer lib.utilities {
