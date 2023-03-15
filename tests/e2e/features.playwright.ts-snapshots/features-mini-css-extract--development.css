@@ -6,37 +6,37 @@
   display: block;
 }
 .features_styleWithComposition__87f2ru1 {
-  background-color: #b0e0e6;
+  background-color: powderblue;
 }
 .features_styleWithComposition__87f2ru1:hover {
-  background-color: #708090;
+  background-color: slategray;
 }
 .features_styleVariantsWithComposition_variant__87f2ru2 {
-  background-color: #b0e0e6;
+  background-color: powderblue;
 }
 .features_styleVariantsWithComposition_variant__87f2ru2:hover {
-  background-color: #708090;
+  background-color: slategray;
 }
 .features_styleVariantsWithMappedComposition_variant__87f2ru3 {
-  background-color: #b0e0e6;
+  background-color: powderblue;
 }
 .features_styleVariantsWithMappedComposition_variant__87f2ru3:hover {
-  background-color: #708090;
+  background-color: slategray;
 }
 .features_styleCompositionInSelector__87f2ru5 {
-  color: #fff;
+  color: white;
 }
 .features_styleCompositionInSelector__87f2ru6 {
-  background-color: #000;
+  background-color: black;
 }
 body .features_styleCompositionInSelector__87f2ru7 {
   font-size: 24px;
 }
 .features_styleVariantsCompositionInSelector_variant__87f2ru8 {
-  color: #fff;
+  color: white;
 }
 .features_styleVariantsCompositionInSelector_variant__87f2ru9 {
-  background-color: #000;
+  background-color: black;
 }
 body .features_styleVariantsCompositionInSelector_variant__87f2rua {
   font-size: 24px;
