@@ -16,7 +16,7 @@
     "test:unit": "pnpm test:jest && pnpm test:vitest",
     "test:jest": "jest",
     "test:vitest": "vitest --watch=false",
-    "test:playwright": "playwright test",
+    "test:playwright": "NODE_OPTIONS=--no-experimental-fetch playwright test",
     "format": "prettier --write .",
     "lint": "manypkg check && prettier --check . && tsc",
     "copy-readme-to-packages": "ts-node scripts/copy-readme-to-packages",

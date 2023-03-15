@@ -39,6 +39,11 @@ export const startParcelFixture = async (
         return reject(err);
       }
 
+      if (buildEvent?.type === 'buildFailure') {
+        console.error('Build event diagnostics:', buildEvent.diagnostics);
+        return reject(buildEvent.diagnostics[0]);
+      }
+
       if (buildEvent?.type === 'buildSuccess') {
         const cssBundle = buildEvent.bundleGraph
           .getBundles()
