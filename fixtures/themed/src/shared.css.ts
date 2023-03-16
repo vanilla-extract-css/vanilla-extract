@@ -6,4 +6,5 @@ export const shadow: string = style({
 
 globalStyle('body', {
   backgroundColor: 'skyblue',
+  lineHeight: '16px',
 });

@@ -22,6 +22,7 @@ globalStyle('a', {
       '@layer': {
         [typography]: {
           color: 'green', // styles *all* links
+          fontSize: '1.5rem',
         },
       },
     },

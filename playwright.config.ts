@@ -5,8 +5,8 @@ const config: PlaywrightTestConfig = {
   updateSnapshots: 'none',
   expect: {
     toMatchSnapshot: {
-      threshold: 0.3,
-      maxDiffPixels: 10,
+      threshold: 0.2,
+      maxDiffPixelRatio: 0.02,
     },
   },
   projects: [

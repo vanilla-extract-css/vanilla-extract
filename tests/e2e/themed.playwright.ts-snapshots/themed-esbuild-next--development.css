@@ -31,6 +31,7 @@
 }
 body {
   background-color: skyblue;
+  line-height: 16px;
 }
 @font-face {
   src: local("Impact");
