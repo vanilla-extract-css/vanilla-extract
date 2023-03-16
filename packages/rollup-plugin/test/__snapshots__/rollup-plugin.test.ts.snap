@@ -3,12 +3,13 @@
 exports[`rollup-plugin should build with preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-fc9198e4.css",
+    "assets/src/shared.css.ts.vanilla-7cb65ce7.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
 body {
   background-color: skyblue;
+  line-height: 16px;
 }",
   ],
   [
@@ -180,7 +181,7 @@ render();
   ],
   [
     "src/shared.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-fc9198e4.css';
+    "import './../assets/src/shared.css.ts.vanilla-7cb65ce7.css';
 
 var shadow = "shared_shadow__4dtfen0";
 
@@ -189,7 +190,7 @@ export { shadow };
   ],
   [
     "src/styles.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-fc9198e4.css';
+    "import './../assets/src/shared.css.ts.vanilla-7cb65ce7.css';
 import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
 import './../assets/src/styles.css.ts.vanilla-1b9864b6.css';
 
@@ -351,6 +352,7 @@ export { shadow };
 }
 body {
   background-color: skyblue;
+  line-height: 16px;
 }",
   ],
   [
@@ -501,7 +503,7 @@ export { altTheme, responsiveTheme, theme, vars };
 exports[`rollup-plugin should build with sourcemaps 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-fc9198e4.css",
+    "assets/src/shared.css.ts.vanilla-7cb65ce7.css",
     "",
   ],
   [
@@ -538,12 +540,13 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
 exports[`rollup-plugin should build without preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-fc9198e4.css",
+    "assets/src/shared.css.ts.vanilla-7cb65ce7.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
 body {
   background-color: skyblue;
+  line-height: 16px;
 }",
   ],
   [
@@ -633,7 +636,7 @@ html .styles_opacity_1\\/4__jteyb17 {
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-3ad7ca47.css';
-import './assets/src/shared.css.ts.vanilla-fc9198e4.css';
+import './assets/src/shared.css.ts.vanilla-7cb65ce7.css';
 import './assets/src/styles.css.ts.vanilla-1b9864b6.css';
 
 var altTheme = "themes_altTheme__cvta176";
