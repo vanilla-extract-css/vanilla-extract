@@ -31,6 +31,9 @@
 }
 body {
   background-color: #87ceeb;
+}
+body,
+button {
   line-height: 16px;
 }
 :root,
@@ -122,5 +125,8 @@ html .styles_opacity_1\/4__blj6yb7 {
 }
 body {
   background-color: #87ceeb;
+}
+body,
+button {
   line-height: 16px;
 }

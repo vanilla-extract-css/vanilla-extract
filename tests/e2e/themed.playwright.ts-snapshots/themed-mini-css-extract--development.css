@@ -31,6 +31,9 @@
 }
 body {
   background-color: skyblue;
+}
+body,
+button {
   line-height: 16px;
 }
 @font-face {
