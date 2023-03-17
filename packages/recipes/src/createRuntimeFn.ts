@@ -62,7 +62,7 @@ export const createRuntimeFn = <Variants extends VariantGroups>(
     return className;
   };
 
-  runtimeFn.variants = Object.keys(config.variantClassNames);
+  runtimeFn.variants = () => Object.keys(config.variantClassNames);
 
   return runtimeFn;
 };
