@@ -2,4 +2,4 @@
 "@vanilla-extract/recipes": minor
 ---
 
-Add `variants` function for acessing variant names at runtime
+Add `variants` function for accessing variant names at runtime
