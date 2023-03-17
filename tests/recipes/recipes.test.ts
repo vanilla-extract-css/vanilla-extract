@@ -64,4 +64,15 @@ describe('recipes', () => {
       `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1"`,
     );
   });
+
+  it('should expose a function returning list of variants', () => {
+    expect(basic.variants()).toMatchInlineSnapshot(`
+      [
+        "spaceWithDefault",
+        "spaceWithoutDefault",
+        "color",
+        "rounded",
+      ]
+    `);
+  });
 });
