@@ -136,7 +136,7 @@ export const typography = globalLayer(
 
 In order to generate the smallest possible CSS output, Vanilla Extract will merge styles that are assigned to the same layer within the same file, if it can be done without impacting the precedence of the rules.
 
-Notice in this example, while the `themedHeading` style is created before the other styles, it appears later in the stylesheet. This is due to it being assigned to the `theme` layer — which is declared after the `base` layer.
+Notice in this example, while the `themedHeading` style is created before the the `heading` style, it appears later in the stylesheet. This is due to it being assigned to the `theme` layer — which is declared after the `base` layer.
 
 ```ts compiled
 // typography.css.ts
@@ -145,17 +145,17 @@ import { style, globalLayer } from '@vanilla-extract/css';
 const base = globalLayer('base');
 const theme = globalLayer('theme');
 
-const themedHeading = style({
-  '@layer': {
-    [theme]: {
-      color: 'rebeccapurple'
-    }
-  }
-});
 const text = style({
   '@layer': {
     [base]: {
       fontSize: '1rem'
+    }
+  }
+});
+const themedHeading = style({
+  '@layer': {
+    [theme]: {
+      color: 'rebeccapurple'
     }
   }
 });
