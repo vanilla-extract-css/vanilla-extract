@@ -23,11 +23,18 @@ type Condition = Partial<Record<ConditionKey, string>>;
 
 type BaseConditions = { [conditionName: string]: Condition };
 
-type AtomicProperties = {
+type AtomicCSSProperties = {
   [Property in keyof CSSProperties]?:
     | Record<string, CSSProperties[Property] | Omit<StyleRule, ConditionKey>>
     | ReadonlyArray<CSSProperties[Property]>;
 };
+
+type AtomicCustomProperties = Record<
+  string,
+  Record<string | number, Omit<StyleRule, ConditionKey>>
+>;
+
+type AtomicProperties = AtomicCSSProperties | AtomicCustomProperties;
 
 type ShorthandOptions<
   Properties extends AtomicProperties,
