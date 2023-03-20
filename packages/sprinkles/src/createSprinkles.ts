@@ -19,7 +19,8 @@ type ConditionalStyle<
   | (Values[keyof Values]['defaultClass'] extends string ? keyof Values : never)
   | {
       [Condition in keyof Values[keyof Values]['conditions']]?: keyof Values;
-    };
+    }
+  | undefined;
 
 type ConditionalStyleWithResponsiveArray<
   Values extends { [key: string]: ConditionalPropertyValue },
@@ -45,10 +46,12 @@ type ChildSprinkleProps<Sprinkles extends SprinklesProperties['styles']> = {
           Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
         >
       : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends UnconditionalProperty
-      ? keyof Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
+      ?
+          | keyof Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
+          | undefined
       : never
     : Sprinkles[Prop] extends UnconditionalProperty
-    ? keyof Sprinkles[Prop]['values']
+    ? keyof Sprinkles[Prop]['values'] | undefined
     : never;
 };
 
