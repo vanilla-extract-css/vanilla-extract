@@ -1,5 +1,16 @@
 # @vanilla-extract/sprinkles
 
+## 1.5.2
+
+### Patch Changes
+
+- [#1039](https://github.com/vanilla-extract-css/vanilla-extract/pull/1039) [`4e8377b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4e8377bdcfb8ffa237f94da67624458a8ff3b2b5) Thanks [@askoufis](https://github.com/askoufis)! - Fixes types for custom properties passed to `defineProperties`
+
+* [#1034](https://github.com/vanilla-extract-css/vanilla-extract/pull/1034) [`8365959`](https://github.com/vanilla-extract-css/vanilla-extract/commit/836595943eb21f97400986a123788ec46f165139) Thanks [@askoufis](https://github.com/askoufis)! - Allow `undefined` property values at the type level.
+  This change enables better compatibility with projects that set the [`exactOptionalPropertyTypes`][exactoptionalpropertytypes] flag to `true`.
+
+  [exactOptionalPropertyTypes]: https://www.typescriptlang.org/tsconfig#exactOptionalPropertyTypes
+
 ## 1.5.1
 
 ### Patch Changes
