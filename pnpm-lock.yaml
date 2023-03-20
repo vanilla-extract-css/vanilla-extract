@@ -142,7 +142,7 @@ importers:
   fixtures/recipes:
     specifiers:
       '@vanilla-extract/css': 1.10.0
-      '@vanilla-extract/recipes': 0.3.0
+      '@vanilla-extract/recipes': 0.4.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
@@ -150,7 +150,7 @@ importers:
   fixtures/sprinkles:
     specifiers:
       '@vanilla-extract/css': 1.10.0
-      '@vanilla-extract/sprinkles': 1.5.1
+      '@vanilla-extract/sprinkles': 1.5.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
@@ -5178,7 +5178,6 @@ packages:
       '@parcel/transformer-react-refresh-wrap': 2.8.3_@parcel+core@2.8.3
       '@parcel/transformer-svg': 2.8.3_@parcel+core@2.8.3
     transitivePeerDependencies:
-      - acorn
       - cssnano
       - postcss
       - purgecss
@@ -5388,7 +5387,6 @@ packages:
       terser: 5.10.0
     transitivePeerDependencies:
       - '@parcel/core'
-      - acorn
     dev: false
 
   /@parcel/package-manager/2.8.3:
@@ -5866,7 +5864,6 @@ packages:
       terser: 5.10.0
       v8-compile-cache: 2.3.0
     transitivePeerDependencies:
-      - acorn
       - supports-color
     dev: false
 
@@ -11942,8 +11939,6 @@ packages:
       param-case: 3.0.4
       relateurl: 0.2.7
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /html-render-webpack-plugin/3.0.1_nzd6q2tbbwu7trnkwxj2tz54fy:
@@ -11978,8 +11973,6 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.64.2_webpack-cli@4.9.1
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /htmlnano/2.0.3_xx67fuclr4dzzmizs2x43q2w6i:
@@ -19004,32 +18997,7 @@ packages:
       supports-hyperlinks: 2.2.0
     dev: true
 
-  /terser-webpack-plugin/5.2.5_acorn@8.8.1+webpack@5.64.2:
-    resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      '@swc/core': '*'
-      esbuild: '*'
-      uglify-js: '*'
-      webpack: ^5.1.0
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      esbuild:
-        optional: true
-      uglify-js:
-        optional: true
-    dependencies:
-      jest-worker: 27.3.1
-      schema-utils: 3.1.1
-      serialize-javascript: 6.0.0
-      source-map: 0.6.1
-      terser: 5.10.0_acorn@8.8.1
-      webpack: 5.64.2
-    transitivePeerDependencies:
-      - acorn
-
-  /terser-webpack-plugin/5.2.5_dmoaxqo2jb2cxajmot43jz3i7a:
+  /terser-webpack-plugin/5.2.5_dhjlflamz74snw5vqhz4pqvd2u:
     resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -19050,39 +19018,42 @@ packages:
       schema-utils: 3.1.1
       serialize-javascript: 6.0.0
       source-map: 0.6.1
-      terser: 5.10.0_acorn@8.8.1
+      terser: 5.10.0
       webpack: 5.64.2_esbuild@0.17.6
-    transitivePeerDependencies:
-      - acorn
     dev: false
+
+  /terser-webpack-plugin/5.2.5_webpack@5.64.2:
+    resolution: {integrity: sha512-3luOVHku5l0QBeYS8r4CdHYWEGMmIj3H1U64jgkdZzECcSOJAyJ9TjuqcQZvw1Y+4AOBN9SeYJPJmFn2cM4/2g==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
+    dependencies:
+      jest-worker: 27.3.1
+      schema-utils: 3.1.1
+      serialize-javascript: 6.0.0
+      source-map: 0.6.1
+      terser: 5.10.0
+      webpack: 5.64.2
 
   /terser/5.10.0:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
     engines: {node: '>=10'}
     hasBin: true
-    peerDependencies:
-      acorn: ^8.5.0
     peerDependenciesMeta:
       acorn:
         optional: true
     dependencies:
       acorn: 8.8.2
-      commander: 2.20.3
-      source-map: 0.7.3
-      source-map-support: 0.5.21
-    dev: false
-
-  /terser/5.10.0_acorn@8.8.1:
-    resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
-    engines: {node: '>=10'}
-    hasBin: true
-    peerDependencies:
-      acorn: ^8.5.0
-    peerDependenciesMeta:
-      acorn:
-        optional: true
-    dependencies:
-      acorn: 8.8.1
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21
@@ -20504,7 +20475,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5_acorn@8.8.1+webpack@5.64.2
+      terser-webpack-plugin: 5.2.5_webpack@5.64.2
       watchpack: 2.3.0
       webpack-sources: 3.2.2
     transitivePeerDependencies:
@@ -20543,7 +20514,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5_dmoaxqo2jb2cxajmot43jz3i7a
+      terser-webpack-plugin: 5.2.5_dhjlflamz74snw5vqhz4pqvd2u
       watchpack: 2.3.0
       webpack-sources: 3.2.2
     transitivePeerDependencies:
@@ -20583,7 +20554,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.2.5_acorn@8.8.1+webpack@5.64.2
+      terser-webpack-plugin: 5.2.5_webpack@5.64.2
       watchpack: 2.3.0
       webpack-cli: 4.9.1_u5qztdvzsqoic44qnlo623kp4a
       webpack-sources: 3.2.2
