@@ -38,8 +38,14 @@ type AssertIsString<S> = S extends string ? true : never;
   const recipeStyles = textRecipes({ size: 'small' });
   const recipeShouldReturnString: AssertIsString<typeof recipeStyles> = true;
 
+  const variants: ReturnType<typeof textRecipes.variants> = ['size'];
+  // @ts-expect-error Type '"foo"' is not assignable to type '"size"'.
+  const invalidVariants: ReturnType<typeof textRecipes.variants> = ['foo'];
+
   noop(invalidVariantValue);
   noop(invalidVariantName);
   noop(validTextVariant);
+  noop(variants);
+  noop(invalidVariants);
   noop(recipeShouldReturnString);
 };
