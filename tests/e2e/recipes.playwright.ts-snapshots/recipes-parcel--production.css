@@ -1,18 +1,18 @@
 .spi1fr2 {
-  --spi1fr0: #b0e0e6;
-  --spi1fr1: #fff;
+  --spi1fr0: powderblue;
+  --spi1fr1: white;
 }
 .spi1fr3 {
   --spi1fr0: crimson;
-  --spi1fr1: #000;
+  --spi1fr1: black;
 }
 .spi1fr4 {
   border: 0;
 }
 .spi1fr5 {
   background: var(--spi1fr0);
-  border-radius: 6px;
   color: var(--spi1fr1);
+  border-radius: 6px;
   transition: all 0.2s;
 }
 .spi1fr5:hover {
@@ -33,9 +33,9 @@
   font-weight: 700;
 }
 .spi1frc {
+  flex-direction: column;
   align-items: flex-start;
   display: flex;
-  flex-direction: column;
 }
 .spi1frd {
   gap: 20px;
