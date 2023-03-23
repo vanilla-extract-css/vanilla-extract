@@ -1,5 +1,5 @@
 import outdent from 'outdent';
-import { onEndFileScope } from './adapter';
+import { onBeginFileScope, onEndFileScope } from './adapter';
 import type { FileScope } from './types';
 
 let refCounter = 0;
@@ -8,10 +8,12 @@ const fileScopes: Array<FileScope> = [];
 
 export function setFileScope(filePath: string, packageName?: string) {
   refCounter = 0;
-  fileScopes.unshift({
+  const fileScope = {
     filePath,
     packageName,
-  });
+  };
+  fileScopes.unshift(fileScope);
+  onBeginFileScope(fileScope);
 }
 
 export function endFileScope() {

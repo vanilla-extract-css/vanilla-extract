@@ -1,14 +1,48 @@
-.cdwe0v0,
-:root {
+:root,
+.cdwe0v0 {
   --cdwe0v1: blue;
-  --cdwe0v2: #fff;
+  --cdwe0v2: white;
   --cdwe0v3: 4px;
   --cdwe0v4: 8px;
   --cdwe0v5: 12px;
 }
 .cdwe0v6 {
   --cdwe0v1: green;
-  --cdwe0v2: #fff;
+  --cdwe0v2: white;
+  --cdwe0v3: 8px;
+  --cdwe0v4: 12px;
+  --cdwe0v5: 16px;
+}
+.cdwe0v7 {
+  --cdwe0v1: pink;
+  --cdwe0v2: purple;
+  --cdwe0v3: 6px;
+  --cdwe0v4: 12px;
+  --cdwe0v5: 18px;
+}
+@media screen and (min-width: 768px) {
+  .cdwe0v7 {
+    --cdwe0v1: purple;
+    --cdwe0v2: pink;
+  }
+}
+._5iqv0q0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: #87ceeb;
+}
+:root,
+.cdwe0v0 {
+  --cdwe0v1: blue;
+  --cdwe0v2: white;
+  --cdwe0v3: 4px;
+  --cdwe0v4: 8px;
+  --cdwe0v5: 12px;
+}
+.cdwe0v6 {
+  --cdwe0v1: green;
+  --cdwe0v2: white;
   --cdwe0v3: 8px;
   --cdwe0v4: 12px;
   --cdwe0v5: 16px;
@@ -27,32 +61,32 @@
   }
 }
 @font-face {
-  font-family: blj6yb0;
   src: local(Impact);
+  font-family: blj6yb0;
 }
 @font-face {
-  font-family: MyGlobalComicSans;
   src: local(Comic Sans MS);
+  font-family: MyGlobalComicSans;
 }
 .blj6yb1 {
-  display: flex;
-  flex-direction: column;
   gap: var(--cdwe0v4);
   padding: var(--cdwe0v5);
+  flex-direction: column;
+  display: flex;
 }
 .blj6yb2 {
-  position: relative;
   z-index: 1;
+  position: relative;
 }
 .blj6yb3 {
   background-color: var(--cdwe0v1, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
-  border-radius: 9999px;
   color: var(--cdwe0v2);
+  border-radius: 9999px;
   font-family: blj6yb0;
 }
 .cdwe0v6 .cdwe0v0 .blj6yb1 .blj6yb3 {
-  font-family: MyGlobalComicSans;
   outline: 5px solid red;
+  font-family: MyGlobalComicSans;
 }
 body .blj6yb2:after {
   content: "I am content";

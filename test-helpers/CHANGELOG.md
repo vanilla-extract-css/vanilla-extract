@@ -1,5 +1,26 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.36
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/recipes@0.0.20
+  - @fixtures/sprinkles@0.0.22
+
+## 0.0.35
+
+### Patch Changes
+
+- Updated dependencies [[`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d)]:
+  - @vanilla-extract/esbuild-plugin@2.2.2
+  - @fixtures/features@0.0.18
+  - @fixtures/low-level@0.0.18
+  - @fixtures/recipes@0.0.19
+  - @fixtures/sprinkles@0.0.21
+  - @fixtures/themed@0.0.18
+  - @fixtures/unused-modules@1.0.18
+
 ## 0.0.34
 
 ### Patch Changes

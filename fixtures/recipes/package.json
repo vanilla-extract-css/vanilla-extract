@@ -1,12 +1,12 @@
 {
   "name": "@fixtures/recipes",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.9.5",
-    "@vanilla-extract/recipes": "0.3.0"
+    "@vanilla-extract/css": "1.10.0",
+    "@vanilla-extract/recipes": "0.4.0"
   }
 }
