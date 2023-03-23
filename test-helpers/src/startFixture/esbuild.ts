@@ -3,12 +3,18 @@ import { existsSync, promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { vanillaExtractPlugin as vanillaExtractPluginNext } from '@vanilla-extract/esbuild-plugin-next';
+import { vanillaExtractPlugin as vanillaExtractPluginInline } from '@vanilla-extract/esbuild-plugin-inline';
 import * as esbuild from 'esbuild';
 
 import { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
-  type: 'esbuild' | 'esbuild-runtime' | 'esbuild-next' | 'esbuild-next-runtime';
+  type:
+    | 'esbuild'
+    | 'esbuild-runtime'
+    | 'esbuild-next'
+    | 'esbuild-next-runtime'
+    | 'inline';
   mode?: 'development' | 'production';
   port: number;
 }
@@ -16,9 +22,16 @@ export const startEsbuildFixture = async (
   fixtureName: string,
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
 ): Promise<TestServer> => {
-  const plugin = type.includes('next')
-    ? vanillaExtractPluginNext
-    : vanillaExtractPlugin;
+  let plugin = vanillaExtractPlugin;
+
+  if (type.includes('next')) {
+    plugin = vanillaExtractPluginNext;
+  }
+
+  if (type === 'inline') {
+    plugin = vanillaExtractPluginInline;
+  }
+
   const entry = require.resolve(`@fixtures/${fixtureName}/src/index.ts`);
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),

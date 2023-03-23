@@ -13,3 +13,5 @@ export * from './theme';
 export * from './style';
 export * from './vars';
 export { createContainer } from './container';
+
+export const css$ = <T>(t: T): T => t;

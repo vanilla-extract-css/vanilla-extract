@@ -1,6 +1,6 @@
 import type { PluginObj, PluginPass } from '@babel/core';
 import { types as t } from '@babel/core';
-import type { Visitor } from '@babel/traverse';
+import type { NodePath, Visitor } from '@babel/traverse';
 import invariant from 'assert';
 import { DefaultMap } from './DefaultMap';
 import { DependencyGraph } from './DependencyGraph';
@@ -16,18 +16,35 @@ function hasIntersection<T>(a: Set<T>, b: Set<T>) {
 }
 
 type IdentifierName = string;
-type StatementIndex = number;
 
-interface Context extends PluginPass {
-  prevalFunctions: Set<IdentifierName>;
-  moduleScopeIdentifiers: Set<IdentifierName>;
-  identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
-  depGraph: DependencyGraph;
+export interface Store {
+  /* Maps the statement index of build-time code to the statement index of the input code */
+  statementSourceMap: Map<number, number>;
+  buildTimeStatements: Array<t.Statement>;
 }
 
-const identifierVisitor: Visitor<{
-  addUsedIdentifier: (ident: IdentifierName) => void;
-}> = {
+interface PluginOptions {
+  store: Store;
+}
+
+interface Context extends PluginPass {
+  moduleScopeIdentifiers: Set<IdentifierName>;
+  identifierOwners: DefaultMap<number, Set<IdentifierName>>;
+  depGraph: DependencyGraph;
+  vanillaPrevalFunctionLocal?: string;
+  anonymousPrevalOwners: DefaultMap<number, Set<NodePath<t.CallExpression>>>;
+  opts: PluginOptions;
+}
+
+const vanillaPrevalFunctionName = 'css$';
+
+const identifierVisitor: Visitor<
+  {
+    addUsedIdentifier: (ident: IdentifierName) => void;
+    moduleScopeIdentifiers: Set<IdentifierName>;
+    statementIndex: number;
+  } & Pick<Context, 'vanillaPrevalFunctionLocal' | 'anonymousPrevalOwners'>
+> = {
   Identifier(path) {
     if (t.isMemberExpression(path.parent, { property: path.node })) {
       // This is a property of an object so we don't want to check it against the outer scope
@@ -36,15 +53,33 @@ const identifierVisitor: Visitor<{
 
     this.addUsedIdentifier(path.node.name);
   },
+  JSXExpressionContainer(path) {
+    const expressionPath = path.get('expression');
+    if (
+      expressionPath.isCallExpression() &&
+      t.isIdentifier(expressionPath.node.callee, {
+        name: this.vanillaPrevalFunctionLocal,
+      })
+    ) {
+      this.anonymousPrevalOwners.get(this.statementIndex).add(expressionPath);
+    }
+  },
 };
 
-const statementVisitor: Visitor<{
-  moduleScopeIdentifiers: Set<IdentifierName>;
-  addUsedIdentifier: (ident: IdentifierName) => void;
-}> = {
+const statementVisitor: Visitor<
+  {
+    addUsedIdentifier: (ident: IdentifierName) => void;
+    moduleScopeIdentifiers: Set<IdentifierName>;
+    statementIndex: number;
+  } & Pick<Context, 'vanillaPrevalFunctionLocal' | 'anonymousPrevalOwners'>
+> = {
   VariableDeclarator(path) {
     path.get('init').traverse(identifierVisitor, {
       addUsedIdentifier: this.addUsedIdentifier,
+      moduleScopeIdentifiers: this.moduleScopeIdentifiers,
+      vanillaPrevalFunctionLocal: this.vanillaPrevalFunctionLocal,
+      anonymousPrevalOwners: this.anonymousPrevalOwners,
+      statementIndex: this.statementIndex,
     });
   },
 };
@@ -52,28 +87,37 @@ const statementVisitor: Visitor<{
 export default function (): PluginObj<Context> {
   return {
     pre() {
-      this.prevalFunctions = new Set();
       this.moduleScopeIdentifiers = new Set();
       this.identifierOwners = new DefaultMap(() => new Set());
       this.depGraph = new DependencyGraph();
+      this.anonymousPrevalOwners = new DefaultMap(() => new Set());
     },
     visitor: {
       Program: {
-        enter(path) {
+        enter(path, state) {
           const bodyPath = path.get('body');
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
 
             if (t.isImportDeclaration(statement.node)) {
+              // The only preval function we care about is `vanillaPrevalFunctionName`
+              if (statement.node.source.value === '@vanilla-extract/css') {
+                for (const specifier of statement.node.specifiers) {
+                  if (
+                    t.isImportSpecifier(specifier) &&
+                    t.isIdentifier(specifier.imported) &&
+                    specifier.imported.name === vanillaPrevalFunctionName
+                  ) {
+                    this.vanillaPrevalFunctionLocal = specifier.imported.name;
+                  }
+                }
+              }
+
               const locals = statement.node.specifiers.map(
                 (specifier) => specifier.local.name,
               );
 
               for (const local of locals) {
-                if (statement.node.source.value === '@vanilla-extract/css') {
-                  this.prevalFunctions.add(local);
-                }
-
                 this.moduleScopeIdentifiers.add(local);
                 this.identifierOwners.get(statementIndex).add(local);
               }
@@ -100,27 +144,57 @@ export default function (): PluginObj<Context> {
                   }
                 },
                 moduleScopeIdentifiers: this.moduleScopeIdentifiers,
+                vanillaPrevalFunctionLocal: this.vanillaPrevalFunctionLocal,
+                anonymousPrevalOwners: this.anonymousPrevalOwners,
+                statementIndex,
               });
             }
           }
 
-          const essentialIdentifiers = new Set<IdentifierName>(
-            this.prevalFunctions,
-          );
+          // Bail if no usage of the preval function is found
+          if (!this.vanillaPrevalFunctionLocal) {
+            throw new Error(
+              `Failed to find usage of Vanilla Extract preval function "${vanillaPrevalFunctionName}"`,
+            );
+          }
 
-          // console.log({
-          //   essentialIdentifiers,
-          // });
-          // console.log(this.depGraph);
+          const essentialIdentifiers = new Set<IdentifierName>([
+            this.vanillaPrevalFunctionLocal,
+          ]);
+
+          const { store } = state.opts;
 
           for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
+            const anonymousPrevals = Array.from(
+              this.anonymousPrevalOwners.get(statementIndex),
+            );
+
+            if (anonymousPrevals.length > 0) {
+              anonymousPrevals.map((prevalCallExpressionPath, prevalIndex) => {
+                const ident = t.identifier(
+                  `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`,
+                );
+                const declaration = t.variableDeclaration('const', [
+                  t.variableDeclarator(ident, prevalCallExpressionPath.node),
+                ]);
+
+                store.buildTimeStatements.unshift(declaration);
+
+                prevalCallExpressionPath.replaceWith(ident);
+              });
+
+              continue;
+            }
+
             // Should keep index if it creates/modifies an essential identifier
             // or it depends on a preval function
 
             const ownedIdents = this.identifierOwners.get(statementIndex);
 
             if (
-              this.depGraph.dependsOnSome(ownedIdents, this.prevalFunctions) ||
+              this.depGraph.dependsOnSome(ownedIdents, [
+                this.vanillaPrevalFunctionLocal,
+              ]) ||
               hasIntersection(ownedIdents, essentialIdentifiers)
             ) {
               for (const ownedIdent of ownedIdents) {
@@ -129,11 +203,10 @@ export default function (): PluginObj<Context> {
                 }
               }
 
-              continue;
+              const statement = bodyPath[statementIndex];
+              store.buildTimeStatements.unshift(statement.node);
+              statement.remove();
             }
-
-            const statement = bodyPath[statementIndex];
-            statement.remove();
           }
         },
       },

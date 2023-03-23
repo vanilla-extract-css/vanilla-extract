@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/core": "^7.20.7",
     "@fixtures/features": "*",
+    "@fixtures/inline": "*",
     "@fixtures/low-level": "*",
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",
@@ -19,6 +20,7 @@
     "@types/webpack-dev-server": "^3.11.1",
     "@vanilla-extract/esbuild-plugin": "*",
     "@vanilla-extract/esbuild-plugin-next": "*",
+    "@vanilla-extract/esbuild-plugin-inline": "*",
     "@vanilla-extract/parcel-transformer": "*",
     "@vanilla-extract/vite-plugin": "*",
     "@vanilla-extract/webpack-plugin": "*",

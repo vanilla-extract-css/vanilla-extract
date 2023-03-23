@@ -133,6 +133,12 @@ importers:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
+  fixtures/inline:
+    specifiers:
+      '@vanilla-extract/css': 1.10.0
+    dependencies:
+      '@vanilla-extract/css': link:../../packages/css
+
   fixtures/low-level:
     specifiers:
       '@vanilla-extract/css': 1.10.0
@@ -246,6 +252,15 @@ importers:
     devDependencies:
       esbuild: 0.17.6
 
+  packages/esbuild-plugin-inline:
+    specifiers:
+      '@vanilla-extract/integration': ^6.0.2
+      esbuild: 0.17.6
+    dependencies:
+      '@vanilla-extract/integration': link:../integration
+    devDependencies:
+      esbuild: 0.17.6
+
   packages/esbuild-plugin-next:
     specifiers:
       '@vanilla-extract/integration': ^6.0.2
@@ -258,10 +273,14 @@ importers:
   packages/integration:
     specifiers:
       '@babel/core': ^7.20.7
+      '@babel/generator': ^7.21.3
+      '@babel/plugin-syntax-jsx': ^7.18.6
       '@babel/plugin-syntax-typescript': ^7.20.0
       '@types/babel__core': ^7.1.20
+      '@types/babel__generator': ^7.6.4
       '@types/lodash': ^4.14.168
       '@vanilla-extract/babel-plugin-debug-ids': ^1.0.2
+      '@vanilla-extract/babel-plugin-split-file': ^1.0.2
       '@vanilla-extract/css': ^1.10.0
       esbuild: 0.17.6
       eval: 0.1.6
@@ -274,8 +293,11 @@ importers:
       vite-node: ^0.28.5
     dependencies:
       '@babel/core': 7.20.7
+      '@babel/generator': 7.21.3
+      '@babel/plugin-syntax-jsx': 7.18.6_@babel+core@7.20.7
       '@babel/plugin-syntax-typescript': 7.20.0_@babel+core@7.20.7
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.2
+      '@vanilla-extract/babel-plugin-split-file': link:../babel-plugin-split-file
       '@vanilla-extract/css': link:../css
       esbuild: 0.17.6
       eval: 0.1.6
@@ -288,6 +310,7 @@ importers:
       vite-node: 0.28.5
     devDependencies:
       '@types/babel__core': 7.1.20
+      '@types/babel__generator': 7.6.4
       '@types/lodash': 4.14.177
 
   packages/jest-transform:
@@ -506,6 +529,7 @@ importers:
     specifiers:
       '@babel/core': ^7.20.7
       '@fixtures/features': '*'
+      '@fixtures/inline': '*'
       '@fixtures/low-level': '*'
       '@fixtures/recipes': '*'
       '@fixtures/sprinkles': '*'
@@ -519,6 +543,7 @@ importers:
       '@types/serve-handler': ^6
       '@types/webpack-dev-server': ^3.11.1
       '@vanilla-extract/esbuild-plugin': '*'
+      '@vanilla-extract/esbuild-plugin-inline': '*'
       '@vanilla-extract/esbuild-plugin-next': '*'
       '@vanilla-extract/parcel-transformer': '*'
       '@vanilla-extract/vite-plugin': '*'
@@ -545,6 +570,7 @@ importers:
     dependencies:
       '@babel/core': 7.20.7
       '@fixtures/features': link:../fixtures/features
+      '@fixtures/inline': link:../fixtures/inline
       '@fixtures/low-level': link:../fixtures/low-level
       '@fixtures/recipes': link:../fixtures/recipes
       '@fixtures/sprinkles': link:../fixtures/sprinkles
@@ -555,6 +581,7 @@ importers:
       '@types/mini-css-extract-plugin': 1.4.3_esbuild@0.17.6
       '@types/webpack-dev-server': 3.11.6
       '@vanilla-extract/esbuild-plugin': link:../packages/esbuild-plugin
+      '@vanilla-extract/esbuild-plugin-inline': link:../packages/esbuild-plugin-inline
       '@vanilla-extract/esbuild-plugin-next': link:../packages/esbuild-plugin-next
       '@vanilla-extract/parcel-transformer': link:../packages/parcel-transformer
       '@vanilla-extract/vite-plugin': link:../packages/vite-plugin

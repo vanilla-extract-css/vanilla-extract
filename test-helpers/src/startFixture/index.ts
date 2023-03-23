@@ -14,7 +14,8 @@ type BuildType =
   | 'esbuild-runtime'
   | 'esbuild-next-runtime'
   | 'vite'
-  | 'parcel';
+  | 'parcel'
+  | 'inline';
 
 export interface TestServer {
   type: BuildType;
@@ -51,6 +52,14 @@ export async function startFixture(
       }).map(([key, value]) => `- ${key}: ${value}`),
     ].join('\n'),
   );
+
+  if (fixtureName === 'inline' || type === 'inline') {
+    return startEsbuildFixture(fixtureName, {
+      type: 'inline',
+      port,
+      mode: options.mode,
+    });
+  }
 
   if (
     type === 'esbuild' ||

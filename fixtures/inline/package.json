@@ -1,0 +1,10 @@
+{
+  "name": "@fixtures/inline",
+  "version": "0.0.18",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@vanilla-extract/css": "1.10.0"
+  }
+}
