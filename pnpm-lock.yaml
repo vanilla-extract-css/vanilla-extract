@@ -148,7 +148,7 @@ importers:
   fixtures/recipes:
     specifiers:
       '@vanilla-extract/css': 1.10.0
-      '@vanilla-extract/recipes': 0.3.0
+      '@vanilla-extract/recipes': 0.4.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/recipes': link:../../packages/recipes
@@ -156,7 +156,7 @@ importers:
   fixtures/sprinkles:
     specifiers:
       '@vanilla-extract/css': 1.10.0
-      '@vanilla-extract/sprinkles': 1.5.1
+      '@vanilla-extract/sprinkles': 1.5.2
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles
@@ -11947,8 +11947,6 @@ packages:
       param-case: 3.0.4
       relateurl: 0.2.7
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /html-render-webpack-plugin/3.0.1_nzd6q2tbbwu7trnkwxj2tz54fy:
@@ -11983,8 +11981,6 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.64.2_webpack-cli@4.9.1
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /htmlnano/2.0.3_xx67fuclr4dzzmizs2x43q2w6i:

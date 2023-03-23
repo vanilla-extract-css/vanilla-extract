@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.4.0
+
+### Minor Changes
+
+- [#1044](https://github.com/vanilla-extract-css/vanilla-extract/pull/1044) [`3163abc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3163abc75c2e280e96989f732e4e5e60e4941eff) Thanks [@mszczepanczyk](https://github.com/mszczepanczyk)! - Add `variants` function for accessing variant names at runtime
+
 ## 0.3.0
 
 ### Minor Changes

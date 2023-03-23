@@ -1,5 +1,13 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.36
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/recipes@0.0.20
+  - @fixtures/sprinkles@0.0.22
+
 ## 0.0.35
 
 ### Patch Changes

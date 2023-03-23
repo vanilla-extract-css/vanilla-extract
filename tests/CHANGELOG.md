@@ -1,5 +1,14 @@
 # @vanilla-extract-private/tests
 
+## 0.0.37
+
+### Patch Changes
+
+- Updated dependencies [[`3163abc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3163abc75c2e280e96989f732e4e5e60e4941eff), [`4e8377b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4e8377bdcfb8ffa237f94da67624458a8ff3b2b5), [`8365959`](https://github.com/vanilla-extract-css/vanilla-extract/commit/836595943eb21f97400986a123788ec46f165139)]:
+  - @vanilla-extract/recipes@0.4.0
+  - @vanilla-extract/sprinkles@1.5.2
+  - @vanilla-extract-private/test-helpers@0.0.36
+
 ## 0.0.36
 
 ### Patch Changes
