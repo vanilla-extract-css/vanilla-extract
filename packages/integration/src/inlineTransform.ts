@@ -27,7 +27,6 @@ export const transform = async ({
   globalAdapterIdentifier,
 }: TransformParams): Promise<{ buildtime: string; runtime: string }> => {
   const store: any = {
-    statementSourceMap: new Map(),
     buildTimeStatements: [],
   };
 

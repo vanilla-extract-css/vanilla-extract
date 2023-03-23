@@ -18,8 +18,6 @@ function hasIntersection<T>(a: Set<T>, b: Set<T>) {
 type IdentifierName = string;
 
 export interface Store {
-  /* Maps the statement index of build-time code to the statement index of the input code */
-  statementSourceMap: Map<number, number>;
   buildTimeStatements: Array<t.Statement>;
 }
 

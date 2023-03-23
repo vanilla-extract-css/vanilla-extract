@@ -9,7 +9,6 @@ import generate from '@babel/generator';
 
 const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
   const store: Store = {
-    statementSourceMap: new Map(),
     buildTimeStatements: [],
   };
   const result = transformSync(source, {
