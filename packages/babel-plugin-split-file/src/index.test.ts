@@ -64,11 +64,11 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
-      const two = 2;
-      const one = css$(style({
+      export const two = 2;
+      export const one = css$(style({
         zIndex: two
       }));
-      const something = [1, 2].map(value => css$(style({
+      export const something = [1, 2].map(value => css$(style({
         zIndex: value
       })));"
     `);
@@ -100,13 +100,13 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
-      const color = 'red';
-      const myStyle = display => css$(style({
+      export const color = 'red';
+      export const myStyle = display => css$(style({
         display,
         color
       }));
-      const block = myStyle('block');
-      const flex = myStyle('flex');"
+      export const block = myStyle('block');
+      export const flex = myStyle('flex');"
     `);
   });
 
@@ -138,17 +138,17 @@ describe('babel-plugin-split-file', () => {
       `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-          "import polished from 'polished';
-          import { style, css$ } from '@vanilla-extract/css';
-          const makeItPretty = color => polished.makeItPretty(color);
-          const color = makeItPretty('red');
-          const myStyle = display => css$(style({
-            display,
-            color
-          }));
-          const block = myStyle('block');
-          const flex = myStyle('flex');"
-      `);
+      "import polished from 'polished';
+      import { style, css$ } from '@vanilla-extract/css';
+      export const makeItPretty = color => polished.makeItPretty(color);
+      export const color = makeItPretty('red');
+      export const myStyle = display => css$(style({
+        display,
+        color
+      }));
+      export const block = myStyle('block');
+      export const flex = myStyle('flex');"
+    `);
   });
 
   it('should work inline as a classname', () => {
@@ -167,11 +167,11 @@ describe('babel-plugin-split-file', () => {
       `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-          "import { style, css$ } from '@vanilla-extract/css';
-          const _vanilla_anonymousIdentifier_2_0 = css$(style({
-            display: 'flex'
-          }));"
-      `);
+      "import { style, css$ } from '@vanilla-extract/css';
+      export const _vanilla_anonymousIdentifier_2_0 = css$(style({
+        display: 'flex'
+      }));"
+    `);
   });
 
   it('should work inline as an export', () => {

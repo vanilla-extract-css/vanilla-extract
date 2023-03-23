@@ -82,6 +82,17 @@ const statementVisitor: Visitor<
   },
 };
 
+const exportVariableDeclarationIfRequired = (
+  statement: t.Statement,
+  shouldExport: boolean,
+) => {
+  if (shouldExport && t.isVariableDeclaration(statement)) {
+    return t.exportNamedDeclaration(statement);
+  }
+
+  return statement;
+};
+
 export default function (): PluginObj<Context> {
   return {
     pre() {
@@ -172,9 +183,11 @@ export default function (): PluginObj<Context> {
                 const ident = t.identifier(
                   `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`,
                 );
-                const declaration = t.variableDeclaration('const', [
-                  t.variableDeclarator(ident, prevalCallExpressionPath.node),
-                ]);
+                const declaration = t.exportNamedDeclaration(
+                  t.variableDeclaration('const', [
+                    t.variableDeclarator(ident, prevalCallExpressionPath.node),
+                  ]),
+                );
 
                 store.buildTimeStatements.unshift(declaration);
 
@@ -200,9 +213,17 @@ export default function (): PluginObj<Context> {
                   essentialIdentifiers.add(dep);
                 }
               }
+              console.log({ essentialIdentifiers });
 
               const statement = bodyPath[statementIndex];
-              store.buildTimeStatements.unshift(statement.node);
+              // TODO: Actually figure this out
+              const shouldExport = true;
+              store.buildTimeStatements.unshift(
+                exportVariableDeclarationIfRequired(
+                  statement.node,
+                  shouldExport,
+                ),
+              );
               statement.remove();
             }
           }

@@ -368,7 +368,7 @@ export const createInlineCompiler = ({
       }
 
       const newRuntimeSource = injectIdentifiersAndCssImports(
-        transformCache.get(filePath)?.runtime,
+        runtimeCode,
         cssImports,
         fileExports,
       );
