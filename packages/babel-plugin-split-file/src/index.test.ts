@@ -59,16 +59,16 @@ describe('babel-plugin-split-file', () => {
     expect(result.code).toMatchInlineSnapshot(`
       "import React from 'react';
       const id = '123';
-      export default (() => \`<div id="\${id}" class="\${one}" />\`);"
+      export default (() => \`<div id="\${_vanilla_identifier_5_0}" class="\${_vanilla_identifier_3_0}" />\`);"
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
-      export const two = 2;
-      export const one = css$(style({
-        zIndex: two
+      const two = 2;
+      export const _vanilla_identifier_3_0 = css$(style({
+        zIndex: _vanilla_identifier_2_0
       }));
-      export const something = [1, 2].map(value => css$(style({
+      export const _vanilla_identifier_4_0 = [1, 2].map(value => css$(style({
         zIndex: value
       })));"
     `);
@@ -95,18 +95,18 @@ describe('babel-plugin-split-file', () => {
     expect(result.code).toMatchInlineSnapshot(`
       "import React from 'react';
       const id = '123';
-      export default (() => \`<div id="\${id}" class="\${flex}" />\`);"
+      export default (() => \`<div id="\${_vanilla_identifier_6_0}" class="\${_vanilla_identifier_5_0}" />\`);"
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
-      export const color = 'red';
-      export const myStyle = display => css$(style({
+      const color = 'red';
+      const myStyle = display => css$(style({
         display,
-        color
+        _vanilla_identifier_2_0
       }));
-      export const block = myStyle('block');
-      export const flex = myStyle('flex');"
+      export const _vanilla_identifier_4_0 = _vanilla_identifier_3_0('block');
+      export const _vanilla_identifier_5_0 = _vanilla_identifier_3_0('flex');"
     `);
   });
 
@@ -127,27 +127,33 @@ describe('babel-plugin-split-file', () => {
 
     const id = '123';
 
+    const SomeComponent = () => \`<div id="\${id}" class="\${flex}" />\`
+    export const SomeOtherComponent = () => \`<div id="\${id}" class="\${flex}" />\`
     export default () => \`<div id="\${id}" class="\${flex}" />\``;
 
     const result = transform(source);
 
+    // TODO: This is wrong, some build time stuff shouldn't be there, flex should be renamed and
+    // exported
     expect(result.code).toMatchInlineSnapshot(`
-          "import React from 'react';
-          const id = '123';
-          export default (() => \`<div id="\${id}" class="\${flex}" />\`);"
-      `);
+      "import React from 'react';
+      export const SomeOtherComponent = () => \`<div id="\${_vanilla_identifier_8_0}" class="\${_vanilla_identifier_7_0}" />\`;
+      export default (() => \`<div id="\${_vanilla_identifier_8_0}" class="\${_vanilla_identifier_7_0}" />\`);"
+    `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import polished from 'polished';
       import { style, css$ } from '@vanilla-extract/css';
-      export const makeItPretty = color => polished.makeItPretty(color);
-      export const color = makeItPretty('red');
-      export const myStyle = display => css$(style({
+      const makeItPretty = color => polished.makeItPretty(color);
+      const color = _vanilla_identifier_3_0('red');
+      const myStyle = display => css$(style({
         display,
-        color
+        _vanilla_identifier_4_0
       }));
-      export const block = myStyle('block');
-      export const flex = myStyle('flex');"
+      export const _vanilla_identifier_6_0 = _vanilla_identifier_5_0('block');
+      const flex = _vanilla_identifier_5_0('flex');
+      const id = '123';
+      export const _vanilla_identifier_9_0 = () => \`<div id="\${_vanilla_identifier_8_0}" class="\${_vanilla_identifier_7_0}" />\`;"
     `);
   });
 
@@ -157,18 +163,27 @@ describe('babel-plugin-split-file', () => {
 
   const blah = () => '123';
 
-  const SomeComponent = () => <div className={css$(style({ display: 'flex' }))}>foo</div>;`;
-
+  const SomeComponent = () => <div className={css$(style({ display: 'flex' }))}>foo</div>;
+  export const SomeOtherComponent = () => <div className={css$(style({ display: 'flex' }))}>foo</div>;
+  export default () => <div className={css$(style({ display: 'flex' }))}>foo</div>;`;
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(`
-          "const blah = () => '123';
-          const SomeComponent = () => <div className={_vanilla_anonymousIdentifier_2_0}>foo</div>;"
-      `);
+      "const blah = () => '123';
+      const SomeComponent = () => <div className={_vanilla_anonymousIdentifier_2_0}>foo</div>;
+      export const SomeOtherComponent = () => <div className={_vanilla_anonymousIdentifier_3_0}>foo</div>;
+      export default (() => <div className={_vanilla_anonymousIdentifier_4_0}>foo</div>);"
+    `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
       export const _vanilla_anonymousIdentifier_2_0 = css$(style({
+        display: 'flex'
+      }));
+      export const _vanilla_anonymousIdentifier_3_0 = css$(style({
+        display: 'flex'
+      }));
+      export const _vanilla_anonymousIdentifier_4_0 = css$(style({
         display: 'flex'
       }));"
     `);
