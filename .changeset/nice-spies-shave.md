@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/rollup-plugin': minor
+'@vanilla-extract/rollup-plugin': patch
 ---
 
-includes rollup v3 as a peer dependency
+Add rollup v3 as a peer dependency
