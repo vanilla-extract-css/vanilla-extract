@@ -24,6 +24,7 @@ const contents = [
       'font-face',
       'keyframes',
       'create-container',
+      'layer',
       'add-function-serializer',
     ],
   },
@@ -36,6 +37,7 @@ const contents = [
       'create-global-theme-contract',
       'global-font-face',
       'global-keyframes',
+      'global-layer',
     ],
   },
   {

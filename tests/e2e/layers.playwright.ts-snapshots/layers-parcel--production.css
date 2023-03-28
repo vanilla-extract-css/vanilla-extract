@@ -1,0 +1,29 @@
+@layer lib;
+@layer lib._18onbx40;
+@media screen and (min-width: 600px) {
+  @layer typography;
+}
+@layer lib._18onbx42;
+@layer typography;
+@layer lib._18onbx40 {
+  a {
+    color: red;
+    font-weight: 800;
+  }
+  ._18onbx41 {
+    color: #00f;
+  }
+}
+@media screen and (min-width: 600px) {
+  @layer typography {
+    a {
+      color: green;
+      font-size: 1.5rem;
+    }
+  }
+}
+@layer lib._18onbx42 {
+  ._18onbx43 {
+    color: #ff69b4;
+  }
+}

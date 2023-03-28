@@ -5,23 +5,9 @@ import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
 import { startParcelFixture, ParcelFixtureOptions } from './parcel';
 
-type BuildType =
-  | 'browser'
-  | 'mini-css-extract'
-  | 'style-loader'
-  | 'esbuild'
-  | 'esbuild-next'
-  | 'esbuild-runtime'
-  | 'esbuild-next-runtime'
-  | 'vite'
-  | 'parcel';
+import { TestServer } from './types';
 
-export interface TestServer {
-  type: BuildType;
-  url: string;
-  close: () => Promise<void>;
-  stylesheet?: string;
-}
+export * from './types';
 
 type SharedOptions = {
   basePort: number;

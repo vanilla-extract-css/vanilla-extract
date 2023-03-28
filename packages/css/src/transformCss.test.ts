@@ -1067,6 +1067,359 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle @layer declarations', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'layer',
+            name: 'reset',
+          },
+          {
+            type: 'layer',
+            name: 'foo.bar.baz',
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer reset;
+      @layer foo.bar.baz;"
+    `);
+  });
+
+  it('should not write layer declarations if not required', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                layer1: {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'layer1',
+          },
+          {
+            type: 'layer',
+            name: 'layer2',
+          },
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                layer2: {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer layer1;
+      @layer layer2;
+      .testClass {
+        display: flex;
+      }
+      .testClass {
+        display: flex;
+      }
+      @layer layer1 {
+        .testClass {
+          display: grid;
+        }
+      }
+      @layer layer2 {
+        .testClass {
+          display: grid;
+        }
+      }"
+    `);
+  });
+
+  it('should handle conditional declaration of layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          { type: 'layer', name: 'lib' },
+          { type: 'layer', name: 'lib.base' },
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  '@layer': {
+                    'lib.typography': {
+                      color: 'green',
+                    },
+                  },
+                },
+              },
+              '@layer': {
+                'lib.base': {
+                  fontWeight: 800,
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                'lib.base': {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          { type: 'layer', name: 'lib.utilities' },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                'lib.utilities': {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+          { type: 'layer', name: 'lib.typography' },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer lib;
+      @layer lib.base;
+      @media screen and (min-width: 600px) {
+        @layer lib.typography;
+      }
+      @layer lib.utilities;
+      @layer lib.typography;
+      @layer lib.base {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+      }
+      @media screen and (min-width: 600px) {
+        @layer lib.typography {
+          a {
+            color: green;
+          }
+        }
+      }
+      @layer lib.utilities {
+        .pink {
+          color: hotpink;
+        }
+      }"
+    `);
+  });
+
+  it('should merge styles from the same layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@layer': {
+                lib: {
+                  fontWeight: 800,
+                  color: 'red',
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'green',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer lib;
+      @layer lib {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+        .pink {
+          color: hotpink;
+        }
+        @media screen and (min-width: 600px) {
+          a {
+            color: green;
+          }
+        }
+      }"
+    `);
+  });
+
+  it('should bailout merging for nested layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass', 'otherTestClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA1',
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA2',
+          },
+          {
+            type: 'local',
+            selector: 'otherTestClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      '@layer': {
+                        layerA2: {
+                          display: 'block',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer layerA;
+      @layer layerA.layerA1;
+      @layer layerA.layerA2;
+      @layer layerA {
+        @media (min-width: 700px) {
+          @layer layerA2;
+        }
+      }
+      @layer layerA {
+        @media (min-width: 700px) {
+          .testClass {
+            display: grid;
+          }
+          @layer layerA2 {
+            .otherTestClass {
+              display: block;
+            }
+          }
+        }
+      }"
+    `);
+  });
+
+  it('should handle @layer rules with complex selectors and simple pseudos', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                foo: {
+                  ':hover': {
+                    color: 'purple',
+                  },
+                  selectors: {
+                    '&:nth-child(3)': {
+                      color: 'blue',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      "@layer foo;
+      @layer foo {
+        .testClass:hover {
+          color: purple;
+        }
+        .testClass:nth-child(3) {
+          color: blue;
+        }
+      }"
+    `);
+  });
+
   it('should handle nested @supports, @media and @container queries', () => {
     expect(
       transformCss({
@@ -1093,7 +1446,6 @@ describe('transformCss', () => {
                   },
                 },
               },
-
               '@media': {
                 'screen and (min-width: 700px)': {
                   color: 'green',
@@ -1767,11 +2119,9 @@ it('should handle multiple references to the same locally scoped selector', () =
               [`${style2} &:before, ${style2} &:after`]: {
                 background: 'black',
               },
-
               [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
                 background: 'blue',
               },
-
               [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
                 background: 'blue',
               },

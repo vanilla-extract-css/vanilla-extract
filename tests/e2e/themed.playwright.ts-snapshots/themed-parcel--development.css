@@ -32,6 +32,10 @@
 body {
   background-color: #87ceeb;
 }
+body,
+button {
+  line-height: 16px;
+}
 :root,
 .themes_theme__cdwe0v0 {
   --colors-backgroundColor__cdwe0v1: blue;
@@ -121,4 +125,8 @@ html .styles_opacity_1\/4__blj6yb7 {
 }
 body {
   background-color: #87ceeb;
+}
+body,
+button {
+  line-height: 16px;
 }

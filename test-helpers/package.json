@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/core": "^7.20.7",
     "@fixtures/features": "*",
+    "@fixtures/layers": "*",
     "@fixtures/low-level": "*",
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",

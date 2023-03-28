@@ -3,6 +3,12 @@ import { transformSync } from '@babel/core';
 import typescriptSyntax from '@babel/plugin-syntax-typescript';
 import plugin from './';
 
+// remove quotes around the snapshot
+expect.addSnapshotSerializer({
+  test: (val) => typeof val === 'string',
+  print: (val) => (val as string).trim(),
+});
+
 const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
   const result = transformSync(source, {
     filename,
@@ -37,10 +43,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const one = style({
         zIndex: 2
-      }, "one");"
+      }, "one");
     `);
   });
 
@@ -54,12 +60,12 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { styleVariants } from '@vanilla-extract/css';
+      import { styleVariants } from '@vanilla-extract/css';
       const colors = styleVariants({
         red: {
           color: 'red'
         }
-      }, "colors");"
+      }, "colors");
     `);
   });
 
@@ -73,12 +79,12 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { styleVariants } from '@vanilla-extract/css';
+      import { styleVariants } from '@vanilla-extract/css';
       const colors = styleVariants({
         red: 'red'
       }, color => ({
         color
-      }), "colors");"
+      }), "colors");
     `);
   });
 
@@ -92,10 +98,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       export default style({
         zIndex: 2
-      }, "default");"
+      }, "default");
     `);
   });
 
@@ -113,14 +119,14 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const test = {
         one: {
           two: style({
             zIndex: 2
           }, "test_one_two")
         }
-      };"
+      };
     `);
   });
 
@@ -136,12 +142,12 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const test = () => {
         return style({
           color: 'red'
         }, "test");
-      };"
+      };
     `);
   });
 
@@ -155,10 +161,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const test = () => style({
         color: 'red'
-      }, "test");"
+      }, "test");
     `);
   });
 
@@ -174,12 +180,12 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       function test() {
         return style({
           color: 'red'
         }, "test");
-      }"
+      }
     `);
   });
 
@@ -191,10 +197,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { globalStyle } from '@vanilla-extract/css';
+      import { globalStyle } from '@vanilla-extract/css';
       globalStyle('html, body', {
         margin: 0
-      });"
+      });
     `);
   });
 
@@ -206,8 +212,8 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createVar } from '@vanilla-extract/css';
-      const myVar = createVar("myVar");"
+      import { createVar } from '@vanilla-extract/css';
+      const myVar = createVar("myVar");
     `);
   });
 
@@ -219,8 +225,8 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createContainer } from '@vanilla-extract/css';
-      const myContainer = createContainer("myContainer");"
+      import { createContainer } from '@vanilla-extract/css';
+      const myContainer = createContainer("myContainer");
     `);
   });
 
@@ -234,10 +240,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { fontFace } from '@vanilla-extract/css';
+      import { fontFace } from '@vanilla-extract/css';
       const myFont = fontFace({
         src: 'local("Comic Sans MS")'
-      }, "myFont");"
+      }, "myFont");
     `);
   });
 
@@ -251,10 +257,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { globalFontFace } from '@vanilla-extract/css';
+      import { globalFontFace } from '@vanilla-extract/css';
       globalFontFace('myFont', {
         src: 'local("Comic Sans MS")'
-      });"
+      });
     `);
   });
 
@@ -269,7 +275,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { keyframes } from '@vanilla-extract/css';
+      import { keyframes } from '@vanilla-extract/css';
       const myAnimation = keyframes({
         from: {
           transform: 'rotate(0deg)'
@@ -277,11 +283,11 @@ describe('babel plugin', () => {
         to: {
           transform: 'rotate(360deg)'
         }
-      }, "myAnimation");"
+      }, "myAnimation");
     `);
   });
 
-  it('should handle global keyframes', () => {
+  it('should handle globalKeyframes', () => {
     const source = `
       import { globalKeyframes } from '@vanilla-extract/css';
 
@@ -292,7 +298,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { globalKeyframes } from '@vanilla-extract/css';
+      import { globalKeyframes } from '@vanilla-extract/css';
       globalKeyframes('myKeyframes', {
         from: {
           transform: 'rotate(0deg)'
@@ -300,7 +306,84 @@ describe('babel plugin', () => {
         to: {
           transform: 'rotate(360deg)'
         }
-      });"
+      });
+    `);
+  });
+
+  it('should handle layer assigned to const', () => {
+    const source = `
+      import { layer } from '@vanilla-extract/css';
+
+      const autoDebugId = layer();
+      const providedDebugId = layer('utils');
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { layer } from '@vanilla-extract/css';
+      const autoDebugId = layer("autoDebugId");
+      const providedDebugId = layer('utils');
+    `);
+  });
+
+  it('should handle layer assigned to a variable', () => {
+    const source = `
+      import { layer } from '@vanilla-extract/css';
+
+      let reset;
+      reset = layer();
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { layer } from '@vanilla-extract/css';
+      let reset;
+      reset = layer("reset");
+    `);
+  });
+
+  it('should handle layer with a parent', () => {
+    const source = `
+      import { layer } from '@vanilla-extract/css';
+
+      const reset = layer({ parent: 'papa' });
+      const providedDebugId = layer({ parent: 'papa' }, 'utils');
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { layer } from '@vanilla-extract/css';
+      const reset = layer({
+        parent: 'papa'
+      }, "reset");
+      const providedDebugId = layer({
+        parent: 'papa'
+      }, 'utils');
+    `);
+  });
+
+  it('should handle globalLayer', () => {
+    const source = `
+      import { globalLayer } from '@vanilla-extract/css';
+
+      globalLayer('reset');
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { globalLayer } from '@vanilla-extract/css';
+      globalLayer('reset');
+    `);
+  });
+
+  it('should handle globalLayer with a parent', () => {
+    const source = `
+      import { globalLayer } from '@vanilla-extract/css';
+
+      const reset = globalLayer({ parent: 'papa' }, 'my-reset');
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { globalLayer } from '@vanilla-extract/css';
+      const reset = globalLayer({
+        parent: 'papa'
+      }, 'my-reset');
     `);
   });
 
@@ -312,8 +395,8 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createTheme } from '@vanilla-extract/css';
-      const darkTheme = createTheme({}, {}, "darkTheme");"
+      import { createTheme } from '@vanilla-extract/css';
+      const darkTheme = createTheme({}, {}, "darkTheme");
     `);
   });
 
@@ -325,8 +408,8 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createTheme } from '@vanilla-extract/css';
-      const [theme, vars] = createTheme({}, {}, "theme");"
+      import { createTheme } from '@vanilla-extract/css';
+      const [theme, vars] = createTheme({}, {}, "theme");
     `);
   });
 
@@ -341,11 +424,11 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createTheme } from '@vanilla-extract/css';
+      import { createTheme } from '@vanilla-extract/css';
       var _createTheme = createTheme({}, "myThemeClass"),
         _createTheme2 = _slicedToArray(_createTheme, 2),
         myThemeClass = _createTheme2[0],
-        vars = _createTheme2[1];"
+        vars = _createTheme2[1];
     `);
   });
 
@@ -357,10 +440,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createGlobalTheme } from '@vanilla-extract/css';
+      import { createGlobalTheme } from '@vanilla-extract/css';
       const vars = createGlobalTheme(':root', {
         foo: 'bar'
-      });"
+      });
     `);
   });
 
@@ -374,10 +457,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { createThemeContract } from '@vanilla-extract/css';
+      import { createThemeContract } from '@vanilla-extract/css';
       const vars = createThemeContract({
         foo: 'bar'
-      });"
+      });
     `);
   });
 
@@ -389,8 +472,8 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { recipe } from '@vanilla-extract/recipes';
-      const button = recipe({}, "button");"
+      import { recipe } from '@vanilla-extract/recipes';
+      const button = recipe({}, "button");
     `);
   });
 
@@ -414,7 +497,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style, styleVariants } from '@vanilla-extract/css';
+      import { style, styleVariants } from '@vanilla-extract/css';
       const three = style({
         testStyle: {
           zIndex: 2
@@ -429,7 +512,7 @@ describe('babel plugin', () => {
         red: {
           color: 'red'
         }
-      }, \`myDebugValue_\${i}\`);"
+      }, \`myDebugValue_\${i}\`);
     `);
   });
 
@@ -443,10 +526,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from 'some-other-package';
+      import { style } from 'some-other-package';
       const three = style({
         zIndex: 2
-      });"
+      });
     `);
   });
 
@@ -460,10 +543,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style as specialStyle } from '@vanilla-extract/css';
+      import { style as specialStyle } from '@vanilla-extract/css';
       const four = specialStyle({
         zIndex: 2
-      }, "four");"
+      }, "four");
     `);
   });
 
@@ -479,10 +562,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       export const height = [style({
         zIndex: 2
-      }, "height")];"
+      }, "height")];
     `);
   });
 
@@ -498,12 +581,12 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       export const height = {
         full: [style({
           zIndex: 2
         }, "height_full")]
-      };"
+      };
     `);
   });
 
@@ -517,10 +600,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import * as css from '@vanilla-extract/css';
+      import * as css from '@vanilla-extract/css';
       const one = css.style({
         zIndex: 2
-      }, "one");"
+      }, "one");
     `);
   });
 
@@ -542,7 +625,7 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const one = instrument(style({
         zIndex: 1
       }, "one"));
@@ -551,7 +634,7 @@ describe('babel plugin', () => {
       }, "two")));
       const three = instrument(instrument(instrument(style({
         zIndex: 3
-      }, "three"))));"
+      }, "three"))));
     `);
   });
 
@@ -565,10 +648,10 @@ describe('babel plugin', () => {
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
-      "import { style } from '@vanilla-extract/css';
+      import { style } from '@vanilla-extract/css';
       const one = (something++, style({
         zIndex: 1
-      }, "one"));"
+      }, "one"));
     `);
   });
 });

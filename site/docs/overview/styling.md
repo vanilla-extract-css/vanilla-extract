@@ -4,7 +4,7 @@ title: Styling
 
 # Styling
 
-All the styling APIs in vanilla-extract take a style object as input.
+All the styling APIs in Vanilla Extract take a style object as input.
 Describing styles as a JavaScript object enables much better use of TypeScript through your styling code, as the styles are typed data-structures like the rest of your application code.
 It also brings type-safety and autocomplete to CSS authoring (via [csstype]).
 
@@ -63,7 +63,7 @@ export const myStyle = style({
 ## CSS Variables
 
 In regular CSS, variables (or CSS custom properties) are able to be set alongside the other properties within the rule.
-In vanilla-extract CSS variables must be nested within the `vars` key — providing more accurate static typing for the other CSS properties.
+In Vanilla Extract, CSS variables must be nested within the `vars` key — providing more accurate static typing for the other CSS properties.
 
 ```ts compiled
 // styles.css.ts
@@ -93,7 +93,7 @@ const myStyle = style({
 
 ## Media Queries
 
-Unlike in regular CSS, vanilla-extract lets you embed media queries **within** your style definitions using the `@media` key.
+Unlike in regular CSS, Vanilla Extract lets you embed media queries **within** your style definitions using the `@media` key.
 This allows you to easily co-locate the responsive rules of a style into a single data-structure.
 
 ```ts compiled
@@ -112,9 +112,9 @@ const myStyle = style({
 });
 ```
 
-When processing your code into CSS, vanilla-extract will always render your media queries **at the end of the file**. This means styles inside the `@media` key will always have higher precedence than other styles due to CSS rule order precedence.
+When processing your code into CSS, Vanilla Extract will always render your media queries **at the end of the file**. This means styles inside the `@media` key will always have higher precedence than other styles due to CSS rule order precedence.
 
-> 🧠&nbsp;&nbsp;When it's safe to do so, vanilla-extract will merge your `@media`, `@supports`, and `@container` condition blocks together to create the smallest possible CSS output.
+> 🧠&nbsp;&nbsp;When it's safe to do so, Vanilla Extract will merge your `@media`, `@supports`, and `@container` condition blocks together to create the smallest possible CSS output.
 
 ## Selectors
 
@@ -241,7 +241,7 @@ globalStyle(`${parent} a[href]`, {
 
 Container queries work the same as [media queries] and are nested inside the `@container` key.
 
-> 🚧&nbsp;&nbsp;Ensure your target browsers [support container queries]. Vanilla-extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support container queries]. Vanilla Extract supports the [container query syntax] but does not polyfill the feature in unsupported browsers.
 
 ```ts compiled
 // styles.css.ts
@@ -276,6 +276,48 @@ const myStyle = style({
   }
 });
 ```
+
+## Layers
+
+As with media queries above, Vanilla Extract lets you assign styles to [layers][layer] by using the `@layer` key **within** your style definition.
+
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support layers].
+> Vanilla Extract supports the [layers syntax][layer] but does not polyfill the feature in unsupported browsers.
+
+[layer]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
+[support layers]: https://caniuse.com/css-cascade-layers
+
+```ts compiled
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+const text = style({
+  '@layer': {
+    typography: {
+      fontSize: '1rem'
+    }
+  }
+});
+```
+
+The `@layer` key also accepts a scoped layer reference, created via the [layer][layer api] API.
+
+```ts compiled
+// styles.css.ts
+import { style, layer } from '@vanilla-extract/css';
+
+const typography = layer();
+
+const text = style({
+  '@layer': {
+    [typography]: {
+      fontSize: '1rem'
+    }
+  }
+});
+```
+
+To learn more about managing layers, check out the API documentation for [layer][layer api] and [globalLayer][global layer api].
 
 ## Supports Queries
 
@@ -315,6 +357,8 @@ export const myStyle = style({
 [csstype]: https://github.com/frenic/csstype
 [unitless properties]: https://github.com/vanilla-extract-css/vanilla-extract/blob/6068246343ceb58a04006f4ce9d9ff7ecc7a6c09/packages/css/src/transformCss.ts#L25
 [createvar]: /documentation/api/create-var/
+[layer api]: /documentation/api/layer/
+[global layer api]: /documentation/global-api/global-layer/
 [createcontainer]: /documentation/api/create-container/
 [css properties]: #css-properties
 [css variables]: #css-variables

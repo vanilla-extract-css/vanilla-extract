@@ -133,6 +133,12 @@ importers:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/dynamic': link:../../packages/dynamic
 
+  fixtures/layers:
+    specifiers:
+      '@vanilla-extract/css': 1.10.0
+    dependencies:
+      '@vanilla-extract/css': link:../../packages/css
+
   fixtures/low-level:
     specifiers:
       '@vanilla-extract/css': 1.10.0
@@ -485,6 +491,7 @@ importers:
     specifiers:
       '@babel/core': ^7.20.7
       '@fixtures/features': '*'
+      '@fixtures/layers': '*'
       '@fixtures/low-level': '*'
       '@fixtures/recipes': '*'
       '@fixtures/sprinkles': '*'
@@ -524,6 +531,7 @@ importers:
     dependencies:
       '@babel/core': 7.20.7
       '@fixtures/features': link:../fixtures/features
+      '@fixtures/layers': link:../fixtures/layers
       '@fixtures/low-level': link:../fixtures/low-level
       '@fixtures/recipes': link:../fixtures/recipes
       '@fixtures/sprinkles': link:../fixtures/sprinkles
