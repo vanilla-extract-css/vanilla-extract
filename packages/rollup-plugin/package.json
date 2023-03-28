@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/rollup-plugin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
   "module": "dist/vanilla-extract-rollup-plugin.esm.js",
@@ -26,6 +26,6 @@
     "rollup-plugin-esbuild": "^4.9.1"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0"
+    "rollup": "^2.0.0 || ^3.0.0"
   }
 }
