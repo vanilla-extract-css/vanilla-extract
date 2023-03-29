@@ -287,7 +287,11 @@ export default function (): PluginObj<Context> {
               };
 
               if (statement.isExportDefaultDeclaration()) {
-                statement.get('declaration').traverse(identifierVisitor, opts);
+                const decl = statement.get('declaration');
+                decl.traverse(identifierVisitor, {
+                  ...opts,
+                  insideJsxElement: t.isJSXElement(decl),
+                });
               } else {
                 statement.traverse(statementVisitor, opts);
               }
