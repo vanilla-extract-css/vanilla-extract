@@ -9,6 +9,12 @@ const testVar = createVar();
 const style1 = style({});
 const style2 = style({});
 
+// remove quotes around the snapshot
+expect.addSnapshotSerializer({
+  test: (val) => typeof val === 'string',
+  print: (val) => (val as string).trim(),
+});
+
 describe('transformCss', () => {
   it('should escape class names', () => {
     expect(
@@ -41,7 +47,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".test_1\\/2_className {
+      .test_1\\/2_className {
         color: red;
       }
       .\\[test_with_brackets\\] {
@@ -56,7 +62,7 @@ describe('transformCss', () => {
         .test_1\\/2_className {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -84,7 +90,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -96,7 +102,7 @@ describe('transformCss', () => {
         .testClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -136,7 +142,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -154,7 +160,7 @@ describe('transformCss', () => {
         body .testClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -206,7 +212,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: green;
       }
       .otherClass {
@@ -230,7 +236,7 @@ describe('transformCss', () => {
         .otherOtherClass {
           color: yellow;
         }
-      }"
+      }
     `);
   });
 
@@ -302,7 +308,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         .otherClass {
           color: yellow;
         }
@@ -340,7 +346,7 @@ describe('transformCss', () => {
         .otherOtherOtherClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -428,7 +434,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@supports (display: grid) {
+      @supports (display: grid) {
         @media screen and (min-width: 700px) {
           .otherClass {
             color: yellow;
@@ -470,7 +476,7 @@ describe('transformCss', () => {
             color: purple;
           }
         }
-      }"
+      }
     `);
   });
 
@@ -522,7 +528,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 768px) {
+      @media screen and (min-width: 768px) {
         .otherOtherClass {
           background: blue;
         }
@@ -539,7 +545,7 @@ describe('transformCss', () => {
         .otherClass {
           color: red;
         }
-      }"
+      }
     `);
   });
 
@@ -562,12 +568,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:hover {
         color: blue;
-      }"
+      }
     `);
   });
 
@@ -590,7 +596,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
         color: blue;
       }
@@ -598,7 +604,7 @@ describe('transformCss', () => {
         color: blue;
         color: red;
         color: yellow;
-      }"
+      }
     `);
   });
 
@@ -622,11 +628,11 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --myCustomVar: 10px;
         background-color: green;
         -webkit-align-content: end;
-      }"
+      }
     `);
   });
 
@@ -646,9 +652,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "";
-      }"
+      }
     `);
   });
 
@@ -671,12 +677,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "hello";
       }
       .testClass {
         content: "there";
-      }"
+      }
     `);
   });
 
@@ -696,10 +702,10 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "hello";
         content: "there";
-      }"
+      }
     `);
   });
 
@@ -722,12 +728,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: 'hello there';
       }
       .testClass {
         content: "hello there";
-      }"
+      }
     `);
   });
 
@@ -777,7 +783,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: normal;
       }
       ._01 .testClass {
@@ -839,7 +845,7 @@ describe('transformCss', () => {
       }
       ._20 .testClass {
         content: unset;
-      }"
+      }
     `);
   });
 
@@ -866,14 +872,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 500px) {
+      @media screen and (min-width: 500px) {
         .testClass {
           color: red;
         }
         .testClass:hover {
           color: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -905,7 +911,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:link {
@@ -919,7 +925,7 @@ describe('transformCss', () => {
       }
       .testClass:active {
         color: blue;
-      }"
+      }
     `);
   });
 
@@ -950,7 +956,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:nth-child(3) {
@@ -961,7 +967,7 @@ describe('transformCss', () => {
       }
       .parentClass.testClass {
         background: black;
-      }"
+      }
     `);
   });
 
@@ -990,14 +996,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
         .testClass:nth-child(3) {
           color: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -1022,14 +1028,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
       }
       @supports (display: grid) {
         .testClass {
           display: grid;
         }
-      }"
+      }
     `);
   });
 
@@ -1055,7 +1061,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
         container-name: sidebar;
       }
@@ -1063,7 +1069,7 @@ describe('transformCss', () => {
         .testClass {
           display: grid;
         }
-      }"
+      }
     `);
   });
 
@@ -1084,12 +1090,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer reset;
-      @layer foo.bar.baz;"
+      @layer reset;
+      @layer foo.bar.baz;
     `);
   });
 
-  it('should not write layer declarations if not required', () => {
+  it('should hoist @layer declarations', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1130,7 +1136,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer layer1;
+      @layer layer1;
       @layer layer2;
       .testClass {
         display: flex;
@@ -1147,7 +1153,7 @@ describe('transformCss', () => {
         .testClass {
           display: grid;
         }
-      }"
+      }
     `);
   });
 
@@ -1207,7 +1213,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer lib;
+      @layer lib;
       @layer lib.base;
       @media screen and (min-width: 600px) {
         @layer lib.typography;
@@ -1234,7 +1240,7 @@ describe('transformCss', () => {
         .pink {
           color: hotpink;
         }
-      }"
+      }
     `);
   });
 
@@ -1286,7 +1292,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer lib;
+      @layer lib;
       @layer lib {
         a {
           font-weight: 800;
@@ -1303,7 +1309,7 @@ describe('transformCss', () => {
             color: green;
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1358,7 +1364,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer layerA;
+      @layer layerA;
       @layer layerA.layerA1;
       @layer layerA.layerA2;
       @layer layerA {
@@ -1377,7 +1383,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1408,7 +1414,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@layer foo;
+      @layer foo;
       @layer foo {
         .testClass:hover {
           color: purple;
@@ -1416,7 +1422,7 @@ describe('transformCss', () => {
         .testClass:nth-child(3) {
           color: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -1466,7 +1472,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
       }
       @media screen and (min-width: 700px) {
@@ -1498,7 +1504,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1559,7 +1565,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
@@ -1584,7 +1590,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1645,7 +1651,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
@@ -1678,7 +1684,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1703,14 +1709,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: grid;
       }
       @supports not (display: grid) {
         .testClass {
           display: flex;
         }
-      }"
+      }
     `);
   });
 
@@ -1739,7 +1745,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@keyframes myAnimation {
+      @keyframes myAnimation {
         from {
           content: none;
           opacity: 0;
@@ -1750,7 +1756,7 @@ describe('transformCss', () => {
           opacity: 1;
           padding: 10px;
         }
-      }"
+      }
     `);
   });
 
@@ -1769,9 +1775,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face {
+      @font-face {
         src: local("Comic Sans MS");
-      }"
+      }
     `);
   });
 
@@ -1798,14 +1804,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face {
+      @font-face {
         font-family: MyFont1;
         src: local("Comic Sans MS");
       }
       @font-face {
         font-family: MyFont2;
         src: local("Impact");
-      }"
+      }
     `);
   });
 
@@ -1829,11 +1835,11 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         .testClass {
           color: green;
         }
-      }"
+      }
     `);
   });
 
@@ -1877,7 +1883,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: hotpink;
       }
       .otherClass {
@@ -1893,7 +1899,7 @@ describe('transformCss', () => {
         .otherClass {
           color: red;
         }
-      }"
+      }
     `);
   });
 
@@ -1933,7 +1939,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --my-var: red;
         --skkcyc0: green;
         display: block;
@@ -1947,7 +1953,7 @@ describe('transformCss', () => {
           --my-var: yellow;
           --skkcyc0: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -1973,13 +1979,13 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --my-var: 12;
         --skkcyc0: 24;
         display: block;
         padding-top: 10px;
         line-height: 20;
-      }"
+      }
     `);
   });
 
@@ -2009,7 +2015,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass > div {
+      .testClass > div {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -2021,7 +2027,7 @@ describe('transformCss', () => {
         .testClass > div {
           display: flex;
         }
-      }"
+      }
     `);
   });
 
@@ -2044,7 +2050,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Simple pseudos are not valid in "globalStyle""`,
+      `Simple pseudos are not valid in "globalStyle"`,
     );
   });
 
@@ -2069,7 +2075,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Selectors are not allowed within "globalStyle""`,
+      `Selectors are not allowed within "globalStyle"`,
     );
   });
 
@@ -2086,6 +2092,7 @@ describe('transformCss', () => {
             classList: composedStyle2,
           },
         ],
+
         localClassNames: ['composedStyle1', 'composedStyle2'],
         cssObjs: [
           {
@@ -2098,9 +2105,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".composedStyle1 button, body > .composedStyle2 {
+      .composedStyle1 button, body > .composedStyle2 {
         display: block;
-      }"
+      }
     `);
   });
 });
@@ -2131,7 +2138,7 @@ it('should handle multiple references to the same locally scoped selector', () =
       ],
     }).join('\n'),
   ).toMatchInlineSnapshot(`
-    ".skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+    .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
       background: black;
     }
     ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
@@ -2139,7 +2146,7 @@ it('should handle multiple references to the same locally scoped selector', () =
     }
     ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
       background: blue;
-    }"
+    }
   `);
 });
 
