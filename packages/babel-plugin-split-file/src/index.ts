@@ -312,27 +312,6 @@ export default function (): PluginObj<Context> {
           const { store } = state.opts;
 
           for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
-            const anonymousPrevals = Array.from(
-              this.anonymousPrevalOwners.get(statementIndex),
-            );
-
-            if (anonymousPrevals.length > 0) {
-              anonymousPrevals.map((prevalCallExpressionPath, prevalIndex) => {
-                const ident = t.identifier(
-                  `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`,
-                );
-                const declaration = t.exportNamedDeclaration(
-                  t.variableDeclaration('const', [
-                    t.variableDeclarator(ident, prevalCallExpressionPath.node),
-                  ]),
-                );
-
-                store.buildTimeStatements.unshift(declaration);
-
-                prevalCallExpressionPath.replaceWith(ident);
-              });
-            }
-
             // Should keep index if it creates/modifies an essential identifier
             // or it depends on a preval function
 
@@ -377,6 +356,27 @@ export default function (): PluginObj<Context> {
                 );
                 statement.remove();
               }
+            }
+
+            const anonymousPrevals = Array.from(
+              this.anonymousPrevalOwners.get(statementIndex),
+            );
+
+            if (anonymousPrevals.length > 0) {
+              anonymousPrevals.map((prevalCallExpressionPath, prevalIndex) => {
+                const ident = t.identifier(
+                  `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`,
+                );
+                const declaration = t.exportNamedDeclaration(
+                  t.variableDeclaration('const', [
+                    t.variableDeclarator(ident, prevalCallExpressionPath.node),
+                  ]),
+                );
+
+                store.buildTimeStatements.unshift(declaration);
+
+                prevalCallExpressionPath.replaceWith(ident);
+              });
             }
           }
         },

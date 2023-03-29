@@ -176,10 +176,10 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       "import { style, css$ } from '@vanilla-extract/css';
-      const SomeComponent = () => <div className={_vanilla_anonymousIdentifier_2_0}>foo</div>;
       export const _vanilla_anonymousIdentifier_2_0 = css$(style({
         display: 'flex'
       }));
+      const SomeComponent = () => <div className={_vanilla_anonymousIdentifier_2_0}>foo</div>;
       export const _vanilla_anonymousIdentifier_3_0 = css$(style({
         display: 'flex'
       }));
