@@ -16,6 +16,7 @@ function hasIntersection<T>(a: Set<T>, b: Set<T>) {
 }
 
 type IdentifierName = string;
+type StatementIndex = number;
 
 export interface Store {
   buildTimeStatements: Array<t.Statement>;
@@ -27,12 +28,15 @@ interface PluginOptions {
 
 interface Context extends PluginPass {
   moduleScopeIdentifiers: Set<IdentifierName>;
-  identifierOwners: DefaultMap<number, Set<IdentifierName>>;
+  mutatedModuleScopeIdentifiers: Set<IdentifierName>;
+  identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
   depGraph: DependencyGraph;
   vanillaPrevalFunctionLocal?: string;
-  anonymousPrevalOwners: DefaultMap<number, Set<NodePath<t.CallExpression>>>;
+  prevalOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
   vanillaIdentifierMap: Map<string, string>;
-  exportStatements: Set<number>;
+  exportStatements: Set<StatementIndex>;
+  mutatingStatements: Set<StatementIndex>;
+  identifierMutators: DefaultMap<number, Set<IdentifierName>>;
   opts: PluginOptions;
 }
 
@@ -43,12 +47,13 @@ const identifierVisitor: Visitor<
     addUsedIdentifier: (ident: IdentifierName) => void;
     moduleScopeIdentifiers: Set<IdentifierName>;
     statementIndex: number;
-    insideJsxElement: boolean;
   } & Pick<
     Context,
     | 'vanillaPrevalFunctionLocal'
-    | 'anonymousPrevalOwners'
-    | 'vanillaIdentifierMap'
+    | 'prevalOwners'
+    | 'mutatingStatements'
+    | 'identifierMutators'
+    | 'mutatedModuleScopeIdentifiers'
   >
 > = {
   Identifier(path) {
@@ -58,106 +63,41 @@ const identifierVisitor: Visitor<
     }
 
     this.addUsedIdentifier(path.node.name);
-    const vanillaIdentifierName = this.vanillaIdentifierMap.get(path.node.name);
-    if (vanillaIdentifierName) {
-      path.replaceWith(t.identifier(vanillaIdentifierName));
+  },
+  CallExpression(path) {
+    if (isVanillaPrevalFunctionCall(path, this.vanillaPrevalFunctionLocal)) {
+      this.prevalOwners.get(this.statementIndex).add(path);
     }
   },
-  JSXElement: {
-    enter() {
-      this.insideJsxElement = true;
-    },
-    exit() {
-      this.insideJsxElement = false;
-    },
+  AssignmentExpression(path) {
+    this.mutatingStatements.add(this.statementIndex);
+
+    const left = path.node.left;
+
+    if (t.isIdentifier(left) && this.moduleScopeIdentifiers.has(left.name)) {
+      this.identifierMutators.get(this.statementIndex).add(left.name);
+      this.mutatedModuleScopeIdentifiers.add(left.name);
+    }
   },
-  // Handle prevals inside JSX
-  CallExpression(path) {
-    if (
-      this.insideJsxElement &&
-      isVanillaPrevalFunctionCall(path, this.vanillaPrevalFunctionLocal)
-    ) {
-      this.anonymousPrevalOwners.get(this.statementIndex).add(path);
-      return;
+  UpdateExpression(path) {
+    this.mutatingStatements.add(this.statementIndex);
+
+    const arg = path.node.argument;
+
+    if (t.isIdentifier(arg) && this.moduleScopeIdentifiers.has(arg.name)) {
+      this.identifierMutators.get(this.statementIndex).add(arg.name);
+      this.mutatedModuleScopeIdentifiers.add(arg.name);
     }
   },
 };
 
 const isVanillaPrevalFunctionCall = (
-  path: NodePath<t.JSXEmptyExpression | t.Expression | null | undefined>,
+  path: NodePath<t.CallExpression>,
   vanillaPrevalFunctionLocal?: string,
 ): path is NodePath<t.CallExpression> =>
-  path.isCallExpression() &&
   t.isIdentifier(path.node.callee, {
     name: vanillaPrevalFunctionLocal,
   });
-
-const statementVisitor: Visitor<
-  {
-    addUsedIdentifier: (ident: IdentifierName) => void;
-    moduleScopeIdentifiers: Set<IdentifierName>;
-    statementIndex: number;
-  } & Pick<
-    Context,
-    | 'vanillaPrevalFunctionLocal'
-    | 'anonymousPrevalOwners'
-    | 'vanillaIdentifierMap'
-    | 'exportStatements'
-  >
-> = {
-  VariableDeclarator: {
-    enter(path) {
-      const initPath = path.get('init');
-
-      initPath.traverse(identifierVisitor, {
-        addUsedIdentifier: this.addUsedIdentifier,
-        moduleScopeIdentifiers: this.moduleScopeIdentifiers,
-        vanillaPrevalFunctionLocal: this.vanillaPrevalFunctionLocal,
-        anonymousPrevalOwners: this.anonymousPrevalOwners,
-        statementIndex: this.statementIndex,
-        vanillaIdentifierMap: this.vanillaIdentifierMap,
-        // Is this correct?
-        insideJsxElement: false,
-      });
-    },
-    exit(path) {
-      const initPath = path.get('init');
-      // Handle prevals in exported declarator inits, e.g. export const foo = css$(style({}))
-      if (
-        this.exportStatements.has(this.statementIndex) &&
-        isVanillaPrevalFunctionCall(initPath, this.vanillaPrevalFunctionLocal)
-      ) {
-        this.anonymousPrevalOwners.get(this.statementIndex).add(initPath);
-      }
-    },
-  },
-};
-
-const renameAndExportVariableDeclarationIfRequired = (
-  statement: t.Statement,
-  shouldExport: boolean,
-  vanillaIdentifierMap: Map<string, string>,
-) => {
-  if (shouldExport && t.isVariableDeclaration(statement)) {
-    for (const decl of statement.declarations) {
-      const declarationIdentifier = decl.id;
-
-      if (t.isIdentifier(declarationIdentifier)) {
-        const vanillaIdentifierName = vanillaIdentifierMap.get(
-          declarationIdentifier.name,
-        );
-
-        if (vanillaIdentifierName) {
-          declarationIdentifier.name = vanillaIdentifierName;
-        }
-      }
-    }
-
-    return t.exportNamedDeclaration(statement);
-  }
-
-  return statement;
-};
 
 const vanillaDefaultIdentifier = '_vanilla_defaultIdentifer';
 
@@ -167,9 +107,12 @@ export default function (): PluginObj<Context> {
       this.moduleScopeIdentifiers = new Set();
       this.identifierOwners = new DefaultMap(() => new Set());
       this.depGraph = new DependencyGraph();
-      this.anonymousPrevalOwners = new DefaultMap(() => new Set());
+      this.prevalOwners = new DefaultMap(() => new Set());
       this.vanillaIdentifierMap = new Map();
       this.exportStatements = new Set();
+      this.mutatingStatements = new Set();
+      this.identifierMutators = new DefaultMap(() => new Set());
+      this.mutatedModuleScopeIdentifiers = new Set();
     },
     visitor: {
       Program: {
@@ -177,6 +120,8 @@ export default function (): PluginObj<Context> {
           const bodyPath = path.get('body');
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
+
+            const declaredIdentifiers = new Set<IdentifierName>();
 
             if (t.isImportDeclaration(statement.node)) {
               // The only preval function we care about is `vanillaPrevalFunctionName`
@@ -200,14 +145,7 @@ export default function (): PluginObj<Context> {
                 this.moduleScopeIdentifiers.add(local);
                 this.identifierOwners.get(statementIndex).add(local);
               }
-            } else if (
-              statement.isVariableDeclaration() ||
-              statement.isExportNamedDeclaration() ||
-              statement.isExportDefaultDeclaration()
-            ) {
-              const declaredIdentifiers = new Set<IdentifierName>();
-
-              // TODO: Handle export named declarations
+            } else {
               if (t.isVariableDeclaration(statement.node)) {
                 for (const declarationIndex of statement.node.declarations.keys()) {
                   const decl = statement.node.declarations[declarationIndex];
@@ -235,6 +173,7 @@ export default function (): PluginObj<Context> {
                   t.isVariableDeclaration(statement.node.declaration),
                   '[TODO] Handle other types of top-level name declarations',
                 );
+
                 this.exportStatements.add(statementIndex);
 
                 for (const declarationIndex of statement.node.declaration.declarations.keys()) {
@@ -274,27 +213,28 @@ export default function (): PluginObj<Context> {
                 addUsedIdentifier: (ident: string) => {
                   if (this.moduleScopeIdentifiers.has(ident)) {
                     for (const declaredIdent of declaredIdentifiers) {
-                      this.depGraph.addDependency(declaredIdent, ident);
+                      // In order to correctly extract prevals at the top level of a declarator, we
+                      // need to traverse the declarator path, not the declarator's init path.
+                      // Doing this results in traversing the declarator identifier, so to prevent a
+                      // self-referential dependency, we explicitly check for it
+                      if (declaredIdent !== ident) {
+                        this.depGraph.addDependency(declaredIdent, ident);
+                      }
                     }
                   }
                 },
                 moduleScopeIdentifiers: this.moduleScopeIdentifiers,
                 vanillaPrevalFunctionLocal: this.vanillaPrevalFunctionLocal,
-                anonymousPrevalOwners: this.anonymousPrevalOwners,
+                prevalOwners: this.prevalOwners,
                 statementIndex,
                 vanillaIdentifierMap: this.vanillaIdentifierMap,
-                exportStatements: this.exportStatements,
+                mutatingStatements: this.mutatingStatements,
+                identifierMutators: this.identifierMutators,
+                mutatedModuleScopeIdentifiers:
+                  this.mutatedModuleScopeIdentifiers,
               };
 
-              if (statement.isExportDefaultDeclaration()) {
-                const decl = statement.get('declaration');
-                decl.traverse(identifierVisitor, {
-                  ...opts,
-                  insideJsxElement: t.isJSXElement(decl),
-                });
-              } else {
-                statement.traverse(statementVisitor, opts);
-              }
+              statement.traverse(identifierVisitor, opts);
             }
           }
 
@@ -316,26 +256,31 @@ export default function (): PluginObj<Context> {
             // or it depends on a preval function
 
             const ownedIdents = this.identifierOwners.get(statementIndex);
-
             const ownsEssentialIdentifier = hasIntersection(
               ownedIdents,
               essentialIdentifiers,
             );
-            console.log({
-              statementIndex,
-              ownedIdents,
-              ownsEssentialIdentifier,
-            });
+
+            const mutatedIdents = this.identifierMutators.get(statementIndex);
+            const mutatesEssentialIdentifier = hasIntersection(
+              mutatedIdents,
+              essentialIdentifiers,
+            );
 
             const statement = bodyPath[statementIndex];
 
+            const prevals = Array.from(this.prevalOwners.get(statementIndex));
             const isExportStatement = this.exportStatements.has(statementIndex);
+            const keepStatementInRuntime =
+              this.mutatingStatements.has(statementIndex) ||
+              hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
 
             if (
               this.depGraph.dependsOnSome(ownedIdents, [
                 this.vanillaPrevalFunctionLocal,
               ]) ||
-              ownsEssentialIdentifier
+              ownsEssentialIdentifier ||
+              mutatesEssentialIdentifier
             ) {
               for (const ownedIdent of ownedIdents) {
                 for (const dep of this.depGraph.getDependencies(ownedIdent)) {
@@ -343,30 +288,45 @@ export default function (): PluginObj<Context> {
                 }
               }
 
-              // This heuristic works, but it over-exports some identifiers
-              const shouldExport = ownsEssentialIdentifier;
+              const moveStatementToBuildtime =
+                statement.isImportDeclaration() ||
+                (prevals.length === 0 && !isExportStatement);
 
-              if (!isExportStatement) {
-                store.buildTimeStatements.unshift(
-                  renameAndExportVariableDeclarationIfRequired(
-                    statement.node,
-                    shouldExport,
-                    this.vanillaIdentifierMap,
-                  ),
-                );
-                statement.remove();
+              // Move essential import specifiers and identifiers to build time
+              if (moveStatementToBuildtime) {
+                store.buildTimeStatements.unshift(statement.node);
+                if (!keepStatementInRuntime) {
+                  statement.remove();
+                }
               }
             }
 
-            const anonymousPrevals = Array.from(
-              this.anonymousPrevalOwners.get(statementIndex),
-            );
+            if (prevals.length > 0) {
+              prevals.map((prevalCallExpressionPath, prevalIndex) => {
+                let identifierName: string | undefined;
 
-            if (anonymousPrevals.length > 0) {
-              anonymousPrevals.map((prevalCallExpressionPath, prevalIndex) => {
-                const ident = t.identifier(
-                  `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`,
-                );
+                if (
+                  // If we're at the top of a named variable declaration
+                  t.isVariableDeclarator(prevalCallExpressionPath.parent) &&
+                  // TODO: Handle other types of ids
+                  t.isIdentifier(prevalCallExpressionPath.parent.id)
+                ) {
+                  identifierName = this.vanillaIdentifierMap.get(
+                    prevalCallExpressionPath.parent.id.name,
+                  );
+                } else if (
+                  // If we're at the top of a default export
+                  t.isExportDefaultDeclaration(prevalCallExpressionPath.parent)
+                ) {
+                  identifierName = vanillaDefaultIdentifier;
+                } else {
+                  // We're somewhere else in an expression
+                  identifierName = `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`;
+                }
+
+                invariant(identifierName, 'Must have an identifier name');
+                const ident = t.identifier(identifierName);
+
                 const declaration = t.exportNamedDeclaration(
                   t.variableDeclaration('const', [
                     t.variableDeclarator(ident, prevalCallExpressionPath.node),
