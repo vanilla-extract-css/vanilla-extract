@@ -421,12 +421,19 @@ function injectIdentifiersAndCssImports(
   cssImports: Array<string>,
   fileExports: any,
 ) {
-  // TODO Actually implement this
-  console.log('injectIdentifiersAndCssImports', {
-    runtimeCode,
-    cssImports,
-    fileExports,
-  });
+  // console.log('injectIdentifiersAndCssImports', {
+  //   runtimeCode,
+  //   cssImports,
+  //   fileExports,
+  // });
 
-  return runtimeCode;
+  const identifierValues = Object.entries(fileExports).map(
+    ([identifier, value]) => {
+      const serializedValue = JSON.stringify(value, null, 2);
+
+      return `var ${identifier} = ${serializedValue};`;
+    },
+  );
+
+  return [...cssImports, ...identifierValues, runtimeCode].join('\n');
 }
