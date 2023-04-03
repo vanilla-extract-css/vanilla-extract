@@ -93,27 +93,72 @@ const getDebugId = (path: NodePath<t.CallExpression>) => {
     return;
   }
 
-  // Special case: Handle `export const [themeClass, vars] = createTheme({});`
-  // when it's already been compiled into this:
+  // Special case 1: Handle `export const [themeClass, vars] = createTheme({});`
+  // when it's already been compiled into one of the following forms:
   //
   // var _createTheme = createTheme({}),
   //   _createTheme2 = _slicedToArray(_createTheme, 2),
   //   themeClass = _createTheme2[0],
   //   vars = _createTheme2[1];
-  if (
-    t.isVariableDeclaration(firstRelevantParentPath.parent) &&
-    firstRelevantParentPath.parent.declarations.length === 4
-  ) {
-    const [themeDeclarator, , classNameDeclarator] =
-      firstRelevantParentPath.parent.declarations;
+  if (t.isVariableDeclaration(firstRelevantParentPath.parent)) {
+    if (firstRelevantParentPath.parent.declarations.length === 4) {
+      const [themeDeclarator, , classNameDeclarator] =
+        firstRelevantParentPath.parent.declarations;
 
-    if (
-      t.isCallExpression(themeDeclarator.init) &&
-      t.isIdentifier(themeDeclarator.init.callee, { name: 'createTheme' }) &&
-      t.isVariableDeclarator(classNameDeclarator) &&
-      t.isIdentifier(classNameDeclarator.id)
-    ) {
-      return classNameDeclarator.id.name;
+      if (
+        t.isCallExpression(themeDeclarator.init) &&
+        t.isIdentifier(themeDeclarator.init.callee, { name: 'createTheme' }) &&
+        t.isIdentifier(classNameDeclarator.id)
+      ) {
+        return classNameDeclarator.id.name;
+      }
+    }
+    // alternative compiled form:
+    //
+    // var ref = _slicedToArray(createTheme({}), 2);
+    // export var themeClass = ref[0],
+    //   vars = ref[1];
+    else if (firstRelevantParentPath.parent.declarations.length === 1) {
+      const [themeDeclarator] = firstRelevantParentPath.parent.declarations;
+      const nextSibling =
+        firstRelevantParentPath.parentPath?.getNextSibling().node;
+
+      if (
+        t.isCallExpression(themeDeclarator.init) &&
+        t.isCallExpression(themeDeclarator.init.arguments[0]) &&
+        t.isIdentifier(themeDeclarator.init.arguments[0].callee, {
+          name: 'createTheme',
+        }) &&
+        t.isExportNamedDeclaration(nextSibling) &&
+        t.isVariableDeclaration(nextSibling.declaration) &&
+        t.isVariableDeclarator(nextSibling.declaration.declarations[0]) &&
+        t.isIdentifier(nextSibling.declaration.declarations[0].id)
+      ) {
+        return nextSibling.declaration.declarations[0].id.name;
+      }
+    }
+    // Special case 2: Handle `const [themeClass, vars] = createTheme({});
+    //                        export { themeClass, vars };`
+    // when compiled into the following:
+    //
+    // var ref = _slicedToArray(createTheme({}), 2),
+    //   myThemeClass = ref[0],
+    //   vars = ref[1];
+    // export { themeClass, vars };
+    else if (firstRelevantParentPath.parent.declarations.length === 3) {
+      const [themeDeclarator, classNameDeclarator] =
+        firstRelevantParentPath.parent.declarations;
+
+      if (
+        t.isCallExpression(themeDeclarator.init) &&
+        t.isCallExpression(themeDeclarator.init.arguments[0]) &&
+        t.isIdentifier(themeDeclarator.init.arguments[0].callee, {
+          name: 'createTheme',
+        }) &&
+        t.isIdentifier(classNameDeclarator.id)
+      ) {
+        return classNameDeclarator.id.name;
+      }
     }
   }
 
