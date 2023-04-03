@@ -29,6 +29,10 @@ export const setAdapterIfNotSet = (newAdapter: Adapter) => {
 };
 
 export const setAdapter = (newAdapter: Adapter) => {
+  if (!newAdapter) {
+    throw new Error('No adapter provided when calling "setAdapter"');
+  }
+
   hasConfiguredAdapter = true;
 
   adapterStack.push(newAdapter);
@@ -56,6 +60,12 @@ export const markCompositionUsed: Adapter['markCompositionUsed'] = (
   ...props
 ) => {
   return currentAdapter().markCompositionUsed(...props);
+};
+
+export const onBeginFileScope: NonNullable<Adapter['onBeginFileScope']> = (
+  ...props
+) => {
+  return currentAdapter().onBeginFileScope?.(...props);
 };
 
 export const onEndFileScope: Adapter['onEndFileScope'] = (...props) => {

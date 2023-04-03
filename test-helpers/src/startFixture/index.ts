@@ -5,21 +5,9 @@ import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
 import { startParcelFixture, ParcelFixtureOptions } from './parcel';
 
-type BuildType =
-  | 'browser'
-  | 'mini-css-extract'
-  | 'style-loader'
-  | 'esbuild'
-  | 'esbuild-runtime'
-  | 'vite'
-  | 'parcel';
+import { TestServer } from './types';
 
-export interface TestServer {
-  type: BuildType;
-  url: string;
-  close: () => Promise<void>;
-  stylesheet?: string;
-}
+export * from './types';
 
 type SharedOptions = {
   basePort: number;
@@ -50,7 +38,12 @@ export async function startFixture(
     ].join('\n'),
   );
 
-  if (type === 'esbuild' || type === 'esbuild-runtime') {
+  if (
+    type === 'esbuild' ||
+    type === 'esbuild-runtime' ||
+    type === 'esbuild-next' ||
+    type === 'esbuild-next-runtime'
+  ) {
     return startEsbuildFixture(fixtureName, {
       type,
       port,

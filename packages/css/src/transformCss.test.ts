@@ -9,6 +9,12 @@ const testVar = createVar();
 const style1 = style({});
 const style2 = style({});
 
+// remove quotes around the snapshot
+expect.addSnapshotSerializer({
+  test: (val) => typeof val === 'string',
+  print: (val) => (val as string).trim(),
+});
+
 describe('transformCss', () => {
   it('should escape class names', () => {
     expect(
@@ -41,7 +47,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".test_1\\/2_className {
+      .test_1\\/2_className {
         color: red;
       }
       .\\[test_with_brackets\\] {
@@ -56,7 +62,7 @@ describe('transformCss', () => {
         .test_1\\/2_className {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -84,7 +90,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -96,7 +102,7 @@ describe('transformCss', () => {
         .testClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -136,7 +142,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -154,7 +160,7 @@ describe('transformCss', () => {
         body .testClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -206,7 +212,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: green;
       }
       .otherClass {
@@ -230,7 +236,7 @@ describe('transformCss', () => {
         .otherOtherClass {
           color: yellow;
         }
-      }"
+      }
     `);
   });
 
@@ -302,7 +308,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         .otherClass {
           color: yellow;
         }
@@ -340,7 +346,7 @@ describe('transformCss', () => {
         .otherOtherOtherClass {
           color: purple;
         }
-      }"
+      }
     `);
   });
 
@@ -428,7 +434,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@supports (display: grid) {
+      @supports (display: grid) {
         @media screen and (min-width: 700px) {
           .otherClass {
             color: yellow;
@@ -470,7 +476,7 @@ describe('transformCss', () => {
             color: purple;
           }
         }
-      }"
+      }
     `);
   });
 
@@ -522,7 +528,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 768px) {
+      @media screen and (min-width: 768px) {
         .otherOtherClass {
           background: blue;
         }
@@ -539,7 +545,7 @@ describe('transformCss', () => {
         .otherClass {
           color: red;
         }
-      }"
+      }
     `);
   });
 
@@ -562,12 +568,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:hover {
         color: blue;
-      }"
+      }
     `);
   });
 
@@ -590,7 +596,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
         color: blue;
       }
@@ -598,7 +604,7 @@ describe('transformCss', () => {
         color: blue;
         color: red;
         color: yellow;
-      }"
+      }
     `);
   });
 
@@ -622,11 +628,11 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --myCustomVar: 10px;
         background-color: green;
         -webkit-align-content: end;
-      }"
+      }
     `);
   });
 
@@ -646,9 +652,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "";
-      }"
+      }
     `);
   });
 
@@ -671,12 +677,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "hello";
       }
       .testClass {
         content: "there";
-      }"
+      }
     `);
   });
 
@@ -696,10 +702,10 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: "hello";
         content: "there";
-      }"
+      }
     `);
   });
 
@@ -722,12 +728,12 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: 'hello there';
       }
       .testClass {
         content: "hello there";
-      }"
+      }
     `);
   });
 
@@ -777,7 +783,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         content: normal;
       }
       ._01 .testClass {
@@ -839,7 +845,7 @@ describe('transformCss', () => {
       }
       ._20 .testClass {
         content: unset;
-      }"
+      }
     `);
   });
 
@@ -866,14 +872,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 500px) {
+      @media screen and (min-width: 500px) {
         .testClass {
           color: red;
         }
         .testClass:hover {
           color: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -905,7 +911,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:link {
@@ -919,7 +925,7 @@ describe('transformCss', () => {
       }
       .testClass:active {
         color: blue;
-      }"
+      }
     `);
   });
 
@@ -950,7 +956,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       .testClass:nth-child(3) {
@@ -961,7 +967,7 @@ describe('transformCss', () => {
       }
       .parentClass.testClass {
         background: black;
-      }"
+      }
     `);
   });
 
@@ -990,14 +996,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: red;
       }
       @media screen and (min-width: 700px) {
         .testClass:nth-child(3) {
           color: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -1022,14 +1028,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
       }
       @supports (display: grid) {
         .testClass {
           display: grid;
         }
-      }"
+      }
     `);
   });
 
@@ -1055,7 +1061,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
         container-name: sidebar;
       }
@@ -1063,7 +1069,360 @@ describe('transformCss', () => {
         .testClass {
           display: grid;
         }
-      }"
+      }
+    `);
+  });
+
+  it('should handle @layer declarations', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'layer',
+            name: 'reset',
+          },
+          {
+            type: 'layer',
+            name: 'foo.bar.baz',
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer reset;
+      @layer foo.bar.baz;
+    `);
+  });
+
+  it('should hoist @layer declarations', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                layer1: {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'layer1',
+          },
+          {
+            type: 'layer',
+            name: 'layer2',
+          },
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@layer': {
+                layer2: {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer layer1;
+      @layer layer2;
+      .testClass {
+        display: flex;
+      }
+      .testClass {
+        display: flex;
+      }
+      @layer layer1 {
+        .testClass {
+          display: grid;
+        }
+      }
+      @layer layer2 {
+        .testClass {
+          display: grid;
+        }
+      }
+    `);
+  });
+
+  it('should handle conditional declaration of layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          { type: 'layer', name: 'lib' },
+          { type: 'layer', name: 'lib.base' },
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@media': {
+                'screen and (min-width: 600px)': {
+                  '@layer': {
+                    'lib.typography': {
+                      color: 'green',
+                    },
+                  },
+                },
+              },
+              '@layer': {
+                'lib.base': {
+                  fontWeight: 800,
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                'lib.base': {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          { type: 'layer', name: 'lib.utilities' },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                'lib.utilities': {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+          { type: 'layer', name: 'lib.typography' },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer lib;
+      @layer lib.base;
+      @media screen and (min-width: 600px) {
+        @layer lib.typography;
+      }
+      @layer lib.utilities;
+      @layer lib.typography;
+      @layer lib.base {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+      }
+      @media screen and (min-width: 600px) {
+        @layer lib.typography {
+          a {
+            color: green;
+          }
+        }
+      }
+      @layer lib.utilities {
+        .pink {
+          color: hotpink;
+        }
+      }
+    `);
+  });
+
+  it('should merge styles from the same layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['link', 'pink'],
+        cssObjs: [
+          {
+            type: 'global',
+            selector: 'a',
+            rule: {
+              '@layer': {
+                lib: {
+                  fontWeight: 800,
+                  color: 'red',
+                  '@media': {
+                    'screen and (min-width: 600px)': {
+                      color: 'green',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'link',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'blue',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: 'pink',
+            rule: {
+              '@layer': {
+                lib: {
+                  color: 'hotpink',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer lib;
+      @layer lib {
+        a {
+          font-weight: 800;
+          color: red;
+        }
+        .link {
+          color: blue;
+        }
+        .pink {
+          color: hotpink;
+        }
+        @media screen and (min-width: 600px) {
+          a {
+            color: green;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should bailout merging for nested layers', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass', 'otherTestClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA1',
+          },
+          {
+            type: 'layer',
+            name: 'layerA.layerA2',
+          },
+          {
+            type: 'local',
+            selector: 'otherTestClass',
+            rule: {
+              '@layer': {
+                layerA: {
+                  '@media': {
+                    '(min-width: 700px)': {
+                      '@layer': {
+                        layerA2: {
+                          display: 'block',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer layerA;
+      @layer layerA.layerA1;
+      @layer layerA.layerA2;
+      @layer layerA {
+        @media (min-width: 700px) {
+          @layer layerA2;
+        }
+      }
+      @layer layerA {
+        @media (min-width: 700px) {
+          .testClass {
+            display: grid;
+          }
+          @layer layerA2 {
+            .otherTestClass {
+              display: block;
+            }
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @layer rules with complex selectors and simple pseudos', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                foo: {
+                  ':hover': {
+                    color: 'purple',
+                  },
+                  selectors: {
+                    '&:nth-child(3)': {
+                      color: 'blue',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer foo;
+      @layer foo {
+        .testClass:hover {
+          color: purple;
+        }
+        .testClass:nth-child(3) {
+          color: blue;
+        }
+      }
     `);
   });
 
@@ -1093,7 +1452,6 @@ describe('transformCss', () => {
                   },
                 },
               },
-
               '@media': {
                 'screen and (min-width: 700px)': {
                   color: 'green',
@@ -1114,7 +1472,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: flex;
       }
       @media screen and (min-width: 700px) {
@@ -1146,7 +1504,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1207,7 +1565,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
@@ -1232,7 +1590,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1293,7 +1651,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         @supports (display: grid) {
           .testClass {
             border-color: blue;
@@ -1326,7 +1684,7 @@ describe('transformCss', () => {
             }
           }
         }
-      }"
+      }
     `);
   });
 
@@ -1351,14 +1709,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         display: grid;
       }
       @supports not (display: grid) {
         .testClass {
           display: flex;
         }
-      }"
+      }
     `);
   });
 
@@ -1387,7 +1745,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@keyframes myAnimation {
+      @keyframes myAnimation {
         from {
           content: none;
           opacity: 0;
@@ -1398,7 +1756,7 @@ describe('transformCss', () => {
           opacity: 1;
           padding: 10px;
         }
-      }"
+      }
     `);
   });
 
@@ -1417,9 +1775,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face {
+      @font-face {
         src: local("Comic Sans MS");
-      }"
+      }
     `);
   });
 
@@ -1446,14 +1804,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@font-face {
+      @font-face {
         font-family: MyFont1;
         src: local("Comic Sans MS");
       }
       @font-face {
         font-family: MyFont2;
         src: local("Impact");
-      }"
+      }
     `);
   });
 
@@ -1477,11 +1835,11 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      "@media screen and (min-width: 700px) {
+      @media screen and (min-width: 700px) {
         .testClass {
           color: green;
         }
-      }"
+      }
     `);
   });
 
@@ -1525,7 +1883,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         color: hotpink;
       }
       .otherClass {
@@ -1541,7 +1899,7 @@ describe('transformCss', () => {
         .otherClass {
           color: red;
         }
-      }"
+      }
     `);
   });
 
@@ -1581,7 +1939,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --my-var: red;
         --skkcyc0: green;
         display: block;
@@ -1595,7 +1953,7 @@ describe('transformCss', () => {
           --my-var: yellow;
           --skkcyc0: blue;
         }
-      }"
+      }
     `);
   });
 
@@ -1621,13 +1979,13 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass {
+      .testClass {
         --my-var: 12;
         --skkcyc0: 24;
         display: block;
         padding-top: 10px;
         line-height: 20;
-      }"
+      }
     `);
   });
 
@@ -1657,7 +2015,7 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".testClass > div {
+      .testClass > div {
         color: red;
       }
       @media screen and (min-width: 700px) {
@@ -1669,7 +2027,7 @@ describe('transformCss', () => {
         .testClass > div {
           display: flex;
         }
-      }"
+      }
     `);
   });
 
@@ -1692,7 +2050,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Simple pseudos are not valid in "globalStyle""`,
+      `Simple pseudos are not valid in "globalStyle"`,
     );
   });
 
@@ -1717,7 +2075,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Selectors are not allowed within "globalStyle""`,
+      `Selectors are not allowed within "globalStyle"`,
     );
   });
 
@@ -1734,6 +2092,7 @@ describe('transformCss', () => {
             classList: composedStyle2,
           },
         ],
+
         localClassNames: ['composedStyle1', 'composedStyle2'],
         cssObjs: [
           {
@@ -1746,9 +2105,9 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      ".composedStyle1 button, body > .composedStyle2 {
+      .composedStyle1 button, body > .composedStyle2 {
         display: block;
-      }"
+      }
     `);
   });
 });
@@ -1767,11 +2126,9 @@ it('should handle multiple references to the same locally scoped selector', () =
               [`${style2} &:before, ${style2} &:after`]: {
                 background: 'black',
               },
-
               [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
                 background: 'blue',
               },
-
               [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
                 background: 'blue',
               },
@@ -1781,7 +2138,7 @@ it('should handle multiple references to the same locally scoped selector', () =
       ],
     }).join('\n'),
   ).toMatchInlineSnapshot(`
-    ".skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+    .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
       background: black;
     }
     ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
@@ -1789,7 +2146,7 @@ it('should handle multiple references to the same locally scoped selector', () =
     }
     ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
       background: blue;
-    }"
+    }
   `);
 });
 

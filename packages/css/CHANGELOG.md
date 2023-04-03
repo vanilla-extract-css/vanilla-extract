@@ -1,5 +1,48 @@
 # @vanilla-extract/css
 
+## 1.11.0
+
+### Minor Changes
+
+- [#955](https://github.com/vanilla-extract-css/vanilla-extract/pull/955) [`ece5fc3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ece5fc3130020aa2fdde5b0075b17695bb082b01) Thanks [@mrm007](https://github.com/mrm007)! - Add support for [cascade layers, i.e. `@layer`][cascade layers].
+
+  Create a scoped [layer] to avoid naming collisions, or with an explicit name using [globalLayer]. Styles can then be assigned to layers using the `@layer` key within your style definition.
+
+  ```tsx
+  // layers.css.ts
+  import { layer } from '@vanilla-extract/css';
+
+  export const reset = layer('reset');
+  export const framework = layer('framework');
+  export const typography = layer('typography');
+
+  // typography.css.ts
+  import { style } from '@vanilla-extract/css';
+  import { typography } from './layers.css';
+
+  export const standard = style({
+    '@layer': {
+      [typography]: {
+        fontSize: '1rem',
+      },
+    },
+  });
+  ```
+
+  [cascade layers]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
+  [layer]: https://vanilla-extract.style/documentation/api/layer
+  [globalLayer]: https://vanilla-extract.style/documentation/global-api/global-layer
+
+## 1.10.0
+
+### Minor Changes
+
+- [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Provide current file scope as an additional argument to the adapter methods `registerClassName` and `registerComposition`. This is to allow fine-grained caching of registered class names and class compositions per file.
+
+### Patch Changes
+
+- [#1030](https://github.com/vanilla-extract-css/vanilla-extract/pull/1030) [`49ff399`](https://github.com/vanilla-extract-css/vanilla-extract/commit/49ff399bf5bf23236b5574f37b4b79058678041d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Throw when `setAdapter` is called with a falsy value
+
 ## 1.9.5
 
 ### Patch Changes

@@ -180,4 +180,59 @@ describe('serializeVanillaModule', () => {
       export var sprinkles = _86bce(__default__,otherComplexExport);"
     `);
   });
+
+  test('should order exports correctly', () => {
+    const simpleObjectExport = { hello: 'world' };
+
+    const complexExport = {
+      my: {
+        very: {
+          complex: {
+            arg: simpleObjectExport,
+          },
+        },
+      },
+    };
+
+    const otherComplexExport = {
+      other: {
+        complex: [1, 2, 3],
+      },
+    };
+
+    const someOtherExport = [4, 5, 6];
+
+    const reExport = otherComplexExport;
+    const reReExport = reExport;
+
+    const sprinkles = () => {};
+    sprinkles.__function_serializer__ = {
+      importPath: 'my-package',
+      importName: 'myFunction',
+      args: [complexExport, otherComplexExport, someOtherExport, reReExport],
+    };
+    const exports = {
+      sprinkles,
+      complexExport,
+      simpleObjectExport,
+      reReExport,
+      otherComplexExport,
+      default: someOtherExport,
+      reExport,
+    };
+
+    expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
+      .toMatchInlineSnapshot(`
+      "import "./styles.css"
+      import { myFunction as _86bce } from 'my-package';
+      export var simpleObjectExport = {hello:'world'};
+      export var complexExport = {my:{very:{complex:{arg:simpleObjectExport}}}};
+      var __default__ = [4,5,6];
+      export default __default__;
+      export var reExport = {other:{complex:[1,2,3]}};
+      export var sprinkles = _86bce(complexExport,reExport,__default__,reExport);
+      export var reReExport = reExport;
+      export var otherComplexExport = reExport;"
+    `);
+  });
 });

@@ -39,6 +39,13 @@ const debuggableFunctionConfig = {
   createContainer: {
     maxParams: 1,
   },
+  layer: {
+    maxParams: 2,
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
+  },
 } satisfies Record<string, DebugConfig>;
 
 const styleFunctions = [
@@ -50,6 +57,7 @@ const styleFunctions = [
   'createThemeContract',
   'globalFontFace',
   'globalKeyframes',
+  'globalLayer',
   'recipe',
 ] as const;
 
@@ -63,6 +71,8 @@ const extractName = (node: t.Node) => {
     t.isIdentifier(node.id)
   ) {
     return node.id.name;
+  } else if (t.isAssignmentExpression(node) && t.isIdentifier(node.left)) {
+    return node.left.name;
   } else if (t.isExportDefaultDeclaration(node)) {
     return 'default';
   } else if (

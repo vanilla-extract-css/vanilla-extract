@@ -12,6 +12,7 @@ interface TransformParams {
   rootPath: string;
   packageName: string;
   identOption: IdentifierOption;
+  globalAdapterIdentifier?: string;
 }
 export const transformSync = ({
   source,
@@ -30,7 +31,7 @@ export const transformSync = ({
       configFile: false,
     });
 
-    if (!result || !result.code) {
+    if (!result || result.code == null) {
       throw new Error('Error adding debug IDs');
     }
 
@@ -51,6 +52,7 @@ export const transform = async ({
   rootPath,
   packageName,
   identOption,
+  globalAdapterIdentifier,
 }: TransformParams): Promise<string> => {
   let code = source;
 
@@ -62,7 +64,7 @@ export const transform = async ({
       configFile: false,
     });
 
-    if (!result || !result.code) {
+    if (!result || result.code == null) {
       throw new Error('Error adding debug IDs');
     }
 
@@ -74,5 +76,6 @@ export const transform = async ({
     filePath,
     rootPath,
     packageName,
+    globalAdapterIdentifier,
   });
 };

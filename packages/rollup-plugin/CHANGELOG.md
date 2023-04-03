@@ -1,5 +1,11 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.2.1
+
+### Patch Changes
+
+- [#1047](https://github.com/vanilla-extract-css/vanilla-extract/pull/1047) [`589d89e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/589d89e93e91d94e0d2f7e8cad862faf977f534e) Thanks [@jd-oconnor](https://github.com/jd-oconnor)! - Add rollup v3 as a peer dependency
+
 ## 1.2.0
 
 ### Minor Changes

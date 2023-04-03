@@ -1,17 +1,17 @@
 .spi1fr2 {
-  --spi1fr0: #b0e0e6;
-  --spi1fr1: #fff;
+  --spi1fr0: powderblue;
+  --spi1fr1: white;
 }
 .spi1fr3 {
   --spi1fr0: crimson;
-  --spi1fr1: #000;
+  --spi1fr1: black;
 }
 .spi1fr4 {
   border: 0;
 }
 .spi1fr5 {
-  background: var(--spi1fr0);
   border-radius: 6px;
+  background: var(--spi1fr0);
   color: var(--spi1fr1);
   transition: all 0.2s ease;
 }
@@ -30,19 +30,19 @@
   box-shadow: 0 10px 6px -6px #777;
 }
 .spi1fra {
-  font-weight: 700;
+  font-weight: bold;
 }
 .spi1frc {
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 .spi1frd {
   gap: 20px;
 }
 @media only screen and (min-width: 600px) {
   .spi1frb {
-    border: 2px solid green;
+    border: 2px green solid;
   }
   .spi1frd {
     gap: 30px;

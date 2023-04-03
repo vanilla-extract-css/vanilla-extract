@@ -38,39 +38,24 @@ type PseudoProperties = {
 
 type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
-export interface MediaQueries<StyleType> {
-  '@media'?: {
-    [query: string]: StyleType;
+type Query<Key extends string, StyleType> = {
+  [key in Key]?: {
+    [query: string]: Omit<StyleType, Key>;
   };
-}
+};
 
-export interface FeatureQueries<StyleType> {
-  '@supports'?: {
-    [query: string]: StyleType;
-  };
-}
+export type MediaQueries<StyleType> = Query<'@media', StyleType>;
+export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
+export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
+export type Layers<StyleType> = Query<'@layer', StyleType>;
 
-export interface ContainerQueries<StyleType> {
-  '@container'?: {
-    [query: string]: StyleType;
-  };
-}
+interface AllQueries<StyleType>
+  extends MediaQueries<StyleType & AllQueries<StyleType>>,
+    FeatureQueries<StyleType & AllQueries<StyleType>>,
+    ContainerQueries<StyleType & AllQueries<StyleType>>,
+    Layers<StyleType & AllQueries<StyleType>> {}
 
-export type WithQueries<StyleType> = MediaQueries<
-  StyleType &
-    FeatureQueries<StyleType & ContainerQueries<StyleType>> &
-    ContainerQueries<StyleType & FeatureQueries<StyleType>>
-> &
-  FeatureQueries<
-    StyleType &
-      MediaQueries<StyleType & ContainerQueries<StyleType>> &
-      ContainerQueries<StyleType & MediaQueries<StyleType>>
-  > &
-  ContainerQueries<
-    StyleType &
-      MediaQueries<StyleType & FeatureQueries<StyleType>> &
-      FeatureQueries<StyleType & MediaQueries<StyleType>>
-  >;
+export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
 interface SelectorMap {
   [selector: string]: CSSPropertiesWithVars &
@@ -113,11 +98,17 @@ export type CSSSelectorBlock = {
   rule: GlobalStyleRule;
 };
 
+export type CSSLayerDeclaration = {
+  type: 'layer';
+  name: string;
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
-  | CSSSelectorBlock;
+  | CSSSelectorBlock
+  | CSSLayerDeclaration;
 
 export type FileScope = {
   packageName?: string;
@@ -132,9 +123,10 @@ export interface Composition {
 type IdentOption = 'short' | 'debug';
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
-  registerClassName: (className: string) => void;
-  registerComposition: (composition: Composition) => void;
+  registerClassName: (className: string, fileScope: FileScope) => void;
+  registerComposition: (composition: Composition, fileScope: FileScope) => void;
   markCompositionUsed: (identifier: string) => void;
+  onBeginFileScope?: (fileScope: FileScope) => void;
   onEndFileScope: (fileScope: FileScope) => void;
   getIdentOption: () => IdentOption;
 }
