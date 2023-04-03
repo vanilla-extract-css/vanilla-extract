@@ -2,4 +2,4 @@
 '@vanilla-extract/next-plugin': patch
 ---
 
-Provide intellisense for users
+Add types to Nextjs plugin configuration
