@@ -2,8 +2,9 @@ import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import browserslist from 'browserslist';
 import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { getGlobalCssLoader } from 'next/dist/build/webpack/config/blocks/css/loaders';
+import type { NextConfig } from 'next/types';
 
-function getSupportedBrowsers(dir, isDevelopment) {
+function getSupportedBrowsers(dir: any, isDevelopment: any) {
   let browsers;
   try {
     browsers = browserslist.loadConfig({
@@ -15,18 +16,20 @@ function getSupportedBrowsers(dir, isDevelopment) {
   return browsers;
 }
 
+type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0];
+
 export const createVanillaExtractPlugin =
-  (pluginOptions = {}) =>
-  (nextConfig = {}) =>
+  (pluginOptions: PluginOptions = {}) =>
+  (nextConfig: NextConfig = {}): NextConfig =>
     Object.assign({}, nextConfig, {
-      webpack(config, options) {
+      webpack(config: any, options: any) {
         const { dir, dev, isServer } = options;
 
         const cssRules = config.module.rules.find(
-          (rule) =>
+          (rule: any) =>
             Array.isArray(rule.oneOf) &&
             rule.oneOf.some(
-              ({ test }) =>
+              ({ test }: any) =>
                 typeof test === 'object' &&
                 typeof test.test === 'function' &&
                 test.test('filename.css'),
@@ -44,8 +47,8 @@ export const createVanillaExtractPlugin =
               isDevelopment: dev,
               future: nextConfig.future || {},
               experimental: nextConfig.experimental || {},
-            },
-            () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev)),
+            } as any,
+            () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined),
             [],
           ),
         });
