@@ -1,6 +1,5 @@
-import { style, createVar, createContainer, css$ } from '@vanilla-extract/css';
-
-const color = createVar();
+import { style, createContainer, css$ } from '@vanilla-extract/css';
+import { brandVar, brand, BrandDetails } from './colors';
 
 const myContainer = createContainer('my-container');
 
@@ -15,9 +14,9 @@ const container = css$(
 const block = css$(
   style({
     vars: {
-      [color]: 'blue',
+      [brandVar]: brand,
     },
-    backgroundColor: color,
+    backgroundColor: brandVar,
     padding: 20,
     '@media': {
       'screen and (min-width: 200px)': {
@@ -36,5 +35,6 @@ document.body.innerHTML = `
   <div class="${block}"> 
     I'm a block
   </div>
+  ${BrandDetails()}
 </div>
 `;

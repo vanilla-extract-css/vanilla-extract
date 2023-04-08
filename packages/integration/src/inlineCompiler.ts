@@ -110,6 +110,8 @@ const createViteServer = async ({
 
           transformCache.set(id, transformResult);
 
+          console.log(id, transformResult);
+
           return transformResult.buildtime;
         },
       },

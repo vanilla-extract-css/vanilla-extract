@@ -292,12 +292,10 @@ export default function (): PluginObj<Context> {
                 statement.isImportDeclaration() ||
                 (prevals.length === 0 && !isExportStatement);
 
-              // Move essential import specifiers and identifiers to build time
-              if (moveStatementToBuildtime) {
-                store.buildTimeStatements.unshift(statement.node);
-                if (!keepStatementInRuntime) {
-                  statement.remove();
-                }
+              store.buildTimeStatements.unshift(statement.node);
+              if (moveStatementToBuildtime && !keepStatementInRuntime) {
+                // Delete buildtime only statements from the runtime
+                statement.remove();
               }
             }
 
