@@ -271,7 +271,7 @@ export default function (): PluginObj<Context> {
 
             const prevals = Array.from(this.prevalOwners.get(statementIndex));
             const isExportStatement = this.exportStatements.has(statementIndex);
-            const keepStatementInRuntime =
+            const mutatesOrOwnsMutatedIdent =
               this.mutatingStatements.has(statementIndex) ||
               hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
 
@@ -287,15 +287,34 @@ export default function (): PluginObj<Context> {
                   essentialIdentifiers.add(dep);
                 }
               }
-
-              const moveStatementToBuildtime =
-                statement.isImportDeclaration() ||
-                (prevals.length === 0 && !isExportStatement);
-
               store.buildTimeStatements.unshift(statement.node);
-              if (moveStatementToBuildtime && !keepStatementInRuntime) {
+
+              const isImportDeclaration = statement.isImportDeclaration();
+              const importSpecifiers = isImportDeclaration
+                ? statement.node.specifiers
+                : [];
+              const ownedRuntimeImportSpecifiers = importSpecifiers.filter(
+                (specifier) => !essentialIdentifiers.has(specifier.local.name),
+              );
+              const canBeRemovedFromRuntime =
+                !mutatesOrOwnsMutatedIdent &&
+                (isImportDeclaration ||
+                  (prevals.length === 0 && !isExportStatement));
+
+              if (
+                canBeRemovedFromRuntime &&
+                ownedRuntimeImportSpecifiers.length === 0
+              ) {
                 // Delete buildtime only statements from the runtime
                 statement.remove();
+              } else if (isImportDeclaration) {
+                // Prune buildtime only import specifiers from the runtime
+                statement.replaceWith(
+                  t.importDeclaration(
+                    ownedRuntimeImportSpecifiers,
+                    statement.node.source,
+                  ),
+                );
               }
             }
 

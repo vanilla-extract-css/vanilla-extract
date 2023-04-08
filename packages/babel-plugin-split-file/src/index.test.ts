@@ -235,7 +235,7 @@ describe('babel-plugin-split-file', () => {
 
   it('should retain mixed required imports', () => {
     const source = `
-    import { style, createContainer, css$ } from '@vanilla-extract/css';
+    import { style, css$ } from '@vanilla-extract/css';
     import { brandVar, brand, BrandDetails } from './colors';
 
     const className = css$(style({
@@ -258,7 +258,7 @@ describe('babel-plugin-split-file', () => {
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, createContainer, css$ } from '@vanilla-extract/css';
+      import { style, css$ } from '@vanilla-extract/css';
       import { brandVar, brand, BrandDetails } from './colors';
       export const _vanilla_identifier_2_0 = css$(style({
         vars: {
