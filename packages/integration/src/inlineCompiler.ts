@@ -429,13 +429,13 @@ function injectIdentifiersAndCssImports(
   //   fileExports,
   // });
 
-  const identifierValues = Object.entries(fileExports).map(
-    ([identifier, value]) => {
+  const identifierValues = Object.entries(fileExports)
+    .filter(([identifier]) => identifier.startsWith('_vanilla_identifier'))
+    .map(([identifier, value]) => {
       const serializedValue = JSON.stringify(value, null, 2);
 
       return `var ${identifier} = ${serializedValue};`;
-    },
-  );
+    });
 
   return [...cssImports, ...identifierValues, runtimeCode].join('\n');
 }
