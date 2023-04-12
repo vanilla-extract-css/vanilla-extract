@@ -16,6 +16,7 @@ interface TransformParams {
   packageName: string;
   identOption: IdentifierOption;
   globalAdapterIdentifier?: string;
+  macros: Array<string>;
 }
 
 export const transform = async ({
@@ -25,6 +26,7 @@ export const transform = async ({
   packageName,
   identOption,
   globalAdapterIdentifier,
+  macros,
 }: TransformParams): Promise<{ buildtime: string; runtime: string }> => {
   const store: any = {
     buildTimeStatements: [],
@@ -34,7 +36,7 @@ export const transform = async ({
     filename: filePath,
     cwd: rootPath,
     plugins: [
-      [vanillaBabelPlugin, { store }],
+      [vanillaBabelPlugin, { store, macros }],
       [typescriptSyntax, { isTSX: true }],
       jsxSyntax,
     ],

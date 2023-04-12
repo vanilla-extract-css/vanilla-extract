@@ -24,6 +24,7 @@ export interface Store {
 
 interface PluginOptions {
   store: Store;
+  macros: Array<string>;
 }
 
 interface Context extends PluginPass {

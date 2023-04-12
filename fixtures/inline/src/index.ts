@@ -1,5 +1,6 @@
 import { style, css$ } from '@vanilla-extract/css';
 import { brandVar, brand, BrandDetails } from './colors';
+import { styled$ } from './styled';
 
 const block = css$(
   style({
@@ -11,9 +12,12 @@ const block = css$(
   }),
 );
 
+const test = styled$('Test');
+
 document.body.innerHTML = `
   <div class="${block}"> 
     I'm a block
   </div>
   ${BrandDetails()}
+  ${test}
 `;

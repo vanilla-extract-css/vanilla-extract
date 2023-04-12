@@ -3,12 +3,16 @@ import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, Plugin as VitePlugin } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
+import { findStaticImports, parseStaticImport } from 'mlly';
 
 import type { IdentifierOption } from './types';
 import { getPackageInfo } from './packageInfo';
 import { transform } from './inlineTransform';
 import { lock } from './lock';
-import { serializeVanillaModule } from './processVanillaFile';
+
+const firstPartyMacros: Record<string, Array<string>> = {
+  '@vanilla-extract/css': ['css$', 'style$', 'styleVariants$'],
+};
 
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];
@@ -91,13 +95,59 @@ const createViteServer = async ({
       {
         name: 'vanilla-extract-transform',
         async transform(code, id) {
-          if (
-            !code.includes('css$') ||
-            // TODO Remove this absoluet hack
-            id.includes('vanilla-extract-css.esm.js')
-          ) {
+          if (!code.includes('$')) {
+            // Super fast bailout for code not containing a '$' character
             return;
           }
+
+          console.log('Transform', id);
+
+          const relevantImports = findStaticImports(code)
+            .map((rawImport) => {
+              const { namedImports, specifier } = parseStaticImport(rawImport);
+
+              return { namedImports, specifier };
+            })
+            .filter(
+              ({ namedImports }) =>
+                namedImports &&
+                Object.keys(namedImports).some((identifier) =>
+                  identifier.endsWith('$'),
+                ),
+            );
+
+          if (relevantImports.length === 0) {
+            return;
+          }
+
+          const result = await Promise.all(
+            relevantImports.map(async ({ specifier, namedImports }) => {
+              let macros = firstPartyMacros[specifier];
+
+              if (!macros) {
+                const resolved = await this.resolve(specifier, id);
+
+                if (!resolved) {
+                  throw new Error(`Can't resolve "${specifier}" from "${id}"`);
+                }
+
+                const { config } = getPackageInfo(resolved.id);
+                macros = config.macros || [];
+              }
+
+              return macros
+                .map((macro) => namedImports![macro])
+                .filter(Boolean);
+            }),
+          );
+
+          const macros = result.flat();
+
+          if (macros.length === 0) {
+            return;
+          }
+
+          console.log({ macros });
 
           const transformResult = await transform({
             source: code,
@@ -106,6 +156,7 @@ const createViteServer = async ({
             packageName: pkg.name,
             identOption: identifiers,
             globalAdapterIdentifier,
+            macros,
           });
 
           transformCache.set(id, transformResult);
@@ -155,7 +206,7 @@ export interface InlineCompiler {
     options?: {
       outputCss?: boolean;
     },
-  ): Promise<{ source: string; watchFiles: Set<string> }>;
+  ): Promise<{ source: string; watchFiles: Set<string> } | null>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
 }
@@ -211,7 +262,7 @@ export const createInlineCompiler = ({
     async processVanillaFile(
       filePath,
       options = {},
-    ): Promise<ProcessedVanillaFile> {
+    ): Promise<ProcessedVanillaFile | null> {
       const { server, runner, transformCache } = await vitePromise;
 
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
@@ -366,7 +417,8 @@ export const createInlineCompiler = ({
       const runtimeCode = transformCache.get(filePath)?.runtime;
 
       if (typeof runtimeCode !== 'string') {
-        throw new Error(`Could not find runtime code for: '${filePath}'`);
+        // This likely means the file doesn't have any vanilla-extract related code
+        return null;
       }
 
       const newRuntimeSource = injectIdentifiersAndCssImports(

@@ -1,7 +1,6 @@
 import { dirname } from 'path';
 
 import {
-  cssFileFilter,
   createInlineCompiler,
   vanillaExtractTransformPlugin,
   IdentifierOption,
@@ -70,14 +69,18 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: /.*/ }, async ({ path }) => {
-        const { source, watchFiles } = await compiler.processVanillaFile(path, {
+        const result = await compiler.processVanillaFile(path, {
           outputCss,
         });
 
+        if (!result) {
+          return;
+        }
+
         return {
-          contents: source,
+          contents: result.source,
           loader: 'js',
-          watchFiles: Array.from(watchFiles),
+          watchFiles: Array.from(result.watchFiles),
         };
       });
     },

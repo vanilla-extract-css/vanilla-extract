@@ -6,6 +6,9 @@ export interface PackageInfo {
   name: string;
   path: string;
   dirname: string;
+  config: {
+    macros?: Array<string>;
+  };
 }
 
 function getClosestPackageInfo(directory: string) {
@@ -14,12 +17,14 @@ function getClosestPackageInfo(directory: string) {
   });
 
   if (packageJsonPath) {
-    const { name } = require(packageJsonPath);
+    const { name, 'vanilla-extract': config = {} } = require(packageJsonPath);
+    console.log(require(packageJsonPath));
 
     return {
       name,
       path: packageJsonPath,
       dirname: path.dirname(packageJsonPath),
+      config,
     };
   }
 }
