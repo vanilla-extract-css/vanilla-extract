@@ -47,6 +47,7 @@ export const createVanillaExtractPlugin =
               isDevelopment: dev,
               future: nextConfig.future || {},
               experimental: nextConfig.experimental || {},
+              // @ts-ignore -- 'appDir' config is in beta
               hasAppDir: nextConfig.experimental?.appDir,
             } as any,
             () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined),
