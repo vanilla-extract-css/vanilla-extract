@@ -12,7 +12,8 @@ expect.addSnapshotSerializer({
   print: (val) => (val as string).trim(),
 });
 
-const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
+const transform = (source: string, macros: string[] = ['css$']) => {
+  const filename = './dir/mockFilename.css.ts';
   const store: Store = {
     buildTimeStatements: [],
   };
@@ -20,7 +21,7 @@ const transform = (source: string, filename = './dir/mockFilename.css.ts') => {
     filename,
     cwd: __dirname,
     plugins: [
-      [dollarPlugin, { store }],
+      [dollarPlugin, { store, macros }],
       [typescriptSyntax, { isTSX: true }],
       jsxSyntax,
     ],
@@ -339,6 +340,40 @@ describe('babel-plugin-split-file', () => {
         color: 'red'
       }));
       export const myStyle = _vanilla_identifier_1_0;
+      export const _vanilla_defaultIdentifer = css$(style({
+        color: 'blue'
+      }));
+      export default _vanilla_defaultIdentifer;
+    `);
+  });
+
+  it('should support multiple macros', () => {
+    const source = `
+      import { style, css$, style$ } from '@vanilla-extract/css';
+
+      export const myStyle = css$(style({ color: 'red' }));
+
+      export const myOtherStyle = style$({ color: 'green' });
+
+      export default css$(style({ color: 'blue' }));`;
+
+    const result = transform(source, ['css$', 'style$']);
+
+    expect(result.code).toMatchInlineSnapshot(`
+      export const myStyle = _vanilla_identifier_1_0;
+      export const myOtherStyle = _vanilla_identifier_2_0;
+      export default _vanilla_defaultIdentifer;
+    `);
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { style, css$, style$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_1_0 = css$(style({
+        color: 'red'
+      }));
+      export const myStyle = _vanilla_identifier_1_0;
+      export const _vanilla_identifier_2_0 = style$({
+        color: 'green'
+      });
+      export const myOtherStyle = _vanilla_identifier_2_0;
       export const _vanilla_defaultIdentifer = css$(style({
         color: 'blue'
       }));

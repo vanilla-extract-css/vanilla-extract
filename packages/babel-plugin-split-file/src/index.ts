@@ -32,7 +32,7 @@ interface Context extends PluginPass {
   mutatedModuleScopeIdentifiers: Set<IdentifierName>;
   identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
   depGraph: DependencyGraph;
-  vanillaPrevalFunctionLocal?: string;
+  vanillaMacros: string[];
   prevalOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
   vanillaIdentifierMap: Map<string, string>;
   exportStatements: Set<StatementIndex>;
@@ -41,8 +41,6 @@ interface Context extends PluginPass {
   opts: PluginOptions;
 }
 
-const vanillaPrevalFunctionName = 'css$';
-
 const identifierVisitor: Visitor<
   {
     addUsedIdentifier: (ident: IdentifierName) => void;
@@ -50,7 +48,7 @@ const identifierVisitor: Visitor<
     statementIndex: number;
   } & Pick<
     Context,
-    | 'vanillaPrevalFunctionLocal'
+    | 'vanillaMacros'
     | 'prevalOwners'
     | 'mutatingStatements'
     | 'identifierMutators'
@@ -66,7 +64,7 @@ const identifierVisitor: Visitor<
     this.addUsedIdentifier(path.node.name);
   },
   CallExpression(path) {
-    if (isVanillaPrevalFunctionCall(path, this.vanillaPrevalFunctionLocal)) {
+    if (isVanillaMacroFunctionCall(path, this.vanillaMacros)) {
       this.prevalOwners.get(this.statementIndex).add(path);
     }
   },
@@ -92,13 +90,12 @@ const identifierVisitor: Visitor<
   },
 };
 
-const isVanillaPrevalFunctionCall = (
+const isVanillaMacroFunctionCall = (
   path: NodePath<t.CallExpression>,
-  vanillaPrevalFunctionLocal?: string,
+  vanillaMacros: string[],
 ): path is NodePath<t.CallExpression> =>
-  t.isIdentifier(path.node.callee, {
-    name: vanillaPrevalFunctionLocal,
-  });
+  t.isIdentifier(path.node.callee) &&
+  vanillaMacros.includes(path.node.callee.name);
 
 const vanillaDefaultIdentifier = '_vanilla_defaultIdentifer';
 
@@ -114,30 +111,24 @@ export default function (): PluginObj<Context> {
       this.mutatingStatements = new Set();
       this.identifierMutators = new DefaultMap(() => new Set());
       this.mutatedModuleScopeIdentifiers = new Set();
+      this.vanillaMacros = [];
     },
     visitor: {
       Program: {
         enter(path, state) {
           const bodyPath = path.get('body');
+          const { macros } = state.opts;
+
+          invariant(macros.length > 0, 'Must define at least one macro');
+
+          this.vanillaMacros = macros;
+
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
 
             const declaredIdentifiers = new Set<IdentifierName>();
 
             if (t.isImportDeclaration(statement.node)) {
-              // The only preval function we care about is `vanillaPrevalFunctionName`
-              if (statement.node.source.value === '@vanilla-extract/css') {
-                for (const specifier of statement.node.specifiers) {
-                  if (
-                    t.isImportSpecifier(specifier) &&
-                    t.isIdentifier(specifier.imported) &&
-                    specifier.imported.name === vanillaPrevalFunctionName
-                  ) {
-                    this.vanillaPrevalFunctionLocal = specifier.imported.name;
-                  }
-                }
-              }
-
               const locals = statement.node.specifiers.map(
                 (specifier) => specifier.local.name,
               );
@@ -225,7 +216,7 @@ export default function (): PluginObj<Context> {
                   }
                 },
                 moduleScopeIdentifiers: this.moduleScopeIdentifiers,
-                vanillaPrevalFunctionLocal: this.vanillaPrevalFunctionLocal,
+                vanillaMacros: this.vanillaMacros,
                 prevalOwners: this.prevalOwners,
                 statementIndex,
                 vanillaIdentifierMap: this.vanillaIdentifierMap,
@@ -239,16 +230,9 @@ export default function (): PluginObj<Context> {
             }
           }
 
-          // Bail if no usage of the preval function is found
-          if (!this.vanillaPrevalFunctionLocal) {
-            throw new Error(
-              `Failed to find usage of Vanilla Extract preval function "${vanillaPrevalFunctionName}"`,
-            );
-          }
-
-          const essentialIdentifiers = new Set<IdentifierName>([
-            this.vanillaPrevalFunctionLocal,
-          ]);
+          const essentialIdentifiers = new Set<IdentifierName>(
+            this.vanillaMacros,
+          );
 
           const { store } = state.opts;
 
@@ -277,9 +261,7 @@ export default function (): PluginObj<Context> {
               hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
 
             if (
-              this.depGraph.dependsOnSome(ownedIdents, [
-                this.vanillaPrevalFunctionLocal,
-              ]) ||
+              this.depGraph.dependsOnSome(ownedIdents, this.vanillaMacros) ||
               ownsEssentialIdentifier ||
               mutatesEssentialIdentifier
             ) {
