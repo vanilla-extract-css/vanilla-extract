@@ -1,5 +1,26 @@
 # @vanilla-extract/sprinkles
 
+## 1.6.0
+
+### Minor Changes
+
+- [#1062](https://github.com/vanilla-extract-css/vanilla-extract/pull/1062) [`d33aa4a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d33aa4a2c6422803967bf4ff1131d1a86a35797d) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Support assigning properties to layers via `@layer` option on `defineProperties`
+
+  **Example usage:**
+
+  ```ts
+  // sprinkles.css.ts
+  import { defineProperties } from '@vanilla-extract/sprinkles';
+  import { layer } from '@vanilla-extract/css';
+
+  export const sprinklesLayer = layer();
+
+  const properties = defineProperties({
+    '@layer': sprinklesLayer,
+    // etc.
+  });
+  ```
+
 ## 1.5.2
 
 ### Patch Changes
