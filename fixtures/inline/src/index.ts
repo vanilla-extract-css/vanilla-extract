@@ -18,6 +18,7 @@ document.body.innerHTML = `
   <div class="${block}"> 
     I'm a block
   </div>
+  <div class="${css$(style({ color: 'red' }))}">Yo</div>
   ${BrandDetails()}
   ${test}
 `;

@@ -427,6 +427,8 @@ export const createInlineCompiler = ({
         fileExports,
       );
 
+      console.log({ newRuntimeSource });
+
       const result: ProcessedVanillaFile = {
         source: newRuntimeSource,
         watchFiles,
@@ -475,14 +477,13 @@ function injectIdentifiersAndCssImports(
   cssImports: Array<string>,
   fileExports: any,
 ) {
-  // console.log('injectIdentifiersAndCssImports', {
-  //   runtimeCode,
-  //   cssImports,
-  //   fileExports,
-  // });
+  console.log('injectIdentifiersAndCssImports', {
+    cssImports,
+    fileExports,
+  });
 
   const identifierValues = Object.entries(fileExports)
-    .filter(([identifier]) => identifier.startsWith('_vanilla_identifier'))
+    .filter(([identifier]) => identifier.startsWith('_vanilla_'))
     .map(([identifier, value]) => {
       const serializedValue = JSON.stringify(value, null, 2);
 
