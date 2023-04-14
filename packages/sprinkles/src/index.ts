@@ -44,6 +44,7 @@ type ShorthandOptions<
 };
 
 type UnconditionalAtomicOptions<Properties extends AtomicProperties> = {
+  '@layer'?: string;
   properties: Properties;
 };
 
@@ -288,6 +289,14 @@ export function defineProperties(options: any): any {
             };
           }
 
+          if (options['@layer']) {
+            styleValue = {
+              '@layer': {
+                [options['@layer']]: styleValue,
+              },
+            };
+          }
+
           const className = style(
             styleValue,
             `${key}_${String(valueName)}_${conditionName}`,
@@ -304,8 +313,16 @@ export function defineProperties(options: any): any {
           styles[key].values[valueName].defaultClass = defaultClasses.join(' ');
         }
       } else {
-        const styleValue: StyleRule =
+        let styleValue: StyleRule =
           typeof value === 'object' ? value : { [key]: value };
+
+        if (options['@layer']) {
+          styleValue = {
+            '@layer': {
+              [options['@layer']]: styleValue,
+            },
+          };
+        }
 
         styles[key].values[valueName] = {
           defaultClass: style(styleValue, `${key}_${String(valueName)}`),
