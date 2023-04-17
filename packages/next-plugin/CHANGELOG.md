@@ -1,5 +1,13 @@
 # @vanilla-extract/next-plugin
 
+## 2.1.2
+
+### Patch Changes
+
+- [#1060](https://github.com/vanilla-extract-css/vanilla-extract/pull/1060) [`71f1dc5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/71f1dc50d01fab62087f86d1ed1ee9025913f328) Thanks [@SuttonJack](https://github.com/SuttonJack)! - Prepare next-plugin for Next 13 App Dir support
+
+* [#912](https://github.com/vanilla-extract-css/vanilla-extract/pull/912) [`9cefba8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9cefba8aff8321b85f3349ab622fec6e344d8f0a) Thanks [@nix6839](https://github.com/nix6839)! - Add types to Nextjs plugin configuration
+
 ## 2.1.1
 
 ### Patch Changes
