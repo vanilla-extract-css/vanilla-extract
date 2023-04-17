@@ -532,6 +532,26 @@ const responsiveProperties = defineProperties({
 });
 ```
 
+### @layer
+
+Optionally defines a layer to assign styles to for a given set of properties.
+
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support layers].
+> Vanilla Extract supports the [layers syntax][layer] but does not polyfill the feature in unsupported browsers.
+
+```ts
+// sprinkles.css.ts
+import { defineProperties } from '@vanilla-extract/sprinkles';
+import { layer } from '@vanilla-extract/css';
+
+export const sprinklesLayer = layer();
+
+const properties = defineProperties({
+  '@layer': sprinklesLayer
+  // etc.
+});
+```
+
 ## createSprinkles
 
 Creates a type-safe function for accessing your [defined properties](#defineProperties). You can provide as many collections of properties as you like.
@@ -775,3 +795,5 @@ const e: ResponsiveAlign = { desktop: 'center' };
 [styled system]: https://styled-system.com
 [support container queries]: https://caniuse.com/css-container-queries
 [container query syntax]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
+[layer]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
+[support layers]: https://caniuse.com/css-cascade-layers
