@@ -12,8 +12,11 @@ expect.addSnapshotSerializer({
   print: (val) => (val as string).trim(),
 });
 
-const transform = (source: string, macros: string[] = ['css$']) => {
-  const filename = './dir/mockFilename.css.ts';
+const transform = (
+  source: string,
+  macros: string[] = ['css$'],
+  filename = './dir/mockFilename.ts',
+) => {
   const store: Store = {
     buildTimeStatements: [],
   };
@@ -377,6 +380,44 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_defaultIdentifer = css$(style({
         color: 'blue'
       }));
+      export default _vanilla_defaultIdentifer;
+    `);
+  });
+
+  it('should extract everything to build-time in a ".css.ts" file', () => {
+    const source = `
+      import { style } from '@vanilla-extract/css';
+      
+      const flex = style({ display: 'flex' });
+      export const red = style({ color: 'red' });
+
+      export const redFlex = style([flex, red])
+
+      export default style({ color: 'blue' });`;
+
+    const result = transform(source, ['css$', 'style$'], 'styles.css.ts');
+
+    expect(result.code).toMatchInlineSnapshot(`
+      const flex = _vanilla_identifier_1_0;
+      export const red = _vanilla_identifier_2_0;
+
+      export const redFlex =_vanilla_identifier_3_0;
+
+      export default _vanilla_defaultIdentifer;
+    `);
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { style, css$ } from '@vanilla-extract/css';
+
+      export const _vanilla_identifier_1_0 = css$(style({ display: 'flex' }));
+      const flex = _vanilla_identifier_1_0;
+
+      export const _vanilla_identifier_2_0 = css$(style({ color: 'red' }));
+      export const red = _vanilla_identifier_2_0;
+
+      export const _vanilla_identifier_3_0 = css$(style([flex, red]));
+      export const redFlex = _vanilla_identifier_3_0;
+
+      export const _vanilla_defaultIdentifer = css$(style({ color: 'blue' }));
       export default _vanilla_defaultIdentifer;
     `);
   });
