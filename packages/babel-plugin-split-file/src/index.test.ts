@@ -20,11 +20,12 @@ const transform = (
   const store: Store = {
     buildTimeStatements: [],
   };
+  const isCssFile = filename.endsWith('.css.ts');
   const result = transformSync(source, {
     filename,
     cwd: __dirname,
     plugins: [
-      [dollarPlugin, { store, macros }],
+      [dollarPlugin, { store, macros, isCssFile }],
       [typescriptSyntax, { isTSX: true }],
       jsxSyntax,
     ],
@@ -395,29 +396,30 @@ describe('babel-plugin-split-file', () => {
 
       export default style({ color: 'blue' });`;
 
-    const result = transform(source, ['css$', 'style$'], 'styles.css.ts');
+    const result = transform(source, ['css$'], 'styles.css.ts');
 
     expect(result.code).toMatchInlineSnapshot(`
       const flex = _vanilla_identifier_1_0;
       export const red = _vanilla_identifier_2_0;
-
-      export const redFlex =_vanilla_identifier_3_0;
-
+      export const redFlex = _vanilla_identifier_3_0;
       export default _vanilla_defaultIdentifer;
     `);
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-
-      export const _vanilla_identifier_1_0 = css$(style({ display: 'flex' }));
+      import { css$ } from "@vanilla-extract/css";
+      import { style } from '@vanilla-extract/css';
+      export const _vanilla_identifier_1_0 = css$(style({
+        display: 'flex'
+      }));
       const flex = _vanilla_identifier_1_0;
-
-      export const _vanilla_identifier_2_0 = css$(style({ color: 'red' }));
+      export const _vanilla_identifier_2_0 = css$(style({
+        color: 'red'
+      }));
       export const red = _vanilla_identifier_2_0;
-
       export const _vanilla_identifier_3_0 = css$(style([flex, red]));
       export const redFlex = _vanilla_identifier_3_0;
-
-      export const _vanilla_defaultIdentifer = css$(style({ color: 'blue' }));
+      export const _vanilla_defaultIdentifer = css$(style({
+        color: 'blue'
+      }));
       export default _vanilla_defaultIdentifer;
     `);
   });

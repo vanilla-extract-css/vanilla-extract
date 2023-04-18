@@ -25,6 +25,8 @@ export interface Store {
 interface PluginOptions {
   store: Store;
   macros: Array<string>;
+  /** Whether or not the file being transformed ends with `.css.ts/js/etc.` */
+  isCssFile: boolean;
 }
 
 interface Context extends PluginPass {
@@ -99,6 +101,8 @@ const isVanillaMacroFunctionCall = (
 
 const vanillaDefaultIdentifier = '_vanilla_defaultIdentifer';
 
+const vanillaExtractMacroIdentifier = t.identifier('css$');
+
 export default function (): PluginObj<Context> {
   return {
     pre() {
@@ -117,11 +121,16 @@ export default function (): PluginObj<Context> {
       Program: {
         enter(path, state) {
           const bodyPath = path.get('body');
-          const { macros } = state.opts;
+          const { macros, isCssFile } = state.opts;
 
           invariant(macros.length > 0, 'Must define at least one macro');
 
           this.vanillaMacros = macros;
+
+          if (isCssFile) {
+            // Make the transform think we imported the extract macro
+            this.moduleScopeIdentifiers.add(vanillaExtractMacroIdentifier.name);
+          }
 
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
@@ -138,15 +147,16 @@ export default function (): PluginObj<Context> {
                 this.identifierOwners.get(statementIndex).add(local);
               }
             } else {
-              if (t.isVariableDeclaration(statement.node)) {
+              if (statement.isVariableDeclaration()) {
                 for (const declarationIndex of statement.node.declarations.keys()) {
-                  const decl = statement.node.declarations[declarationIndex];
+                  const declaratorPath =
+                    statement.get('declarations')[declarationIndex];
                   invariant(
-                    t.isIdentifier(decl.id),
+                    t.isIdentifier(declaratorPath.node.id),
                     '[TODO] Handle other types of top-level declarations',
                   );
 
-                  const identifierName = decl.id.name;
+                  const identifierName = declaratorPath.node.id.name;
                   const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
 
                   this.vanillaIdentifierMap.set(
@@ -157,27 +167,37 @@ export default function (): PluginObj<Context> {
                   this.moduleScopeIdentifiers.add(identifierName);
                   declaredIdentifiers.add(identifierName);
                   this.identifierOwners.get(statementIndex).add(identifierName);
+
+                  if (isCssFile) {
+                    declaratorPath.get('init').replaceWith(
+                      t.callExpression(vanillaExtractMacroIdentifier, [
+                        // TODO: don't cast to any
+                        declaratorPath.node.init as any,
+                      ]),
+                    );
+                  }
                 }
               }
 
-              if (t.isExportNamedDeclaration(statement.node)) {
+              if (statement.isExportNamedDeclaration()) {
+                const declarationPath = statement.get('declaration');
                 invariant(
-                  t.isVariableDeclaration(statement.node.declaration),
+                  declarationPath.isVariableDeclaration(),
                   '[TODO] Handle other types of top-level name declarations',
                 );
 
                 this.exportStatements.add(statementIndex);
 
-                for (const declarationIndex of statement.node.declaration.declarations.keys()) {
-                  const decl =
-                    statement.node.declaration.declarations[declarationIndex];
+                const declarationPaths = declarationPath.get('declarations');
+                for (const declarationIndex of declarationPaths.keys()) {
+                  const declaratorPath = declarationPaths[declarationIndex];
 
                   invariant(
-                    t.isIdentifier(decl.id),
+                    t.isIdentifier(declaratorPath.node.id),
                     '[TODO] Handle other types of top-level declarations',
                   );
 
-                  const identifierName = decl.id.name;
+                  const identifierName = declaratorPath.node.id.name;
                   const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
 
                   this.vanillaIdentifierMap.set(
@@ -188,10 +208,19 @@ export default function (): PluginObj<Context> {
                   this.moduleScopeIdentifiers.add(identifierName);
                   declaredIdentifiers.add(identifierName);
                   this.identifierOwners.get(statementIndex).add(identifierName);
+
+                  if (isCssFile) {
+                    declaratorPath.get('init').replaceWith(
+                      t.callExpression(vanillaExtractMacroIdentifier, [
+                        // TODO: don't cast to any
+                        declaratorPath.node.init as any,
+                      ]),
+                    );
+                  }
                 }
               }
 
-              if (t.isExportDefaultDeclaration(statement.node)) {
+              if (statement.isExportDefaultDeclaration()) {
                 const identifierName = vanillaDefaultIdentifier;
 
                 this.exportStatements.add(statementIndex);
@@ -199,6 +228,22 @@ export default function (): PluginObj<Context> {
                 this.moduleScopeIdentifiers.add(identifierName);
                 declaredIdentifiers.add(identifierName);
                 this.identifierOwners.get(statementIndex).add(identifierName);
+
+                if (isCssFile) {
+                  const declaration = statement.node.declaration;
+                  invariant(
+                    t.isExpression(declaration),
+                    'Can only wrap an expression in a macro',
+                  );
+
+                  statement
+                    .get('declaration')
+                    .replaceWith(
+                      t.callExpression(vanillaExtractMacroIdentifier, [
+                        declaration,
+                      ]),
+                    );
+                }
               }
 
               const opts = {
@@ -254,11 +299,22 @@ export default function (): PluginObj<Context> {
 
             const statement = bodyPath[statementIndex];
 
-            const macros = Array.from(this.macroOwners.get(statementIndex));
+            const statementMacros = Array.from(
+              this.macroOwners.get(statementIndex),
+            );
             const isExportStatement = this.exportStatements.has(statementIndex);
             const mutatesOrOwnsMutatedIdent =
               this.mutatingStatements.has(statementIndex) ||
               hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
+
+            const isImportDeclaration = statement.isImportDeclaration();
+
+            if (isCssFile && isImportDeclaration) {
+              // Move all import statements from runtime to buildtime if we're in a `.css.ts` file
+              store.buildTimeStatements.unshift(statement.node);
+              statement.remove();
+              continue;
+            }
 
             if (
               this.depGraph.dependsOnSome(ownedIdents, this.vanillaMacros) ||
@@ -272,7 +328,6 @@ export default function (): PluginObj<Context> {
               }
               store.buildTimeStatements.unshift(statement.node);
 
-              const isImportDeclaration = statement.isImportDeclaration();
               const importSpecifiers = isImportDeclaration
                 ? statement.node.specifiers
                 : [];
@@ -282,7 +337,7 @@ export default function (): PluginObj<Context> {
               const canBeRemovedFromRuntime =
                 !mutatesOrOwnsMutatedIdent &&
                 (isImportDeclaration ||
-                  (macros.length === 0 && !isExportStatement));
+                  (statementMacros.length === 0 && !isExportStatement));
 
               if (
                 canBeRemovedFromRuntime &&
@@ -301,8 +356,8 @@ export default function (): PluginObj<Context> {
               }
             }
 
-            if (macros.length > 0) {
-              macros.map((macroCallExpressionPath, macroIndex) => {
+            if (statementMacros.length > 0) {
+              statementMacros.map((macroCallExpressionPath, macroIndex) => {
                 let identifierName: string | undefined;
 
                 if (
@@ -338,6 +393,20 @@ export default function (): PluginObj<Context> {
                 macroCallExpressionPath.replaceWith(ident);
               });
             }
+          }
+
+          if (isCssFile) {
+            store.buildTimeStatements.unshift(
+              t.importDeclaration(
+                [
+                  t.importSpecifier(
+                    vanillaExtractMacroIdentifier,
+                    vanillaExtractMacroIdentifier,
+                  ),
+                ],
+                t.stringLiteral('@vanilla-extract/css'),
+              ),
+            );
           }
         },
       },
