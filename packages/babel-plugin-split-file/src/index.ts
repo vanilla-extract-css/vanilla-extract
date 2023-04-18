@@ -33,7 +33,7 @@ interface Context extends PluginPass {
   identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
   depGraph: DependencyGraph;
   vanillaMacros: string[];
-  prevalOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
+  macroOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
   vanillaIdentifierMap: Map<string, string>;
   exportStatements: Set<StatementIndex>;
   mutatingStatements: Set<StatementIndex>;
@@ -44,14 +44,14 @@ interface Context extends PluginPass {
 const identifierVisitor: Visitor<
   {
     addUsedIdentifier: (ident: IdentifierName) => void;
-    moduleScopeIdentifiers: Set<IdentifierName>;
     statementIndex: number;
   } & Pick<
     Context,
     | 'vanillaMacros'
-    | 'prevalOwners'
+    | 'macroOwners'
     | 'mutatingStatements'
     | 'identifierMutators'
+    | 'moduleScopeIdentifiers'
     | 'mutatedModuleScopeIdentifiers'
   >
 > = {
@@ -65,7 +65,7 @@ const identifierVisitor: Visitor<
   },
   CallExpression(path) {
     if (isVanillaMacroFunctionCall(path, this.vanillaMacros)) {
-      this.prevalOwners.get(this.statementIndex).add(path);
+      this.macroOwners.get(this.statementIndex).add(path);
     }
   },
   AssignmentExpression(path) {
@@ -105,7 +105,7 @@ export default function (): PluginObj<Context> {
       this.moduleScopeIdentifiers = new Set();
       this.identifierOwners = new DefaultMap(() => new Set());
       this.depGraph = new DependencyGraph();
-      this.prevalOwners = new DefaultMap(() => new Set());
+      this.macroOwners = new DefaultMap(() => new Set());
       this.vanillaIdentifierMap = new Map();
       this.exportStatements = new Set();
       this.mutatingStatements = new Set();
@@ -205,7 +205,7 @@ export default function (): PluginObj<Context> {
                 addUsedIdentifier: (ident: string) => {
                   if (this.moduleScopeIdentifiers.has(ident)) {
                     for (const declaredIdent of declaredIdentifiers) {
-                      // In order to correctly extract prevals at the top level of a declarator, we
+                      // In order to correctly extract macros at the top level of a declarator, we
                       // need to traverse the declarator path, not the declarator's init path.
                       // Doing this results in traversing the declarator identifier, so to prevent a
                       // self-referential dependency, we explicitly check for it
@@ -217,7 +217,7 @@ export default function (): PluginObj<Context> {
                 },
                 moduleScopeIdentifiers: this.moduleScopeIdentifiers,
                 vanillaMacros: this.vanillaMacros,
-                prevalOwners: this.prevalOwners,
+                macroOwners: this.macroOwners,
                 statementIndex,
                 vanillaIdentifierMap: this.vanillaIdentifierMap,
                 mutatingStatements: this.mutatingStatements,
@@ -238,7 +238,7 @@ export default function (): PluginObj<Context> {
 
           for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
             // Should keep index if it creates/modifies an essential identifier
-            // or it depends on a preval function
+            // or it depends on a macro
 
             const ownedIdents = this.identifierOwners.get(statementIndex);
             const ownsEssentialIdentifier = hasIntersection(
@@ -254,7 +254,7 @@ export default function (): PluginObj<Context> {
 
             const statement = bodyPath[statementIndex];
 
-            const prevals = Array.from(this.prevalOwners.get(statementIndex));
+            const macros = Array.from(this.macroOwners.get(statementIndex));
             const isExportStatement = this.exportStatements.has(statementIndex);
             const mutatesOrOwnsMutatedIdent =
               this.mutatingStatements.has(statementIndex) ||
@@ -282,7 +282,7 @@ export default function (): PluginObj<Context> {
               const canBeRemovedFromRuntime =
                 !mutatesOrOwnsMutatedIdent &&
                 (isImportDeclaration ||
-                  (prevals.length === 0 && !isExportStatement));
+                  (macros.length === 0 && !isExportStatement));
 
               if (
                 canBeRemovedFromRuntime &&
@@ -301,27 +301,27 @@ export default function (): PluginObj<Context> {
               }
             }
 
-            if (prevals.length > 0) {
-              prevals.map((prevalCallExpressionPath, prevalIndex) => {
+            if (macros.length > 0) {
+              macros.map((macroCallExpressionPath, macroIndex) => {
                 let identifierName: string | undefined;
 
                 if (
                   // If we're at the top of a named variable declaration
-                  t.isVariableDeclarator(prevalCallExpressionPath.parent) &&
+                  t.isVariableDeclarator(macroCallExpressionPath.parent) &&
                   // TODO: Handle other types of ids
-                  t.isIdentifier(prevalCallExpressionPath.parent.id)
+                  t.isIdentifier(macroCallExpressionPath.parent.id)
                 ) {
                   identifierName = this.vanillaIdentifierMap.get(
-                    prevalCallExpressionPath.parent.id.name,
+                    macroCallExpressionPath.parent.id.name,
                   );
                 } else if (
                   // If we're at the top of a default export
-                  t.isExportDefaultDeclaration(prevalCallExpressionPath.parent)
+                  t.isExportDefaultDeclaration(macroCallExpressionPath.parent)
                 ) {
                   identifierName = vanillaDefaultIdentifier;
                 } else {
                   // We're somewhere else in an expression
-                  identifierName = `_vanilla_anonymousIdentifier_${statementIndex}_${prevalIndex}`;
+                  identifierName = `_vanilla_anonymousIdentifier_${statementIndex}_${macroIndex}`;
                 }
 
                 invariant(identifierName, 'Must have an identifier name');
@@ -329,13 +329,13 @@ export default function (): PluginObj<Context> {
 
                 const declaration = t.exportNamedDeclaration(
                   t.variableDeclaration('const', [
-                    t.variableDeclarator(ident, prevalCallExpressionPath.node),
+                    t.variableDeclarator(ident, macroCallExpressionPath.node),
                   ]),
                 );
 
                 store.buildTimeStatements.unshift(declaration);
 
-                prevalCallExpressionPath.replaceWith(ident);
+                macroCallExpressionPath.replaceWith(ident);
               });
             }
           }
