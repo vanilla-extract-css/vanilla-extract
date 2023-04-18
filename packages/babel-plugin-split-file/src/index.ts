@@ -146,133 +146,131 @@ export default function (): PluginObj<Context> {
                 this.moduleScopeIdentifiers.add(local);
                 this.identifierOwners.get(statementIndex).add(local);
               }
-            } else {
-              if (statement.isVariableDeclaration()) {
-                for (const declarationIndex of statement.node.declarations.keys()) {
-                  const declaratorPath =
-                    statement.get('declarations')[declarationIndex];
-                  invariant(
-                    t.isIdentifier(declaratorPath.node.id),
-                    '[TODO] Handle other types of top-level declarations',
-                  );
 
-                  const identifierName = declaratorPath.node.id.name;
-                  const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
+              // No need to traverse import declarations
+              continue;
+            }
 
-                  this.vanillaIdentifierMap.set(
-                    identifierName,
-                    vanillaIdentifierName,
-                  );
-
-                  this.moduleScopeIdentifiers.add(identifierName);
-                  declaredIdentifiers.add(identifierName);
-                  this.identifierOwners.get(statementIndex).add(identifierName);
-
-                  if (isCssFile) {
-                    declaratorPath.get('init').replaceWith(
-                      t.callExpression(vanillaExtractMacroIdentifier, [
-                        // TODO: don't cast to any
-                        declaratorPath.node.init as any,
-                      ]),
-                    );
-                  }
-                }
-              }
-
-              if (statement.isExportNamedDeclaration()) {
-                const declarationPath = statement.get('declaration');
+            if (statement.isVariableDeclaration()) {
+              for (const declarationIndex of statement.node.declarations.keys()) {
+                const declaratorPath =
+                  statement.get('declarations')[declarationIndex];
                 invariant(
-                  declarationPath.isVariableDeclaration(),
-                  '[TODO] Handle other types of top-level name declarations',
+                  t.isIdentifier(declaratorPath.node.id),
+                  '[TODO] Handle other types of top-level declarations',
                 );
 
-                this.exportStatements.add(statementIndex);
+                const identifierName = declaratorPath.node.id.name;
+                const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
 
-                const declarationPaths = declarationPath.get('declarations');
-                for (const declarationIndex of declarationPaths.keys()) {
-                  const declaratorPath = declarationPaths[declarationIndex];
-
-                  invariant(
-                    t.isIdentifier(declaratorPath.node.id),
-                    '[TODO] Handle other types of top-level declarations',
-                  );
-
-                  const identifierName = declaratorPath.node.id.name;
-                  const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
-
-                  this.vanillaIdentifierMap.set(
-                    identifierName,
-                    vanillaIdentifierName,
-                  );
-
-                  this.moduleScopeIdentifiers.add(identifierName);
-                  declaredIdentifiers.add(identifierName);
-                  this.identifierOwners.get(statementIndex).add(identifierName);
-
-                  if (isCssFile) {
-                    declaratorPath.get('init').replaceWith(
-                      t.callExpression(vanillaExtractMacroIdentifier, [
-                        // TODO: don't cast to any
-                        declaratorPath.node.init as any,
-                      ]),
-                    );
-                  }
-                }
-              }
-
-              if (statement.isExportDefaultDeclaration()) {
-                const identifierName = vanillaDefaultIdentifier;
-
-                this.exportStatements.add(statementIndex);
+                this.vanillaIdentifierMap.set(
+                  identifierName,
+                  vanillaIdentifierName,
+                );
 
                 this.moduleScopeIdentifiers.add(identifierName);
                 declaredIdentifiers.add(identifierName);
                 this.identifierOwners.get(statementIndex).add(identifierName);
 
                 if (isCssFile) {
-                  const declaration = statement.node.declaration;
-                  invariant(
-                    t.isExpression(declaration),
-                    'Can only wrap an expression in a macro',
+                  declaratorPath.get('init').replaceWith(
+                    t.callExpression(vanillaExtractMacroIdentifier, [
+                      // TODO: don't cast to any
+                      declaratorPath.node.init as any,
+                    ]),
                   );
-
-                  statement
-                    .get('declaration')
-                    .replaceWith(
-                      t.callExpression(vanillaExtractMacroIdentifier, [
-                        declaration,
-                      ]),
-                    );
                 }
               }
+            } else if (statement.isExportNamedDeclaration()) {
+              const declarationPath = statement.get('declaration');
+              invariant(
+                declarationPath.isVariableDeclaration(),
+                '[TODO] Handle other types of top-level name declarations',
+              );
 
-              const opts = {
-                addUsedIdentifier: (ident: string) => {
-                  if (this.moduleScopeIdentifiers.has(ident)) {
-                    for (const declaredIdent of declaredIdentifiers) {
-                      // In order to correctly extract macros at the top level of a declarator, we
-                      // need to traverse the declarator path, not the declarator's init path.
-                      // Doing this results in traversing the declarator identifier, so to prevent a
-                      // self-referential dependency, we explicitly check for it
-                      if (declaredIdent !== ident) {
-                        this.depGraph.addDependency(declaredIdent, ident);
-                      }
+              this.exportStatements.add(statementIndex);
+
+              const declarationPaths = declarationPath.get('declarations');
+              for (const declarationIndex of declarationPaths.keys()) {
+                const declaratorPath = declarationPaths[declarationIndex];
+
+                invariant(
+                  t.isIdentifier(declaratorPath.node.id),
+                  '[TODO] Handle other types of top-level declarations',
+                );
+
+                const identifierName = declaratorPath.node.id.name;
+                const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
+
+                this.vanillaIdentifierMap.set(
+                  identifierName,
+                  vanillaIdentifierName,
+                );
+
+                this.moduleScopeIdentifiers.add(identifierName);
+                declaredIdentifiers.add(identifierName);
+                this.identifierOwners.get(statementIndex).add(identifierName);
+
+                if (isCssFile) {
+                  declaratorPath.get('init').replaceWith(
+                    t.callExpression(vanillaExtractMacroIdentifier, [
+                      // TODO: don't cast to any
+                      declaratorPath.node.init as any,
+                    ]),
+                  );
+                }
+              }
+            } else if (statement.isExportDefaultDeclaration()) {
+              const identifierName = vanillaDefaultIdentifier;
+
+              this.exportStatements.add(statementIndex);
+
+              this.moduleScopeIdentifiers.add(identifierName);
+              declaredIdentifiers.add(identifierName);
+              this.identifierOwners.get(statementIndex).add(identifierName);
+
+              if (isCssFile) {
+                const declaration = statement.node.declaration;
+                invariant(
+                  t.isExpression(declaration),
+                  'Can only wrap an expression in a macro',
+                );
+
+                statement
+                  .get('declaration')
+                  .replaceWith(
+                    t.callExpression(vanillaExtractMacroIdentifier, [
+                      declaration,
+                    ]),
+                  );
+              }
+            }
+
+            const opts = {
+              addUsedIdentifier: (ident: string) => {
+                if (this.moduleScopeIdentifiers.has(ident)) {
+                  for (const declaredIdent of declaredIdentifiers) {
+                    // In order to correctly extract macros at the top level of a declarator, we
+                    // need to traverse the declarator path, not the declarator's init path.
+                    // Doing this results in traversing the declarator identifier, so to prevent a
+                    // self-referential dependency, we explicitly check for it
+                    if (declaredIdent !== ident) {
+                      this.depGraph.addDependency(declaredIdent, ident);
                     }
                   }
-                },
-                moduleScopeIdentifiers: this.moduleScopeIdentifiers,
-                vanillaMacros: this.vanillaMacros,
-                macroOwners: this.macroOwners,
-                statementIndex,
-                vanillaIdentifierMap: this.vanillaIdentifierMap,
-                mutatingStatements: this.mutatingStatements,
-                identifierMutators: this.identifierMutators,
-                mutatedModuleScopeIdentifiers:
-                  this.mutatedModuleScopeIdentifiers,
-              };
+                }
+              },
+              moduleScopeIdentifiers: this.moduleScopeIdentifiers,
+              vanillaMacros: this.vanillaMacros,
+              macroOwners: this.macroOwners,
+              statementIndex,
+              vanillaIdentifierMap: this.vanillaIdentifierMap,
+              mutatingStatements: this.mutatingStatements,
+              identifierMutators: this.identifierMutators,
+              mutatedModuleScopeIdentifiers: this.mutatedModuleScopeIdentifiers,
+            };
 
-              statement.traverse(identifierVisitor, opts);
-            }
+            statement.traverse(identifierVisitor, opts);
           }
 
           const essentialIdentifiers = new Set<IdentifierName>(
