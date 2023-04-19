@@ -9,6 +9,7 @@ import type { IdentifierOption } from './types';
 import { getPackageInfo } from './packageInfo';
 import { transform } from './inlineTransform';
 import { lock } from './lock';
+import { cssFileFilter } from './filters';
 
 const firstPartyMacros: Record<string, Array<string>> = {
   '@vanilla-extract/css': ['css$', 'style$', 'styleVariants$'],
@@ -95,59 +96,64 @@ const createViteServer = async ({
       {
         name: 'vanilla-extract-transform',
         async transform(code, id) {
-          if (!code.includes('$')) {
-            // Super fast bailout for code not containing a '$' character
-            return;
-          }
+          let macros: Array<string> = ['css$'];
 
-          console.log('Transform', id);
+          if (!cssFileFilter.test(id)) {
+            if (!code.includes('$')) {
+              // Super fast bailout for code not containing a '$' character
+              return;
+            }
 
-          const relevantImports = findStaticImports(code)
-            .map((rawImport) => {
-              const { namedImports, specifier } = parseStaticImport(rawImport);
+            console.log('Transform', id);
 
-              return { namedImports, specifier };
-            })
-            .filter(
-              ({ namedImports }) =>
-                namedImports &&
-                Object.keys(namedImports).some((identifier) =>
-                  identifier.endsWith('$'),
-                ),
-            );
+            const relevantImports = findStaticImports(code)
+              .map((rawImport) => {
+                const { namedImports, specifier } =
+                  parseStaticImport(rawImport);
 
-          if (relevantImports.length === 0) {
-            return;
-          }
+                return { namedImports, specifier };
+              })
+              .filter(
+                ({ namedImports }) =>
+                  namedImports &&
+                  Object.keys(namedImports).some((identifier) =>
+                    identifier.endsWith('$'),
+                  ),
+              );
 
-          const result = await Promise.all(
-            relevantImports.map(async ({ specifier, namedImports }) => {
-              let macros = firstPartyMacros[specifier];
+            if (relevantImports.length === 0) {
+              return;
+            }
 
-              if (!macros) {
-                const resolved = await this.resolve(specifier, id);
+            const result = await Promise.all(
+              relevantImports.map(async ({ specifier, namedImports }) => {
+                let importMacros = firstPartyMacros[specifier];
 
-                if (!resolved) {
-                  throw new Error(`Can't resolve "${specifier}" from "${id}"`);
+                if (!importMacros) {
+                  const resolved = await this.resolve(specifier, id);
+
+                  if (!resolved) {
+                    throw new Error(
+                      `Can't resolve "${specifier}" from "${id}"`,
+                    );
+                  }
+
+                  const { config } = getPackageInfo(resolved.id);
+                  importMacros = config.macros || [];
                 }
 
-                const { config } = getPackageInfo(resolved.id);
-                macros = config.macros || [];
-              }
+                return importMacros
+                  .map((macro) => namedImports![macro])
+                  .filter(Boolean);
+              }),
+            );
 
-              return macros
-                .map((macro) => namedImports![macro])
-                .filter(Boolean);
-            }),
-          );
+            macros = result.flat();
 
-          const macros = result.flat();
-
-          if (macros.length === 0) {
-            return;
+            if (macros.length === 0) {
+              return;
+            }
           }
-
-          console.log({ macros });
 
           const transformResult = await transform({
             source: code,

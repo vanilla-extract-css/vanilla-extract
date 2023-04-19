@@ -8,6 +8,7 @@ import jsxSyntax from '@babel/plugin-syntax-jsx';
 
 import { addFileScope } from './addFileScope';
 import type { IdentifierOption } from './types';
+import { cssFileFilter } from './filters';
 
 interface TransformParams {
   source: string;
@@ -36,7 +37,10 @@ export const transform = async ({
     filename: filePath,
     cwd: rootPath,
     plugins: [
-      [vanillaBabelPlugin, { store, macros }],
+      [
+        vanillaBabelPlugin,
+        { store, macros, isCssFile: cssFileFilter.test(filePath) },
+      ],
       [typescriptSyntax, { isTSX: true }],
       jsxSyntax,
     ],
