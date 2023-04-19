@@ -7,3 +7,8 @@ export const shadow: string = style({
 globalStyle('body', {
   backgroundColor: 'skyblue',
 });
+
+// make the screenshot less flaky in CI
+globalStyle('body, button', {
+  lineHeight: '16px',
+});

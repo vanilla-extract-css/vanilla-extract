@@ -1,0 +1,10 @@
+{
+  "name": "@fixtures/layers",
+  "version": "0.0.2",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@vanilla-extract/css": "1.11.0"
+  }
+}

@@ -32,6 +32,10 @@
 body {
   background-color: #87ceeb;
 }
+body,
+button {
+  line-height: 16px;
+}
 :root,
 .cdwe0v0 {
   --cdwe0v1: blue;
@@ -115,4 +119,8 @@ html .blj6yb7 {
 }
 body {
   background-color: #87ceeb;
+}
+body,
+button {
+  line-height: 16px;
 }

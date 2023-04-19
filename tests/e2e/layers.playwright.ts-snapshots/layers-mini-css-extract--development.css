@@ -1,0 +1,29 @@
+@layer lib;
+@layer lib.styles_base__18onbx40;
+@media screen and (min-width: 600px) {
+  @layer typography;
+}
+@layer lib.styles_utilities__18onbx42;
+@layer typography;
+@layer lib.styles_base__18onbx40 {
+  a {
+    font-weight: 800;
+    color: red;
+  }
+  .styles_link__18onbx41 {
+    color: blue;
+  }
+}
+@media screen and (min-width: 600px) {
+  @layer typography {
+    a {
+      color: green;
+      font-size: 1.5rem;
+    }
+  }
+}
+@layer lib.styles_utilities__18onbx42 {
+  .styles_pink__18onbx43 {
+    color: hotpink;
+  }
+}

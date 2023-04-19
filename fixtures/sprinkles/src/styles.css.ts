@@ -21,7 +21,7 @@ export const container = style({
   containerType: 'size',
 });
 
-const responsiveProperties = defineProperties({
+const responsiveConditions = {
   defaultCondition: 'mobile',
   conditions: {
     mobile: {},
@@ -40,12 +40,23 @@ const responsiveProperties = defineProperties({
     },
   },
   responsiveArray: ['mobile', 'tablet', 'desktop'],
+} as const;
+
+const responsiveProperties = defineProperties({
+  ...responsiveConditions,
   properties: {
     display: ['flex', 'none', 'block'],
     paddingTop: {
       small: '10px',
       medium: '20px',
     },
+  },
+});
+
+const responsiveLayerProperties = defineProperties({
+  '@layer': 'responsive-layer-name',
+  ...responsiveConditions,
+  properties: {
     background: {
       red: {
         vars: { [alpha]: '1' },
@@ -71,6 +82,12 @@ const unconditionalProperties = defineProperties({
         color: `rgba(255, 0, 0, ${textAlpha})`,
       },
     },
+  },
+});
+
+const unconditionalLayerProperties = defineProperties({
+  '@layer': 'unconditional-layer-name',
+  properties: {
     textOpacity: {
       1: { vars: { [textAlpha]: '1' } },
       0.8: { vars: { [textAlpha]: '0.8' } },
@@ -80,7 +97,9 @@ const unconditionalProperties = defineProperties({
 
 export const sprinkles = createSprinkles(
   responsiveProperties,
+  responsiveLayerProperties,
   unconditionalProperties,
+  unconditionalLayerProperties,
 );
 
 export const mapResponsiveValue = createMapValueFn(responsiveProperties);

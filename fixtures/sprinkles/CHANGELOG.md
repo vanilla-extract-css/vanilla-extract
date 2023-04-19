@@ -1,5 +1,19 @@
 # @fixtures/sprinkles
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`d33aa4a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d33aa4a2c6422803967bf4ff1131d1a86a35797d)]:
+  - @vanilla-extract/sprinkles@1.6.0
+
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies [[`ece5fc3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ece5fc3130020aa2fdde5b0075b17695bb082b01)]:
+  - @vanilla-extract/css@1.11.0
+
 ## 0.0.22
 
 ### Patch Changes

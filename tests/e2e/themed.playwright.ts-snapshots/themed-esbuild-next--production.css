@@ -32,6 +32,10 @@
 body {
   background-color: #87ceeb;
 }
+body,
+button {
+  line-height: 16px;
+}
 @font-face {
   src: local("Impact");
   font-family: jteyb10;

@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-extract-private/test-helpers",
   "private": true,
-  "version": "0.0.36",
+  "version": "0.0.38",
   "main": "src/index.ts",
   "author": "SEEK",
   "license": "MIT",
@@ -9,6 +9,7 @@
     "@babel/core": "^7.20.7",
     "@fixtures/features": "*",
     "@fixtures/inline": "*",
+    "@fixtures/layers": "*",
     "@fixtures/low-level": "*",
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",
