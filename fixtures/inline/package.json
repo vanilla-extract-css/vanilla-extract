@@ -5,7 +5,8 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.10.0"
+    "@vanilla-extract/css": "^1.10.0",
+    "@vanilla-extract/recipes": "^0.4.0"
   },
   "vanilla-extract": {
     "macros": [

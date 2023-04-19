@@ -373,6 +373,7 @@ export function createSprinkles<
     args: config,
   });
 }
+export const createSprinkles$ = createSprinkles;
 
 /** @deprecated - Use `defineProperties` */
 export const createAtomicStyles = defineProperties;

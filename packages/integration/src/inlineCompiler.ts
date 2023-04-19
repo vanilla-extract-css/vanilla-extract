@@ -10,9 +10,21 @@ import { getPackageInfo } from './packageInfo';
 import { transform } from './inlineTransform';
 import { lock } from './lock';
 import { cssFileFilter } from './filters';
+import { serializeVanillaModule } from './inlineExportSerializer';
 
 const firstPartyMacros: Record<string, Array<string>> = {
-  '@vanilla-extract/css': ['css$', 'style$', 'styleVariants$'],
+  '@vanilla-extract/css': [
+    'css$',
+    'style$',
+    'styleVariants$',
+    'globalStyle$',
+    'keyframes$',
+    'globalKeyframes$',
+    'fontFace$',
+    'globalFontFace$',
+  ],
+  '@vanilla-extract/recipes': ['recipe$'],
+  '@vanilla-extract/sprinkles': ['createSprinkles$'],
 };
 
 type Css = Parameters<Adapter['appendCss']>[0];
@@ -104,8 +116,6 @@ const createViteServer = async ({
               return;
             }
 
-            console.log('Transform', id);
-
             const relevantImports = findStaticImports(code)
               .map((rawImport) => {
                 const { namedImports, specifier } =
@@ -167,7 +177,7 @@ const createViteServer = async ({
 
           transformCache.set(id, transformResult);
 
-          console.log(id, transformResult);
+          // console.log(id, transformResult);
 
           return transformResult.buildtime;
         },
@@ -361,7 +371,7 @@ export const createInlineCompiler = ({
             };
           };
 
-          console.log('Execute file', filePath);
+          // console.log('Execute file', filePath);
           const fileExports = await runner.executeFile(filePath);
 
           const moduleId = normalizeModuleId(filePath);
@@ -427,13 +437,14 @@ export const createInlineCompiler = ({
         return null;
       }
 
-      const newRuntimeSource = injectIdentifiersAndCssImports(
-        runtimeCode,
+      const newRuntimeSource = serializeVanillaModule(
         cssImports,
         fileExports,
+        null, // This compiler currently retains all composition classes
+        runtimeCode,
       );
 
-      console.log({ newRuntimeSource });
+      // console.log({ newRuntimeSource });
 
       const result: ProcessedVanillaFile = {
         source: newRuntimeSource,
@@ -477,24 +488,3 @@ export const createInlineCompiler = ({
     },
   };
 };
-
-function injectIdentifiersAndCssImports(
-  runtimeCode: string,
-  cssImports: Array<string>,
-  fileExports: any,
-) {
-  console.log('injectIdentifiersAndCssImports', {
-    cssImports,
-    fileExports,
-  });
-
-  const identifierValues = Object.entries(fileExports)
-    .filter(([identifier]) => identifier.startsWith('_vanilla_'))
-    .map(([identifier, value]) => {
-      const serializedValue = JSON.stringify(value, null, 2);
-
-      return `var ${identifier} = ${serializedValue};`;
-    });
-
-  return [...cssImports, ...identifierValues, runtimeCode].join('\n');
-}

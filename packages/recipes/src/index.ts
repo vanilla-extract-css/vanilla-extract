@@ -75,3 +75,5 @@ export function recipe<Variants extends VariantGroups>(
     args: [config],
   });
 }
+
+export const recipe$ = recipe;

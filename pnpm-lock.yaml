@@ -135,9 +135,11 @@ importers:
 
   fixtures/inline:
     specifiers:
-      '@vanilla-extract/css': 1.10.0
+      '@vanilla-extract/css': ^1.10.0
+      '@vanilla-extract/recipes': ^0.4.0
     dependencies:
-      '@vanilla-extract/css': 1.10.0
+      '@vanilla-extract/css': link:../../packages/css
+      '@vanilla-extract/recipes': link:../../packages/recipes
 
   fixtures/layers:
     specifiers:
@@ -6860,26 +6862,6 @@ packages:
       '@babel/core': 7.20.7
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@vanilla-extract/css/1.10.0:
-    resolution: {integrity: sha512-s/EFfLDKbU1c2jnELNl+l14AufvIyryDh09ZZxRRqKjRKitiKvEjoiUy964pGKmfHngc9O0mkbzqrbhWaH+96Q==}
-    dependencies:
-      '@emotion/hash': 0.9.0
-      '@vanilla-extract/private': 1.0.3
-      ahocorasick: 1.0.2
-      chalk: 4.1.2
-      css-what: 5.1.0
-      cssesc: 3.0.0
-      csstype: 3.0.10
-      deep-object-diff: 1.1.9
-      deepmerge: 4.2.2
-      media-query-parser: 2.0.2
-      outdent: 0.8.0
-    dev: false
-
-  /@vanilla-extract/private/1.0.3:
-    resolution: {integrity: sha512-17kVyLq3ePTKOkveHxXuIJZtGYs+cSoev7BlP+Lf4916qfDhk/HBjvlYDe8egrea7LNPHKwSZJK/bzZC+Q6AwQ==}
     dev: false
 
   /@vercel/nft/0.22.1:

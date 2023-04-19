@@ -18,7 +18,6 @@ function getClosestPackageInfo(directory: string) {
 
   if (packageJsonPath) {
     const { name, 'vanilla-extract': config = {} } = require(packageJsonPath);
-    console.log(require(packageJsonPath));
 
     return {
       name,

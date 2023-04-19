@@ -80,6 +80,8 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
   return className;
 }
 
+export const style$ = style;
+
 /**
  * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
  */
@@ -92,6 +94,8 @@ export function composeStyles(...classNames: Array<ClassNames>) {
 export function globalStyle(selector: string, rule: GlobalStyleRule) {
   appendCss({ type: 'global', selector, rule }, getFileScope());
 }
+
+export const globalStyle$ = globalStyle;
 
 export function fontFace(rule: FontFaceRule, debugId?: string) {
   const fontFamily = `"${cssesc(generateIdentifier(debugId), {
@@ -116,12 +120,16 @@ export function fontFace(rule: FontFaceRule, debugId?: string) {
   return fontFamily;
 }
 
+export const fontFace$ = fontFace;
+
 export function globalFontFace(fontFamily: string, rule: FontFaceRule) {
   appendCss(
     { type: 'fontFace', rule: { ...rule, fontFamily } },
     getFileScope(),
   );
 }
+
+export const globalFontFace$ = globalFontFace;
 
 export function keyframes(rule: CSSKeyframes, debugId?: string) {
   const name = cssesc(generateIdentifier(debugId), {
@@ -133,9 +141,13 @@ export function keyframes(rule: CSSKeyframes, debugId?: string) {
   return name;
 }
 
+export const keyframes$ = keyframes;
+
 export function globalKeyframes(name: string, rule: CSSKeyframes) {
   appendCss({ type: 'keyframes', name, rule }, getFileScope());
 }
+
+export const globalKeyframes$ = globalKeyframes;
 
 export function styleVariants<
   StyleMap extends Record<string | number, ComplexStyleRule>,
@@ -175,3 +187,5 @@ export function styleVariants(...args: any[]) {
 
   return classMap;
 }
+
+export const styleVariants$ = styleVariants;

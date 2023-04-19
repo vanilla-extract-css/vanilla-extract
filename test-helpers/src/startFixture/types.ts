@@ -7,7 +7,8 @@ type BuildType =
   | 'esbuild-runtime'
   | 'esbuild-next-runtime'
   | 'vite'
-  | 'parcel';
+  | 'parcel'
+  | 'inline';
 
 export interface TestServer {
   type: BuildType;
