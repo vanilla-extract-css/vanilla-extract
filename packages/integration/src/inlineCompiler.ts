@@ -221,6 +221,11 @@ export interface InlineCompiler {
     filePath: string,
     options?: {
       outputCss?: boolean;
+      cssImportSpecifier?: (
+        filePath: string,
+        css: string,
+        root: string,
+      ) => Promise<string> | string;
     },
   ): Promise<{ source: string; watchFiles: Set<string> } | null>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
@@ -234,14 +239,12 @@ interface ProcessedVanillaFile {
 
 export interface CreateInlineCompilerOptions {
   root: string;
-  cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
   vitePlugins?: Array<VitePlugin>;
 }
 export const createInlineCompiler = ({
   root,
   identifiers = 'debug',
-  cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
   vitePlugins,
 }: CreateInlineCompilerOptions): InlineCompiler => {
   let originalPrepareContext: ViteNodeRunner['prepareContext'];
@@ -277,12 +280,14 @@ export const createInlineCompiler = ({
   return {
     async processVanillaFile(
       filePath,
-      options = {},
+      {
+        outputCss = true,
+        cssImportSpecifier = (filePath: string) => filePath + '.vanilla.css',
+      } = {},
     ): Promise<ProcessedVanillaFile | null> {
       const { server, runner, transformCache } = await vitePromise;
 
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
-      const outputCss = options.outputCss ?? true;
 
       const cacheKey = Object.entries({ filePath, outputCss })
         .map((entry) => entry.join('='))
@@ -417,7 +422,11 @@ export const createInlineCompiler = ({
 
             if (cssObjs || cachedCss?.css) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+                `import '${await cssImportSpecifier(
+                  cssDepModuleId,
+                  cssCache.get(cssDepModuleId)?.css!,
+                  root,
+                )}';`,
               );
             }
           }
@@ -443,8 +452,6 @@ export const createInlineCompiler = ({
         null, // This compiler currently retains all composition classes
         runtimeCode,
       );
-
-      // console.log({ newRuntimeSource });
 
       const result: ProcessedVanillaFile = {
         source: newRuntimeSource,

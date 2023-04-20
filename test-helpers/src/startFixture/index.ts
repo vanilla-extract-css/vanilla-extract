@@ -38,14 +38,6 @@ export async function startFixture(
     ].join('\n'),
   );
 
-  if (fixtureName === 'inline' || type === 'inline') {
-    return startEsbuildFixture(fixtureName, {
-      type: 'inline',
-      port,
-      mode: options.mode,
-    });
-  }
-
   if (
     type === 'esbuild' ||
     type === 'esbuild-runtime' ||

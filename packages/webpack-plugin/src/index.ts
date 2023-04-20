@@ -1,7 +1,12 @@
-import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
+import {
+  createInlineCompiler,
+  cssFileFilter,
+  IdentifierOption,
+} from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
+// @ts-expect-error
+import loaderUtils from 'loader-utils';
 
-import { ChildCompiler } from './compiler';
 import createCompat, { WebpackCompat } from './compat';
 
 const pluginName = 'VanillaExtractPlugin';
@@ -48,38 +53,25 @@ interface PluginOptions {
   test?: RuleSetRule['test'];
   identifiers?: IdentifierOption;
   outputCss?: boolean;
-  externals?: any;
-  /** @deprecated */
-  allowRuntime?: boolean;
 }
 export class VanillaExtractPlugin {
   test: RuleSetRule['test'];
   outputCss: boolean;
-  allowRuntime: boolean;
-  childCompiler: ChildCompiler;
   identifiers?: IdentifierOption;
 
   constructor(options: PluginOptions = {}) {
-    const {
-      test = cssFileFilter,
-      outputCss = true,
-      externals,
-      allowRuntime,
-      identifiers,
-    } = options;
-
-    if (allowRuntime !== undefined) {
-      console.warn('The "allowRuntime" option is deprecated.');
-    }
+    const { test = cssFileFilter, outputCss = true, identifiers } = options;
 
     this.test = test;
     this.outputCss = outputCss;
-    this.allowRuntime = allowRuntime ?? false;
-    this.childCompiler = new ChildCompiler(externals);
     this.identifiers = identifiers;
   }
 
   apply(compiler: Compiler) {
+    const veCompiler = createInlineCompiler({
+      root: compiler.context,
+      identifiers: this.identifiers,
+    });
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );
@@ -87,13 +79,13 @@ export class VanillaExtractPlugin {
     markCSSFilesAsSideEffects(compiler, compat);
 
     compiler.options.module?.rules.splice(0, 0, {
-      test: this.test,
+      test: /\.(ts|tsx)$/,
       use: [
         {
           loader: require.resolve('../loader'),
           options: {
             outputCss: this.outputCss,
-            childCompiler: this.childCompiler,
+            veCompiler: veCompiler,
             identifiers: this.identifiers,
           },
         },

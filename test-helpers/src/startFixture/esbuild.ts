@@ -9,12 +9,7 @@ import * as esbuild from 'esbuild';
 import { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
-  type:
-    | 'esbuild'
-    | 'esbuild-runtime'
-    | 'esbuild-next'
-    | 'esbuild-next-runtime'
-    | 'inline';
+  type: 'esbuild' | 'esbuild-runtime' | 'esbuild-next' | 'esbuild-next-runtime';
   mode?: 'development' | 'production';
   port: number;
 }
@@ -26,10 +21,6 @@ export const startEsbuildFixture = async (
 
   if (type.includes('next')) {
     plugin = vanillaExtractPluginNext;
-  }
-
-  if (type === 'inline') {
-    plugin = vanillaExtractPluginInline;
   }
 
   const entry = require.resolve(`@fixtures/${fixtureName}/src/index.ts`);
