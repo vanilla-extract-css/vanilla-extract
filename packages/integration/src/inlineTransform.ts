@@ -1,11 +1,11 @@
 import * as babel from '@babel/core';
-import vanillaBabelPlugin from '@vanilla-extract/babel-plugin-split-file';
 import generate from '@babel/generator';
 // @ts-expect-error
 import typescriptSyntax from '@babel/plugin-syntax-typescript';
 // @ts-expect-error
 import jsxSyntax from '@babel/plugin-syntax-jsx';
 
+import vanillaBabelPlugin from './babel-plugin-split-file';
 import { addFileScope } from './addFileScope';
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
