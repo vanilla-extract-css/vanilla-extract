@@ -3,7 +3,6 @@ import { existsSync, promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { vanillaExtractPlugin as vanillaExtractPluginNext } from '@vanilla-extract/esbuild-plugin-next';
-import { vanillaExtractPlugin as vanillaExtractPluginInline } from '@vanilla-extract/esbuild-plugin-inline';
 import * as esbuild from 'esbuild';
 
 import { TestServer } from './types';

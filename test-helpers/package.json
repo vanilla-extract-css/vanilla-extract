@@ -21,7 +21,6 @@
     "@types/webpack-dev-server": "^3.11.1",
     "@vanilla-extract/esbuild-plugin": "*",
     "@vanilla-extract/esbuild-plugin-next": "*",
-    "@vanilla-extract/esbuild-plugin-inline": "*",
     "@vanilla-extract/parcel-transformer": "*",
     "@vanilla-extract/vite-plugin": "*",
     "@vanilla-extract/webpack-plugin": "*",
