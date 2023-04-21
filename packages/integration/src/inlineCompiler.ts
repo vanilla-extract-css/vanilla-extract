@@ -1,4 +1,5 @@
 import { join, relative, isAbsolute } from 'path';
+import { readFile } from 'fs/promises';
 import assert from 'assert';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
@@ -118,50 +119,79 @@ export class InlineCompiler {
     return filePath;
   }
 
-  async transformCode(code: string, id: string) {
-    let macros: Array<string> = ['css$'];
+  async analyseModule(
+    code: string,
+    id: string,
+  ): Promise<{
+    isLegacyCssFile: boolean;
+    macros: Array<string>;
+    shouldProcess: boolean;
+  }> {
+    if (cssFileFilter.test(id)) {
+      return {
+        isLegacyCssFile: true,
+        shouldProcess: true,
+        macros: ['css$'],
+      };
+    }
 
-    if (!cssFileFilter.test(id)) {
-      const relevantImports = findStaticImports(code)
-        .map((rawImport) => {
-          const { namedImports, specifier } = parseStaticImport(rawImport);
+    const relevantImports = findStaticImports(code)
+      .map((rawImport) => {
+        const { namedImports, specifier } = parseStaticImport(rawImport);
 
-          return { namedImports, specifier };
-        })
-        .filter(
-          ({ namedImports }) =>
-            namedImports &&
-            Object.keys(namedImports).some((identifier) =>
-              identifier.endsWith('$'),
-            ),
-        );
-
-      if (relevantImports.length === 0) {
-        return;
-      }
-
-      const result = await Promise.all(
-        relevantImports.map(async ({ specifier, namedImports }) => {
-          let importMacros = firstPartyMacros[specifier];
-
-          if (!importMacros) {
-            const resolved = await this.resolve(specifier, id);
-
-            if (!resolved) {
-              throw new Error(`Can't resolve "${specifier}" from "${id}"`);
-            }
-
-            const { config } = getPackageInfo(resolved);
-            importMacros = config.macros || [];
-          }
-
-          return importMacros
-            .map((macro) => namedImports![macro])
-            .filter(Boolean);
-        }),
+        return { namedImports, specifier };
+      })
+      .filter(
+        ({ namedImports }) =>
+          namedImports &&
+          Object.keys(namedImports).some((identifier) =>
+            identifier.endsWith('$'),
+          ),
       );
 
-      macros = result.flat();
+    if (relevantImports.length === 0) {
+      return {
+        isLegacyCssFile: false,
+        shouldProcess: false,
+        macros: [],
+      };
+    }
+
+    const result = await Promise.all(
+      relevantImports.map(async ({ specifier, namedImports }) => {
+        let importMacros = firstPartyMacros[specifier];
+
+        if (!importMacros) {
+          const resolved = await this.resolve(specifier, id);
+
+          if (!resolved) {
+            throw new Error(`Can't resolve "${specifier}" from "${id}"`);
+          }
+
+          const { config } = getPackageInfo(resolved);
+          importMacros = config.macros || [];
+        }
+
+        return importMacros
+          .map((macro) => namedImports![macro])
+          .filter(Boolean);
+      }),
+    );
+
+    const macros = result.flat();
+
+    return {
+      isLegacyCssFile: false,
+      shouldProcess: macros.length > 0,
+      macros,
+    };
+  }
+
+  async transformCode(code: string, id: string) {
+    const { macros, shouldProcess } = await this.analyseModule(code, id);
+
+    if (!shouldProcess) {
+      return null;
     }
 
     const transformResult = await transform({
@@ -252,7 +282,6 @@ export class InlineCompiler {
 
     // Store the original method so we can monkey patch it on demand
     this.originalPrepareContext = runner.prepareContext;
-
     this.server = server;
     this.runner = runner;
     this.normalizeModuleId = vite.normalizePath;
@@ -278,8 +307,18 @@ export class InlineCompiler {
       'Vite Node not intialized correctly',
     );
 
-    const normalizeModuleId = this.normalizeModuleId;
     filePath = isAbsolute(filePath) ? filePath : join(this.root, filePath);
+
+    // TODO: Improve perf. Reading all files from disk is wasteful.
+    // We can likely cache using the module graph
+    const code = await readFile(filePath, { encoding: 'utf-8' });
+    const { shouldProcess } = await this.analyseModule(code, filePath);
+
+    if (!shouldProcess) {
+      return null;
+    }
+
+    const normalizeModuleId = this.normalizeModuleId;
 
     const cacheKey = Object.entries({ filePath, outputCss })
       .map((entry) => entry.join('='))
