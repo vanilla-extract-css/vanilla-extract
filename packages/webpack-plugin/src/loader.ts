@@ -16,11 +16,6 @@ const virtualLoader = require.resolve(
   ),
 );
 
-const emptyCssExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
-  'extracted.js',
-);
-
 interface LoaderOptions {
   outputCss: boolean;
   identifiers?: IdentifierOption;

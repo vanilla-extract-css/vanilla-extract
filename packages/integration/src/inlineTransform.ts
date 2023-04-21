@@ -25,7 +25,8 @@ export const transform = async ({
   filePath,
   rootPath,
   packageName,
-  identOption,
+  // TODO: Implement automatic debug IDs
+  // identOption,
   globalAdapterIdentifier,
   macros,
 }: TransformParams): Promise<{ buildtime: string; runtime: string }> => {

@@ -1,10 +1,10 @@
 import { dirname } from 'path';
 
 import {
-  createInlineCompiler,
   vanillaExtractTransformPlugin,
   IdentifierOption,
-  CreateInlineCompilerOptions,
+  InlineCompilerOptions,
+  InlineCompiler,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
@@ -15,7 +15,7 @@ interface VanillaExtractPluginOptions {
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
-  compilerVitePlugins?: CreateInlineCompilerOptions['vitePlugins'];
+  compilerVitePlugins?: InlineCompilerOptions['vitePlugins'];
 }
 export function vanillaExtractPlugin({
   outputCss = true,
@@ -36,7 +36,7 @@ export function vanillaExtractPlugin({
       const identifiers =
         identOption || (build.initialOptions.minify ? 'short' : 'debug');
 
-      const compiler = createInlineCompiler({ root, identifiers, vitePlugins });
+      const compiler = new InlineCompiler({ root, identifiers, vitePlugins });
 
       build.onDispose(async () => {
         await compiler.close();

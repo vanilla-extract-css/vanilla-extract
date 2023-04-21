@@ -1,5 +1,5 @@
 import {
-  createInlineCompiler,
+  InlineCompiler,
   cssFileFilter,
   IdentifierOption,
 } from '@vanilla-extract/integration';
@@ -68,7 +68,7 @@ export class VanillaExtractPlugin {
   }
 
   apply(compiler: Compiler) {
-    const veCompiler = createInlineCompiler({
+    const veCompiler = new InlineCompiler({
       root: compiler.context,
       identifiers: this.identifiers,
     });
