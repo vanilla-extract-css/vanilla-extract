@@ -63,9 +63,6 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
   return { cssDeps: [...tail, head], watchFiles };
 };
 
-// We lazily load this utility from Vite
-let normalizeModuleId: (fsPath: string) => string;
-
 export interface InlineCompilerOptions {
   root: string;
   identifiers?: IdentifierOption;
@@ -79,6 +76,7 @@ export class InlineCompiler {
   runner: ViteNodeRunner | undefined;
   server: ViteDevServer | undefined;
   originalPrepareContext: ViteNodeRunner['prepareContext'] | undefined;
+  normalizeModuleId: ((fsPath: string) => string) | undefined;
   viteInitPromise: Promise<void>;
   cssCache: Map<string, { css: string }>;
   processVanillaFileCache: Map<
@@ -190,8 +188,6 @@ export class InlineCompiler {
 
     const vite = await import('vite');
 
-    normalizeModuleId = vite.normalizePath;
-
     const transform = (code: string, id: string) =>
       this.transformCode(code, id);
 
@@ -259,6 +255,7 @@ export class InlineCompiler {
 
     this.server = server;
     this.runner = runner;
+    this.normalizeModuleId = vite.normalizePath;
   }
 
   async processVanillaFile(
@@ -276,8 +273,12 @@ export class InlineCompiler {
     } = {},
   ): Promise<ProcessedVanillaFile | null> {
     await this.viteInitPromise;
-    assert(this.server && this.runner, 'Vite Node not intialized correctly');
+    assert(
+      this.server && this.runner && this.normalizeModuleId,
+      'Vite Node not intialized correctly',
+    );
 
+    const normalizeModuleId = this.normalizeModuleId;
     filePath = isAbsolute(filePath) ? filePath : join(this.root, filePath);
 
     const cacheKey = Object.entries({ filePath, outputCss })
@@ -466,14 +467,14 @@ export class InlineCompiler {
 
   getCssForFile(filePath: string) {
     assert(
-      normalizeModuleId,
+      this.normalizeModuleId,
       `Compiler is still loading. No CSS for file: ${filePath}`,
     );
 
     filePath = isAbsolute(filePath) ? filePath : join(this.root, filePath);
     const rootRelativePath = relative(this.root, filePath);
 
-    const moduleId = normalizeModuleId(rootRelativePath);
+    const moduleId = this.normalizeModuleId(rootRelativePath);
     const result = this.cssCache.get(moduleId);
 
     if (!result) {
