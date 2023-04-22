@@ -48,7 +48,6 @@ export const transform = async ({
   let program = ast.program;
 
   if (identOption === 'debug') {
-    console.log(filePath);
     const result = await babel.transformFromAstAsync(program, undefined, {
       ...babelConfig,
       ast: true,
