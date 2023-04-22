@@ -4,3 +4,5 @@ import { generateIdentifier } from './identifier';
 // For now it is mostly just an alias of generateIdentifier
 export const createContainer = (debugId?: string) =>
   generateIdentifier(debugId);
+
+export const createContainer$ = createContainer;

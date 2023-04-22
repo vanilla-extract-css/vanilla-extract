@@ -38,6 +38,8 @@ export function layer(...args: any[]): string {
   return name;
 }
 
+export const layer$ = layer;
+
 export function globalLayer(options: LayerOptions, name: string): string;
 export function globalLayer(name: string): string;
 export function globalLayer(...args: any[]): string {
@@ -51,3 +53,5 @@ export function globalLayer(...args: any[]): string {
 
   return name;
 }
+
+export const globalLayer$ = globalLayer;

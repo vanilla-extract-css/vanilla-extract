@@ -14,7 +14,13 @@ const debuggableFunctionConfig = {
   style: {
     maxParams: 2,
   },
+  style$: {
+    maxParams: 2,
+  },
   createTheme: {
+    maxParams: 3,
+  },
+  createTheme$: {
     maxParams: 3,
   },
   styleVariants: {
@@ -24,22 +30,51 @@ const debuggableFunctionConfig = {
       return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
     },
   },
+  styleVariants$: {
+    maxParams: 3,
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
+  },
   fontFace: {
+    maxParams: 2,
+  },
+  fontFace$: {
     maxParams: 2,
   },
   keyframes: {
     maxParams: 2,
   },
+  keyframes$: {
+    maxParams: 2,
+  },
   createVar: {
+    maxParams: 1,
+  },
+  createVar$: {
     maxParams: 1,
   },
   recipe: {
     maxParams: 2,
   },
+  recipe$: {
+    maxParams: 2,
+  },
   createContainer: {
     maxParams: 1,
   },
+  createContainer$: {
+    maxParams: 1,
+  },
   layer: {
+    maxParams: 2,
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
+  },
+  layer$: {
     maxParams: 2,
     hasDebugId: ({ arguments: args }) => {
       const previousArg = args[args.length - 1];

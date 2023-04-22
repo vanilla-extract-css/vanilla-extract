@@ -50,6 +50,40 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle style$ assigned to const', () => {
+    const source = `
+      import { style$ } from '@vanilla-extract/css';
+
+      const one = style$({
+        zIndex: 2,
+      });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { style$ } from '@vanilla-extract/css';
+      const one = style$({
+        zIndex: 2
+      }, "one");
+    `);
+  });
+
+  it('should handle style inside a css$ call', () => {
+    const source = `
+      import { style, css$ } from '@vanilla-extract/css';
+
+      const one = css$(style({
+        zIndex: 2,
+      }));
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { style, css$ } from '@vanilla-extract/css';
+      const one = css$(style({
+        zIndex: 2
+      }, "one"));
+    `);
+  });
+
   it('should handle styleVariants assigned to const', () => {
     const source = `
       import { styleVariants } from '@vanilla-extract/css';

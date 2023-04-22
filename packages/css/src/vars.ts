@@ -23,6 +23,8 @@ export function createVar(debugId?: string): CSSVarFunction {
   return `var(--${cssVarName})` as const;
 }
 
+export const createVar$ = createVar;
+
 export function fallbackVar(
   ...values: [string, ...Array<string>]
 ): CSSVarFunction {
@@ -69,6 +71,8 @@ export function createThemeContract<ThemeTokens extends NullableTokens>(
   });
 }
 
+export const createThemeContract$ = createThemeContract;
+
 export function createGlobalThemeContract<ThemeTokens extends Tokens>(
   tokens: ThemeTokens,
 ): ThemeVars<ThemeTokens>;
@@ -101,3 +105,5 @@ export function createGlobalThemeContract(
     return `var(--${varName})`;
   });
 }
+
+export const createGlobalThemeContract$ = createGlobalThemeContract;

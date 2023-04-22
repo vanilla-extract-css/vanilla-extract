@@ -41,6 +41,8 @@ export function createGlobalTheme(
   }
 }
 
+export const createGlobalTheme$ = createGlobalTheme;
+
 export function createTheme<ThemeTokens extends Tokens>(
   tokens: ThemeTokens,
   debugId?: string,
@@ -64,3 +66,5 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
 
   return vars ? [themeClassName, vars] : themeClassName;
 }
+
+export const createTheme$ = createTheme;

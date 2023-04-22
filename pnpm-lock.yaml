@@ -276,7 +276,7 @@ importers:
       '@babel/plugin-syntax-jsx': 7.18.6_@babel+core@7.20.7
       '@babel/plugin-syntax-typescript': 7.20.0_@babel+core@7.20.7
       '@babel/traverse': 7.20.10
-      '@vanilla-extract/babel-plugin-debug-ids': 1.0.2
+      '@vanilla-extract/babel-plugin-debug-ids': link:../babel-plugin-debug-ids
       '@vanilla-extract/css': link:../css
       esbuild: 0.17.6
       eval: 0.1.6
@@ -6825,14 +6825,6 @@ packages:
       '@typescript-eslint/types': 5.38.0
       eslint-visitor-keys: 3.3.0
     dev: true
-
-  /@vanilla-extract/babel-plugin-debug-ids/1.0.2:
-    resolution: {integrity: sha512-LjnbQWGeMwaydmovx8jWUR8BxLtLiPyq0xz5C8G5OvFhsuJxvavLdrBHNNizvr1dq7/3qZGlPv0znsvU4P44YA==}
-    dependencies:
-      '@babel/core': 7.20.7
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@vercel/nft/0.22.1:
     resolution: {integrity: sha512-lYYZIoxRurqDOSoVIdBicGnpUIpfyaS5qVjdPq+EfI285WqtZK3NK/dyCkiyBul+X2U2OEhRyeMdXPCHGJbohw==}
