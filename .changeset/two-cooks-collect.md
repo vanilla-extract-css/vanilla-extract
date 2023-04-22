@@ -5,6 +5,7 @@
 '@vanilla-extract/recipes': major
 '@vanilla-extract/sprinkles': major
 '@vanilla-extract/webpack-plugin': major
+'@vanilla-extract/babel-plugin-debug-ids': major
 ---
 
 Inline prototype
