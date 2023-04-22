@@ -422,4 +422,31 @@ describe('babel-plugin-split-file', () => {
       export default _vanilla_defaultIdentifer;
     `);
   });
+
+  it('should extract global APIs in a ".css.ts" file', () => {
+    const source = /* tsx */ `
+      import { globalStyle } from '@vanilla-extract/css';
+      
+      globalStyle(':root', { fontSize: '24px' });
+
+      export const red = style({ color: 'red' });`;
+
+    const result = transform(source, ['css$'], 'styles.css.ts');
+
+    expect(result.code).toMatchInlineSnapshot(
+      /* tsx */
+      `export const red = _vanilla_identifier_2_0;`,
+    );
+    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+      import { css$ } from "@vanilla-extract/css";
+      import { globalStyle } from '@vanilla-extract/css';
+      css$(globalStyle(':root', {
+        fontSize: '24px'
+      }));
+      export const _vanilla_identifier_2_0 = css$(style({
+        color: 'red'
+      }));
+      export const red = _vanilla_identifier_2_0;
+    `);
+  });
 });

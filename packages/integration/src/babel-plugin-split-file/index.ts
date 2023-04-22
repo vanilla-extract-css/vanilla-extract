@@ -32,6 +32,7 @@ interface PluginOptions {
 interface Context extends PluginPass {
   moduleScopeIdentifiers: Set<IdentifierName>;
   mutatedModuleScopeIdentifiers: Set<IdentifierName>;
+  globalVanillaApiStatements: Set<number>;
   identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
   depGraph: DependencyGraph;
   vanillaMacros: string[];
@@ -103,11 +104,20 @@ const vanillaDefaultIdentifier = '_vanilla_defaultIdentifer';
 
 const vanillaExtractMacroIdentifier = t.identifier('css$');
 
+const globalApis = [
+  'createGlobalTheme',
+  'globalFontFace',
+  'globalKeyframes',
+  'globalLayer',
+  'globalStyle',
+];
+
 export default function (): PluginObj<Context> {
   return {
     pre() {
       this.moduleScopeIdentifiers = new Set();
       this.identifierOwners = new DefaultMap(() => new Set());
+      this.globalVanillaApiStatements = new Set();
       this.depGraph = new DependencyGraph();
       this.macroOwners = new DefaultMap(() => new Set());
       this.vanillaIdentifierMap = new Map();
@@ -244,6 +254,28 @@ export default function (): PluginObj<Context> {
                     ]),
                   );
               }
+            } else if (isCssFile && statement.isExpressionStatement()) {
+              const expression = statement.node.expression;
+
+              invariant(
+                t.isCallExpression(expression),
+                'Can only extract call expressions at the global level in `.css.ts` files',
+              );
+
+              if (
+                t.isIdentifier(expression.callee) &&
+                // TODO: Use a list of global APIs
+                globalApis.includes(expression.callee.name)
+              ) {
+                statement
+                  .get('expression')
+                  .replaceWith(
+                    t.callExpression(vanillaExtractMacroIdentifier, [
+                      expression,
+                    ]),
+                  );
+                this.globalVanillaApiStatements.add(statementIndex);
+              }
             }
 
             const opts = {
@@ -280,6 +312,17 @@ export default function (): PluginObj<Context> {
           const { store } = state.opts;
 
           for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
+            const statement = bodyPath[statementIndex];
+
+            if (
+              isCssFile &&
+              this.globalVanillaApiStatements.has(statementIndex)
+            ) {
+              store.buildTimeStatements.unshift(statement.node);
+              statement.remove();
+              continue;
+            }
+
             // Should keep index if it creates/modifies an essential identifier
             // or it depends on a macro
 
@@ -294,8 +337,6 @@ export default function (): PluginObj<Context> {
               mutatedIdents,
               essentialIdentifiers,
             );
-
-            const statement = bodyPath[statementIndex];
 
             const statementMacros = Array.from(
               this.macroOwners.get(statementIndex),
