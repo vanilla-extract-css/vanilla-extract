@@ -62,13 +62,13 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
       const one = _vanilla_identifier_3_0;
       export default (() => \`<div id="\${id}" class="\${one}" />\`);
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       const two = 2;
       export const _vanilla_identifier_3_0 = css$(style({
@@ -93,7 +93,7 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
       const something = _vanilla_identifier_2_0;
       export default (() => \`<>
@@ -102,7 +102,7 @@ describe('babel-plugin-split-file', () => {
             </>\`);
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       export const _vanilla_identifier_2_0 = css$([1, 2].map(value => style({
         zIndex: value
@@ -140,7 +140,7 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
       let id = 'my-id';
       let z = 1;
@@ -153,7 +153,7 @@ describe('babel-plugin-split-file', () => {
       export default (() => <div id={id} className={className} />);
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       let id = 'my-id';
       let z = 1;
@@ -188,13 +188,13 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
       const flex = _vanilla_identifier_4_0;
       export default (() => \`<div class="\${flex}" />\`);
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       const color = 'red';
       const myStyle = display => style({
@@ -220,13 +220,13 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
       const lightRed = _vanilla_identifier_4_0;
       export default (() => <div className={lightRed} />);
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import polished from 'polished';
       import { style, css$ } from '@vanilla-extract/css';
       const myColorStyle = color => style({
@@ -255,13 +255,13 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       import { BrandDetails } from './colors';
       const className = _vanilla_identifier_2_0;
       export const Component = () => <BrandDetails className={className} />;
     `);
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       import { brandVar, brand, BrandDetails } from './colors';
       export const _vanilla_identifier_2_0 = css$(style({
@@ -287,7 +287,7 @@ describe('babel-plugin-split-file', () => {
       `export default (() => <div className={_vanilla_anonymousIdentifier_1_0}>foo</div>);`,
     );
 
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       export const _vanilla_anonymousIdentifier_1_0 = css$(style({
         display: 'flex'
@@ -306,11 +306,11 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       export const myStyle = _vanilla_identifier_1_0;
       export const blue = _vanilla_identifier_2_0;
     `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
@@ -333,11 +333,11 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       export const myStyle = _vanilla_identifier_1_0;
       export default _vanilla_defaultIdentifer;
     `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
@@ -362,12 +362,12 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source, ['css$', 'style$']);
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       export const myStyle = _vanilla_identifier_1_0;
       export const myOtherStyle = _vanilla_identifier_2_0;
       export default _vanilla_defaultIdentifer;
     `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$, style$ } from '@vanilla-extract/css';
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
@@ -397,13 +397,13 @@ describe('babel-plugin-split-file', () => {
 
     const result = transform(source, ['css$'], 'styles.css.ts');
 
-    expect(result.code).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.code).toMatchInlineSnapshot(`
       const flex = _vanilla_identifier_1_0;
       export const red = _vanilla_identifier_2_0;
       export const redFlex = _vanilla_identifier_3_0;
       export default _vanilla_defaultIdentifer;
     `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { css$ } from "@vanilla-extract/css";
       import { style } from '@vanilla-extract/css';
       export const _vanilla_identifier_1_0 = css$(style({
@@ -434,10 +434,9 @@ describe('babel-plugin-split-file', () => {
     const result = transform(source, ['css$'], 'styles.css.ts');
 
     expect(result.code).toMatchInlineSnapshot(
-      /* tsx */
       `export const red = _vanilla_identifier_2_0;`,
     );
-    expect(result.buildTimeCode).toMatchInlineSnapshot(/* tsx */ `
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { css$ } from "@vanilla-extract/css";
       import { globalStyle } from '@vanilla-extract/css';
       css$(globalStyle(':root', {
