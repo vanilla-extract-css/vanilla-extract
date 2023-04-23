@@ -192,42 +192,49 @@ export default function (): PluginObj<Context> {
                 }
               }
             } else if (statement.isExportNamedDeclaration()) {
-              const declarationPath = statement.get('declaration');
-              invariant(
-                declarationPath.isVariableDeclaration(),
-                '[TODO] Handle other types of top-level name declarations',
-              );
-
               this.exportStatements.add(statementIndex);
+              const isReexportOrAggregate =
+                statement.get('specifiers').length > 0;
 
-              const declarationPaths = declarationPath.get('declarations');
-              for (const declarationIndex of declarationPaths.keys()) {
-                const declaratorPath = declarationPaths[declarationIndex];
+              // Don't do anything if it is a re-export or aggregate as the identifiers
+              // will have already been accounted for
+              if (!isReexportOrAggregate) {
+                const declarationPath = statement.get('declaration');
 
                 invariant(
-                  t.isIdentifier(declaratorPath.node.id),
-                  '[TODO] Handle other types of top-level declarations',
+                  declarationPath.isVariableDeclaration(),
+                  '[TODO] Handle other types of top-level name declarations',
                 );
 
-                const identifierName = declaratorPath.node.id.name;
-                const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
+                const declarationPaths = declarationPath.get('declarations');
+                for (const declarationIndex of declarationPaths.keys()) {
+                  const declaratorPath = declarationPaths[declarationIndex];
 
-                this.vanillaIdentifierMap.set(
-                  identifierName,
-                  vanillaIdentifierName,
-                );
-
-                this.moduleScopeIdentifiers.add(identifierName);
-                declaredIdentifiers.add(identifierName);
-                this.identifierOwners.get(statementIndex).add(identifierName);
-
-                if (isCssFile) {
-                  declaratorPath.get('init').replaceWith(
-                    t.callExpression(vanillaExtractMacroIdentifier, [
-                      // @ts-expect-error Could be uninitialized
-                      declaratorPath.node.init,
-                    ]),
+                  invariant(
+                    t.isIdentifier(declaratorPath.node.id),
+                    '[TODO] Handle other types of top-level declarations',
                   );
+
+                  const identifierName = declaratorPath.node.id.name;
+                  const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
+
+                  this.vanillaIdentifierMap.set(
+                    identifierName,
+                    vanillaIdentifierName,
+                  );
+
+                  this.moduleScopeIdentifiers.add(identifierName);
+                  declaredIdentifiers.add(identifierName);
+                  this.identifierOwners.get(statementIndex).add(identifierName);
+
+                  if (isCssFile) {
+                    declaratorPath.get('init').replaceWith(
+                      t.callExpression(vanillaExtractMacroIdentifier, [
+                        // @ts-expect-error Could be uninitialized
+                        declaratorPath.node.init,
+                      ]),
+                    );
+                  }
                 }
               }
             } else if (statement.isExportDefaultDeclaration()) {

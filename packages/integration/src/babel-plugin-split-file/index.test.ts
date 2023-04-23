@@ -200,6 +200,38 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
+  it.only('should handle re-exporting and aggregating', () => {
+    const source = /* tsx */ `
+      import { style, css$ } from '@vanilla-extract/css';
+      import { myOtherStyle } from './otherStyles';
+
+      const color = 'red';
+
+      const myStyle = (display) => style({ display, color })
+
+      const flex = css$(myStyle('flex'));
+
+      export { flex, myOtherStyle }`;
+
+    const result = transform(source);
+
+    expect(result.code).toMatchInlineSnapshot(`
+      import { myOtherStyle } from './otherStyles';
+      const flex = _vanilla_identifier_4_0;
+      export { flex, myOtherStyle };
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { style, css$ } from '@vanilla-extract/css';
+      const color = 'red';
+      const myStyle = display => style({
+        display,
+        color
+      });
+      export const _vanilla_identifier_4_0 = css$(myStyle('flex'));
+    `);
+  });
+
   it('should retain required imports', () => {
     const source = /* tsx */ `
       import React from 'react';
