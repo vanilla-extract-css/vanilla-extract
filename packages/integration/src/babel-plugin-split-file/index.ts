@@ -364,7 +364,9 @@ export default function (): PluginObj<Context> {
                   essentialIdentifiers.add(dep);
                 }
               }
-              store.buildTimeStatements.unshift(statement.node);
+              if (ownsEssentialIdentifier || mutatesEssentialIdentifier) {
+                store.buildTimeStatements.unshift(statement.node);
+              }
 
               const importSpecifiers = isImportDeclaration
                 ? statement.node.specifiers

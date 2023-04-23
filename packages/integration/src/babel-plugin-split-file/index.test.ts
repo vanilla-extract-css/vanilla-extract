@@ -75,7 +75,6 @@ describe('babel-plugin-split-file', () => {
         zIndex: two
       }));
       const one = _vanilla_identifier_3_0;
-      export default (() => \`<div id="\${id}" class="\${one}" />\`);
     `);
   });
 
@@ -108,10 +107,6 @@ describe('babel-plugin-split-file', () => {
         zIndex: value
       })));
       const something = _vanilla_identifier_2_0;
-      export default (() => \`<>
-              <div class="\${something[0]}" />
-              <div class="\${something[1]}" />
-            </>\`);
     `);
   });
 
@@ -169,7 +164,6 @@ describe('babel-plugin-split-file', () => {
         }
       }));
       const className = _vanilla_identifier_6_0;
-      export default (() => <div id={id} className={className} />);
     `);
   });
 
@@ -203,7 +197,6 @@ describe('babel-plugin-split-file', () => {
       });
       export const _vanilla_identifier_4_0 = css$(myStyle('flex'));
       const flex = _vanilla_identifier_4_0;
-      export default (() => \`<div class="\${flex}" />\`);
     `);
   });
 
@@ -234,7 +227,6 @@ describe('babel-plugin-split-file', () => {
       });
       export const _vanilla_identifier_4_0 = css$(myColorStyle('red'));
       const lightRed = _vanilla_identifier_4_0;
-      export default (() => <div className={lightRed} />);
     `);
   });
 
@@ -271,7 +263,6 @@ describe('babel-plugin-split-file', () => {
         backgroundColor: brandVar
       }));
       const className = _vanilla_identifier_2_0;
-      export const Component = () => <BrandDetails className={className} />;
     `);
   });
 
@@ -292,7 +283,6 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_anonymousIdentifier_1_0 = css$(style({
         display: 'flex'
       }));
-      export default (() => <div className={_vanilla_anonymousIdentifier_1_0}>foo</div>);
     `);
   });
 
@@ -315,11 +305,9 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
       }));
-      export const myStyle = _vanilla_identifier_1_0;
       export const _vanilla_identifier_2_0 = css$(style({
         color: 'blue'
       }));
-      export const blue = _vanilla_identifier_2_0;
     `);
   });
 
@@ -342,11 +330,9 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
       }));
-      export const myStyle = _vanilla_identifier_1_0;
       export const _vanilla_defaultIdentifer = css$(style({
         color: 'blue'
       }));
-      export default _vanilla_defaultIdentifer;
     `);
   });
 
@@ -372,15 +358,12 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_identifier_1_0 = css$(style({
         color: 'red'
       }));
-      export const myStyle = _vanilla_identifier_1_0;
       export const _vanilla_identifier_2_0 = style$({
         color: 'green'
       });
-      export const myOtherStyle = _vanilla_identifier_2_0;
       export const _vanilla_defaultIdentifer = css$(style({
         color: 'blue'
       }));
-      export default _vanilla_defaultIdentifer;
     `);
   });
 
@@ -415,11 +398,9 @@ describe('babel-plugin-split-file', () => {
       }));
       export const red = _vanilla_identifier_2_0;
       export const _vanilla_identifier_3_0 = css$(style([flex, red]));
-      export const redFlex = _vanilla_identifier_3_0;
       export const _vanilla_defaultIdentifer = css$(style({
         color: 'blue'
       }));
-      export default _vanilla_defaultIdentifer;
     `);
   });
 
@@ -445,7 +426,6 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_identifier_2_0 = css$(style({
         color: 'red'
       }));
-      export const red = _vanilla_identifier_2_0;
     `);
   });
 });
