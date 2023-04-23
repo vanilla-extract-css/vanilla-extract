@@ -1,11 +1,7 @@
 import path from 'path';
 // @ts-expect-error
 import loaderUtils from 'loader-utils';
-import {
-  IdentifierOption,
-  serializeCss,
-  InlineCompiler,
-} from '@vanilla-extract/integration';
+import { serializeCss, InlineCompiler } from '@vanilla-extract/integration';
 
 import type { LoaderContext } from './types';
 
@@ -18,7 +14,6 @@ const virtualLoader = require.resolve(
 
 interface LoaderOptions {
   outputCss: boolean;
-  identifiers?: IdentifierOption;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {

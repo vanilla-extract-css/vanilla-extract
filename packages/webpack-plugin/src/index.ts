@@ -49,6 +49,12 @@ function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
   });
 }
 
+const defaultIdentifierOption = (
+  mode: Compiler['options']['mode'],
+  identifiers?: IdentifierOption,
+): IdentifierOption =>
+  identifiers ?? (mode === 'production' ? 'short' : 'debug');
+
 interface PluginOptions {
   test?: RuleSetRule['test'];
   identifiers?: IdentifierOption;
@@ -70,7 +76,10 @@ export class VanillaExtractPlugin {
   apply(compiler: Compiler) {
     const veCompiler = new InlineCompiler({
       root: compiler.context,
-      identifiers: this.identifiers,
+      identifiers: defaultIdentifierOption(
+        compiler.options.mode,
+        this.identifiers,
+      ),
     });
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
@@ -86,7 +95,6 @@ export class VanillaExtractPlugin {
           options: {
             outputCss: this.outputCss,
             veCompiler: veCompiler,
-            identifiers: this.identifiers,
           },
         },
       ],
