@@ -185,8 +185,8 @@ export default function (): PluginObj<Context> {
                 if (isCssFile) {
                   declaratorPath.get('init').replaceWith(
                     t.callExpression(vanillaExtractMacroIdentifier, [
-                      // TODO: don't cast to any
-                      declaratorPath.node.init as any,
+                      // @ts-expect-error Could be uninitialized
+                      declaratorPath.node.init,
                     ]),
                   );
                 }
@@ -224,8 +224,8 @@ export default function (): PluginObj<Context> {
                 if (isCssFile) {
                   declaratorPath.get('init').replaceWith(
                     t.callExpression(vanillaExtractMacroIdentifier, [
-                      // TODO: don't cast to any
-                      declaratorPath.node.init as any,
+                      // @ts-expect-error Could be uninitialized
+                      declaratorPath.node.init,
                     ]),
                   );
                 }
@@ -264,7 +264,6 @@ export default function (): PluginObj<Context> {
 
               if (
                 t.isIdentifier(expression.callee) &&
-                // TODO: Use a list of global APIs
                 globalApis.includes(expression.callee.name)
               ) {
                 statement
@@ -338,7 +337,7 @@ export default function (): PluginObj<Context> {
               essentialIdentifiers,
             );
 
-            const statementMacros = Array.from(
+            const statementMacroPaths = Array.from(
               this.macroOwners.get(statementIndex),
             );
             const isExportStatement = this.exportStatements.has(statementIndex);
@@ -376,12 +375,10 @@ export default function (): PluginObj<Context> {
               const canBeRemovedFromRuntime =
                 !mutatesOrOwnsMutatedIdent &&
                 (isImportDeclaration ||
-                  (statementMacros.length === 0 && !isExportStatement));
+                  (statementMacroPaths.length === 0 && !isExportStatement)) &&
+                ownedRuntimeImportSpecifiers.length === 0;
 
-              if (
-                canBeRemovedFromRuntime &&
-                ownedRuntimeImportSpecifiers.length === 0
-              ) {
+              if (canBeRemovedFromRuntime) {
                 // Delete buildtime only statements from the runtime
                 statement.remove();
               } else if (isImportDeclaration) {
@@ -395,8 +392,8 @@ export default function (): PluginObj<Context> {
               }
             }
 
-            if (statementMacros.length > 0) {
-              statementMacros.map((macroCallExpressionPath, macroIndex) => {
+            if (statementMacroPaths.length > 0) {
+              statementMacroPaths.map((macroCallExpressionPath, macroIndex) => {
                 let identifierName: string | undefined;
 
                 if (
