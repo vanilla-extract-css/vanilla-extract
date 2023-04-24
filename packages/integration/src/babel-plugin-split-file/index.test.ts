@@ -200,7 +200,7 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it('should handle re-exporting and aggregating', () => {
+  it('should handle export lists', () => {
     const source = /* tsx */ `
       import { style, css$ } from '@vanilla-extract/css';
       import { myOtherStyle } from './otherStyles';
@@ -413,7 +413,6 @@ describe('babel-plugin-split-file', () => {
     const result = transform(source, ['css$'], 'styles.css.ts');
 
     expect(result.code).toMatchInlineSnapshot(`
-      const flex = _vanilla_identifier_1_0;
       export const red = _vanilla_identifier_2_0;
       export const redFlex = _vanilla_identifier_3_0;
       export default _vanilla_defaultIdentifer;
@@ -421,10 +420,9 @@ describe('babel-plugin-split-file', () => {
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { css$ } from "@vanilla-extract/css";
       import { style } from '@vanilla-extract/css';
-      export const _vanilla_identifier_1_0 = css$(style({
+      const flex = style({
         display: 'flex'
-      }));
-      const flex = _vanilla_identifier_1_0;
+      });
       export const _vanilla_identifier_2_0 = css$(style({
         color: 'red'
       }));
@@ -458,6 +456,42 @@ describe('babel-plugin-split-file', () => {
       export const _vanilla_identifier_2_0 = css$(style({
         color: 'red'
       }));
+    `);
+  });
+
+  it('should handle export lists in a ".css.ts" file', () => {
+    const source = /* tsx */ `
+      import { style } from '@vanilla-extract/css';
+
+      const px = (value: number) => value + 'px';
+      const big = style({ fontSize: px(36) });
+
+      const rem = (value: number) => value + 'rem';
+      const bigger = style({ fontSize: rem(8) });
+
+      export { big, bigger as biggerRem }`;
+
+    const result = transform(source, ['css$'], 'styles.css.ts');
+
+    expect(result.code).toMatchInlineSnapshot(`
+      const _vanilla_export_big = _vanilla_export_identifier_0;
+      const _vanilla_export_bigger = _vanilla_export_identifier_1;
+      export { _vanilla_export_big as big, _vanilla_export_bigger as biggerRem };
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { css$ } from "@vanilla-extract/css";
+      import { style } from '@vanilla-extract/css';
+      const px = (value: number) => value + 'px';
+      const big = style({
+        fontSize: px(36)
+      });
+      const rem = (value: number) => value + 'rem';
+      const bigger = style({
+        fontSize: rem(8)
+      });
+      export const _vanilla_export_identifier_0 = css$(big);
+      export const _vanilla_export_identifier_1 = css$(bigger);
     `);
   });
 });
