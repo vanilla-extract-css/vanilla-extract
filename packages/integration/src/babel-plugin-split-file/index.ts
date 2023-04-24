@@ -160,8 +160,6 @@ export default function (): PluginObj<Context> {
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
 
-            const declaredIdentifiers = new Set<IdentifierName>();
-
             const partialVisitorOpts = {
               moduleScopeIdentifiers: this.moduleScopeIdentifiers,
               vanillaMacros: this.vanillaMacros,
@@ -205,7 +203,6 @@ export default function (): PluginObj<Context> {
                 );
 
                 this.moduleScopeIdentifiers.add(identifierName);
-                declaredIdentifiers.add(identifierName);
                 this.identifierOwners.get(statementIndex).add(identifierName);
               }
             } else if (statement.isExportNamedDeclaration()) {
@@ -306,7 +303,6 @@ export default function (): PluginObj<Context> {
                   );
 
                   this.moduleScopeIdentifiers.add(identifierName);
-                  declaredIdentifiers.add(identifierName);
                   this.identifierOwners.get(statementIndex).add(identifierName);
 
                   if (isCssFile) {
@@ -325,7 +321,6 @@ export default function (): PluginObj<Context> {
               this.exportStatements.add(statementIndex);
 
               this.moduleScopeIdentifiers.add(identifierName);
-              declaredIdentifiers.add(identifierName);
               this.identifierOwners.get(statementIndex).add(identifierName);
 
               if (isCssFile) {
@@ -368,7 +363,9 @@ export default function (): PluginObj<Context> {
 
             statement.traverse(identifierVisitor, {
               ...partialVisitorOpts,
-              addUsedIdentifier: createAddUsedIdentifier(declaredIdentifiers),
+              addUsedIdentifier: createAddUsedIdentifier(
+                this.identifierOwners.get(statementIndex),
+              ),
             });
           }
 
