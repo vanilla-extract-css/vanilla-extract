@@ -200,7 +200,7 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it.only('should handle re-exporting and aggregating', () => {
+  it('should handle re-exporting and aggregating', () => {
     const source = /* tsx */ `
       import { style, css$ } from '@vanilla-extract/css';
       import { myOtherStyle } from './otherStyles';
