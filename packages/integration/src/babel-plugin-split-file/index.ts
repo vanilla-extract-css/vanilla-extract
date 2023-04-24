@@ -142,6 +142,24 @@ export default function (): PluginObj<Context> {
             this.moduleScopeIdentifiers.add(vanillaExtractMacroIdentifier.name);
           }
 
+          let identifierCount = 0;
+          const createVanillaIdentifier = () =>
+            `_vanilla_identifier_${identifierCount++}`;
+
+          const registerNewVanillaIdentifier = (
+            identifierName: string,
+            statementIndex: number,
+          ) => {
+            const vanillaIdentifierName = createVanillaIdentifier();
+
+            this.vanillaIdentifierMap.set(
+              identifierName,
+              vanillaIdentifierName,
+            );
+            this.moduleScopeIdentifiers.add(identifierName);
+            this.identifierOwners.get(statementIndex).add(identifierName);
+          };
+
           const createAddUsedIdentifier =
             (declaredIdentifiers: Set<string>) => (ident: string) => {
               if (this.moduleScopeIdentifiers.has(ident)) {
@@ -195,18 +213,11 @@ export default function (): PluginObj<Context> {
                 );
 
                 const identifierName = declaratorPath.node.id.name;
-                const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
-
-                this.vanillaIdentifierMap.set(
-                  identifierName,
-                  vanillaIdentifierName,
-                );
-
-                this.moduleScopeIdentifiers.add(identifierName);
-                this.identifierOwners.get(statementIndex).add(identifierName);
+                registerNewVanillaIdentifier(identifierName, statementIndex);
               }
             } else if (statement.isExportNamedDeclaration()) {
               this.exportStatements.add(statementIndex);
+
               const specifiers = statement.get('specifiers');
               const isExportList =
                 specifiers.length > 0 && !Boolean(statement.get('source').node);
@@ -233,14 +244,6 @@ export default function (): PluginObj<Context> {
                     );
                     specifier.replaceWith(newSpecifier);
 
-                    const identifierName = newSpecifierLocal.name;
-                    const vanillaIdentifierName = `_vanilla_export_identifier_${specifierIndex}`;
-
-                    this.vanillaIdentifierMap.set(
-                      identifierName,
-                      vanillaIdentifierName,
-                    );
-
                     const exportNamedDeclaration = t.variableDeclaration(
                       'const',
                       [
@@ -257,13 +260,15 @@ export default function (): PluginObj<Context> {
                       exportNamedDeclaration,
                     );
 
-                    // Is this correct?
                     const insertedStatementIndex =
                       statementIndex + specifierIndex;
                     this.exportStatements.add(insertedStatementIndex);
-                    this.identifierOwners
-                      .get(insertedStatementIndex)
-                      .add(identifierName);
+
+                    const identifierName = newSpecifierLocal.name;
+                    registerNewVanillaIdentifier(
+                      identifierName,
+                      insertedStatementIndex,
+                    );
 
                     // Traverse the newly created statement to ensure we have an accurate dependency graph
                     // These newly inserted statements will not be traversed at the end of the
@@ -295,15 +300,7 @@ export default function (): PluginObj<Context> {
                   );
 
                   const identifierName = declaratorPath.node.id.name;
-                  const vanillaIdentifierName = `_vanilla_identifier_${statementIndex}_${declarationIndex}`;
-
-                  this.vanillaIdentifierMap.set(
-                    identifierName,
-                    vanillaIdentifierName,
-                  );
-
-                  this.moduleScopeIdentifiers.add(identifierName);
-                  this.identifierOwners.get(statementIndex).add(identifierName);
+                  registerNewVanillaIdentifier(identifierName, statementIndex);
 
                   if (isCssFile) {
                     declaratorPath.get('init').replaceWith(
