@@ -6,3 +6,9 @@ export const legacyStyle = style({
     content: 'This is a legacy style',
   },
 });
+
+const px = (value: number) => `${value}px`;
+
+const largeText = style({ fontSize: px(36) });
+
+export { largeText as large };
