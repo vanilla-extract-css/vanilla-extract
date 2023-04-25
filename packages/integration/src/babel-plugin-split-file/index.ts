@@ -347,6 +347,11 @@ export default function (): PluginObj<Context> {
                 t.isIdentifier(expression.callee) &&
                 globalApis.includes(expression.callee.name)
               ) {
+                // We need to track dependencies of global API expressions
+                // This identifier should never actually be referenced by anything
+                const identifierName = createVanillaIdentifier();
+                this.identifierOwners.get(statementIndex).add(identifierName);
+
                 statement
                   .get('expression')
                   .replaceWith(
@@ -379,11 +384,10 @@ export default function (): PluginObj<Context> {
             newBodyPath.keys(),
           ).reverse()) {
             const statement = newBodyPath[statementIndex];
+            const isImportDeclaration = statement.isImportDeclaration();
 
-            if (
-              isCssFile &&
-              this.globalVanillaApiStatements.has(statementIndex)
-            ) {
+            // Move all import statements from runtime to buildtime if we're in a `.css.ts` file
+            if (isCssFile && isImportDeclaration) {
               store.buildTimeStatements.unshift(statement.node);
               statement.remove();
               continue;
@@ -412,15 +416,6 @@ export default function (): PluginObj<Context> {
               this.mutatingStatements.has(statementIndex) ||
               hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
 
-            const isImportDeclaration = statement.isImportDeclaration();
-
-            if (isCssFile && isImportDeclaration) {
-              // Move all import statements from runtime to buildtime if we're in a `.css.ts` file
-              store.buildTimeStatements.unshift(statement.node);
-              statement.remove();
-              continue;
-            }
-
             if (
               this.depGraph.dependsOnSome(ownedIdents, this.vanillaMacros) ||
               ownsEssentialIdentifier ||
@@ -431,6 +426,7 @@ export default function (): PluginObj<Context> {
                   essentialIdentifiers.add(dep);
                 }
               }
+
               if (ownsEssentialIdentifier || mutatesEssentialIdentifier) {
                 store.buildTimeStatements.unshift(statement.node);
               }
@@ -484,18 +480,26 @@ export default function (): PluginObj<Context> {
                   identifierName = `_vanilla_anonymousIdentifier_${statementIndex}_${macroIndex}`;
                 }
 
-                invariant(identifierName, 'Must have an identifier name');
-                const ident = t.identifier(identifierName);
+                if (
+                  isCssFile &&
+                  this.globalVanillaApiStatements.has(statementIndex)
+                ) {
+                  store.buildTimeStatements.unshift(statement.node);
+                  statement.remove();
+                } else {
+                  invariant(identifierName, 'Must have an identifier name');
+                  const ident = t.identifier(identifierName);
 
-                const declaration = t.exportNamedDeclaration(
-                  t.variableDeclaration('const', [
-                    t.variableDeclarator(ident, macroCallExpressionPath.node),
-                  ]),
-                );
+                  const declaration = t.exportNamedDeclaration(
+                    t.variableDeclaration('const', [
+                      t.variableDeclarator(ident, macroCallExpressionPath.node),
+                    ]),
+                  );
 
-                store.buildTimeStatements.unshift(declaration);
+                  store.buildTimeStatements.unshift(declaration);
 
-                macroCallExpressionPath.replaceWith(ident);
+                  macroCallExpressionPath.replaceWith(ident);
+                }
               });
             }
           }

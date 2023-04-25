@@ -440,12 +440,14 @@ describe('babel-plugin-split-file', () => {
       
       globalStyle(':root', { fontSize: '24px' });
 
-      export const red = style({ color: 'red' });`;
+      export const red = style({ color: 'red' });
+
+      globalStyle(\`body $\{red\}\`, { fontWeight: 700 })`;
 
     const result = transform(source, ['css$'], 'styles.css.ts');
 
     expect(result.code).toMatchInlineSnapshot(
-      `export const red = _vanilla_identifier_0;`,
+      `export const red = _vanilla_identifier_1;`,
     );
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { css$ } from "@vanilla-extract/css";
@@ -453,8 +455,12 @@ describe('babel-plugin-split-file', () => {
       css$(globalStyle(':root', {
         fontSize: '24px'
       }));
-      export const _vanilla_identifier_0 = css$(style({
+      export const _vanilla_identifier_1 = css$(style({
         color: 'red'
+      }));
+      export const red = _vanilla_identifier_1;
+      css$(globalStyle(\`body \${red}\`, {
+        fontWeight: 700
       }));
     `);
   });
