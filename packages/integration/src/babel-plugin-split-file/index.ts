@@ -143,14 +143,14 @@ export default function (): PluginObj<Context> {
           }
 
           let identifierCount = 0;
-          const createVanillaIdentifier = () =>
+          const createVanillaIdentifierName = () =>
             `_vanilla_identifier_${identifierCount++}`;
 
           const registerNewVanillaIdentifier = (
             identifierName: string,
             statementIndex: number,
           ) => {
-            const vanillaIdentifierName = createVanillaIdentifier();
+            const vanillaIdentifierName = createVanillaIdentifierName();
 
             this.vanillaIdentifierMap.set(
               identifierName,
@@ -235,7 +235,7 @@ export default function (): PluginObj<Context> {
                     const specifierExported = specifier.node.exported;
 
                     const newSpecifierLocal = t.identifier(
-                      `_vanilla_export_${specifierLocal.name}`,
+                      createVanillaIdentifierName(),
                     );
 
                     const newSpecifier = t.exportSpecifier(
@@ -349,7 +349,7 @@ export default function (): PluginObj<Context> {
               ) {
                 // We need to track dependencies of global API expressions
                 // This identifier should never actually be referenced by anything
-                const identifierName = createVanillaIdentifier();
+                const identifierName = createVanillaIdentifierName();
                 this.identifierOwners.get(statementIndex).add(identifierName);
 
                 statement
@@ -458,7 +458,7 @@ export default function (): PluginObj<Context> {
             }
 
             if (statementMacroPaths.length > 0) {
-              statementMacroPaths.map((macroCallExpressionPath, macroIndex) => {
+              for (const macroCallExpressionPath of statementMacroPaths) {
                 let identifierName: string | undefined;
 
                 if (
@@ -477,7 +477,7 @@ export default function (): PluginObj<Context> {
                   identifierName = vanillaDefaultIdentifier;
                 } else {
                   // We're somewhere else in an expression
-                  identifierName = `_vanilla_anonymousIdentifier_${statementIndex}_${macroIndex}`;
+                  identifierName = createVanillaIdentifierName();
                 }
 
                 if (
@@ -500,7 +500,7 @@ export default function (): PluginObj<Context> {
 
                   macroCallExpressionPath.replaceWith(ident);
                 }
-              });
+              }
             }
           }
 

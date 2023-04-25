@@ -307,12 +307,12 @@ describe('babel-plugin-split-file', () => {
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(
-      `export default (() => <div className={_vanilla_anonymousIdentifier_1_0}>foo</div>);`,
+      `export default (() => <div className={_vanilla_identifier_0}>foo</div>);`,
     );
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
-      export const _vanilla_anonymousIdentifier_1_0 = css$(style({
+      export const _vanilla_identifier_0 = css$(style({
         display: 'flex'
       }));
     `);
@@ -480,9 +480,9 @@ describe('babel-plugin-split-file', () => {
     const result = transform(source, ['css$'], 'styles.css.ts');
 
     expect(result.code).toMatchInlineSnapshot(`
-      const _vanilla_export_big = _vanilla_identifier_4;
-      const _vanilla_export_bigger = _vanilla_identifier_5;
-      export { _vanilla_export_big as big, _vanilla_export_bigger as biggerRem };
+      const _vanilla_identifier_4 = _vanilla_identifier_5;
+      const _vanilla_identifier_6 = _vanilla_identifier_7;
+      export { _vanilla_identifier_4 as big, _vanilla_identifier_6 as biggerRem };
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
@@ -496,8 +496,8 @@ describe('babel-plugin-split-file', () => {
       const bigger = style({
         fontSize: rem(8)
       });
-      export const _vanilla_identifier_4 = css$(big);
-      export const _vanilla_identifier_5 = css$(bigger);
+      export const _vanilla_identifier_5 = css$(big);
+      export const _vanilla_identifier_7 = css$(bigger);
     `);
   });
 });
