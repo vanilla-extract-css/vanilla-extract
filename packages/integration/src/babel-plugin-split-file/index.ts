@@ -416,6 +416,9 @@ export default function (): PluginObj<Context> {
               this.mutatingStatements.has(statementIndex) ||
               hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
 
+            const statementCallsGlobalVanillaApi =
+              this.globalVanillaApiStatements.has(statementIndex);
+
             if (
               this.depGraph.dependsOnSome(ownedIdents, this.vanillaMacros) ||
               ownsEssentialIdentifier ||
@@ -427,7 +430,8 @@ export default function (): PluginObj<Context> {
                 }
               }
 
-              if (ownsEssentialIdentifier || mutatesEssentialIdentifier) {
+              // Global APIs are handled elsewhere
+              if (!statementCallsGlobalVanillaApi) {
                 store.buildTimeStatements.unshift(statement.node);
               }
 
@@ -480,10 +484,7 @@ export default function (): PluginObj<Context> {
                   identifierName = createVanillaIdentifierName();
                 }
 
-                if (
-                  isCssFile &&
-                  this.globalVanillaApiStatements.has(statementIndex)
-                ) {
+                if (isCssFile && statementCallsGlobalVanillaApi) {
                   store.buildTimeStatements.unshift(statement.node);
                   statement.remove();
                 } else {
