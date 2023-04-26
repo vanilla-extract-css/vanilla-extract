@@ -81,6 +81,11 @@ export class VanillaExtractPlugin {
         this.identifiers,
       ),
     });
+
+    compiler.hooks.shutdown.tapPromise('VanillaExtractPlugin', async () => {
+      await veCompiler.close();
+    });
+
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );
