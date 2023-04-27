@@ -207,7 +207,50 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it.only('should handle an imported style that is used in the same statement as a build-time variable', () => {
+  it('should handle an import with the same name as an object property', () => {
+    const source = /* tsx */ `
+      import { recipe$ } from '@vanilla-extract/css';
+      import { large } from './otherStyles';
+
+      const myRecipe = recipe$({ variants: { size: { fontSize: '24px' }}});
+
+      export const MyComponent = () => (
+        <div className={myRecipe({ size: 'large' })}>
+          <span className={large}>Foo</span>
+        </div>
+      );`;
+
+    const result = transform(source, ['recipe$']);
+
+    expect(result.code).toMatchInlineSnapshot(`
+      const myRecipe = _vanilla_identifier_0;
+      export const MyComponent = () => <div className={myRecipe({
+        size: 'large'
+      })}>
+                <span className={large}>Foo</span>
+              </div>;
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { recipe$ } from '@vanilla-extract/css';
+      import { large } from './otherStyles';
+      export const _vanilla_identifier_0 = recipe$({
+        variants: {
+          size: {
+            fontSize: '24px'
+          }
+        }
+      });
+      const myRecipe = _vanilla_identifier_0;
+      export const MyComponent = () => <div className={myRecipe({
+        size: 'large'
+      })}>
+                <span className={large}>Foo</span>
+              </div>;
+    `);
+  });
+
+  it('should handle an imported style that is used in the same statement as a build-time variable', () => {
     const source = /* tsx */ `
       import { style$ } from '@vanilla-extract/css';
       import { large } from './otherStyles';
