@@ -207,6 +207,42 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
+  it.only('should handle an imported style that is used in the same statement as a build-time variable', () => {
+    const source = /* tsx */ `
+      import { style$ } from '@vanilla-extract/css';
+      import { large } from './otherStyles';
+
+      const blue = style$({ background: 'blue' });
+
+      export const MyComponent = () => (
+        <div className={blue}>
+          <span className={large}>Foo</span>
+        </div>
+      );`;
+
+    const result = transform(source, ['style$']);
+
+    expect(result.code).toMatchInlineSnapshot(`
+      import { large } from './otherStyles';
+      const blue = _vanilla_identifier_0;
+      export const MyComponent = () => <div className={blue}>
+                <span className={large}>Foo</span>
+              </div>;
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { style$ } from '@vanilla-extract/css';
+      import { large } from './otherStyles';
+      export const _vanilla_identifier_0 = style$({
+        background: 'blue'
+      });
+      const blue = _vanilla_identifier_0;
+      export const MyComponent = () => <div className={blue}>
+                <span className={large}>Foo</span>
+              </div>;
+    `);
+  });
+
   it('should handle export lists', () => {
     const source = /* tsx */ `
       import { style, css$ } from '@vanilla-extract/css';
