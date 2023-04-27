@@ -209,44 +209,63 @@ describe('babel-plugin-split-file', () => {
 
   it('should handle an import with the same name as an object property', () => {
     const source = /* tsx */ `
-      import { recipe$ } from '@vanilla-extract/css';
-      import { large } from './otherStyles';
+      import { recipe$ } from '@vanilla-extract/recipes';
+      import { large, legacyStyle } from './styles.css';
 
-      const myRecipe = recipe$({ variants: { size: { fontSize: '24px' }}});
+      const thing = recipe$({
+        base: {
+          background: 'black',
+          color: 'white',
+        },
+        variants: {
+          size: {
+            small: { fontSize: 12 },
+            medium: { fontSize: 16 },
+            large: { fontSize: 32 },
+          },
+        },
+      });
 
-      export const MyComponent = () => (
-        <div className={myRecipe({ size: 'large' })}>
-          <span className={large}>Foo</span>
-        </div>
-      );`;
+      document.body.innerHTML = \`
+        <div class="$\{legacyStyle\}"></div>
+        <div class="$\{thing({ size: 'large' })\}">I am a recipe$</div>
+      \``;
 
     const result = transform(source, ['recipe$']);
 
     expect(result.code).toMatchInlineSnapshot(`
-      const myRecipe = _vanilla_identifier_0;
-      export const MyComponent = () => <div className={myRecipe({
+      import { large, legacyStyle } from './styles.css';
+      const thing = _vanilla_identifier_0;
+      document.body.innerHTML = \`
+              <div class="\${legacyStyle}"></div>
+              <div class="\${thing({
         size: 'large'
-      })}>
-                <span className={large}>Foo</span>
-              </div>;
+      })}">I am a recipe$</div>
+            \`;
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { recipe$ } from '@vanilla-extract/css';
-      import { large } from './otherStyles';
+      import { recipe$ } from '@vanilla-extract/recipes';
       export const _vanilla_identifier_0 = recipe$({
+        base: {
+          background: 'black',
+          color: 'white'
+        },
         variants: {
           size: {
-            fontSize: '24px'
+            small: {
+              fontSize: 12
+            },
+            medium: {
+              fontSize: 16
+            },
+            large: {
+              fontSize: 32
+            }
           }
         }
       });
-      const myRecipe = _vanilla_identifier_0;
-      export const MyComponent = () => <div className={myRecipe({
-        size: 'large'
-      })}>
-                <span className={large}>Foo</span>
-              </div>;
+      const thing = _vanilla_identifier_0;
     `);
   });
 
