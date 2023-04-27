@@ -63,6 +63,10 @@ const identifierVisitor: Visitor<
       // This is a property of an object so we don't want to check it against the outer scope
       return;
     }
+    if (t.isObjectProperty(path.parent, { key: path.node })) {
+      // This is a property of an object so we don't want to check it against the outer scope
+      return;
+    }
 
     this.addUsedIdentifier(path.node.name);
   },

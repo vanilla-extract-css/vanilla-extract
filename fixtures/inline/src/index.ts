@@ -19,6 +19,13 @@ const thing = recipe$({
     background: 'black',
     color: 'white',
   },
+  variants: {
+    size: {
+      small: { fontSize: 12 },
+      medium: { fontSize: 16 },
+      large: { fontSize: 32 },
+    },
+  },
 });
 
 document.body.innerHTML = `
@@ -28,7 +35,7 @@ document.body.innerHTML = `
   <div class="${style$({ color: 'red' })}">Yo</div>
   <div class="${legacyStyle}"></div>
   <div class="${large}">Large legacy style text</div>
-  <div class="${thing()}">I am a recipe$</div>
+  <div class="${thing({ size: 'large' })}">I am a recipe$</div>
   ${BrandDetails()}
   ${test}
 `;
