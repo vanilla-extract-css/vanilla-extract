@@ -346,7 +346,10 @@ class Stylesheet {
     rule: StyleWithSelectors,
     conditions?: Array<string>,
   ) {
-    forEach(rule.selectors, (selectorRule, selector) => {
+    const selectors =
+      typeof rule.selectors === 'function' ? rule.selectors() : rule.selectors;
+
+    forEach(selectors, (selectorRule, selector) => {
       if (root.type !== 'local') {
         throw new Error(
           `Selectors are not allowed within ${

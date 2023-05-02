@@ -63,7 +63,7 @@ interface SelectorMap {
 }
 
 export interface StyleWithSelectors extends CSSPropertiesAndPseudos {
-  selectors?: SelectorMap;
+  selectors?: SelectorMap | (() => SelectorMap);
 }
 
 export type StyleRule = StyleWithSelectors & WithQueries<StyleWithSelectors>;

@@ -271,6 +271,35 @@ describe('compiler', () => {
     `);
   });
 
+  test('function selector', async () => {
+    const compiler = compilers.default;
+
+    const cssPath = path.join(__dirname, 'fixtures/selectors/function.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = await compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/selectors/function.css.ts.vanilla.css';
+      export var child = 'function_child__a95bk50';
+      export var parent = 'function_parent__a95bk51';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".function_child__a95bk50 {
+        background: blue;
+      }
+      .function_parent__a95bk51 .function_child__a95bk50 {
+        color: red;
+      }
+      .function_parent__a95bk51 {
+        background: yellow;
+      }
+      .function_parent__a95bk51:has(.function_child__a95bk50) {
+        padding: 10px;
+      }"
+    `);
+  });
+
   afterAll(async () => {
     await Promise.allSettled(
       Object.values(compilers).map((compiler) => compiler.close()),
