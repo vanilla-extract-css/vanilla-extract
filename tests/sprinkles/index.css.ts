@@ -44,8 +44,26 @@ export const conditionalProperties = defineProperties({
     desktop: {
       '@media': 'screen and (min-width: 786px)',
     },
+    foo: {},
+    foo1: {},
+    foo2: {},
+    foo3: {},
+    foo4: {},
+    foo5: {},
   },
-  responsiveArray: ['mobile', 'tablet', 'desktop'],
+  responsiveArray: [
+    'mobile',
+    'tablet',
+    'desktop',
+    'foo',
+    'foo1',
+    'foo2',
+    'foo3',
+    'foo4',
+    // Limited to elements in a responsive responsive array
+    // Remove to fix type error
+    'foo5',
+  ],
   properties: {
     display: ['block', 'none', 'flex'],
     paddingTop: spacing,

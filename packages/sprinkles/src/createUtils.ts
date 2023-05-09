@@ -41,12 +41,9 @@ export type ConditionalValue<
   | (ExtractDefaultCondition<SprinklesProperties> extends false ? never : Value)
   | Partial<Record<ExtractConditionNames<SprinklesProperties>, Value>>
   | (SprinklesProperties['conditions']['responsiveArray'] extends {
-      length: number;
+      length: infer MaxLength extends number;
     }
-      ? ResponsiveArrayByMaxLength<
-          SprinklesProperties['conditions']['responsiveArray']['length'],
-          Value
-        >
+      ? ResponsiveArrayByMaxLength<MaxLength, Value>
       : never);
 
 type RequiredConditionalObject<
@@ -72,12 +69,9 @@ export type RequiredConditionalValue<
           Value
         >
       | (SprinklesProperties['conditions']['responsiveArray'] extends {
-          length: number;
+          length: infer MaxLength extends number;
         }
-          ? RequiredResponsiveArrayByMaxLength<
-              SprinklesProperties['conditions']['responsiveArray']['length'],
-              Value
-            >
+          ? RequiredResponsiveArrayByMaxLength<MaxLength, Value>
           : never);
 
 export function createNormalizeValueFn<
