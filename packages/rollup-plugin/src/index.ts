@@ -69,12 +69,12 @@ export function vanillaExtractPlugin({
         external: true,
         meta: {
           css: source,
-        }
+        },
       };
     },
     // Emit .css assets
     moduleParsed(moduleInfo) {
-      moduleInfo.importedIdResolutions.forEach(resolution => {
+      moduleInfo.importedIdResolutions.forEach((resolution) => {
         if (resolution.meta.css) {
           resolution.meta.assetId = this.emitFile({
             type: 'asset',
@@ -93,7 +93,9 @@ export function vanillaExtractPlugin({
           return codeResult;
         }
         const assetPath = this.getFileName(moduleInfo?.meta.assetId);
-        const relativeAssetPath = `./${normalize(relative(chunkPath, assetPath))}`;
+        const relativeAssetPath = `./${normalize(
+          relative(chunkPath, assetPath),
+        )}`;
         return codeResult.replace(importPath, relativeAssetPath);
       }, code);
 
