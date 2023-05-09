@@ -22,14 +22,11 @@ export function vanillaExtractPlugin({
   cwd = process.cwd(),
   esbuildOptions,
 }: Options = {}): Plugin {
-  const emittedFiles = new Map<string, string>();
   const isProduction = process.env.NODE_ENV === 'production';
 
   return {
     name: 'vanilla-extract',
-    buildStart() {
-      emittedFiles.clear();
-    },
+    // Transform .css.js to .js
     async transform(_code, id) {
       if (!cssFileFilter.test(id)) {
         return null;
@@ -61,47 +58,45 @@ export function vanillaExtractPlugin({
         map: { mappings: '' },
       };
     },
+    // Resolve .css to external module
     async resolveId(id) {
       if (!virtualCssFileFilter.test(id)) {
         return null;
       }
-
-      // Emit an asset for every virtual css file
       const { fileName, source } = await getSourceFromVirtualCssFile(id);
-      if (!emittedFiles.get(fileName)) {
-        const assetId = this.emitFile({
-          type: 'asset',
-          name: fileName,
-          source,
-        });
-        emittedFiles.set(fileName, assetId);
-      }
-
-      // Resolve to a temporary external module
       return {
         id: fileName,
         external: true,
+        meta: {
+          css: source,
+        }
       };
     },
+    // Emit .css assets
+    moduleParsed(moduleInfo) {
+      moduleInfo.importedIdResolutions.forEach(resolution => {
+        if (resolution.meta.css) {
+          resolution.meta.assetId = this.emitFile({
+            type: 'asset',
+            name: resolution.id,
+            source: resolution.meta.css,
+          });
+        }
+      });
+    },
+    // Replace .css import paths with relative paths to emitted css files
     renderChunk(code, chunkInfo) {
-      // For all imports in this chunk that we have emitted files for...
-      const importsToReplace = chunkInfo.imports.filter((fileName) =>
-        emittedFiles.get(fileName),
-      );
-      if (!importsToReplace.length) {
-        return null;
-      }
-
-      // ...replace import paths with relative paths to emitted css files
       const chunkPath = dirname(chunkInfo.fileName);
-      const output = importsToReplace.reduce((codeResult, importPath) => {
-        const assetId = emittedFiles.get(importPath)!;
-        const assetName = this.getFileName(assetId);
-        const fixedImportPath = `./${normalize(
-          relative(chunkPath, assetName),
-        )}`;
-        return codeResult.replace(importPath, fixedImportPath);
+      const output = chunkInfo.imports.reduce((codeResult, importPath) => {
+        const moduleInfo = this.getModuleInfo(importPath);
+        if (!moduleInfo?.meta.assetId) {
+          return codeResult;
+        }
+        const assetPath = this.getFileName(moduleInfo?.meta.assetId);
+        const relativeAssetPath = `./${normalize(relative(chunkPath, assetPath))}`;
+        return codeResult.replace(importPath, relativeAssetPath);
       }, code);
+
       return {
         code: output,
         map: chunkInfo.map ?? null,
