@@ -156,7 +156,7 @@ importers:
   fixtures/sprinkles:
     specifiers:
       '@vanilla-extract/css': 1.11.0
-      '@vanilla-extract/sprinkles': 1.5.2
+      '@vanilla-extract/sprinkles': 1.6.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
       '@vanilla-extract/sprinkles': link:../../packages/sprinkles

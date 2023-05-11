@@ -216,16 +216,18 @@ export function vanillaExtractPlugin({
             cssMap.get(absoluteId) !== source
           ) {
             const { moduleGraph } = server;
-            const [module] = Array.from(
+            const modules = Array.from(
               moduleGraph.getModulesByFile(absoluteId) || [],
             );
 
-            if (module) {
-              moduleGraph.invalidateModule(module);
+            for (const module of modules) {
+              if (module) {
+                moduleGraph.invalidateModule(module);
 
-              // Vite uses this timestamp to add `?t=` query string automatically for HMR.
-              module.lastHMRTimestamp =
-                (module as any).lastInvalidationTimestamp || Date.now();
+                // Vite uses this timestamp to add `?t=` query string automatically for HMR.
+                module.lastHMRTimestamp =
+                  (module as any).lastInvalidationTimestamp || Date.now();
+              }
             }
 
             server.ws.send({
