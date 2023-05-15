@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.8.1
+
+### Patch Changes
+
+- [#1066](https://github.com/vanilla-extract-css/vanilla-extract/pull/1066) [`0d0ea39`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0d0ea3909e7f952f24aafa4c9653853ac5841b8c) Thanks [@askoufis](https://github.com/askoufis)! - Fix stale emitted CSS in SSR mode by invalidating all modules related to a file
+
 ## 3.8.0
 
 ### Minor Changes

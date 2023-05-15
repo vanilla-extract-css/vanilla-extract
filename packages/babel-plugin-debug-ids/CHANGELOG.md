@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin-debug-ids
 
+## 1.0.3
+
+### Patch Changes
+
+- [#1054](https://github.com/vanilla-extract-css/vanilla-extract/pull/1054) [`3c74cc2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3c74cc2a8fab0dde26aab57c568af70b42ab5347) Thanks [@askoufis](https://github.com/askoufis)! - Handle alternative compiled forms of array destructured `createTheme`
+
 ## 1.0.2
 
 ### Patch Changes
