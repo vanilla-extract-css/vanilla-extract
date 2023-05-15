@@ -413,7 +413,7 @@ describe('babel plugin', () => {
     `);
   });
 
-  it('should handle createTheme using destructuring when already compiled', () => {
+  it('should handle createTheme using destructuring when already compiled scenario 1', () => {
     const source = `
       import { createTheme } from '@vanilla-extract/css';
 
@@ -429,6 +429,42 @@ describe('babel plugin', () => {
         _createTheme2 = _slicedToArray(_createTheme, 2),
         myThemeClass = _createTheme2[0],
         vars = _createTheme2[1];
+    `);
+  });
+
+  it('should handle createTheme using destructuring when already compiled scenario 2', () => {
+    const source = `
+      import { createTheme } from '@vanilla-extract/css';
+
+      var ref = _slicedToArray(createTheme({}), 2);
+      export var myThemeClass = ref[0],
+        vars = ref[1];
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { createTheme } from '@vanilla-extract/css';
+      var ref = _slicedToArray(createTheme({}, "myThemeClass"), 2);
+      export var myThemeClass = ref[0],
+        vars = ref[1];
+    `);
+  });
+
+  it('should handle createTheme using destructuring when already compiled scenario 3', () => {
+    const source = `
+      import { createTheme } from '@vanilla-extract/css';
+
+      var ref = _slicedToArray(createTheme({}), 2),
+        myThemeClass = ref[0],
+        vars = ref[1];
+      export { myThemeClass, vars };
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { createTheme } from '@vanilla-extract/css';
+      var ref = _slicedToArray(createTheme({}, "myThemeClass"), 2),
+        myThemeClass = ref[0],
+        vars = ref[1];
+      export { myThemeClass, vars };
     `);
   });
 
