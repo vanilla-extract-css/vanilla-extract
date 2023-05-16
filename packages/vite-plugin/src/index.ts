@@ -179,7 +179,7 @@ export function vanillaExtractPlugin({
       for (const file of watchFiles) {
         // In start mode, we need to prevent the file from rewatching itself.
         // If it's a `build --watch`, it needs to watch everything.
-        if (config.command === 'build' || file !== validId) {
+        if (config.command === 'build' || normalizePath(file) !== validId) {
           this.addWatchFile(file);
         }
       }
