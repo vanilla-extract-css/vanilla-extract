@@ -103,12 +103,19 @@ export type CSSLayerDeclaration = {
   name: string;
 };
 
+export type CSSPropertyBlock = {
+  type: 'property';
+  name: string;
+  rule: AtRule.Property
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
   | CSSSelectorBlock
-  | CSSLayerDeclaration;
+  | CSSLayerDeclaration
+  | CSSPropertyBlock;
 
 export type FileScope = {
   packageName?: string;
@@ -147,3 +154,22 @@ export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
 export type ClassNames = string | Array<ClassNames>;
 
 export type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
+
+export type PropertySyntax = 
+    | '<length>'
+    | '<number>' 
+    | '<percentage>' 
+    | '<length-percentage>' 
+    | '<color>' 
+    | '<image>' 
+    | '<url>' 
+    | '<integer>' 
+    | '<angle>' 
+    | '<time>' 
+    | '<resolution>' 
+    | '<transform-function>' 
+    | '<custom-ident>' 
+    | '<transform-list>' 
+    | '*'
+    // needs this to make TS suggestions work
+    | (string & Record<never, never>);

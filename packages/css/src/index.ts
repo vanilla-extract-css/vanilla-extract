@@ -14,3 +14,4 @@ export * from './style';
 export * from './vars';
 export { createContainer } from './container';
 export * from './layer';
+export * from './properties';
