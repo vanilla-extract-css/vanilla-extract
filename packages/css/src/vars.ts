@@ -23,6 +23,12 @@ export function createVar(debugId?: string): CSSVarFunction {
   return `var(--${cssVarName})` as const;
 }
 
+export function assertVarName(value: unknown): asserts value is `var(--${string})` {
+  if (typeof value !== 'string' || !/^var\(--.*\)$/.test(value)) {
+    throw new Error(`Invalid variable name: ${value}`);
+  }
+}
+
 export function fallbackVar(
   ...values: [string, ...Array<string>]
 ): CSSVarFunction {
@@ -32,9 +38,7 @@ export function fallbackVar(
     if (finalValue === '') {
       finalValue = String(value);
     } else {
-      if (typeof value !== 'string' || !/^var\(--.*\)$/.test(value)) {
-        throw new Error(`Invalid variable name: ${value}`);
-      }
+      assertVarName(value)
 
       finalValue = value.replace(/\)$/, `, ${finalValue})`);
     }
