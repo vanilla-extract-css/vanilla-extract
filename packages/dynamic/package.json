@@ -10,10 +10,15 @@
     ".": {
       "module": "./dist/vanilla-extract-dynamic.esm.js",
       "default": "./dist/vanilla-extract-dynamic.cjs.js"
+    },
+    "./runtimeDynamicStyles": {
+      "module": "./runtimeDynamicStyles/dist/vanilla-extract-dynamic-runtimeDynamicStyles.esm.js",
+      "default": "./runtimeDynamicStyles/dist/vanilla-extract-dynamic-runtimeDynamicStyles.cjs.js"
     }
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/runtimeDynamicStyle"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +27,19 @@
   },
   "author": "SEEK",
   "license": "MIT",
+  "peerDependencies": {
+    "@vanilla-extract/css": "^1.11.0"
+  },
   "dependencies": {
     "@vanilla-extract/private": "^1.0.3"
   },
   "devDependencies": {
     "@vanilla-extract/css": "*"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "runtimeDynamicStyle.ts"
+    ]
   }
 }

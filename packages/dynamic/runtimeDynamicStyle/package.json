@@ -1,0 +1,4 @@
+{
+  "main": "dist/vanilla-extract-dynamic-runtimeDynamicStyle.cjs.js",
+  "module": "dist/vanilla-extract-dynamic-runtimeDynamicStyle.esm.js"
+}
