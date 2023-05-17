@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.8.2
+
+### Patch Changes
+
+- [#1093](https://github.com/vanilla-extract-css/vanilla-extract/pull/1093) [`8bed6f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8bed6f5ef36287006db458093e67bef5231e206c) Thanks [@kosmotema](https://github.com/kosmotema)! - Fix HMR in Windows by normalizing paths from `watchFiles`
+
 ## 3.8.1
 
 ### Patch Changes
