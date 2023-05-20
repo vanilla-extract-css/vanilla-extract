@@ -30,17 +30,28 @@ interface PluginOptions {
 }
 
 interface Context extends PluginPass {
+  /** Identifiers available at the module scope (imported or declared) */
   moduleScopeIdentifiers: Set<IdentifierName>;
+  /** Identifiers available at the module scope and are mutated within the module */
   mutatedModuleScopeIdentifiers: Set<IdentifierName>;
-  globalVanillaApiStatements: Set<number>;
+  /** Indices of statements that call vanilla global vanilla APIs at the module scope*/
+  globalVanillaApiStatements: Set<StatementIndex>;
+  /** Which statements own which module scope identifiers */
   identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
+  /** Identifier dependency graph */
   depGraph: DependencyGraph;
+  /** Names of function identifiers that can be evaluated at buildtime */
   vanillaMacros: string[];
+  /** Map of statement indicies to the paths of any macro function calls they own */
   macroOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
+  /** Map of module scope identifier names in the original file to their generated identifier name used at buildtime */
   vanillaIdentifierMap: Map<string, string>;
+  /** Statements that export anything */
   exportStatements: Set<StatementIndex>;
+  /** Statements that mutate anything */
   mutatingStatements: Set<StatementIndex>;
-  identifierMutators: DefaultMap<number, Set<IdentifierName>>;
+  /** Which statements modify which module scope identifiers */
+  identifierMutators: DefaultMap<StatementIndex, Set<IdentifierName>>;
   opts: PluginOptions;
 }
 
