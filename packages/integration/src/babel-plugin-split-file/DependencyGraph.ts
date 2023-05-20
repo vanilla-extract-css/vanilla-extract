@@ -39,7 +39,7 @@ export class DependencyGraph {
         return true;
       }
 
-      for (const [dep] of dependencies.entries()) {
+      for (const dep of dependencies.values()) {
         if (this.dependsOn(dep, dependency)) {
           return true;
         }

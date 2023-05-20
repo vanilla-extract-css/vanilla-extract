@@ -619,4 +619,48 @@ describe('babel-plugin-split-file', () => {
       const _vanilla_identifier_6 = _vanilla_identifier_7;
     `);
   });
+
+  it('should handle array destructuring', () => {
+    const source = /* tsx */ `
+      import { createTheme, css$ } from '@vanilla-extract/css';
+
+      const [themeClass, vars] = css$(createTheme({
+        color: {
+          brand: 'blue'
+        },
+      }));
+
+      export const [publicThemeClass, publicVars] = css$(createTheme({
+        color: {
+          brand: 'red'
+        },
+      }));
+
+      export const Themed = () => <div className={themeClass}>Foo</div>;`;
+
+    const result = transform(source);
+
+    expect(result.code).toMatchInlineSnapshot(`
+      const [themeClass, vars] = _vanilla_identifier_6;
+      export const [publicThemeClass, publicVars] = _vanilla_identifier_5;
+      export const Themed = () => <div className={themeClass}>Foo</div>;
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { createTheme, css$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_6 = css$(createTheme({
+        color: {
+          brand: 'blue'
+        }
+      }));
+      const [themeClass, vars] = _vanilla_identifier_6;
+      export const _vanilla_identifier_5 = css$(createTheme({
+        color: {
+          brand: 'red'
+        }
+      }));
+      export const [publicThemeClass, publicVars] = _vanilla_identifier_5;
+      export const Themed = () => <div className={themeClass}>Foo</div>;
+    `);
+  });
 });

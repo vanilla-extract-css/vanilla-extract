@@ -218,12 +218,36 @@ export default function (): PluginObj<Context> {
                   // need to traverse the declarator path, not the declarator's init path.
                   // Doing this results in traversing the declarator identifier, so to prevent a
                   // self-referential dependency, we explicitly check for it
-                  if (declaredIdent !== ident) {
+                  if (!declaredIdentifiers.has(ident)) {
                     this.depGraph.addDependency(declaredIdent, ident);
                   }
                 }
               }
             };
+
+          const handleVariableDeclarator = (
+            declaratorPath: NodePath<t.VariableDeclarator>,
+            statementIndex: number,
+          ) => {
+            const declaratorId = declaratorPath.node.id;
+
+            if (t.isIdentifier(declaratorId)) {
+              const identifierName = declaratorId.name;
+              registerNewVanillaIdentifier(identifierName, statementIndex);
+            } else if (t.isArrayPattern(declaratorId)) {
+              for (const element of declaratorId.elements) {
+                invariant(
+                  t.isIdentifier(element),
+                  'Array pattern elements must be identifiers',
+                );
+                registerNewVanillaIdentifier(element.name, statementIndex);
+              }
+            } else {
+              throw new Error(
+                `[TODO] Handle other types of top-level declarations, statementIndex: ${statementIndex}, type: ${declaratorPath.node.id.type}`,
+              );
+            }
+          };
 
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
@@ -261,13 +285,7 @@ export default function (): PluginObj<Context> {
               for (const declarationIndex of statement.node.declarations.keys()) {
                 const declaratorPath =
                   statement.get('declarations')[declarationIndex];
-                invariant(
-                  t.isIdentifier(declaratorPath.node.id),
-                  '[TODO] Handle other types of top-level declarations',
-                );
-
-                const identifierName = declaratorPath.node.id.name;
-                registerNewVanillaIdentifier(identifierName, statementIndex);
+                handleVariableDeclarator(declaratorPath, statementIndex);
               }
             } else if (statement.isExportNamedDeclaration()) {
               this.exportStatements.add(statementIndex);
@@ -341,20 +359,13 @@ export default function (): PluginObj<Context> {
 
                 invariant(
                   declarationPath.isVariableDeclaration(),
-                  `[TODO] Handle other types of top-level name declarations, ${statementIndex}, ${declarationPath.type}`,
+                  `[TODO] Handle other types of top-level name declarations, statementIndex: ${statementIndex}, type: ${declarationPath.type}`,
                 );
 
                 const declarationPaths = declarationPath.get('declarations');
                 for (const declarationIndex of declarationPaths.keys()) {
                   const declaratorPath = declarationPaths[declarationIndex];
-
-                  invariant(
-                    t.isIdentifier(declaratorPath.node.id),
-                    '[TODO] Handle other types of top-level declarations',
-                  );
-
-                  const identifierName = declaratorPath.node.id.name;
-                  registerNewVanillaIdentifier(identifierName, statementIndex);
+                  handleVariableDeclarator(declaratorPath, statementIndex);
 
                   if (isCssFile) {
                     declaratorPath.get('init').replaceWith(
