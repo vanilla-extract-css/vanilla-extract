@@ -32,8 +32,6 @@ interface PluginOptions {
 interface Context extends PluginPass {
   /** Identifiers available at the module scope (imported or declared) */
   moduleScopeIdentifiers: Set<IdentifierName>;
-  /** Identifiers available at the module scope and are mutated within the module */
-  mutatedModuleScopeIdentifiers: Set<IdentifierName>;
   /** Indices of statements that call vanilla global vanilla APIs at the module scope*/
   globalVanillaApiStatements: Set<StatementIndex>;
   /** Which statements own which module scope identifiers */
@@ -48,8 +46,6 @@ interface Context extends PluginPass {
   vanillaIdentifierMap: Map<string, string>;
   /** Statements that export anything */
   exportStatements: Set<StatementIndex>;
-  /** Statements that mutate anything */
-  mutatingStatements: Set<StatementIndex>;
   /** Which statements modify which module scope identifiers */
   identifierMutators: DefaultMap<StatementIndex, Set<IdentifierName>>;
   importedIdentifiers: Set<IdentifierName>;
@@ -67,10 +63,8 @@ const identifierVisitor: Visitor<
     Context,
     | 'vanillaMacros'
     | 'macroOwners'
-    | 'mutatingStatements'
     | 'identifierMutators'
     | 'moduleScopeIdentifiers'
-    | 'mutatedModuleScopeIdentifiers'
     | 'exportStatements'
     | 'importedIdentifiers'
     | 'importedIdentifiersUsedAtBuildtime'
@@ -133,23 +127,17 @@ const identifierVisitor: Visitor<
     },
   },
   AssignmentExpression(path) {
-    this.mutatingStatements.add(this.statementIndex);
-
     const left = path.node.left;
 
     if (t.isIdentifier(left) && this.moduleScopeIdentifiers.has(left.name)) {
       this.identifierMutators.get(this.statementIndex).add(left.name);
-      this.mutatedModuleScopeIdentifiers.add(left.name);
     }
   },
   UpdateExpression(path) {
-    this.mutatingStatements.add(this.statementIndex);
-
     const arg = path.node.argument;
 
     if (t.isIdentifier(arg) && this.moduleScopeIdentifiers.has(arg.name)) {
       this.identifierMutators.get(this.statementIndex).add(arg.name);
-      this.mutatedModuleScopeIdentifiers.add(arg.name);
     }
   },
 };
@@ -183,9 +171,7 @@ export default function (): PluginObj<Context> {
       this.macroOwners = new DefaultMap(() => new Set());
       this.vanillaIdentifierMap = new Map();
       this.exportStatements = new Set();
-      this.mutatingStatements = new Set();
       this.identifierMutators = new DefaultMap(() => new Set());
-      this.mutatedModuleScopeIdentifiers = new Set();
       this.importedIdentifiers = new Set();
       this.importedIdentifiersUsedAtRuntime = new Set();
       this.importedIdentifiersUsedAtBuildtime = new Set();
@@ -248,9 +234,7 @@ export default function (): PluginObj<Context> {
               macroOwners: this.macroOwners,
               statementIndex,
               vanillaIdentifierMap: this.vanillaIdentifierMap,
-              mutatingStatements: this.mutatingStatements,
               identifierMutators: this.identifierMutators,
-              mutatedModuleScopeIdentifiers: this.mutatedModuleScopeIdentifiers,
               insideMacroCall: false,
               exportStatements: this.exportStatements,
               importedIdentifiers: this.importedIdentifiers,
@@ -449,10 +433,18 @@ export default function (): PluginObj<Context> {
 
           // Refetch the body path as the old body path doesn't contain inserted statements
           const newBodyPath = path.get('body');
+          const newBodyPathKeys = Array.from(newBodyPath.keys());
 
-          for (const statementIndex of Array.from(
-            newBodyPath.keys(),
-          ).reverse()) {
+          const mutatedModuleScopeIdentifiers = new Set<IdentifierName>();
+          for (const statementIndex of newBodyPathKeys) {
+            for (const ident of this.identifierMutators
+              .get(statementIndex)
+              .values()) {
+              mutatedModuleScopeIdentifiers.add(ident);
+            }
+          }
+
+          for (const statementIndex of newBodyPathKeys.reverse()) {
             const statement = newBodyPath[statementIndex];
             const isImportDeclaration = statement.isImportDeclaration();
 
@@ -483,8 +475,8 @@ export default function (): PluginObj<Context> {
             );
             const isExportStatement = this.exportStatements.has(statementIndex);
             const mutatesOrOwnsMutatedIdent =
-              this.mutatingStatements.has(statementIndex) ||
-              hasIntersection(ownedIdents, this.mutatedModuleScopeIdentifiers);
+              mutatedIdents.size > 0 ||
+              hasIntersection(ownedIdents, mutatedModuleScopeIdentifiers);
 
             const statementCallsGlobalVanillaApi =
               this.globalVanillaApiStatements.has(statementIndex);
