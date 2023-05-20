@@ -42,7 +42,7 @@ interface Context extends PluginPass {
   depGraph: DependencyGraph;
   /** Names of function identifiers that can be evaluated at buildtime */
   vanillaMacros: string[];
-  /** Map of statement indicies to the paths of any macro function calls they own */
+  /** Map of statement indices to the paths of any macro function calls they own */
   macroOwners: DefaultMap<StatementIndex, Set<NodePath<t.CallExpression>>>;
   /** Map of module scope identifier names in the original file to their generated identifier name used at buildtime */
   vanillaIdentifierMap: Map<string, string>;
@@ -52,6 +52,9 @@ interface Context extends PluginPass {
   mutatingStatements: Set<StatementIndex>;
   /** Which statements modify which module scope identifiers */
   identifierMutators: DefaultMap<StatementIndex, Set<IdentifierName>>;
+  importedIdentifiers: Set<IdentifierName>;
+  importedIdentifiersUsedAtRuntime: Set<IdentifierName>;
+  importedIdentifiersUsedAtBuildtime: Set<IdentifierName>;
   opts: PluginOptions;
 }
 
@@ -59,6 +62,7 @@ const identifierVisitor: Visitor<
   {
     addUsedIdentifier: (ident: IdentifierName) => void;
     statementIndex: number;
+    insideMacroCall: boolean;
   } & Pick<
     Context,
     | 'vanillaMacros'
@@ -67,6 +71,10 @@ const identifierVisitor: Visitor<
     | 'identifierMutators'
     | 'moduleScopeIdentifiers'
     | 'mutatedModuleScopeIdentifiers'
+    | 'exportStatements'
+    | 'importedIdentifiers'
+    | 'importedIdentifiersUsedAtBuildtime'
+    | 'importedIdentifiersUsedAtRuntime'
   >
 > = {
   Identifier(path) {
@@ -79,12 +87,50 @@ const identifierVisitor: Visitor<
       return;
     }
 
-    this.addUsedIdentifier(path.node.name);
-  },
-  CallExpression(path) {
-    if (isVanillaMacroFunctionCall(path, this.vanillaMacros)) {
-      this.macroOwners.get(this.statementIndex).add(path);
+    const identifierName = path.node.name;
+    this.addUsedIdentifier(identifierName);
+
+    if (this.insideMacroCall) {
+      if (this.importedIdentifiers.has(identifierName)) {
+        this.importedIdentifiersUsedAtBuildtime.add(identifierName);
+      }
+    } else {
+      if (this.exportStatements.has(this.statementIndex)) {
+        this.importedIdentifiersUsedAtRuntime.add(identifierName);
+      }
     }
+  },
+  JSXIdentifier(path) {
+    if (t.isJSXMemberExpression(path.parent, { property: path.node })) {
+      // This is a property of an object so we don't want to check it against the outer scope
+      return;
+    }
+
+    const identifierName = path.node.name;
+    this.addUsedIdentifier(identifierName);
+
+    if (this.insideMacroCall) {
+      if (this.importedIdentifiers.has(identifierName)) {
+        this.importedIdentifiersUsedAtBuildtime.add(identifierName);
+      }
+    } else {
+      if (this.exportStatements.has(this.statementIndex)) {
+        this.importedIdentifiersUsedAtRuntime.add(identifierName);
+      }
+    }
+  },
+  CallExpression: {
+    enter(path) {
+      if (isVanillaMacroFunctionCall(path, this.vanillaMacros)) {
+        this.macroOwners.get(this.statementIndex).add(path);
+        this.insideMacroCall = true;
+      }
+    },
+    exit(path) {
+      if (isVanillaMacroFunctionCall(path, this.vanillaMacros)) {
+        this.insideMacroCall = false;
+      }
+    },
   },
   AssignmentExpression(path) {
     this.mutatingStatements.add(this.statementIndex);
@@ -140,6 +186,9 @@ export default function (): PluginObj<Context> {
       this.mutatingStatements = new Set();
       this.identifierMutators = new DefaultMap(() => new Set());
       this.mutatedModuleScopeIdentifiers = new Set();
+      this.importedIdentifiers = new Set();
+      this.importedIdentifiersUsedAtRuntime = new Set();
+      this.importedIdentifiersUsedAtBuildtime = new Set();
       this.vanillaMacros = [];
     },
     visitor: {
@@ -202,6 +251,13 @@ export default function (): PluginObj<Context> {
               mutatingStatements: this.mutatingStatements,
               identifierMutators: this.identifierMutators,
               mutatedModuleScopeIdentifiers: this.mutatedModuleScopeIdentifiers,
+              insideMacroCall: false,
+              exportStatements: this.exportStatements,
+              importedIdentifiers: this.importedIdentifiers,
+              importedIdentifiersUsedAtBuildtime:
+                this.importedIdentifiersUsedAtBuildtime,
+              importedIdentifiersUsedAtRuntime:
+                this.importedIdentifiersUsedAtRuntime,
             };
 
             if (t.isImportDeclaration(statement.node)) {
@@ -212,13 +268,12 @@ export default function (): PluginObj<Context> {
               for (const local of locals) {
                 this.moduleScopeIdentifiers.add(local);
                 this.identifierOwners.get(statementIndex).add(local);
+                this.importedIdentifiers.add(local);
               }
 
               // No need to traverse import declarations
               continue;
-            }
-
-            if (statement.isVariableDeclaration()) {
+            } else if (statement.isVariableDeclaration()) {
               for (const declarationIndex of statement.node.declarations.keys()) {
                 const declaratorPath =
                   statement.get('declarations')[declarationIndex];
@@ -235,7 +290,7 @@ export default function (): PluginObj<Context> {
 
               const specifiers = statement.get('specifiers');
               const isExportList =
-                specifiers.length > 0 && !Boolean(statement.get('source').node);
+                specifiers.length > 0 && !statement.get('source').node;
 
               if (isExportList) {
                 if (isCssFile) {
@@ -454,7 +509,10 @@ export default function (): PluginObj<Context> {
                 ? statement.node.specifiers
                 : [];
               const ownedRuntimeImportSpecifiers = importSpecifiers.filter(
-                (specifier) => !essentialIdentifiers.has(specifier.local.name),
+                (specifier) =>
+                  this.importedIdentifiersUsedAtRuntime.has(
+                    specifier.local.name,
+                  ),
               );
               const canBeRemovedFromRuntime =
                 !mutatesOrOwnsMutatedIdent &&

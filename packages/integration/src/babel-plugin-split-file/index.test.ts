@@ -269,38 +269,37 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it('should handle an imported style that is used in the same statement as a build-time variable', () => {
+  it('should handle an imported identifier that is used both at buildtime and runtime', () => {
     const source = /* tsx */ `
       import { style$ } from '@vanilla-extract/css';
-      import { large } from './otherStyles';
-
-      const blue = style$({ background: 'blue' });
+      import { large } from './myStyles';
 
       export const MyComponent = () => (
-        <div className={blue}>
+        <div>
           <span className={large}>Foo</span>
+          <span className={style$([large, { color: 'blue' }])}>Foo</span>
         </div>
       );`;
 
     const result = transform(source, ['style$']);
 
     expect(result.code).toMatchInlineSnapshot(`
-      import { large } from './otherStyles';
-      const blue = _vanilla_identifier_0;
-      export const MyComponent = () => <div className={blue}>
+      import { large } from './myStyles';
+      export const MyComponent = () => <div>
                 <span className={large}>Foo</span>
+                <span className={_vanilla_identifier_1}>Foo</span>
               </div>;
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style$ } from '@vanilla-extract/css';
-      import { large } from './otherStyles';
-      export const _vanilla_identifier_0 = style$({
-        background: 'blue'
-      });
-      const blue = _vanilla_identifier_0;
-      export const MyComponent = () => <div className={blue}>
+      import { large } from './myStyles';
+      export const _vanilla_identifier_1 = style$([large, {
+        color: 'blue'
+      }]);
+      export const MyComponent = () => <div>
                 <span className={large}>Foo</span>
+                <span className={_vanilla_identifier_1}>Foo</span>
               </div>;
     `);
   });
