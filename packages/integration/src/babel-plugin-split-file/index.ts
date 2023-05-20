@@ -242,6 +242,30 @@ export default function (): PluginObj<Context> {
                 );
                 registerNewVanillaIdentifier(element.name, statementIndex);
               }
+            } else if (t.isObjectPattern(declaratorId)) {
+              for (const property of declaratorId.properties) {
+                if (t.isRestElement(property)) {
+                  invariant(
+                    t.isIdentifier(property.argument),
+                    'Rest elements must be identifiers',
+                  );
+                  registerNewVanillaIdentifier(
+                    property.argument.name,
+                    statementIndex,
+                  );
+
+                  // `property` is an ObjectProperty
+                } else {
+                  invariant(
+                    t.isIdentifier(property.value),
+                    'Property values must be identifiers',
+                  );
+                  registerNewVanillaIdentifier(
+                    property.value.name,
+                    statementIndex,
+                  );
+                }
+              }
             } else {
               throw new Error(
                 `[TODO] Handle other types of top-level declarations, statementIndex: ${statementIndex}, type: ${declaratorPath.node.id.type}`,

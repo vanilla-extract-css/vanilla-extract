@@ -663,4 +663,59 @@ describe('babel-plugin-split-file', () => {
       export const Themed = () => <div className={themeClass}>Foo</div>;
     `);
   });
+
+  it('should handle object destructuring', () => {
+    const source = /* tsx */ `
+      import { objectMacro1$, objectMacro2$ } from './macro';
+
+      const { blue: primary, red, ...rest } = objectMacro1$();
+      export const theRest = rest;
+      export const { small, large } = objectMacro2$();
+
+      export const MyComponent = () => 
+        <div className={primary}>
+          <span className={rest.orange}>Foo</span>
+        </div>;`;
+
+    const result = transform(
+      source,
+      ['objectMacro1$', 'objectMacro2$'],
+      'file.ts',
+    );
+
+    expect(result.code).toMatchInlineSnapshot(`
+      const {
+        blue: primary,
+        red,
+        ...rest
+      } = _vanilla_identifier_8;
+      export const theRest = rest;
+      export const {
+        small,
+        large
+      } = _vanilla_identifier_7;
+      export const MyComponent = () => <div className={primary}>
+                <span className={rest.orange}>Foo</span>
+              </div>;
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { objectMacro1$, objectMacro2$ } from './macro';
+      export const _vanilla_identifier_8 = objectMacro1$();
+      const {
+        blue: primary,
+        red,
+        ...rest
+      } = _vanilla_identifier_8;
+      export const theRest = rest;
+      export const _vanilla_identifier_7 = objectMacro2$();
+      export const {
+        small,
+        large
+      } = _vanilla_identifier_7;
+      export const MyComponent = () => <div className={primary}>
+                <span className={rest.orange}>Foo</span>
+              </div>;
+    `);
+  });
 });
