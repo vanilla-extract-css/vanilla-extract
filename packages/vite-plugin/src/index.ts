@@ -5,12 +5,8 @@ import { normalizePath } from 'vite';
 import outdent from 'outdent';
 import {
   cssFileFilter,
-  processVanillaFile,
-  compile,
   IdentifierOption,
-  getPackageInfo,
-  CompileOptions,
-  transform,
+  InlineCompiler,
 } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
@@ -23,12 +19,10 @@ const virtualExtJs = '.vanilla.js';
 interface Options {
   identifiers?: IdentifierOption;
   emitCssInSsr?: boolean;
-  esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   emitCssInSsr,
-  esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
@@ -39,10 +33,11 @@ export function vanillaExtractPlugin({
   let resolvedEmitCssInSsr: boolean = hasEmitCssOverride
     ? emitCssInSsr
     : !!process.env.VITE_RSC_BUILD;
-  let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
+
+  let compiler: InlineCompiler;
 
   return {
     name: 'vanilla-extract',
@@ -67,7 +62,11 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      packageName = getPackageInfo(config.root).name;
+      compiler = new InlineCompiler({
+        root: config.root,
+        identifiers:
+          identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
+      });
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
@@ -141,16 +140,12 @@ export function vanillaExtractPlugin({
         }
       `;
     },
-    async transform(code, id, ssrParam) {
+    async transform(_code, id, ssrParam) {
       const [validId] = id.split('?');
 
-      if (!cssFileFilter.test(validId)) {
-        return null;
+      if (validId.endsWith(virtualExtCss) || validId.endsWith(virtualExtJs)) {
+        return;
       }
-
-      const identOption =
-        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
-
       let ssr: boolean | undefined;
 
       if (typeof ssrParam === 'boolean') {
@@ -159,49 +154,22 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
-      if (ssr && !resolvedEmitCssInSsr) {
-        return transform({
-          source: code,
-          filePath: normalizePath(validId),
-          rootPath: config.root,
-          packageName,
-          identOption,
-        });
-      }
-
-      const { source, watchFiles } = await compile({
-        filePath: validId,
-        cwd: config.root,
-        esbuildOptions,
-        identOption,
-      });
-
-      for (const file of watchFiles) {
-        // In start mode, we need to prevent the file from rewatching itself.
-        // If it's a `build --watch`, it needs to watch everything.
-        if (config.command === 'build' || file !== validId) {
-          this.addWatchFile(file);
-        }
-      }
-
-      const output = await processVanillaFile({
-        source,
-        filePath: validId,
-        identOption,
-        serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${
+      const result = await compiler.processVanillaFile(normalizePath(validId), {
+        outputCss: !ssr || resolvedEmitCssInSsr,
+        async cssImportSpecifier(filePath, css, root) {
+          const rootRelativeId = `${filePath}${
             config.command === 'build' || (ssr && resolvedEmitCssInSsr)
               ? virtualExtCss
               : virtualExtJs
           }`;
           const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
-          let cssSource = source;
+          let cssSource = css;
 
           if (postCssConfig) {
             const postCssResult = await (await import('postcss'))
               .default(postCssConfig.plugins)
-              .process(source, {
+              .process(cssSource, {
                 ...postCssConfig.options,
                 from: undefined,
                 map: false,
@@ -213,7 +181,7 @@ export function vanillaExtractPlugin({
           if (
             server &&
             cssMap.has(absoluteId) &&
-            cssMap.get(absoluteId) !== source
+            cssMap.get(absoluteId) !== css
           ) {
             const { moduleGraph } = server;
             const modules = Array.from(
@@ -241,12 +209,24 @@ export function vanillaExtractPlugin({
 
           // We use the root relative id here to ensure file contents (content-hashes)
           // are consistent across build machines
-          return `import "${rootRelativeId}";`;
+          return rootRelativeId;
         },
       });
 
+      if (!result) {
+        return null;
+      }
+
+      for (const file of result.watchFiles) {
+        // In start mode, we need to prevent the file from rewatching itself.
+        // If it's a `build --watch`, it needs to watch everything.
+        if (config.command === 'build' || normalizePath(file) !== validId) {
+          this.addWatchFile(file);
+        }
+      }
+
       return {
-        code: output,
+        code: result.source,
         map: { mappings: '' },
       };
     },
