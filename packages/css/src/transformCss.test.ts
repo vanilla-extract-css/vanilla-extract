@@ -971,6 +971,50 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle getter selectors', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass', 'parentClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              get selectors() {
+                return {
+                  '&:nth-child(3)': {
+                    color: 'blue',
+                  },
+                  'parentClass > div > span ~ &.someGlobalClass:hover': {
+                    background: 'green',
+                  },
+                  'parentClass&': {
+                    background: 'black',
+                  },
+                };
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        color: red;
+      }
+      .testClass:nth-child(3) {
+        color: blue;
+      }
+      .parentClass > div > span ~ .testClass.someGlobalClass:hover {
+        background: green;
+      }
+      .parentClass.testClass {
+        background: black;
+      }
+    `);
+  });
+
   it('should handle complex selectors within media queries', () => {
     expect(
       transformCss({

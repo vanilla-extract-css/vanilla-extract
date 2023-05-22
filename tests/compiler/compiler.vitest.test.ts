@@ -271,6 +271,35 @@ describe('compiler', () => {
     `);
   });
 
+  test('getter selector', async () => {
+    const compiler = compilers.default;
+
+    const cssPath = path.join(__dirname, 'fixtures/selectors/getter.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = await compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/selectors/getter.css.ts.vanilla.css';
+      export var child = 'getter_child__ux95kn0';
+      export var parent = 'getter_parent__ux95kn1';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".getter_child__ux95kn0 {
+        background: blue;
+      }
+      .getter_parent__ux95kn1 .getter_child__ux95kn0 {
+        color: red;
+      }
+      .getter_parent__ux95kn1 {
+        background: yellow;
+      }
+      .getter_parent__ux95kn1:has(.getter_child__ux95kn0) {
+        padding: 10px;
+      }"
+    `);
+  });
+
   afterAll(async () => {
     await Promise.allSettled(
       Object.values(compilers).map((compiler) => compiler.close()),
