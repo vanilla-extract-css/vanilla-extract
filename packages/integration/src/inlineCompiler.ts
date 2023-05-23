@@ -10,6 +10,7 @@ import { findStaticImports, parseStaticImport } from 'mlly';
 import type { IdentifierOption } from './types';
 import { getPackageInfo } from './packageInfo';
 import { transform } from './inlineTransform';
+import { transform as legacyTransform } from './transform';
 import { lock } from './lock';
 import { cssFileFilter } from './filters';
 import { serializeVanillaModule } from './inlineExportSerializer';
@@ -188,10 +189,24 @@ export class InlineCompiler {
   }
 
   async transformCode(code: string, id: string) {
-    const { macros, shouldProcess } = await this.analyseModule(code, id);
+    const { macros, shouldProcess, isLegacyCssFile } = await this.analyseModule(
+      code,
+      id,
+    );
 
     if (!shouldProcess) {
       return null;
+    }
+
+    if (isLegacyCssFile) {
+      return legacyTransform({
+        source: code,
+        rootPath: this.root,
+        filePath: id,
+        // TODO: Do we need this anymore after file scope change?
+        packageName: getPackageInfo(this.root).name,
+        identOption: this.identifiers,
+      });
     }
 
     const transformResult = await transform({
@@ -287,6 +302,37 @@ export class InlineCompiler {
     this.normalizeModuleId = vite.normalizePath;
   }
 
+  renderRuntimeFile({
+    filePath,
+    isLegacyCssFile,
+    cssImports,
+    fileExports,
+  }: {
+    filePath: string;
+    isLegacyCssFile: boolean;
+    cssImports: Array<string>;
+    fileExports: Record<string, unknown>;
+  }) {
+    let runtimeCode;
+
+    if (isLegacyCssFile) {
+      runtimeCode = `export { ${Object.keys(fileExports).join(', ')} };`;
+    } else {
+      runtimeCode = this.transformCache.get(filePath)?.runtime;
+      if (typeof runtimeCode !== 'string') {
+        throw new Error(`Can't find runtime code for "${filePath}"`);
+      }
+    }
+
+    return serializeVanillaModule(
+      cssImports,
+      fileExports,
+      null, // This compiler currently retains all composition classes
+      runtimeCode,
+      isLegacyCssFile ? () => true : (key) => key.startsWith('_vanilla_'),
+    );
+  }
+
   async processVanillaFile(
     filePath: string,
     {
@@ -312,7 +358,10 @@ export class InlineCompiler {
     // TODO: Improve perf. Reading all files from disk is wasteful.
     // We can likely cache using the module graph
     const code = await readFile(filePath, { encoding: 'utf-8' });
-    const { shouldProcess } = await this.analyseModule(code, filePath);
+    const { shouldProcess, isLegacyCssFile } = await this.analyseModule(
+      code,
+      filePath,
+    );
 
     if (!shouldProcess) {
       return null;
@@ -477,22 +526,13 @@ export class InlineCompiler {
         };
       });
 
-    const runtimeCode = this.transformCache.get(filePath)?.runtime;
-
-    if (typeof runtimeCode !== 'string') {
-      // This likely means the file doesn't have any vanilla-extract related code
-      return null;
-    }
-
-    const newRuntimeSource = serializeVanillaModule(
-      cssImports,
-      fileExports,
-      null, // This compiler currently retains all composition classes
-      runtimeCode,
-    );
-
     const result: ProcessedVanillaFile = {
-      source: newRuntimeSource,
+      source: this.renderRuntimeFile({
+        filePath,
+        isLegacyCssFile,
+        cssImports,
+        fileExports,
+      }),
       watchFiles,
     };
 

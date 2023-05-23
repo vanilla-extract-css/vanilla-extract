@@ -50,10 +50,11 @@ export function serializeVanillaModule(
   exports: Record<string, unknown>,
   unusedCompositionRegex: RegExp | null,
   runtimeCode: string,
+  exportFilter: (key: string) => boolean,
 ) {
   const functionSerializationImports = new Set<string>();
-  const relevantExports = Object.entries(exports).filter(([identifier]) =>
-    identifier.startsWith('_vanilla_'),
+  const relevantExports = Object.entries(exports).filter(([key]) =>
+    exportFilter(key),
   );
   const exportLookup = new Map(
     relevantExports.map(([key, value]) => [value, key]),
