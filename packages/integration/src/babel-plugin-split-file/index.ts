@@ -46,7 +46,6 @@ interface Context extends PluginPass {
   identifierMutators: DefaultMap<StatementIndex, Set<IdentifierName>>;
   importedIdentifiers: Set<IdentifierName>;
   importedIdentifiersUsedAtRuntime: Set<IdentifierName>;
-  importedIdentifiersUsedAtBuildtime: Set<IdentifierName>;
   opts: PluginOptions;
 }
 
@@ -63,7 +62,6 @@ const identifierVisitor: Visitor<
     | 'moduleScopeIdentifiers'
     | 'exportStatements'
     | 'importedIdentifiers'
-    | 'importedIdentifiersUsedAtBuildtime'
     | 'importedIdentifiersUsedAtRuntime'
   >
 > = {
@@ -80,11 +78,7 @@ const identifierVisitor: Visitor<
     const identifierName = path.node.name;
     this.addUsedIdentifier(identifierName);
 
-    if (this.insideMacroCall) {
-      if (this.importedIdentifiers.has(identifierName)) {
-        this.importedIdentifiersUsedAtBuildtime.add(identifierName);
-      }
-    } else {
+    if (!this.insideMacroCall) {
       if (this.exportStatements.has(this.statementIndex)) {
         this.importedIdentifiersUsedAtRuntime.add(identifierName);
       }
@@ -99,11 +93,7 @@ const identifierVisitor: Visitor<
     const identifierName = path.node.name;
     this.addUsedIdentifier(identifierName);
 
-    if (this.insideMacroCall) {
-      if (this.importedIdentifiers.has(identifierName)) {
-        this.importedIdentifiersUsedAtBuildtime.add(identifierName);
-      }
-    } else {
+    if (!this.insideMacroCall) {
       if (this.exportStatements.has(this.statementIndex)) {
         this.importedIdentifiersUsedAtRuntime.add(identifierName);
       }
@@ -159,7 +149,6 @@ export default function (): PluginObj<Context> {
       this.identifierMutators = new DefaultMap(() => new Set());
       this.importedIdentifiers = new Set();
       this.importedIdentifiersUsedAtRuntime = new Set();
-      this.importedIdentifiersUsedAtBuildtime = new Set();
       this.vanillaMacros = [];
     },
     visitor: {
@@ -266,8 +255,6 @@ export default function (): PluginObj<Context> {
               insideMacroCall: false,
               exportStatements: this.exportStatements,
               importedIdentifiers: this.importedIdentifiers,
-              importedIdentifiersUsedAtBuildtime:
-                this.importedIdentifiersUsedAtBuildtime,
               importedIdentifiersUsedAtRuntime:
                 this.importedIdentifiersUsedAtRuntime,
             };
