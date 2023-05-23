@@ -239,7 +239,7 @@ globalStyle(`${parent} a[href]`, {
 
 ### Circular Selectors
 
-If your selectors are depended on each other you can use [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) to define them:
+If your selectors are dependent on each other you can use [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) to define them:
 
 ```ts compiled
 // styles.css.ts
