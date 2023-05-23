@@ -250,19 +250,19 @@ export const child = style({
   get selectors() {
     return {
       [`${parent} &`]: {
-        color: 'red',
-      },
+        color: 'red'
+      }
     };
-  },
+  }
 });
 
 export const parent = style({
   background: 'yellow',
   selectors: {
     [`&:has(${child})`]: {
-      padding: 10,
-    },
-  },
+      padding: 10
+    }
+  }
 });
 ```
 
