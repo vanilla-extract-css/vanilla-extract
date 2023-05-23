@@ -25,15 +25,11 @@ export interface Store {
 interface PluginOptions {
   store: Store;
   macros: Array<string>;
-  /** Whether or not the file being transformed ends with `.css.ts/js/etc.` */
-  isCssFile: boolean;
 }
 
 interface Context extends PluginPass {
   /** Identifiers available at the module scope (imported or declared) */
   moduleScopeIdentifiers: Set<IdentifierName>;
-  /** Indices of statements that call vanilla global vanilla APIs at the module scope*/
-  globalVanillaApiStatements: Set<StatementIndex>;
   /** Which statements own which module scope identifiers */
   identifierOwners: DefaultMap<StatementIndex, Set<IdentifierName>>;
   /** Identifier dependency graph */
@@ -151,22 +147,11 @@ const isVanillaMacroFunctionCall = (
 
 const vanillaDefaultIdentifier = '_vanilla_defaultIdentifer';
 
-const vanillaExtractMacroIdentifier = t.identifier('css$');
-
-const globalApis = [
-  'createGlobalTheme',
-  'globalFontFace',
-  'globalKeyframes',
-  'globalLayer',
-  'globalStyle',
-];
-
 export default function (): PluginObj<Context> {
   return {
     pre() {
       this.moduleScopeIdentifiers = new Set();
       this.identifierOwners = new DefaultMap(() => new Set());
-      this.globalVanillaApiStatements = new Set();
       this.depGraph = new DependencyGraph();
       this.macroOwners = new DefaultMap(() => new Set());
       this.vanillaIdentifierMap = new Map();
@@ -181,16 +166,11 @@ export default function (): PluginObj<Context> {
       Program: {
         enter(path, state) {
           const bodyPath = path.get('body');
-          const { macros, isCssFile } = state.opts;
+          const { macros } = state.opts;
 
           invariant(macros.length > 0, 'Must define at least one macro');
 
           this.vanillaMacros = macros;
-
-          if (isCssFile) {
-            // Make the transform think we imported the extract macro
-            this.moduleScopeIdentifiers.add(vanillaExtractMacroIdentifier.name);
-          }
 
           let identifierCount = 0;
           const createVanillaIdentifierName = () =>
@@ -315,70 +295,11 @@ export default function (): PluginObj<Context> {
               this.exportStatements.add(statementIndex);
 
               const specifiers = statement.get('specifiers');
-              const isExportList =
-                specifiers.length > 0 && !statement.get('source').node;
+              const isExportWithoutDeclaration =
+                specifiers.length > 0 && !statement.node.declaration;
 
-              if (isExportList) {
-                if (isCssFile) {
-                  for (const specifierIndex of specifiers.keys()) {
-                    const specifier = specifiers[specifierIndex];
-                    invariant(
-                      specifier.isExportSpecifier(),
-                      'I think this should never happen',
-                    );
-
-                    const specifierLocal = specifier.node.local;
-                    const specifierExported = specifier.node.exported;
-
-                    const newSpecifierLocal = t.identifier(
-                      createVanillaIdentifierName(),
-                    );
-
-                    const newSpecifier = t.exportSpecifier(
-                      newSpecifierLocal,
-                      specifierExported,
-                    );
-                    specifier.replaceWith(newSpecifier);
-
-                    const exportNamedDeclaration = t.variableDeclaration(
-                      'const',
-                      [
-                        t.variableDeclarator(
-                          newSpecifierLocal,
-                          t.callExpression(vanillaExtractMacroIdentifier, [
-                            specifierLocal,
-                          ]),
-                        ),
-                      ],
-                    );
-                    // We only insert 1 node so we will only get 1 path back
-                    const [newPath] = statement.insertBefore(
-                      exportNamedDeclaration,
-                    );
-
-                    const insertedStatementIndex =
-                      statementIndex + specifierIndex;
-                    this.exportStatements.add(insertedStatementIndex);
-
-                    const identifierName = newSpecifierLocal.name;
-                    registerNewVanillaIdentifier(
-                      identifierName,
-                      insertedStatementIndex,
-                    );
-
-                    // Traverse the newly created statement to ensure we have an accurate dependency graph
-                    // These newly inserted statements will not be traversed at the end of the
-                    // outer for loop
-                    newPath.traverse(identifierVisitor, {
-                      ...partialVisitorOpts,
-                      addUsedIdentifier: createAddUsedIdentifier(
-                        new Set([identifierName]),
-                      ),
-                      statementIndex: insertedStatementIndex,
-                    });
-                  }
-                }
-              } else {
+              // We care about variable declarations, so if we're only exporting things,
+              if (!isExportWithoutDeclaration) {
                 const declarationPath = statement.get('declaration');
 
                 invariant(
@@ -390,15 +311,6 @@ export default function (): PluginObj<Context> {
                 for (const declarationIndex of declarationPaths.keys()) {
                   const declaratorPath = declarationPaths[declarationIndex];
                   handleVariableDeclarator(declaratorPath, statementIndex);
-
-                  if (isCssFile) {
-                    declaratorPath.get('init').replaceWith(
-                      t.callExpression(vanillaExtractMacroIdentifier, [
-                        // @ts-expect-error Could be uninitialized
-                        declaratorPath.node.init,
-                      ]),
-                    );
-                  }
                 }
               }
             } else if (statement.isExportDefaultDeclaration()) {
@@ -408,48 +320,6 @@ export default function (): PluginObj<Context> {
 
               this.moduleScopeIdentifiers.add(identifierName);
               this.identifierOwners.get(statementIndex).add(identifierName);
-
-              if (isCssFile) {
-                const declaration = statement.node.declaration;
-                invariant(
-                  t.isExpression(declaration),
-                  'Can only wrap an expression in a macro',
-                );
-
-                statement
-                  .get('declaration')
-                  .replaceWith(
-                    t.callExpression(vanillaExtractMacroIdentifier, [
-                      declaration,
-                    ]),
-                  );
-              }
-            } else if (isCssFile && statement.isExpressionStatement()) {
-              const expression = statement.node.expression;
-
-              invariant(
-                t.isCallExpression(expression),
-                'Can only extract call expressions at the global level in `.css.ts` files',
-              );
-
-              if (
-                t.isIdentifier(expression.callee) &&
-                globalApis.includes(expression.callee.name)
-              ) {
-                // We need to track dependencies of global API expressions
-                // This identifier should never actually be referenced by anything
-                const identifierName = createVanillaIdentifierName();
-                this.identifierOwners.get(statementIndex).add(identifierName);
-
-                statement
-                  .get('expression')
-                  .replaceWith(
-                    t.callExpression(vanillaExtractMacroIdentifier, [
-                      expression,
-                    ]),
-                  );
-                this.globalVanillaApiStatements.add(statementIndex);
-              }
             }
 
             statement.traverse(identifierVisitor, {
@@ -483,13 +353,6 @@ export default function (): PluginObj<Context> {
             const statement = newBodyPath[statementIndex];
             const isImportDeclaration = statement.isImportDeclaration();
 
-            // Move all import statements from runtime to buildtime if we're in a `.css.ts` file
-            if (isCssFile && isImportDeclaration) {
-              store.buildTimeStatements.unshift(statement.node);
-              statement.remove();
-              continue;
-            }
-
             // Should keep index if it creates/modifies an essential identifier
             // or it depends on a macro
 
@@ -513,9 +376,6 @@ export default function (): PluginObj<Context> {
               mutatedIdents.size > 0 ||
               hasIntersection(ownedIdents, mutatedModuleScopeIdentifiers);
 
-            const statementCallsGlobalVanillaApi =
-              this.globalVanillaApiStatements.has(statementIndex);
-
             if (
               this.depGraph.dependsOnSome(ownedIdents, this.vanillaMacros) ||
               ownsEssentialIdentifier ||
@@ -527,10 +387,7 @@ export default function (): PluginObj<Context> {
                 }
               }
 
-              // Global APIs are handled elsewhere
-              if (!statementCallsGlobalVanillaApi) {
-                store.buildTimeStatements.unshift(statement.node);
-              }
+              store.buildTimeStatements.unshift(statement.node);
 
               const importSpecifiers = isImportDeclaration
                 ? statement.node.specifiers
@@ -584,39 +441,20 @@ export default function (): PluginObj<Context> {
                   identifierName = createVanillaIdentifierName();
                 }
 
-                if (isCssFile && statementCallsGlobalVanillaApi) {
-                  store.buildTimeStatements.unshift(statement.node);
-                  statement.remove();
-                } else {
-                  invariant(identifierName, 'Must have an identifier name');
-                  const ident = t.identifier(identifierName);
+                invariant(identifierName, 'Must have an identifier name');
+                const ident = t.identifier(identifierName);
 
-                  const declaration = t.exportNamedDeclaration(
-                    t.variableDeclaration('const', [
-                      t.variableDeclarator(ident, macroCallExpressionPath.node),
-                    ]),
-                  );
+                const declaration = t.exportNamedDeclaration(
+                  t.variableDeclaration('const', [
+                    t.variableDeclarator(ident, macroCallExpressionPath.node),
+                  ]),
+                );
 
-                  store.buildTimeStatements.unshift(declaration);
+                store.buildTimeStatements.unshift(declaration);
 
-                  macroCallExpressionPath.replaceWith(ident);
-                }
+                macroCallExpressionPath.replaceWith(ident);
               }
             }
-          }
-
-          if (isCssFile) {
-            store.buildTimeStatements.unshift(
-              t.importDeclaration(
-                [
-                  t.importSpecifier(
-                    vanillaExtractMacroIdentifier,
-                    vanillaExtractMacroIdentifier,
-                  ),
-                ],
-                t.stringLiteral('@vanilla-extract/css'),
-              ),
-            );
           }
         },
       },

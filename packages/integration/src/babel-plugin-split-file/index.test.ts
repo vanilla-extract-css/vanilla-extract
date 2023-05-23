@@ -315,7 +315,8 @@ describe('babel-plugin-split-file', () => {
 
       const flex = css$(myStyle('flex'));
 
-      export { flex, myOtherStyle }`;
+      export { flex, myOtherStyle };
+      export { foo } from './somewhereElse';`;
 
     const result = transform(source);
 
@@ -323,6 +324,7 @@ describe('babel-plugin-split-file', () => {
       import { myOtherStyle } from './otherStyles';
       const flex = _vanilla_identifier_2;
       export { flex, myOtherStyle };
+      export { foo } from './somewhereElse';
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
@@ -511,112 +513,6 @@ describe('babel-plugin-split-file', () => {
         color: 'blue'
       }));
       export default _vanilla_defaultIdentifer;
-    `);
-  });
-
-  it('should extract everything to build-time in a ".css.ts" file', () => {
-    const source = /* tsx */ `
-      import { style } from '@vanilla-extract/css';
-      
-      const flex = style({ display: 'flex' });
-      export const red = style({ color: 'red' });
-
-      export const redFlex = style([flex, red])
-
-      export default style({ color: 'blue' });`;
-
-    const result = transform(source, ['css$'], 'styles.css.ts');
-
-    expect(result.code).toMatchInlineSnapshot(`
-      export const red = _vanilla_identifier_1;
-      export const redFlex = _vanilla_identifier_2;
-      export default _vanilla_defaultIdentifer;
-    `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { css$ } from "@vanilla-extract/css";
-      import { style } from '@vanilla-extract/css';
-      const flex = style({
-        display: 'flex'
-      });
-      export const _vanilla_identifier_1 = css$(style({
-        color: 'red'
-      }));
-      export const red = _vanilla_identifier_1;
-      export const _vanilla_identifier_2 = css$(style([flex, red]));
-      export const redFlex = _vanilla_identifier_2;
-      export const _vanilla_defaultIdentifer = css$(style({
-        color: 'blue'
-      }));
-      export default _vanilla_defaultIdentifer;
-    `);
-  });
-
-  it('should extract global APIs in a ".css.ts" file', () => {
-    const source = /* tsx */ `
-      import { globalStyle } from '@vanilla-extract/css';
-      
-      globalStyle(':root', { fontSize: '24px' });
-
-      export const red = style({ color: 'red' });
-
-      globalStyle(\`body $\{red\}\`, { fontWeight: 700 })`;
-
-    const result = transform(source, ['css$'], 'styles.css.ts');
-
-    expect(result.code).toMatchInlineSnapshot(
-      `export const red = _vanilla_identifier_1;`,
-    );
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { css$ } from "@vanilla-extract/css";
-      import { globalStyle } from '@vanilla-extract/css';
-      css$(globalStyle(':root', {
-        fontSize: '24px'
-      }));
-      export const _vanilla_identifier_1 = css$(style({
-        color: 'red'
-      }));
-      export const red = _vanilla_identifier_1;
-      css$(globalStyle(\`body \${red}\`, {
-        fontWeight: 700
-      }));
-    `);
-  });
-
-  it('should handle export lists in a ".css.ts" file', () => {
-    const source = /* tsx */ `
-      import { style } from '@vanilla-extract/css';
-
-      const px = (value: number) => value + 'px';
-      const big = style({ fontSize: px(36) });
-
-      const rem = (value: number) => value + 'rem';
-      const bigger = style({ fontSize: rem(8) });
-
-      export { big, bigger as biggerRem }`;
-
-    const result = transform(source, ['css$'], 'styles.css.ts');
-
-    expect(result.code).toMatchInlineSnapshot(`
-      const _vanilla_identifier_4 = _vanilla_identifier_5;
-      const _vanilla_identifier_6 = _vanilla_identifier_7;
-      export { _vanilla_identifier_4 as big, _vanilla_identifier_6 as biggerRem };
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { css$ } from "@vanilla-extract/css";
-      import { style } from '@vanilla-extract/css';
-      const px = (value: number) => value + 'px';
-      const big = style({
-        fontSize: px(36)
-      });
-      const rem = (value: number) => value + 'rem';
-      const bigger = style({
-        fontSize: rem(8)
-      });
-      export const _vanilla_identifier_5 = css$(big);
-      const _vanilla_identifier_4 = _vanilla_identifier_5;
-      export const _vanilla_identifier_7 = css$(bigger);
-      const _vanilla_identifier_6 = _vanilla_identifier_7;
     `);
   });
 
