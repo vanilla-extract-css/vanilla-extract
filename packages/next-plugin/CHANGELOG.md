@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.1.3
+
+### Patch Changes
+
+- [#1099](https://github.com/vanilla-extract-css/vanilla-extract/pull/1099) [`0d1c17a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0d1c17a3ffa0212466370a9c0840774e73793f3a) Thanks [@shuding](https://github.com/shuding)! - Use the resolved Next.js config in `next-plugin`
+
 ## 2.1.2
 
 ### Patch Changes
