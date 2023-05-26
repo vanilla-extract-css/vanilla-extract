@@ -23,7 +23,7 @@ export const createVanillaExtractPlugin =
   (nextConfig: NextConfig = {}): NextConfig =>
     Object.assign({}, nextConfig, {
       webpack(config: any, options: any) {
-        const { dir, dev, isServer } = options;
+        const { dir, dev, isServer, config: resolvedNextConfig } = options;
 
         const cssRules = config.module.rules.find(
           (rule: any) =>
@@ -45,10 +45,10 @@ export const createVanillaExtractPlugin =
               isClient: !isServer,
               isServer,
               isDevelopment: dev,
-              future: nextConfig.future || {},
-              experimental: nextConfig.experimental || {},
+              future: resolvedNextConfig.future || {},
+              experimental: resolvedNextConfig.experimental || {},
               // @ts-ignore -- 'appDir' config is in beta
-              hasAppDir: nextConfig.experimental?.appDir,
+              hasAppDir: resolvedNextConfig.experimental?.appDir,
             } as any,
             () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined),
             [],
