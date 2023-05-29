@@ -22,7 +22,7 @@ const shouldApplyCompound = <Variants extends VariantGroups>(
 export const createRuntimeFn = <Variants extends VariantGroups>(
   config: PatternResult<Variants>,
 ): RuntimeFn<Variants> => {
-  const runtimeFn: RuntimeFn<Variants> = (options) => {
+  const runtimeFn = ((options) => {
     let className = config.defaultClassName;
 
     const selections: VariantSelection<Variants> = {
@@ -60,9 +60,10 @@ export const createRuntimeFn = <Variants extends VariantGroups>(
     }
 
     return className;
-  };
+  }) as RuntimeFn<Variants>;
 
   runtimeFn.variants = () => Object.keys(config.variantClassNames);
 
-  return runtimeFn;
+  runtimeFn.base = config.defaultClassName;
+  return Object.assign(runtimeFn, config.variantClassNames);
 };

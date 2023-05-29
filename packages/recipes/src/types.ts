@@ -32,9 +32,18 @@ export type PatternOptions<Variants extends VariantGroups> = {
   compoundVariants?: Array<CompoundVariant<Variants>>;
 };
 
+export type VariantsClassNames<Variants extends VariantGroups> = {
+  base: string;
+} & {
+  [P in keyof Variants]: {
+      [PP in keyof Variants[P]]: string;
+  };
+};
 export type RuntimeFn<Variants extends VariantGroups> = ((
   options?: VariantSelection<Variants>,
-) => string) & { variants: () => (keyof Variants)[] };
+) => string) & {
+  variants: () => (keyof Variants)[];
+} & VariantsClassNames<Variants>;
 
 export type RecipeVariants<RecipeFn extends RuntimeFn<VariantGroups>> =
   Parameters<RecipeFn>[0];

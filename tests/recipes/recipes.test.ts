@@ -75,4 +75,28 @@ describe('recipes', () => {
       ]
     `);
   });
+
+  it('should expose variants class names', () => {
+    expect([
+      basic.base,
+      basic.spaceWithDefault.large,
+      basic.spaceWithDefault.small,
+      basic.spaceWithoutDefault.large,
+      basic.spaceWithoutDefault.small,
+      basic.color.blue,
+      basic.color.red,
+      basic.rounded.true,
+    ]).toMatchInlineSnapshot(`
+      [
+        "recipes_basic__niwegb0",
+        "recipes_basic_spaceWithDefault_large__niwegb2",
+        "recipes_basic_spaceWithDefault_small__niwegb1",
+        "recipes_basic_spaceWithoutDefault_large__niwegb4",
+        "recipes_basic_spaceWithoutDefault_small__niwegb3",
+        "recipes_basic_color_blue__niwegb6",
+        "recipes_basic_color_red__niwegb5",
+        "recipes_basic_rounded_true__niwegb7",
+      ]
+    `);
+  });
 });
