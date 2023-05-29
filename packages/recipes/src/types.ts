@@ -36,7 +36,7 @@ export type VariantsClassNames<Variants extends VariantGroups> = {
   base: string;
 } & {
   [P in keyof Variants]: {
-      [PP in keyof Variants[P]]: string;
+    [PP in keyof Variants[P]]: string;
   };
 };
 export type RuntimeFn<Variants extends VariantGroups> = ((

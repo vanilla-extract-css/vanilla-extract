@@ -303,7 +303,10 @@ describe('compiler', () => {
   test('recipes class names', async () => {
     const compiler = compilers.default;
 
-    const cssPath = path.join(__dirname, 'fixtures/recipes/recipeClassNames.css.ts');
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/recipes/recipeClassNames.css.ts',
+    );
     const output = await compiler.processVanillaFile(cssPath);
     const { css } = await compiler.getCssForFile(cssPath);
 
