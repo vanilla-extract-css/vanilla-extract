@@ -8,11 +8,19 @@ The main goal of Macros is to allow authoring of styles within regular TypeScrip
 
 ## What are macros?
 
-Macros are special functions, always ending in a `$` (e.g. `style$`), that flag to the VE compiler that a file contains styling logic that should be extracted. You can think of the `.css.ts` extension as a way of declaring to Vanilla Extract which of your **files** should be executed at build-time. Macros are instead a way to declare which **functions** should be executed at build-time.
+Macros are special functions, always ending in a `$` (e.g. `style$`), that flag to the VE compiler that a file contains styling logic that should be extracted.
+You can think of the `.css.ts` extension as a way of declaring to Vanilla Extract which of your **files** should be executed at build-time.
+Macros are instead a way to declare which **functions** should be executed at build-time.
+
+> **Why suffix with a `$`?**
+>
+> Macros are executed in a different context (build-time vs run-time) to the rest of your code.
+> Because of this, we wanted Macros to use an easy to spot convention that helps developers quickly identify them.
+> Also, as this idea is very similar to that of server functions (i.e. [Solid Start](https://start.solidjs.com/api/server), [Bling](https://github.com/TanStack/bling#macros)) we decided to adopt a similar convention.
 
 Here's an example file making use of Macros:
 
-```tsx
+```jsx
 // Button.tsx
 import { style$ } from '@vanilla-extract/css';
 
@@ -23,9 +31,10 @@ const red = style$({
 export const Button = () => <button className={red} />;
 ```
 
-When VE see's the use of one of it macros, it knows to pass the files through it's transform and split it into a build-time and run-time version. After being processed, the run-time version of this file would look something like the following:
+When VE see's the use of one of it macros, it knows to pass the files through it's transform and split it into a build-time and run-time version.
+After being processed, the run-time version of this file would look something like the following:
 
-```tsx
+```jsx
 // Button.tsx (compiled output)
 import './button.vanilla.css';
 
@@ -34,7 +43,8 @@ const red = 'red_button_[hash]';
 export const Button = () => <button className={red} />;
 ```
 
-Almost all of the current VE API have macro variations, allowing their use outside of `.css.ts` files. There is also a new API called `extract$` for executing arbitrary styling logic at build time.
+Almost all of the current VE API have macro variations, allowing their use outside of `.css.ts` files.
+There is also a new API called `extract$` for executing arbitrary styling logic at build time.
 
 ```jsx
 // Colors.tsx
@@ -51,7 +61,10 @@ export const Colors = () => <>
 
 ### Why have macro and non-macro APIs?
 
-It may seem confusing to have both macro and non-macro variations of each API (this is definitely a concern held by the team), why not just target the VE compiler at the regular API? The reason is they mean different things from a semantic perspective. Unlike regular function calls, macros are hoisted to the top-level of the file. Therefore they can only utilize variables from the top-level scope of the file. I like to think of this as executing the functions inline.
+It may seem confusing to have both macro and non-macro variations of each API (this is definitely a concern held by the team), why not just target the VE compiler at the regular API?
+The reason is they mean different things from a semantic perspective.
+Unlike regular function calls, macros are hoisted to the top-level of the file. Therefore they can only utilize variables from the top-level scope of the file.
+I like to think of this as executing the functions inline.
 
 Take a look at the following example:
 
@@ -72,7 +85,9 @@ const two = extract$(colors.map(color => style$({
 }))
 ```
 
-Before understanding macros you would think that `one` and `two` would work the same way. However as macros are hoisted, the macro variation won't work as it can't access the values from it's original scope. The below example shows the code that VE would execute at build-time.
+Before understanding macros you would think that `one` and `two` would work the same way.
+However as macros are hoisted, the macro variation won't work as it can't access the values from it's original scope.
+The below example shows the code that VE would execute at build-time.
 
 ```jsx
 // Colors.tsx
@@ -105,11 +120,14 @@ export const Button = () => (
 );
 ```
 
-We're eager to hear feedback from the community about whether this model is too confusing or complicated. Our hope is once the inital concept is understood, it unlocks a faster way to developer apps while still being able to write real type-safe code for your styling.
+We're eager to hear feedback from the community about whether this model is too confusing or complicated.
+Our hope is once the inital concept is understood, it unlocks a faster way to developer apps while still being able to write real type-safe code for your styling.
 
 ## Recipes
 
-Where macros get really exciting is the ability to use them as higher level APIs. A great example here is the macro variation of the Recipes API. Being able to keep components and your style definitions in the same file unlocks rapid prototyping that VE hasn't achieved before.
+Where macros get really exciting is the ability to use them as higher level APIs.
+A great example here is the macro variation of the Recipes API.
+Being able to keep components and your style definitions in the same file unlocks rapid prototyping that VE hasn't achieved before.
 
 ```jsx
 import { recipe$ } from '@vanilla-extract/recipes';
@@ -133,7 +151,8 @@ export const Button = ({ size }) => (
 );
 ```
 
-And while the existing recipes API is framework agnostic, there's nothing stopping you from creating framework specific APIs. I'm looking at you styled-component fans out there 😉
+And while the existing recipes API is framework agnostic, there's nothing stopping you from creating framework specific APIs.
+I'm looking at you styled-component fans out there 😉
 
 ```jsx
 // Just an example, this API doesn't actually exist
@@ -158,7 +177,9 @@ export const App = () => <Button size="medium" />;
 
 ## Custom Macros
 
-This leads to one of our favourite features. As macros are expressed via a convention (e.g. ending the function name with `$`) we're providing a way for you to create your own VE macros. To create a custom macro, first create a function somewhere in your project.
+This leads to one of our favourite features.
+As macros are expressed via a convention (e.g. ending the function name with `$`) we're providing a way for you to create your own VE macros.
+To create a custom macro, first create a function somewhere in your project.
 
 ```jsx
 import { style } from '@vanilla-extract/css';
@@ -183,11 +204,15 @@ Then inside your projects `package.json` add the following config:
 }
 ```
 
-The `macros` key tells the VE compiler to treat all calls to `box$` within this project as a VE macro and be extracted at build-time. The config is driven by the closest `package.json` to the file, this enables package authors to create and share VE macros on NPM! Macros are also completely compatible with VE's existing [function serialization](https://vanilla-extract.style/documentation/api/add-function-serializer/) system. If you ever wanted to implement your own CSS-in-JS interface like [styled-components](https://styled-components.com/) or [stitches](https://stitches.dev/) you can do this using VE macros.
+The `macros` key tells the VE compiler to treat all calls to `box$` within this project as a VE macro and be extracted at build-time.
+The config is driven by the closest `package.json` to the file, this enables package authors to create and share VE macros on NPM!
+Macros are also completely compatible with VE's existing [function serialization](https://vanilla-extract.style/documentation/api/add-function-serializer/) system.
+If you ever wanted to implement your own CSS-in-JS interface like [styled-components](https://styled-components.com/) or [stitches](https://stitches.dev/) you can do this using VE macros.
 
 ## Try it out
 
-If you're keen to give macros a spin we encourage you to try out the experimental implementation yourself. To get started you just need to point your VE deps to the `inline-prototype` tag on NPM.
+If you're keen to give macros a spin we encourage you to try out the experimental implementation yourself.
+To get started you just need to point your VE deps to the `inline-prototype` tag on NPM.
 
 ```json
 {
@@ -198,11 +223,16 @@ If you're keen to give macros a spin we encourage you to try out the experimenta
 }
 ```
 
-It's very likely you'll run into issues as it's still early. If you do, we'd really appreciate you posting details of the issues (bonus points for a reproduction repo) in our discord. We have a channel dedicated to the macros discussion and feedback.
+### Feedback
 
-## Risks
+It's very likely you'll run into issues as it's still early.
+If you do, we'd really appreciate you posting details of the issues (bonus points for a reproduction repo) in our discord.
+We have a channel dedicated to the macros discussion and feedback.
 
-TODO: Thought it'd be good to have a section around what our current concerns are. Not sure.
+Outside of any issues you run into, we'd also really appreciate community feedback on the following:
 
-- Confusing to use
-- Build time cost
+- Are Macros confusing?
+- If released, would you use Macros?
+- Do you understand which code is run at build-time vs in the browser?
+- Are you seeing any drop in build time performance?
+- Should the core VE Macros be in a separate package? (e.g. `@vanilla-extract/macros`)
