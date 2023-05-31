@@ -1,3 +1,5 @@
+export { getVarName } from '@vanilla-extract/private';
+
 import './runtimeAdapter';
 
 export type {
@@ -14,4 +16,3 @@ export * from './style';
 export * from './vars';
 export { createContainer } from './container';
 export * from './layer';
-export * from './properties';
