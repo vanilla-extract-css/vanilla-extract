@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.11.1
+
+### Patch Changes
+
+- [#1106](https://github.com/vanilla-extract-css/vanilla-extract/pull/1106) [`8b1c965`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b1c9651112edd9fa294e8ffbb8c873c6ab18cc7) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix "Invalid selector" errors on pseudo-elements with params
+
 ## 1.11.0
 
 ### Minor Changes
