@@ -1,10 +1,10 @@
 {
   "name": "@fixtures/low-level",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "main": "src/index.ts",
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.11.0"
+    "@vanilla-extract/css": "1.11.1"
   }
 }

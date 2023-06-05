@@ -20,7 +20,7 @@
   "devDependencies": {
     "@fixtures/themed": "*",
     "@rollup/plugin-json": "^4.1.0",
-    "@vanilla-extract/css": "^1.11.0",
+    "@vanilla-extract/css": "^1.11.1",
     "esbuild": "0.17.6",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
