@@ -1825,6 +1825,40 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle multiple font faces of the same family', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont',
+              src: 'local("Helvetica")',
+            },
+          },
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont',
+              src: 'local("Helvetica-Bold")',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @font-face {
+        font-family: MyFont;
+        src: local("Helvetica");
+      }
+      @font-face {
+        font-family: MyFont;
+        src: local("Helvetica-Bold");
+      }
+    `);
+  });
+
   it('should handle multiple font faces', () => {
     expect(
       transformCss({
