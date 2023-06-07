@@ -101,35 +101,22 @@ export function fontFace(
     quotes: 'double',
   })}"`;
 
-  const fontFamilyError = outdent`
-  This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
+  const rules = Array.isArray(rule) ? rule : [rule];
 
-  If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
-`;
-
-  if (Array.isArray(rule)) {
-    for (const singleRule of rule) {
-      if ('fontFamily' in singleRule) {
-        throw new Error(fontFamilyError);
-      }
-
-      appendCss(
-        { type: 'fontFace', rule: { ...singleRule, fontFamily } },
-        getFileScope(),
-      );
+  for (const singleRule of rules) {
+    if ('fontFamily' in singleRule) {
+      throw new Error(outdent`
+      This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
+    
+      If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
+    `);
     }
 
-    return fontFamily;
+    appendCss(
+      { type: 'fontFace', rule: { ...singleRule, fontFamily } },
+      getFileScope(),
+    );
   }
-
-  if ('fontFamily' in rule) {
-    throw new Error(fontFamilyError);
-  }
-
-  appendCss(
-    { type: 'fontFace', rule: { ...rule, fontFamily } },
-    getFileScope(),
-  );
 
   return fontFamily;
 }
