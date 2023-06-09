@@ -16,7 +16,7 @@ import { SprinklesProperties, ResponsiveArrayConfig } from './types';
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 
-export type { ResponsiveArray } from './types';
+export type { ResponsiveArray, SprinklesProperties } from './types';
 
 type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
 type Condition = Partial<Record<ConditionKey, string>>;
