@@ -155,11 +155,11 @@ class Stylesheet {
     }
 
     if (root.type === 'property') {
-      this.propertyRules.push(root)
+      this.propertyRules.push(root);
 
       return;
     }
-    
+
     if (root.type === 'keyframes') {
       root.rule = Object.fromEntries(
         Object.entries(root.rule).map(([keyframe, rule]) => {
