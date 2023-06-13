@@ -32,15 +32,15 @@ import { fontFace, style } from '@vanilla-extract/css';
 const gentium = fontFace([
   {
     src: 'local("Gentium")',
-    fontWeight: 'normal',
+    fontWeight: 'normal'
   },
   {
     src: 'local("Gentium Bold")',
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 ]);
 
 export const font = style({
-  fontFamily: gentium,
+  fontFamily: gentium
 });
 ```
