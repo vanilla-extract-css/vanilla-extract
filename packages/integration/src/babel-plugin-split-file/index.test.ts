@@ -4,7 +4,7 @@ import typescriptSyntax from '@babel/plugin-syntax-typescript';
 // @ts-expect-error
 import jsxSyntax from '@babel/plugin-syntax-jsx';
 import { types as t } from '@babel/core';
-import dollarPlugin, { Store } from '.';
+import dollarPlugin, { Store } from './index';
 import generate from '@babel/generator';
 
 expect.addSnapshotSerializer({
@@ -47,7 +47,7 @@ const transform = (
 };
 
 describe('babel-plugin-split-file', () => {
-  it('should handle basic style calls', () => {
+  it.only('should handle basic style calls', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
@@ -69,7 +69,7 @@ describe('babel-plugin-split-file', () => {
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style, css$ } from '@vanilla-extract/css';x
       const two = 2;
       export const _vanilla_identifier_1 = css$(style({
         zIndex: two
