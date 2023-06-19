@@ -78,3 +78,8 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### esbuildOptions
+
+esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader` and `tsconfig`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
