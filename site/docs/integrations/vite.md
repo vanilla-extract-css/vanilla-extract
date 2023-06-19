@@ -76,3 +76,8 @@ export default {
   ]
 };
 ```
+
+### esbuildOptions
+
+esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader` and `tsconfig`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
