@@ -33,7 +33,7 @@ export function recipe<Variants extends VariantGroups>(
     variants = {},
     defaultVariants = {},
     compoundVariants = [],
-    base = '',
+    base = style({}),
   } = options;
 
   const defaultClassName =

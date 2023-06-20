@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 const basic = recipe({
-  base: {},
   variants: {
     spaceWithDefault: {
       small: {},
@@ -25,19 +24,19 @@ const basic = recipe({
 export const cssWithRecipe = style({
   color: 'red',
   selectors: {
-    [`.${basic.base} &`]: {
+    [`.${basic.classNames.base} &`]: {
       color: 'blue',
     },
-    [`.${basic.spaceWithDefault.large} &`]: {
+    [`.${basic.classNames.variants.spaceWithDefault.large} &`]: {
       color: 'yellow',
     },
-    [`.${basic.spaceWithoutDefault.small} &`]: {
+    [`.${basic.classNames.variants.spaceWithoutDefault.small} &`]: {
       color: 'green',
     },
-    [`.${basic.color.red} &`]: {
+    [`.${basic.classNames.variants.color.red} &`]: {
       color: 'black',
     },
-    [`.${basic.spaceWithDefault.large}.${basic.rounded.true} &`]: {
+    [`.${basic.classNames.variants.spaceWithDefault.large}.${basic.classNames.variants.rounded.true} &`]: {
       color: 'white',
     },
   },

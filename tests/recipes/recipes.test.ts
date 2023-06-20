@@ -78,14 +78,14 @@ describe('recipes', () => {
 
   it('should expose variants class names', () => {
     expect([
-      basic.base,
-      basic.spaceWithDefault.large,
-      basic.spaceWithDefault.small,
-      basic.spaceWithoutDefault.large,
-      basic.spaceWithoutDefault.small,
-      basic.color.blue,
-      basic.color.red,
-      basic.rounded.true,
+      basic.classNames.base,
+      basic.classNames.variants.spaceWithDefault.large,
+      basic.classNames.variants.spaceWithDefault.small,
+      basic.classNames.variants.spaceWithoutDefault.large,
+      basic.classNames.variants.spaceWithoutDefault.small,
+      basic.classNames.variants.color.blue,
+      basic.classNames.variants.color.red,
+      basic.classNames.variants.rounded.true,
     ]).toMatchInlineSnapshot(`
       [
         "recipes_basic__niwegb0",
