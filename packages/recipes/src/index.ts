@@ -33,11 +33,19 @@ export function recipe<Variants extends VariantGroups>(
     variants = {},
     defaultVariants = {},
     compoundVariants = [],
-    base = style({}),
+    base,
   } = options;
 
-  const defaultClassName =
-    typeof base === 'string' ? base : style(base, debugId);
+  let baseClassName;
+  let defaultClassName;
+
+  if (!base || typeof base === 'string') {
+    baseClassName = style({});
+    defaultClassName = base ? `${baseClassName} ${base}` : baseClassName;
+  } else {
+    defaultClassName =  style(base, debugId);
+    baseClassName = defaultClassName.split(' ')[0];
+  }
 
   // @ts-expect-error
   const variantClassNames: PatternResult<Variants>['variantClassNames'] =
@@ -62,6 +70,7 @@ export function recipe<Variants extends VariantGroups>(
   }
 
   const config: PatternResult<Variants> = {
+    baseClassName,
     defaultClassName,
     variantClassNames,
     defaultVariants,

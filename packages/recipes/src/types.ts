@@ -18,6 +18,7 @@ export type VariantsClassNames<Variants extends VariantGroups> = {
 };
 
 export type PatternResult<Variants extends VariantGroups> = {
+  baseClassName: string;
   defaultClassName: string;
   variantClassNames: VariantsClassNames<Variants>;
   defaultVariants: VariantSelection<Variants>;
