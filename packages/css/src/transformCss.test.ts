@@ -1825,6 +1825,40 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle multiple font faces of the same family', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont',
+              src: 'local("Helvetica")',
+            },
+          },
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'MyFont',
+              src: 'local("Helvetica-Bold")',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @font-face {
+        font-family: MyFont;
+        src: local("Helvetica");
+      }
+      @font-face {
+        font-family: MyFont;
+        src: local("Helvetica-Bold");
+      }
+    `);
+  });
+
   it('should handle multiple font faces', () => {
     expect(
       transformCss({
@@ -2154,44 +2188,76 @@ describe('transformCss', () => {
       }
     `);
   });
-});
 
-it('should handle multiple references to the same locally scoped selector', () => {
-  expect(
-    transformCss({
-      composedClassLists: [],
-      localClassNames: [style1, style2, '_1g1ptzo1', '_1g1ptzo10'],
-      cssObjs: [
-        {
-          type: 'local',
-          selector: style1,
-          rule: {
-            selectors: {
-              [`${style2} &:before, ${style2} &:after`]: {
-                background: 'black',
-              },
-              [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
-                background: 'blue',
-              },
-              [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
-                background: 'blue',
+  it('should handle the pseudo-elements with params', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              selectors: {
+                '&::part(external-wrapper)': {
+                  display: 'block',
+                },
+                '&::slotted(span)': {
+                  display: 'block',
+                },
               },
             },
           },
-        },
-      ],
-    }).join('\n'),
-  ).toMatchInlineSnapshot(`
-    .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
-      background: black;
-    }
-    ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
-      background: blue;
-    }
-    ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
-      background: blue;
-    }
-  `);
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass::part(external-wrapper) {
+        display: block;
+      }
+      .testClass::slotted(span) {
+        display: block;
+      }
+    `);
+  });
+
+  it('should handle multiple references to the same locally scoped selector', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [style1, style2, '_1g1ptzo1', '_1g1ptzo10'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: style1,
+            rule: {
+              selectors: {
+                [`${style2} &:before, ${style2} &:after`]: {
+                  background: 'black',
+                },
+                [`_1g1ptzo1_1g1ptzo10 ${style1}`]: {
+                  background: 'blue',
+                },
+                [`_1g1ptzo10_1g1ptzo1 ${style1}`]: {
+                  background: 'blue',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+        background: black;
+      }
+      ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+        background: blue;
+      }
+      ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
+        background: blue;
+      }
+    `);
+  });
 });
 
 endFileScope();

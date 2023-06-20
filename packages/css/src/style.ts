@@ -93,25 +93,30 @@ export function globalStyle(selector: string, rule: GlobalStyleRule) {
   appendCss({ type: 'global', selector, rule }, getFileScope());
 }
 
-export function fontFace(rule: FontFaceRule, debugId?: string) {
+export function fontFace(
+  rule: FontFaceRule | FontFaceRule[],
+  debugId?: string,
+) {
   const fontFamily = `"${cssesc(generateIdentifier(debugId), {
     quotes: 'double',
   })}"`;
 
-  if ('fontFamily' in rule) {
-    throw new Error(
-      outdent`
-          This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
-  
-          If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
-        `,
+  const rules = Array.isArray(rule) ? rule : [rule];
+
+  for (const singleRule of rules) {
+    if ('fontFamily' in singleRule) {
+      throw new Error(outdent`
+      This function creates and returns a hashed font-family name, so the "fontFamily" property should not be provided.
+    
+      If you'd like to define a globally scoped custom font, you can use the "globalFontFace" function instead.
+    `);
+    }
+
+    appendCss(
+      { type: 'fontFace', rule: { ...singleRule, fontFamily } },
+      getFileScope(),
     );
   }
-
-  appendCss(
-    { type: 'fontFace', rule: { ...rule, fontFamily } },
-    getFileScope(),
-  );
 
   return fontFamily;
 }

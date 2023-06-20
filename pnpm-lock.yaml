@@ -88,7 +88,7 @@ importers:
       '@types/react': ^17
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
       '@vanilla-extract/sprinkles': ^1.5.1
       '@vanilla-extract/webpack-plugin': ^2.2.0
       babel-loader: ^8.2.2
@@ -127,7 +127,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -135,19 +135,19 @@ importers:
 
   fixtures/layers:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
       '@vanilla-extract/recipes': 0.4.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -155,7 +155,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
       '@vanilla-extract/sprinkles': 1.6.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -163,7 +163,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -171,7 +171,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.11.0
+      '@vanilla-extract/css': 1.11.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -191,7 +191,7 @@ importers:
       '@vanilla-extract/private': ^1.0.3
       ahocorasick: 1.0.2
       chalk: ^4.1.1
-      css-what: ^5.0.1
+      css-what: ^6.1.0
       cssesc: ^3.0.0
       csstype: ^3.0.7
       deep-object-diff: ^1.1.9
@@ -203,7 +203,7 @@ importers:
       '@vanilla-extract/private': link:../private
       ahocorasick: 1.0.2
       chalk: 4.1.2
-      css-what: 5.1.0
+      css-what: 6.1.0
       cssesc: 3.0.0
       csstype: 3.0.10
       deep-object-diff: 1.1.9
@@ -318,7 +318,7 @@ importers:
     specifiers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
-      '@vanilla-extract/css': ^1.11.0
+      '@vanilla-extract/css': ^1.11.1
       '@vanilla-extract/integration': ^6.2.0
       esbuild: 0.17.6
       rollup: ^2.7.0
@@ -9110,6 +9110,11 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
+  /css-what/6.1.0:
+    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
+    engines: {node: '>= 6'}
+    dev: false
+
   /css.escape/1.5.1:
     resolution: {integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==}
 
@@ -11226,7 +11231,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
