@@ -36,15 +36,13 @@ export function recipe<Variants extends VariantGroups>(
     base,
   } = options;
 
-  let baseClassName;
   let defaultClassName;
 
   if (!base || typeof base === 'string') {
-    baseClassName = style({});
+    const baseClassName = style({});
     defaultClassName = base ? `${baseClassName} ${base}` : baseClassName;
   } else {
     defaultClassName = style(base, debugId);
-    baseClassName = defaultClassName.split(' ')[0];
   }
 
   // @ts-expect-error
