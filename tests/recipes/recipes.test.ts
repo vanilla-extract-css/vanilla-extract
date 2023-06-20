@@ -3,7 +3,6 @@ import {
   empty,
   definedStringBase,
   definedStringBaseArray,
-  nestedSelectors,
 } from './recipes.css';
 
 describe('recipes', () => {
@@ -88,7 +87,7 @@ describe('recipes', () => {
     expect(empty()).toStrictEqual(empty.classNames.base);
   });
 
-  it('should use created base class name for provided string classes', () => {
+  it('should include generated base class name for provided string classes', () => {
     expect(definedStringBase()).toMatchInlineSnapshot(
       `"recipes__niwegba definedStringBase"`,
     );
@@ -102,36 +101,25 @@ describe('recipes', () => {
     expect(
       definedStringBase.classNames.variants.variant.simple,
     ).toMatchInlineSnapshot(
-      `"recipes_definedStringBase_variant_simple__niwegbb simple-one"`,
+      `"recipes_definedStringBase_variant_simple__niwegbb"`,
     );
   });
 
-  it('should use create base class name for provided array string classes', () => {
+  it('should include generated base class name for provided array string classes', () => {
     expect(definedStringBaseArray()).toMatchInlineSnapshot(
       `"recipes_definedStringBaseArray__niwegbc definedStringBaseInArray_1 definedStringBaseInArray_2"`,
     );
     expect(definedStringBaseArray.classNames.base).toMatchInlineSnapshot(
       `"recipes_definedStringBaseArray__niwegbc"`,
     );
-  });
 
-  it('should not include other base class name in variant className prop', () => {
-    expect(nestedSelectors()).toMatchInlineSnapshot(
-      `"recipes_nestedSelectors__niwegbe"`,
-    );
-    expect(nestedSelectors.classNames.base).toMatchInlineSnapshot(
-      `"recipes_nestedSelectors__niwegbe"`,
-    );
-    expect(nestedSelectors()).toEqual(nestedSelectors.classNames.base);
-
-    expect(nestedSelectors({ first: true })).toMatchInlineSnapshot(
-      `"recipes_nestedSelectors__niwegbe recipes_nestedSelectors_first_true__niwegbf"`,
+    expect(definedStringBaseArray({ variant: 'simple' })).toMatchInlineSnapshot(
+      `"recipes_definedStringBaseArray__niwegbc definedStringBaseInArray_1 definedStringBaseInArray_2 recipes_definedStringBaseArray_variant_simple__niwegbd simple-one simple-two"`,
     );
     expect(
-      nestedSelectors.classNames.variants.first.true,
-    ).toMatchInlineSnapshot(`"recipes_nestedSelectors_first_true__niwegbf"`);
-    expect(nestedSelectors({ first: true })).not.toEqual(
-      nestedSelectors.classNames.variants.first.true,
+      definedStringBaseArray.classNames.variants.variant.simple,
+    ).toMatchInlineSnapshot(
+      `"recipes_definedStringBaseArray_variant_simple__niwegbd"`,
     );
   });
 

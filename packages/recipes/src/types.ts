@@ -18,9 +18,10 @@ export type VariantsClassNames<Variants extends VariantGroups> = {
 };
 
 export type PatternResult<Variants extends VariantGroups> = {
-  baseClassName: string;
   defaultClassName: string;
+  rawDefaultClassName: string;
   variantClassNames: VariantsClassNames<Variants>;
+  rawVariantClassNames: VariantsClassNames<Variants>;
   defaultVariants: VariantSelection<Variants>;
   compoundVariants: Array<[VariantSelection<Variants>, string]>;
 };

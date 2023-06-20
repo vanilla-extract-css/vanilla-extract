@@ -52,20 +52,3 @@ export const definedStringBaseArray = recipe({
     },
   },
 });
-
-export const nestedSelectors = recipe({
-  base: {
-    selectors: {
-      [`${basic.classNames.base} &`]: {},
-    },
-  },
-  variants: {
-    first: {
-      true: {
-        selectors: {
-          [`${basic.classNames.variants.spaceWithDefault.large} &`]: {},
-        },
-      },
-    },
-  },
-});

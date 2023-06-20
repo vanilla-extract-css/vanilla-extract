@@ -65,8 +65,8 @@ export const createRuntimeFn = <Variants extends VariantGroups>(
   runtimeFn.variants = () => Object.keys(config.variantClassNames);
 
   runtimeFn.classNames = {
-    base: config.baseClassName,
-    variants: config.variantClassNames,
+    base: config.rawDefaultClassName,
+    variants: config.rawVariantClassNames,
   };
 
   return runtimeFn;
