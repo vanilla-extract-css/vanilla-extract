@@ -32,3 +32,26 @@ export const basic = recipe({
     },
   ],
 });
+
+export const empty = recipe({});
+
+export const definedStringBase = recipe({
+  base: 'definedStringBase',
+});
+
+export const nestedSelectors = recipe({
+  base: {
+    selectors: {
+      [`${basic.classNames.base} &`]: {},
+    },
+  },
+  variants: {
+    first: {
+      true: {
+        selectors: {
+          [`${basic.classNames.variants.spaceWithDefault.large} &`]: {},
+        },
+      },
+    },
+  },
+});

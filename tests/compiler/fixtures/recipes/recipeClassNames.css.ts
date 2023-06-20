@@ -1,4 +1,3 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 const basic = recipe({
@@ -21,23 +20,34 @@ const basic = recipe({
   },
 });
 
-export const cssWithRecipe = style({
-  color: 'red',
-  selectors: {
-    [`.${basic.classNames.base} &`]: {
-      color: 'blue',
+export const recipeWithReferences = recipe({
+  base: {
+    color: 'red',
+    selectors: {
+      [`.${basic.classNames.base} &`]: {
+        color: 'blue',
+      },
+      [`.${basic.classNames.variants.spaceWithDefault.large} &`]: {
+        color: 'yellow',
+      },
+      [`.${basic.classNames.variants.spaceWithoutDefault.small} &`]: {
+        color: 'green',
+      },
     },
-    [`.${basic.classNames.variants.spaceWithDefault.large} &`]: {
-      color: 'yellow',
-    },
-    [`.${basic.classNames.variants.spaceWithoutDefault.small} &`]: {
-      color: 'green',
-    },
-    [`.${basic.classNames.variants.color.red} &`]: {
-      color: 'black',
-    },
-    [`.${basic.classNames.variants.spaceWithDefault.large}.${basic.classNames.variants.rounded.true} &`]: {
-      color: 'white',
+  },
+  variants: {
+    first: {
+      true: {
+        selectors: {
+          [`.${basic.classNames.variants.color.red} &`]: {
+            color: 'black',
+          },
+          [`.${basic.classNames.variants.spaceWithDefault.large}.${basic.classNames.variants.rounded.true} &`]:
+            {
+              color: 'white',
+            },
+        },
+      },
     },
   },
 });

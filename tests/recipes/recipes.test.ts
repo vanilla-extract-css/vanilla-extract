@@ -1,4 +1,9 @@
-import { basic } from './recipes.css';
+import {
+  basic,
+  empty,
+  definedStringBase,
+  nestedSelectors,
+} from './recipes.css';
 
 describe('recipes', () => {
   it('should return default variants for no options', () => {
@@ -74,6 +79,39 @@ describe('recipes', () => {
         "rounded",
       ]
     `);
+  });
+
+  it('should have base class name even when "base" prop is not defined', () => {
+    expect(empty()).toMatchInlineSnapshot(`"recipes__niwegb9"`);
+    expect(empty.classNames.base).toMatchInlineSnapshot(`"recipes__niwegb9"`);
+    expect(empty()).toStrictEqual(empty.classNames.base);
+  });
+
+  it('should use provided string base class name', () => {
+    expect(definedStringBase()).toMatchInlineSnapshot(`"definedStringBase"`);
+    expect(definedStringBase.classNames.base).toMatchInlineSnapshot(
+      `"definedStringBase"`,
+    );
+  });
+
+  it('should not include other base class name in variant className prop', () => {
+    expect(nestedSelectors()).toMatchInlineSnapshot(
+      `"recipes_nestedSelectors__niwegba"`,
+    );
+    expect(nestedSelectors.classNames.base).toMatchInlineSnapshot(
+      `"recipes_nestedSelectors__niwegba"`,
+    );
+    expect(nestedSelectors()).toEqual(nestedSelectors.classNames.base);
+
+    expect(nestedSelectors({ first: true })).toMatchInlineSnapshot(
+      `"recipes_nestedSelectors__niwegba recipes_nestedSelectors_first_true__niwegbb"`,
+    );
+    expect(
+      nestedSelectors.classNames.variants.first.true,
+    ).toMatchInlineSnapshot(`"recipes_nestedSelectors_first_true__niwegbb"`);
+    expect(nestedSelectors({ first: true })).not.toEqual(
+      nestedSelectors.classNames.variants.first.true,
+    );
   });
 
   it('should expose variants class names', () => {
