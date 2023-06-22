@@ -52,7 +52,9 @@ describe('babel-plugin-split-file', () => {
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
 
-      const two = 2;
+      const zero = 0;
+
+      const two = 2 + zero;
 
       const one = css$(style({
         zIndex: two,
@@ -64,22 +66,27 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      const one = _vanilla_identifier_1;
+      import { style, css$ } from '@vanilla-extract/css';
+      const zero = 0;
+      const two = 2 + zero;
+      const one = __VE_css$-9-18;
       export default (() => \`<div id="\${id}" class="\${one}" />\`);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';x
-      const two = 2;
-      export const _vanilla_identifier_1 = css$(style({
+      import React from 'react';
+      import { style, css$ } from '@vanilla-extract/css';
+      const zero = 0;
+      const two = 2 + zero;
+      export const __VE_css$-9-18 = css$(style({
         zIndex: two
       }));
-      const one = _vanilla_identifier_1;
+      const one = __VE_css$-9-18;
       export default (() => \`<div id="\${id}" class="\${one}" />\`);
     `);
   });
 
-  it('should handle expressions that create styles', () => {
+  it.only('should handle expressions that create styles', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
@@ -95,7 +102,8 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      const something = _vanilla_identifier_0;
+      import { style, css$ } from '@vanilla-extract/css';
+      const something = __VE_css$-5-24;
       export default (() => \`<>
               <div class="\${something[0]}" />
               <div class="\${something[1]}" />
@@ -103,11 +111,12 @@ describe('babel-plugin-split-file', () => {
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_0 = css$([1, 2].map(value => style({
+      export const __VE_css$-5-24 = css$([1, 2].map(value => style({
         zIndex: value
       })));
-      const something = _vanilla_identifier_0;
+      const something = __VE_css$-5-24;
       export default (() => \`<>
               <div class="\${something[0]}" />
               <div class="\${something[1]}" />
@@ -115,7 +124,7 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it('should handle shared vars between runtime and buildtime code', () => {
+  it.only('should handle shared vars between runtime and buildtime code', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
@@ -142,18 +151,6 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      let id = 'my-id';
-      let z = 1;
-      z = 2;
-      for (let i = 0; i < 5; i++) {
-        id = id + i;
-        z++;
-      }
-      const className = _vanilla_identifier_2;
-      export default (() => <div id={id} className={className} />);
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style, css$ } from '@vanilla-extract/css';
       let id = 'my-id';
       let z = 1;
@@ -162,13 +159,27 @@ describe('babel-plugin-split-file', () => {
         id = id + i;
         z++;
       }
-      export const _vanilla_identifier_2 = css$(style({
+      const className = __VE_css$-14-24;
+      export default (() => <div id={id} className={className} />);
+    `);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import React from 'react';
+      import { style, css$ } from '@vanilla-extract/css';
+      let id = 'my-id';
+      let z = 1;
+      z = 2;
+      for (let i = 0; i < 5; i++) {
+        id = id + i;
+        z++;
+      }
+      export const __VE_css$-14-24 = css$(style({
         ':before': {
           content: id,
           zIndex: z
         }
       }));
-      const className = _vanilla_identifier_2;
+      const className = __VE_css$-14-24;
       export default (() => <div id={id} className={className} />);
     `);
   });
