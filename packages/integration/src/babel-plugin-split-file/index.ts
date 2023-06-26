@@ -3,6 +3,7 @@ import { ContentGraph } from '@parcel/graph';
 import { types as t } from '@babel/core';
 import type { NodePath, Visitor } from '@babel/traverse';
 import invariant from 'assert';
+import { DefaultMap } from './DefaultMap';
 
 type Graph = any;
 type NodeId = number;
@@ -155,17 +156,50 @@ interface PluginOptions {
 }
 
 interface Context extends PluginPass {
-  graph: Graph;
-  rootNode: number;
+  macroReferences: Set<string>;
+  identifierCount: number;
+  injectedStatements: DefaultMap<number, Array<t.Statement>>;
+  createVanillaIdentifierName: () => string;
+  isMacroCallExpression: (
+    path: NodePath<t.CallExpression>,
+  ) => path is NodePath<t.CallExpression>;
   opts: PluginOptions;
 }
 
-const isVanillaMacroFunctionCall = (
-  path: NodePath<t.CallExpression>,
-  vanillaMacros: string[],
-): path is NodePath<t.CallExpression> =>
-  t.isIdentifier(path.node.callee) &&
-  vanillaMacros.includes(path.node.callee.name);
+// traverse CallExpression to find all macros
+// Find which refs are used by the macros
+// Are those refs imports?
+// If so, are those imports used elewhere
+
+const macroVisitor: Visitor<Context> = {
+  CallExpression(path) {
+    if (this.isMacroCallExpression(path)) {
+      for (const arg of path.get('arguments')) {
+        arg.traverse(
+          {
+            Identifier({ node }) {
+              this.macroReferences.add(node.name);
+            },
+          },
+          this,
+        );
+      }
+
+      const injectedIndentifier = t.identifier(
+        this.createVanillaIdentifierName(),
+      );
+      const declaration = t.exportNamedDeclaration(
+        t.variableDeclaration('const', [
+          t.variableDeclarator(injectedIndentifier, path.node),
+        ]),
+      );
+      const statementIndex = getStatementIndex(path);
+
+      this.injectedStatements.get(statementIndex).push(declaration);
+      path.replaceWith(injectedIndentifier);
+    }
+  },
+};
 
 const statementContentKey = (index: number) => `statement:${index}`;
 
@@ -175,121 +209,149 @@ type Node =
   | { type: 'module-root' }
   | { type: 'macro-root' }
   | { type: 'statement' }
-  | { type: 'identifier'; local: string }
   | { type: 'macro'; name: string; ast: t.CallExpression }
   | { type: 'import'; local: string };
 
 export default function (): PluginObj<Context> {
   return {
     pre() {
-      this.graph = new ContentGraph();
-      this.moduleRootNode = this.graph.addNodeByContentKey('module-root', {
-        type: 'module-root',
-      });
-      this.macroRootNode = this.graph.addNodeByContentKey('macro-root', {
-        type: 'macro-root',
-      });
+      this.macroReferences = new Set();
+      this.identifierCount = 0;
+      this.injectedStatements = new DefaultMap(() => []);
     },
     visitor: {
       Program: {
         enter(path, state) {
-          const bodyPath = path.get('body');
           const { macros, store } = state.opts;
 
           invariant(macros.length > 0, 'Must define at least one macro');
 
-          this.macros = macros;
+          this.isMacroCallExpression = (
+            path: NodePath<t.CallExpression>,
+          ): path is NodePath<t.CallExpression> =>
+            t.isIdentifier(path.node.callee) &&
+            macros.includes(path.node.callee.name);
 
+          this.createVanillaIdentifierName = () =>
+            `_vanilla_identifier_${this.identifierCount++}`;
+
+          path.traverse(macroVisitor, this);
+
+          const bodyPath = path.get('body');
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
-            const statementNodeId = this.graph.addNodeByContentKey(
-              statementContentKey(statementIndex),
-              { type: 'statement' },
-            );
-            this.graph.addEdge(this.moduleRootNode, statementNodeId);
 
-            const declaredNodeIds = [];
-            // Find which idents are declared by this statement
-            // add all delcared idents to graph
-            statement.traverse(declarationVisitor, {
-              ...this,
-              declaredNodeIds,
-              statementNodeId,
-            });
-
-            // Attach all references to graph
-            statement.traverse(referenceVisitor, {
-              ...this,
-              parentNodeIds: declaredNodeIds,
-              activeMacros: [],
-              statementNodeId,
-            });
-          }
-
-          const isUsedInMacro = (identName: string) => {
-            let isUsed = false;
-
-            this.graph.traverse((nodeId, _, actions) => {
-              const node = this.graph.getNode(nodeId);
-
-              if (node.local === identName) {
-                isUsed = true;
-                actions.stop();
-              }
-            }, this.macroRootNode);
-
-            return isUsed;
-          };
-
-          for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
-            const statementNodeId = this.graph.getNodeIdByContentKey(
-              statementContentKey(statementIndex),
-            );
-
-            const declaredIdents =
-              this.graph.getNodeIdsConnectedFrom(statementNodeId);
-
-            const shouldRemove =
-              declaredIdents.length > 0 &&
-              declaredIdents
-                .map((nodeId) => [nodeId, this.graph.getNode(nodeId)])
-                .filter(([, node]) => node.type !== 'macro')
-                .every(([nodeId, { local }]) => {
-                  // Is is used in a macros?
-                  // const isUsedInMacro =
-                  // and
-                  // Is it not used at runtime?
-
-                  return isUsedInMacro(local);
-                });
-
-            const statement = bodyPath[statementIndex];
+            for (const injectedStatment of this.injectedStatements.get(
+              statementIndex,
+            )) {
+              store.buildTimeStatements.push(injectedStatment);
+            }
 
             store.buildTimeStatements.push(statement.node);
-
-            declaredIdents
-              .map((nodeId) => this.graph.getNode(nodeId))
-              .filter((node) => node.type === 'macro')
-              .forEach(({ ast, injectedIndentifier }) => {
-                const declaration = t.exportNamedDeclaration(
-                  t.variableDeclaration('const', [
-                    t.variableDeclarator(
-                      t.identifier(injectedIndentifier),
-                      ast,
-                    ),
-                  ]),
-                );
-                store.buildTimeStatements.push(declaration);
-              });
-
-            if (shouldRemove) {
-              statement.remove();
-            }
           }
 
-          store.buildTimeStatements.reverse();
+          //   for (const statementIndex of bodyPath.keys()) {
+          //     const statement = bodyPath[statementIndex];
+          //     const statementNodeId = this.graph.addNodeByContentKey(
+          //       statementContentKey(statementIndex),
+          //       { type: 'statement' },
+          //     );
+          //     this.graph.addEdge(this.moduleRootNode, statementNodeId);
+
+          //     const declaredNodeIds = [];
+          //     // Find which idents are declared by this statement
+          //     // add all delcared idents to graph
+          //     statement.traverse(declarationVisitor, {
+          //       ...this,
+          //       declaredNodeIds,
+          //       statementNodeId,
+          //     });
+
+          //     // Attach all references to graph
+          //     statement.traverse(referenceVisitor, {
+          //       ...this,
+          //       parentNodeIds: declaredNodeIds,
+          //       activeMacros: [],
+          //       statementNodeId,
+          //     });
+          //   }
+
+          //   const isUsedInMacro = (identName: string) => {
+          //     console.log('isUsedInMacro', identName);
+          //     let isUsed = false;
+
+          //     this.graph.traverse((nodeId, _, actions) => {
+          //       const node = this.graph.getNode(nodeId);
+          //       console.log(node.local);
+
+          //       if (node.local === identName) {
+          //         isUsed = true;
+          //         actions.stop();
+          //       }
+          //     }, this.macroRootNode);
+
+          //     return isUsed;
+          //   };
+
+          //   for (const statementIndex of Array.from(bodyPath.keys()).reverse()) {
+          //     const statementNodeId = this.graph.getNodeIdByContentKey(
+          //       statementContentKey(statementIndex),
+          //     );
+
+          //     const declaredIdents =
+          //       this.graph.getNodeIdsConnectedFrom(statementNodeId);
+
+          //     const shouldRemove =
+          //       declaredIdents.length > 0 &&
+          //       declaredIdents
+          //         .map((nodeId) => [nodeId, this.graph.getNode(nodeId)])
+          //         .filter(([, node]) => node.type !== 'macro')
+          //         .every(([nodeId, { local }]) => {
+          //           // Is is used in a macros?
+          //           // const isUsedInMacro =
+          //           // and
+          //           // Is it not used at runtime?
+
+          //           return isUsedInMacro(local);
+          //         });
+
+          //     const statement = bodyPath[statementIndex];
+
+          //     store.buildTimeStatements.push(statement.node);
+
+          //     declaredIdents
+          //       .map((nodeId) => this.graph.getNode(nodeId))
+          //       .filter((node) => node.type === 'macro')
+          //       .forEach(({ ast, injectedIndentifier }) => {
+          //         const declaration = t.exportNamedDeclaration(
+          //           t.variableDeclaration('const', [
+          //             t.variableDeclarator(
+          //               t.identifier(injectedIndentifier),
+          //               ast,
+          //             ),
+          //           ]),
+          //         );
+          //         store.buildTimeStatements.push(declaration);
+          //       });
+
+          //     if (shouldRemove) {
+          //       statement.remove();
+          //     }
+          //   }
+
+          //   store.buildTimeStatements.reverse();
         },
       },
     },
   };
+}
+
+function getStatementIndex(path: NodePath<t.CallExpression>): number {
+  const pathLocation = path.getStatementParent()?.getPathLocation();
+  invariant(pathLocation != null, 'Could not get statment parent of macro');
+
+  const indexMatch = pathLocation.match(/program.body\[(\d+)]/);
+  invariant(indexMatch != null, 'Could not parse path location');
+
+  return parseInt(indexMatch[1], 10);
 }

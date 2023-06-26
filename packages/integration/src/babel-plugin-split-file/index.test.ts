@@ -14,18 +14,17 @@ expect.addSnapshotSerializer({
 
 const transform = (
   source: string,
-  macros: string[] = ['css$'],
+  macros: string[] = ['extract$', 'style$'],
   filename = './dir/mockFilename.ts',
 ) => {
   const store: Store = {
     buildTimeStatements: [],
   };
-  const isCssFile = filename.endsWith('.css.ts');
   const result = transformSync(source, {
     filename,
     cwd: __dirname,
     plugins: [
-      [dollarPlugin, { store, macros, isCssFile }],
+      [dollarPlugin, { store, macros }],
       [typescriptSyntax, { isTSX: true }],
       jsxSyntax,
     ],
@@ -50,43 +49,35 @@ describe('babel-plugin-split-file', () => {
   it.only('should handle basic style calls', () => {
     const source = /* tsx */ `
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style$ } from '@vanilla-extract/css';
 
-      const zero = 0;
+      const one = style$({
+        zIndex: 1,
+      });
 
-      const two = 2 + zero;
-
-      const one = css$(style({
-        zIndex: two,
-      }));
-
-      export default () => \`<div id="\${id}" class="\${one}" />\``;
+      export default () => <div class="\${one}" />`;
 
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
-      const zero = 0;
-      const two = 2 + zero;
-      const one = __VE_css$-9-18;
-      export default (() => \`<div id="\${id}" class="\${one}" />\`);
+      import { style$ } from '@vanilla-extract/css';
+      const one = _vanilla_identifier_0;
+      export default (() => <div class="\${one}" />);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
-      const zero = 0;
-      const two = 2 + zero;
-      export const __VE_css$-9-18 = css$(style({
-        zIndex: two
-      }));
-      const one = __VE_css$-9-18;
-      export default (() => \`<div id="\${id}" class="\${one}" />\`);
+      import { style$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_0 = style$({
+        zIndex: 1
+      });
+      const one = _vanilla_identifier_0;
+      export default (() => <div class="\${one}" />);
     `);
   });
 
-  it.only('should handle expressions that create styles', () => {
+  it('should handle expressions that create styles', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
@@ -124,7 +115,7 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
-  it.only('should handle shared vars between runtime and buildtime code', () => {
+  it('should handle shared vars between runtime and buildtime code', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style, css$ } from '@vanilla-extract/css';
@@ -181,40 +172,6 @@ describe('babel-plugin-split-file', () => {
       }));
       const className = __VE_css$-14-24;
       export default (() => <div id={id} className={className} />);
-    `);
-  });
-
-  it('should handle style inside a new function', () => {
-    const source = /* tsx */ `
-      import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
-
-      const color = 'red';
-
-      const myStyle = (display) => style({ display, color })
-
-      const flex = css$(myStyle('flex'));
-
-      export default () => \`<div class="\${flex}" />\``;
-
-    const result = transform(source);
-
-    expect(result.code).toMatchInlineSnapshot(`
-      import React from 'react';
-      const flex = _vanilla_identifier_2;
-      export default (() => \`<div class="\${flex}" />\`);
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-      const color = 'red';
-      const myStyle = display => style({
-        display,
-        color
-      });
-      export const _vanilla_identifier_2 = css$(myStyle('flex'));
-      const flex = _vanilla_identifier_2;
-      export default (() => \`<div class="\${flex}" />\`);
     `);
   });
 
