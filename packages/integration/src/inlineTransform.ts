@@ -8,7 +8,7 @@ import typescriptSyntax from '@babel/plugin-syntax-typescript';
 import jsxSyntax from '@babel/plugin-syntax-jsx';
 import vanillaDebugIdsBabelPlugin from '@vanilla-extract/babel-plugin-debug-ids';
 
-import vanillaBabelPlugin from './babel-plugin-split-file/index.old';
+import vanillaBabelPlugin from './babel-plugin-split-file/index';
 import { addFileScope } from './addFileScope';
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';

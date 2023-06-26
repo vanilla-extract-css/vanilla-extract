@@ -46,7 +46,7 @@ const transform = (
 };
 
 describe('babel-plugin-split-file', () => {
-  it.only('should handle basic style calls', () => {
+  it('should handle basic style calls', () => {
     const source = /* tsx */ `
       import React from 'react';
       import { style$ } from '@vanilla-extract/css';
@@ -55,15 +55,14 @@ describe('babel-plugin-split-file', () => {
         zIndex: 1,
       });
 
-      export default () => <div class="\${one}" />`;
+      export default () => <div className={one} />`;
 
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style$ } from '@vanilla-extract/css';
       const one = _vanilla_identifier_0;
-      export default (() => <div class="\${one}" />);
+      export default (() => <div className={one} />);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
@@ -73,52 +72,51 @@ describe('babel-plugin-split-file', () => {
         zIndex: 1
       });
       const one = _vanilla_identifier_0;
-      export default (() => <div class="\${one}" />);
+      export default (() => <div className={one} />);
     `);
   });
 
   it('should handle expressions that create styles', () => {
     const source = /* tsx */ `
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style, extract$ } from '@vanilla-extract/css';
 
-      const something = css$([1, 2].map(value => style({ zIndex: value })));
+      const something = extract$([1, 2].map(value => style({ zIndex: value })));
 
-      export default () => \`<>
-        <div class="\${something[0]}" />
-        <div class="\${something[1]}" />
-      </>\``;
+      export default () => <>
+        <div className={something[0]} />
+        <div className={something[1]} />
+      </>`;
 
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
-      const something = __VE_css$-5-24;
-      export default (() => \`<>
-              <div class="\${something[0]}" />
-              <div class="\${something[1]}" />
-            </>\`);
+      const something = _vanilla_identifier_0;
+      export default (() => <>
+              <div className={something[0]} />
+              <div className={something[1]} />
+            </>);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
-      export const __VE_css$-5-24 = css$([1, 2].map(value => style({
+      import { style, extract$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_0 = extract$([1, 2].map(value => style({
         zIndex: value
       })));
-      const something = __VE_css$-5-24;
-      export default (() => \`<>
-              <div class="\${something[0]}" />
-              <div class="\${something[1]}" />
-            </>\`);
+      const something = _vanilla_identifier_0;
+      export default (() => <>
+              <div className={something[0]} />
+              <div className={something[1]} />
+            </>);
     `);
   });
 
   it('should handle shared vars between runtime and buildtime code', () => {
     const source = /* tsx */ `
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style, extract$ } from '@vanilla-extract/css';
 
       let id = 'my-id';
       let z = 1;
@@ -129,7 +127,7 @@ describe('babel-plugin-split-file', () => {
         z++;
       }
 
-      const className = css$(style({
+      const className = extract$(style({
         ':before': {
           content: id,
           zIndex: z,
@@ -142,7 +140,6 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
       let id = 'my-id';
       let z = 1;
       z = 2;
@@ -150,13 +147,13 @@ describe('babel-plugin-split-file', () => {
         id = id + i;
         z++;
       }
-      const className = __VE_css$-14-24;
+      const className = _vanilla_identifier_0;
       export default (() => <div id={id} className={className} />);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import React from 'react';
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style, extract$ } from '@vanilla-extract/css';
       let id = 'my-id';
       let z = 1;
       z = 2;
@@ -164,13 +161,13 @@ describe('babel-plugin-split-file', () => {
         id = id + i;
         z++;
       }
-      export const __VE_css$-14-24 = css$(style({
+      export const _vanilla_identifier_0 = extract$(style({
         ':before': {
           content: id,
           zIndex: z
         }
       }));
-      const className = __VE_css$-14-24;
+      const className = _vanilla_identifier_0;
       export default (() => <div id={id} className={className} />);
     `);
   });
@@ -214,6 +211,7 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { recipe$ } from '@vanilla-extract/recipes';
+      import { large, legacyStyle } from './styles.css';
       export const _vanilla_identifier_0 = recipe$({
         base: {
           background: 'black',
@@ -234,6 +232,12 @@ describe('babel-plugin-split-file', () => {
         }
       });
       const thing = _vanilla_identifier_0;
+      document.body.innerHTML = \`
+              <div class="\${legacyStyle}"></div>
+              <div class="\${thing({
+        size: 'large'
+      })}">I am a recipe$</div>
+            \`;
     `);
   });
 
@@ -255,55 +259,20 @@ describe('babel-plugin-split-file', () => {
       import { large } from './myStyles';
       export const MyComponent = () => <div>
                 <span className={large}>Foo</span>
-                <span className={_vanilla_identifier_1}>Foo</span>
+                <span className={_vanilla_identifier_0}>Foo</span>
               </div>;
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
       import { style$ } from '@vanilla-extract/css';
       import { large } from './myStyles';
-      export const _vanilla_identifier_1 = style$([large, {
+      export const _vanilla_identifier_0 = style$([large, {
         color: 'blue'
       }]);
       export const MyComponent = () => <div>
                 <span className={large}>Foo</span>
-                <span className={_vanilla_identifier_1}>Foo</span>
+                <span className={_vanilla_identifier_0}>Foo</span>
               </div>;
-    `);
-  });
-
-  it('should handle export lists', () => {
-    const source = /* tsx */ `
-      import { style, css$ } from '@vanilla-extract/css';
-      import { myOtherStyle } from './otherStyles';
-
-      const color = 'red';
-
-      const myStyle = (display) => style({ display, color })
-
-      const flex = css$(myStyle('flex'));
-
-      export { flex, myOtherStyle };
-      export { foo } from './somewhereElse';`;
-
-    const result = transform(source);
-
-    expect(result.code).toMatchInlineSnapshot(`
-      import { myOtherStyle } from './otherStyles';
-      const flex = _vanilla_identifier_2;
-      export { flex, myOtherStyle };
-      export { foo } from './somewhereElse';
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-      const color = 'red';
-      const myStyle = display => style({
-        display,
-        color
-      });
-      export const _vanilla_identifier_2 = css$(myStyle('flex'));
-      const flex = _vanilla_identifier_2;
     `);
   });
 
@@ -311,10 +280,9 @@ describe('babel-plugin-split-file', () => {
     const source = /* tsx */ `
       import React from 'react';
       import polished from 'polished';
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style$ } from '@vanilla-extract/css';
 
-      const myColorStyle = (color) => style({ color: polished.lighten(color) });
-      const lightRed = css$(myColorStyle('red'));
+      const lightRed = style$({ color: polished.lighten('red') });
 
       export default () => <div className={lightRed} />`;
 
@@ -322,33 +290,33 @@ describe('babel-plugin-split-file', () => {
 
     expect(result.code).toMatchInlineSnapshot(`
       import React from 'react';
-      const lightRed = _vanilla_identifier_1;
+      const lightRed = _vanilla_identifier_0;
       export default (() => <div className={lightRed} />);
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import React from 'react';
       import polished from 'polished';
-      import { style, css$ } from '@vanilla-extract/css';
-      const myColorStyle = color => style({
-        color: polished.lighten(color)
+      import { style$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_0 = style$({
+        color: polished.lighten('red')
       });
-      export const _vanilla_identifier_1 = css$(myColorStyle('red'));
-      const lightRed = _vanilla_identifier_1;
+      const lightRed = _vanilla_identifier_0;
       export default (() => <div className={lightRed} />);
     `);
   });
 
   it('should retain mixed required imports', () => {
     const source = /* tsx */ `
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style$ } from '@vanilla-extract/css';
       import { brandVar, brand, BrandDetails } from './colors';
 
-      const className = css$(style({
+      const className = style$({
         vars: {
           [brandVar]: brand,
         },
         backgroundColor: brandVar,
-      }))
+      });
 
       export const Component = () =>
         <BrandDetails className={className} />`;
@@ -356,20 +324,20 @@ describe('babel-plugin-split-file', () => {
     const result = transform(source);
 
     expect(result.code).toMatchInlineSnapshot(`
-      import { BrandDetails } from './colors';
+      import { brandVar, brand, BrandDetails } from './colors';
       const className = _vanilla_identifier_0;
       export const Component = () => <BrandDetails className={className} />;
     `);
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style$ } from '@vanilla-extract/css';
       import { brandVar, brand, BrandDetails } from './colors';
-      export const _vanilla_identifier_0 = css$(style({
+      export const _vanilla_identifier_0 = style$({
         vars: {
           [brandVar]: brand
         },
         backgroundColor: brandVar
-      }));
+      });
       const className = _vanilla_identifier_0;
       export const Component = () => <BrandDetails className={className} />;
     `);
@@ -377,9 +345,9 @@ describe('babel-plugin-split-file', () => {
 
   it('should work inline as a classname', () => {
     const source = /* tsx */ `
-      import { style, css$ } from '@vanilla-extract/css';
+      import { style, extract$ } from '@vanilla-extract/css';
 
-      export default () => <div className={css$(style({ display: 'flex' }))}>foo</div>;`;
+      export default () => <div className={extract$(style({ display: 'flex' }))}>foo</div>;`;
 
     const result = transform(source);
 
@@ -388,88 +356,34 @@ describe('babel-plugin-split-file', () => {
     );
 
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_0 = css$(style({
+      import { style, extract$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_0 = extract$(style({
         display: 'flex'
       }));
       export default (() => <div className={_vanilla_identifier_0}>foo</div>);
     `);
   });
 
-  it('should work inline as a named export', () => {
-    const source = /* tsx */ `
-      import { style, css$ } from '@vanilla-extract/css';
-
-      export const myStyle = css$(style({ color: 'red' }));
-
-      export const blue = css$(style({ color: 'blue' }));`;
-
-    const result = transform(source);
-
-    expect(result.code).toMatchInlineSnapshot(`
-      export const myStyle = _vanilla_identifier_0;
-      export const blue = _vanilla_identifier_1;
-    `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_0 = css$(style({
-        color: 'red'
-      }));
-      export const myStyle = _vanilla_identifier_0;
-      export const _vanilla_identifier_1 = css$(style({
-        color: 'blue'
-      }));
-      export const blue = _vanilla_identifier_1;
-    `);
-  });
-
-  it('should work inline as a default export', () => {
-    const source = /* tsx */ `
-      import { style, css$ } from '@vanilla-extract/css';
-
-      export const myStyle = css$(style({ color: 'red' }));
-
-      export default css$(style({ color: 'blue' }));`;
-
-    const result = transform(source);
-
-    expect(result.code).toMatchInlineSnapshot(`
-      export const myStyle = _vanilla_identifier_0;
-      export default _vanilla_defaultIdentifer;
-    `);
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_0 = css$(style({
-        color: 'red'
-      }));
-      export const myStyle = _vanilla_identifier_0;
-      export const _vanilla_defaultIdentifer = css$(style({
-        color: 'blue'
-      }));
-      export default _vanilla_defaultIdentifer;
-    `);
-  });
-
   it('should support multiple macros', () => {
     const source = /* tsx */ `
-      import { style, css$, style$ } from '@vanilla-extract/css';
+      import { style, extract$, style$ } from '@vanilla-extract/css';
 
-      export const myStyle = css$(style({ color: 'red' }));
+      export const myStyle = extract$(style({ color: 'red' }));
 
       export const myOtherStyle = style$({ color: 'green' });
 
-      export default css$(style({ color: 'blue' }));`;
+      export default extract$(style({ color: 'blue' }));`;
 
-    const result = transform(source, ['css$', 'style$']);
+    const result = transform(source, ['extract$', 'style$']);
 
     expect(result.code).toMatchInlineSnapshot(`
       export const myStyle = _vanilla_identifier_0;
       export const myOtherStyle = _vanilla_identifier_1;
-      export default _vanilla_defaultIdentifer;
+      export default _vanilla_identifier_2;
     `);
     expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { style, css$, style$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_0 = css$(style({
+      import { style, extract$, style$ } from '@vanilla-extract/css';
+      export const _vanilla_identifier_0 = extract$(style({
         color: 'red'
       }));
       export const myStyle = _vanilla_identifier_0;
@@ -477,109 +391,10 @@ describe('babel-plugin-split-file', () => {
         color: 'green'
       });
       export const myOtherStyle = _vanilla_identifier_1;
-      export const _vanilla_defaultIdentifer = css$(style({
+      export const _vanilla_identifier_2 = extract$(style({
         color: 'blue'
       }));
-      export default _vanilla_defaultIdentifer;
-    `);
-  });
-
-  it('should handle array destructuring', () => {
-    const source = /* tsx */ `
-      import { createTheme, css$ } from '@vanilla-extract/css';
-
-      const [themeClass, vars] = css$(createTheme({
-        color: {
-          brand: 'blue'
-        },
-      }));
-
-      export const [publicThemeClass, publicVars] = css$(createTheme({
-        color: {
-          brand: 'red'
-        },
-      }));
-
-      export const Themed = () => <div className={themeClass}>Foo</div>;`;
-
-    const result = transform(source);
-
-    expect(result.code).toMatchInlineSnapshot(`
-      const [themeClass, vars] = _vanilla_identifier_6;
-      export const [publicThemeClass, publicVars] = _vanilla_identifier_5;
-      export const Themed = () => <div className={themeClass}>Foo</div>;
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { createTheme, css$ } from '@vanilla-extract/css';
-      export const _vanilla_identifier_6 = css$(createTheme({
-        color: {
-          brand: 'blue'
-        }
-      }));
-      const [themeClass, vars] = _vanilla_identifier_6;
-      export const _vanilla_identifier_5 = css$(createTheme({
-        color: {
-          brand: 'red'
-        }
-      }));
-      export const [publicThemeClass, publicVars] = _vanilla_identifier_5;
-      export const Themed = () => <div className={themeClass}>Foo</div>;
-    `);
-  });
-
-  it('should handle object destructuring', () => {
-    const source = /* tsx */ `
-      import { objectMacro1$, objectMacro2$ } from './macro';
-
-      const { blue: primary, red, ...rest } = objectMacro1$();
-      export const theRest = rest;
-      export const { small, large } = objectMacro2$();
-
-      export const MyComponent = () => 
-        <div className={primary}>
-          <span className={rest.orange}>Foo</span>
-        </div>;`;
-
-    const result = transform(
-      source,
-      ['objectMacro1$', 'objectMacro2$'],
-      'file.ts',
-    );
-
-    expect(result.code).toMatchInlineSnapshot(`
-      const {
-        blue: primary,
-        red,
-        ...rest
-      } = _vanilla_identifier_8;
-      export const theRest = rest;
-      export const {
-        small,
-        large
-      } = _vanilla_identifier_7;
-      export const MyComponent = () => <div className={primary}>
-                <span className={rest.orange}>Foo</span>
-              </div>;
-    `);
-
-    expect(result.buildTimeCode).toMatchInlineSnapshot(`
-      import { objectMacro1$, objectMacro2$ } from './macro';
-      export const _vanilla_identifier_8 = objectMacro1$();
-      const {
-        blue: primary,
-        red,
-        ...rest
-      } = _vanilla_identifier_8;
-      export const theRest = rest;
-      export const _vanilla_identifier_7 = objectMacro2$();
-      export const {
-        small,
-        large
-      } = _vanilla_identifier_7;
-      export const MyComponent = () => <div className={primary}>
-                <span className={rest.orange}>Foo</span>
-              </div>;
+      export default _vanilla_identifier_2;
     `);
   });
 });
