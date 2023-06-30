@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/integration": "^6.2.0",
-    "esbuild": "0.17.6"
+    "esbuild": "0.17.18"
   },
   "devDependencies": {
     "@jest/transform": "^29.0.3"
