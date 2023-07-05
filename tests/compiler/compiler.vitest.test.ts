@@ -313,7 +313,7 @@ describe('compiler', () => {
     expect(output.source).toMatchInlineSnapshot(`
       "import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
       import { createRuntimeFn as _7a468 } from '@vanilla-extract/recipes/createRuntimeFn';
-      export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',rawDefaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},rawVariantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});"
+      export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});"
     `);
 
     expect(css).toMatchInlineSnapshot(`

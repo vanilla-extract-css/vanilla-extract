@@ -9,21 +9,9 @@ import type {
   VariantGroups,
   VariantSelection,
 } from './types';
+import { mapValues } from './utils';
 
 export type { RecipeVariants, RuntimeFn } from './types';
-
-function mapValues<Input extends Record<string, any>, OutputValue>(
-  input: Input,
-  fn: (value: Input[keyof Input], key: keyof Input) => OutputValue,
-): Record<keyof Input, OutputValue> {
-  const result: any = {};
-
-  for (const key in input) {
-    result[key] = fn(input[key], key);
-  }
-
-  return result;
-}
 
 export function recipe<Variants extends VariantGroups>(
   options: PatternOptions<Variants>,
@@ -69,12 +57,7 @@ export function recipe<Variants extends VariantGroups>(
 
   const config: PatternResult<Variants> = {
     defaultClassName,
-    rawDefaultClassName: defaultClassName.split(' ')[0],
     variantClassNames,
-    // @ts-expect-error
-    rawVariantClassNames: mapValues(variantClassNames, (classNames) =>
-      mapValues(classNames, (className) => className.split(' ')[0]),
-    ),
     defaultVariants,
     compoundVariants: compounds,
   };
