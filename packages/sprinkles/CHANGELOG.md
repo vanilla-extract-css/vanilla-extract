@@ -1,5 +1,11 @@
 # @vanilla-extract/sprinkles
 
+## 1.6.1
+
+### Patch Changes
+
+- [#1117](https://github.com/vanilla-extract-css/vanilla-extract/pull/1117) [`8a35dff`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8a35dff7f8b4f75691b7ba6ecdc98f45d6e8c5f4) Thanks [@gabro](https://github.com/gabro)! - Export `SprinklesProperties` type
+
 ## 1.6.0
 
 ### Minor Changes

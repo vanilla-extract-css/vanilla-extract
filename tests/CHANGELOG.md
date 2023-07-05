@@ -1,5 +1,14 @@
 # @vanilla-extract-private/tests
 
+## 0.0.43
+
+### Patch Changes
+
+- Updated dependencies [[`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3), [`8a35dff`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8a35dff7f8b4f75691b7ba6ecdc98f45d6e8c5f4)]:
+  - @vanilla-extract/css@1.12.0
+  - @vanilla-extract/sprinkles@1.6.1
+  - @vanilla-extract-private/test-helpers@0.0.42
+
 ## 0.0.42
 
 ### Patch Changes
