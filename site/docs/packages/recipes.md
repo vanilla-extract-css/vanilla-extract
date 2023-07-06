@@ -140,7 +140,7 @@ console.log(button.classNames.variants.size.small);
 // -> app_button_size_small__129pj254
 ```
 
-> 🚧&nbsp;&nbsp;The class names does not have `.` at the beginning.
+> 🚧&nbsp;&nbsp;The class names do not have `.` at the beginning.
 
 Exposed class names allow you to select special variant in cascade styles:
 
