@@ -144,10 +144,26 @@ console.log(button.classNames.variants.size.small);
 
 Exposed class names allow you to select special variant in cascade styles:
 
-```ts
-style({
+```ts compiled
+// button.css.ts
+import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+
+export const button = recipe({
+  base: { fontWeight: 'bold' },
+  variants: {
+    color: {
+      neutral: { background: 'transparent' }
+    }
+  }
+});
+
+export const parent = style({
   background: 'blue',
   selectors: {
+    [`.${button.classNames.base} &`]: {
+      padding: 10
+    },
     [`.${button.classNames.variants.color.neutral} &`]: {
       color: 'red'
     }
