@@ -15,4 +15,11 @@ export * from './vars';
 export * from './layer';
 export { createContainer, createContainer$ } from './container';
 
-export const css$ = <T>(t: T): T => t;
+export const extract$ = <T>(t: (() => T) | T): T => {
+  if (typeof t === 'function') {
+    // @ts-expect-error
+    return t();
+  }
+
+  return t;
+};

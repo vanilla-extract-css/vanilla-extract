@@ -17,7 +17,7 @@ import { serializeVanillaModule } from './inlineExportSerializer';
 
 const firstPartyMacros: Record<string, Array<string>> = {
   '@vanilla-extract/css': [
-    'css$',
+    'extract$',
     'style$',
     'styleVariants$',
     'globalStyle$',
@@ -132,7 +132,7 @@ export class InlineCompiler {
       return {
         isLegacyCssFile: true,
         shouldProcess: true,
-        macros: ['css$'],
+        macros: ['extract$'],
       };
     }
 

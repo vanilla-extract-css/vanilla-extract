@@ -1,8 +1,8 @@
-import { createVar, css$ } from '@vanilla-extract/css';
+import { createVar, extract$ } from '@vanilla-extract/css';
 
 export const brand = 'green';
 
-export const brandVar = css$(createVar());
+export const brandVar = extract$(createVar());
 
 export const BrandDetails = () => `
     <div>Brand color is: ${brand}</div>

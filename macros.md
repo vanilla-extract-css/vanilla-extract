@@ -16,7 +16,7 @@ Macros are instead a way to declare which **functions** should be executed at bu
 >
 > Macros are executed in a different context (build-time vs run-time) to the rest of your code.
 > Because of this, we wanted Macros to use an easy to spot convention that helps developers quickly identify them.
-> Also, as this idea is very similar to that of server functions (i.e. [Solid Start](https://start.solidjs.com/api/server), [Bling](https://github.com/TanStack/bling#macros)) we decided to adopt a similar convention.
+> Also, as this idea is very similar to that of server functions (i.e. [Solid Start](https://start.solidjs.com/api/server), [Bling](https://github.com/TanStack/bling#macros)) we decided to adopt a similar convention. Only a pre-configured set of functions are treated as macros, just because a function name ends with `$` does not automatically make it a VE macro.
 
 Here's an example file making use of Macros:
 
@@ -44,19 +44,56 @@ export const Button = () => <button className={red} />;
 ```
 
 Almost all of the current VE API have macro variations, allowing their use outside of `.css.ts` files.
+
+### extract$
+
 There is also a new API called `extract$` for executing arbitrary styling logic at build time.
+The `extract$` macro acts as signal to VE to execute the code that's passed to it's parameter.
+This allows you to extract more complex styling logic out of your runtime code.
 
 ```jsx
 // Colors.tsx
 import { extract$, style } from '@vanilla-extract/css';
 
-const colors = extract$(['red', 'blue', 'green'].map(color => style({
-  background: color
-}))
+const colors = extract$(
+  ['red', 'blue', 'green'].map((color) =>
+    style({
+      background: color
+    })
+  )
+);
 
-export const Colors = () => <>
-  {colors.map(color => <div className={color} />)}
-</>
+export const Colors = () => (
+  <>
+    {colors.map((color) => (
+      <div className={color} />
+    ))}
+  </>
+);
+```
+
+You can also pass a function to `extract$` and VE will execute it for you.
+This is useful when you want to create variables in your build-time styleing logic.
+
+```jsx
+// Colors.tsx
+import {
+  extract$,
+  styleVariants
+} from '@vanilla-extract/css';
+import { darken } from 'polished';
+
+const darkColors = extract$(() => {
+  const colors = {
+    red: '#FF0000',
+    blue: '#00FFFF',
+    green: '#00FF00'
+  };
+
+  return styleVariants(colors, (color) => ({
+    color: darken(0.3, color)
+  }));
+});
 ```
 
 ### Why have macro and non-macro APIs?
@@ -74,15 +111,21 @@ import { style$, style } from '@vanilla-extract/css';
 
 const colors = ['red', 'blue', 'green'];
 
-// No macro (style)
-const one = extract$(colors.map(color => style({
-  background: color
-}))
+// No macro (style) inside the `extract$` macro
+const one = extract$(
+  colors.map((color) =>
+    style({
+      background: color
+    })
+  )
+);
 
 // With macro (style$)
-const two = extract$(colors.map(color => style$({
-  background: color
-}))
+const two = colors.map((color) =>
+  style$({
+    background: color
+  })
+);
 ```
 
 Before understanding macros you would think that `one` and `two` would work the same way.
@@ -95,18 +138,24 @@ import { style$, style } from '@vanilla-extract/css';
 
 const colors = ['red', 'blue', 'green'];
 
-// No macro (style)
-const one = extract$(colors.map(color => style({
-  background: color
-}))
+// No macro (style) inside the `extract$` macro
+const __hoistedCall1 = extract$(
+  colors.map((color) =>
+    style({
+      background: color
+    })
+  )
+);
 
-const __hoistedCall = style$({
+const one = __hoistedCall1;
+
+const __hoistedCall2 = style$({
   // color isn't available here
   background: color
-})
+});
 
 // With macro (style$)
-const two = extract$(colors.map(color => __hoistedCall)
+const two = colors.map((color) => __hoistedCall);
 ```
 
 This may seem confusing at first but it enables some interesting patterns like inline style creation.
@@ -120,8 +169,48 @@ export const Button = () => (
 );
 ```
 
+### Can I use macros to pass props to styles?
+
+No. Macros are hoisted and styles are generated statically so they won’t have access to runtime props.
+
+```jsx
+// Colors.tsx
+import { style$ } from '@vanilla-extract/css';
+
+export const Button = ({ color }) => (
+  // ERROR: Can not access `color` at build-time
+  <div className={style$({ color })} />
+);
+```
+
+If you want to create dynamic styling behaviour you'll still want to use normal VE approaches. e.g. [styleVariants](https://vanilla-extract.style/documentation/api/style-variants/) or the [dynamic API](https://vanilla-extract.style/documentation/packages/dynamic/).
+
+### Global side effects
+
+While macros can be used in almost all files, they can't be used alongside global side effects called at the top-level scope of the file. e.g. `document.createElement`.
+
+```jsx
+// html.tsx
+import { style$ } from '@vanilla-extract/css';
+
+// This will fail to compile...
+const red = style$({ color: 'red' });
+
+document.innerHTML = `<div class="${red}">`;
+```
+
+If you need to use side effects in the top-level scope of a file you'll need to separate out any VE code into a separate file.
+
 We're eager to hear feedback from the community about whether this model is too confusing or complicated.
 Our hope is once the inital concept is understood, it unlocks a faster way to developer apps while still being able to write real type-safe code for your styling.
+
+## What does this means for `.css.ts` files
+
+In short, nothing.
+
+We have no plans on removing support for `.css.ts` files at this stage.
+It often makes sense to split your styling logic out into a separate file and we feel `.css.ts` files are still a great way of doing this.
+Their behaviour hasn't changed, however macros should _not_ be used inside `.css.ts` files.
 
 ## Recipes
 
