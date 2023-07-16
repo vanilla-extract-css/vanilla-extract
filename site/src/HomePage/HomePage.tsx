@@ -209,9 +209,9 @@ export const HomePage = () => {
                         });
 
                         export const hero = style({
-                          backgroundColor: vars.color.brandd,
+                          backgroundColor: vars.color.brand,
                           color: vars.color.white,
-                          padding: vars.space.large
+                          padding: vars.space.medium
                         });`,
                       },
                     ]}
@@ -333,7 +333,7 @@ export const HomePage = () => {
                     fileName: 'styles.css.ts',
                     contents: outdent`
                     import { style } from '@vanilla-extract/css';
-    
+
                     export const className = style({
                       display: 'flex',
                       flexDirection: 'column',
@@ -381,7 +381,7 @@ export const HomePage = () => {
                         fileName: 'styles.css.ts',
                         contents: outdent`
                         import { createTheme, style } from '@vanilla-extract/css';
-                          
+
                         export const [themeClass, vars] = createTheme({
                           color: {
                             brand: 'aquamarine',
@@ -422,7 +422,7 @@ export const HomePage = () => {
                     contents: outdent`import { style, createVar } from '@vanilla-extract/css';
 
                   const shadowColor = createVar();
-            
+
                   export const shadow = style({
                     boxShadow: ${'`0 0 10px ${shadowColor}`'},
                     selectors: {
@@ -460,13 +460,13 @@ export const HomePage = () => {
                     fileName: 'styles.css.ts',
                     contents: outdent`
                   import { styleVariants } from '@vanilla-extract/css';
-  
+
                   export const background = styleVariants({
                     primary: { background: 'navy' },
                     secondary: { background: 'blue' },
                     tertiary: { background: 'aqua' },
                   });
-  
+
                   export const color = styleVariants({
                     neutral: { color: 'black' },
                     secondary: { color: 'gray' },

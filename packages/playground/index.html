@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla Extract Playground</title>
+  </head>
+  <body>
+    <div id="app">
+      <textarea id="editor" style="width: 80%" rows="20">
+import { createTheme, style } from '@vanilla-extract/css';
+
+export const [themeClass, vars] = createTheme({
+  color: {
+    brand: 'blue',
+    white: '#fff'
+  },
+  space: {
+    small: '4px',
+    medium: '8px',
+  }
+});
+
+export const hero = style({
+  backgroundColor: vars.color.brand,
+  color: vars.color.white,
+  padding: vars.space.medium
+});
+</textarea
+      >
+      <pre id="result"></pre>
+    </div>
+    <script type="module" src="/src/client.ts"></script>
+  </body>
+</html>

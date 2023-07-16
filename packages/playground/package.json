@@ -1,0 +1,37 @@
+{
+  "name": "@vanilla-extract/playground",
+  "version": "0.0.1",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "license": "MIT",
+  "author": "Remus Mate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/playground"
+  },
+  "main": "dist/vanilla-extract-playground.cjs.js",
+  "module": "dist/vanilla-extract-playground.esm.js",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "dev": "ts-node src/server.ts"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@vanilla-extract/css": "^1.12.0",
+    "@vanilla-extract/integration": "^6.2.1",
+    "esbuild-wasm": "0.17.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "express": "^4.18.2",
+    "vite": "^4.4.4",
+    "vite-plugin-node-polyfills": "^0.9.0"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  }
+}
