@@ -1,0 +1,19 @@
+{
+  "name": "vanilla-extract-example-nuxt",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/ui-templates": "^1.2.0",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/vite-plugin": "workspace:*",
+    "nuxt": "^3.6.3",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  }
+}
