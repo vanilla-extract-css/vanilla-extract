@@ -301,16 +301,22 @@ If you ever wanted to implement your own CSS-in-JS interface like [styled-compon
 ## Try it out
 
 If you're keen to give macros a spin we encourage you to try out the experimental implementation yourself.
-To get started you just need to point your VE deps to the `inline-prototype` tag on NPM.
+To get started in an existing project, update the `@vanilla-extract/css` package and your integration of choice to the `experimental-macros` tag on NPM.
+Macros are currenly working for the `Vite`, `Webpack` and `esbuild` plugins.
 
 ```json
 {
   "dependencies": {
-    "@vanilla-extract/css": "0.0.0-inline-prototype-2023326232811",
-    "@vanilla-extract/webpack-plugin": "0.0.0-inline-prototype-2023326232811"
+    "@vanilla-extract/css": "0.0.0-experimental-macros-2023326232811",
+    // You only need the relevant integration to your project
+    "@vanilla-extract/webpack-plugin": "0.0.0-experimental-macros-2023326232811",
+    "@vanilla-extract/vite-plugin": "0.0.0-experimental-macros-2023326232811",
+    "@vanilla-extract/esbuild-plugin": "0.0.0-experimental-macros-2023326232811"
   }
 }
 ```
+
+Or if you want to try-out Macros in a fresh project, you can fork our [macros starter repo](https://github.com/vanilla-extract-css/macros-playground) that already has Vite and Macros setup.
 
 ### Feedback
 
