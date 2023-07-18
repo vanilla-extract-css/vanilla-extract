@@ -10,16 +10,12 @@ async function createServer() {
 
   app.post('/ve', async (req, res) => {
     try {
-      const css = await compile({
-        filePath: req.body.filePath,
-        input: req.body.input,
-        identifiers: req.body.identifiers,
-      });
+      const result = await compile(req.body);
 
-      res.send({ css });
+      res.send(result);
     } catch (e) {
       console.error(e);
-      res.send({ css: '' });
+      res.send({});
     }
   });
 

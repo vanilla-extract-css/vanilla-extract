@@ -63,7 +63,8 @@
   "packageManager": "pnpm@7.9.5",
   "pnpm": {
     "patchedDependencies": {
-      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
+      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch",
+      "vm-browserify@1.1.2": "patches/vm-browserify@1.1.2.patch"
     }
   }
 }

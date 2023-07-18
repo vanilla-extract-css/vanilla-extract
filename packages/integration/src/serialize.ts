@@ -1,5 +1,6 @@
 import { gzip, gunzip } from 'zlib';
 import { promisify } from 'util';
+import { Buffer } from 'buffer';
 
 const zip = promisify(gzip);
 const unzip = promisify(gunzip);

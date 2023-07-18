@@ -1,21 +1,41 @@
-export {};
+import { compile, initialize } from '.';
 
-async function updateResult(input: string) {
+const options = {
+  // identifiers: 'short',
+};
+
+async function compileEsbuild(input: string) {
+  const { css } = await compile({
+    ...options,
+    filePath: 'styles.css.ts',
+    input,
+    mode: 'client',
+  });
+
+  return css;
+}
+
+async function compilePost(input: string) {
   const res = await fetch('/ve', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      ...options,
       filePath: 'styles.css.ts',
       input,
-      // identifiers: 'short'
+      mode: 'server',
     }),
   });
 
   const { css } = await res.json();
 
-  document.querySelector('#result')!.innerHTML = css;
+  return css;
+}
+
+async function updateResult(input: string) {
+  document.querySelector('#result')!.innerHTML = await compileEsbuild(input);
 }
 
 document.querySelector('textarea')!.addEventListener('input', async (e) => {
@@ -24,4 +44,8 @@ document.querySelector('textarea')!.addEventListener('input', async (e) => {
   updateResult(input);
 });
 
-updateResult(document.querySelector('textarea')!.value);
+initialize({
+  wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
+}).then(() => {
+  updateResult(document.querySelector('textarea')!.value);
+});

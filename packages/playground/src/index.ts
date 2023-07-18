@@ -12,7 +12,7 @@ import {
   type BuildResult as EsbuildResult,
 } from 'esbuild-wasm';
 
-const CWD = process.cwd();
+let CWD = '';
 
 interface CompileOptions {
   input: string;
@@ -48,7 +48,7 @@ async function transformFileScope({
   const vanillaExtractTransformPlugin = ({
     identOption,
   }: Pick<CompileOptions, 'identOption'>): Plugin => ({
-    name: 'vanilla-extract-filescope',
+    name: 'playground-filescope',
     setup(build) {
       build.onResolve({ filter: /^<stdin>$/ }, () => {
         return { path: filePath, namespace: 'stdin' };
@@ -60,8 +60,7 @@ async function transformFileScope({
           filePath: path,
           rootPath: build.initialOptions.absWorkingDir!,
           packageName: 'playground',
-          identOption:
-            identOption ?? (build.initialOptions.minify ? 'short' : 'debug'),
+          identOption: identOption,
         });
 
         return {
@@ -82,6 +81,7 @@ async function transformFileScope({
 }
 
 type Options = {
+  mode?: 'client' | 'server';
   input: string;
   filePath: string;
   identifiers?: IdentifierOption;
@@ -91,7 +91,7 @@ const extractCss = async ({ input, filePath }: Options) => {
   let extractedCss: string = '';
 
   const vanillaExtractCssPlugin = (): Plugin => ({
-    name: 'vanilla-extract-css',
+    name: 'playground-css',
     setup(build) {
       build.onResolve({ filter: virtualCssFileFilter }, async ({ path }) => {
         const { fileName: _fileName, source } =
@@ -122,10 +122,12 @@ const extractCss = async ({ input, filePath }: Options) => {
 export { initialize };
 
 export async function compile({
+  mode = 'server',
   input,
   filePath,
   identifiers = 'debug',
 }: Options) {
+  CWD = mode === 'server' ? process.cwd() : '/tmp';
   filePath = `${CWD}/${filePath}`;
 
   const source = await transformFileScope({
@@ -134,16 +136,20 @@ export async function compile({
     identOption: identifiers,
   });
 
+  // console.log('source:', source);
+
   const output = await processVanillaFile({
     source,
     filePath,
     identOption: identifiers,
   });
 
+  // console.log('output:', output);
+
   const css = await extractCss({
     input: output,
     filePath,
   });
 
-  return css;
+  return { css };
 }

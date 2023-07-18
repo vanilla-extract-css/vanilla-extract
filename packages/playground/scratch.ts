@@ -22,9 +22,9 @@ const input = /*ts*/ `
   });
 
   export const hero = style({
-    backgroundColor: vars.color.brandd,
+    backgroundColor: vars.color.brand,
     color: vars.color.white,
-    padding: vars.space.large
+    padding: vars.space.medium
   });
 `;
 
@@ -33,11 +33,11 @@ const input = /*ts*/ `
   //   wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
   // });
 
-  const result = await compile({
+  const { css } = await compile({
     filePath,
     input,
     // identifiers: 'short'
   });
 
-  console.log(result);
+  console.log(css);
 })();
