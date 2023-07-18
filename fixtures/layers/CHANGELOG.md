@@ -1,5 +1,12 @@
 # @fixtures/layers
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3)]:
+  - @vanilla-extract/css@1.12.0
+
 ## 0.0.3
 
 ### Patch Changes
