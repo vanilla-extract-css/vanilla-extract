@@ -6,13 +6,13 @@ import type { SimplePseudos } from './simplePseudos';
 // csstype is yet to ship container property types as they are not in
 // the output MDN spec files yet. Remove this once that's done.
 // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
-interface ContainerProperties {
+export interface ContainerProperties {
   container?: string;
   containerType?: 'size' | 'inline-size' | (string & {});
   containerName?: string;
 }
 
-type CSSTypeProperties = Properties<number | (string & {})> &
+export type CSSTypeProperties = Properties<number | (string & {})> &
   ContainerProperties;
 
 export type CSSProperties = {
@@ -32,13 +32,13 @@ export type CSSPropertiesWithVars = CSSProperties & {
   };
 };
 
-type PseudoProperties = {
+export type PseudoProperties = {
   [key in SimplePseudos]?: CSSPropertiesWithVars;
 };
 
-type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
+export type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
-type Query<Key extends string, StyleType> = {
+export type Query<Key extends string, StyleType> = {
   [key in Key]?: {
     [query: string]: Omit<StyleType, Key>;
   };
@@ -49,7 +49,7 @@ export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
 export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
 export type Layers<StyleType> = Query<'@layer', StyleType>;
 
-interface AllQueries<StyleType>
+export interface AllQueries<StyleType>
   extends MediaQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
@@ -57,7 +57,7 @@ interface AllQueries<StyleType>
 
 export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
-interface SelectorMap {
+export interface SelectorMap {
   [selector: string]: CSSPropertiesWithVars &
     WithQueries<CSSPropertiesWithVars>;
 }
@@ -120,7 +120,7 @@ export interface Composition {
   classList: string;
 }
 
-type IdentOption = 'short' | 'debug';
+export type IdentOption = 'short' | 'debug';
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string, fileScope: FileScope) => void;
