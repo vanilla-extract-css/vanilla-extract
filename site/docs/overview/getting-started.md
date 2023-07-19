@@ -53,7 +53,7 @@ By importing the style we receive the scoped class name that was generated and w
 
 ```ts compiled
 // app.ts
-import { container } from './styles.css.ts';
+import { container } from './app.css.ts';
 
 document.write(`
   <section class="${container}">
