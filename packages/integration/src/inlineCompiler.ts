@@ -237,6 +237,7 @@ export class InlineCompiler {
       this.transformCode(code, id);
 
     const server = await vite.createServer({
+      configFile: false,
       root: this.root,
       server: {
         hmr: false,
