@@ -356,9 +356,16 @@ export class InlineCompiler {
 
     filePath = isAbsolute(filePath) ? filePath : join(this.root, filePath);
 
-    // TODO: Improve perf. Reading all files from disk is wasteful.
-    // We can likely cache using the module graph
-    const code = await readFile(filePath, { encoding: 'utf-8' });
+    let code;
+
+    try {
+      // TODO: Improve perf. Reading all files from disk is wasteful.
+      // We can likely cache using the module graph
+      code = await readFile(filePath, { encoding: 'utf-8' });
+    } catch (e) {
+      // Ignore virtual files
+      return null;
+    }
     const { shouldProcess, isLegacyCssFile } = await this.analyseModule(
       code,
       filePath,
