@@ -307,13 +307,24 @@ Macros are currenly working for the `Vite`, `Webpack` and `esbuild` plugins.
 ```json
 {
   "dependencies": {
-    "@vanilla-extract/css": "0.0.0-experimental-macros-2023326232811",
+    "@vanilla-extract/css": "0.0.0-experimental-macros-202362010319",
     // You only need the relevant integration to your project
-    "@vanilla-extract/webpack-plugin": "0.0.0-experimental-macros-2023326232811",
-    "@vanilla-extract/vite-plugin": "0.0.0-experimental-macros-2023326232811",
-    "@vanilla-extract/esbuild-plugin": "0.0.0-experimental-macros-2023326232811"
+    "@vanilla-extract/webpack-plugin": "0.0.0-experimental-macros-202362010319",
+    "@vanilla-extract/vite-plugin": "0.0.0-experimental-macros-202362010319",
+    "@vanilla-extract/esbuild-plugin": "0.0.0-experimental-macros-202362010319"
   }
 }
+```
+
+The `@vanilla-extract/integration` package version should match this as well.
+Ideally it should just work, but if you get a different version you can work around by setting a package resolution.
+
+e.g.
+
+```json
+  "resolutions": {
+    "@vanilla-extract/integration": "0.0.0-experimental-macros-202362010319"
+  }
 ```
 
 Or if you want to try-out Macros in a fresh project, you can fork our [macros starter repo](https://github.com/vanilla-extract-css/macros-playground) that already has Vite and Macros setup.
