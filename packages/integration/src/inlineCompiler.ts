@@ -206,6 +206,7 @@ export class InlineCompiler {
         // TODO: Do we need this anymore after file scope change?
         packageName: getPackageInfo(this.root).name,
         identOption: this.identifiers,
+        globalAdapterIdentifier,
       });
     }
 
