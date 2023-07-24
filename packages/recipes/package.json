@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/recipes",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Create multi-variant styles with a type-safe runtime API, heavily inspired by https://stitches.dev",
   "sideEffects": false,
   "main": "dist/vanilla-extract-recipes.cjs.js",
