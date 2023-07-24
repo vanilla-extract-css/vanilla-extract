@@ -2,4 +2,4 @@
 '@vanilla-extract/recipes': minor
 ---
 
-Expose recipe's class names to allow their selection
+Always create a base class name for a recipe
