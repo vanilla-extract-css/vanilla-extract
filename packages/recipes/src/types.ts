@@ -11,11 +11,15 @@ export type VariantSelection<Variants extends VariantGroups> = {
   [VariantGroup in keyof Variants]?: BooleanMap<keyof Variants[VariantGroup]>;
 };
 
+export type VariantsClassNames<Variants extends VariantGroups> = {
+  [P in keyof Variants]: {
+    [PP in keyof Variants[P]]: string;
+  };
+};
+
 export type PatternResult<Variants extends VariantGroups> = {
   defaultClassName: string;
-  variantClassNames: {
-    [P in keyof Variants]: { [P in keyof Variants[keyof Variants]]: string };
-  };
+  variantClassNames: VariantsClassNames<Variants>;
   defaultVariants: VariantSelection<Variants>;
   compoundVariants: Array<[VariantSelection<Variants>, string]>;
 };
@@ -32,9 +36,17 @@ export type PatternOptions<Variants extends VariantGroups> = {
   compoundVariants?: Array<CompoundVariant<Variants>>;
 };
 
+export type RecipeClassNames<Variants extends VariantGroups> = {
+  base: string;
+  variants: VariantsClassNames<Variants>;
+};
+
 export type RuntimeFn<Variants extends VariantGroups> = ((
   options?: VariantSelection<Variants>,
-) => string) & { variants: () => (keyof Variants)[] };
+) => string) & {
+  variants: () => (keyof Variants)[];
+  classNames: RecipeClassNames<Variants>;
+};
 
 export type RecipeVariants<RecipeFn extends RuntimeFn<VariantGroups>> =
   Parameters<RecipeFn>[0];
