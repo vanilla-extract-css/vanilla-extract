@@ -140,37 +140,6 @@ console.log(button.classNames.variants.size.small);
 // -> app_button_size_small__129pj254
 ```
 
-> 🚧&nbsp;&nbsp;The class names do not have `.` at the beginning.
-
-Exposed class names allow you to select special variant in cascade styles:
-
-```ts compiled
-// button.css.ts
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-
-export const button = recipe({
-  base: { fontWeight: 'bold' },
-  variants: {
-    color: {
-      neutral: { background: 'transparent' }
-    }
-  }
-});
-
-export const parent = style({
-  background: 'blue',
-  selectors: {
-    [`.${button.classNames.base} &`]: {
-      padding: 10
-    },
-    [`.${button.classNames.variants.color.neutral} &`]: {
-      color: 'red'
-    }
-  }
-});
-```
-
 ## RecipeVariants
 
 A utility to make use of the recipe’s type interface. This can be useful when typing functions or component props that need to accept recipe values as part of their interface.
