@@ -1,12 +1,15 @@
-import { style$, extract$, style } from '@vanilla-extract/css';
+import { style$, extract$, style, createVar$ } from '@vanilla-extract/css';
 import { recipe$ } from '@vanilla-extract/recipes';
 import { brandVar, brand, BrandDetails } from './colors';
 import { styled$ } from './styled';
 import { large, legacyStyle } from './styles.css';
 
+const accentVar = createVar$();
+
 const block = style$({
   vars: {
     [brandVar]: brand,
+    [accentVar]: 'blue',
   },
   backgroundColor: brandVar,
   padding: 20,

@@ -3,11 +3,7 @@ import path from 'path';
 import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
 import { normalizePath } from 'vite';
 import outdent from 'outdent';
-import {
-  cssFileFilter,
-  IdentifierOption,
-  InlineCompiler,
-} from '@vanilla-extract/integration';
+import { IdentifierOption, InlineCompiler } from '@vanilla-extract/integration';
 import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const styleUpdateEvent = (fileId: string) =>
@@ -156,7 +152,7 @@ export function vanillaExtractPlugin({
 
       const result = await compiler.processVanillaFile(normalizePath(validId), {
         outputCss: !ssr || resolvedEmitCssInSsr,
-        async cssImportSpecifier(filePath, css, root) {
+        async cssImportSpecifier(filePath, css) {
           const rootRelativeId = `${filePath}${
             config.command === 'build' || (ssr && resolvedEmitCssInSsr)
               ? virtualExtCss
