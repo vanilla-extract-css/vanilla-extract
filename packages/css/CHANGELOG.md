@@ -1,5 +1,38 @@
 # @vanilla-extract/css
 
+## 1.12.0
+
+### Minor Changes
+
+- [#1114](https://github.com/vanilla-extract-css/vanilla-extract/pull/1114) [`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3) Thanks [@taylorfsteele](https://github.com/taylorfsteele)! - Supports passing multiple font face rules to `fontFace`
+
+  **Example usage**
+
+  ```ts
+  import { fontFace, style } from '@vanilla-extract/css';
+
+  const gentium = fontFace([
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+
+  export const font = style({
+    fontFamily: gentium,
+  });
+  ```
+
+## 1.11.1
+
+### Patch Changes
+
+- [#1106](https://github.com/vanilla-extract-css/vanilla-extract/pull/1106) [`8b1c965`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b1c9651112edd9fa294e8ffbb8c873c6ab18cc7) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix "Invalid selector" errors on pseudo-elements with params
+
 ## 1.11.0
 
 ### Minor Changes

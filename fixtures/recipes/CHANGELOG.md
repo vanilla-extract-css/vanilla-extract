@@ -1,5 +1,26 @@
 # @fixtures/recipes
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb), [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb)]:
+  - @vanilla-extract/recipes@0.5.0
+
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies [[`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3)]:
+  - @vanilla-extract/css@1.12.0
+
+## 0.0.22
+
+### Patch Changes
+
+- Updated dependencies [[`8b1c965`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b1c9651112edd9fa294e8ffbb8c873c6ab18cc7)]:
+  - @vanilla-extract/css@1.11.1
+
 ## 0.0.21
 
 ### Patch Changes

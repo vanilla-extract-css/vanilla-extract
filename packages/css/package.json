@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -111,7 +111,7 @@
     "@vanilla-extract/private": "^1.0.3",
     "ahocorasick": "1.0.2",
     "chalk": "^4.1.1",
-    "css-what": "^5.0.1",
+    "css-what": "^6.1.0",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
     "deep-object-diff": "^1.1.9",

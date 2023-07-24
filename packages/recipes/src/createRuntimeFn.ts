@@ -1,9 +1,11 @@
 import type {
   PatternResult,
+  RecipeClassNames,
   RuntimeFn,
   VariantGroups,
   VariantSelection,
 } from './types';
+import { mapValues } from './utils';
 
 const shouldApplyCompound = <Variants extends VariantGroups>(
   compoundCheck: VariantSelection<Variants>,
@@ -63,6 +65,18 @@ export const createRuntimeFn = <Variants extends VariantGroups>(
   };
 
   runtimeFn.variants = () => Object.keys(config.variantClassNames);
+
+  runtimeFn.classNames = {
+    get base() {
+      return config.defaultClassName.split(' ')[0];
+    },
+
+    get variants() {
+      return mapValues(config.variantClassNames, (classNames) =>
+        mapValues(classNames, (className) => className.split(' ')[0]),
+      ) as RecipeClassNames<Variants>['variants'];
+    },
+  };
 
   return runtimeFn;
 };

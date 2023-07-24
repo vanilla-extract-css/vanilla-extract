@@ -300,6 +300,47 @@ describe('compiler', () => {
     `);
   });
 
+  test('recipes class names', async () => {
+    const compiler = compilers.default;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/recipes/recipeClassNames.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = await compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
+      import { createRuntimeFn as _7a468 } from '@vanilla-extract/recipes/createRuntimeFn';
+      export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".recipeClassNames_basic_rounded_true__129pj257 {
+        border-radius: 999px;
+      }
+      .recipeClassNames_recipeWithReferences__129pj258 {
+        color: red;
+      }
+      .recipeClassNames__129pj250 .recipeClassNames_recipeWithReferences__129pj258 {
+        color: blue;
+      }
+      .recipeClassNames_basic_spaceWithDefault_large__129pj252 .recipeClassNames_recipeWithReferences__129pj258 {
+        color: yellow;
+      }
+      .recipeClassNames_basic_spaceWithoutDefault_small__129pj253 .recipeClassNames_recipeWithReferences__129pj258 {
+        color: green;
+      }
+      .recipeClassNames_basic_color_red__129pj255 .recipeClassNames_recipeWithReferences_first_true__129pj259 {
+        color: black;
+      }
+      .recipeClassNames_basic_spaceWithDefault_large__129pj252.recipeClassNames_basic_rounded_true__129pj257 .recipeClassNames_recipeWithReferences_first_true__129pj259 {
+        color: white;
+      }"
+    `);
+  });
+
   afterAll(async () => {
     await Promise.allSettled(
       Object.values(compilers).map((compiler) => compiler.close()),
