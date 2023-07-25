@@ -2,11 +2,13 @@ import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import browserslist from 'browserslist';
 import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
-import NextMiniCssExtractPlugin from 'next/dist/build/webpack/plugins/mini-css-extract-plugin';
+import NextMiniCssExtractPluginDefault from 'next/dist/build/webpack/plugins/mini-css-extract-plugin';
 
 import type webpack from 'webpack';
 import type { NextConfig } from 'next/types';
 import type { WebpackConfigContext } from 'next/dist/server/config-shared';
+
+const NextMiniCssExtractPlugin = NextMiniCssExtractPluginDefault as any;
 
 function getSupportedBrowsers(dir: any, isDevelopment: any) {
   let browsers;
