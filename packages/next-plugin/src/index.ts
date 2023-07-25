@@ -2,16 +2,13 @@ import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import browserslist from 'browserslist';
 import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
-import nextMiniCssExtractPluginExports from 'next/dist/build/webpack/plugins/mini-css-extract-plugin';
+import NextMiniCssExtractPluginDefault from 'next/dist/build/webpack/plugins/mini-css-extract-plugin';
 
 import type webpack from 'webpack';
 import type { NextConfig } from 'next/types';
 import type { WebpackConfigContext } from 'next/dist/server/config-shared';
 
-// Next.js' built-in mini-css-extract-plugin has a very terrible type definition, let's just use any
-const NextMiniCssExtractPlugin: any =
-  // @ts-expect-error -- Next.js' precompilation does add "__esModule: true", but doesn't add an actual default exports
-  nextMiniCssExtractPluginExports.default;
+const NextMiniCssExtractPlugin = NextMiniCssExtractPluginDefault as any;
 
 function getSupportedBrowsers(dir: any, isDevelopment: any) {
   let browsers;
