@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.2.1
+
+### Patch Changes
+
+- [#1148](https://github.com/vanilla-extract-css/vanilla-extract/pull/1148) [`b279bb5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b279bb5fc4902abb68319f44948e0f66d60125b6) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix error when intializing plugin
+
 ## 2.2.0
 
 ### Minor Changes
