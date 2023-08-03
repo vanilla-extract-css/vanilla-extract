@@ -118,6 +118,28 @@ export const button = recipe({
 });
 ```
 
+The recipes function also exposes an array property `variants` that includes all the variants from your recipe.
+
+```ts
+button.variants();
+// -> ['color', 'size']
+```
+
+## Recipe class name selection
+
+Recipes function exposes internal class names in `classNames` property.
+The property has two predefined props: `base` and `variants`. The `base` prop includes base class name. It is always defined even if you do not have any base styles. The `variants` prop includes class names for each defined variant.
+
+```ts
+// app.css.ts
+console.log(button.classNames.base);
+// -> app_button__129pj250
+console.log(button.classNames.variants.color.neutral);
+// -> app_button_color_neutral__129pj251
+console.log(button.classNames.variants.size.small);
+// -> app_button_size_small__129pj254
+```
+
 ## RecipeVariants
 
 A utility to make use of the recipe’s type interface. This can be useful when typing functions or component props that need to accept recipe values as part of their interface.

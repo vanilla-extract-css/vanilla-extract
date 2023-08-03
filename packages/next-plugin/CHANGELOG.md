@@ -1,5 +1,17 @@
 # @vanilla-extract/next-plugin
 
+## 2.2.1
+
+### Patch Changes
+
+- [#1148](https://github.com/vanilla-extract-css/vanilla-extract/pull/1148) [`b279bb5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b279bb5fc4902abb68319f44948e0f66d60125b6) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix error when intializing plugin
+
+## 2.2.0
+
+### Minor Changes
+
+- [#1105](https://github.com/vanilla-extract-css/vanilla-extract/pull/1105) [`9541d79`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9541d79722b9e0488422ee116a31567c0ac192d6) Thanks [@SukkaW](https://github.com/SukkaW)! - Fix #1101. Correctly handle Next.js configuration.
+
 ## 2.1.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @vanilla-extract/recipes
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1104](https://github.com/vanilla-extract-css/vanilla-extract/pull/1104) [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb) Thanks [@aspirisen](https://github.com/aspirisen)! - Expose recipe's class names to allow their selection
+
+* [#1104](https://github.com/vanilla-extract-css/vanilla-extract/pull/1104) [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb) Thanks [@aspirisen](https://github.com/aspirisen)! - Always create a base class name for a recipe
+
 ## 0.4.0
 
 ### Minor Changes
