@@ -6,13 +6,13 @@ import type { SimplePseudos } from './simplePseudos';
 // csstype is yet to ship container property types as they are not in
 // the output MDN spec files yet. Remove this once that's done.
 // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
-export interface ContainerProperties {
+interface ContainerProperties {
   container?: string;
   containerType?: 'size' | 'inline-size' | (string & {});
   containerName?: string;
 }
 
-export type CSSTypeProperties = Properties<number | (string & {})> &
+type CSSTypeProperties = Properties<number | (string & {})> &
   ContainerProperties;
 
 export type CSSProperties = {
@@ -32,13 +32,13 @@ export type CSSPropertiesWithVars = CSSProperties & {
   };
 };
 
-export type PseudoProperties = {
+type PseudoProperties = {
   [key in SimplePseudos]?: CSSPropertiesWithVars;
 };
 
-export type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
+type CSSPropertiesAndPseudos = CSSPropertiesWithVars & PseudoProperties;
 
-export type Query<Key extends string, StyleType> = {
+type Query<Key extends string, StyleType> = {
   [key in Key]?: {
     [query: string]: Omit<StyleType, Key>;
   };
@@ -57,7 +57,7 @@ export interface AllQueries<StyleType>
 
 export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
-export interface SelectorMap {
+interface SelectorMap {
   [selector: string]: CSSPropertiesWithVars &
     WithQueries<CSSPropertiesWithVars>;
 }
@@ -120,7 +120,7 @@ export interface Composition {
   classList: string;
 }
 
-export type IdentOption = 'short' | 'debug';
+type IdentOption = 'short' | 'debug';
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string, fileScope: FileScope) => void;
