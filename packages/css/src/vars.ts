@@ -23,6 +23,11 @@ export function createVar(debugId?: string): CSSVarFunction {
   return `var(--${cssVarName})` as const;
 }
 
+export function getVarName(cssVar: CSSVarFunction): string | undefined {
+  const [, varName] = /(?:var\()(--[a-z-]+)(.*)(\))/.exec(cssVar) ?? [];
+  return varName;
+}
+
 export function fallbackVar(
   ...values: [string, ...Array<string>]
 ): CSSVarFunction {

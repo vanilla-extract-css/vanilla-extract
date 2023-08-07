@@ -1,4 +1,36 @@
-import { fallbackVar, createGlobalThemeContract } from './vars';
+import { getVarName, fallbackVar, createGlobalThemeContract } from './vars';
+
+describe('getVarName', () => {
+  it('supports a valid var', () => {
+    expect(getVarName('var(--foo-bar)')).toEqual('--foo-bar');
+  });
+
+  it('supports a css variable with a fallback', () => {
+    expect(getVarName('var(--foo-bar, #FF0000)')).toEqual('--foo-bar');
+  });
+
+  it('upports multiple fallbacks resolving to a string', () => {
+    expect(getVarName('var(--foo, var(--bar, var(--baz, blue)))')).toEqual(
+      '--foo',
+    );
+  });
+
+  it('supports multiple fallbacks resolving to a number', () => {
+    expect(getVarName('var(--foo, var(--bar, var(--baz, 10px)))')).toEqual(
+      '--foo',
+    );
+  });
+
+  it('supports multiple fallbacks resolving to a var', () => {
+    expect(
+      getVarName('var(--foo, var(--bar, var(--baz, var(--final-fallback))))'),
+    ).toEqual('--foo');
+  });
+
+  it('supports an invalid var', () => {
+    expect(getVarName('var--foobar')).toEqual(undefined);
+  });
+});
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
