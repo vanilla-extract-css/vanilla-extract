@@ -2,6 +2,7 @@ import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import browserslist from 'browserslist';
 import { lazyPostCSS } from 'next/dist/build/webpack/config/blocks/css';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir';
+import { cssFileResolve } from 'next/dist/build/webpack/config/blocks/css/loaders/file-resolve';
 import NextMiniCssExtractPluginDefault from 'next/dist/build/webpack/plugins/mini-css-extract-plugin';
 
 import type webpack from 'webpack';
@@ -60,6 +61,18 @@ const getVanillaExtractCssLoaders = (
       postcss,
       importLoaders: 1,
       modules: false,
+      url: (url: string, resourcePath: string) =>
+        cssFileResolve(
+          url,
+          resourcePath,
+          options.config.experimental?.urlImports,
+        ),
+      import: (url: string, _: any, resourcePath: string) =>
+        cssFileResolve(
+          url,
+          resourcePath,
+          options.config.experimental?.urlImports,
+        ),
     },
   });
 
