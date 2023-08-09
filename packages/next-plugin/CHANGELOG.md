@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.2.2
+
+### Patch Changes
+
+- [#1155](https://github.com/vanilla-extract-css/vanilla-extract/pull/1155) [`1cb537b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1cb537b04b5733d5d3a697c6f355c44465c9c468) Thanks [@GeeWizWow](https://github.com/GeeWizWow)! - Fix URL statements not not respecting Next's setup for resolving assets
+
 ## 2.2.1
 
 ### Patch Changes
