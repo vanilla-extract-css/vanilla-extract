@@ -7,7 +7,8 @@ import { DefaultMap } from './DefaultMap';
 interface Context extends PluginPass {
   macroReferences: DefaultMap<string, number>;
   identifierCount: number;
-  injectedStatements: DefaultMap<number, Array<t.Statement>>;
+  injectedDeclarations: DefaultMap<number, Array<t.Statement>>;
+  injectedSideEffects: DefaultMap<number, Array<t.Statement>>;
   moduleScopeBindings: {
     [name: string]: Binding;
   };
@@ -75,18 +76,35 @@ const macroVisitor: Visitor<Context> = {
         );
       }
 
-      const injectedIndentifier = t.identifier(
+      const statementIndex = getStatementIndex(path);
+
+      // Is there a better way to check this?
+      const isReferenced = t.isExportDeclaration(path.parent) || !/^program\.body\[\d+\]$/.test(
+        path.parentPath.getPathLocation(),
+      );
+
+      if (!isReferenced) {
+        // This means the call is a side effect e.g. `globalStyle$`
+        // In this case we don't inject an identifier and just remove the
+        // statement entirely. We also push to the previous statement index
+        // as this statement will no longer exist.
+        t.assertStatement(path.parent);
+        this.injectedSideEffects.get(statementIndex - 1).push(path.parent);
+        path.remove();
+        return;
+      }
+
+      const injectedIdentifier = t.identifier(
         this.createVanillaIdentifierName(),
       );
       const declaration = t.exportNamedDeclaration(
         t.variableDeclaration('const', [
-          t.variableDeclarator(injectedIndentifier, path.node),
+          t.variableDeclarator(injectedIdentifier, path.node),
         ]),
       );
-      const statementIndex = getStatementIndex(path);
 
-      this.injectedStatements.get(statementIndex).push(declaration);
-      path.replaceWith(injectedIndentifier);
+      this.injectedDeclarations.get(statementIndex).push(declaration);
+      path.replaceWith(injectedIdentifier);
     }
   },
 };
@@ -96,7 +114,8 @@ export default function (): PluginObj<Context> {
     pre() {
       this.macroReferences = new DefaultMap(() => 0);
       this.identifierCount = 0;
-      this.injectedStatements = new DefaultMap(() => []);
+      this.injectedDeclarations = new DefaultMap(() => []);
+      this.injectedSideEffects = new DefaultMap(() => []);
     },
     visitor: {
       Program: {
@@ -123,13 +142,19 @@ export default function (): PluginObj<Context> {
           for (const statementIndex of bodyPath.keys()) {
             const statement = bodyPath[statementIndex];
 
-            for (const injectedStatment of this.injectedStatements.get(
+            for (const injectedStatment of this.injectedDeclarations.get(
               statementIndex,
             )) {
               store.buildTimeStatements.push(injectedStatment);
             }
 
             store.buildTimeStatements.push(statement.node);
+
+            for (const injectedStatment of this.injectedSideEffects.get(
+              statementIndex,
+            )) {
+              store.buildTimeStatements.push(injectedStatment);
+            }
           }
 
           path.traverse(importDeclarationVisitor, this);

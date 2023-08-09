@@ -364,6 +364,26 @@ describe('babel-plugin-split-file', () => {
     `);
   });
 
+  it('should not create identifiers if none were assigned', () => {
+    const source = /* tsx */ `
+      import { globalStyle$ } from '@vanilla-extract/css';
+
+      globalStyle$('body', {
+        color: 'red'
+      })`;
+
+    const result = transform(source, ['globalStyle$']);
+
+    expect(result.code).toMatchInlineSnapshot(``);
+
+    expect(result.buildTimeCode).toMatchInlineSnapshot(`
+      import { globalStyle$ } from '@vanilla-extract/css';
+      globalStyle$('body', {
+        color: 'red'
+      });
+    `);
+  });
+
   it('should support multiple macros', () => {
     const source = /* tsx */ `
       import { style, extract$, style$ } from '@vanilla-extract/css';
