@@ -136,7 +136,7 @@ export function vanillaExtractPlugin({
         }
       `;
     },
-    async transform(_code, id, ssrParam) {
+    async transform(code, id, ssrParam) {
       const [validId] = id.split('?');
 
       if (validId.endsWith(virtualExtCss) || validId.endsWith(virtualExtJs)) {
@@ -150,7 +150,9 @@ export function vanillaExtractPlugin({
         ssr = ssrParam?.ssr;
       }
 
-      const result = await compiler.processVanillaFile(normalizePath(validId), {
+      const result = await compiler.processVanillaFile({
+        code,
+        filePath: normalizePath(validId),
         outputCss: !ssr || resolvedEmitCssInSsr,
         async cssImportSpecifier(filePath, css) {
           const rootRelativeId = `${filePath}${

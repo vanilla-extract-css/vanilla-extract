@@ -1,4 +1,5 @@
 import { dirname } from 'path';
+import { readFile } from 'fs/promises';
 
 import {
   vanillaExtractTransformPlugin,
@@ -69,7 +70,10 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: /.*/ }, async ({ path }) => {
-        const result = await compiler.processVanillaFile(path, {
+        const code = await readFile(path, { encoding: 'utf-8' });
+        const result = await compiler.processVanillaFile({
+          filePath: path,
+          code,
           outputCss,
         });
 

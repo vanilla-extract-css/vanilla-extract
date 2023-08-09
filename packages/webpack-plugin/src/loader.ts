@@ -20,40 +20,46 @@ interface InternalLoaderOptions extends LoaderOptions {
   veCompiler: InlineCompiler;
 }
 
-export async function pitch(this: LoaderContext) {
+export default async function loader(this: LoaderContext, code: string) {
   const { veCompiler, outputCss } = loaderUtils.getOptions(
     this,
   ) as InternalLoaderOptions;
 
   const callback = this.async();
 
-  const result = await veCompiler.processVanillaFile(this.resourcePath, {
-    outputCss,
-    cssImportSpecifier: async (filePath, css, root) => {
-      const serializedCss = await serializeCss(css);
-      const absFilePath = path.join(root, filePath);
-      const virtualFileName = absFilePath + '.vanilla.css';
-      const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
-        source: serializedCss,
-      })}`;
+  try {
+    const result = await veCompiler.processVanillaFile({
+      filePath: this.resourcePath,
+      code,
+      outputCss,
+      cssImportSpecifier: async (filePath, css, root) => {
+        const serializedCss = await serializeCss(css);
+        const absFilePath = path.join(root, filePath);
+        const virtualFileName = absFilePath + '.vanilla.css';
+        const virtualResourceLoader = `${virtualLoader}?${JSON.stringify({
+          source: serializedCss,
+        })}`;
 
-      const request = loaderUtils.stringifyRequest(
-        this,
-        `${virtualFileName}!=!${virtualResourceLoader}!${absFilePath}`,
-      );
+        const request = loaderUtils.stringifyRequest(
+          this,
+          `${virtualFileName}!=!${virtualResourceLoader}!${absFilePath}`,
+        );
 
-      // Webpack automatically wraps the request in quotes which VE does for us.
-      return request.slice(1, -1);
-    },
-  });
+        // Webpack automatically wraps the request in quotes which VE does for us.
+        return request.slice(1, -1);
+      },
+    });
 
-  if (!result) {
-    return callback(null);
+    if (!result || !result.source) {
+      return callback(null, code);
+    }
+
+    for (const watchFile of result.watchFiles) {
+      this.addDependency(watchFile);
+    }
+
+    return callback(null, result.source);
+  } catch (e) {
+    return callback(e);
   }
-
-  for (const watchFile of result.watchFiles) {
-    this.addDependency(watchFile);
-  }
-
-  return callback(null, result.source);
 }

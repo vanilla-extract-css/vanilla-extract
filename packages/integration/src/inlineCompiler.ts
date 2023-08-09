@@ -1,5 +1,4 @@
 import { join, relative, isAbsolute } from 'path';
-import { readFile } from 'fs/promises';
 import assert from 'assert';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
@@ -82,7 +81,6 @@ export interface InlineCompilerOptions {
 export class InlineCompiler {
   root: string;
   identifiers: IdentifierOption;
-  transformCache: Map<string, { buildtime: string; runtime: string }>;
   runner: ViteNodeRunner | undefined;
   server: ViteDevServer | undefined;
   originalPrepareContext: ViteNodeRunner['prepareContext'] | undefined;
@@ -111,7 +109,6 @@ export class InlineCompiler {
   }: InlineCompilerOptions) {
     this.root = root;
     this.identifiers = identifiers;
-    this.transformCache = new Map();
     this.viteInitPromise = this.intializeViteNode(vitePlugins);
     this.cssCache = new Map();
     this.processVanillaFileCache = new Map();
@@ -207,15 +204,17 @@ export class InlineCompiler {
     }
 
     if (isLegacyCssFile) {
-      return legacyTransform({
-        source: code,
-        rootPath: this.root,
-        filePath: id,
-        // TODO: Do we need this anymore after file scope change?
-        packageName: getPackageInfo(this.root).name,
-        identOption: this.identifiers,
-        globalAdapterIdentifier,
-      });
+      return {
+        buildtime: legacyTransform({
+          source: code,
+          rootPath: this.root,
+          filePath: id,
+          // TODO: Do we need this anymore after file scope change?
+          packageName: getPackageInfo(this.root).name,
+          identOption: this.identifiers,
+          globalAdapterIdentifier,
+        }),
+      };
     }
 
     const transformResult = await transform({
@@ -229,9 +228,7 @@ export class InlineCompiler {
       macros,
     });
 
-    this.transformCache.set(id, transformResult);
-
-    return transformResult.buildtime;
+    return transformResult;
   }
 
   async intializeViteNode(vitePlugins: Array<VitePlugin>) {
@@ -242,8 +239,11 @@ export class InlineCompiler {
 
     const vite = await import('vite');
 
-    const transform = (code: string, id: string) =>
-      this.transformCode(code, id);
+    const transform = async (code: string, id: string) => {
+      const result = await this.transformCode(code, id);
+
+      return result?.buildtime;
+    };
 
     const server = await vite.createServer({
       configFile: false,
@@ -312,12 +312,14 @@ export class InlineCompiler {
     this.normalizeModuleId = vite.normalizePath;
   }
 
-  renderRuntimeFile({
+  async renderRuntimeFile({
+    code,
     filePath,
     isLegacyCssFile,
     cssImports,
     fileExports,
   }: {
+    code: string;
     filePath: string;
     isLegacyCssFile: boolean;
     cssImports: Array<string>;
@@ -328,10 +330,14 @@ export class InlineCompiler {
     if (isLegacyCssFile) {
       runtimeCode = `export { ${Object.keys(fileExports).join(', ')} };`;
     } else {
-      runtimeCode = this.transformCache.get(filePath)?.runtime;
-      if (typeof runtimeCode !== 'string') {
-        throw new Error(`Can't find runtime code for "${filePath}"`);
+      const result = await this.transformCode(code, filePath);
+
+      if (!result || !('runtime' in result)) {
+        // This means that the file contains no macros, can this happen???
+        return null;
       }
+
+      runtimeCode = result.runtime;
     }
 
     return serializeVanillaModule(
@@ -343,20 +349,21 @@ export class InlineCompiler {
     );
   }
 
-  async processVanillaFile(
-    filePath: string,
-    {
-      outputCss = true,
-      cssImportSpecifier = (filePath: string) => filePath + '.vanilla.css',
-    }: {
-      outputCss?: boolean;
-      cssImportSpecifier?: (
-        filePath: string,
-        css: string,
-        root: string,
-      ) => Promise<string> | string;
-    } = {},
-  ): Promise<ProcessedVanillaFile | null> {
+  async processVanillaFile({
+    filePath,
+    code,
+    outputCss = true,
+    cssImportSpecifier = (filePath: string) => filePath + '.vanilla.css',
+  }: {
+    filePath: string;
+    code: string;
+    outputCss?: boolean;
+    cssImportSpecifier?: (
+      filePath: string,
+      css: string,
+      root: string,
+    ) => Promise<string> | string;
+  }): Promise<ProcessedVanillaFile | null> {
     await this.viteInitPromise;
     assert(
       this.server && this.runner && this.normalizeModuleId,
@@ -364,17 +371,6 @@ export class InlineCompiler {
     );
 
     filePath = isAbsolute(filePath) ? filePath : join(this.root, filePath);
-
-    let code;
-
-    try {
-      // TODO: Improve perf. Reading all files from disk is wasteful.
-      // We can likely cache using the module graph
-      code = await readFile(filePath, { encoding: 'utf-8' });
-    } catch (e) {
-      // Ignore virtual files
-      return null;
-    }
     const { shouldProcess, isLegacyCssFile } = await this.analyseModule(
       code,
       filePath,
@@ -480,7 +476,6 @@ export class InlineCompiler {
           };
         };
 
-        // console.log('Execute file', filePath);
         const fileExports = await this.runner.executeFile(filePath);
 
         const moduleId = normalizeModuleId(filePath);
@@ -543,13 +538,20 @@ export class InlineCompiler {
         };
       });
 
+    const finalSource = await this.renderRuntimeFile({
+      code,
+      filePath,
+      isLegacyCssFile,
+      cssImports,
+      fileExports,
+    });
+
+    if (!finalSource) {
+      return null;
+    }
+
     const result: ProcessedVanillaFile = {
-      source: this.renderRuntimeFile({
-        filePath,
-        isLegacyCssFile,
-        cssImports,
-        fileExports,
-      }),
+      source: finalSource,
       watchFiles,
     };
 
