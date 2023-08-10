@@ -1,4 +1,5 @@
-import { setFileScope, endFileScope } from './fileScope';
+import { removeAdapter, setAdapter } from './adapter';
+import { endFileScope, setFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 
 describe('identifier', () => {
@@ -55,6 +56,36 @@ describe('identifier', () => {
       expect(
         generateIdentifier({ debugFileName: false }),
       ).toMatchInlineSnapshot(`"_18bazsm6"`);
+    });
+  });
+
+  describe('with custom callback', () => {
+    beforeAll(() => {
+      setAdapter({
+        appendCss: () => {},
+        registerClassName: () => {},
+        onEndFileScope: () => {},
+        registerComposition: () => {},
+        markCompositionUsed: () => {},
+        getIdentOption: () => (scope, refCount, debugId) =>
+          `abc_${debugId}_${scope}_${refCount}`,
+      });
+    });
+
+    afterAll(() => {
+      removeAdapter();
+    });
+
+    it('defers to a custom callback', () => {
+      expect(generateIdentifier(`a`)).toMatchInlineSnapshot(
+        `"abc_a_18bazsm_7"`,
+      );
+    });
+
+    it('rejects invalid identifiers', () => {
+      // getIdentOption() does not remove spaces from the debug info so the
+      // resulting identifier should be invalid here.
+      expect(() => generateIdentifier(`a b`)).toThrow();
     });
   });
 });

@@ -1,5 +1,5 @@
-import type { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
-import type { Properties, AtRule } from 'csstype';
+import type { CSSVarFunction, MapLeafNodes } from '@vanilla-extract/private';
+import type { AtRule, Properties } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
@@ -120,7 +120,11 @@ export interface Composition {
   classList: string;
 }
 
-type IdentOption = 'short' | 'debug';
+type IdentOption =
+  | 'short'
+  | 'debug'
+  | ((scope: string, refCount: string, debugId: string | undefined) => string);
+
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;
   registerClassName: (className: string, fileScope: FileScope) => void;
