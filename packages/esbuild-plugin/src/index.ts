@@ -22,11 +22,13 @@ interface VanillaExtractPluginOptions {
   externals?: Array<string>;
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
+  onFileCompiled?: (path: string, identifiers: Record<string, string>) => void;
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   outputCss,
+  onFileCompiled,
   externals = [],
   runtime = false,
   processCss,
@@ -93,6 +95,7 @@ export function vanillaExtractPlugin({
 
         const contents = await processVanillaFile({
           source,
+          onFileCompiled,
           filePath: path,
           outputCss,
           identOption,
