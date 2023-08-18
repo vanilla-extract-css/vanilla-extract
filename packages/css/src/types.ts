@@ -120,10 +120,14 @@ export interface Composition {
   classList: string;
 }
 
-type IdentOption =
-  | 'short'
-  | 'debug'
-  | ((scope: string, refCount: string, debugId: string | undefined) => string);
+type CustomIdentFunction = (params: {
+  hash: string;
+  debugId?: string;
+  filePath?: string;
+  packageName?: string;
+}) => string;
+
+type IdentOption = 'short' | 'debug' | CustomIdentFunction;
 
 export interface Adapter {
   appendCss: (css: CSS, fileScope: FileScope) => void;

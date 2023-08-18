@@ -42,7 +42,7 @@ export function generateIdentifier(options?: GenerateIdentifierOptions): string;
 export function generateIdentifier(
   arg?: string | GenerateIdentifierOptions,
 ): string {
-  const indentOption = getIdentOption();
+  const identOption = getIdentOption();
   const { debugId, debugFileName = true } = {
     ...(typeof arg === 'string' ? { debugId: arg } : null),
     ...(typeof arg === 'object' ? arg : null),
@@ -58,7 +58,7 @@ export function generateIdentifier(
 
   let identifier = `${fileScopeHash}${refCount}`;
 
-  if (indentOption === 'debug') {
+  if (identOption === 'debug') {
     const devPrefix = getDevPrefix({ debugId, debugFileName });
 
     if (devPrefix) {
@@ -67,8 +67,13 @@ export function generateIdentifier(
 
     return normalizeIdentifier(identifier);
   }
-  if (typeof indentOption === 'function') {
-    identifier = indentOption(fileScopeHash, refCount, debugId);
+  if (typeof identOption === 'function') {
+    identifier = identOption({
+      hash: identifier,
+      debugId,
+      filePath,
+      packageName,
+    });
 
     if (!identifier.match(/^[A-Z_][0-9A-Z_]+$/i)) {
       throw new Error(

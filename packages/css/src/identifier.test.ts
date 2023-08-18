@@ -61,24 +61,33 @@ describe('identifier', () => {
 
   describe('with custom callback', () => {
     beforeAll(() => {
+      setFileScope('path/to/file.css.ts', 'packagetest');
       setAdapter({
         appendCss: () => {},
         registerClassName: () => {},
         onEndFileScope: () => {},
         registerComposition: () => {},
         markCompositionUsed: () => {},
-        getIdentOption: () => (scope, refCount, debugId) =>
-          `abc_${debugId}_${scope}_${refCount}`,
+        getIdentOption:
+          () =>
+          ({ hash, debugId, filePath, packageName }) => {
+            const filenameWithExtension = filePath?.split('/').pop();
+            const filenameWithoutExtension =
+              filenameWithExtension?.split('.')?.[0];
+
+            return `abc_${debugId}_${hash}_${packageName}_${filenameWithoutExtension}`;
+          },
       });
     });
 
     afterAll(() => {
       removeAdapter();
+      endFileScope();
     });
 
     it('defers to a custom callback', () => {
       expect(generateIdentifier(`a`)).toMatchInlineSnapshot(
-        `"abc_a_18bazsm_7"`,
+        `"abc_a_s0xkdr0_packagetest_file"`,
       );
     });
 
