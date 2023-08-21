@@ -88,9 +88,9 @@ importers:
       '@types/react': ^17
       '@types/react-dom': ^17
       '@types/tailwindcss': ^2
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/sprinkles': ^1.6.1
-      '@vanilla-extract/webpack-plugin': ^2.2.0
+      '@vanilla-extract/webpack-plugin': ^2.3.0
       babel-loader: ^8.2.2
       css-loader: ^5.2.4
       html-webpack-plugin: ^5.3.1
@@ -127,7 +127,7 @@ importers:
 
   fixtures/features:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -135,19 +135,19 @@ importers:
 
   fixtures/layers:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/low-level:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
   fixtures/recipes:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/recipes': 0.5.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -155,7 +155,7 @@ importers:
 
   fixtures/sprinkles:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/sprinkles': 1.6.1
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -163,7 +163,7 @@ importers:
 
   fixtures/themed:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/dynamic': 2.0.3
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
@@ -171,7 +171,7 @@ importers:
 
   fixtures/unused-modules:
     specifiers:
-      '@vanilla-extract/css': 1.12.0
+      '@vanilla-extract/css': 1.13.0
     dependencies:
       '@vanilla-extract/css': link:../../packages/css
 
@@ -288,7 +288,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
-      '@vanilla-extract/webpack-plugin': ^2.2.0
+      '@vanilla-extract/webpack-plugin': ^2.3.0
       browserslist: ^4.19.1
       next: 12.3.4
       webpack: ^5.36.1
@@ -320,7 +320,7 @@ importers:
     specifiers:
       '@fixtures/themed': '*'
       '@rollup/plugin-json': ^4.1.0
-      '@vanilla-extract/css': ^1.12.0
+      '@vanilla-extract/css': ^1.13.0
       '@vanilla-extract/integration': ^6.2.0
       esbuild: 0.17.6
       rollup: ^2.7.0
