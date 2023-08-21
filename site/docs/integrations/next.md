@@ -57,6 +57,12 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 
 - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
-- A function accepting three parameters: A scope name, an index, and an optional rule level debug name, and returning the identifier.
+- A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
+
+```ts
+const withVanillaExtract = createVanillaExtractPlugin({
+  identifiers: ({ hash }) => `prefix_${hash}`
+});
+```
 
 Each integration will set a default value based on the configuration options passed to the bundler.

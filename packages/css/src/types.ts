@@ -122,8 +122,8 @@ export interface Composition {
 
 type CustomIdentFunction = (params: {
   hash: string;
+  filePath: string;
   debugId?: string;
-  filePath?: string;
   packageName?: string;
 }) => string;
 
