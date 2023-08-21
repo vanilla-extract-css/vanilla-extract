@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.0
+
+### Minor Changes
+
+- [#1160](https://github.com/vanilla-extract-css/vanilla-extract/pull/1160) [`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180) Thanks [@SombreroElGringo](https://github.com/SombreroElGringo)! - Users can now provide a custom identifier hashing function
+
 ## 2.2.0
 
 ### Minor Changes
