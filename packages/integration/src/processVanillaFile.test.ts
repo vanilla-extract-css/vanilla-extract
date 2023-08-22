@@ -1,6 +1,3 @@
-// @ts-expect-error
-import evalCode from 'eval';
-
 import { serializeVanillaModule } from './processVanillaFile';
 
 describe('serializeVanillaModule', () => {

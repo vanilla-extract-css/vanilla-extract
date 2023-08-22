@@ -19,7 +19,7 @@
     "@vanilla-extract/babel-plugin-debug-ids": "^1.0.2",
     "@vanilla-extract/css": "^1.10.0",
     "esbuild": "0.17.6",
-    "eval": "0.1.6",
+    "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
