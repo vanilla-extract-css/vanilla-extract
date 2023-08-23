@@ -18,7 +18,6 @@
     "@babel/plugin-syntax-typescript": "^7.20.0",
     "@vanilla-extract/babel-plugin-debug-ids": "^1.0.2",
     "@vanilla-extract/css": "^1.10.0",
-    "esbuild": "0.17.6",
     "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
@@ -30,6 +29,10 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.20",
-    "@types/lodash": "^4.14.168"
+    "@types/lodash": "^4.14.168",
+    "esbuild": "0.17.6"
+  },
+  "peerDependencies": {
+    "esbuild": "^0.17.0 || ^0.18.0 || ^0.19.0"
   }
 }

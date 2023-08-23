@@ -20,7 +20,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.2.0",
+    "@vanilla-extract/integration": "^6.2.2",
     "esbuild": "0.17.6"
   },
   "devDependencies": {

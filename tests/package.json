@@ -13,6 +13,7 @@
     "@vanilla-extract/dynamic": "*",
     "@vanilla-extract/integration": "*",
     "@vanilla-extract/recipes": "*",
-    "@vanilla-extract/sprinkles": "*"
+    "@vanilla-extract/sprinkles": "*",
+    "esbuild": "0.17.6"
   }
 }

@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@parcel/plugin": "^2.7.0",
-    "@vanilla-extract/integration": "^6.0.0"
+    "@vanilla-extract/integration": "^6.2.2",
+    "esbuild": "0.17.6"
   }
 }
