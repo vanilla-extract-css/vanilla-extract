@@ -8,6 +8,10 @@ import {
 
 type Styles = { [cssVarName: string]: string };
 
+function isDefined(value : any) : boolean {
+  return value !== null && value !== undefined;
+}
+
 export function assignInlineVars(vars: Record<string, string>): Styles;
 export function assignInlineVars<ThemeContract extends Contract>(
   contract: ThemeContract,
@@ -21,14 +25,16 @@ export function assignInlineVars(varsOrContract: any, tokens?: any) {
 
     walkObject(tokens, (value, path) => {
       const varName = get(contract, path);
-
+      if(!isDefined(value)) return;
       styles[getVarName(varName)] = String(value);
     });
   } else {
     const vars = varsOrContract;
 
     for (const varName in vars) {
-      styles[getVarName(varName)] = vars[varName];
+      const value = vars[varName];
+      if(!isDefined(value)) continue;      
+      styles[getVarName(varName)] = value;
     }
   }
 
