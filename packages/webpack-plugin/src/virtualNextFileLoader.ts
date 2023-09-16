@@ -1,4 +1,4 @@
-import { deserializeCss } from "@vanilla-extract/integration";
+import { deserializeCss } from '@vanilla-extract/integration';
 
 export default function (this: any) {
   const callback = this.async();
