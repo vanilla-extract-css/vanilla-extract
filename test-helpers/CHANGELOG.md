@@ -1,5 +1,12 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [[`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241)]:
+  - @vanilla-extract/webpack-plugin@2.3.1
+
 ## 0.0.44
 
 ### Patch Changes

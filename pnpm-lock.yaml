@@ -288,7 +288,7 @@ importers:
 
   packages/next-plugin:
     specifiers:
-      '@vanilla-extract/webpack-plugin': ^2.3.0
+      '@vanilla-extract/webpack-plugin': ^2.3.1
       next: 12.3.4
       webpack: ^5.36.1
     dependencies:
