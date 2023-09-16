@@ -8,7 +8,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: [14, ''] # Add 'lts/*' to this list when ready
+        node: [16, ''] # Add 'lts/*' to this list when ready
     name: Lint & Test (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
