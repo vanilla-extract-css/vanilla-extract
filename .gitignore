@@ -10,3 +10,4 @@ test-results
 .pnp.*
 .next
 .DS_Store
+.idea
