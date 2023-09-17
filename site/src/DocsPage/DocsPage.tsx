@@ -385,7 +385,7 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
-  const normalisedPath = location.pathname.endsWith('/')
+  const normalizedPath = location.pathname.endsWith('/')
     ? location.pathname.slice(0, location.pathname.lastIndexOf('/'))
     : location.pathname;
 
@@ -408,10 +408,10 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
       <PrimaryNav
         open={menuOpen}
         onClick={closeMenu}
-        pathname={normalisedPath}
+        pathname={normalizedPath}
       />
 
-      <SecondaryNav onClick={closeMenu} pathname={normalisedPath} />
+      <SecondaryNav onClick={closeMenu} pathname={normalizedPath} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'flex' }} alignItems="center">

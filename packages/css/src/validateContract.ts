@@ -2,10 +2,10 @@ import { Contract, walkObject } from '@vanilla-extract/private';
 import { diff } from 'deep-object-diff';
 import chalk from 'chalk';
 
-const normaliseObject = (obj: Contract) => walkObject(obj, () => '');
+const normalizeObject = (obj: Contract) => walkObject(obj, () => '');
 
 export function validateContract(contract: any, tokens: any) {
-  const theDiff = diff(normaliseObject(contract), normaliseObject(tokens));
+  const theDiff = diff(normalizeObject(contract), normalizeObject(tokens));
   const valid = Object.keys(theDiff).length === 0;
 
   return {
