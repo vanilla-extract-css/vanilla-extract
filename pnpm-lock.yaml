@@ -189,7 +189,6 @@ importers:
       '@emotion/hash': ^0.9.0
       '@types/cssesc': ^3.0.0
       '@vanilla-extract/private': ^1.0.3
-      ahocorasick: 1.0.2
       chalk: ^4.1.1
       css-what: ^6.1.0
       cssesc: ^3.0.0
@@ -197,11 +196,11 @@ importers:
       deep-object-diff: ^1.1.9
       deepmerge: ^4.2.2
       media-query-parser: ^2.0.2
+      modern-ahocorasick: ^1.0.0
       outdent: ^0.8.0
     dependencies:
       '@emotion/hash': 0.9.0
       '@vanilla-extract/private': link:../private
-      ahocorasick: 1.0.2
       chalk: 4.1.2
       css-what: 6.1.0
       cssesc: 3.0.0
@@ -209,6 +208,7 @@ importers:
       deep-object-diff: 1.1.9
       deepmerge: 4.2.2
       media-query-parser: 2.0.2
+      modern-ahocorasick: 1.0.0
       outdent: 0.8.0
     devDependencies:
       '@types/cssesc': 3.0.0
@@ -7013,10 +7013,6 @@ packages:
       clean-stack: 4.2.0
       indent-string: 5.0.0
     dev: true
-
-  /ahocorasick/1.0.2:
-    resolution: {integrity: sha512-hCOfMzbFx5IDutmWLAt6MZwOUjIfSM9G9FyVxytmE4Rs/5YDPWQrD/+IR1w+FweD9H2oOZEnv36TmkjhNURBVA==}
-    dev: false
 
   /ajv-errors/1.0.1_ajv@6.12.6:
     resolution: {integrity: sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==}
@@ -14320,6 +14316,11 @@ packages:
       pathe: 1.1.0
       pkg-types: 1.0.1
       ufo: 1.0.1
+    dev: false
+
+  /modern-ahocorasick/1.0.0:
+    resolution: {integrity: sha512-vg0ZzTD3tmcIPUMpuJKfcCpoxzsQu9ka/jAAGQLdrq2yLu/jUUMq/IWw9578q8QE0bNrQHonaFHmvqrhTGpk4g==}
+    requiresBuild: true
     dev: false
 
   /modern-normalize/1.1.0:
