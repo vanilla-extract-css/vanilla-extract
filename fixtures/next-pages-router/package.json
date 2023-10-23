@@ -1,0 +1,36 @@
+{
+  "name": "@fixtures/next-pages-router",
+  "description": "Next pages router fixtures",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean-build": "pnpm clean && next build",
+    "clean": "pnpm clean:dev && pnpm clean:prod",
+    "clean:dev": "rm -rf .next",
+    "clean:prod": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fixtures/features": "*",
+    "@fixtures/recipes": "*",
+    "@fixtures/sprinkles": "*",
+    "@vanilla-extract/css": "*",
+    "@vanilla-extract/recipes": "*",
+    "@vanilla-extract/sprinkles": "*",
+    "next": "12.3.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17",
+    "@vanilla-extract/next-plugin": "2.3.6"
+  },
+  "browserslist": [
+    ">0.3%",
+    "ie 11",
+    "safari 4",
+    "not op_mini all"
+  ]
+}

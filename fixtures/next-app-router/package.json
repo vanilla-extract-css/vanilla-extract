@@ -1,0 +1,38 @@
+{
+  "name": "@fixtures/next-app-router",
+  "description": "Next app router fixtures",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm copy-next-plugin && next dev",
+    "build": "pnpm copy-next-plugin && next build",
+    "start": "next start",
+    "clean-build": "pnpm clean && pnpm build",
+    "copy-next-plugin": "node ./copyNextPlugin.cjs",
+    "clean": "pnpm clean:dev && pnpm clean:prod",
+    "clean:dev": "rm -rf .next",
+    "clean:prod": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fixtures/features": "*",
+    "@fixtures/recipes": "*",
+    "@fixtures/sprinkles": "*",
+    "@vanilla-extract/css": "*",
+    "@vanilla-extract/recipes": "*",
+    "@vanilla-extract/sprinkles": "*",
+    "next": "npm:next@13.5.4",
+    "react": "npm:react@^18.2.0",
+    "react-dom": "npm:react-dom@^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17",
+    "@vanilla-extract/next-plugin": "*",
+    "@vanilla-extract/webpack-plugin": "*"
+  },
+  "browserslist": [
+    ">0.3%",
+    "ie 11",
+    "safari 4",
+    "not op_mini all"
+  ]
+}

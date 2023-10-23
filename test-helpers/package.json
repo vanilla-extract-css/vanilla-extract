@@ -10,6 +10,8 @@
     "@fixtures/features": "*",
     "@fixtures/layers": "*",
     "@fixtures/low-level": "*",
+    "@fixtures/next-app-router": "*",
+    "@fixtures/next-pages-router": "*",
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",
     "@fixtures/template-string-paths": "*",
