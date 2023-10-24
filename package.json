@@ -31,7 +31,7 @@
   },
   "volta": {
     "node": "18.17.1",
-    "pnpm": "8.7.5"
+    "pnpm": "8.9.2"
   },
   "dependencies": {
     "@babel/core": "^7.20.7",
@@ -61,7 +61,7 @@
     "typescript": "^4.9.4",
     "vitest": "^0.28.5"
   },
-  "packageManager": "pnpm@8.7.5",
+  "packageManager": "pnpm@8.9.2",
   "pnpm": {
     "patchedDependencies": {
       "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
