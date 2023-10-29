@@ -115,6 +115,7 @@ export const createVanillaExtractPlugin = (
         dir,
         resolvedNextConfig.experimental?.appDir ?? false,
       );
+      // Skip nextConfig check since appDir is stable feature after Next.js 13.4
       const hasAppDir = !!(findPagesDirResult && findPagesDirResult.appDir);
 
       const outputCss = hasAppDir
