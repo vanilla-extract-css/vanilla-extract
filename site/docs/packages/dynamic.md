@@ -80,7 +80,8 @@ document.write(`
 
 ### Assigning theme contracts dynamically
 
-[Theme contracts](/documentation/theming/) can also be assigned dynamically by passing one as the first argument. All variables must be assigned or it’s a type error.
+[Theme contracts](/documentation/theming/) can also be assigned dynamically by passing one as the first argument.
+All variables must be assigned or it’s a type error.
 
 This API makes the concept of dynamic theming much simpler.
 
@@ -139,27 +140,34 @@ export const container = style({
 
 An imperative API, allowing variables created using vanilla-extract APIs, e.g. `createVar`, `createTheme`, etc, to be assigned dynamically on a DOM element.
 
+Variables with a value of `null` or `undefined` will not be assigned a value.
+
+> 🧠&nbsp;&nbsp;`null` and `undefined` values can only be passed to `setElementVars` if a theme contract is not provided
+
 ```ts compiled
 // app.ts
 
 import { setElementVars } from '@vanilla-extract/dynamic';
-import { brandColor } from './styles.css.ts';
+import { brandColor, textColor } from './styles.css.ts';
 
 const el = document.getElementById('myElement');
 
 setElementVars(el, {
-  [brandColor]: 'pink'
+  [brandColor]: 'pink',
+  [textColor]: null
 });
 
 // styles.css.ts
 import { createVar, style } from '@vanilla-extract/css';
 
 export const brandColor = createVar();
+export const textColor = createVar();
 ```
 
 ### Setting theme contracts dynamically
 
-[Theme contracts](/documentation/theming/) can also be set dynamically by passing one as the second argument. All variables must be assigned or it’s a type error.
+[Theme contracts](/documentation/theming/) can also be set dynamically by passing one as the second argument.
+All variables must be assigned or it’s a type error.
 
 ```ts compiled
 // app.ts
