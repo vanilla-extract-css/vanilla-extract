@@ -17,18 +17,29 @@ Allows variables to be assigned dynamically that have been created using vanilla
 
 As these APIs produce variable references that contain the CSS var function, e.g. `var(--brandColor__8uideo0)`, it is necessary to remove the wrapping function when setting its value.
 
+Variables with a value of `null` or `undefined` will be omitted from the resulting inline style.
+
+> 🧠&nbsp;&nbsp;`null` and `undefined` values can only be passed to `assignInlineVars` if a theme contract is not provided
+
 ```ts compiled
 // app.tsx
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { container, brandColor } from './styles.css.ts';
+import {
+  container,
+  brandColor,
+  textColor
+} from './styles.css.ts';
 
-// The following inline style becomes:
+// If `tone` is `undefined`, the following inline style becomes:
 // { '--brandColor__8uideo0': 'pink' }
 
-const MyComponent = () => (
+const MyComponent = ({ tone }: { tone?: critical }) => (
   <section
     className={container}
-    style={assignInlineVars({ [brandColor]: 'pink' })}
+    style={assignInlineVars({
+      [brandColor]: 'pink',
+      [textColor]: tone === 'critical' ? 'red' : null
+    })}
   >
     ...
   </section>
@@ -38,9 +49,11 @@ const MyComponent = () => (
 import { createVar, style } from '@vanilla-extract/css';
 
 export const brandColor = createVar();
+export const textColor = createVar();
 
 export const container = style({
-  background: brandColor
+  background: brandColor,
+  color: textColor
 });
 ```
 

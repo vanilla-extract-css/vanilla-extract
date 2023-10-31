@@ -8,6 +8,8 @@ describe('assignInlineVars', () => {
       [vars.baz.qux]: '2',
       '--global-var-1': '3',
       '--global-var-2': '4',
+      '--global-var-3': undefined,
+      '--global-var-4': null,
     });
 
     it('assigns vars', () => {

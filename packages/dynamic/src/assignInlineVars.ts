@@ -8,11 +8,9 @@ import {
 
 type Styles = { [cssVarName: string]: string };
 
-function isDefined(value : any) : boolean {
-  return value !== null && value !== undefined;
-}
-
-export function assignInlineVars(vars: Record<string, string>): Styles;
+export function assignInlineVars(
+  vars: Record<string, string | undefined | null>,
+): Styles;
 export function assignInlineVars<ThemeContract extends Contract>(
   contract: ThemeContract,
   tokens: MapLeafNodes<ThemeContract, string>,
@@ -24,8 +22,12 @@ export function assignInlineVars(varsOrContract: any, tokens?: any) {
     const contract = varsOrContract;
 
     walkObject(tokens, (value, path) => {
+      if (value == null) {
+        return;
+      }
+
       const varName = get(contract, path);
-      if(!isDefined(value)) return;
+
       styles[getVarName(varName)] = String(value);
     });
   } else {
@@ -33,7 +35,11 @@ export function assignInlineVars(varsOrContract: any, tokens?: any) {
 
     for (const varName in vars) {
       const value = vars[varName];
-      if(!isDefined(value)) continue;      
+
+      if (value == null) {
+        continue;
+      }
+
       styles[getVarName(varName)] = value;
     }
   }
