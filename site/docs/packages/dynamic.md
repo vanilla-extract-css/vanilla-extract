@@ -21,7 +21,7 @@ Variables with a value of `null` or `undefined` will be omitted from the resulti
 
 > 🧠&nbsp;&nbsp;`null` and `undefined` values can only be passed to `assignInlineVars` if a theme contract is not provided
 
-```ts compiled
+```tsx compiled
 // app.tsx
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import {
@@ -59,7 +59,7 @@ export const container = style({
 
 Even though this function returns an object of inline styles, it implements the `toString` method, returning a valid `style` attribute value so that it can be used in string templates.
 
-```tsx
+```ts
 // app.ts
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
@@ -85,7 +85,7 @@ All variables must be assigned or it’s a type error.
 
 This API makes the concept of dynamic theming much simpler.
 
-```ts compiled
+```tsx compiled
 // app.tsx
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { container, themeVars } from './theme.css.ts';
