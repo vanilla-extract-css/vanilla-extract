@@ -1,5 +1,6 @@
 import type { ResolvedConfig } from 'vite';
 import type { ProcessOptions, AcceptedPlugin } from 'postcss';
+import postcssrc from 'postcss-load-config';
 
 export interface PostCSSConfigResult {
   options: ProcessOptions;
