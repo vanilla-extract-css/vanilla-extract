@@ -1,25 +1,37 @@
 import type { ResolvedConfig } from 'vite';
-import type { ProcessOptions, Plugin } from 'postcss';
+import type { ProcessOptions, AcceptedPlugin } from 'postcss';
 
 export interface PostCSSConfigResult {
   options: ProcessOptions;
-  plugins: Plugin[];
+  plugins: AcceptedPlugin[];
 }
 
+function isObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
+
+const postcssConfigCache = new WeakMap<
+  ResolvedConfig,
+  PostCSSConfigResult | null | undefined
+>();
+
 // Mostly copied from vite's implementation
-// https://github.com/vitejs/vite/blob/efec70f816b80e55b64255b32a5f120e1cf4e4be/packages/vite/src/node/plugins/css.ts
-export const resolvePostcssConfig = async (
+// https://github.com/vitejs/vite/blob/efec70f816b80e55b64255b32a5f120e1cf4e4be/packages/vite/src/node/plugins/css.ts#L786
+export async function resolvePostcssConfig(
   config: ResolvedConfig,
-): Promise<PostCSSConfigResult | null> => {
+): Promise<PostCSSConfigResult | null> {
+  let result = postcssConfigCache.get(config);
+  if (result !== undefined) {
+    return result;
+  }
+
   // inline postcss config via vite config
   const inlineOptions = config.css?.postcss;
-  const inlineOptionsIsString = typeof inlineOptions === 'string';
-
-  if (inlineOptions && !inlineOptionsIsString) {
+  if (isObject(inlineOptions)) {
     const options = { ...inlineOptions };
 
     delete options.plugins;
-    return {
+    result = {
       options,
       plugins: inlineOptions.plugins || [],
     };
@@ -27,21 +39,20 @@ export const resolvePostcssConfig = async (
     try {
       const searchPath =
         typeof inlineOptions === 'string' ? inlineOptions : config.root;
-
-      const postCssConfig = await (
-        await import('postcss-load-config')
-      ).default({}, searchPath);
-
-      return {
-        options: postCssConfig.options,
-        // @ts-expect-error - The postcssrc options don't agree with real postcss, but it should be ok
-        plugins: postCssConfig.plugins,
-      };
+      // @ts-ignore
+      result = await postcssrc({}, searchPath);
     } catch (e: any) {
       if (!/No PostCSS Config found/.test(e.message)) {
         throw e;
       }
-      return null;
+      result = null;
     }
   }
-};
+
+  if (typeof result === 'undefined') {
+    throw new Error(`PostCSS Config undefined`);
+  }
+
+  postcssConfigCache.set(config, result);
+  return result;
+}

@@ -1,6 +1,6 @@
 import path from 'path';
 
-import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
+import type { PluginOption, ResolvedConfig, ViteDevServer } from 'vite';
 import { normalizePath } from 'vite';
 import outdent from 'outdent';
 import {
@@ -29,7 +29,7 @@ export function vanillaExtractPlugin({
   identifiers,
   emitCssInSsr,
   esbuildOptions,
-}: Options = {}): Plugin {
+}: Options = {}): PluginOption {
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;
