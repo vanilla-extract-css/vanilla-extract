@@ -96,3 +96,13 @@ module.exports = createVanillaExtractPlugin(nextConfig);
 ```
 
 [`transpilepackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages
+
+## CSS load order issues
+
+There are some known issues with Next.js css load order and/or duplicate css.
+
+- When client-side navigating, new css is injected into the head, but unused css isn't removed. This means if route B has a component that applies some global css to a component also in route A, upon returning to route A, those styles from route B will still be applied.
+- When using App router, css can be duplicated which could cause unexpected overrides.
+
+[next.js #51030](https://github.com/vercel/next.js/issues/51030)
+[next.js #40080](https://github.com/vercel/next.js/issues/40080)
