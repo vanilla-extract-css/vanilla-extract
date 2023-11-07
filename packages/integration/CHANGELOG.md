@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 6.2.2
+
+### Patch Changes
+
+- [#1167](https://github.com/vanilla-extract-css/vanilla-extract/pull/1167) [`53fd2a6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/53fd2a6a3387a47745387f792d723deaf37d84a2) Thanks [@askoufis](https://github.com/askoufis)! - Bump `eval` to `0.1.8`
+
 ## 6.2.1
 
 ### Patch Changes

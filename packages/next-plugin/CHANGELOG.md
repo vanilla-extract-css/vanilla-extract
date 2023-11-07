@@ -1,5 +1,43 @@
 # @vanilla-extract/next-plugin
 
+## 2.3.1
+
+### Patch Changes
+
+- [#1180](https://github.com/vanilla-extract-css/vanilla-extract/pull/1180) [`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241) Thanks [@syfxlin](https://github.com/syfxlin)! - Fixes Next.js 13 CSS output on Windows when using React Server Components
+
+- Updated dependencies [[`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241)]:
+  - @vanilla-extract/webpack-plugin@2.3.1
+
+## 2.3.0
+
+### Minor Changes
+
+- [#1160](https://github.com/vanilla-extract-css/vanilla-extract/pull/1160) [`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180) Thanks [@SombreroElGringo](https://github.com/SombreroElGringo)! - Users can now provide a custom identifier hashing function
+
+### Patch Changes
+
+- Updated dependencies [[`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180)]:
+  - @vanilla-extract/webpack-plugin@2.3.0
+
+## 2.2.2
+
+### Patch Changes
+
+- [#1155](https://github.com/vanilla-extract-css/vanilla-extract/pull/1155) [`1cb537b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1cb537b04b5733d5d3a697c6f355c44465c9c468) Thanks [@GeeWizWow](https://github.com/GeeWizWow)! - Fix URL statements not not respecting Next's setup for resolving assets
+
+## 2.2.1
+
+### Patch Changes
+
+- [#1148](https://github.com/vanilla-extract-css/vanilla-extract/pull/1148) [`b279bb5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b279bb5fc4902abb68319f44948e0f66d60125b6) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix error when intializing plugin
+
+## 2.2.0
+
+### Minor Changes
+
+- [#1105](https://github.com/vanilla-extract-css/vanilla-extract/pull/1105) [`9541d79`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9541d79722b9e0488422ee116a31567c0ac192d6) Thanks [@SukkaW](https://github.com/SukkaW)! - Fix #1101. Correctly handle Next.js configuration.
+
 ## 2.1.3
 
 ### Patch Changes

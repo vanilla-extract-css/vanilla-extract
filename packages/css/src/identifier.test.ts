@@ -1,4 +1,5 @@
-import { setFileScope, endFileScope } from './fileScope';
+import { removeAdapter, setAdapter } from './adapter';
+import { endFileScope, setFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 
 describe('identifier', () => {
@@ -55,6 +56,45 @@ describe('identifier', () => {
       expect(
         generateIdentifier({ debugFileName: false }),
       ).toMatchInlineSnapshot(`"_18bazsm6"`);
+    });
+  });
+
+  describe('with custom callback', () => {
+    beforeAll(() => {
+      setFileScope('path/to/file.css.ts', 'packagetest');
+      setAdapter({
+        appendCss: () => {},
+        registerClassName: () => {},
+        onEndFileScope: () => {},
+        registerComposition: () => {},
+        markCompositionUsed: () => {},
+        getIdentOption:
+          () =>
+          ({ hash, debugId, filePath, packageName }) => {
+            const filenameWithExtension = filePath?.split('/').pop();
+            const filenameWithoutExtension =
+              filenameWithExtension?.split('.')?.[0];
+
+            return `abc_${debugId}_${hash}_${packageName}_${filenameWithoutExtension}`;
+          },
+      });
+    });
+
+    afterAll(() => {
+      removeAdapter();
+      endFileScope();
+    });
+
+    it('defers to a custom callback', () => {
+      expect(generateIdentifier(`a`)).toMatchInlineSnapshot(
+        `"abc_a_s0xkdr0_packagetest_file"`,
+      );
+    });
+
+    it('rejects invalid identifiers', () => {
+      // getIdentOption() does not remove spaces from the debug info so the
+      // resulting identifier should be invalid here.
+      expect(() => generateIdentifier(`a b`)).toThrow();
     });
   });
 });

@@ -1,5 +1,35 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [[`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241)]:
+  - @vanilla-extract/webpack-plugin@2.3.1
+
+## 0.0.44
+
+### Patch Changes
+
+- Updated dependencies [[`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180)]:
+  - @vanilla-extract/webpack-plugin@2.3.0
+  - @vanilla-extract/esbuild-plugin@2.3.0
+  - @vanilla-extract/vite-plugin@3.9.0
+  - @fixtures/features@0.0.22
+  - @fixtures/layers@0.0.5
+  - @fixtures/low-level@0.0.22
+  - @fixtures/recipes@0.0.25
+  - @fixtures/sprinkles@0.0.27
+  - @fixtures/themed@0.0.22
+  - @fixtures/unused-modules@1.0.22
+
+## 0.0.43
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/recipes@0.0.24
+
 ## 0.0.42
 
 ### Patch Changes

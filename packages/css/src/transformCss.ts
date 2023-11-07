@@ -1,6 +1,6 @@
 import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
-import AhoCorasick from 'ahocorasick';
+import AhoCorasick from 'modern-ahocorasick';
 
 import type {
   CSS,

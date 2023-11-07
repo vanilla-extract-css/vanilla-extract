@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/integration",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-integration.cjs.js",
   "files": [
@@ -19,7 +19,7 @@
     "@vanilla-extract/babel-plugin-debug-ids": "^1.0.2",
     "@vanilla-extract/css": "^1.10.0",
     "esbuild": "0.17.6",
-    "eval": "0.1.6",
+    "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",

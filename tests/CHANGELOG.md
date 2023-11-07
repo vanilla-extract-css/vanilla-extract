@@ -1,5 +1,35 @@
 # @vanilla-extract-private/tests
 
+## 0.0.47
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.45
+
+## 0.0.46
+
+### Patch Changes
+
+- Updated dependencies [[`53fd2a6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/53fd2a6a3387a47745387f792d723deaf37d84a2)]:
+  - @vanilla-extract/integration@6.2.2
+
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [[`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180)]:
+  - @vanilla-extract/css@1.13.0
+  - @vanilla-extract-private/test-helpers@0.0.44
+
+## 0.0.44
+
+### Patch Changes
+
+- Updated dependencies [[`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb), [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb)]:
+  - @vanilla-extract/recipes@0.5.0
+  - @vanilla-extract-private/test-helpers@0.0.43
+
 ## 0.0.43
 
 ### Patch Changes

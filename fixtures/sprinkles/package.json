@@ -1,12 +1,12 @@
 {
   "name": "@fixtures/sprinkles",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.12.0",
+    "@vanilla-extract/css": "1.13.0",
     "@vanilla-extract/sprinkles": "1.6.1"
   }
 }

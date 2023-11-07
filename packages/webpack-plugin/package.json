@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/webpack-plugin",
-  "version": "2.2.0",
+  "version": "2.3.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
@@ -17,20 +17,33 @@
     "./virtualFileLoader": {
       "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
       "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
+    },
+    "./next": {
+      "module": "./next/dist/vanilla-extract-webpack-plugin-next.esm.js",
+      "default": "./next/dist/vanilla-extract-webpack-plugin-next.cjs.js"
+    },
+    "./virtualNextFileLoader": {
+      "module": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.esm.js",
+      "default": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.js"
     }
   },
   "preconstruct": {
     "entrypoints": [
       "index.ts",
       "loader.ts",
-      "virtualFileLoader.ts"
+      "virtualFileLoader.ts",
+      "next.ts",
+      "virtualNextFileLoader.ts"
     ]
   },
   "files": [
     "/dist",
     "/loader",
     "/virtualFileLoader",
-    "extracted.js"
+    "/next",
+    "/virtualNextFileLoader",
+    "extracted.js",
+    "vanilla.virtual.css"
   ],
   "repository": {
     "type": "git",

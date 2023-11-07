@@ -1,6 +1,5 @@
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-// @ts-expect-error
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
@@ -97,7 +96,7 @@ export async function processVanillaFile({
       __adapter__: cssAdapter,
     },
     true,
-  );
+  ) as Record<string, unknown>;
 
   const cssImports = [];
 
