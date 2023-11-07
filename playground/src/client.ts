@@ -13,7 +13,6 @@ async function updateResult() {
     ...getOptions(),
     filePath: 'styles.css.ts',
     input,
-    mode: 'client',
   });
 
   document.querySelector('#result')!.innerHTML = css;

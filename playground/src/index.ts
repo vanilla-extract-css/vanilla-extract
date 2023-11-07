@@ -1,3 +1,4 @@
+import * as path from 'path';
 // importing directly from source so we don't bundle esbuild
 import { processVanillaFile } from '@vanilla-extract/integration/src/processVanillaFile';
 import { virtualCssFileFilter } from '@vanilla-extract/integration/src/filters';
@@ -12,7 +13,7 @@ import {
   type BuildResult as EsbuildResult,
 } from 'esbuild-wasm';
 
-let CWD = '';
+const cwd = process.cwd();
 
 const runEsbuild = async (esbuildOptions: EsbuildOptions) =>
   esbuild({
@@ -21,7 +22,7 @@ const runEsbuild = async (esbuildOptions: EsbuildOptions) =>
     external: ['@vanilla-extract', ...(esbuildOptions?.external ?? [])],
     platform: 'node',
     write: false,
-    absWorkingDir: CWD,
+    absWorkingDir: cwd,
     ...esbuildOptions,
   });
 const getEsbuildResult = (result: EsbuildResult) => {
@@ -65,7 +66,7 @@ async function transformFileScope({
         return {
           contents: source,
           loader: 'ts',
-          resolveDir: CWD,
+          resolveDir: cwd,
         };
       });
     },
@@ -77,13 +78,6 @@ async function transformFileScope({
   });
 
   return getEsbuildResult(result);
-}
-
-export interface CompileOptions {
-  mode?: 'client' | 'server';
-  input: string;
-  filePath: string;
-  identifiers?: IdentifierOption;
 }
 
 const extractCss = async ({ input, filePath }: CompileOptions) => {
@@ -103,17 +97,15 @@ const extractCss = async ({ input, filePath }: CompileOptions) => {
     },
   });
 
-  const result = await runEsbuild({
+  await runEsbuild({
     stdin: {
       contents: input,
       sourcefile: filePath,
       loader: 'ts',
-      resolveDir: CWD,
+      resolveDir: cwd,
     },
     plugins: [vanillaExtractCssPlugin()],
   });
-
-  getEsbuildResult(result);
 
   return extractedCss;
 };
@@ -122,14 +114,17 @@ export const init = initialize({
   wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
 });
 
+export interface CompileOptions {
+  input: string;
+  filePath: string;
+  identifiers?: IdentifierOption;
+}
 export async function compile({
-  mode = 'server',
   input,
   filePath,
   identifiers = 'debug',
 }: CompileOptions) {
-  CWD = mode === 'server' ? process.cwd() : '/dummy';
-  filePath = `${CWD}/${filePath}`;
+  filePath = path.join(cwd, filePath);
 
   const source = await transformFileScope({
     input,
@@ -137,15 +132,11 @@ export async function compile({
     identOption: identifiers,
   });
 
-  // console.log('source:', source);
-
   const output = await processVanillaFile({
     source,
     filePath,
     identOption: identifiers,
   });
-
-  // console.log('output:', output);
 
   const css = await extractCss({
     input: output,
