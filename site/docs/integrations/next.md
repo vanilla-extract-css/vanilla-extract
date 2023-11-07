@@ -69,7 +69,9 @@ Each integration will set a default value based on the configuration options pas
 
 ## Transpiling Vanilla Extract-dependent Libraries
 
-If your Next.js application depends on a library from `node_modules`, and that library styles its components with Vanilla Extract, but does _not_ compile its styles (i.e. it ships `.css.js/ts` files), then that library needs to be added to `transpilePackages` in your Next.js config:
+By default, Next.js does not allow importing of TypeScript files outside of the app root.
+
+If your application depends on a TypeScript library, either via a local package within a monorepo or a dependnecy inside `node_modules`, and that library styles its components with Vanilla Extract, but does _not_ compile its styles, then that library needs to be added to [`transpilePackages`] in your Next.js config:
 
 ```tsx
 // App.tsx
@@ -92,3 +94,5 @@ const nextConfig = {
 // Next.js Vanilla Extract integration will now compile @company/design-system styles
 module.exports = createVanillaExtractPlugin(nextConfig);
 ```
+
+[`transpilepackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages
