@@ -26,7 +26,7 @@
     "@vanilla-extract/css-utils": "workspace:*",
     "@vanilla-extract/integration": "workspace:*",
     "vite": "^4.5.0",
-    "vite-plugin-node-polyfills": "^0.9.0",
+    "vite-plugin-node-polyfills": "^0.16.0",
     "vite-plugin-static-copy": "^0.17.0"
   }
 }

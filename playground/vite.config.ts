@@ -3,9 +3,6 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
-  define: {
-    'process.env': {},
-  },
   build: {
     minify: false,
   },
@@ -16,30 +13,18 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['./src/shims/require-like.cjs'],
-    // force: true,
+    include: ['./src/shims/*.cjs'],
+    force: true,
   },
   plugins: [
-    // nodePolyfills({
-    //   overrides: {
-    //     module: './src/shims/module.cjs',
-    //   },
-    // }),
-    nodePolyfills(),
-    {
-      // `node-stdlib-browser` (used by `vite-plugin-node-polyfills`) aliases `node:module` to an empty object.
-      // We provide a minimal `node:module` stub so `mlly` doesn't crash.
-      // https://github.com/unjs/mlly/blob/c5bcca0cda175921344fd6de1bc0c499e73e5dac/src/_utils.ts#L1-L3
-      // TODO check https://github.com/unjs/unenv
-      name: 'override-polyfill-aliases',
-      config(config) {
-        Object.assign(config.resolve!.alias!, {
-          module: './src/shims/module.cjs',
-          'node:module': './src/shims/module.cjs',
-        });
-        return config;
+    nodePolyfills({
+      overrides: {
+        // `node-stdlib-browser` (used by `vite-plugin-node-polyfills`) aliases `node:module` to null.
+        // We provide a minimal `node:module` stub so `mlly` doesn't crash.
+        // https://github.com/unjs/mlly/blob/c5bcca0cda175921344fd6de1bc0c499e73e5dac/src/_utils.ts#L1-L3
+        module: './src/shims/module.cjs',
       },
-    },
+    }),
     viteStaticCopy({
       targets: [
         {
