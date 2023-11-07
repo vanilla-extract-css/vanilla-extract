@@ -2,7 +2,6 @@
   "name": "@vanilla-extract/playground",
   "version": "0.0.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-playground.cjs.js",
   "license": "MIT",
   "author": "Remus Mate",
   "repository": {

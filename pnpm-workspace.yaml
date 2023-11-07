@@ -3,6 +3,7 @@ packages:
   - 'packages/*'
   - 'test-helpers'
   - 'fixtures/*'
+  - 'playground'
   - 'site'
   - 'examples/*'
   - 'tests'
