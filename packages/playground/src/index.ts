@@ -14,12 +14,6 @@ import {
 
 let CWD = '';
 
-interface CompileOptions {
-  input: string;
-  filePath: string;
-  identOption: IdentifierOption;
-}
-
 const runEsbuild = async (esbuildOptions: EsbuildOptions) =>
   esbuild({
     metafile: true,
@@ -40,14 +34,19 @@ const getEsbuildResult = (result: EsbuildResult) => {
   return outputFiles[0].text;
 };
 
+interface TransformFileScopeParams {
+  input: string;
+  filePath: string;
+  identOption: IdentifierOption;
+}
 async function transformFileScope({
   input,
   filePath,
   identOption,
-}: CompileOptions) {
+}: TransformFileScopeParams) {
   const vanillaExtractTransformPlugin = ({
     identOption,
-  }: Pick<CompileOptions, 'identOption'>): Plugin => ({
+  }: Pick<TransformFileScopeParams, 'identOption'>): Plugin => ({
     name: 'playground-filescope',
     setup(build) {
       build.onResolve({ filter: /^<stdin>$/ }, () => {
@@ -80,15 +79,15 @@ async function transformFileScope({
   return getEsbuildResult(result);
 }
 
-type Options = {
+export interface CompileOptions {
   mode?: 'client' | 'server';
   input: string;
   filePath: string;
   identifiers?: IdentifierOption;
-};
+}
 
-const extractCss = async ({ input, filePath }: Options) => {
-  let extractedCss: string = '';
+const extractCss = async ({ input, filePath }: CompileOptions) => {
+  let extractedCss = '';
 
   const vanillaExtractCssPlugin = (): Plugin => ({
     name: 'playground-css',
@@ -119,15 +118,17 @@ const extractCss = async ({ input, filePath }: Options) => {
   return extractedCss;
 };
 
-export { initialize };
+export const init = initialize({
+  wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
+});
 
 export async function compile({
   mode = 'server',
   input,
   filePath,
   identifiers = 'debug',
-}: Options) {
-  CWD = mode === 'server' ? process.cwd() : '/tmp';
+}: CompileOptions) {
+  CWD = mode === 'server' ? process.cwd() : '/dummy';
   filePath = `${CWD}/${filePath}`;
 
   const source = await transformFileScope({

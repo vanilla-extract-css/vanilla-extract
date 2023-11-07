@@ -10,6 +10,9 @@ import { hash } from './hash';
 import { serializeCss } from './serialize';
 import type { IdentifierOption } from './types';
 
+// Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
+// This can cause CSS to be bound to the wrong instance, resulting in no CSS output
+// To get around this we set the NODE_ENV back to the original value ONLY during eval
 const originalNodeEnv = process.env.NODE_ENV;
 
 export function stringifyFileScope({
@@ -78,26 +81,23 @@ export async function processVanillaFile({
     getIdentOption: () => identOption,
   };
 
-  const currentNodeEnv = process.env.NODE_ENV;
-
-  // Vite sometimes modifies NODE_ENV which causes different versions (e.g. dev/prod) of vanilla packages to be loaded
-  // This can cause CSS to be bound to the wrong instance, resulting in no CSS output
-  // To get around this we set the NODE_ENV back to the original value ONLY during eval
-  // process.env.NODE_ENV = originalNodeEnv;
-
   const adapterBoundSource = `
-    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
-    ${source}
+  require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+  ${source}
   `;
 
   const evalResult = evalCode(
     adapterBoundSource,
     filePath,
-    { console, process: { env: process.env }, __adapter__: cssAdapter },
+    {
+      console,
+      process: {
+        env: { ...process.env, NODE_ENV: originalNodeEnv },
+      },
+      __adapter__: cssAdapter,
+    },
     true,
   );
-
-  // process.env.NODE_ENV = currentNodeEnv;
 
   const cssImports = [];
 

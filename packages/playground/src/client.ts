@@ -1,51 +1,31 @@
-import { compile, initialize } from '.';
+import { compile, init, type CompileOptions } from '.';
 
-const options = {
-  // identifiers: 'short',
-};
+function getOptions() {
+  const options: Partial<CompileOptions> = JSON.parse(
+    document.querySelector<HTMLTextAreaElement>('#options')!.value,
+  );
+  return options;
+}
 
-async function compileEsbuild(input: string) {
+async function updateResult() {
+  const input = document.querySelector<HTMLTextAreaElement>('#editor')!.value;
   const { css } = await compile({
-    ...options,
+    ...getOptions(),
     filePath: 'styles.css.ts',
     input,
     mode: 'client',
   });
 
-  return css;
+  document.querySelector('#result')!.innerHTML = css;
 }
 
-async function compilePost(input: string) {
-  const res = await fetch('/ve', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ...options,
-      filePath: 'styles.css.ts',
-      input,
-      mode: 'server',
-    }),
-  });
+init.then(() => {
+  document
+    .querySelector<HTMLTextAreaElement>('#editor')!
+    .addEventListener('input', updateResult);
+  document
+    .querySelector<HTMLTextAreaElement>('#options')!
+    .addEventListener('input', updateResult);
 
-  const { css } = await res.json();
-
-  return css;
-}
-
-async function updateResult(input: string) {
-  document.querySelector('#result')!.innerHTML = await compileEsbuild(input);
-}
-
-document.querySelector('textarea')!.addEventListener('input', async (e) => {
-  const input = (e.target as HTMLTextAreaElement).value;
-
-  updateResult(input);
-});
-
-initialize({
-  wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
-}).then(() => {
-  updateResult(document.querySelector('textarea')!.value);
+  updateResult();
 });
