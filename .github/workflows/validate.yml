@@ -8,7 +8,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: [16, ''] # Add 'lts/*' to this list when ready
+        node: ['', 'lts/*']
     name: Lint & Test (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@master
 
       - name: Set up Node.js
         uses: actions/setup-node@main
@@ -42,7 +42,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: [''] # Add 'lts/*' to this list when ready
+        node: ['', 'lts/*']
     name: Windows Tests (${{ (matrix.node && matrix.node != 'lts/*') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: windows-latest
     env:
@@ -51,7 +51,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@master
 
       - name: Set up Node.js
         uses: actions/setup-node@main
@@ -77,7 +77,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@master
 
       - name: Set up Node.js
         uses: actions/setup-node@main
