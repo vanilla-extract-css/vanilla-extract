@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 6.2.3
+
+### Patch Changes
+
+- [#1195](https://github.com/vanilla-extract-css/vanilla-extract/pull/1195) [`c446b5e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c446b5e95ee4e64f7af0da484d2dda81a7f6a522) Thanks [@HelloWorld017](https://github.com/HelloWorld017)! - Ensure userland babel config can not affect integration transforms
+
+- Updated dependencies [[`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4), [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99)]:
+  - @vanilla-extract/css@1.14.0
+
 ## 6.2.2
 
 ### Patch Changes

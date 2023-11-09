@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.3.2
+
+### Patch Changes
+
+- [#1193](https://github.com/vanilla-extract-css/vanilla-extract/pull/1193) [`a22dd4d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a22dd4da82e4338b8f13fdf66827f6e061ff2038) Thanks [@syfxlin](https://github.com/syfxlin)! - Fixes Next.js 13.5.x CSS output on Windows when using React Server Components
+
 ## 2.3.1
 
 ### Patch Changes

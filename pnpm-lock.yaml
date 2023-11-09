@@ -126,7 +126,7 @@ importers:
         specifier: ^7.18.6
         version: 7.18.6(@babel/core@7.20.7)
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
       '@vanilla-extract/sprinkles':
         specifier: ^1.6.1
@@ -181,37 +181,37 @@ importers:
   fixtures/features:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
       '@vanilla-extract/dynamic':
-        specifier: 2.0.3
+        specifier: 2.1.0
         version: link:../../packages/dynamic
 
   fixtures/layers:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
 
   fixtures/low-level:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
 
   fixtures/recipes:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
       '@vanilla-extract/recipes':
-        specifier: 0.5.0
+        specifier: 0.5.1
         version: link:../../packages/recipes
 
   fixtures/sprinkles:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
       '@vanilla-extract/sprinkles':
         specifier: 1.6.1
@@ -220,16 +220,16 @@ importers:
   fixtures/themed:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
       '@vanilla-extract/dynamic':
-        specifier: 2.0.3
+        specifier: 2.1.0
         version: link:../../packages/dynamic
 
   fixtures/unused-modules:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.13.0
+        specifier: 1.14.0
         version: link:../../packages/css
 
   packages/babel-plugin-debug-ids:
@@ -324,7 +324,7 @@ importers:
         specifier: ^1.0.2
         version: link:../babel-plugin-debug-ids
       '@vanilla-extract/css':
-        specifier: ^1.10.0
+        specifier: ^1.14.0
         version: link:../css
       esbuild:
         specifier: 0.17.6
@@ -401,7 +401,7 @@ importers:
   packages/recipes:
     devDependencies:
       '@vanilla-extract/css':
-        specifier: ^1.9.2
+        specifier: ^1.14.0
         version: link:../css
 
   packages/rollup-plugin:

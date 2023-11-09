@@ -1,5 +1,53 @@
 # @vanilla-extract/dynamic
 
+## 2.1.0
+
+### Minor Changes
+
+- [#1175](https://github.com/vanilla-extract-css/vanilla-extract/pull/1175) [`ca854f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ca854f51d5068fb1105a44b3d9af2852d4b61839) Thanks [@youngkyo0504](https://github.com/youngkyo0504)! - `assignInlineVars` now accepts `null` and `undefined` values
+
+  Variables with a value of `null` or `undefined` will be omitted from the resulting inline style.
+
+  **NOTE:** This only applies to the case where a theme contract is not provided.
+
+  ```tsx
+  import { assignInlineVars } from '@vanilla-extract/dynamic';
+  import { container, brandColor, textColor } from './styles.css.ts';
+
+  // If `tone` is `undefined`, the following inline style becomes:
+  // { '--brandColor__8uideo0': 'pink' }
+
+  const MyComponent = ({ tone }: { tone?: critical }) => (
+    <section
+      className={container}
+      style={assignInlineVars({
+        [brandColor]: 'pink',
+        [textColor]: tone === 'critical' ? 'red' : null,
+      })}
+    >
+      ...
+    </section>
+  );
+  ```
+
+- [#1175](https://github.com/vanilla-extract-css/vanilla-extract/pull/1175) [`ca854f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ca854f51d5068fb1105a44b3d9af2852d4b61839) Thanks [@youngkyo0504](https://github.com/youngkyo0504)! - `setElementVars` now accepts `null` and `undefined` values
+
+  Variables with a value of `null` or `undefined` will not be assigned a value.
+
+  **NOTE:** This only applies to the case where a theme contract is not provided.
+
+  ```ts
+  import { setElementVars } from '@vanilla-extract/dynamic';
+  import { brandColor, textColor } from './styles.css.ts';
+
+  const el = document.getElementById('myElement');
+
+  setElementVars(el, {
+    [brandColor]: 'pink',
+    [textColor]: null,
+  });
+  ```
+
 ## 2.0.3
 
 ### Patch Changes
