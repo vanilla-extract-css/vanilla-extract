@@ -24,14 +24,6 @@
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
     "release": "pnpm prepare-release && changeset publish"
   },
-  "preconstruct": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "volta": {
-    "node": "16.17.0"
-  },
   "dependencies": {
     "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
@@ -60,10 +52,18 @@
     "typescript": "^4.9.4",
     "vitest": "^0.28.5"
   },
-  "packageManager": "pnpm@7.9.5",
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "packageManager": "pnpm@8.10.2",
   "pnpm": {
     "patchedDependencies": {
       "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
     }
+  },
+  "volta": {
+    "node": "20.9.0"
   }
 }
