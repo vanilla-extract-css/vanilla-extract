@@ -1,5 +1,9 @@
 import type { ComplexStyleRule } from '@vanilla-extract/css';
 
+type Resolve<T> = {
+  [Key in keyof T]: T[Key];
+} & {};
+
 type RecipeStyleRule = ComplexStyleRule | string;
 
 export type VariantDefinitions = Record<string, RecipeStyleRule>;
@@ -48,5 +52,6 @@ export type RuntimeFn<Variants extends VariantGroups> = ((
   classNames: RecipeClassNames<Variants>;
 };
 
-export type RecipeVariants<RecipeFn extends RuntimeFn<VariantGroups>> =
-  Parameters<RecipeFn>[0];
+export type RecipeVariants<RecipeFn extends RuntimeFn<VariantGroups>> = Resolve<
+  Parameters<RecipeFn>[0]
+>;

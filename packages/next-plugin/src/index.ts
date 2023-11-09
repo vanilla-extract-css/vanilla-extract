@@ -115,9 +115,8 @@ export const createVanillaExtractPlugin = (
         dir,
         resolvedNextConfig.experimental?.appDir ?? false,
       );
-      const hasAppDir =
-        !!resolvedNextConfig.experimental?.appDir &&
-        !!(findPagesDirResult && findPagesDirResult.appDir);
+      // Skip nextConfig check since appDir is stable feature after Next.js 13.4
+      const hasAppDir = !!(findPagesDirResult && findPagesDirResult.appDir);
 
       const outputCss = hasAppDir
         ? // Always output css since Next.js App Router needs to collect Server CSS from React Server Components

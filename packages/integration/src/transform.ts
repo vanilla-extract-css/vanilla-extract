@@ -29,6 +29,7 @@ export const transformSync = ({
       cwd: rootPath,
       plugins: [vanillaBabelPlugin, typescriptSyntax],
       configFile: false,
+      babelrc: false,
     });
 
     if (!result || result.code == null) {
@@ -62,6 +63,7 @@ export const transform = async ({
       cwd: rootPath,
       plugins: [vanillaBabelPlugin, typescriptSyntax],
       configFile: false,
+      babelrc: false,
     });
 
     if (!result || result.code == null) {
