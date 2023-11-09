@@ -17,18 +17,29 @@ Allows variables to be assigned dynamically that have been created using vanilla
 
 As these APIs produce variable references that contain the CSS var function, e.g. `var(--brandColor__8uideo0)`, it is necessary to remove the wrapping function when setting its value.
 
-```ts compiled
+Variables with a value of `null` or `undefined` will be omitted from the resulting inline style.
+
+> 🧠&nbsp;&nbsp;`null` and `undefined` values can only be passed to `assignInlineVars` if a theme contract is not provided
+
+```tsx compiled
 // app.tsx
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { container, brandColor } from './styles.css.ts';
+import {
+  container,
+  brandColor,
+  textColor
+} from './styles.css.ts';
 
-// The following inline style becomes:
+// If `tone` is `undefined`, the following inline style becomes:
 // { '--brandColor__8uideo0': 'pink' }
 
-const MyComponent = () => (
+const MyComponent = ({ tone }: { tone?: critical }) => (
   <section
     className={container}
-    style={assignInlineVars({ [brandColor]: 'pink' })}
+    style={assignInlineVars({
+      [brandColor]: 'pink',
+      [textColor]: tone === 'critical' ? 'red' : null
+    })}
   >
     ...
   </section>
@@ -38,15 +49,17 @@ const MyComponent = () => (
 import { createVar, style } from '@vanilla-extract/css';
 
 export const brandColor = createVar();
+export const textColor = createVar();
 
 export const container = style({
-  background: brandColor
+  background: brandColor,
+  color: textColor
 });
 ```
 
 Even though this function returns an object of inline styles, it implements the `toString` method, returning a valid `style` attribute value so that it can be used in string templates.
 
-```tsx
+```ts
 // app.ts
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
@@ -67,11 +80,12 @@ document.write(`
 
 ### Assigning theme contracts dynamically
 
-[Theme contracts](/documentation/theming/) can also be assigned dynamically by passing one as the first argument. All variables must be assigned or it’s a type error.
+[Theme contracts](/documentation/theming/) can also be assigned dynamically by passing one as the first argument.
+All variables must be assigned or it’s a type error.
 
 This API makes the concept of dynamic theming much simpler.
 
-```ts compiled
+```tsx compiled
 // app.tsx
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { container, themeVars } from './theme.css.ts';
@@ -126,27 +140,34 @@ export const container = style({
 
 An imperative API, allowing variables created using vanilla-extract APIs, e.g. `createVar`, `createTheme`, etc, to be assigned dynamically on a DOM element.
 
+Variables with a value of `null` or `undefined` will not be assigned a value.
+
+> 🧠&nbsp;&nbsp;`null` and `undefined` values can only be passed to `setElementVars` if a theme contract is not provided
+
 ```ts compiled
 // app.ts
 
 import { setElementVars } from '@vanilla-extract/dynamic';
-import { brandColor } from './styles.css.ts';
+import { brandColor, textColor } from './styles.css.ts';
 
 const el = document.getElementById('myElement');
 
 setElementVars(el, {
-  [brandColor]: 'pink'
+  [brandColor]: 'pink',
+  [textColor]: null
 });
 
 // styles.css.ts
 import { createVar, style } from '@vanilla-extract/css';
 
 export const brandColor = createVar();
+export const textColor = createVar();
 ```
 
 ### Setting theme contracts dynamically
 
-[Theme contracts](/documentation/theming/) can also be set dynamically by passing one as the second argument. All variables must be assigned or it’s a type error.
+[Theme contracts](/documentation/theming/) can also be set dynamically by passing one as the second argument.
+All variables must be assigned or it’s a type error.
 
 ```ts compiled
 // app.ts
