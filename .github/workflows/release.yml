@@ -30,7 +30,7 @@ jobs:
         run: pnpm i
 
       - name: Create release PR or publish to npm
-        uses: changesets/action@main
+        uses: changesets/action@v1
         with:
           version: pnpm run version
           publish: pnpm release
