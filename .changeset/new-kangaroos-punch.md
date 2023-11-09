@@ -1,5 +1,5 @@
 ---
-"@vanilla-extract/css": feat
+"@vanilla-extract/css": minor
 ---
 
 Add some missing [simple pseudo selectors]
