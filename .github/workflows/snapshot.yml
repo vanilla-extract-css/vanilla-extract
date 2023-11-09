@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.VANILLA_EXTRACT_CI_GITHUB_TOKEN }}
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@master
 
       - name: Set up Node.js
         uses: actions/setup-node@main
