@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@master
 
       - name: Set up Node.js
         uses: actions/setup-node@main
