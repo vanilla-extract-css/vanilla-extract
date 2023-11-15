@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 3.9.1
+
+### Patch Changes
+
+- [#1231](https://github.com/vanilla-extract-css/vanilla-extract/pull/1231) [`cdd5150`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cdd51507fd40eb9efa8c4ad59a7b31615b5d69d6) Thanks [@mrm007](https://github.com/mrm007)! - Bump `postcss-load-config` to enable loading PostCSS configs defined as ES Modules
+
 ## 3.9.0
 
 ### Minor Changes
