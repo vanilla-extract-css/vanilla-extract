@@ -17,6 +17,14 @@
   "dependencies": {
     "@vanilla-extract/integration": "^6.2.0"
   },
+  "peerDependencies": {
+    "esbuild": ">=0.17.6"
+  },
+  "peerDependenciesMeta": {
+    "esbuild": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "esbuild": "0.17.6"
   }
