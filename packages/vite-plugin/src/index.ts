@@ -12,7 +12,7 @@ import {
   CompileOptions,
   transform,
 } from '@vanilla-extract/integration';
-import { PostCSSConfigResult, resolvePostcssConfig } from './postcss';
+import { type PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const styleUpdateEvent = (fileId: string) =>
   `vanilla-extract-style-update:${fileId}`;
