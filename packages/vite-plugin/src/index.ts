@@ -78,6 +78,7 @@ export function vanillaExtractPlugin({
         config.plugins.some((plugin) =>
           [
             'astro:build',
+            'remix',
             'solid-start-server',
             'vite-plugin-qwik',
             'vite-plugin-svelte',
