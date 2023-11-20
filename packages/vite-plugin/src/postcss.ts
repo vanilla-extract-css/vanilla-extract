@@ -1,10 +1,7 @@
+import type postcssrc from 'postcss-load-config';
 import type { ResolvedConfig } from 'vite';
-import type { ProcessOptions, Plugin } from 'postcss';
 
-export interface PostCSSConfigResult {
-  options: ProcessOptions;
-  plugins: Plugin[];
-}
+export type PostCSSConfigResult = Pick<postcssrc.Result, 'options' | 'plugins'>;
 
 // Mostly copied from vite's implementation
 // https://github.com/vitejs/vite/blob/efec70f816b80e55b64255b32a5f120e1cf4e4be/packages/vite/src/node/plugins/css.ts
@@ -34,7 +31,6 @@ export const resolvePostcssConfig = async (
 
       return {
         options: postCssConfig.options,
-        // @ts-expect-error - The postcssrc options don't agree with real postcss, but it should be ok
         plugins: postCssConfig.plugins,
       };
     } catch (e: any) {
