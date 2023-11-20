@@ -59,6 +59,7 @@ const createViteServer = async ({
   normalizeModuleId = vite.normalizePath;
 
   const server = await vite.createServer({
+    configFile: false,
     root,
     server: {
       hmr: false,
