@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 6.2.4
+
+### Patch Changes
+
+- [#1238](https://github.com/vanilla-extract-css/vanilla-extract/pull/1238) [`fd5d9fc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5d9fc389b84d7de92ec86d89305185d6c4cfd4) Thanks [@askoufis](https://github.com/askoufis)! - Disable config file resolution in experimental `vite-node` compiler
+
 ## 6.2.3
 
 ### Patch Changes

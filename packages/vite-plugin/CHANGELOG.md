@@ -1,5 +1,16 @@
 # @vanilla-extract/vite-plugin
 
+## 3.9.2
+
+### Patch Changes
+
+- [#1239](https://github.com/vanilla-extract-css/vanilla-extract/pull/1239) [`1791df2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1791df27743429593858097ba65927a06b42e254) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Default `emitCssInSsr` to `true` when Remix Vite plugin is present
+
+- [#1240](https://github.com/vanilla-extract-css/vanilla-extract/pull/1240) [`2cad138`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2cad138d9c32f93582c65b52ed9c786210aaf317) Thanks [@mrm007](https://github.com/mrm007)! - Add Vite 5 to peer dependencies
+
+- Updated dependencies [[`fd5d9fc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5d9fc389b84d7de92ec86d89305185d6c4cfd4)]:
+  - @vanilla-extract/integration@6.2.4
+
 ## 3.9.1
 
 ### Patch Changes

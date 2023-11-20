@@ -440,7 +440,7 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.0.2
+        specifier: ^6.2.4
         version: link:../integration
       outdent:
         specifier: ^0.8.0
