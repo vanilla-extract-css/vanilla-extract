@@ -382,6 +382,7 @@ importers:
       '@vanilla-extract/css': 1.13.0
       '@vanilla-extract/css-utils': 0.1.3
       '@vanilla-extract/integration': 6.2.2
+      '@vanilla-extract/recipes': link:../packages/recipes
       esbuild-wasm: 0.17.6
       vite: ^4.1.4
       vite-plugin-node-polyfills: ^0.16.0
@@ -392,6 +393,7 @@ importers:
       '@vanilla-extract/css': link:../packages/css
       '@vanilla-extract/css-utils': link:../packages/utils
       '@vanilla-extract/integration': link:../packages/integration
+      '@vanilla-extract/recipes': link:../packages/recipes
       vite: 4.1.4
       vite-plugin-node-polyfills: 0.16.0_vite@4.1.4
       vite-plugin-static-copy: 0.17.0_vite@4.1.4
@@ -11900,8 +11902,6 @@ packages:
       param-case: 3.0.4
       relateurl: 0.2.7
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /html-render-webpack-plugin/3.0.1_nzd6q2tbbwu7trnkwxj2tz54fy:
@@ -11936,8 +11936,6 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.64.2_webpack-cli@4.9.1
-    transitivePeerDependencies:
-      - acorn
     dev: false
 
   /htmlnano/2.0.3_xx67fuclr4dzzmizs2x43q2w6i:
