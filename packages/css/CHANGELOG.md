@@ -1,5 +1,17 @@
 # @vanilla-extract/css
 
+## 1.14.0
+
+### Minor Changes
+
+- [#1207](https://github.com/vanilla-extract-css/vanilla-extract/pull/1207) [`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4) Thanks [@CroModder](https://github.com/CroModder)! - Add some missing [simple pseudo selectors]
+
+  [simple pseudo selectors]: https://vanilla-extract.style/documentation/styling/#simple-pseudo-selectors
+
+### Patch Changes
+
+- [#1215](https://github.com/vanilla-extract-css/vanilla-extract/pull/1215) [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99) Thanks [@mrm007](https://github.com/mrm007)! - Replace dependency `ahocorasick` with `modern-ahocorasick`
+
 ## 1.13.0
 
 ### Minor Changes
@@ -70,7 +82,7 @@
 
   [cascade layers]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
   [layer]: https://vanilla-extract.style/documentation/api/layer
-  [globalLayer]: https://vanilla-extract.style/documentation/global-api/global-layer
+  [globallayer]: https://vanilla-extract.style/documentation/global-api/global-layer
 
 ## 1.10.0
 
@@ -399,7 +411,7 @@
         body: 'font-body',
       },
     },
-    value => `prefix-${value}`,
+    (value) => `prefix-${value}`,
   );
   ```
 
