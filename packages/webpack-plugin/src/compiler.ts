@@ -65,7 +65,11 @@ function compileVanillaSource(
     );
     const compat = createCompat(isWebpack5);
     // Child compiler will compile vanilla-extract files to be evaled during compilation
-    const outputOptions = { filename: loader.resourcePath };
+    const outputOptions = {
+      filename: loader.resourcePath
+        .replaceAll('[', '[\\')
+        .replaceAll(']', '\\]'),
+    };
 
     const compilerName = getCompilerName(loader.resourcePath);
     const childCompiler = getRootCompilation(loader).createChildCompiler(
