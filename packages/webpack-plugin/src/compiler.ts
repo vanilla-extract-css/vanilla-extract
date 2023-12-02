@@ -64,13 +64,15 @@ function compileVanillaSource(
       loader._compiler.webpack && loader._compiler.webpack.version,
     );
     const compat = createCompat(isWebpack5);
-    // Child compiler will compile vanilla-extract files to be evaled during compilation
+
+    // Escape webpack template strings in output files so they don't get replaced
     const outputOptions = {
       filename: loader.resourcePath
         .replaceAll('[', '[\\')
         .replaceAll(']', '\\]'),
     };
 
+    // Child compiler will compile vanilla-extract files to be evaled during compilation
     const compilerName = getCompilerName(loader.resourcePath);
     const childCompiler = getRootCompilation(loader).createChildCompiler(
       compilerName,
