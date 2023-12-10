@@ -214,7 +214,7 @@ export function vanillaExtractPlugin({
           if (
             server &&
             cssMap.has(absoluteId) &&
-            cssMap.get(absoluteId) !== source
+            cssMap.get(absoluteId) !== cssSource
           ) {
             const { moduleGraph } = server;
             const modules = Array.from(
