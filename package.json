@@ -5,8 +5,10 @@
   "author": "SEEK",
   "license": "MIT",
   "scripts": {
-    "dev": "preconstruct dev",
-    "build": "pnpm --recursive --filter='@vanilla-extract/*' build",
+    "%packages": "pnpm --filter='@vanilla-extract/*' --aggregate-output",
+    "clean": "pnpm %packages exec crackle clean",
+    "dev": "pnpm %packages dev",
+    "build": "pnpm %packages build",
     "watch": "preconstruct watch",
     "start-fixture": "ts-node ./test-helpers/src/startFixtureCLI",
     "start": "pnpm start-fixture themed",
@@ -36,6 +38,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.17.0",
+    "@crackle/cli": "^0.12.6",
     "@manypkg/cli": "^0.19.1",
     "@playwright/test": "^1.25.1",
     "@preconstruct/cli": "^2.0.1",
@@ -54,9 +57,6 @@
   },
   "packageManager": "pnpm@7.9.5",
   "pnpm": {
-    "overrides": {
-      "@crackle/core": "0.0.0-dts-options-20220919055334"
-    },
     "patchedDependencies": {
       "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
     }
