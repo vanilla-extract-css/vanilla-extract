@@ -18,7 +18,7 @@
     "@babel/plugin-syntax-typescript": "^7.20.0",
     "@vanilla-extract/babel-plugin-debug-ids": "^1.0.2",
     "@vanilla-extract/css": "^1.14.0",
-    "esbuild": "0.17.6",
+    "esbuild": "0.19.9",
     "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
