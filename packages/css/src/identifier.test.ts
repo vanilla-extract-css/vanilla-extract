@@ -91,6 +91,11 @@ describe('identifier', () => {
       );
     });
 
+    it('should allow hyphens in a class name', () => {
+      expect(generateIdentifier("a-b")).toMatchInlineSnapshot(`"abc_a-b_s0xkdr1_packagetest_file"`);
+      expect(generateIdentifier("a-b-c")).toMatchInlineSnapshot(`"abc_a-b-c_s0xkdr2_packagetest_file"`);
+    });
+
     it('rejects invalid identifiers', () => {
       // getIdentOption() does not remove spaces from the debug info so the
       // resulting identifier should be invalid here.
