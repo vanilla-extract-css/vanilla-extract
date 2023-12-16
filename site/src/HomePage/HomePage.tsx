@@ -209,7 +209,7 @@ export const HomePage = () => {
                         });
 
                         export const hero = style({
-                          backgroundColor: vars.color.brandd,
+                          backgroundColor: vars.color.brand,
                           color: vars.color.white,
                           padding: vars.space.large
                         });`,
