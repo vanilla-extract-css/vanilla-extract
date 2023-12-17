@@ -1,4 +1,6 @@
-import { compile, init, type CompileOptions } from '.';
+import { version as esbuildVersion } from 'esbuild-wasm/package.json';
+
+import { type CompileOptions, initialize, compile } from './index';
 
 function getOptions() {
   const options: Partial<CompileOptions> = JSON.parse(
@@ -18,7 +20,11 @@ async function updateResult() {
   document.querySelector('#result')!.innerHTML = css;
 }
 
-init.then(() => {
+initialize({
+  wasmURL:
+    globalThis.WASM_URL ??
+    `https://unpkg.com/esbuild-wasm@${esbuildVersion}/esbuild.wasm`,
+}).then(() => {
   document
     .querySelector<HTMLTextAreaElement>('#editor')!
     .addEventListener('input', updateResult);

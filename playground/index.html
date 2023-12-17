@@ -10,7 +10,7 @@
       <label for="options">Options<br /></label>
       <textarea id="options" style="width: 300px" rows="4">
 {
-  "identifiers": "short"
+  "identifiers": "debug"
 }
       </textarea>
       <textarea id="editor" style="width: 80%" rows="20">
@@ -30,12 +30,12 @@ export const [themeClass, vars] = createTheme({
 export const hero = style({
   backgroundColor: vars.color.brand,
   color: vars.color.white,
-  padding: vars.space.medium
+  padding: vars.space.medium,
 });
 </textarea
       >
       <pre id="result"></pre>
     </div>
-    <script type="module" src="/src/client.ts"></script>
+    <script type="module" src="./src/browser.ts"></script>
   </body>
 </html>
