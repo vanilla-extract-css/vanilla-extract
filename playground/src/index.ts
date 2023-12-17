@@ -19,7 +19,7 @@ const runEsbuild = async (esbuildOptions: EsbuildOptions) =>
   esbuild({
     metafile: true,
     bundle: true,
-    external: ['@vanilla-extract', ...(esbuildOptions?.external ?? [])],
+    external: ['@vanilla-extract'],
     platform: 'node',
     write: false,
     absWorkingDir: cwd,
@@ -110,9 +110,7 @@ const extractCss = async ({ input, filePath }: CompileOptions) => {
   return extractedCss;
 };
 
-export const init = initialize({
-  wasmURL: './node_modules/esbuild-wasm/esbuild.wasm',
-});
+export { initialize };
 
 export interface CompileOptions {
   input: string;
