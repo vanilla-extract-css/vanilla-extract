@@ -4,7 +4,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 const resolveRelative = (p: string) => path.resolve(__dirname, p);
 
-const WASM_URL = './node_modules/esbuild-wasm/esbuild.wasm';
+const WASM_URL = '/node_modules/esbuild-wasm/esbuild.wasm';
 
 export default defineConfig({
   build: {
@@ -18,7 +18,7 @@ export default defineConfig({
     target: 'esnext',
   },
   define: {
-    'globalThis.WASM_URL': JSON.stringify(WASM_URL),
+    'window.WASM_URL': JSON.stringify(WASM_URL),
   },
   resolve: {
     alias: {

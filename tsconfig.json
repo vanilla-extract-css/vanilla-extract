@@ -23,6 +23,7 @@
     "@types/testing-library__jest-dom",
     "./jest.setup.ts",
     "packages/**/*",
+    "standalone/**/*",
     "examples/*/src/**/*",
     "fixtures/*/src/**/*",
     "test-helpers/**/*",

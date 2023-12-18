@@ -1,5 +1,5 @@
 import * as path from 'path';
-// importing directly from source so we don't bundle esbuild
+// importing directly from source so we don't bundle all the deps of `@vanilla-extract/integration`
 import { processVanillaFile } from '@vanilla-extract/integration/src/processVanillaFile';
 import { virtualCssFileFilter } from '@vanilla-extract/integration/src/filters';
 import { getSourceFromVirtualCssFile } from '@vanilla-extract/integration/src/virtualFile';
@@ -124,22 +124,28 @@ export async function compile({
 }: CompileOptions) {
   filePath = path.join(cwd, filePath);
 
+  console.time(`[${filePath}] transform`);
   const source = await transformFileScope({
     input,
     filePath,
     identOption: identifiers,
   });
+  console.timeEnd(`[${filePath}] transform`);
 
+  console.time(`[${filePath}] processVanillaFile`);
   const output = await processVanillaFile({
     source,
     filePath,
     identOption: identifiers,
   });
+  console.timeEnd(`[${filePath}] processVanillaFile`);
 
+  console.time(`[${filePath}] extractCss`);
   const css = await extractCss({
     input: output,
     filePath,
   });
+  console.timeEnd(`[${filePath}] extractCss`);
 
   return { css };
 }

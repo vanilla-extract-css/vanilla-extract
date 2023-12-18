@@ -12,7 +12,7 @@ const {
   await initialize({});
 
   const { css } = await compile({
-    filePath: 'styles.css.ts',
+    filePath: fileName,
     input: await fs.readFile(fileName, 'utf-8'),
     identifiers,
   });

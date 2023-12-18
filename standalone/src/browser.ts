@@ -20,9 +20,15 @@ async function updateResult() {
   document.querySelector('#result')!.innerHTML = css;
 }
 
+declare global {
+  interface Window {
+    WASM_URL: string;
+  }
+}
+
 initialize({
   wasmURL:
-    globalThis.WASM_URL ??
+    window.WASM_URL ??
     `https://unpkg.com/esbuild-wasm@${esbuildVersion}/esbuild.wasm`,
 }).then(() => {
   document

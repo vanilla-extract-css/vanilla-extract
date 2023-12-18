@@ -60,8 +60,7 @@
   "packageManager": "pnpm@8.10.2",
   "pnpm": {
     "patchedDependencies": {
-      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch",
-      "vm-browserify@1.1.2": "patches/vm-browserify@1.1.2.patch"
+      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
     }
   },
   "volta": {
