@@ -36,9 +36,10 @@ export const startEsbuildFixture = async (
     metafile: true,
     platform: 'browser',
     bundle: true,
-    minify: mode === 'production',
+    minify: false,
     plugins: [
       plugin({
+        identifiers: mode === 'production' ? 'short' : 'debug',
         runtime: type.includes('runtime'),
       }),
     ],
