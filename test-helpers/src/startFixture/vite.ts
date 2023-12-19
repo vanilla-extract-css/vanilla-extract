@@ -45,7 +45,6 @@ export const startViteFixture = async (
     plugins: [vanillaExtractPlugin()],
     server: {
       port,
-      force: true,
     },
     build: {
       cssCodeSplit: false,

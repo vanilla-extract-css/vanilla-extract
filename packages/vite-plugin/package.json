@@ -17,11 +17,11 @@
   "dependencies": {
     "@vanilla-extract/integration": "^6.2.4",
     "outdent": "^0.8.0",
-    "postcss": "^8.3.6",
+    "postcss": "^8.4.32",
     "postcss-load-config": "^4.0.1"
   },
   "devDependencies": {
-    "vite": "npm:vite@^2.7.0"
+    "vite": "npm:vite@^5.0.10"
   },
   "peerDependencies": {
     "vite": "^2.2.3 || ^3.0.0 || ^4.0.3 || ^5.0.0"
