@@ -1,16 +1,16 @@
 @layer lib;
-@layer lib._1sqkzjx0;
+@layer lib.styles_base__1sqkzjx0;
 @media screen and (min-width: 600px) {
   @layer typography;
 }
-@layer lib._1sqkzjx2;
+@layer lib.styles_utilities__1sqkzjx2;
 @layer typography;
-@layer lib._1sqkzjx0 {
+@layer lib.styles_base__1sqkzjx0 {
   a {
     font-weight: 800;
     color: red;
   }
-  ._1sqkzjx1 {
+  .styles_link__1sqkzjx1 {
     color: blue;
   }
 }
@@ -22,8 +22,8 @@
     }
   }
 }
-@layer lib._1sqkzjx2 {
-  ._1sqkzjx3 {
+@layer lib.styles_utilities__1sqkzjx2 {
+  .styles_pink__1sqkzjx3 {
     color: hotpink;
   }
 }
