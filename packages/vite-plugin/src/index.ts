@@ -33,13 +33,9 @@ export function vanillaExtractPlugin({
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;
-  const cssMap = new Map<string, string>();
-
-  const hasEmitCssOverride = typeof emitCssInSsr === 'boolean';
-  let resolvedEmitCssInSsr: boolean = hasEmitCssOverride
-    ? emitCssInSsr
-    : !!process.env.VITE_RSC_BUILD;
   let packageName: string;
+
+  const cssMap = new Map<string, string>();
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -50,12 +46,8 @@ export function vanillaExtractPlugin({
     configureServer(_server) {
       server = _server;
     },
-    config(_userConfig, env) {
-      const include =
-        env.command === 'serve' ? ['@vanilla-extract/css/injectStyles'] : [];
-
+    config() {
       return {
-        optimizeDeps: { include },
         ssr: {
           external: [
             '@vanilla-extract/css',
@@ -71,21 +63,6 @@ export function vanillaExtractPlugin({
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
-      }
-
-      if (
-        !hasEmitCssOverride &&
-        config.plugins.some((plugin) =>
-          [
-            'astro:build',
-            'remix',
-            'solid-start-server',
-            'vite-plugin-qwik',
-            'vite-plugin-svelte',
-          ].includes(plugin.name),
-        )
-      ) {
-        resolvedEmitCssInSsr = true;
       }
     },
     resolveId(source) {
@@ -142,7 +119,7 @@ export function vanillaExtractPlugin({
         }
       `;
     },
-    async transform(code, id, ssrParam) {
+    async transform(code, id) {
       const [validId] = id.split('?');
 
       if (!cssFileFilter.test(validId)) {
@@ -152,15 +129,7 @@ export function vanillaExtractPlugin({
       const identOption =
         identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
 
-      let ssr: boolean | undefined;
-
-      if (typeof ssrParam === 'boolean') {
-        ssr = ssrParam;
-      } else {
-        ssr = ssrParam?.ssr;
-      }
-
-      if (ssr && !resolvedEmitCssInSsr) {
+      if (!emitCssInSsr) {
         return transform({
           source: code,
           filePath: normalizePath(validId),
@@ -190,11 +159,7 @@ export function vanillaExtractPlugin({
         filePath: validId,
         identOption,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${
-            config.command === 'build' || (ssr && resolvedEmitCssInSsr)
-              ? virtualExtCss
-              : virtualExtJs
-          }`;
+          const rootRelativeId = `${fileScope.filePath}${virtualExtCss}`;
           const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
 
           let cssSource = source;
