@@ -51,7 +51,7 @@ export async function startFixture(
     });
   }
 
-  if (type === 'vite') {
+  if (type === 'vite' || type === 'vite-next') {
     return startViteFixture(fixtureName, {
       type,
       port,

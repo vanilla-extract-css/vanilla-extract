@@ -4,6 +4,7 @@ import http from 'http';
 import { createServer, build, InlineConfig } from 'vite';
 import handler from 'serve-handler';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import inspect from 'vite-plugin-inspect';
 
 import { TestServer } from './types';
 
@@ -26,13 +27,13 @@ const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
   });
 
 export interface ViteFixtureOptions {
-  type: 'vite';
+  type: 'vite' | 'vite-next';
   mode?: 'development' | 'production';
   port: number;
 }
 export const startViteFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: ViteFixtureOptions,
+  { mode = 'development', port = 3000, type }: ViteFixtureOptions,
 ): Promise<TestServer> => {
   const root = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
@@ -42,9 +43,15 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [vanillaExtractPlugin()],
+    plugins: [
+      vanillaExtractPlugin({
+        emitCssInSsr: type === 'vite-next' ? 'compiler' : true,
+      }),
+      mode === 'development' && inspect(),
+    ],
     server: {
       port,
+      strictPort: true,
     },
     build: {
       cssCodeSplit: false,

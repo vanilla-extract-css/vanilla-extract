@@ -1,0 +1,51 @@
+._1o6ek500 {
+  height: 50px;
+}
+._1o6ek500:after {
+  content: "Below 700px";
+  display: block;
+}
+._1o6ek501 {
+  background-color: powderblue;
+}
+._1o6ek501:hover {
+  background-color: slategray;
+}
+._1o6ek502 {
+  background-color: powderblue;
+}
+._1o6ek502:hover {
+  background-color: slategray;
+}
+._1o6ek503 {
+  background-color: powderblue;
+}
+._1o6ek503:hover {
+  background-color: slategray;
+}
+._1o6ek505 {
+  color: white;
+}
+._1o6ek506 {
+  background-color: black;
+}
+body ._1o6ek507 {
+  font-size: 24px;
+}
+._1o6ek508 {
+  color: white;
+}
+._1o6ek509 {
+  background-color: black;
+}
+body ._1o6ek50a {
+  font-size: 24px;
+}
+@media screen and (min-width: 700px) {
+  ._1o6ek500 {
+    color: plum;
+  }
+  ._1o6ek500:after {
+    content: "Above 700px";
+  }
+}

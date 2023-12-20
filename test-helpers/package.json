@@ -47,6 +47,7 @@
   "devDependencies": {
     "@types/minimist": "^1",
     "@types/prettier": "^2",
-    "@types/serve-handler": "^6"
+    "@types/serve-handler": "^6",
+    "vite-plugin-inspect": "^0.8.1"
   }
 }
