@@ -1,7 +1,7 @@
 import { join, relative, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import type { ModuleNode, ResolvedConfig } from 'vite';
+import type { ModuleNode, InlineConfig as ViteConfig } from 'vite';
 import type { ViteNodeRunner } from 'vite-node/client';
 
 import type { IdentifierOption } from './types';
@@ -51,7 +51,7 @@ const createViteServer = async ({
 }: {
   root: string;
   identifiers: IdentifierOption;
-  vitePlugins?: ResolvedConfig['plugins'];
+  vitePlugins?: ViteConfig['plugins'];
 }) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
@@ -155,7 +155,7 @@ export interface CreateCompilerOptions {
   root: string;
   cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
-  vitePlugins?: ResolvedConfig['plugins'];
+  vitePlugins?: ViteConfig['plugins'];
 }
 export const createCompiler = ({
   root,

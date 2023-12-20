@@ -18,6 +18,7 @@ export const resolvePostcssConfig = async (
     delete options.plugins;
     return {
       options,
+      //  @ts-expect-error TODO: incompatible types?
       plugins: inlineOptions.plugins || [],
     };
   } else {
