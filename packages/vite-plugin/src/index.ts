@@ -12,16 +12,11 @@ import {
   transform,
   type Compiler,
   createCompiler,
+  normalizePath,
 } from '@vanilla-extract/integration';
 import { type PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const virtualExtCss = '.vanilla.css';
-const cssImportSpecifier = (filePath: string) => `${filePath}${virtualExtCss}`;
-
-// Inlined from @rollup/pluginutils
-// https://github.com/rollup/plugins/blob/33174f956304ab4aad4bbaba656f627c31679dc5/packages/pluginutils/src/normalizePath.ts#L5-L7
-const normalizePath = (filename: string) =>
-  filename.split(path.win32.sep).join(path.posix.sep);
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -43,6 +38,8 @@ export function vanillaExtractPlugin({
 
   const getAbsoluteFileId = (source: string) =>
     normalizePath(path.resolve(config.root, source));
+  const cssImportSpecifier = (filePath: string) =>
+    `${filePath}${virtualExtCss}`;
 
   const invalidateModule = (absoluteId: string) => {
     const { moduleGraph } = server;
