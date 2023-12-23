@@ -264,5 +264,8 @@ export function vanillaExtractPlugin({
         map: { mappings: '' },
       };
     },
+    buildEnd() {
+      compiler?.close();
+    },
   };
 }
