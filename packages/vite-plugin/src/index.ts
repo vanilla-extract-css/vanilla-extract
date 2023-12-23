@@ -36,12 +36,28 @@ export function vanillaExtractPlugin({
 
   const cssMap = new Map<string, string>();
 
-  const getAbsoluteFileId = (source: string) =>
-    normalizePath(path.resolve(config.root, source));
-  const cssImportSpecifier = (filePath: string) =>
-    `${filePath}${virtualExtCss}`;
+  const getAbsoluteFileId = (filePath: string) => {
+    let resolvedId = filePath;
 
-  const invalidateModule = (absoluteId: string) => {
+    if (
+      filePath.startsWith(config.root) ||
+      (path.isAbsolute(filePath) && filePath.includes('node_modules'))
+    ) {
+      resolvedId = filePath;
+    } else {
+      // in SSR mode we can have paths like /app/styles.css.ts
+      resolvedId = path.join(config.root, filePath);
+    }
+
+    return normalizePath(resolvedId);
+  };
+  const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
+  const virtualIdToFileId = (virtualId: string) =>
+    virtualId.replace(virtualExtCss, '');
+
+  function invalidateModule(absoluteId: string) {
+    if (!server) return;
+
     const { moduleGraph } = server;
     const modules = Array.from(moduleGraph.getModulesByFile(absoluteId) || []);
 
@@ -96,10 +112,10 @@ export function vanillaExtractPlugin({
           root: config.root,
           identifiers:
             identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
-          cssImportSpecifier,
-          vitePlugins: (config.inlineConfig.plugins ?? [])
-            .flat()
-            // Prevent an infinite loop where the child compiler creates a new child compiler
+          cssImportSpecifier: fileIdToVirtualId,
+          vitePlugins: config.inlineConfig.plugins
+            ?.flat()
+            // Prevent an infinite loop where the compiler creates a new instance of the plugin, which creates a new compiler etc.
             .filter(
               (plugin) =>
                 typeof plugin === 'object' &&
@@ -118,14 +134,15 @@ export function vanillaExtractPlugin({
 
       // Absolute paths seem to occur often in monorepos, where files are
       // imported from outside the config root.
-      const absoluteId = source.startsWith(config.root)
-        ? source
-        : getAbsoluteFileId(validId);
+      const absoluteId = getAbsoluteFileId(validId);
 
       // There should always be an entry in the `cssMap` here.
       // The only valid scenario for a missing one is if someone had written
       // a file in their app using the .vanilla.js/.vanilla.css extension
-      if (cssMap.has(absoluteId)) {
+      if (
+        compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
+        cssMap.has(absoluteId)
+      ) {
         // Keep the original query string for HMR.
         return absoluteId + (query ? `?${query}` : '');
       }
@@ -133,11 +150,20 @@ export function vanillaExtractPlugin({
     load(id) {
       const [validId] = id.split('?');
 
-      const css = cssMap.get(validId);
+      if (!validId.endsWith(virtualExtCss)) return;
 
-      if (typeof css === 'string' && validId.endsWith(virtualExtCss)) {
+      if (compiler) {
+        const absoluteId = getAbsoluteFileId(validId);
+
+        let { css } =
+          compiler.getCssForFile(virtualIdToFileId(absoluteId)) ?? {};
+
         return css;
       }
+
+      const css = cssMap.get(validId);
+
+      return css;
     },
     async transform(code, id) {
       const [validId] = id.split('?');
@@ -146,46 +172,39 @@ export function vanillaExtractPlugin({
         return null;
       }
 
-      const identOption =
-        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
 
       if (compiler) {
-        const absoluteVirtualId = cssImportSpecifier(validId);
+        const absoluteId = getAbsoluteFileId(validId);
 
         console.time(`[compiler] ${validId}`);
         const { source, watchFiles } = await compiler.processVanillaFile(
-          validId,
+          absoluteId,
+          { outputCss: true },
         );
-
-        let { css } = compiler.getCssForFile(validId);
-        console.timeEnd(`[compiler] ${validId}`);
-
-        if (postCssConfig) {
-          css = await processCss(css);
-        }
+        console.timeEnd(`[compiler] ${absoluteId}`);
 
         for (const file of watchFiles) {
           // In start mode, we need to prevent the file from rewatching itself.
           // If it's a `build --watch`, it needs to watch everything.
-          if (config.command === 'build' || normalizePath(file) !== validId) {
+          if (
+            config.command === 'build' ||
+            normalizePath(file) !== absoluteId
+          ) {
             this.addWatchFile(file);
           }
         }
 
-        if (
-          cssMap.has(absoluteVirtualId) &&
-          cssMap.get(absoluteVirtualId) !== css
-        ) {
-          invalidateModule(absoluteVirtualId);
-        }
-
-        cssMap.set(absoluteVirtualId, css);
+        // We have to invalidate the virtual module, not the real one we just transformed
+        invalidateModule(fileIdToVirtualId(validId));
 
         return {
           code: source,
           map: { mappings: '' },
         };
       }
+
+      const identOption =
+        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
 
       if (!emitCssInSsr) {
         return transform({
