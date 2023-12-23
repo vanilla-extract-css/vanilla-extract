@@ -1,5 +1,4 @@
 import path from 'path';
-import assert from 'assert';
 
 import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
 import {
@@ -14,7 +13,6 @@ import {
   createCompiler,
   normalizePath,
 } from '@vanilla-extract/integration';
-import { type PostCSSConfigResult, resolvePostcssConfig } from './postcss';
 
 const virtualExtCss = '.vanilla.css';
 
@@ -30,7 +28,6 @@ export function vanillaExtractPlugin({
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
-  let postCssConfig: PostCSSConfigResult | null;
   let packageName: string;
   let compiler: Compiler | undefined;
 
@@ -67,24 +64,10 @@ export function vanillaExtractPlugin({
       // Vite uses this timestamp to add `?t=` query string automatically for HMR.
       module.lastHMRTimestamp = module.lastInvalidationTimestamp || Date.now();
     }
-  };
-  const processCss = async (css: string) => {
-    assert(postCssConfig);
-
-    const postCssResult = await (await import('postcss'))
-      .default(postCssConfig.plugins)
-      .process(css, {
-        ...postCssConfig.options,
-        from: undefined,
-        map: false,
-      });
-
-    return postCssResult.css;
-  };
+  }
 
   return {
     name: 'vanilla-extract',
-    enforce: 'pre',
     configureServer(_server) {
       server = _server;
     },
@@ -102,10 +85,6 @@ export function vanillaExtractPlugin({
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
-
-      if (config.command === 'serve') {
-        postCssConfig = await resolvePostcssConfig(config);
-      }
 
       if (emitCssInSsr === 'compiler') {
         compiler = createCompiler({
@@ -232,17 +211,11 @@ export function vanillaExtractPlugin({
           const rootRelativeId = `${fileScope.filePath}${virtualExtCss}`;
           const absoluteId = getAbsoluteFileId(rootRelativeId);
 
-          let cssSource = source;
-
-          if (postCssConfig) {
-            cssSource = await processCss(cssSource);
-          }
-
-          if (cssMap.has(absoluteId) && cssMap.get(absoluteId) !== cssSource) {
+          if (cssMap.has(absoluteId) && cssMap.get(absoluteId) !== source) {
             invalidateModule(absoluteId);
           }
 
-          cssMap.set(absoluteId, cssSource);
+          cssMap.set(absoluteId, source);
 
           // We use the root relative id here to ensure file contents (content-hashes)
           // are consistent across build machines

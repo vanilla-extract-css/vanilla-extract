@@ -15,10 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.2.4",
-    "outdent": "^0.8.0",
-    "postcss": "^8.4.32",
-    "postcss-load-config": "^4.0.1"
+    "@vanilla-extract/integration": "^6.2.4"
   },
   "devDependencies": {
     "vite": "npm:vite@^5.0.10"
