@@ -114,3 +114,7 @@ Each integration will set a default value based on the configuration options pas
 
 esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
 Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader` and `tsconfig`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
+
+### packageName
+
+The name of the closest package json is used to scope the styles. If a package json isn't available or there's a need to use a different name, `packageName` can be used instead.

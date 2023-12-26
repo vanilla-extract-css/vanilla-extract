@@ -67,6 +67,10 @@ const withVanillaExtract = createVanillaExtractPlugin({
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
+### packageName
+
+The name of the closest package json is used to scope the styles. If a package json isn't available or there's a need to use a different name, `packageName` can be used instead.
+
 ## Transpiling Vanilla Extract-dependent Libraries
 
 By default, Next.js does not allow importing of TypeScript files outside of the app root.
