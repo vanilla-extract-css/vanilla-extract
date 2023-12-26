@@ -16,6 +16,10 @@ import {
 
 const virtualExtCss = '.vanilla.css';
 
+const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
+const virtualIdToFileId = (virtualId: string) =>
+  virtualId.replace(virtualExtCss, '');
+
 interface Options {
   identifiers?: IdentifierOption;
   emitCssInSsr?: boolean | 'compiler';
@@ -48,9 +52,6 @@ export function vanillaExtractPlugin({
 
     return normalizePath(resolvedId);
   };
-  const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
-  const virtualIdToFileId = (virtualId: string) =>
-    virtualId.replace(virtualExtCss, '');
 
   function invalidateModule(absoluteId: string) {
     if (!server) return;
@@ -107,9 +108,8 @@ export function vanillaExtractPlugin({
     },
     resolveId(source) {
       const [validId, query] = source.split('?');
-      if (!validId.endsWith(virtualExtCss)) {
-        return;
-      }
+
+      if (!validId.endsWith(virtualExtCss)) return;
 
       // Absolute paths seem to occur often in monorepos, where files are
       // imported from outside the config root.
@@ -151,7 +151,6 @@ export function vanillaExtractPlugin({
         return null;
       }
 
-
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
 
@@ -160,7 +159,7 @@ export function vanillaExtractPlugin({
           absoluteId,
           { outputCss: true },
         );
-        console.timeEnd(`[compiler] ${absoluteId}`);
+        console.timeEnd(`[compiler] ${validId}`);
 
         for (const file of watchFiles) {
           // In start mode, we need to prevent the file from rewatching itself.
