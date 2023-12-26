@@ -24,6 +24,7 @@ interface VanillaExtractPluginOptions {
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  packageName?: string;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -32,6 +33,7 @@ export function vanillaExtractPlugin({
   processCss,
   identifiers,
   esbuildOptions,
+  packageName,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes and debug IDs to code

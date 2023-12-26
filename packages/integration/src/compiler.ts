@@ -48,12 +48,13 @@ const createViteServer = async ({
   root,
   identifiers,
   vitePlugins = [],
+  packageName,
 }: {
   root: string;
   identifiers: IdentifierOption;
   vitePlugins?: Array<VitePlugin>;
+  packageName?: string;
 }) => {
-  const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
   normalizeModuleId = vite.normalizePath;
@@ -93,7 +94,7 @@ const createViteServer = async ({
               source: code,
               rootPath: root,
               filePath: id,
-              packageName: pkg.name,
+              packageName: packageName ?? getPackageInfo(root).name,
               identOption: identifiers,
               globalAdapterIdentifier,
             });

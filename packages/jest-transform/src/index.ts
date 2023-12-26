@@ -25,7 +25,7 @@ const vanillaTransformer: Transformer = {
       source,
       filePath,
       rootPath: options.config.rootDir,
-      packageName: packageName,
+      packageName,
       identOption: 'debug',
     });
 
