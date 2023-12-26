@@ -13,6 +13,7 @@
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",
     "@fixtures/themed": "*",
+    "@fixtures/thirdparty": "*",
     "@fixtures/unused-modules": "*",
     "@parcel/config-default": "^2.7.0",
     "@parcel/core": "^2.7.0",

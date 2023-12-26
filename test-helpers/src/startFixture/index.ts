@@ -66,5 +66,6 @@ export async function startFixture(
       mode: options.mode,
     });
   }
+
   return startWebpackFixture(fixtureName, { type, ...options, port });
 }
