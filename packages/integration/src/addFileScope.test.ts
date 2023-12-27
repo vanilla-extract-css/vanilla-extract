@@ -1,5 +1,9 @@
 import { outdent } from 'outdent';
+import { sep, posix, win32 } from 'path';
+
 import { addFileScope } from './addFileScope';
+
+const raw = String.raw;
 
 // remove quotes around the snapshot
 expect.addSnapshotSerializer({
@@ -262,4 +266,40 @@ describe('CJS', () => {
       __vanilla_filescope__.endFileScope();
     `);
   });
+});
+
+test('platform-specific relative path', () => {
+  const { rootPath, filePath } = {
+    [posix.sep]: {
+      rootPath: '/the-root',
+      filePath: '/the-root/app/app.css.ts',
+    },
+    [win32.sep]: {
+      rootPath: raw`D:\the-root`,
+      filePath: raw`D:\the-root\app\app.css.ts`,
+    },
+  }[sep];
+
+  const source = outdent`
+    import { style } from '@vanilla-extract/css';
+
+    export const myStyle = style({});
+  `;
+
+  // The snapshot should be the same for either platform
+  expect(
+    addFileScope({
+      source,
+      rootPath,
+      filePath,
+      packageName: 'my-package',
+    }),
+  ).toMatchInlineSnapshot(`
+    import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+    setFileScope("app/app.css.ts", "my-package");
+    import { style } from '@vanilla-extract/css';
+
+    export const myStyle = style({});
+    endFileScope();
+  `);
 });
