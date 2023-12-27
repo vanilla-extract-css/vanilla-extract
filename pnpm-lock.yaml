@@ -19,9 +19,6 @@ importers:
       '@babel/preset-env':
         specifier: ^7.20.2
         version: 7.20.2(@babel/core@7.20.7)
-      '@babel/preset-modules':
-        specifier: ^0.1.6
-        version: 0.1.6(@babel/core@7.20.7)
       '@babel/preset-react':
         specifier: ^7.18.6
         version: 7.18.6(@babel/core@7.20.7)
@@ -160,7 +157,7 @@ importers:
         version: 17.0.2(react@17.0.2)
       tailwindcss:
         specifier: ^2.1.2
-        version: 2.2.19(autoprefixer@10.4.15)(postcss@8.4.21)(ts-node@10.9.1)
+        version: 2.2.19(autoprefixer@10.4.15)(postcss@8.4.32)(ts-node@10.9.1)
       webpack:
         specifier: ^5.36.1
         version: 5.64.2(@swc/core@1.2.112)(webpack-cli@4.9.1)
@@ -630,7 +627,7 @@ importers:
         version: 0.3.0
       tailwindcss:
         specifier: ^2.1.2
-        version: 2.2.19(autoprefixer@10.4.15)(postcss@8.4.21)(ts-node@10.9.1)
+        version: 2.2.19(autoprefixer@10.4.15)(postcss@8.4.32)(ts-node@10.9.1)
       webpack:
         specifier: ^5.36.1
         version: 5.64.2(@swc/core@1.2.112)(webpack-cli@4.9.1)
@@ -2098,19 +2095,6 @@ packages:
       '@babel/plugin-transform-dotall-regex': 7.18.6(@babel/core@7.20.7)
       '@babel/types': 7.20.7
       esutils: 2.0.3
-
-  /@babel/preset-modules@0.1.6(@babel/core@7.20.7):
-    resolution: {integrity: sha512-ID2yj6K/4lKfhuU3+EX4UvNbIt7eACFbHmNUjzA+ep+B5971CknnA/9DEWKbRokfbbtblxxxXFJJrH47UEAMVg==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0 || ^8.0.0-0 <8.0.0
-    dependencies:
-      '@babel/core': 7.20.7
-      '@babel/helper-plugin-utils': 7.20.2
-      '@babel/plugin-proposal-unicode-property-regex': 7.18.6(@babel/core@7.20.7)
-      '@babel/plugin-transform-dotall-regex': 7.18.6(@babel/core@7.20.7)
-      '@babel/types': 7.20.7
-      esutils: 2.0.3
-    dev: false
 
   /@babel/preset-react@7.18.6(@babel/core@7.20.7):
     resolution: {integrity: sha512-zXr6atUmyYdiWRVLOZahakYmOBHtWc2WGCkP8PYTgZi0iJXDY2CN180TdrIW4OGOAdLc7TifzDIvtx6izaRIzg==}
@@ -6642,7 +6626,7 @@ packages:
     engines: {node: '>= 4.5.0'}
     hasBin: true
 
-  /autoprefixer@10.4.15(postcss@8.4.21):
+  /autoprefixer@10.4.15(postcss@8.4.32):
     resolution: {integrity: sha512-KCuPB8ZCIqFdA4HwKXsvz7j6gvSDNhDP7WnUjBleRkKjPdvCmHFuQ77ocavI8FT6NdvlBnE2UFr2H4Mycn8Vew==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -6654,7 +6638,7 @@ packages:
       fraction.js: 4.3.1
       normalize-range: 0.1.2
       picocolors: 1.0.0
-      postcss: 8.4.21
+      postcss: 8.4.32
       postcss-value-parser: 4.2.0
 
   /available-typed-arrays@1.0.5:
@@ -7413,7 +7397,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
@@ -10018,6 +10002,7 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /fsevents@2.3.3:
@@ -10025,7 +10010,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /function-bind@1.1.2:
@@ -11954,7 +11938,7 @@ packages:
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: false
 
   /jest-haste-map@29.4.3:
@@ -11973,7 +11957,7 @@ packages:
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /jest-leak-detector@29.4.3:
     resolution: {integrity: sha512-9yw4VC1v2NspMMeV3daQ1yXPNxMgCzwq9BocCwYrRgXe4uaEJPAN0ZK37nFBhcy3cUwEVstFecFLaTHpF7NiGA==}
@@ -13613,7 +13597,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: false
 
   /nanomatch@1.2.13(supports-color@6.1.0):
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -15048,13 +15031,13 @@ packages:
       icss-utils: 5.1.0(postcss@8.4.21)
       postcss: 8.4.21
 
-  /postcss-nested@5.0.6(postcss@8.4.21):
+  /postcss-nested@5.0.6(postcss@8.4.32):
     resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.21
+      postcss: 8.4.32
       postcss-selector-parser: 6.0.11
 
   /postcss-normalize-charset@5.1.0(postcss@8.4.21):
@@ -15249,7 +15232,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: false
 
   /posthtml-parser@0.10.2:
     resolution: {integrity: sha512-PId6zZ/2lyJi9LiKfe+i2xv57oEjJgWbsHGGANwos5AvdQp98i6AtamAl8gzSVFGfQ43Glb5D614cvZf012VKg==}
@@ -16241,7 +16223,7 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /rollup@4.9.1:
     resolution: {integrity: sha512-pgPO9DWzLoW/vIhlSoDByCzcpX92bKEorbgXuZrqxByte3JFk2xSW2JEeAcyLc9Ru9pqcNNW+Ob7ntsk2oT/Xw==}
@@ -17296,7 +17278,7 @@ packages:
       - supports-color
     dev: true
 
-  /tailwindcss@2.2.19(autoprefixer@10.4.15)(postcss@8.4.21)(ts-node@10.9.1):
+  /tailwindcss@2.2.19(autoprefixer@10.4.15)(postcss@8.4.32)(ts-node@10.9.1):
     resolution: {integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -17305,7 +17287,7 @@ packages:
       postcss: ^8.0.9
     dependencies:
       arg: 5.0.1
-      autoprefixer: 10.4.15(postcss@8.4.21)
+      autoprefixer: 10.4.15(postcss@8.4.32)
       bytes: 3.1.1
       chalk: 4.1.2
       chokidar: 3.5.2
@@ -17326,10 +17308,10 @@ packages:
       node-emoji: 1.11.0
       normalize-path: 3.0.0
       object-hash: 2.2.0
-      postcss: 8.4.21
+      postcss: 8.4.32
       postcss-js: 3.0.3
       postcss-load-config: 3.1.0(ts-node@10.9.1)
-      postcss-nested: 5.0.6(postcss@8.4.21)
+      postcss-nested: 5.0.6(postcss@8.4.32)
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
       pretty-hrtime: 1.0.3
@@ -18401,7 +18383,7 @@ packages:
       resolve: 1.22.1
       rollup: 2.79.1
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /vite@5.0.10(@types/node@16.11.10):
     resolution: {integrity: sha512-2P8J7WWgmc355HUMlFrwofacvr98DAjoE52BfdbwQtyLH06XKwaL/FMnmKM2crF0iX4MpmMKoDlNCB1ok7zHCw==}

@@ -76,9 +76,15 @@ export const startWebpackFixture = (
                 options: {
                   babelrc: false,
                   presets: [
-                    [require.resolve('@babel/preset-modules'), { loose: true }],
+                    [
+                      require.resolve('@babel/preset-env'),
+                      { bugfixes: true, targets: 'last 2 Chrome versions' },
+                    ],
                     require.resolve('@babel/preset-typescript'),
-                    require.resolve('@babel/preset-react'),
+                    [
+                      require.resolve('@babel/preset-react'),
+                      { runtime: 'automatic' },
+                    ],
                   ],
                 },
               },
