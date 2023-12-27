@@ -1,7 +1,6 @@
 import path from 'path';
 
 import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
-import { normalizePath } from 'vite';
 import outdent from 'outdent';
 import {
   cssFileFilter,
@@ -33,6 +32,8 @@ export function vanillaExtractPlugin({
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let postCssConfig: PostCSSConfigResult | null;
+  // We lazily load this utility from Vite
+  let normalizePath: (fsPath: string) => string;
   const cssMap = new Map<string, string>();
 
   const hasEmitCssOverride = typeof emitCssInSsr === 'boolean';
@@ -68,6 +69,7 @@ export function vanillaExtractPlugin({
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
+      normalizePath = (await import('vite')).normalizePath;
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
