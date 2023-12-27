@@ -244,7 +244,7 @@ export const createCompiler = ({
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
           // Before evaluating a file, reset the cache for it
-          const moduleId = fileScope.filePath;
+          const moduleId = normalizePath(fileScope.filePath);
           cssByModuleId.set(moduleId, []);
           classRegistrationsByModuleId.set(moduleId, {
             localClassNames: new Set(),
@@ -255,7 +255,7 @@ export const createCompiler = ({
           // For backwards compatibility, ensure the cache is populated even if
           // a file didn't contain any CSS. This is to ensure that the only
           // error messages shown in older versions are the ones below.
-          const moduleId = fileScope.filePath;
+          const moduleId = normalizePath(fileScope.filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssByModuleId.set(moduleId, cssObjs);
         },
@@ -268,7 +268,7 @@ export const createCompiler = ({
 
           localClassNames.add(className);
 
-          const moduleId = fileScope.filePath;
+          const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .localClassNames.add(className);
@@ -282,7 +282,7 @@ export const createCompiler = ({
 
           composedClassLists.push(composedClassList);
 
-          const moduleId = fileScope.filePath;
+          const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .composedClassLists.push(composedClassList);
@@ -291,7 +291,7 @@ export const createCompiler = ({
           // This compiler currently retains all composition classes
         },
         appendCss: (css, fileScope) => {
-          const moduleId = fileScope.filePath;
+          const moduleId = normalizePath(fileScope.filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssObjs.push(css);
 
@@ -305,7 +305,7 @@ export const createCompiler = ({
 
           const fileExports = await runner.executeFile(filePath);
 
-          const moduleId = filePath;
+          const moduleId = normalizePath(filePath);
           const moduleNode = server.moduleGraph.getModuleById(moduleId);
 
           if (!moduleNode) {
@@ -316,7 +316,8 @@ export const createCompiler = ({
 
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
-          for (const cssDepModuleId of cssDeps) {
+          for (const cssDep of cssDeps) {
+            const cssDepModuleId = normalizePath(cssDep);
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
@@ -380,7 +381,7 @@ export const createCompiler = ({
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const rootRelativePath = relative(root, filePath);
 
-      const moduleId = rootRelativePath;
+      const moduleId = normalizePath(rootRelativePath);
       const result = cssCache.get(moduleId);
 
       if (!result) {
