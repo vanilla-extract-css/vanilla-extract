@@ -24,23 +24,14 @@ export function addFileScope({
   // Encode windows file paths as posix
   const normalizedPath = normalizePath(relative(rootPath, filePath));
 
-  // If there's already a file scope set, replace it with the current file scope
+  const { hasESM, isMixed } = detectSyntax(source);
+
   if (source.includes('@vanilla-extract/css/fileScope')) {
     source = source.replace(
       /setFileScope\(((\n|.)*?)\)/,
       `setFileScope("${normalizedPath}", "${packageName}")`,
     );
-  }
-
-  // If there's an adapter already set, don't add another one
-  if (source.includes('@vanilla-extract/css/adapter')) {
-    return source;
-  }
-
-  const { hasESM, isMixed } = detectSyntax(source);
-
-  // If the file has already been transformed, don't add another file scope
-  if (!source.includes('@vanilla-extract/css/fileScope')) {
+  } else {
     if (hasESM && !isMixed) {
       source = outdent`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
@@ -58,7 +49,6 @@ export function addFileScope({
     }
   }
 
-  // Add the global adapter
   if (globalAdapterIdentifier) {
     const adapterImport =
       hasESM && !isMixed
