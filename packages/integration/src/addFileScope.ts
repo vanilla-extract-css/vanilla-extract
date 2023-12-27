@@ -1,4 +1,4 @@
-import { posix, win32 } from 'path';
+import { posix, relative, win32 } from 'path';
 import { detectSyntax } from 'mlly';
 import outdent from 'outdent';
 
@@ -22,7 +22,7 @@ export function addFileScope({
   globalAdapterIdentifier,
 }: AddFileScopeParams) {
   // Encode windows file paths as posix
-  const normalizedPath = normalizePath(posix.relative(rootPath, filePath));
+  const normalizedPath = normalizePath(relative(rootPath, filePath));
 
   // If there's already a file scope set, replace it with the current file scope
   if (source.includes('@vanilla-extract/css/fileScope')) {
