@@ -14,6 +14,8 @@ import {
   normalizePath,
 } from '@vanilla-extract/integration';
 
+const DEBUG = process.env.DEBUG?.includes('vanilla-extract') ?? false;
+
 const virtualExtCss = '.vanilla.css';
 
 const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
@@ -154,12 +156,12 @@ export function vanillaExtractPlugin({
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
 
-        console.time(`[compiler] ${validId}`);
+        if (DEBUG) console.time(`[compiler] ${validId}`);
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
           { outputCss: true },
         );
-        console.timeEnd(`[compiler] ${validId}`);
+        if (DEBUG) console.timeEnd(`[compiler] ${validId}`);
 
         for (const file of watchFiles) {
           // In start mode, we need to prevent the file from rewatching itself.
@@ -194,7 +196,7 @@ export function vanillaExtractPlugin({
         });
       }
 
-      console.time(`[current] ${validId}`);
+      if (DEBUG) console.time(`[current] ${validId}`);
       const { source, watchFiles } = await compile({
         filePath: validId,
         cwd: config.root,
@@ -221,7 +223,7 @@ export function vanillaExtractPlugin({
           return `import "${rootRelativeId}";`;
         },
       });
-      console.timeEnd(`[current] ${validId}`);
+      if (DEBUG) console.timeEnd(`[current] ${validId}`);
 
       for (const file of watchFiles) {
         // In start mode, we need to prevent the file from rewatching itself.
