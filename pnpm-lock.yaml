@@ -377,9 +377,6 @@ importers:
       outdent:
         specifier: ^0.8.0
         version: 0.8.0
-      vite:
-        specifier: ^5.0.10
-        version: 5.0.10(@types/node@20.9.5)
       vite-node:
         specifier: ^1.1.0
         version: 1.1.0(@types/node@20.9.5)
@@ -390,6 +387,9 @@ importers:
       '@types/lodash':
         specifier: ^4.14.168
         version: 4.14.177
+      vite:
+        specifier: npm:vite@^5.0.10
+        version: 5.0.10(@types/node@20.9.5)
 
   packages/jest-transform:
     dependencies:
