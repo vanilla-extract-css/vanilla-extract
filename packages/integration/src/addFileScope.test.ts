@@ -1,7 +1,7 @@
 import { outdent } from 'outdent';
 import { sep, posix, win32 } from 'path';
 
-import { addFileScope } from './addFileScope';
+import { addFileScope, normalizePath } from './addFileScope';
 
 const raw = String.raw;
 
@@ -302,4 +302,9 @@ test('platform-specific relative path', () => {
     export const myStyle = style({});
     endFileScope();
   `);
+});
+
+test('normalizePath()', () => {
+  expect(normalizePath(raw`foo\bar`)).toMatchInlineSnapshot(`foo/bar`);
+  expect(normalizePath(raw`foo/bar`)).toMatchInlineSnapshot(`foo/bar`);
 });
