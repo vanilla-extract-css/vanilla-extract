@@ -18,7 +18,7 @@ const virtualExtCss = '.vanilla.css';
 
 const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
 const virtualIdToFileId = (virtualId: string) =>
-  virtualId.replace(virtualExtCss, '');
+  virtualId.slice(0, -virtualExtCss.length);
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -47,11 +47,13 @@ export function vanillaExtractPlugin({
 
     if (
       filePath.startsWith(config.root) ||
-      (path.isAbsolute(filePath) && filePath.includes('node_modules'))
+      // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
+      (path.isAbsolute(filePath) &&
+        filePath.split(path.sep)[1] === config.root.split(path.sep)[1])
     ) {
       resolvedId = filePath;
     } else {
-      // in SSR mode we can have paths like /app/styles.css.ts
+      // In SSR mode we can have paths like /app/styles.css.ts
       resolvedId = path.join(config.root, filePath);
     }
 
@@ -136,15 +138,13 @@ export function vanillaExtractPlugin({
 
       if (!validId.endsWith(virtualExtCss)) return;
 
-      // Absolute paths seem to occur often in monorepos, where files are
-      // imported from outside the config root.
       const absoluteId = getAbsoluteFileId(validId);
 
-      // There should always be an entry in the `cssMap` here.
-      // The only valid scenario for a missing one is if someone had written
-      // a file in their app using the .vanilla.js/.vanilla.css extension
       if (
         compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
+        // There should always be an entry in the `cssMap` here.
+        // The only valid scenario for a missing one is if someone had written
+        // a file in their app using the .vanilla.js/.vanilla.css extension
         cssMap.has(absoluteId)
       ) {
         // Keep the original query string for HMR.
