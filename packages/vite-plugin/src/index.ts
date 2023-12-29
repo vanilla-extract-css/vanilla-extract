@@ -14,8 +14,6 @@ import {
   normalizePath,
 } from '@vanilla-extract/integration';
 
-const DEBUG = process.env.DEBUG?.includes('vanilla-extract') ?? false;
-
 const virtualExtCss = '.vanilla.css';
 
 const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
@@ -39,6 +37,11 @@ export function vanillaExtractPlugin({
 
   const cssMap = new Map<string, string>();
 
+  const debug = (cb: () => void) => {
+    if (config.logLevel === 'info') cb();
+  };
+  const getIdentOption = () =>
+    identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
   const getAbsoluteFileId = (filePath: string) => {
     let resolvedId = filePath;
 
@@ -58,6 +61,7 @@ export function vanillaExtractPlugin({
   function invalidateModule(absoluteId: string) {
     if (!server) return;
 
+    debug(() => console.log(`[invalidate] ${absoluteId}`));
     const { moduleGraph } = server;
     const modules = Array.from(moduleGraph.getModulesByFile(absoluteId) || []);
 
@@ -112,8 +116,7 @@ export function vanillaExtractPlugin({
       if (emitCssInSsr === 'compiler') {
         compiler = createCompiler({
           root: config.root,
-          identifiers:
-            identifiers ?? (config.mode === 'production' ? 'short' : 'debug'),
+          identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
           vitePlugins: config.inlineConfig.plugins
             ?.flat()
@@ -176,12 +179,12 @@ export function vanillaExtractPlugin({
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
 
-        if (DEBUG) console.time(`[compiler] ${validId}`);
+        debug(() => console.time(`[compiler] ${absoluteId}`));
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
           { outputCss: true },
         );
-        if (DEBUG) console.timeEnd(`[compiler] ${validId}`);
+        debug(() => console.timeEnd(`[compiler] ${absoluteId}`));
 
         addWatchFiles.call(this, absoluteId, watchFiles);
 
@@ -194,8 +197,7 @@ export function vanillaExtractPlugin({
         };
       }
 
-      const identOption =
-        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
+      const identOption = getIdentOption();
 
       if (!emitCssInSsr) {
         return transform({
@@ -207,7 +209,7 @@ export function vanillaExtractPlugin({
         });
       }
 
-      if (DEBUG) console.time(`[current] ${validId}`);
+      debug(() => console.time(`[current] ${validId}`));
       const { source, watchFiles } = await compile({
         filePath: validId,
         cwd: config.root,
@@ -234,7 +236,7 @@ export function vanillaExtractPlugin({
           return `import "${rootRelativeId}";`;
         },
       });
-      if (DEBUG) console.timeEnd(`[current] ${validId}`);
+      debug(() => console.timeEnd(`[current] ${validId}`));
 
       addWatchFiles.call(this, validId, new Set(watchFiles));
 
