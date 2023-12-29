@@ -1,6 +1,6 @@
 import path from 'path';
 
-import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
+import type { Plugin, ResolvedConfig, ViteDevServer, Rollup } from 'vite';
 import {
   cssFileFilter,
   processVanillaFile,
@@ -66,6 +66,26 @@ export function vanillaExtractPlugin({
 
       // Vite uses this timestamp to add `?t=` query string automatically for HMR.
       module.lastHMRTimestamp = module.lastInvalidationTimestamp || Date.now();
+    }
+  }
+
+  function addWatchFiles(
+    this: Rollup.PluginContext,
+    fromId: string,
+    files: Set<string>,
+  ) {
+    if (!(config.command === 'build' && config.build.watch)) {
+      return;
+    }
+
+    const filesToWatch = [...files].filter(
+      (file) => !file.includes('node_modules'),
+    );
+
+    for (const file of filesToWatch) {
+      if (normalizePath(file) !== fromId) {
+        this.addWatchFile(file);
+      }
     }
   }
 
@@ -163,19 +183,10 @@ export function vanillaExtractPlugin({
         );
         if (DEBUG) console.timeEnd(`[compiler] ${validId}`);
 
-        for (const file of watchFiles) {
-          // In start mode, we need to prevent the file from rewatching itself.
-          // If it's a `build --watch`, it needs to watch everything.
-          if (
-            config.command === 'build' ||
-            normalizePath(file) !== absoluteId
-          ) {
-            this.addWatchFile(file);
-          }
-        }
+        addWatchFiles.call(this, absoluteId, watchFiles);
 
         // We have to invalidate the virtual module, not the real one we just transformed
-        invalidateModule(fileIdToVirtualId(validId));
+        invalidateModule(fileIdToVirtualId(absoluteId));
 
         return {
           code: source,
@@ -225,13 +236,7 @@ export function vanillaExtractPlugin({
       });
       if (DEBUG) console.timeEnd(`[current] ${validId}`);
 
-      for (const file of watchFiles) {
-        // In start mode, we need to prevent the file from rewatching itself.
-        // If it's a `build --watch`, it needs to watch everything.
-        if (config.command === 'build' || normalizePath(file) !== validId) {
-          this.addWatchFile(file);
-        }
-      }
+      addWatchFiles.call(this, validId, new Set(watchFiles));
 
       return {
         code: output,
