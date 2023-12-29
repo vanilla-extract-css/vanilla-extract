@@ -161,8 +161,7 @@ export function vanillaExtractPlugin({
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
 
-        let { css } =
-          compiler.getCssForFile(virtualIdToFileId(absoluteId)) ?? {};
+        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
         return css;
       }
@@ -171,12 +170,14 @@ export function vanillaExtractPlugin({
 
       return css;
     },
-    async transform(code, id) {
+    async transform(code, id, options) {
       const [validId] = id.split('?');
 
       if (!cssFileFilter.test(validId)) {
         return null;
       }
+
+      const outputCss = options?.ssr ? emitCssInSsr : true;
 
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
@@ -184,7 +185,7 @@ export function vanillaExtractPlugin({
         debug(() => console.time(`[compiler] ${absoluteId}`));
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
-          { outputCss: true },
+          { outputCss: outputCss },
         );
         debug(() => console.timeEnd(`[compiler] ${absoluteId}`));
 
@@ -201,7 +202,7 @@ export function vanillaExtractPlugin({
 
       const identOption = getIdentOption();
 
-      if (!emitCssInSsr) {
+      if (!outputCss) {
         return transform({
           source: code,
           filePath: normalizePath(validId),
