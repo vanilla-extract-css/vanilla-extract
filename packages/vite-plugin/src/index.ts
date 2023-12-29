@@ -22,12 +22,14 @@ const virtualIdToFileId = (virtualId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
-  emitCssInSsr?: boolean | 'compiler';
+  emitCssInSsr?: boolean;
+  mode?: 'esbuild';
   esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
   emitCssInSsr = true,
+  mode,
   esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -115,7 +117,7 @@ export function vanillaExtractPlugin({
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
 
-      if (emitCssInSsr === 'compiler') {
+      if (mode !== 'esbuild') {
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
