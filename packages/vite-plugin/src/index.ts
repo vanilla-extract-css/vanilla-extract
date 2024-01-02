@@ -22,14 +22,16 @@ const virtualIdToFileId = (virtualId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
+  mode?: 'transform' | 'emitCss';
   emitCssInSsr?: boolean;
-  mode?: 'esbuild';
+  compiler?: 'esbuild';
   esbuildOptions?: CompileOptions['esbuildOptions'];
 }
 export function vanillaExtractPlugin({
   identifiers,
+  mode = 'emitCss',
   emitCssInSsr = true,
-  mode,
+  compiler: chosenCompiler,
   esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -117,7 +119,7 @@ export function vanillaExtractPlugin({
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
 
-      if (mode !== 'esbuild') {
+      if (!chosenCompiler) {
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
@@ -177,7 +179,18 @@ export function vanillaExtractPlugin({
         return null;
       }
 
-      const outputCss = options?.ssr ? emitCssInSsr : true;
+      const outputCss = options?.ssr || options == null ? emitCssInSsr : true;
+      const identOption = getIdentOption();
+
+      if (mode === 'transform') {
+        return transform({
+          source: code,
+          filePath: normalizePath(validId),
+          rootPath: config.root,
+          packageName,
+          identOption,
+        });
+      }
 
       if (compiler) {
         const absoluteId = getAbsoluteFileId(validId);
@@ -198,18 +211,6 @@ export function vanillaExtractPlugin({
           code: source,
           map: { mappings: '' },
         };
-      }
-
-      const identOption = getIdentOption();
-
-      if (!outputCss) {
-        return transform({
-          source: code,
-          filePath: normalizePath(validId),
-          rootPath: config.root,
-          packageName,
-          identOption,
-        });
       }
 
       debug(() => console.time(`[current] ${validId}`));
