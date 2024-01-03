@@ -14,14 +14,14 @@ import { getPackageInfo } from './packageInfo';
 
 interface VanillaExtractTransformPluginParams {
   identOption?: IdentifierOption;
+  packageName?: string;
 }
 export const vanillaExtractTransformPlugin = ({
   identOption,
+  packageName,
 }: VanillaExtractTransformPluginParams): Plugin => ({
   name: 'vanilla-extract-filescope',
   setup(build) {
-    const packageInfo = getPackageInfo(build.initialOptions.absWorkingDir);
-
     build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
       const originalSource = await fs.readFile(path, 'utf-8');
 
@@ -29,7 +29,9 @@ export const vanillaExtractTransformPlugin = ({
         source: originalSource,
         filePath: path,
         rootPath: build.initialOptions.absWorkingDir!,
-        packageName: packageInfo.name,
+        packageName:
+          packageName ??
+          getPackageInfo(build.initialOptions.absWorkingDir).name,
         identOption:
           identOption ?? (build.initialOptions.minify ? 'short' : 'debug'),
       });

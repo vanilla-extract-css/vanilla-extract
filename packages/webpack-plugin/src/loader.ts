@@ -33,6 +33,7 @@ const virtualNextFileLoaderExtractionFile = path.join(
 interface LoaderOptions {
   outputCss: boolean;
   identifiers?: IdentifierOption;
+  packageName?: string;
 }
 
 interface InternalLoaderOptions extends LoaderOptions {
@@ -47,9 +48,9 @@ const defaultIdentifierOption = (
   identifiers ?? (mode === 'production' ? 'short' : 'debug');
 
 export default function (this: LoaderContext, source: string) {
-  const { identifiers } = loaderUtils.getOptions(this) as InternalLoaderOptions;
-
-  const { name } = getPackageInfo(this.rootContext);
+  const { identifiers, packageName } = loaderUtils.getOptions(
+    this,
+  ) as InternalLoaderOptions;
 
   const callback = this.async();
 
@@ -57,7 +58,7 @@ export default function (this: LoaderContext, source: string) {
     source,
     filePath: this.resourcePath,
     rootPath: this.rootContext,
-    packageName: name,
+    packageName: packageName ?? getPackageInfo(this.rootContext).name,
     identOption: defaultIdentifierOption(this.mode, identifiers),
   })
     .then((code) => {

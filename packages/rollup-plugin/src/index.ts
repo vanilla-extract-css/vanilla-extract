@@ -16,11 +16,13 @@ interface Options {
   identifiers?: IdentifierOption;
   cwd?: string;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  packageName?: string;
 }
 export function vanillaExtractPlugin({
   identifiers,
   cwd = process.cwd(),
   esbuildOptions,
+  packageName,
 }: Options = {}): Plugin {
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -42,6 +44,7 @@ export function vanillaExtractPlugin({
         cwd,
         esbuildOptions,
         identOption,
+        packageName,
       });
 
       for (const file of watchFiles) {

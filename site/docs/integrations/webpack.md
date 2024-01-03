@@ -100,3 +100,7 @@ VanillaExtractPlugin({
 ```
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### packageName
+
+The name of the closest package json is used to scope the styles. If a package json isn't available or there's a need to use a different name, `packageName` can be used instead.

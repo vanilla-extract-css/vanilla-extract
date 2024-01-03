@@ -24,11 +24,13 @@ interface Options {
   identifiers?: IdentifierOption;
   emitCssInSsr?: boolean;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  packageName?: string;
 }
 export function vanillaExtractPlugin({
   identifiers,
   emitCssInSsr,
   esbuildOptions,
+  packageName,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
@@ -39,7 +41,6 @@ export function vanillaExtractPlugin({
   let resolvedEmitCssInSsr: boolean = hasEmitCssOverride
     ? emitCssInSsr
     : !!process.env.VITE_RSC_BUILD;
-  let packageName: string;
 
   const getAbsoluteVirtualFileId = (source: string) =>
     normalizePath(path.join(config.root, source));
@@ -67,7 +68,10 @@ export function vanillaExtractPlugin({
     },
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
-      packageName = getPackageInfo(config.root).name;
+
+      if (!packageName) {
+        packageName = getPackageInfo(config.root).name;
+      }
 
       if (config.command === 'serve') {
         postCssConfig = await resolvePostcssConfig(config);
