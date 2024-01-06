@@ -22,16 +22,12 @@ const virtualIdToFileId = (virtualId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
-  mode?: 'transform' | 'emitCss';
-  emitCssInSsr?: boolean;
-  compiler?: 'esbuild';
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  mode?: 'transform' | 'emitCss';
 }
 export function vanillaExtractPlugin({
   identifiers,
   mode = 'emitCss',
-  emitCssInSsr = true,
-  compiler: chosenCompiler,
   esbuildOptions,
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -46,7 +42,7 @@ export function vanillaExtractPlugin({
   };
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
-  const getAbsoluteFileId = (filePath: string) => {
+  const getAbsoluteId = (filePath: string) => {
     let resolvedId = filePath;
 
     if (
@@ -119,7 +115,7 @@ export function vanillaExtractPlugin({
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
 
-      if (!chosenCompiler) {
+      if (mode !== 'transform' && !esbuildOptions) {
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
@@ -142,7 +138,7 @@ export function vanillaExtractPlugin({
 
       if (!validId.endsWith(virtualExtCss)) return;
 
-      const absoluteId = getAbsoluteFileId(validId);
+      const absoluteId = getAbsoluteId(validId);
 
       if (
         compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
@@ -161,7 +157,7 @@ export function vanillaExtractPlugin({
       if (!validId.endsWith(virtualExtCss)) return;
 
       if (compiler) {
-        const absoluteId = getAbsoluteFileId(validId);
+        const absoluteId = getAbsoluteId(validId);
 
         const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
@@ -172,14 +168,13 @@ export function vanillaExtractPlugin({
 
       return css;
     },
-    async transform(code, id, options) {
+    async transform(code, id) {
       const [validId] = id.split('?');
 
       if (!cssFileFilter.test(validId)) {
         return null;
       }
 
-      const outputCss = options?.ssr || options == null ? emitCssInSsr : true;
       const identOption = getIdentOption();
 
       if (mode === 'transform') {
@@ -193,12 +188,12 @@ export function vanillaExtractPlugin({
       }
 
       if (compiler) {
-        const absoluteId = getAbsoluteFileId(validId);
+        const absoluteId = getAbsoluteId(validId);
 
         debug(() => console.time(`[compiler] ${absoluteId}`));
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
-          { outputCss: outputCss },
+          { outputCss: true },
         );
         debug(() => console.timeEnd(`[compiler] ${absoluteId}`));
 
@@ -226,8 +221,8 @@ export function vanillaExtractPlugin({
         filePath: validId,
         identOption,
         serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${virtualExtCss}`;
-          const absoluteId = getAbsoluteFileId(rootRelativeId);
+          const rootRelativeId = fileIdToVirtualId(fileScope.filePath);
+          const absoluteId = getAbsoluteId(rootRelativeId);
 
           if (cssMap.has(absoluteId) && cssMap.get(absoluteId) !== source) {
             invalidateModule(absoluteId);

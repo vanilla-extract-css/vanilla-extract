@@ -45,7 +45,7 @@ export const startViteFixture = async (
     logLevel: 'error',
     plugins: [
       vanillaExtractPlugin({
-        compiler: type === 'vite-next' ? undefined : 'esbuild',
+        esbuildOptions: type === 'vite-next' ? undefined : {},
       }),
       mode === 'development' && inspect(),
     ],
