@@ -16,6 +16,7 @@ import {
 
 const virtualExtCss = '.vanilla.css';
 
+const isVirtualId = (id: string) => id.endsWith(virtualExtCss);
 const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
 const virtualIdToFileId = (virtualId: string) =>
   virtualId.slice(0, -virtualExtCss.length);
@@ -133,41 +134,10 @@ export function vanillaExtractPlugin({
         });
       }
     },
-    resolveId(source) {
-      const [validId, query] = source.split('?');
-
-      if (!validId.endsWith(virtualExtCss)) return;
-
-      const absoluteId = getAbsoluteId(validId);
-
-      if (
-        compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
-        // There should always be an entry in the `cssMap` here.
-        // The only valid scenario for a missing one is if someone had written
-        // a file in their app using the .vanilla.js/.vanilla.css extension
-        cssMap.has(absoluteId)
-      ) {
-        // Keep the original query string for HMR.
-        return absoluteId + (query ? `?${query}` : '');
-      }
+    buildEnd() {
+      compiler?.close();
     },
-    load(id) {
-      const [validId] = id.split('?');
-
-      if (!validId.endsWith(virtualExtCss)) return;
-
-      if (compiler) {
-        const absoluteId = getAbsoluteId(validId);
-
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
-
-        return css;
-      }
-
-      const css = cssMap.get(validId);
-
-      return css;
-    },
+    // Transform
     async transform(code, id) {
       const [validId] = id.split('?');
 
@@ -244,8 +214,40 @@ export function vanillaExtractPlugin({
         map: { mappings: '' },
       };
     },
-    buildEnd() {
-      compiler?.close();
+    resolveId(source) {
+      const [validId, query] = source.split('?');
+
+      if (!isVirtualId(validId)) return;
+
+      const absoluteId = getAbsoluteId(validId);
+
+      if (
+        compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
+        // There should always be an entry in the `cssMap` here.
+        // The only valid scenario for a missing one is if someone had written
+        // a file in their app using the .vanilla.js/.vanilla.css extension
+        cssMap.has(absoluteId)
+      ) {
+        // Keep the original query string for HMR.
+        return absoluteId + (query ? `?${query}` : '');
+      }
+    },
+    load(id) {
+      const [validId] = id.split('?');
+
+      if (!isVirtualId(validId)) return;
+
+      if (compiler) {
+        const absoluteId = getAbsoluteId(validId);
+
+        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+
+        return css;
+      }
+
+      const css = cssMap.get(validId);
+
+      return css;
     },
   };
 }
