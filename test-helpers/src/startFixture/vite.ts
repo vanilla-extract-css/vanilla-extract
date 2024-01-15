@@ -27,13 +27,13 @@ const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
   });
 
 export interface ViteFixtureOptions {
-  type: 'vite' | 'vite-next';
+  type: 'vite';
   mode?: 'development' | 'production';
   port: number;
 }
 export const startViteFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000, type }: ViteFixtureOptions,
+  { mode = 'development', port = 3000 }: ViteFixtureOptions,
 ): Promise<TestServer> => {
   const root = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
@@ -43,12 +43,7 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [
-      vanillaExtractPlugin({
-        esbuildOptions: type === 'vite-next' ? undefined : {},
-      }),
-      mode === 'development' && inspect(),
-    ],
+    plugins: [vanillaExtractPlugin(), mode === 'development' && inspect()],
     server: {
       port,
       strictPort: true,

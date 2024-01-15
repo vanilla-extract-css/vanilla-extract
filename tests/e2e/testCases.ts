@@ -12,8 +12,6 @@ export const all = [
   { type: 'esbuild-next-runtime', mode: 'production', snapshotCss: false },
   { type: 'vite', mode: 'development', snapshotCss: false },
   { type: 'vite', mode: 'production', snapshotCss: true },
-  { type: 'vite-next', mode: 'development', snapshotCss: false },
-  { type: 'vite-next', mode: 'production', snapshotCss: true },
   { type: 'parcel', mode: 'development', snapshotCss: true },
   { type: 'parcel', mode: 'production', snapshotCss: true },
 ] as const;
