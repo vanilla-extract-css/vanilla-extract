@@ -3,11 +3,8 @@ import path from 'path';
 import type { Plugin, ResolvedConfig, ViteDevServer, Rollup } from 'vite';
 import {
   cssFileFilter,
-  processVanillaFile,
-  compile,
   IdentifierOption,
   getPackageInfo,
-  CompileOptions,
   transform,
   type Compiler,
   createCompiler,
@@ -23,24 +20,17 @@ const virtualIdToFileId = (virtualId: string) =>
 
 interface Options {
   identifiers?: IdentifierOption;
-  esbuildOptions?: CompileOptions['esbuildOptions'];
-  mode?: 'transform' | 'emitCss';
+  unstable_mode?: 'transform' | 'emitCss';
 }
 export function vanillaExtractPlugin({
   identifiers,
-  mode = 'emitCss',
-  esbuildOptions,
+  unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
 
-  const cssMap = new Map<string, string>();
-
-  const debug = (cb: () => void) => {
-    if (config.logLevel === 'info') cb();
-  };
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
   const getAbsoluteId = (filePath: string) => {
@@ -64,7 +54,6 @@ export function vanillaExtractPlugin({
   function invalidateModule(absoluteId: string) {
     if (!server) return;
 
-    debug(() => console.log(`[invalidate] ${absoluteId}`));
     const { moduleGraph } = server;
     const modules = Array.from(moduleGraph.getModulesByFile(absoluteId) || []);
 
@@ -116,7 +105,7 @@ export function vanillaExtractPlugin({
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
 
-      if (mode !== 'transform' && !esbuildOptions) {
+      if (mode !== 'transform') {
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
@@ -137,7 +126,6 @@ export function vanillaExtractPlugin({
     buildEnd() {
       compiler?.close();
     },
-    // Transform
     async transform(code, id) {
       const [validId] = id.split('?');
 
@@ -160,12 +148,10 @@ export function vanillaExtractPlugin({
       if (compiler) {
         const absoluteId = getAbsoluteId(validId);
 
-        debug(() => console.time(`[compiler] ${absoluteId}`));
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
           { outputCss: true },
         );
-        debug(() => console.timeEnd(`[compiler] ${absoluteId}`));
 
         addWatchFiles.call(this, absoluteId, watchFiles);
 
@@ -177,42 +163,6 @@ export function vanillaExtractPlugin({
           map: { mappings: '' },
         };
       }
-
-      debug(() => console.time(`[current] ${validId}`));
-      const { source, watchFiles } = await compile({
-        filePath: validId,
-        cwd: config.root,
-        esbuildOptions,
-        identOption,
-      });
-
-      const output = await processVanillaFile({
-        source,
-        filePath: validId,
-        identOption,
-        serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = fileIdToVirtualId(fileScope.filePath);
-          const absoluteId = getAbsoluteId(rootRelativeId);
-
-          if (cssMap.has(absoluteId) && cssMap.get(absoluteId) !== source) {
-            invalidateModule(absoluteId);
-          }
-
-          cssMap.set(absoluteId, source);
-
-          // We use the root relative id here to ensure file contents (content-hashes)
-          // are consistent across build machines
-          return `import "${rootRelativeId}";`;
-        },
-      });
-      debug(() => console.timeEnd(`[current] ${validId}`));
-
-      addWatchFiles.call(this, validId, new Set(watchFiles));
-
-      return {
-        code: output,
-        map: { mappings: '' },
-      };
     },
     resolveId(source) {
       const [validId, query] = source.split('?');
@@ -222,11 +172,10 @@ export function vanillaExtractPlugin({
       const absoluteId = getAbsoluteId(validId);
 
       if (
-        compiler?.getCssForFile(virtualIdToFileId(absoluteId)) ||
-        // There should always be an entry in the `cssMap` here.
+        // We should always have CSS for a file here.
         // The only valid scenario for a missing one is if someone had written
         // a file in their app using the .vanilla.js/.vanilla.css extension
-        cssMap.has(absoluteId)
+        compiler?.getCssForFile(virtualIdToFileId(absoluteId))
       ) {
         // Keep the original query string for HMR.
         return absoluteId + (query ? `?${query}` : '');
@@ -235,17 +184,11 @@ export function vanillaExtractPlugin({
     load(id) {
       const [validId] = id.split('?');
 
-      if (!isVirtualId(validId)) return;
+      if (!isVirtualId(validId) || !compiler) return;
 
-      if (compiler) {
-        const absoluteId = getAbsoluteId(validId);
+      const absoluteId = getAbsoluteId(validId);
 
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
-
-        return css;
-      }
-
-      const css = cssMap.get(validId);
+      const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
       return css;
     },
