@@ -17,6 +17,4 @@
 '@vanilla-extract/webpack-plugin': patch
 ---
 
-Compile packages with modern syntax
-
-This should have no impact on consumers, as browsers and Node.js LTS have had extensive support for modern syntax for a while.
+Update Babel config to target Node.js 14
