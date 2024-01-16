@@ -70,7 +70,8 @@ export function vanillaExtractPlugin({
     fromId: string,
     files: Set<string>,
   ) {
-    if (!(config.command === 'build' && config.build.watch)) {
+    // We don't need to watch files in build mode
+    if (config.command === 'build' && !config.build.watch) {
       return;
     }
 
