@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/vite-plugin': minor
+'@vanilla-extract/vite-plugin': major
 ---
 
 The Vite plugin now uses a newer, faster, Vite-based compiler by default.
