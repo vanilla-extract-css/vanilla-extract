@@ -33,7 +33,7 @@
     "@changesets/cli": "^2.26.2",
     "@manypkg/cli": "^0.19.1",
     "@playwright/test": "^1.40.1",
-    "@preconstruct/cli": "^2.0.1",
+    "@preconstruct/cli": "^2.8.2",
     "@swc/core": "^1.2.112",
     "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^29.2.5",
@@ -50,9 +50,12 @@
     "rollup-plugin-node-externals": "^5.0.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.9.4",
-    "vitest": "^0.28.5"
+    "vitest": "^1.1.0"
   },
   "preconstruct": {
+    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
+      "keepDynamicImportAsDynamicImportInCommonJS": true
+    },
     "packages": [
       "packages/*"
     ]
