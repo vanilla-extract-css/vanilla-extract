@@ -322,7 +322,7 @@ importers:
   packages/esbuild-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.2.0
+        specifier: ^6.2.5
         version: link:../integration
     devDependencies:
       esbuild:
@@ -332,7 +332,7 @@ importers:
   packages/esbuild-plugin-next:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.0.2
+        specifier: ^6.2.5
         version: link:../integration
     devDependencies:
       esbuild:
@@ -348,7 +348,7 @@ importers:
         specifier: ^7.20.0
         version: 7.20.0(@babel/core@7.20.7)
       '@vanilla-extract/babel-plugin-debug-ids':
-        specifier: ^1.0.2
+        specifier: ^1.0.4
         version: link:../babel-plugin-debug-ids
       '@vanilla-extract/css':
         specifier: ^1.14.0
@@ -391,7 +391,7 @@ importers:
   packages/jest-transform:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.2.0
+        specifier: ^6.2.5
         version: link:../integration
       esbuild:
         specifier: 0.17.6
@@ -404,7 +404,7 @@ importers:
   packages/next-plugin:
     dependencies:
       '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.1
+        specifier: ^2.3.2
         version: link:../webpack-plugin
     devDependencies:
       next:
@@ -420,7 +420,7 @@ importers:
         specifier: ^2.7.0
         version: 2.8.3(@parcel/core@2.8.3)
       '@vanilla-extract/integration':
-        specifier: ^6.0.0
+        specifier: ^6.2.5
         version: link:../integration
 
   packages/private: {}
@@ -434,7 +434,7 @@ importers:
   packages/rollup-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.2.0
+        specifier: ^6.2.5
         version: link:../integration
     devDependencies:
       '@fixtures/themed':
@@ -467,7 +467,7 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.2.4
+        specifier: ^6.2.5
         version: link:../integration
     devDependencies:
       vite:
@@ -477,7 +477,7 @@ importers:
   packages/webpack-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.0.0
+        specifier: ^6.2.5
         version: link:../integration
       chalk:
         specifier: ^4.1.1
