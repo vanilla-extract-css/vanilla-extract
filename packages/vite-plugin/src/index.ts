@@ -55,13 +55,16 @@ export function vanillaExtractPlugin({
     if (!server) return;
 
     const { moduleGraph } = server;
-    const modules = Array.from(moduleGraph.getModulesByFile(absoluteId) || []);
+    const modules = moduleGraph.getModulesByFile(absoluteId);
 
-    for (const module of modules) {
-      moduleGraph.invalidateModule(module);
+    if (modules) {
+      for (const module of modules) {
+        moduleGraph.invalidateModule(module);
 
-      // Vite uses this timestamp to add `?t=` query string automatically for HMR.
-      module.lastHMRTimestamp = module.lastInvalidationTimestamp || Date.now();
+        // Vite uses this timestamp to add `?t=` query string automatically for HMR.
+        module.lastHMRTimestamp =
+          module.lastInvalidationTimestamp || Date.now();
+      }
     }
   }
 
@@ -75,12 +78,8 @@ export function vanillaExtractPlugin({
       return;
     }
 
-    const filesToWatch = [...files].filter(
-      (file) => !file.includes('node_modules'),
-    );
-
-    for (const file of filesToWatch) {
-      if (normalizePath(file) !== fromId) {
+    for (const file of files) {
+      if (!file.includes('node_modules') && normalizePath(file) !== fromId) {
         this.addWatchFile(file);
       }
     }
