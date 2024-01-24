@@ -49,14 +49,14 @@ const contents = [
     group: 'integrations',
     label: 'Integrations',
     pages: [
-      'vite',
       'esbuild',
-      'webpack',
+      'gatsby',
       'next',
       'parcel',
       'remix',
       'rollup',
-      'gatsby',
+      'vite',
+      'webpack',
     ],
   },
 ];
