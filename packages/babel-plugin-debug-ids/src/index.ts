@@ -61,7 +61,7 @@ const styleFunctions = [
   'recipe',
 ] as const;
 
-type StyleFunction = typeof styleFunctions[number];
+type StyleFunction = (typeof styleFunctions)[number];
 
 const extractName = (node: t.Node) => {
   if (t.isObjectProperty(node) && t.isIdentifier(node.key)) {
