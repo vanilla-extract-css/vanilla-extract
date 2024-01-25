@@ -71,7 +71,7 @@ Each integration will set a default value based on the configuration options pas
 
 By default, Next.js does not allow importing of TypeScript files outside of the app root.
 
-If your application depends on a TypeScript library, whether that be a local package within your app's monorepo, or a dependnecy inside `node_modules`, and that library styles its components with Vanilla Extract, but does _not_ compile its styles, then that library needs to be added to [`transpilePackages`] in your Next.js config:
+If your application depends on a TypeScript library, whether that be a local package within your app's monorepo, or a dependency inside `node_modules`, and that library styles its components with Vanilla Extract, but does _not_ compile its styles, then that library needs to be added to [`transpilePackages`] in your Next.js config:
 
 ```tsx
 // App.tsx

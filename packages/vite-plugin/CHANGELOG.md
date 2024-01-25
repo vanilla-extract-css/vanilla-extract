@@ -1,5 +1,22 @@
 # @vanilla-extract/vite-plugin
 
+## 3.9.4
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Lazy load Vite to avoid the CJS warning
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e), [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/integration@6.2.5
+
+## 3.9.3
+
+### Patch Changes
+
+- [#1250](https://github.com/vanilla-extract-css/vanilla-extract/pull/1250) [`bc349fd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/bc349fd7cb3c50488bb1b169418fbb35b7de5c95) Thanks [@kosmotema](https://github.com/kosmotema)! - Prevent unnecessary module invalidations when using PostCSS
+
 ## 3.9.2
 
 ### Patch Changes
