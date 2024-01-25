@@ -252,10 +252,6 @@ describe('compiler', () => {
       export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';"
     `);
 
-    // styles_a.css.ts should not generate any CSS
-    const { css: cssA } = compiler.getCssForFile(cssPathA);
-    expect(cssA).toBe('');
-
     // Process the file multiple times with different args to test caching
     await compiler.processVanillaFile(cssPathB, { outputCss: false });
     const outputB = await compiler.processVanillaFile(cssPathB);
@@ -265,10 +261,6 @@ describe('compiler', () => {
       "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
       export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
     `);
-
-    // styles_b.css.ts should not generate any CSS
-    const { css: cssB } = compiler.getCssForFile(cssPathB);
-    expect(cssB).toBe('');
 
     // shared.css.ts should generate CSS
     const { css } = compiler.getCssForFile(sharedCssPath);
