@@ -262,7 +262,6 @@ describe('compiler', () => {
       export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
     `);
 
-    // shared.css.ts should generate CSS
     const { css } = compiler.getCssForFile(sharedCssPath);
     expect(css).toMatchInlineSnapshot(`
       ".shared_shared__5i7sy00 {
