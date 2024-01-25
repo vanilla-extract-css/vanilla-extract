@@ -10,7 +10,7 @@ let testCounter = 0;
 const test = base.extend<TestFixtures>({
   port: async ({}, use, workerInfo) => {
     const portRange = 100 * workerInfo.workerIndex;
-    await use(10000 + portRange + testCounter++);
+    await use(9000 + portRange + testCounter++);
   },
 
   // Workaround from https://github.com/microsoft/playwright/issues/11134

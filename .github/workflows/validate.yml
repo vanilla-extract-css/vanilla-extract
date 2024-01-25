@@ -83,6 +83,7 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Install Dependencies
         run: pnpm i

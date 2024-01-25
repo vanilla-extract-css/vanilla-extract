@@ -5,7 +5,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@playwright/test": "^1.25.1",
+    "@playwright/test": "^1.40.1",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@vanilla-extract-private/test-helpers": "*",
