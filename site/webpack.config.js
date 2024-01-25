@@ -45,7 +45,7 @@ module.exports = [
     },
     mode,
     resolve: {
-      extensions: ['.js', '.json', '.ts', '.tsx'],
+      extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     module: {
       rules: [
@@ -55,15 +55,7 @@ module.exports = [
             {
               loader: 'babel-loader',
               options: {
-                babelrc: false,
-                presets: [
-                  '@babel/preset-typescript',
-                  [
-                    '@babel/preset-env',
-                    { modules: false, targets: 'last 2 Chrome versions' },
-                  ],
-                  ['@babel/preset-react', { runtime: 'automatic' }],
-                ],
+                babelrc: true,
               },
             },
           ],
@@ -122,7 +114,7 @@ module.exports = [
     entry: require.resolve('./src/render.tsx'),
     mode,
     resolve: {
-      extensions: ['.js', '.json', '.ts', '.tsx'],
+      extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     module: {
       rules: [
@@ -132,15 +124,7 @@ module.exports = [
             {
               loader: 'babel-loader',
               options: {
-                babelrc: false,
-                presets: [
-                  '@babel/preset-typescript',
-                  [
-                    '@babel/preset-env',
-                    { modules: false, targets: 'last 2 Chrome versions' },
-                  ],
-                  ['@babel/preset-react', { runtime: 'automatic' }],
-                ],
+                babelrc: true,
               },
             },
           ],
