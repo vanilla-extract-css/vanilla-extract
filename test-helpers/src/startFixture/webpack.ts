@@ -41,7 +41,6 @@ export const startWebpackFixture = (
     hot = false,
     mode = 'development',
     port,
-    logLevel = 'errors-only',
   }: WebpackFixtureOptions,
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
@@ -96,25 +95,32 @@ export const startWebpackFixture = (
     });
     const compiler = webpack(config);
 
-    // @ts-expect-error - webpack version mismatch
-    const server = new WDS(compiler, {
-      hot,
-      stats: logLevel,
-      noInfo: true,
-      onListening: () => {
-        resolve({
-          url: `http://localhost:${port}`,
-          close: () =>
-            new Promise<void>((resolveClose) =>
-              server.close(() => {
-                compiler.close(() => resolveClose());
-              }),
-            ),
-          type,
-          stylesheet: 'main.css',
-        });
+    const server = new WDS(
+      {
+        hot,
+        onListening: () => {
+          resolve({
+            url: `http://localhost:${port}`,
+            close: () =>
+              new Promise<void>((resolveClose) =>
+                server.close(() => {
+                  compiler.close(() => resolveClose());
+                }),
+              ),
+            type,
+            stylesheet: 'main.css',
+          });
+        },
+        port,
       },
-    });
+      compiler,
+    );
 
-    server.listen(port);
+    server.startCallback((err) => {
+      console.log('Started webpack-dev-server');
+
+      if (err) {
+        throw err;
+      }
+    });
   });

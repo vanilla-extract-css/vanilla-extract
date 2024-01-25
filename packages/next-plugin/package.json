@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "next": "12.3.4",
-    "webpack": "^5.36.1"
+    "webpack": "^5.90.0"
   }
 }
