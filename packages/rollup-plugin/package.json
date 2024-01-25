@@ -21,7 +21,7 @@
     "@fixtures/themed": "*",
     "@rollup/plugin-json": "^4.1.0",
     "@vanilla-extract/css": "^1.13.0",
-    "esbuild": "0.19.9",
+    "esbuild": "~0.19.12",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
   },
