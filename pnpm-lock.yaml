@@ -388,7 +388,7 @@ importers:
   packages/jest-transform:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.2.5
+        specifier: ^6.3.0
         version: link:../integration
       esbuild:
         specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0

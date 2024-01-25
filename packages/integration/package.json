@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/integration",
-  "version": "6.2.5",
+  "version": "6.3.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-integration.cjs.js",
   "files": [
