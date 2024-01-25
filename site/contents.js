@@ -49,6 +49,7 @@ const contents = [
     group: 'integrations',
     label: 'Integrations',
     pages: [
+      'astro',
       'esbuild',
       'gatsby',
       'next',
