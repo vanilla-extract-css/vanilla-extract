@@ -5,7 +5,7 @@ parent: integrations
 
 # Astro
 
-A plugin for integrating vanilla-extract with [Astro](https://astro.build).
+Integrating Vanilla Extract with [Astro](https://astro.build) is done with the help of the [Vite plugin][vite integration].
 
 ## Installation
 
@@ -46,9 +46,12 @@ export const button = style({
 });
 ```
 
-```astro
+And now you can reference styles in your Astro component:
+
+```tsx
+//  Button.astro
+
 ---
-// Button.astro
 import { button } from './button.css'
 ---
 
@@ -57,4 +60,6 @@ import { button } from './button.css'
 
 ## Configuration
 
-See the [Vite integration page](/documentation/integrations/vite) for documentation on the Vite plugin.
+See the [Vite integration page][vite integration] for documentation on the Vite plugin.
+
+[vite integration]: /documentation/integrations/vite
