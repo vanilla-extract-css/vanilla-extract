@@ -21,4 +21,4 @@ export default defineConfig({
 
 See [Vite (Unstable) | Remix](https://remix.run/docs/en/main/future/vite#add-vanilla-extract-plugin) for more details.
 
-[Vite integration]: /documentation/integrations/vite
+[vite integration]: /documentation/integrations/vite
