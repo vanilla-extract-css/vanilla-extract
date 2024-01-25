@@ -8,6 +8,8 @@ export const stylesheetName = 'main.css';
 
 export async function getStylesheet(url: string, stylesheetName = 'main.css') {
   const response = await got(`${url}/${stylesheetName}`);
+  // Just remove comments and normalize whitespace
+  // https://cssnano.co/docs/what-are-optimisations/#what-optimisations-do-you-support%3F
   const { css } = await postcss([cssnano({ preset: litePreset() })]).process(
     response.body,
     {
