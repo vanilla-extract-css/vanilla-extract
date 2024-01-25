@@ -1,5 +1,17 @@
 # @vanilla-extract/integration
 
+## 6.3.0
+
+### Minor Changes
+
+- [#1273](https://github.com/vanilla-extract-css/vanilla-extract/pull/1273) [`959c646`](https://github.com/vanilla-extract-css/vanilla-extract/commit/959c646ad6154ef0f8e357660319c7049e8b0459) Thanks [@lars-berger](https://github.com/lars-berger)! - Allow `conditions` option to be passed through to esbuild
+
+### Patch Changes
+
+- [#1252](https://github.com/vanilla-extract-css/vanilla-extract/pull/1252) [`5bc98a4`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5bc98a4af30a339336ab4ef7c387d3e809586a83) Thanks [@Ethan-PageUp](https://github.com/Ethan-PageUp)! - Unpin esbuild and broaden the version range
+
+- [#1243](https://github.com/vanilla-extract-css/vanilla-extract/pull/1243) [`1566f92`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1566f9238078a3cfefec9ae5023b56aba02875d4) Thanks [@askoufis](https://github.com/askoufis)! - Experimental `vite-node` compiler: Skip transforming CSS for files that won't generate any CSS
+
 ## 6.2.5
 
 ### Patch Changes
