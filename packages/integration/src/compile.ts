@@ -49,7 +49,7 @@ export interface CompileOptions {
   cwd?: string;
   esbuildOptions?: Pick<
     EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader' | 'tsconfig'
+    'plugins' | 'external' | 'define' | 'loader' | 'tsconfig' | 'conditions'
   >;
 }
 export async function compile({
@@ -73,6 +73,7 @@ export async function compile({
     loader: esbuildOptions?.loader,
     define: esbuildOptions?.define,
     tsconfig: esbuildOptions?.tsconfig,
+    conditions: esbuildOptions?.conditions,
   });
 
   const { outputFiles, metafile } = result;
