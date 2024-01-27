@@ -1,5 +1,11 @@
 # @vanilla-extract/esbuild-plugin-next
 
+## 0.0.3
+
+### Patch Changes
+
+- [#1291](https://github.com/vanilla-extract-css/vanilla-extract/pull/1291) [`00af971`](https://github.com/vanilla-extract-css/vanilla-extract/commit/00af9715e522d9caf6e90cb138dee13580b8dea1) Thanks [@mrm007](https://github.com/mrm007)! - Update dependency `@vanilla-extract/integration`
+
 ## 0.0.2
 
 ### Patch Changes

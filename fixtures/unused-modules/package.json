@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/unused-modules",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "main": "src/index.ts",
   "sideEffects": [
     "src/global.css.ts"
@@ -8,6 +8,6 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.14.0"
+    "@vanilla-extract/css": "1.14.1"
   }
 }
