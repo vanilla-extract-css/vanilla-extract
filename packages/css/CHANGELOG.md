@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.14.1
+
+### Patch Changes
+
+- [#1254](https://github.com/vanilla-extract-css/vanilla-extract/pull/1254) [`f373d7f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f373d7f6b59f43236dc713e1b421ef4631f392c0) Thanks [@EvgenNoskov](https://github.com/EvgenNoskov)! - Allow hyphens in class names when using a custom identifier
+
 ## 1.14.0
 
 ### Minor Changes

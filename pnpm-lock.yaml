@@ -126,13 +126,13 @@ importers:
         specifier: ^7.18.6
         version: 7.18.6(@babel/core@7.20.7)
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
       '@vanilla-extract/sprinkles':
         specifier: ^1.6.1
         version: link:../../packages/sprinkles
       '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.0
+        specifier: ^2.3.3
         version: link:../../packages/webpack-plugin
       babel-loader:
         specifier: ^8.2.2
@@ -181,7 +181,7 @@ importers:
   fixtures/features:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
       '@vanilla-extract/dynamic':
         specifier: 2.1.0
@@ -190,19 +190,19 @@ importers:
   fixtures/layers:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
 
   fixtures/low-level:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
 
   fixtures/recipes:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
       '@vanilla-extract/recipes':
         specifier: 0.5.1
@@ -211,7 +211,7 @@ importers:
   fixtures/sprinkles:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
       '@vanilla-extract/sprinkles':
         specifier: 1.6.1
@@ -220,7 +220,7 @@ importers:
   fixtures/themed:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
       '@vanilla-extract/dynamic':
         specifier: 2.1.0
@@ -229,31 +229,31 @@ importers:
   fixtures/thirdparty:
     dependencies:
       '@fixtures/thirdparty-dep':
-        specifier: 0.0.1
+        specifier: 0.0.2
         version: link:thirdparty-dep
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
 
   fixtures/thirdparty/thirdparty-dep:
     dependencies:
       '@fixtures/thirdparty-dep-dep':
-        specifier: 0.0.1
+        specifier: 0.0.2
         version: link:thirdparty-dep-dep
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../../packages/css
 
   fixtures/thirdparty/thirdparty-dep/thirdparty-dep-dep:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../../../packages/css
 
   fixtures/unused-modules:
     dependencies:
       '@vanilla-extract/css':
-        specifier: 1.14.0
+        specifier: 1.14.1
         version: link:../../packages/css
 
   packages/babel-plugin-debug-ids:
@@ -401,7 +401,7 @@ importers:
   packages/next-plugin:
     dependencies:
       '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.2
+        specifier: ^2.3.3
         version: link:../webpack-plugin
     devDependencies:
       next:
@@ -441,7 +441,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(rollup@2.79.1)
       '@vanilla-extract/css':
-        specifier: ^1.13.0
+        specifier: ^1.14.1
         version: link:../css
       esbuild:
         specifier: ~0.19.12
