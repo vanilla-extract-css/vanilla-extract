@@ -75,7 +75,7 @@ export function generateIdentifier(
       packageName,
     });
 
-    if (!identifier.match(/^[A-Z_][0-9A-Z_\-]+$/i)) {
+    if (!identifier.match(/^[A-Z_][0-9A-Z_-]+$/i)) {
       throw new Error(
         `Identifier function returned invalid indentifier: "${identifier}"`,
       );
