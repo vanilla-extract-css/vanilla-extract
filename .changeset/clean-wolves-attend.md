@@ -1,6 +1,5 @@
 ---
-'@vanilla-extract/rollup-plugin': minor
+'@vanilla-extract/rollup-plugin': patch
 ---
 
-PR: https://github.com/vanilla-extract-css/vanilla-extract/pull/1290
-Allow rollup@4.x.x as peer dependency. See https://github.com/vanilla-extract-css/vanilla-extract/discussions/1289 for additional context.
+Add Rollup v4 to peer dependencies
