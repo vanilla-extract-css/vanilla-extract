@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.2.5",
+    "@vanilla-extract/integration": "^6.3.0",
     "outdent": "^0.8.0",
     "postcss": "^8.3.6",
     "postcss-load-config": "^4.0.1"
