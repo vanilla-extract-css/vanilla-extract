@@ -19,6 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@parcel/plugin": "^2.7.0",
-    "@vanilla-extract/integration": "^6.2.5"
+    "@vanilla-extract/integration": "^6.3.0"
   }
 }
