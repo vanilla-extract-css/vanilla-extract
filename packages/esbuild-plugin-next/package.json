@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@vanilla-extract/esbuild-plugin-next",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin-next.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin-next.esm.js",
