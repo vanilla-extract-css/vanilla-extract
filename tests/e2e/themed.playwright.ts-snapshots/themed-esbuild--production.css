@@ -30,7 +30,7 @@
   box-shadow: 0 0 5px red;
 }
 body {
-  background-color: #87ceeb;
+  background-color: skyblue;
 }
 body,
 button {
@@ -38,7 +38,7 @@ button {
 }
 @font-face {
   src: local("Impact");
-  font-family: jteyb10;
+  font-family: "jteyb10";
 }
 @font-face {
   src: local("Comic Sans MS");
@@ -55,7 +55,7 @@ button {
   position: relative;
 }
 .jteyb13 {
-  font-family: jteyb10;
+  font-family: "jteyb10";
   background-color: var(--cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
   color: var(--cvta172);
   border-radius: 9999px;

@@ -1,5 +1,23 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.3
+
+### Patch Changes
+
+- [#1252](https://github.com/vanilla-extract-css/vanilla-extract/pull/1252) [`5bc98a4`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5bc98a4af30a339336ab4ef7c387d3e809586a83) Thanks [@Ethan-PageUp](https://github.com/Ethan-PageUp)! - Unpin esbuild and broaden the version range
+
+- Updated dependencies [[`959c646`](https://github.com/vanilla-extract-css/vanilla-extract/commit/959c646ad6154ef0f8e357660319c7049e8b0459), [`5bc98a4`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5bc98a4af30a339336ab4ef7c387d3e809586a83), [`1566f92`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1566f9238078a3cfefec9ae5023b56aba02875d4)]:
+  - @vanilla-extract/integration@6.3.0
+
+## 1.1.2
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e), [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/integration@6.2.5
+
 ## 1.1.1
 
 ### Patch Changes

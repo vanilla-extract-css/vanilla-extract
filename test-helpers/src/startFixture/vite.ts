@@ -49,6 +49,7 @@ export const startViteFixture = async (
     },
     build: {
       cssCodeSplit: false,
+      minify: false,
     },
   };
 

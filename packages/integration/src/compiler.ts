@@ -315,11 +315,15 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              const css = transformCss({
-                localClassNames: Array.from(localClassNames),
-                composedClassLists,
-                cssObjs,
-              }).join('\n');
+              let css = '';
+
+              if (cssObjs.length > 0) {
+                css = transformCss({
+                  localClassNames: Array.from(localClassNames),
+                  composedClassLists,
+                  cssObjs,
+                }).join('\n');
+              }
 
               cssCache.set(cssDepModuleId, { css });
             } else if (cachedClassRegistrations) {

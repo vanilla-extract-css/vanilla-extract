@@ -66,7 +66,7 @@ describe('compiler', () => {
     `);
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
+      const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
@@ -78,7 +78,7 @@ describe('compiler', () => {
     })();
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
+      const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
@@ -112,7 +112,7 @@ describe('compiler', () => {
     `);
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
+      const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
@@ -124,7 +124,7 @@ describe('compiler', () => {
     })();
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
+      const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
@@ -158,7 +158,7 @@ describe('compiler', () => {
     `);
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
+      const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
@@ -170,7 +170,7 @@ describe('compiler', () => {
     })();
 
     await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
+      const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
@@ -187,7 +187,7 @@ describe('compiler', () => {
     let error: Error | undefined;
 
     try {
-      await compiler.getCssForFile('does-not-exist.css.ts');
+      compiler.getCssForFile('does-not-exist.css.ts');
     } catch (_error) {
       error = _error as Error;
     }
@@ -212,7 +212,7 @@ describe('compiler', () => {
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'q7x3ow0 _16bmd920';"
     `);
-    const { css } = await compiler.getCssForFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
       ".q7x3ow0 {
         color: red;
@@ -262,7 +262,7 @@ describe('compiler', () => {
       export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
     `);
 
-    const { css } = await compiler.getCssForFile(sharedCssPath);
+    const { css } = compiler.getCssForFile(sharedCssPath);
     expect(css).toMatchInlineSnapshot(`
       ".shared_shared__5i7sy00 {
         padding: 20px;
@@ -276,7 +276,7 @@ describe('compiler', () => {
 
     const cssPath = path.join(__dirname, 'fixtures/selectors/getter.css.ts');
     const output = await compiler.processVanillaFile(cssPath);
-    const { css } = await compiler.getCssForFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
       "import 'fixtures/selectors/getter.css.ts.vanilla.css';
@@ -308,7 +308,7 @@ describe('compiler', () => {
       'fixtures/recipes/recipeClassNames.css.ts',
     );
     const output = await compiler.processVanillaFile(cssPath);
-    const { css } = await compiler.getCssForFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
       "import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';

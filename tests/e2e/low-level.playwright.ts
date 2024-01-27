@@ -6,24 +6,7 @@ import {
 } from '@vanilla-extract-private/test-helpers';
 
 import test from './fixture';
-
-const testCases = [
-  { type: 'mini-css-extract', mode: 'development', snapshotCss: true },
-  { type: 'mini-css-extract', mode: 'production', snapshotCss: true },
-  { type: 'style-loader', mode: 'development', snapshotCss: false },
-  { type: 'esbuild', mode: 'development', snapshotCss: true },
-  { type: 'esbuild', mode: 'production', snapshotCss: true },
-  { type: 'esbuild-runtime', mode: 'development', snapshotCss: false },
-  { type: 'esbuild-runtime', mode: 'production', snapshotCss: false },
-  { type: 'esbuild-next', mode: 'development', snapshotCss: true },
-  { type: 'esbuild-next', mode: 'production', snapshotCss: true },
-  { type: 'esbuild-next-runtime', mode: 'development', snapshotCss: false },
-  { type: 'esbuild-next-runtime', mode: 'production', snapshotCss: false },
-  { type: 'vite', mode: 'development', snapshotCss: false },
-  { type: 'vite', mode: 'production', snapshotCss: true },
-  { type: 'parcel', mode: 'development', snapshotCss: true },
-  { type: 'parcel', mode: 'production', snapshotCss: true },
-] as const;
+import { all as testCases } from './testCases';
 
 testCases.forEach(({ type, mode, snapshotCss = true }) => {
   test.describe(`low-level - ${type} (${mode})`, () => {
