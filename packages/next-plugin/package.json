@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/next-plugin",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-next-plugin.cjs.js",
   "module": "dist/vanilla-extract-next-plugin.esm.js",
@@ -20,7 +20,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/webpack-plugin": "^2.3.2"
+    "@vanilla-extract/webpack-plugin": "^2.3.3"
   },
   "peerDependencies": {
     "next": ">=12.1.7"

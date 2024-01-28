@@ -8,7 +8,7 @@ export { getPackageInfo } from './packageInfo';
 export { compile, vanillaExtractTransformPlugin } from './compile';
 export { createCompiler } from './compiler';
 export { hash } from './hash';
-export { addFileScope } from './addFileScope';
+export { addFileScope, normalizePath } from './addFileScope';
 export { serializeCss, deserializeCss } from './serialize';
 export { transformSync, transform } from './transform';
 
