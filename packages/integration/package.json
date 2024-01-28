@@ -23,10 +23,10 @@
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "lodash": "^4.17.21",
-    "mlly": "^1.1.0",
+    "mlly": "^1.4.2",
     "outdent": "^0.8.0",
-    "vite": "^5.0.10",
-    "vite-node": "^1.1.0"
+    "vite": "^5.0.11",
+    "vite-node": "^1.2.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.20",

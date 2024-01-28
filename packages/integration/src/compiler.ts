@@ -1,13 +1,13 @@
 import { join, relative, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import type { ModuleNode, Plugin as VitePlugin } from 'vite';
-import type { ViteNodeRunner } from 'vite-node/client';
+import type { ModuleNode, InlineConfig as ViteConfig } from 'vite';
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
 import { getPackageInfo } from './packageInfo';
 import { transform } from './transform';
+import { normalizePath } from './addFileScope';
 import { lock } from './lock';
 import { serializeVanillaModule } from './processVanillaFile';
 
@@ -17,22 +17,27 @@ type Composition = Parameters<Adapter['registerComposition']>[0];
 const globalAdapterIdentifier = '__vanilla_globalCssAdapter__';
 
 const scanModule = (entryModule: ModuleNode, root: string) => {
-  const queue = [entryModule];
+  const queue = new Set([entryModule]);
   const cssDeps = new Set<string>();
   const watchFiles = new Set<string>();
 
   for (const moduleNode of queue) {
-    const relativePath = moduleNode.id && relative(root, moduleNode.id);
-
-    if (relativePath) {
-      cssDeps.add(relativePath);
+    if (moduleNode.id?.includes('@vanilla-extract/')) {
+      continue;
     }
 
+    const relativePath = moduleNode.id && relative(root, moduleNode.id);
+
+    if (relativePath && cssFileFilter.test(relativePath)) {
+      cssDeps.add(relativePath);
+    }
     if (moduleNode.file) {
       watchFiles.add(moduleNode.file);
     }
 
-    queue.push(...moduleNode.importedModules);
+    for (const dep of moduleNode.importedModules) {
+      queue.add(dep);
+    }
   }
 
   // This ensures the root module's styles are last in terms of CSS ordering
@@ -41,22 +46,13 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
   return { cssDeps: [...tail, head], watchFiles };
 };
 
-// We lazily load this utility from Vite
-let normalizeModuleId: (fsPath: string) => string;
-
 const createViteServer = async ({
   root,
   identifiers,
-  vitePlugins = [],
-}: {
-  root: string;
-  identifiers: IdentifierOption;
-  vitePlugins?: Array<VitePlugin>;
-}) => {
+  vitePlugins,
+}: Required<Omit<CreateCompilerOptions, 'cssImportSpecifier'>>) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
-
-  normalizeModuleId = vite.normalizePath;
 
   const server = await vite.createServer({
     configFile: false,
@@ -114,7 +110,18 @@ const createViteServer = async ({
 
   const node = new ViteNodeServer(server);
 
-  const runner = new ViteNodeRunner({
+  class ViteNodeRunnerWithContext extends ViteNodeRunner {
+    cssAdapter: Adapter | undefined;
+
+    prepareContext(context: Record<string, any>): Record<string, any> {
+      return {
+        ...super.prepareContext(context),
+        [globalAdapterIdentifier]: this.cssAdapter,
+      };
+    }
+  }
+
+  const runner = new ViteNodeRunnerWithContext({
     root,
     base: server.config.base,
     fetchModule(id) {
@@ -134,6 +141,28 @@ const createViteServer = async ({
     runner,
   };
 };
+
+class NormalizedMap<V> extends Map<string, V> {
+  constructor(readonly root: string) {
+    super();
+  }
+
+  #normalizePath(filePath: string) {
+    return normalizePath(
+      isAbsolute(filePath) ? relative(this.root, filePath) : filePath,
+    );
+  }
+
+  get(filePath: string) {
+    filePath = this.#normalizePath(filePath);
+    return super.get(filePath);
+  }
+
+  set(filePath: string, value: V) {
+    filePath = this.#normalizePath(filePath);
+    return super.set(filePath, value);
+  }
+}
 
 export interface Compiler {
   processVanillaFile(
@@ -155,27 +184,19 @@ export interface CreateCompilerOptions {
   root: string;
   cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
-  vitePlugins?: Array<VitePlugin>;
+  vitePlugins?: ViteConfig['plugins'];
 }
 export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
-  vitePlugins,
+  vitePlugins = [],
 }: CreateCompilerOptions): Compiler => {
-  let originalPrepareContext: ViteNodeRunner['prepareContext'];
-
   const vitePromise = createViteServer({
     root,
     identifiers,
     vitePlugins,
-  }).then(({ server, runner }) => {
-    // Store the original method so we can monkey patch it on demand
-    originalPrepareContext = runner.prepareContext;
-    return { server, runner };
   });
-
-  const cssCache = new Map<string, { css: string }>();
 
   const processVanillaFileCache = new Map<
     string,
@@ -185,13 +206,11 @@ export const createCompiler = ({
     }
   >();
 
-  const classRegistrationsByModuleId = new Map<
-    string,
-    {
-      localClassNames: Set<string>;
-      composedClassLists: Array<Composition>;
-    }
-  >();
+  const cssCache = new NormalizedMap<{ css: string }>(root);
+  const classRegistrationsByModuleId = new NormalizedMap<{
+    localClassNames: Set<string>;
+    composedClassLists: Array<Composition>;
+  }>(root);
 
   return {
     async processVanillaFile(
@@ -217,7 +236,7 @@ export const createCompiler = ({
         }
       }
 
-      const cssByModuleId = new Map<string, Array<Css>>();
+      const cssByModuleId = new NormalizedMap<Array<Css>>(root);
       const localClassNames = new Set<string>();
       const composedClassLists: Array<Composition> = [];
 
@@ -225,18 +244,18 @@ export const createCompiler = ({
         getIdentOption: () => identifiers,
         onBeginFileScope: (fileScope) => {
           // Before evaluating a file, reset the cache for it
-          const moduleId = normalizeModuleId(fileScope.filePath);
+          const moduleId = normalizePath(fileScope.filePath);
           cssByModuleId.set(moduleId, []);
           classRegistrationsByModuleId.set(moduleId, {
             localClassNames: new Set(),
             composedClassLists: [],
           });
         },
-        onEndFileScope: ({ filePath }) => {
+        onEndFileScope: (fileScope) => {
           // For backwards compatibility, ensure the cache is populated even if
           // a file didn't contain any CSS. This is to ensure that the only
           // error messages shown in older versions are the ones below.
-          const moduleId = normalizeModuleId(filePath);
+          const moduleId = normalizePath(fileScope.filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssByModuleId.set(moduleId, cssObjs);
         },
@@ -249,7 +268,7 @@ export const createCompiler = ({
 
           localClassNames.add(className);
 
-          const moduleId = normalizeModuleId(fileScope.filePath);
+          const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .localClassNames.add(className);
@@ -263,7 +282,7 @@ export const createCompiler = ({
 
           composedClassLists.push(composedClassList);
 
-          const moduleId = normalizeModuleId(fileScope.filePath);
+          const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
             .get(moduleId)!
             .composedClassLists.push(composedClassList);
@@ -272,7 +291,7 @@ export const createCompiler = ({
           // This compiler currently retains all composition classes
         },
         appendCss: (css, fileScope) => {
-          const moduleId = normalizeModuleId(fileScope.filePath);
+          const moduleId = normalizePath(fileScope.filePath);
           const cssObjs = cssByModuleId.get(moduleId) ?? [];
           cssObjs.push(css);
 
@@ -282,17 +301,11 @@ export const createCompiler = ({
 
       const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
-          // Monkey patch the prepareContext method to inject the adapter
-          runner.prepareContext = function (...args) {
-            return {
-              ...originalPrepareContext.apply(this, args),
-              [globalAdapterIdentifier]: cssAdapter,
-            };
-          };
+          runner.cssAdapter = cssAdapter;
 
           const fileExports = await runner.executeFile(filePath);
 
-          const moduleId = normalizeModuleId(filePath);
+          const moduleId = normalizePath(filePath);
           const moduleNode = server.moduleGraph.getModuleById(moduleId);
 
           if (!moduleNode) {
@@ -304,7 +317,7 @@ export const createCompiler = ({
           const { cssDeps, watchFiles } = scanModule(moduleNode, root);
 
           for (const cssDep of cssDeps) {
-            const cssDepModuleId = normalizeModuleId(cssDep);
+            const cssDepModuleId = normalizePath(cssDep);
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
@@ -369,16 +382,10 @@ export const createCompiler = ({
       return result;
     },
     getCssForFile(filePath: string) {
-      if (!normalizeModuleId) {
-        throw new Error(
-          `Compiler is still loading. No CSS for file: ${filePath}`,
-        );
-      }
-
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const rootRelativePath = relative(root, filePath);
 
-      const moduleId = normalizeModuleId(rootRelativePath);
+      const moduleId = normalizePath(rootRelativePath);
       const result = cssCache.get(moduleId);
 
       if (!result) {
