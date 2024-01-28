@@ -19,6 +19,11 @@ const defaultWebpackConfig: Configuration = {
   optimization: {
     minimize: false,
   },
+  output: {
+    // For less noisy CSS snapshots
+    // https://webpack.js.org/configuration/output/#outputpathinfo
+    pathinfo: false,
+  },
   plugins: [
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
