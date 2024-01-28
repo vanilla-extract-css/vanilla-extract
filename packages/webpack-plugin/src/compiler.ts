@@ -66,6 +66,7 @@ function compileVanillaSource(
     const compat = createCompat(isWebpack5);
 
     // Escape webpack template strings in output files so they don't get replaced
+    // Non-standard escape syntax, see the docs https://webpack.js.org/configuration/output/#template-strings
     const outputOptions = {
       filename: loader.resourcePath
         .replaceAll('[', '[\\')
