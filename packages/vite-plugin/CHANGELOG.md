@@ -1,5 +1,30 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.0
+
+### Major Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The Vite plugin now uses a newer, faster, Vite-based compiler by default.
+
+  The new compiler uses [`vite-node`](https://github.com/vitest-dev/vitest/tree/main/packages/vite-node) to parse and extract CSS from `.css.ts` files. This comes with all the benefits of using Vite, faster builds and the ability to use Vite plugins.
+
+  The new compiler has been used in Remix ever since support for Vanilla Extract was introduced.
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The behaviour previously known as `emitCssInSsr` has been turned on by default. The `emitCssInSsr` option has been removed.
+
+  This means that the CSS emitted by the plugin is now processed by Vite, so the plugin no longer needs to resolve PostCSS plugins and process the CSS output itself.
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The `esbuildOptions` option has been removed as we are no longer using esbuild internally
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Drop support for Vite < 4
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
+- Updated dependencies [[`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a), [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a)]:
+  - @vanilla-extract/integration@6.4.0
+
 ## 3.9.5
 
 ### Patch Changes
