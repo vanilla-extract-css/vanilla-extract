@@ -1,5 +1,24 @@
 # @vanilla-extract/integration
 
+## 6.4.0
+
+### Minor Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Export a `normalizePath` function that converts path separators to forward slashes
+
+  **Example usage**
+
+  ```ts
+  import { normalizePath } from '@vanilla-extract/integration';
+
+  normalizePath('foo\\bar'); // 'foo/bar'
+  normalizePath('foo/bar'); // 'foo/bar'
+  ```
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
 ## 6.3.0
 
 ### Minor Changes
