@@ -1,6 +1,12 @@
 import path from 'path';
 
-import type { Plugin, ResolvedConfig, ViteDevServer, Rollup } from 'vite';
+import type {
+  Plugin,
+  ResolvedConfig,
+  UserConfig,
+  ViteDevServer,
+  Rollup,
+} from 'vite';
 import {
   cssFileFilter,
   IdentifierOption,
@@ -27,6 +33,7 @@ export function vanillaExtractPlugin({
   unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
+  let userConfig: UserConfig;
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
@@ -90,7 +97,8 @@ export function vanillaExtractPlugin({
     configureServer(_server) {
       server = _server;
     },
-    config() {
+    config(viteUserConfig) {
+      userConfig = viteUserConfig;
       return {
         ssr: {
           external: [
@@ -110,7 +118,7 @@ export function vanillaExtractPlugin({
           root: config.root,
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
-          vitePlugins: config.inlineConfig.plugins
+          vitePlugins: userConfig.plugins
             ?.flat()
             // Prevent an infinite loop where the compiler creates a new instance of the plugin, which creates a new compiler etc.
             .filter(
