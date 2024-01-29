@@ -1,5 +1,13 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.1
+
+### Patch Changes
+
+- [#1300](https://github.com/vanilla-extract-css/vanilla-extract/pull/1300) [`d0b84f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d0b84f6340d34b39414fbead3893a6000f9810fe) Thanks [@mrm007](https://github.com/mrm007)! - Skip loading plugins added by Vitest
+
+- [#1297](https://github.com/vanilla-extract-css/vanilla-extract/pull/1297) [`85e1131`](https://github.com/vanilla-extract-css/vanilla-extract/commit/85e11318f0a8b405041e967bd35aaed7f8abe753) Thanks [@mrm007](https://github.com/mrm007)! - Correctly resolve the user's Vite plugins
+
 ## 4.0.0
 
 ### Major Changes
