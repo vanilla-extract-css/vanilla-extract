@@ -118,19 +118,18 @@ export function vanillaExtractPlugin({
           root: config.root,
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
-          vitePlugins: userConfig.plugins
-            ?.flat()
-            // Prevent an infinite loop where the compiler creates a new instance of the plugin, which creates a new compiler etc.
-            .filter(
-              (plugin) =>
-                typeof plugin === 'object' &&
-                plugin !== null &&
-                'name' in plugin &&
-                plugin.name !== 'vanilla-extract' &&
-                // skip Vitest plugins
-                plugin.name !== 'vitest' &&
-                !plugin.name.startsWith('vitest:'),
-            ),
+          vitePlugins: userConfig.plugins?.flat().filter(
+            (plugin) =>
+              typeof plugin === 'object' &&
+              plugin !== null &&
+              'name' in plugin &&
+              // Prevent an infinite loop where the compiler creates a new instance of the plugin,
+              //  which creates a new compiler, which creates a new instance of the plugin, etc.
+              plugin.name !== 'vanilla-extract' &&
+              // Skip Vitest plugins
+              plugin.name !== 'vitest' &&
+              !plugin.name.startsWith('vitest:'),
+          ),
         });
       }
     },
