@@ -126,7 +126,10 @@ export function vanillaExtractPlugin({
                 typeof plugin === 'object' &&
                 plugin !== null &&
                 'name' in plugin &&
-                plugin.name !== 'vanilla-extract',
+                plugin.name !== 'vanilla-extract' &&
+                // skip Vitest plugins
+                plugin.name !== 'vitest' &&
+                !plugin.name.startsWith('vitest:'),
             ),
         });
       }
