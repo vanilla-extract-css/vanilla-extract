@@ -46,6 +46,7 @@ export const startWebpackFixture = (
     hot = false,
     mode = 'development',
     port,
+    logLevel = 'errors-only',
   }: WebpackFixtureOptions,
 ): Promise<TestServer> =>
   new Promise(async (resolve) => {
@@ -54,6 +55,9 @@ export const startWebpackFixture = (
     );
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
+      infrastructureLogging: {
+        level: 'none',
+      },
       mode,
       module: {
         rules: [
@@ -117,6 +121,9 @@ export const startWebpackFixture = (
           });
         },
         port,
+        devMiddleware: {
+          stats: logLevel,
+        },
       },
       compiler,
     );
