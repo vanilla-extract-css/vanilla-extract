@@ -17,7 +17,7 @@ function getLocalFiles(files: Set<string>) {
 
 describe('compiler', () => {
   let compilers: Record<
-    'default' | 'cssImportSpecifier' | 'shortIdentifiers',
+    'default' | 'cssImportSpecifier' | 'shortIdentifiers' | 'debugIdentifiers' | 'customIdentifiers',
     ReturnType<typeof createCompiler>
   >;
 
@@ -35,6 +35,16 @@ describe('compiler', () => {
       shortIdentifiers: createCompiler({
         root: __dirname,
         identifiers: 'short',
+      }),
+
+      debugIdentifiers: createCompiler({
+        root: __dirname,
+        identifiers: 'debug',
+      }),
+
+      customIdentifiers: createCompiler({
+        root: __dirname,
+        identifiers: ({ debugId, hash }) => `${debugId}__${hash}`,
       }),
     };
   });
@@ -215,6 +225,48 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
       ".q7x3ow0 {
+        color: red;
+      }"
+    `);
+  });
+
+  test('debug identifiers', async () => {
+    const compiler = compilers.debugIdentifiers;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/class-composition/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+    `);
+    const { css } = await compiler.getCssForFile(cssPath);
+    expect(css).toMatchInlineSnapshot(`
+      ".styles_className__q7x3ow0 {
+        color: red;
+      }"
+    `);
+  });
+
+  test('custom identifiers', async () => {
+    const compiler = compilers.customIdentifiers;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/class-composition/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      export var className = 'className__q7x3ow0 shared__16bmd920';"
+    `);
+    const { css } = await compiler.getCssForFile(cssPath);
+    expect(css).toMatchInlineSnapshot(`
+      ".className__q7x3ow0 {
         color: red;
       }"
     `);

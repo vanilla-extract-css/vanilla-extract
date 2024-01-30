@@ -23,7 +23,7 @@ export const transformSync = ({
 }: TransformParams): string => {
   let code = source;
 
-  if (identOption === 'debug') {
+  if (identOption !== 'short') {
     const result = babel.transformSync(source, {
       filename: filePath,
       cwd: rootPath,
@@ -57,7 +57,7 @@ export const transform = async ({
 }: TransformParams): Promise<string> => {
   let code = source;
 
-  if (identOption === 'debug') {
+  if (identOption !== 'short') {
     const result = await babel.transformAsync(source, {
       filename: filePath,
       cwd: rootPath,
