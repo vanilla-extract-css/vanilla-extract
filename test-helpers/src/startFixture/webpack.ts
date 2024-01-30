@@ -19,6 +19,11 @@ const defaultWebpackConfig: Configuration = {
   optimization: {
     minimize: false,
   },
+  output: {
+    // For less noisy CSS snapshots
+    // https://webpack.js.org/configuration/output/#outputpathinfo
+    pathinfo: false,
+  },
   plugins: [
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -50,6 +55,9 @@ export const startWebpackFixture = (
     );
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
+      infrastructureLogging: {
+        level: 'none',
+      },
       mode,
       module: {
         rules: [
@@ -96,25 +104,35 @@ export const startWebpackFixture = (
     });
     const compiler = webpack(config);
 
-    // @ts-expect-error - webpack version mismatch
-    const server = new WDS(compiler, {
-      hot,
-      stats: logLevel,
-      noInfo: true,
-      onListening: () => {
-        resolve({
-          url: `http://localhost:${port}`,
-          close: () =>
-            new Promise<void>((resolveClose) =>
-              server.close(() => {
-                compiler.close(() => resolveClose());
-              }),
-            ),
-          type,
-          stylesheet: 'main.css',
-        });
+    const server = new WDS(
+      {
+        hot,
+        onListening: () => {
+          resolve({
+            url: `http://localhost:${port}`,
+            close: () =>
+              new Promise<void>((resolveClose) =>
+                server.close(() => {
+                  compiler.close(() => resolveClose());
+                }),
+              ),
+            type,
+            stylesheet: 'main.css',
+          });
+        },
+        port,
+        devMiddleware: {
+          stats: logLevel,
+        },
       },
-    });
+      compiler,
+    );
 
-    server.listen(port);
+    server.startCallback((err) => {
+      console.log('Started webpack-dev-server');
+
+      if (err) {
+        throw err;
+      }
+    });
   });

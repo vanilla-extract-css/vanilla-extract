@@ -81,7 +81,7 @@ function compileVanillaSource(
     );
     const ExternalsPlugin = compat.getExternalsPlugin(loader._compiler);
 
-    new NodeTemplatePlugin(outputOptions).apply(childCompiler);
+    new NodeTemplatePlugin().apply(childCompiler);
     new NodeTargetPlugin().apply(childCompiler);
 
     if (compat.isWebpack5) {
