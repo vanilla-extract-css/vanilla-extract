@@ -55,8 +55,10 @@ function getRootCompilation(loader: LoaderContext) {
   return compilation;
 }
 
+const templateStringRegexp = /\[([^\[\]\.]+)\]/g;
+
 export const escapeWebpackTemplateString = (s: string) =>
-  s.replaceAll(/\[([^\[\]\.]+)\]/g, '[\\$1\\]');
+  s.replaceAll(templateStringRegexp, '[\\$1\\]');
 
 function compileVanillaSource(
   loader: LoaderContext,
