@@ -71,7 +71,8 @@ function compileVanillaSource(
     const compat = createCompat(isWebpack5);
 
     // Escape webpack template strings and Next.js dynamic routes in output files so they don't get replaced
-    // Non-standard escape syntax, see the docs https://webpack.js.org/configuration/output/#template-strings
+    // Non-standard escape syntax, see https://webpack.js.org/configuration/output/#template-strings
+    // and https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
     const outputOptions = {
       filename: escapeWebpackTemplateString(loader.resourcePath),
     };
