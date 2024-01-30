@@ -1,62 +1,105 @@
 import path from 'path';
 
-import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
-import outdent from 'outdent';
+import type {
+  Plugin,
+  ResolvedConfig,
+  UserConfig,
+  ViteDevServer,
+  Rollup,
+} from 'vite';
 import {
   cssFileFilter,
-  processVanillaFile,
-  compile,
   IdentifierOption,
   getPackageInfo,
-  CompileOptions,
   transform,
+  type Compiler,
+  createCompiler,
+  normalizePath,
 } from '@vanilla-extract/integration';
-import { type PostCSSConfigResult, resolvePostcssConfig } from './postcss';
-
-const styleUpdateEvent = (fileId: string) =>
-  `vanilla-extract-style-update:${fileId}`;
 
 const virtualExtCss = '.vanilla.css';
-const virtualExtJs = '.vanilla.js';
+
+const isVirtualId = (id: string) => id.endsWith(virtualExtCss);
+const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
+const virtualIdToFileId = (virtualId: string) =>
+  virtualId.slice(0, -virtualExtCss.length);
 
 interface Options {
   identifiers?: IdentifierOption;
-  emitCssInSsr?: boolean;
-  esbuildOptions?: CompileOptions['esbuildOptions'];
+  unstable_mode?: 'transform' | 'emitCss';
 }
 export function vanillaExtractPlugin({
   identifiers,
-  emitCssInSsr,
-  esbuildOptions,
+  unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
+  let userConfig: UserConfig;
   let server: ViteDevServer;
-  let postCssConfig: PostCSSConfigResult | null;
-  // We lazily load this utility from Vite
-  let normalizePath: (fsPath: string) => string;
-  const cssMap = new Map<string, string>();
-
-  const hasEmitCssOverride = typeof emitCssInSsr === 'boolean';
-  let resolvedEmitCssInSsr: boolean = hasEmitCssOverride
-    ? emitCssInSsr
-    : !!process.env.VITE_RSC_BUILD;
   let packageName: string;
+  let compiler: Compiler | undefined;
 
-  const getAbsoluteVirtualFileId = (source: string) =>
-    normalizePath(path.join(config.root, source));
+  const getIdentOption = () =>
+    identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
+  const getAbsoluteId = (filePath: string) => {
+    let resolvedId = filePath;
+
+    if (
+      filePath.startsWith(config.root) ||
+      // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
+      (path.isAbsolute(filePath) &&
+        filePath.split(path.sep)[1] === config.root.split(path.sep)[1])
+    ) {
+      resolvedId = filePath;
+    } else {
+      // In SSR mode we can have paths like /app/styles.css.ts
+      resolvedId = path.join(config.root, filePath);
+    }
+
+    return normalizePath(resolvedId);
+  };
+
+  function invalidateModule(absoluteId: string) {
+    if (!server) return;
+
+    const { moduleGraph } = server;
+    const modules = moduleGraph.getModulesByFile(absoluteId);
+
+    if (modules) {
+      for (const module of modules) {
+        moduleGraph.invalidateModule(module);
+
+        // Vite uses this timestamp to add `?t=` query string automatically for HMR.
+        module.lastHMRTimestamp =
+          module.lastInvalidationTimestamp || Date.now();
+      }
+    }
+  }
+
+  function addWatchFiles(
+    this: Rollup.PluginContext,
+    fromId: string,
+    files: Set<string>,
+  ) {
+    // We don't need to watch files in build mode
+    if (config.command === 'build' && !config.build.watch) {
+      return;
+    }
+
+    for (const file of files) {
+      if (!file.includes('node_modules') && normalizePath(file) !== fromId) {
+        this.addWatchFile(file);
+      }
+    }
+  }
 
   return {
     name: 'vanilla-extract',
-    enforce: 'pre',
     configureServer(_server) {
       server = _server;
     },
-    config(_userConfig, env) {
-      const include =
-        env.command === 'serve' ? ['@vanilla-extract/css/injectStyles'] : [];
-
+    config(viteUserConfig) {
+      userConfig = viteUserConfig;
       return {
-        optimizeDeps: { include },
         ssr: {
           external: [
             '@vanilla-extract/css',
@@ -69,100 +112,40 @@ export function vanillaExtractPlugin({
     async configResolved(resolvedConfig) {
       config = resolvedConfig;
       packageName = getPackageInfo(config.root).name;
-      normalizePath = (await import('vite')).normalizePath;
 
-      if (config.command === 'serve') {
-        postCssConfig = await resolvePostcssConfig(config);
-      }
-
-      if (
-        !hasEmitCssOverride &&
-        config.plugins.some((plugin) =>
-          [
-            'astro:build',
-            'remix',
-            'solid-start-server',
-            'vite-plugin-qwik',
-            'vite-plugin-svelte',
-          ].includes(plugin.name),
-        )
-      ) {
-        resolvedEmitCssInSsr = true;
-      }
-    },
-    resolveId(source) {
-      const [validId, query] = source.split('?');
-      if (!validId.endsWith(virtualExtCss) && !validId.endsWith(virtualExtJs)) {
-        return;
-      }
-
-      // Absolute paths seem to occur often in monorepos, where files are
-      // imported from outside the config root.
-      const absoluteId = source.startsWith(config.root)
-        ? source
-        : getAbsoluteVirtualFileId(validId);
-
-      // There should always be an entry in the `cssMap` here.
-      // The only valid scenario for a missing one is if someone had written
-      // a file in their app using the .vanilla.js/.vanilla.css extension
-      if (cssMap.has(absoluteId)) {
-        // Keep the original query string for HMR.
-        return absoluteId + (query ? `?${query}` : '');
-      }
-    },
-    load(id) {
-      const [validId] = id.split('?');
-
-      if (!cssMap.has(validId)) {
-        return;
-      }
-
-      const css = cssMap.get(validId);
-
-      if (typeof css !== 'string') {
-        return;
-      }
-
-      if (validId.endsWith(virtualExtCss)) {
-        return css;
-      }
-
-      return outdent`
-        import { injectStyles } from '@vanilla-extract/css/injectStyles';
-
-        const inject = (css) => injectStyles({
-          fileScope: ${JSON.stringify({ filePath: validId })},
-          css
+      if (mode !== 'transform') {
+        compiler = createCompiler({
+          root: config.root,
+          identifiers: getIdentOption(),
+          cssImportSpecifier: fileIdToVirtualId,
+          vitePlugins: userConfig.plugins?.flat().filter(
+            (plugin) =>
+              typeof plugin === 'object' &&
+              plugin !== null &&
+              'name' in plugin &&
+              // Prevent an infinite loop where the compiler creates a new instance of the plugin,
+              //  which creates a new compiler, which creates a new instance of the plugin, etc.
+              plugin.name !== 'vanilla-extract' &&
+              // Skip Vitest plugins
+              plugin.name !== 'vitest' &&
+              !plugin.name.startsWith('vitest:'),
+          ),
         });
-
-        inject(${JSON.stringify(css)});
-
-        if (import.meta.hot) {
-          import.meta.hot.on('${styleUpdateEvent(validId)}', (css) => {
-            inject(css);
-          });
-        }
-      `;
+      }
     },
-    async transform(code, id, ssrParam) {
+    buildEnd() {
+      compiler?.close();
+    },
+    async transform(code, id) {
       const [validId] = id.split('?');
 
       if (!cssFileFilter.test(validId)) {
         return null;
       }
 
-      const identOption =
-        identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
+      const identOption = getIdentOption();
 
-      let ssr: boolean | undefined;
-
-      if (typeof ssrParam === 'boolean') {
-        ssr = ssrParam;
-      } else {
-        ssr = ssrParam?.ssr;
-      }
-
-      if (ssr && !resolvedEmitCssInSsr) {
+      if (mode === 'transform') {
         return transform({
           source: code,
           filePath: normalizePath(validId),
@@ -172,86 +155,52 @@ export function vanillaExtractPlugin({
         });
       }
 
-      const { source, watchFiles } = await compile({
-        filePath: validId,
-        cwd: config.root,
-        esbuildOptions,
-        identOption,
-      });
+      if (compiler) {
+        const absoluteId = getAbsoluteId(validId);
 
-      for (const file of watchFiles) {
-        // In start mode, we need to prevent the file from rewatching itself.
-        // If it's a `build --watch`, it needs to watch everything.
-        if (config.command === 'build' || normalizePath(file) !== validId) {
-          this.addWatchFile(file);
-        }
+        const { source, watchFiles } = await compiler.processVanillaFile(
+          absoluteId,
+          { outputCss: true },
+        );
+
+        addWatchFiles.call(this, absoluteId, watchFiles);
+
+        // We have to invalidate the virtual module, not the real one we just transformed
+        invalidateModule(fileIdToVirtualId(absoluteId));
+
+        return {
+          code: source,
+          map: { mappings: '' },
+        };
       }
+    },
+    resolveId(source) {
+      const [validId, query] = source.split('?');
 
-      const output = await processVanillaFile({
-        source,
-        filePath: validId,
-        identOption,
-        serializeVirtualCssPath: async ({ fileScope, source }) => {
-          const rootRelativeId = `${fileScope.filePath}${
-            config.command === 'build' || (ssr && resolvedEmitCssInSsr)
-              ? virtualExtCss
-              : virtualExtJs
-          }`;
-          const absoluteId = getAbsoluteVirtualFileId(rootRelativeId);
+      if (!isVirtualId(validId)) return;
 
-          let cssSource = source;
+      const absoluteId = getAbsoluteId(validId);
 
-          if (postCssConfig) {
-            const postCssResult = await (await import('postcss'))
-              .default(postCssConfig.plugins)
-              .process(source, {
-                ...postCssConfig.options,
-                from: undefined,
-                map: false,
-              });
+      if (
+        // We should always have CSS for a file here.
+        // The only valid scenario for a missing one is if someone had written
+        // a file in their app using the .vanilla.js/.vanilla.css extension
+        compiler?.getCssForFile(virtualIdToFileId(absoluteId))
+      ) {
+        // Keep the original query string for HMR.
+        return absoluteId + (query ? `?${query}` : '');
+      }
+    },
+    load(id) {
+      const [validId] = id.split('?');
 
-            cssSource = postCssResult.css;
-          }
+      if (!isVirtualId(validId) || !compiler) return;
 
-          if (
-            server &&
-            cssMap.has(absoluteId) &&
-            cssMap.get(absoluteId) !== cssSource
-          ) {
-            const { moduleGraph } = server;
-            const modules = Array.from(
-              moduleGraph.getModulesByFile(absoluteId) || [],
-            );
+      const absoluteId = getAbsoluteId(validId);
 
-            for (const module of modules) {
-              if (module) {
-                moduleGraph.invalidateModule(module);
+      const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
-                // Vite uses this timestamp to add `?t=` query string automatically for HMR.
-                module.lastHMRTimestamp =
-                  (module as any).lastInvalidationTimestamp || Date.now();
-              }
-            }
-
-            server.ws.send({
-              type: 'custom',
-              event: styleUpdateEvent(absoluteId),
-              data: cssSource,
-            });
-          }
-
-          cssMap.set(absoluteId, cssSource);
-
-          // We use the root relative id here to ensure file contents (content-hashes)
-          // are consistent across build machines
-          return `import "${rootRelativeId}";`;
-        },
-      });
-
-      return {
-        code: output,
-        map: { mappings: '' },
-      };
+      return css;
     },
   };
 }

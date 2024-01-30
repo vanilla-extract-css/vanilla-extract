@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/parcel-transformer",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-parcel-transformer.cjs.js",
   "module": "dist/vanilla-extract-parcel-transformer.esm.js",
@@ -19,6 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@parcel/plugin": "^2.7.0",
-    "@vanilla-extract/integration": "^6.2.5"
+    "@vanilla-extract/integration": "^6.4.0"
   }
 }

@@ -94,7 +94,7 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 - A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
 
 ```ts
-VanillaExtractPlugin({
+new VanillaExtractPlugin({
   identifiers: ({ hash }) => `prefix_${hash}`
 });
 ```
