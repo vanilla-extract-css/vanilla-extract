@@ -1,7 +1,11 @@
-export const all = [
+export const webpack = [
   { type: 'mini-css-extract', mode: 'development', snapshotCss: true },
   { type: 'mini-css-extract', mode: 'production', snapshotCss: true },
   { type: 'style-loader', mode: 'development', snapshotCss: false },
+] as const;
+
+export const all = [
+  ...webpack,
   { type: 'esbuild', mode: 'development', snapshotCss: true },
   { type: 'esbuild', mode: 'production', snapshotCss: true },
   { type: 'esbuild-runtime', mode: 'development', snapshotCss: false },
