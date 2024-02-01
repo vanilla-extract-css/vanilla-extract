@@ -220,6 +220,12 @@ importers:
         specifier: 1.6.1
         version: link:../../packages/sprinkles
 
+  fixtures/template-string-paths:
+    dependencies:
+      '@vanilla-extract/css':
+        specifier: 1.14.1
+        version: link:../../packages/css
+
   fixtures/themed:
     dependencies:
       '@vanilla-extract/css':
@@ -682,6 +688,9 @@ importers:
       '@fixtures/sprinkles':
         specifier: '*'
         version: link:../fixtures/sprinkles
+      '@fixtures/template-string-paths':
+        specifier: '*'
+        version: link:../fixtures/template-string-paths
       '@fixtures/themed':
         specifier: '*'
         version: link:../fixtures/themed
