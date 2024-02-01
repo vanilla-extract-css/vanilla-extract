@@ -224,7 +224,7 @@ describe('compiler', () => {
 
     expect(
       // We know `error.message` is defined, and we want make the snapshot consistent across machines
-      normalizePath(error!.message!).replace(__dirname, '{{__dirname}}'),
+      normalizePath(error!.message!.replace(__dirname, '{{__dirname}}')),
     ).toMatchInlineSnapshot(
       `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
     );
