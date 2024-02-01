@@ -1,5 +1,6 @@
 ---
 '@vanilla-extract/webpack-plugin': patch
+'@vanilla-extract/next-plugin': patch
 ---
 
 Fixes a bug that was causing style compilation to fail on paths containing [webpack template strings] such as `[id]` or [Next.js dynamic routes] such as `[slug]`.
