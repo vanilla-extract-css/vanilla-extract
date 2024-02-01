@@ -1,10 +1,9 @@
-import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import path from 'path';
-import { createCompiler } from '@vanilla-extract/integration';
-
-function toPosix(filePath: string) {
-  return filePath.split(path.sep).join(path.posix.sep);
-}
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
+import {
+  createCompiler,
+  normalizePath as toPosix,
+} from '@vanilla-extract/integration';
 
 function getLocalFiles(files: Set<string>) {
   const posixDirname = toPosix(__dirname);
@@ -17,7 +16,11 @@ function getLocalFiles(files: Set<string>) {
 
 describe('compiler', () => {
   let compilers: Record<
-    'default' | 'cssImportSpecifier' | 'shortIdentifiers',
+    | 'default'
+    | 'cssImportSpecifier'
+    | 'shortIdentifiers'
+    | 'vitePlugins'
+    | 'viteResolve',
     ReturnType<typeof createCompiler>
   >;
 
@@ -26,17 +29,47 @@ describe('compiler', () => {
       default: createCompiler({
         root: __dirname,
       }),
-
       cssImportSpecifier: createCompiler({
         root: __dirname,
         cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
       }),
-
       shortIdentifiers: createCompiler({
         root: __dirname,
         identifiers: 'short',
       }),
+      vitePlugins: createCompiler({
+        root: __dirname,
+        vitePlugins: [
+          {
+            name: 'test-plugin',
+            resolveId(id) {
+              if (id === '~/vars') {
+                return 'resolved-vars';
+              }
+            },
+            load: (id) => {
+              if (id === 'resolved-vars') {
+                return `export const color = "green"`;
+              }
+            },
+          },
+        ],
+      }),
+      viteResolve: createCompiler({
+        root: __dirname,
+        viteResolve: {
+          alias: {
+            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+          },
+        },
+      }),
     };
+  });
+
+  afterAll(async () => {
+    await Promise.allSettled(
+      Object.values(compilers).map((compiler) => compiler.close()),
+    );
   });
 
   test('absolute paths', async () => {
@@ -341,9 +374,42 @@ describe('compiler', () => {
     `);
   });
 
-  afterAll(async () => {
-    await Promise.allSettled(
-      Object.values(compilers).map((compiler) => compiler.close()),
-    );
+  test('Vite plugins', async () => {
+    const compiler = compilers.vitePlugins;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/plugin.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
+      export var root = 'plugin_root__1e902gk0';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".plugin_root__1e902gk0 {
+        color: green;
+      }"
+    `);
+  });
+
+  test('Vite resolve', async () => {
+    const compiler = compilers.viteResolve;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/vite-config/util/style.css.ts.vanilla.css';
+      import 'fixtures/vite-config/alias.css.ts.vanilla.css';
+      export var styleBase = 'alias_styleBase__ez4dr20 style_styleSquare__j48ehy0';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".alias_styleBase__ez4dr20 {
+        color: red;
+      }"
+    `);
   });
 });
