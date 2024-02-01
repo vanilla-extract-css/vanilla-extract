@@ -1,23 +1,23 @@
-import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import path from 'path';
-import { createCompiler } from '@vanilla-extract/integration';
-
-function toPosix(filePath: string) {
-  return filePath.split(path.sep).join(path.posix.sep);
-}
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
+import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
 function getLocalFiles(files: Set<string>) {
-  const posixDirname = toPosix(__dirname);
+  const posixDirname = normalizePath(__dirname);
 
   return [...files]
-    .map(toPosix)
+    .map(normalizePath)
     .filter((file) => file.startsWith(posixDirname))
     .map((file) => file.replace(posixDirname, ''));
 }
 
 describe('compiler', () => {
   let compilers: Record<
-    'default' | 'cssImportSpecifier' | 'shortIdentifiers',
+    | 'default'
+    | 'cssImportSpecifier'
+    | 'shortIdentifiers'
+    | 'vitePlugins'
+    | 'viteResolve',
     ReturnType<typeof createCompiler>
   >;
 
@@ -26,17 +26,47 @@ describe('compiler', () => {
       default: createCompiler({
         root: __dirname,
       }),
-
       cssImportSpecifier: createCompiler({
         root: __dirname,
         cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
       }),
-
       shortIdentifiers: createCompiler({
         root: __dirname,
         identifiers: 'short',
       }),
+      vitePlugins: createCompiler({
+        root: __dirname,
+        vitePlugins: [
+          {
+            name: 'test-plugin',
+            resolveId(id) {
+              if (id === '~/vars') {
+                return '\0resolved-vars';
+              }
+            },
+            load: (id) => {
+              if (id === '\0resolved-vars') {
+                return `export const color = "green"`;
+              }
+            },
+          },
+        ],
+      }),
+      viteResolve: createCompiler({
+        root: __dirname,
+        viteResolve: {
+          alias: {
+            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+          },
+        },
+      }),
     };
+  });
+
+  afterAll(async () => {
+    await Promise.allSettled(
+      Object.values(compilers).map((compiler) => compiler.close()),
+    );
   });
 
   test('absolute paths', async () => {
@@ -72,7 +102,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -84,7 +114,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -118,7 +148,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -130,7 +160,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -164,7 +194,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -176,7 +206,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -193,7 +223,8 @@ describe('compiler', () => {
     }
 
     expect(
-      toPosix(error?.message.replace(__dirname, '{{__dirname}}') ?? ''),
+      // We know `error.message` is defined, and we want make the snapshot consistent across machines
+      normalizePath(error!.message!.replace(__dirname, '{{__dirname}}')),
     ).toMatchInlineSnapshot(
       `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
     );
@@ -341,9 +372,43 @@ describe('compiler', () => {
     `);
   });
 
-  afterAll(async () => {
-    await Promise.allSettled(
-      Object.values(compilers).map((compiler) => compiler.close()),
-    );
+  test('Vite plugins', async () => {
+    const compiler = compilers.vitePlugins;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/plugin.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
+      export var root = 'plugin_root__1e902gk0';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".plugin_root__1e902gk0 {
+        color: green;
+      }"
+    `);
+  });
+
+  test('Vite resolve', async () => {
+    const compiler = compilers.viteResolve;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      "import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import 'fixtures/vite-config/alias.css.ts.vanilla.css';
+      export var root = 'alias_root__ez4dr20';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".alias_root__ez4dr20 {
+        --border__13z1r1g0: 1px solid black;
+        border: var(--border__13z1r1g0);
+      }"
+    `);
   });
 });

@@ -49,6 +49,7 @@ const scanModule = (entryModule: ModuleNode, root: string) => {
 const createViteServer = async ({
   root,
   identifiers,
+  viteResolve,
   vitePlugins,
 }: Required<Omit<CreateCompilerOptions, 'cssImportSpecifier'>>) => {
   const pkg = getPackageInfo(root);
@@ -67,6 +68,7 @@ const createViteServer = async ({
     ssr: {
       noExternal: true,
     },
+    resolve: viteResolve,
     plugins: [
       {
         name: 'vanilla-extract-externalize',
@@ -184,17 +186,20 @@ export interface CreateCompilerOptions {
   root: string;
   cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
+  viteResolve?: ViteConfig['resolve'];
   vitePlugins?: ViteConfig['plugins'];
 }
 export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
+  viteResolve = {},
   vitePlugins = [],
 }: CreateCompilerOptions): Compiler => {
   const vitePromise = createViteServer({
     root,
     identifiers,
+    viteResolve,
     vitePlugins,
   });
 
