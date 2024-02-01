@@ -1,15 +1,12 @@
 import path from 'path';
 import { describe, beforeAll, afterAll, test, expect } from 'vitest';
-import {
-  createCompiler,
-  normalizePath as toPosix,
-} from '@vanilla-extract/integration';
+import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
 function getLocalFiles(files: Set<string>) {
-  const posixDirname = toPosix(__dirname);
+  const posixDirname = normalizePath(__dirname);
 
   return [...files]
-    .map(toPosix)
+    .map(normalizePath)
     .filter((file) => file.startsWith(posixDirname))
     .map((file) => file.replace(posixDirname, ''));
 }
@@ -44,11 +41,11 @@ describe('compiler', () => {
             name: 'test-plugin',
             resolveId(id) {
               if (id === '~/vars') {
-                return 'resolved-vars';
+                return '\0resolved-vars';
               }
             },
             load: (id) => {
-              if (id === 'resolved-vars') {
+              if (id === '\0resolved-vars') {
                 return `export const color = "green"`;
               }
             },
@@ -105,7 +102,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -117,7 +114,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -151,7 +148,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -163,7 +160,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -197,7 +194,7 @@ describe('compiler', () => {
           color: red;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/styles.css.ts',
       );
     })();
@@ -209,7 +206,7 @@ describe('compiler', () => {
           background: blue;
         }"
       `);
-      expect(toPosix(filePath)).toBe(
+      expect(normalizePath(filePath)).toBe(
         'fixtures/class-composition/shared.css.ts',
       );
     })();
@@ -226,7 +223,8 @@ describe('compiler', () => {
     }
 
     expect(
-      toPosix(error?.message.replace(__dirname, '{{__dirname}}') ?? ''),
+      // We know `error.message` is defined, and we want make the snapshot consistent across machines
+      normalizePath(error!.message!).replace(__dirname, '{{__dirname}}'),
     ).toMatchInlineSnapshot(
       `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
     );
