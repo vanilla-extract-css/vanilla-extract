@@ -399,14 +399,15 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/vite-config/util/style.css.ts.vanilla.css';
+      "import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
       import 'fixtures/vite-config/alias.css.ts.vanilla.css';
-      export var styleBase = 'alias_styleBase__ez4dr20 style_styleSquare__j48ehy0';"
+      export var root = 'alias_root__ez4dr20';"
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      ".alias_styleBase__ez4dr20 {
-        color: red;
+      ".alias_root__ez4dr20 {
+        --border__13z1r1g0: 1px solid black;
+        border: var(--border__13z1r1g0);
       }"
     `);
   });
