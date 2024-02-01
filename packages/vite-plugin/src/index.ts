@@ -118,6 +118,7 @@ export function vanillaExtractPlugin({
           root: config.root,
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
+          viteResolve: config.resolve,
           vitePlugins: userConfig.plugins?.flat().filter(
             (plugin) =>
               typeof plugin === 'object' &&
