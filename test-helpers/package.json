@@ -12,6 +12,7 @@
     "@fixtures/low-level": "*",
     "@fixtures/recipes": "*",
     "@fixtures/sprinkles": "*",
+    "@fixtures/template-string-paths": "*",
     "@fixtures/themed": "*",
     "@fixtures/thirdparty": "*",
     "@fixtures/unused-modules": "*",

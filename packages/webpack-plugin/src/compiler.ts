@@ -55,6 +55,11 @@ function getRootCompilation(loader: LoaderContext) {
   return compilation;
 }
 
+const templateStringRegexp = /\[([^\[\]\.]+)\]/g;
+
+export const escapeWebpackTemplateString = (s: string) =>
+  s.replaceAll(templateStringRegexp, '[\\$1\\]');
+
 function compileVanillaSource(
   loader: LoaderContext,
   externals: Externals | undefined,
@@ -64,9 +69,15 @@ function compileVanillaSource(
       loader._compiler.webpack && loader._compiler.webpack.version,
     );
     const compat = createCompat(isWebpack5);
-    // Child compiler will compile vanilla-extract files to be evaled during compilation
-    const outputOptions = { filename: loader.resourcePath };
 
+    // Escape webpack template strings and Next.js dynamic routes in output files so they don't get replaced
+    // Non-standard escape syntax, see https://webpack.js.org/configuration/output/#template-strings
+    // and https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+    const outputOptions = {
+      filename: escapeWebpackTemplateString(loader.resourcePath),
+    };
+
+    // Child compiler will compile vanilla-extract files to be evaled during compilation
     const compilerName = getCompilerName(loader.resourcePath);
     const childCompiler = getRootCompilation(loader).createChildCompiler(
       compilerName,
