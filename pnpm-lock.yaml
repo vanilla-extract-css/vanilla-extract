@@ -410,7 +410,7 @@ importers:
   packages/next-plugin:
     dependencies:
       '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.4
+        specifier: ^2.3.5
         version: link:../webpack-plugin
     devDependencies:
       next:
@@ -473,7 +473,7 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^6.5.0
         version: link:../integration
     devDependencies:
       vite:
@@ -483,7 +483,7 @@ importers:
   packages/webpack-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^6.5.0
         version: link:../integration
       chalk:
         specifier: ^4.1.1

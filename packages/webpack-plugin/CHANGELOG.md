@@ -1,5 +1,17 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.5
+
+### Patch Changes
+
+- [#1247](https://github.com/vanilla-extract-css/vanilla-extract/pull/1247) [`f0c3be9`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f0c3be99ca437fb1f61ecde58fdf58cccc3256bb) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that was causing style compilation to fail on paths containing [webpack template strings] such as `[id]` or [Next.js dynamic routes] such as `[slug]`.
+
+  [webpack template strings]: https://webpack.js.org/configuration/output/#template-strings
+  [next.js dynamic routes]: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+
+- Updated dependencies [[`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491)]:
+  - @vanilla-extract/integration@6.5.0
+
 ## 2.3.4
 
 ### Patch Changes

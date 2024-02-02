@@ -1,5 +1,22 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.2
+
+### Patch Changes
+
+- [#1304](https://github.com/vanilla-extract-css/vanilla-extract/pull/1304) [`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491) Thanks [@fukumasuya](https://github.com/fukumasuya)! - Pass Vite `resolve` config to vite-node compiler
+
+  The plugin passes through the project's Vite `resolve` config to the vite-node compiler, which will be used for resolving imports. These options include [`resolve.alias`], [`resolve.dedupe`], [`resolve.conditions`], [`resolve.mainFields`], [`resolve.extensions`], and others.
+
+  [`resolve.alias`]: https://vitejs.dev/config/shared-options.html#resolve-alias
+  [`resolve.dedupe`]: https://vitejs.dev/config/shared-options.html#resolve-dedupe
+  [`resolve.conditions`]: https://vitejs.dev/config/shared-options.html#resolve-conditions
+  [`resolve.mainFields`]: https://vitejs.dev/config/shared-options.html#resolve-mainfields
+  [`resolve.extensions`]: https://vitejs.dev/config/shared-options.html#resolve-extensions
+
+- Updated dependencies [[`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491)]:
+  - @vanilla-extract/integration@6.5.0
+
 ## 4.0.1
 
 ### Patch Changes

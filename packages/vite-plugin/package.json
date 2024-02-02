@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/vite-plugin",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-vite-plugin.cjs.js",
   "module": "dist/vanilla-extract-vite-plugin.esm.js",
@@ -15,7 +15,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.4.0"
+    "@vanilla-extract/integration": "^6.5.0"
   },
   "devDependencies": {
     "vite": "npm:vite@^5.0.11"
