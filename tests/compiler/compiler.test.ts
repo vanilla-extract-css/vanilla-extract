@@ -1,5 +1,4 @@
 import path from 'path';
-import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
 function getLocalFiles(files: Set<string>) {
@@ -87,6 +86,7 @@ describe('compiler', () => {
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
     `);
+
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
@@ -95,29 +95,29 @@ describe('compiler', () => {
       ]
     `);
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/styles.css.ts"`,
       );
-    })();
+    }
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/shared.css.ts"`,
       );
-    })();
+    }
   });
 
   test('root relative paths', async () => {
@@ -141,29 +141,29 @@ describe('compiler', () => {
       ]
     `);
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/styles.css.ts"`,
       );
-    })();
+    }
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/shared.css.ts"`,
       );
-    })();
+    }
   });
 
   test('root relative paths starting with dot', async () => {
@@ -187,29 +187,29 @@ describe('compiler', () => {
       ]
     `);
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
         ".styles_className__q7x3ow0 {
           color: red;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/styles.css.ts"`,
       );
-    })();
+    }
 
-    await (async () => {
+    {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
         ".shared_shared__16bmd920 {
           background: blue;
         }"
       `);
-      expect(normalizePath(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `"fixtures/class-composition/shared.css.ts"`,
       );
-    })();
+    }
   });
 
   test('throws on getCssForFile when file does not exist', async () => {
