@@ -1,5 +1,6 @@
 import path from 'path';
 import { createCompiler, normalizePath } from '@vanilla-extract/integration';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
@@ -19,8 +20,9 @@ describe('compiler', () => {
     | 'default'
     | 'cssImportSpecifier'
     | 'shortIdentifiers'
+    | 'viteResolve'
     | 'vitePlugins'
-    | 'viteResolve',
+    | 'tsconfigPaths',
     ReturnType<typeof createCompiler>
   >;
 
@@ -36,6 +38,14 @@ describe('compiler', () => {
       shortIdentifiers: createCompiler({
         root: __dirname,
         identifiers: 'short',
+      }),
+      viteResolve: createCompiler({
+        root: __dirname,
+        viteResolve: {
+          alias: {
+            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+          },
+        },
       }),
       vitePlugins: createCompiler({
         root: __dirname,
@@ -55,13 +65,9 @@ describe('compiler', () => {
           },
         ],
       }),
-      viteResolve: createCompiler({
+      tsconfigPaths: createCompiler({
         root: __dirname,
-        viteResolve: {
-          alias: {
-            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
-          },
-        },
+        vitePlugins: [tsconfigPaths()],
       }),
     };
   });
@@ -376,6 +382,27 @@ describe('compiler', () => {
     `);
   });
 
+  test('Vite resolve', async () => {
+    const compiler = compilers.viteResolve;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
+      export var root = 'alias_root__ez4dr20';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .alias_root__ez4dr20 {
+        --border__13z1r1g0: 1px solid black;
+        border: var(--border__13z1r1g0);
+      }
+    `);
+  });
+
   test('Vite plugins', async () => {
     const compiler = compilers.vitePlugins;
 
@@ -395,23 +422,26 @@ describe('compiler', () => {
     `);
   });
 
-  test('Vite resolve', async () => {
-    const compiler = compilers.viteResolve;
+  test('vite-tsconfig-paths', async () => {
+    const compiler = compilers.tsconfigPaths;
 
-    const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/tsconfig-paths/src/main.css.ts',
+    );
     const output = await compiler.processVanillaFile(cssPath);
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
-      import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
-      export var root = 'alias_root__ez4dr20';
+      import '{{__dirname}}/fixtures/tsconfig-paths/src/main.css.ts.vanilla.css';
+      export var box = 'main_box__1tm7bbb0';
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      .alias_root__ez4dr20 {
-        --border__13z1r1g0: 1px solid black;
-        border: var(--border__13z1r1g0);
+      .main_box__1tm7bbb0 {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
     `);
   });

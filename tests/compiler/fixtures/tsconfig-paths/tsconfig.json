@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "baseUrl": "./src"
+  }
+}

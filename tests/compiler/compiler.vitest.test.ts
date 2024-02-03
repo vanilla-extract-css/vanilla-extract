@@ -67,13 +67,14 @@ describe('compiler running in Vitest', () => {
     );
 
     const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
     expect(source).toMatchInlineSnapshot(`
       "import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
       import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
     `);
 
-    const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
       ".styles_className__q7x3ow0 {
         color: red;
@@ -87,12 +88,13 @@ describe('compiler running in Vitest', () => {
     const cssPath = path.join(__dirname, 'fixtures/vite-config/plugin.css.ts');
 
     const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
     expect(source).toMatchInlineSnapshot(`
       "import '{{__dirname}}/fixtures/vite-config/plugin.css.ts.vanilla.css';
       export var root = 'plugin_root__1e902gk0';"
     `);
 
-    const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
       ".plugin_root__1e902gk0 {
         color: green;
@@ -106,13 +108,14 @@ describe('compiler running in Vitest', () => {
     const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
 
     const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
     expect(source).toMatchInlineSnapshot(`
       "import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
       import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
       export var root = 'alias_root__ez4dr20';"
     `);
 
-    const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
       ".alias_root__ez4dr20 {
         --border__13z1r1g0: 1px solid black;
