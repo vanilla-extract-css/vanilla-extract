@@ -68,8 +68,8 @@ describe('compiler running in Vitest', () => {
 
     const { source } = await compiler.processVanillaFile(cssPath);
     expect(source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      "import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
     `);
 
@@ -88,7 +88,7 @@ describe('compiler running in Vitest', () => {
 
     const { source } = await compiler.processVanillaFile(cssPath);
     expect(source).toMatchInlineSnapshot(`
-      "import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
+      "import '{{__dirname}}/fixtures/vite-config/plugin.css.ts.vanilla.css';
       export var root = 'plugin_root__1e902gk0';"
     `);
 
@@ -107,8 +107,8 @@ describe('compiler running in Vitest', () => {
 
     const { source } = await compiler.processVanillaFile(cssPath);
     expect(source).toMatchInlineSnapshot(`
-      "import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
-      import 'fixtures/vite-config/alias.css.ts.vanilla.css';
+      "import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
       export var root = 'alias_root__ez4dr20';"
     `);
 

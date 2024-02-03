@@ -11,8 +11,7 @@ function getLocalFiles(files: Set<string>) {
 
   return [...files]
     .map(normalizePath)
-    .filter((file) => file.startsWith(posixDirname))
-    .map((file) => file.replace(posixDirname, ''));
+    .filter((file) => file.startsWith(posixDirname));
 }
 
 describe('compiler', () => {
@@ -87,16 +86,16 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        /fixtures/class-composition/styles.css.ts,
-        /fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
+        {{__dirname}}/fixtures/class-composition/shared.css.ts,
       ]
     `);
 
@@ -108,7 +107,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/styles.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/styles.css.ts`,
       );
     }
 
@@ -120,7 +119,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/shared.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -133,16 +132,16 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        /fixtures/class-composition/styles.css.ts,
-        /fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
+        {{__dirname}}/fixtures/class-composition/shared.css.ts,
       ]
     `);
 
@@ -154,7 +153,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/styles.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/styles.css.ts`,
       );
     }
 
@@ -166,7 +165,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/shared.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -179,16 +178,16 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        /fixtures/class-composition/styles.css.ts,
-        /fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
+        {{__dirname}}/fixtures/class-composition/shared.css.ts,
       ]
     `);
 
@@ -200,7 +199,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/styles.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/styles.css.ts`,
       );
     }
 
@@ -212,7 +211,7 @@ describe('compiler', () => {
         }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `fixtures/class-composition/shared.css.ts`,
+        `{{__dirname}}/fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -244,8 +243,8 @@ describe('compiler', () => {
     );
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
       export var className = 'q7x3ow0 _16bmd920';
     `);
     const { css } = compiler.getCssForFile(cssPath);
@@ -265,8 +264,8 @@ describe('compiler', () => {
     );
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/class-composition/shared.css.ts.custom-extension.css';
-      import 'fixtures/class-composition/styles.css.ts.custom-extension.css';
+      import '{{__dirname}}/fixtures/class-composition/shared.css.ts.custom-extension.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.custom-extension.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
   });
@@ -284,7 +283,7 @@ describe('compiler', () => {
 
     // The `root` className string should be a composition of multiple classes:
     expect(outputA.source).toMatchInlineSnapshot(`
-      import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/unused-compositions/shared.css.ts.vanilla.css';
       export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';
     `);
 
@@ -294,7 +293,7 @@ describe('compiler', () => {
 
     // The `root` className string should be a composition of multiple classes:
     expect(outputB.source).toMatchInlineSnapshot(`
-      import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/unused-compositions/shared.css.ts.vanilla.css';
       export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';
     `);
 
@@ -315,7 +314,7 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/selectors/getter.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/selectors/getter.css.ts.vanilla.css';
       export var child = 'getter_child__ux95kn0';
       export var parent = 'getter_parent__ux95kn1';
     `);
@@ -347,7 +346,7 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
       import { createRuntimeFn as _7a468 } from '@vanilla-extract/recipes/createRuntimeFn';
       export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});
     `);
@@ -385,7 +384,7 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/plugin.css.ts.vanilla.css';
       export var root = 'plugin_root__1e902gk0';
     `);
 
@@ -404,8 +403,8 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
-      import 'fixtures/vite-config/alias.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
       export var root = 'alias_root__ez4dr20';
     `);
 

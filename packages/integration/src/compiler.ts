@@ -1,4 +1,4 @@
-import { join, relative, isAbsolute } from 'path';
+import { join, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, InlineConfig as ViteConfig } from 'vite';
@@ -16,20 +16,18 @@ type Composition = Parameters<Adapter['registerComposition']>[0];
 
 const globalAdapterIdentifier = '__vanilla_globalCssAdapter__';
 
-const scanModule = (entryModule: ModuleNode, root: string) => {
+const scanModule = (entryModule: ModuleNode) => {
   const queue = new Set([entryModule]);
   const cssDeps = new Set<string>();
   const watchFiles = new Set<string>();
 
   for (const moduleNode of queue) {
-    if (moduleNode.id?.includes('@vanilla-extract/')) {
+    if (!moduleNode.id || moduleNode.id.includes('@vanilla-extract/')) {
       continue;
     }
 
-    const relativePath = moduleNode.id && relative(root, moduleNode.id);
-
-    if (relativePath && cssFileFilter.test(relativePath)) {
-      cssDeps.add(relativePath);
+    if (cssFileFilter.test(moduleNode.id)) {
+      cssDeps.add(moduleNode.id);
     }
     if (moduleNode.file) {
       watchFiles.add(moduleNode.file);
@@ -151,7 +149,7 @@ class NormalizedMap<V> extends Map<string, V> {
 
   #normalizePath(filePath: string) {
     return normalizePath(
-      isAbsolute(filePath) ? relative(this.root, filePath) : filePath,
+      isAbsolute(filePath) ? filePath : join(this.root, filePath),
     );
   }
 
@@ -319,7 +317,7 @@ export const createCompiler = ({
 
           const cssImports = [];
 
-          const { cssDeps, watchFiles } = scanModule(moduleNode, root);
+          const { cssDeps, watchFiles } = scanModule(moduleNode);
 
           for (const cssDep of cssDeps) {
             const cssDepModuleId = normalizePath(cssDep);
@@ -388,9 +386,7 @@ export const createCompiler = ({
     },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
-      const rootRelativePath = relative(root, filePath);
-
-      const moduleId = normalizePath(rootRelativePath);
+      const moduleId = normalizePath(filePath);
       const result = cssCache.get(moduleId);
 
       if (!result) {
@@ -399,7 +395,7 @@ export const createCompiler = ({
 
       return {
         css: result.css,
-        filePath: rootRelativePath,
+        filePath: filePath,
         resolveDir: root,
       };
     },
