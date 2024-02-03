@@ -4,7 +4,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
-  print: (val) => (val as string).replaceAll(__dirname, '{{__dirname}}'),
+  print: (val) =>
+    (val as string).replaceAll(normalizePath(__dirname), '{{__dirname}}'),
 });
 
 function getLocalFiles(files: Set<string>) {

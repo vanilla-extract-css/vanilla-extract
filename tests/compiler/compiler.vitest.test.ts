@@ -1,6 +1,6 @@
 import path from 'path';
 import { describe, beforeAll, afterAll, test, expect } from 'vitest';
-import { createCompiler } from '@vanilla-extract/integration';
+import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
 // Vitest has trouble with snapshots that don't contain wrapping quotes. See this regex and the functions above/below it:
 // https://github.com/vitest-dev/vitest/blob/ae73f2737607a878ba589d548aa6f8ba639dc07c/packages/snapshot/src/port/inlineSnapshot.ts#L96
@@ -9,7 +9,10 @@ import { createCompiler } from '@vanilla-extract/integration';
 // In fact, just updating the snapshot from now on will mangle the test file ¯\_(ツ)_/¯
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
-  print: (val) => `"${(val as string).replaceAll(__dirname, '{{__dirname}}')}"`,
+  print: (val) =>
+    '"' +
+    (val as string).replaceAll(normalizePath(__dirname), '{{__dirname}}') +
+    '"',
 });
 
 describe('compiler running in Vitest', () => {
