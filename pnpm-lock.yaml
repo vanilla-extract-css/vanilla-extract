@@ -61,6 +61,9 @@ importers:
       babel-jest:
         specifier: ^27.3.1
         version: 27.3.1(@babel/core@7.20.7)
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
       fast-glob:
         specifier: ^3.2.7
         version: 3.3.2
@@ -7786,6 +7789,14 @@ packages:
     dependencies:
       luxon: 3.0.4
     dev: true
+
+  /cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: false
 
   /cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
