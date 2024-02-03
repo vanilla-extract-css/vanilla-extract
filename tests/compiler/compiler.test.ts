@@ -1,6 +1,11 @@
 import path from 'path';
 import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
+expect.addSnapshotSerializer({
+  test: (val) => typeof val === 'string',
+  print: (val) => (val as string).replaceAll(__dirname, '{{__dirname}}'),
+});
+
 function getLocalFiles(files: Set<string>) {
   const posixDirname = normalizePath(__dirname);
 
@@ -82,40 +87,40 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
+        /fixtures/class-composition/styles.css.ts,
+        /fixtures/class-composition/shared.css.ts,
       ]
     `);
 
     {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
+        .styles_className__q7x3ow0 {
           color: red;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/styles.css.ts"`,
+        `fixtures/class-composition/styles.css.ts`,
       );
     }
 
     {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
+        .shared_shared__16bmd920 {
           background: blue;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/shared.css.ts"`,
+        `fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -128,40 +133,40 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
+        /fixtures/class-composition/styles.css.ts,
+        /fixtures/class-composition/shared.css.ts,
       ]
     `);
 
     {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
+        .styles_className__q7x3ow0 {
           color: red;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/styles.css.ts"`,
+        `fixtures/class-composition/styles.css.ts`,
       );
     }
 
     {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
+        .shared_shared__16bmd920 {
           background: blue;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/shared.css.ts"`,
+        `fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -174,40 +179,40 @@ describe('compiler', () => {
 
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
 
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
+        /fixtures/class-composition/styles.css.ts,
+        /fixtures/class-composition/shared.css.ts,
       ]
     `);
 
     {
       const { css, filePath } = compiler.getCssForFile(cssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
+        .styles_className__q7x3ow0 {
           color: red;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/styles.css.ts"`,
+        `fixtures/class-composition/styles.css.ts`,
       );
     }
 
     {
       const { css, filePath } = compiler.getCssForFile(sharedCssPath);
       expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
+        .shared_shared__16bmd920 {
           background: blue;
-        }"
+        }
       `);
       expect(normalizePath(filePath)).toMatchInlineSnapshot(
-        `"fixtures/class-composition/shared.css.ts"`,
+        `fixtures/class-composition/shared.css.ts`,
       );
     }
   });
@@ -226,7 +231,7 @@ describe('compiler', () => {
       // We know `error.message` is defined, and we want make the snapshot consistent across machines
       normalizePath(error!.message!.replace(__dirname, '{{__dirname}}')),
     ).toMatchInlineSnapshot(
-      `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
+      `No CSS for file: {{__dirname}}/does-not-exist.css.ts`,
     );
   });
 
@@ -239,15 +244,15 @@ describe('compiler', () => {
     );
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
+      import 'fixtures/class-composition/shared.css.ts.vanilla.css';
       import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'q7x3ow0 _16bmd920';"
+      export var className = 'q7x3ow0 _16bmd920';
     `);
     const { css } = compiler.getCssForFile(cssPath);
     expect(css).toMatchInlineSnapshot(`
-      ".q7x3ow0 {
+      .q7x3ow0 {
         color: red;
-      }"
+      }
     `);
   });
 
@@ -260,9 +265,9 @@ describe('compiler', () => {
     );
     const output = await compiler.processVanillaFile(cssPath);
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.custom-extension.css';
+      import 'fixtures/class-composition/shared.css.ts.custom-extension.css';
       import 'fixtures/class-composition/styles.css.ts.custom-extension.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
     `);
   });
 
@@ -279,8 +284,8 @@ describe('compiler', () => {
 
     // The `root` className string should be a composition of multiple classes:
     expect(outputA.source).toMatchInlineSnapshot(`
-      "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';"
+      import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';
     `);
 
     // Process the file multiple times with different args to test caching
@@ -289,16 +294,16 @@ describe('compiler', () => {
 
     // The `root` className string should be a composition of multiple classes:
     expect(outputB.source).toMatchInlineSnapshot(`
-      "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
+      import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';
     `);
 
     const { css } = compiler.getCssForFile(sharedCssPath);
     expect(css).toMatchInlineSnapshot(`
-      ".shared_shared__5i7sy00 {
+      .shared_shared__5i7sy00 {
         padding: 20px;
         background: peachpuff;
-      }"
+      }
     `);
   });
 
@@ -310,13 +315,13 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/selectors/getter.css.ts.vanilla.css';
+      import 'fixtures/selectors/getter.css.ts.vanilla.css';
       export var child = 'getter_child__ux95kn0';
-      export var parent = 'getter_parent__ux95kn1';"
+      export var parent = 'getter_parent__ux95kn1';
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      ".getter_child__ux95kn0 {
+      .getter_child__ux95kn0 {
         background: blue;
       }
       .getter_parent__ux95kn1 .getter_child__ux95kn0 {
@@ -327,7 +332,7 @@ describe('compiler', () => {
       }
       .getter_parent__ux95kn1:has(.getter_child__ux95kn0) {
         padding: 10px;
-      }"
+      }
     `);
   });
 
@@ -342,13 +347,13 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
+      import 'fixtures/recipes/recipeClassNames.css.ts.vanilla.css';
       import { createRuntimeFn as _7a468 } from '@vanilla-extract/recipes/createRuntimeFn';
-      export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});"
+      export var recipeWithReferences = _7a468({defaultClassName:'recipeClassNames_recipeWithReferences__129pj258',variantClassNames:{first:{true:'recipeClassNames_recipeWithReferences_first_true__129pj259'}},defaultVariants:{},compoundVariants:[]});
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      ".recipeClassNames_basic_rounded_true__129pj257 {
+      .recipeClassNames_basic_rounded_true__129pj257 {
         border-radius: 999px;
       }
       .recipeClassNames_recipeWithReferences__129pj258 {
@@ -368,7 +373,7 @@ describe('compiler', () => {
       }
       .recipeClassNames_basic_spaceWithDefault_large__129pj252.recipeClassNames_basic_rounded_true__129pj257 .recipeClassNames_recipeWithReferences_first_true__129pj259 {
         color: white;
-      }"
+      }
     `);
   });
 
@@ -380,14 +385,14 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
-      export var root = 'plugin_root__1e902gk0';"
+      import 'fixtures/vite-config/plugin.css.ts.vanilla.css';
+      export var root = 'plugin_root__1e902gk0';
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      ".plugin_root__1e902gk0 {
+      .plugin_root__1e902gk0 {
         color: green;
-      }"
+      }
     `);
   });
 
@@ -399,16 +404,16 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import 'fixtures/vite-config/util/vars.css.ts.vanilla.css';
       import 'fixtures/vite-config/alias.css.ts.vanilla.css';
-      export var root = 'alias_root__ez4dr20';"
+      export var root = 'alias_root__ez4dr20';
     `);
 
     expect(css).toMatchInlineSnapshot(`
-      ".alias_root__ez4dr20 {
+      .alias_root__ez4dr20 {
         --border__13z1r1g0: 1px solid black;
         border: var(--border__13z1r1g0);
-      }"
+      }
     `);
   });
 });
