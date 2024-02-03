@@ -214,15 +214,8 @@ const noop = (...args: Array<any>) => {};
   responsiveValue = ['NOPE'];
   // @ts-expect-error
   responsiveValue = [123];
-  responsiveValue = [
-    'row',
-    'row',
-    'row',
-    // @ts-expect-error
-    'your',
-    // @ts-expect-error
-    'boat',
-  ];
+  // @ts-expect-error
+  responsiveValue = ['row', 'row', 'row', 'your', 'boat'];
   // @ts-expect-error
   responsiveValue = { mobile: 'nope' };
   // @ts-expect-error
