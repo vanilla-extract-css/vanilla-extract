@@ -125,11 +125,13 @@ export function vanillaExtractPlugin({
               plugin !== null &&
               'name' in plugin &&
               // Prevent an infinite loop where the compiler creates a new instance of the plugin,
-              //  which creates a new compiler, which creates a new instance of the plugin, etc.
+              // which creates a new compiler, which creates a new instance of the plugin, etc.
               plugin.name !== 'vanilla-extract' &&
               // Skip Vitest plugins
               plugin.name !== 'vitest' &&
-              !plugin.name.startsWith('vitest:'),
+              !plugin.name.startsWith('vitest:') &&
+              // Skip Remix because it throws an error if it's not loaded with a config file
+              plugin.name !== 'remix',
           ),
         });
       }
