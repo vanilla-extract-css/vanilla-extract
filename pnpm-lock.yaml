@@ -331,7 +331,7 @@ importers:
   packages/esbuild-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^7.0.0
         version: link:../integration
     devDependencies:
       esbuild:
@@ -341,7 +341,7 @@ importers:
   packages/esbuild-plugin-next:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^7.0.0
         version: link:../integration
     devDependencies:
       esbuild:
@@ -400,7 +400,7 @@ importers:
   packages/jest-transform:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.3.0
+        specifier: ^7.0.0
         version: link:../integration
       esbuild:
         specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0
@@ -429,7 +429,7 @@ importers:
         specifier: ^2.7.0
         version: 2.8.3(@parcel/core@2.8.3)
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^7.0.0
         version: link:../integration
 
   packages/private: {}
@@ -443,7 +443,7 @@ importers:
   packages/rollup-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.4.0
+        specifier: ^7.0.0
         version: link:../integration
     devDependencies:
       '@fixtures/themed':
@@ -476,7 +476,7 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.5.0
+        specifier: ^7.0.0
         version: link:../integration
     devDependencies:
       vite:
@@ -486,7 +486,7 @@ importers:
   packages/webpack-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^6.5.0
+        specifier: ^7.0.0
         version: link:../integration
       chalk:
         specifier: ^4.1.1

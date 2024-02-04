@@ -1,5 +1,18 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.3
+
+### Patch Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Correctly resolve module paths when using Vite plugins that affect module resolution, such as [`vite-tsconfig-paths`](https://github.com/aleclarson/vite-tsconfig-paths)
+
+- [#1308](https://github.com/vanilla-extract-css/vanilla-extract/pull/1308) [`20e33a5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/20e33a5003cf1ef74beaba60cad6db8882cf5319) Thanks [@mrm007](https://github.com/mrm007)! - Don't pass Remix Vite plugin to the vite-node compiler
+
+  Remix throws an error if it's loaded without a config file, which is what we do when we initialise the vite-node compiler.
+
+- Updated dependencies [[`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14)]:
+  - @vanilla-extract/integration@7.0.0
+
 ## 4.0.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @vanilla-extract/esbuild-plugin-next
 
+## 0.0.5
+
+### Patch Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Correctly resolve module paths when using Vite plugins that affect module resolution, such as [`vite-tsconfig-paths`](https://github.com/aleclarson/vite-tsconfig-paths)
+
+- Updated dependencies [[`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14)]:
+  - @vanilla-extract/integration@7.0.0
+
 ## 0.0.4
 
 ### Patch Changes
