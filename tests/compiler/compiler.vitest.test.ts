@@ -15,6 +15,8 @@ expect.addSnapshotSerializer({
     '"',
 });
 
+// ! These tests are to ensure that the compiler works correctly in Vitest.
+// ! Please add tests to `compiler.test.ts` going forward.
 describe('compiler running in Vitest', () => {
   let compilers: Record<
     'default' | 'vitePlugins' | 'viteResolve',

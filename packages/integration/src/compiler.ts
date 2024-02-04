@@ -22,11 +22,11 @@ const scanModule = (entryModule: ModuleNode) => {
   const watchFiles = new Set<string>();
 
   for (const moduleNode of queue) {
-    if (!moduleNode.id || moduleNode.id.includes('@vanilla-extract/')) {
+    if (moduleNode.id?.includes('@vanilla-extract/')) {
       continue;
     }
 
-    if (cssFileFilter.test(moduleNode.id)) {
+    if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
       cssDeps.add(moduleNode.id);
     }
     if (moduleNode.file) {

@@ -225,7 +225,7 @@ describe('compiler', () => {
 
   test('throws on getCssForFile when file does not exist', async () => {
     const compiler = compilers.default;
-    let error: Error | undefined;
+    let error: Error;
 
     try {
       compiler.getCssForFile('does-not-exist.css.ts');
@@ -234,8 +234,8 @@ describe('compiler', () => {
     }
 
     expect(
-      // We know `error.message` is defined, and we want make the snapshot consistent across machines
-      normalizePath(error!.message!.replace(__dirname, '{{__dirname}}')),
+      // We know `error.message` is defined here
+      normalizePath(error!.message),
     ).toMatchInlineSnapshot(
       `No CSS for file: {{__dirname}}/does-not-exist.css.ts`,
     );
