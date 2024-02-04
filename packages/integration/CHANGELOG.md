@@ -1,5 +1,13 @@
 # @vanilla-extract/integration
 
+## 7.0.0
+
+### Major Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Use absolute paths internally to make sure Vite resolves modules correctly
+
+  This change only affects integrations that use the vite-node compiler, which is currently the esbuild (next) and Vite plugins
+
 ## 6.5.0
 
 ### Minor Changes
