@@ -138,7 +138,11 @@ export function vanillaExtractPlugin({
                 'name' in plugin &&
                 // Prevent an infinite loop where the compiler creates a new instance of the plugin,
                 // which creates a new compiler, which creates a new instance of the plugin, etc.
-                plugin.name !== 'vanilla-extract',
+                plugin.name !== 'vanilla-extract' &&
+                // Skip Remix because it throws an error if it's not loaded with a config file.
+                // If it _is_ loaded with a config file, it will create an infinite loop because it
+                // also has a child compiler which uses the same mechanism to load the config file.
+                plugin.name !== 'remix',
             ),
           },
         });
