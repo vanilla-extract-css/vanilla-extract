@@ -476,7 +476,7 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@vanilla-extract/integration':
-        specifier: ^7.0.0
+        specifier: ^7.1.0
         version: link:../integration
     devDependencies:
       vite:
