@@ -3,7 +3,7 @@ import path from 'path';
 import type {
   Plugin,
   ResolvedConfig,
-  UserConfig,
+  ConfigEnv,
   ViteDevServer,
   Rollup,
 } from 'vite';
@@ -33,10 +33,11 @@ export function vanillaExtractPlugin({
   unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
-  let userConfig: UserConfig;
+  let configEnv: ConfigEnv;
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
+  const vitePromise = import('vite');
 
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
@@ -97,8 +98,8 @@ export function vanillaExtractPlugin({
     configureServer(_server) {
       server = _server;
     },
-    config(viteUserConfig) {
-      userConfig = viteUserConfig;
+    config(_userConfig, _configEnv) {
+      configEnv = _configEnv;
       return {
         ssr: {
           external: [
@@ -109,30 +110,42 @@ export function vanillaExtractPlugin({
         },
       };
     },
-    async configResolved(resolvedConfig) {
-      config = resolvedConfig;
+    async configResolved(_resolvedConfig) {
+      config = _resolvedConfig;
       packageName = getPackageInfo(config.root).name;
 
       if (mode !== 'transform') {
+        const { loadConfigFromFile } = await vitePromise;
+        const configFile = await loadConfigFromFile(
+          {
+            command: config.command,
+            mode: config.mode,
+            isSsrBuild: configEnv.isSsrBuild,
+          },
+          config.configFile,
+        );
+
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
-          viteResolve: config.resolve,
-          vitePlugins: userConfig.plugins?.flat().filter(
-            (plugin) =>
-              typeof plugin === 'object' &&
-              plugin !== null &&
-              'name' in plugin &&
-              // Prevent an infinite loop where the compiler creates a new instance of the plugin,
-              // which creates a new compiler, which creates a new instance of the plugin, etc.
-              plugin.name !== 'vanilla-extract' &&
-              // Skip Vitest plugins
-              plugin.name !== 'vitest' &&
-              !plugin.name.startsWith('vitest:') &&
-              // Skip Remix because it throws an error if it's not loaded with a config file
-              plugin.name !== 'remix',
-          ),
+          viteConfig: {
+            ...configFile?.config,
+            plugins: configFile?.config.plugins?.flat().filter(
+              (plugin) =>
+                typeof plugin === 'object' &&
+                plugin !== null &&
+                'name' in plugin &&
+                // Prevent an infinite loop where the compiler creates a new instance of the plugin,
+                // which creates a new compiler, which creates a new instance of the plugin, etc.
+                plugin.name !== 'vanilla-extract' &&
+                // Skip Remix because it throws an error if it's not loaded with a config file.
+                // If it _is_ loaded with a config file, it will create an infinite loop because it
+                // also has a child compiler which uses the same mechanism to load the config file.
+                // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
+                plugin.name !== 'remix',
+            ),
+          },
         });
       }
     },

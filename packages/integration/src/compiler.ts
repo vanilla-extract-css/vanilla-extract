@@ -1,7 +1,8 @@
+import assert from 'assert';
 import { join, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import type { ModuleNode, InlineConfig as ViteConfig } from 'vite';
+import type { ModuleNode, UserConfig as ViteUserConfig } from 'vite';
 
 import type { IdentifierOption } from './types';
 import { cssFileFilter } from './filters';
@@ -47,13 +48,15 @@ const scanModule = (entryModule: ModuleNode) => {
 const createViteServer = async ({
   root,
   identifiers,
-  viteResolve,
-  vitePlugins,
-}: Required<Omit<CreateCompilerOptions, 'cssImportSpecifier'>>) => {
+  viteConfig,
+}: Required<
+  Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
+>) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
   const server = await vite.createServer({
+    ...viteConfig,
     configFile: false,
     root,
     server: {
@@ -66,7 +69,6 @@ const createViteServer = async ({
     ssr: {
       noExternal: true,
     },
-    resolve: viteResolve,
     plugins: [
       {
         name: 'vanilla-extract-externalize',
@@ -98,7 +100,7 @@ const createViteServer = async ({
           }
         },
       },
-      ...vitePlugins,
+      ...(viteConfig.plugins ?? []),
     ],
   });
 
@@ -184,21 +186,32 @@ export interface CreateCompilerOptions {
   root: string;
   cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
-  viteResolve?: ViteConfig['resolve'];
-  vitePlugins?: ViteConfig['plugins'];
+  viteConfig?: ViteUserConfig;
+  /** @deprecated */
+  viteResolve?: ViteUserConfig['resolve'];
+  /** @deprecated */
+  vitePlugins?: ViteUserConfig['plugins'];
 }
 export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
-  viteResolve = {},
-  vitePlugins = [],
+  viteConfig,
+  viteResolve,
+  vitePlugins,
 }: CreateCompilerOptions): Compiler => {
+  assert(
+    !(viteConfig && (viteResolve || vitePlugins)),
+    'viteConfig cannot be used with viteResolve or vitePlugins',
+  );
+
   const vitePromise = createViteServer({
     root,
     identifiers,
-    viteResolve,
-    vitePlugins,
+    viteConfig: viteConfig ?? {
+      resolve: viteResolve,
+      plugins: vitePlugins,
+    },
   });
 
   const processVanillaFileCache = new Map<
