@@ -1,5 +1,13 @@
 # @vanilla-extract/integration
 
+## 7.1.0
+
+### Minor Changes
+
+- [#1314](https://github.com/vanilla-extract-css/vanilla-extract/pull/1314) [`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2) Thanks [@mrm007](https://github.com/mrm007)! - A Vite config object can be passed to the vite-node compiler via the `viteConfig` option
+
+  `viteResolve` and `vitePlugins` options are deprecated and will be removed in a future version.
+
 ## 7.0.0
 
 ### Major Changes

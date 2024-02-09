@@ -1,5 +1,16 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.4
+
+### Patch Changes
+
+- [#1314](https://github.com/vanilla-extract-css/vanilla-extract/pull/1314) [`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2) Thanks [@mrm007](https://github.com/mrm007)! - Resolve and pass a new copy of the Vite config to the vite-node compiler
+
+  Previously, we were passing the same Vite config object to the vite-node compiler. This was causing compatibility issues with other plugins, such as Vitest and Remix.
+
+- Updated dependencies [[`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2)]:
+  - @vanilla-extract/integration@7.1.0
+
 ## 4.0.3
 
 ### Patch Changes
