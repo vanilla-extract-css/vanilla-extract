@@ -29,7 +29,7 @@
     "vite-node": "^1.2.0"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.20",
+    "@types/babel__core": "^7.20.5",
     "@types/lodash": "^4.14.168"
   }
 }
