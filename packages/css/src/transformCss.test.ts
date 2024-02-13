@@ -1893,6 +1893,48 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle font face rules with src as an array', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'Pretendard',
+              src: [
+                `url("/fonts/Pretendard-Regular.woff") format("woff")`,
+                `url("/fonts/Pretendard-Regular.woff2") format("woff2")`,
+                `local("Pretendard-Regular")`,
+              ],
+            },
+          },
+          {
+            type: 'fontFace',
+            rule: {
+              fontFamily: 'Pretendard',
+              src: [
+                `url("/fonts/Pretendard-Medium.woff") format("woff")`,
+                `url("/fonts/Pretendard-Medium.woff2") format("woff2")`,
+                `local("Pretendard-Medium")`,
+              ],
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @font-face {
+        font-family: Pretendard;
+        src: url("/fonts/Pretendard-Regular.woff") format("woff"), url("/fonts/Pretendard-Regular.woff2") format("woff2"), local("Pretendard-Regular");
+      }
+      @font-face {
+        font-family: Pretendard;
+        src: url("/fonts/Pretendard-Medium.woff") format("woff"), url("/fonts/Pretendard-Medium.woff2") format("woff2"), local("Pretendard-Medium");
+      }
+    `);
+  });
+
   it('should not create empty rules', () => {
     expect(
       transformCss({

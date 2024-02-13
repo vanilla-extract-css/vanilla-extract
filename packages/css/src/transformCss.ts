@@ -622,6 +622,10 @@ function renderCss(v: any, indent: string = '') {
       const isEmpty = Object.keys(value).length === 0;
 
       if (!isEmpty) {
+        if (key === '@font-face' && Array.isArray(value.src)) {
+          value.src = value.src.join(', ');
+        }
+
         rules.push(
           `${indent}${key} {\n${renderCss(
             value,
