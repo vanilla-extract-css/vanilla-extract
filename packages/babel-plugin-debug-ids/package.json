@@ -20,7 +20,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.23.7"
+    "@babel/core": "^7.23.9"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5"

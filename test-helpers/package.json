@@ -6,7 +6,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.23.7",
+    "@babel/core": "^7.23.9",
     "@fixtures/features": "*",
     "@fixtures/layers": "*",
     "@fixtures/low-level": "*",

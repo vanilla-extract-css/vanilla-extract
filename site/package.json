@@ -25,10 +25,10 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
     "@types/classnames": "^2.2.11",
     "@types/lodash": "^4.14.168",
     "@types/mdx-js__react": "^1.5.3",

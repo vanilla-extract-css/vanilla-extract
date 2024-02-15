@@ -14,7 +14,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.23.7",
+    "@babel/core": "^7.23.9",
     "@babel/plugin-syntax-typescript": "^7.23.3",
     "@vanilla-extract/babel-plugin-debug-ids": "^1.0.4",
     "@vanilla-extract/css": "^1.14.0",
