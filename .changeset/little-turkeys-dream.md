@@ -3,4 +3,4 @@
 '@vanilla-extract/integration': minor
 ---
 
-update babel dependencies
+Update Babel dependencies to address https://github.com/advisories/GHSA-67hx-6x53-jw92
