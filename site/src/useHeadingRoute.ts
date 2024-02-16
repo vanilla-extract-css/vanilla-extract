@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useReactRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
 import throttle from 'lodash/throttle';
 
 let activeHash: string | null = null;
@@ -32,7 +32,7 @@ export const useActiveHash = () => {
 };
 
 export const useHeadingRouteUpdates = (headingHashes: Array<string>) => {
-  const { location } = useReactRouter();
+  const location = useLocation();
 
   updateActiveRoute(location.hash.substring(1));
 
