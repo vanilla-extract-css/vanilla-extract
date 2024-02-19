@@ -352,7 +352,7 @@ importers:
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.9)
       '@vanilla-extract/babel-plugin-debug-ids':
-        specifier: ^1.0.4
+        specifier: ^1.0.5
         version: link:../babel-plugin-debug-ids
       '@vanilla-extract/css':
         specifier: ^1.14.0

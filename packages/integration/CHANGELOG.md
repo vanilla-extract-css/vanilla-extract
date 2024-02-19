@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 7.1.1
+
+### Patch Changes
+
+- [#1319](https://github.com/vanilla-extract-css/vanilla-extract/pull/1319) [`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b) Thanks [@joeldavuk](https://github.com/joeldavuk)! - Update Babel dependencies to address https://github.com/advisories/GHSA-67hx-6x53-jw92
+
+- Updated dependencies [[`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.5
+
 ## 7.1.0
 
 ### Minor Changes

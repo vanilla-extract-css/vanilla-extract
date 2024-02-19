@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/babel-plugin-debug-ids",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
   "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
