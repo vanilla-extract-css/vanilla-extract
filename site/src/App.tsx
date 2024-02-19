@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Title, Meta } from 'react-head';
 import { HomePage } from './HomePage/HomePage';
 import { DocsPage } from './DocsPage/DocsPage';
@@ -18,15 +18,20 @@ export default () => {
       <Meta name="description" content={description} />
       <Meta property="og:description" content={description} />
       <Meta name="twitter:description" content={description} />
-      <Route path="/" exact component={HomePage} />
 
-      <Switch>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+
         {legacyRoutes.map((route) => (
-          <Redirect key={route.from} from={route.from} to={route.to} />
+          <Route
+            key={route.from}
+            path={route.from}
+            element={<Navigate to={route.to} replace />}
+          />
         ))}
 
-        <Route path="/documentation" component={DocsPage} />
-      </Switch>
+        <Route path="/*" element={<DocsPage />} />
+      </Routes>
     </ColorModeProvider>
   );
 };

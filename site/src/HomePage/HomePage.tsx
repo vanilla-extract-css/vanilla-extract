@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import outdent from 'outdent';
+import dedent from 'dedent';
 import { Box, Stack, ContentBlock, Columns, ButtonLink } from '../system';
 import { Heading } from '../Typography/Heading';
 import { Chevron } from '../Chevron/Chevron';
@@ -194,7 +194,7 @@ export const HomePage = () => {
                     code={[
                       {
                         fileName: 'styles.css.ts',
-                        contents: outdent`
+                        contents: dedent/*ts*/ `
                         import { createTheme, style } from '@vanilla-extract/css';
 
                         export const [themeClass, vars] = createTheme({
@@ -331,24 +331,24 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: outdent`
-                    import { style } from '@vanilla-extract/css';
-    
-                    export const className = style({
-                      display: 'flex',
-                      flexDirection: 'column',
-                      selectors: {
-                        '&:nth-child(2n)': {
-                          background: 'aliceblue'
+                    contents: dedent/*css*/ `
+                      import { style } from '@vanilla-extract/css';
+
+                      export const className = style({
+                        display: 'flex',
+                        flexDirection: 'column',
+                        selectors: {
+                          '&:nth-child(2n)': {
+                            background: 'aliceblue'
+                          }
+                        },
+                        '@media': {
+                          'screen and (min-width: 768px)': {
+                            flexDirection: 'row'
+                          }
                         }
-                      },
-                      '@media': {
-                        'screen and (min-width: 768px)': {
-                          flexDirection: 'row'
-                        }
-                      }
-                    });
-                  `,
+                      });
+                    `,
                   },
                 ]}
               />
@@ -379,19 +379,20 @@ export const HomePage = () => {
                     code={[
                       {
                         fileName: 'styles.css.ts',
-                        contents: outdent`
-                        import { createTheme, style } from '@vanilla-extract/css';
-                          
-                        export const [themeClass, vars] = createTheme({
-                          color: {
-                            brand: 'aquamarine',
-                            accent: 'honeydew',
-                          },
-                        });
+                        contents: dedent/*ts*/ `
+                          import { createTheme, style } from '@vanilla-extract/css';
 
-                        export const brandedSection = style({
-                          backgroundColor: vars.color.brandd,
-                      `,
+                          export const [themeClass, vars] = createTheme({
+                            color: {
+                              brand: 'aquamarine',
+                              accent: 'honeydew',
+                            },
+                          });
+
+                          export const brandedSection = style({
+                            backgroundColor: vars.color.brandd,
+                          });
+                        `,
                       },
                     ]}
                   />
@@ -419,21 +420,23 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: outdent`import { style, createVar } from '@vanilla-extract/css';
+                    contents: dedent/*ts*/ `
+                      import { style, createVar } from '@vanilla-extract/css';
 
-                  const shadowColor = createVar();
-            
-                  export const shadow = style({
-                    boxShadow: ${'`0 0 10px ${shadowColor}`'},
-                    selectors: {
-                      '.light &': {
-                        vars: { [shadowColor]: 'black' }
-                      },
-                      '.dark &': {
-                        vars: { [shadowColor]: 'white' }
-                      },
-                    }
-                  });`,
+                      const shadowColor = createVar();
+
+                      export const shadow = style({
+                        boxShadow: ${'`0 0 10px ${shadowColor}`'},
+                        selectors: {
+                          '.light &': {
+                            vars: { [shadowColor]: 'black' }
+                          },
+                          '.dark &': {
+                            vars: { [shadowColor]: 'white' }
+                          },
+                        },
+                      });
+                    `,
                   },
                 ]}
               />
@@ -458,21 +461,21 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: outdent`
-                  import { styleVariants } from '@vanilla-extract/css';
-  
-                  export const background = styleVariants({
-                    primary: { background: 'navy' },
-                    secondary: { background: 'blue' },
-                    tertiary: { background: 'aqua' },
-                  });
-  
-                  export const color = styleVariants({
-                    neutral: { color: 'black' },
-                    secondary: { color: 'gray' },
-                    link: { color: 'blue' },
-                  });
-                `,
+                    contents: dedent/*ts*/ `
+                      import { styleVariants } from '@vanilla-extract/css';
+
+                      export const background = styleVariants({
+                        primary: { background: 'navy' },
+                        secondary: { background: 'blue' },
+                        tertiary: { background: 'aqua' },
+                      });
+
+                      export const color = styleVariants({
+                        neutral: { color: 'black' },
+                        secondary: { color: 'gray' },
+                        link: { color: 'blue' },
+                      });
+                    `,
                   },
                 ]}
               />
@@ -499,18 +502,18 @@ export const HomePage = () => {
                   {
                     fileName: 'output.css',
                     language: 'css',
-                    contents: outdent`
-                  :root {
-                    --space-none__ya5b7b0: 0;
-                    --space-small__ya5b7b1: 4px;
-                    --space-medium__ya5b7b2: 8px;
-                    --space-large__ya5b7b3: 12px;
-                  }
+                    contents: dedent/*css*/ `
+                      :root {
+                        --space-none__ya5b7b0: 0;
+                        --space-small__ya5b7b1: 4px;
+                        --space-medium__ya5b7b2: 8px;
+                        --space-large__ya5b7b3: 12px;
+                      }
 
-                  .Hero_container__1ldw6lo0 {
-                    padding: var(--space-medium__ya5b7b2);
-                  }
-                `,
+                      .Hero_container__1ldw6lo0 {
+                        padding: var(--space-medium__ya5b7b2);
+                      }
+                    `,
                   },
                 ]}
               />

@@ -63,11 +63,7 @@
     ]
   },
   "packageManager": "pnpm@8.10.2",
-  "pnpm": {
-    "patchedDependencies": {
-      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
-    }
-  },
+  "pnpm": {},
   "volta": {
     "node": "20.9.0"
   }
