@@ -18,7 +18,7 @@
     "@vanilla-extract/integration": "^7.1.0"
   },
   "devDependencies": {
-    "vite": "npm:vite@^5.0.11"
+    "vite": "^5.0.11"
   },
   "peerDependencies": {
     "vite": "^4.0.3 || ^5.0.0"
