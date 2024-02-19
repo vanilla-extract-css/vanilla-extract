@@ -1,5 +1,6 @@
 import {
   ReactNode,
+  ComponentProps,
   AllHTMLAttributes,
   ElementType,
   createElement,
@@ -18,17 +19,6 @@ import { BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
-
-interface Children {
-  children: ReactNode;
-}
-interface HeadingProps {
-  children: ReactNode;
-  component: ElementType;
-  level: HeadingLevel;
-  href?: string;
-  id?: string;
-}
 
 const Block = ({
   component,
@@ -51,30 +41,21 @@ const Block = ({
   </Box>
 );
 
-const RemoveNestedParagraphs = (p: Children) => (
+const RemoveNestedParagraphs = (props: { children: ReactNode }) => (
   <MDXProvider
-    {...p}
+    {...props}
     components={{
       p: ({ children }) => <Text>{children}</Text>,
     }}
   />
 );
 
-const Th = (props: Children) => (
-  <Text component="th" weight="strong">
-    {props.children}
-  </Text>
-);
-
-const Td = (props: Children) => <Text component="td">{props.children}</Text>;
-
 const A = ({
   href,
-  size, // Omit
   color, // Omit
   type, // Omit
   ...restProps
-}: AllHTMLAttributes<HTMLAnchorElement>) => {
+}: JSX.IntrinsicElements['a']) => {
   let isInlineCodeLink = false;
 
   if (
@@ -108,6 +89,11 @@ const A = ({
   );
 };
 
+interface HeadingProps extends AllHTMLAttributes<HTMLHeadingElement> {
+  component: ElementType;
+  level: HeadingLevel;
+  href?: string;
+}
 const Heading = ({ level, component, children, href }: HeadingProps) => {
   const headingElement = createElement(
     Box,
@@ -140,17 +126,17 @@ export default {
       <Divider />
     </Block>
   ),
-  p: ({ children }: Children) => (
+  p: ({ children }) => (
     <Block component="p">
       <Text>{children}</Text>
     </Block>
   ),
-  h1: ({ component, id, ...props }: HeadingProps) => (
+  h1: ({ id, ...props }) => (
     <Block component="h1" id={id} className={styles.headingScrollTop}>
       <Heading component="span" {...props} href={id} level="1" />
     </Block>
   ),
-  h2: ({ component, id, ...props }: HeadingProps) => (
+  h2: ({ id, ...props }) => (
     <Block component="h2" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
@@ -178,7 +164,7 @@ export default {
       </Box>
     </Block>
   ),
-  h3: ({ component, id, ...props }: HeadingProps) => (
+  h3: ({ id, ...props }) => (
     <Block component="h3" id={id} className={styles.headingScrollTop}>
       <Box
         position="relative"
@@ -206,7 +192,7 @@ export default {
       </Box>
     </Block>
   ),
-  pre: ({ children }: Children) => (
+  pre: ({ children }) => (
     <Block maxWidth="xlarge" component="pre">
       {children}
     </Block>
@@ -218,13 +204,13 @@ export default {
       </Box>
     </Block>
   ),
-  code: ({
-    'data-language': language,
-    dangerouslySetInnerHTML,
-  }: {
-    'data-language': string;
-    dangerouslySetInnerHTML: { __html: string };
-  }) => {
+  code: (props) => {
+    // These props are added by SyntaxHighlighter
+    const { dangerouslySetInnerHTML, ['data-language']: language } =
+      props as typeof props & {
+        'data-language'?: string;
+        dangerouslySetInnerHTML: { __html: string };
+      };
     let resolvedTitle = '';
     let resolvedChildren = dangerouslySetInnerHTML.__html;
     const matches = resolvedChildren.match(
@@ -252,17 +238,21 @@ export default {
     );
   },
   inlineCode: InlineCode,
-  th: Th,
-  td: Td,
+  th: (props) => (
+    <Text component="th" weight="strong">
+      {props.children}
+    </Text>
+  ),
+  td: (props) => <Text component="td">{props.children}</Text>,
   a: A,
-  blockquote: ({ children }: Children) => (
+  blockquote: ({ children }) => (
     <Block component="blockquote">
       <RemoveNestedParagraphs>
         <Blockquote>{children}</Blockquote>
       </RemoveNestedParagraphs>
     </Block>
   ),
-  ul: (props: Children) => (
+  ul: (props) => (
     <Block
       component="ul"
       className={useTextStyles({ baseline: false })}
@@ -276,7 +266,7 @@ export default {
       {props.children}
     </Block>
   ),
-  ol: (props: Children) => (
+  ol: (props) => (
     <Block
       component="ol"
       className={useTextStyles({ baseline: false })}
@@ -290,4 +280,4 @@ export default {
       {props.children}
     </Block>
   ),
-};
+} satisfies ComponentProps<typeof MDXProvider>['components'];

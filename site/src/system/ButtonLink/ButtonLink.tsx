@@ -9,6 +9,7 @@ import { sprinkles } from '../styles/sprinkles.css';
 interface ButtonLinkProps extends NavLinkProps {
   variant?: 'solid' | 'transparent';
   icon?: ReactNode;
+  children: ReactNode;
 }
 export const ButtonLink = ({
   to,
