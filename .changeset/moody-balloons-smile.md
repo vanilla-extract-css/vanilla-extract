@@ -2,4 +2,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-turn off file watchers
+Turn off file watchers in the vite-node compiler
