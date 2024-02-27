@@ -55,7 +55,10 @@ function getRootCompilation(loader: LoaderContext) {
   return compilation;
 }
 
-const templateStringRegexp = /\[([^\[\]\.]+)\]/g;
+// Modified version of webpack's regex for detecting template strings.
+// We only want to match un-escaped strings so we can escape them ourselves.
+// https://github.com/webpack/webpack/blob/87660921808566ef3b8796f8df61bd79fc026108/lib/TemplatedPathPlugin.js#L19
+const templateStringRegexp = /\[([\w:]+)\]/g;
 
 export const escapeWebpackTemplateString = (s: string) =>
   s.replaceAll(templateStringRegexp, '[\\$1\\]');
