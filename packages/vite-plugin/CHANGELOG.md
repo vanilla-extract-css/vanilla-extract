@@ -1,5 +1,121 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.4
+
+### Patch Changes
+
+- [#1314](https://github.com/vanilla-extract-css/vanilla-extract/pull/1314) [`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2) Thanks [@mrm007](https://github.com/mrm007)! - Resolve and pass a new copy of the Vite config to the vite-node compiler
+
+  Previously, we were passing the same Vite config object to the vite-node compiler. This was causing compatibility issues with other plugins, such as Vitest and Remix.
+
+- Updated dependencies [[`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2)]:
+  - @vanilla-extract/integration@7.1.0
+
+## 4.0.3
+
+### Patch Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Correctly resolve module paths when using Vite plugins that affect module resolution, such as [`vite-tsconfig-paths`](https://github.com/aleclarson/vite-tsconfig-paths)
+
+- [#1308](https://github.com/vanilla-extract-css/vanilla-extract/pull/1308) [`20e33a5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/20e33a5003cf1ef74beaba60cad6db8882cf5319) Thanks [@mrm007](https://github.com/mrm007)! - Don't pass Remix Vite plugin to the vite-node compiler
+
+  Remix throws an error if it's loaded without a config file, which is what we do when we initialise the vite-node compiler.
+
+- Updated dependencies [[`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14)]:
+  - @vanilla-extract/integration@7.0.0
+
+## 4.0.2
+
+### Patch Changes
+
+- [#1304](https://github.com/vanilla-extract-css/vanilla-extract/pull/1304) [`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491) Thanks [@fukumasuya](https://github.com/fukumasuya)! - Pass Vite `resolve` config to vite-node compiler
+
+  The plugin passes through the project's Vite `resolve` config to the vite-node compiler, which will be used for resolving imports. These options include [`resolve.alias`], [`resolve.dedupe`], [`resolve.conditions`], [`resolve.mainFields`], [`resolve.extensions`], and others.
+
+  [`resolve.alias`]: https://vitejs.dev/config/shared-options.html#resolve-alias
+  [`resolve.dedupe`]: https://vitejs.dev/config/shared-options.html#resolve-dedupe
+  [`resolve.conditions`]: https://vitejs.dev/config/shared-options.html#resolve-conditions
+  [`resolve.mainFields`]: https://vitejs.dev/config/shared-options.html#resolve-mainfields
+  [`resolve.extensions`]: https://vitejs.dev/config/shared-options.html#resolve-extensions
+
+- Updated dependencies [[`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491)]:
+  - @vanilla-extract/integration@6.5.0
+
+## 4.0.1
+
+### Patch Changes
+
+- [#1300](https://github.com/vanilla-extract-css/vanilla-extract/pull/1300) [`d0b84f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d0b84f6340d34b39414fbead3893a6000f9810fe) Thanks [@mrm007](https://github.com/mrm007)! - Skip loading plugins added by Vitest
+
+- [#1297](https://github.com/vanilla-extract-css/vanilla-extract/pull/1297) [`85e1131`](https://github.com/vanilla-extract-css/vanilla-extract/commit/85e11318f0a8b405041e967bd35aaed7f8abe753) Thanks [@mrm007](https://github.com/mrm007)! - Correctly resolve the user's Vite plugins
+
+## 4.0.0
+
+### Major Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The Vite plugin now uses a newer, faster, Vite-based compiler by default.
+
+  The new compiler uses [`vite-node`](https://github.com/vitest-dev/vitest/tree/main/packages/vite-node) to parse and extract CSS from `.css.ts` files. This comes with all the benefits of using Vite, faster builds and the ability to use Vite plugins.
+
+  The new compiler has been used in Remix ever since support for Vanilla Extract was introduced.
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The behaviour previously known as `emitCssInSsr` has been turned on by default. The `emitCssInSsr` option has been removed.
+
+  This means that the CSS emitted by the plugin is now processed by Vite, so the plugin no longer needs to resolve PostCSS plugins and process the CSS output itself.
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - The `esbuildOptions` option has been removed as we are no longer using esbuild internally
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Drop support for Vite < 4
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
+- Updated dependencies [[`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a), [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a)]:
+  - @vanilla-extract/integration@6.4.0
+
+## 3.9.5
+
+### Patch Changes
+
+- [#1291](https://github.com/vanilla-extract-css/vanilla-extract/pull/1291) [`00af971`](https://github.com/vanilla-extract-css/vanilla-extract/commit/00af9715e522d9caf6e90cb138dee13580b8dea1) Thanks [@mrm007](https://github.com/mrm007)! - Update dependency `@vanilla-extract/integration`
+
+- [#1254](https://github.com/vanilla-extract-css/vanilla-extract/pull/1254) [`f373d7f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f373d7f6b59f43236dc713e1b421ef4631f392c0) Thanks [@EvgenNoskov](https://github.com/EvgenNoskov)! - Allow hyphens in class names when using a custom identifier
+
+## 3.9.4
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Lazy load Vite to avoid the CJS warning
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e), [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/integration@6.2.5
+
+## 3.9.3
+
+### Patch Changes
+
+- [#1250](https://github.com/vanilla-extract-css/vanilla-extract/pull/1250) [`bc349fd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/bc349fd7cb3c50488bb1b169418fbb35b7de5c95) Thanks [@kosmotema](https://github.com/kosmotema)! - Prevent unnecessary module invalidations when using PostCSS
+
+## 3.9.2
+
+### Patch Changes
+
+- [#1239](https://github.com/vanilla-extract-css/vanilla-extract/pull/1239) [`1791df2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1791df27743429593858097ba65927a06b42e254) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Default `emitCssInSsr` to `true` when Remix Vite plugin is present
+
+- [#1240](https://github.com/vanilla-extract-css/vanilla-extract/pull/1240) [`2cad138`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2cad138d9c32f93582c65b52ed9c786210aaf317) Thanks [@mrm007](https://github.com/mrm007)! - Add Vite 5 to peer dependencies
+
+- Updated dependencies [[`fd5d9fc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5d9fc389b84d7de92ec86d89305185d6c4cfd4)]:
+  - @vanilla-extract/integration@6.2.4
+
+## 3.9.1
+
+### Patch Changes
+
+- [#1231](https://github.com/vanilla-extract-css/vanilla-extract/pull/1231) [`cdd5150`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cdd51507fd40eb9efa8c4ad59a7b31615b5d69d6) Thanks [@mrm007](https://github.com/mrm007)! - Bump `postcss-load-config` to enable loading PostCSS configs defined as ES Modules
+
 ## 3.9.0
 
 ### Minor Changes

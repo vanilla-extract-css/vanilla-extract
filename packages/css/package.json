@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "1.13.0",
+  "version": "1.14.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -109,7 +109,6 @@
   "dependencies": {
     "@emotion/hash": "^0.9.0",
     "@vanilla-extract/private": "^1.0.3",
-    "ahocorasick": "1.0.2",
     "chalk": "^4.1.1",
     "css-what": "^6.1.0",
     "cssesc": "^3.0.0",
@@ -117,6 +116,7 @@
     "deep-object-diff": "^1.1.9",
     "deepmerge": "^4.2.2",
     "media-query-parser": "^2.0.2",
+    "modern-ahocorasick": "^1.0.0",
     "outdent": "^0.8.0"
   },
   "devDependencies": {

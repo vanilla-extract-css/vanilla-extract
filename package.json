@@ -14,7 +14,7 @@
     "start-site": "pnpm --filter=site start",
     "build-site": "pnpm --filter=site build",
     "test:unit": "pnpm test:jest && pnpm test:vitest",
-    "test:jest": "jest",
+    "test:jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "test:vitest": "vitest --watch=false",
     "test:playwright": "NODE_OPTIONS=--no-experimental-fetch playwright test",
     "format": "prettier --write .",
@@ -24,46 +24,47 @@
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
     "release": "pnpm prepare-release && changeset publish"
   },
-  "preconstruct": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "volta": {
-    "node": "16.17.0"
-  },
   "dependencies": {
-    "@babel/core": "^7.20.7",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@changesets/changelog-github": "^0.4.0",
-    "@changesets/cli": "^2.17.0",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
     "@manypkg/cli": "^0.19.1",
-    "@playwright/test": "^1.25.1",
-    "@preconstruct/cli": "^2.0.1",
+    "@playwright/test": "^1.40.1",
+    "@preconstruct/cli": "^2.8.2",
     "@swc/core": "^1.2.112",
     "@testing-library/jest-dom": "^5.11.9",
     "@types/jest": "^29.2.5",
+    "@types/node": "^20.9.5",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@vanilla-extract/jest-transform": "*",
     "babel-jest": "^27.3.1",
+    "cross-env": "^7.0.3",
     "fast-glob": "^3.2.7",
-    "jest": "^29.3.1",
+    "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.3.1",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.8",
     "resolve.exports": "^1.1.0",
     "rollup": "^2.7.0",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-node-externals": "^5.0.0",
     "ts-node": "^10.0.0",
-    "typescript": "^4.9.4",
-    "vitest": "^0.28.5"
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
   },
-  "packageManager": "pnpm@7.9.5",
-  "pnpm": {
-    "patchedDependencies": {
-      "html-render-webpack-plugin@3.0.1": "patches/html-render-webpack-plugin@3.0.1.patch"
-    }
+  "preconstruct": {
+    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
+      "keepDynamicImportAsDynamicImportInCommonJS": true
+    },
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "packageManager": "pnpm@8.10.2",
+  "pnpm": {},
+  "volta": {
+    "node": "20.9.0"
   }
 }

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom/server';
 import { HeadProvider } from 'react-head';
 import App from './App';
 import { StatsCompilation } from 'webpack';

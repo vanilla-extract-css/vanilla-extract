@@ -1,5 +1,19 @@
 # @fixtures/low-level
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [[`f373d7f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f373d7f6b59f43236dc713e1b421ef4631f392c0)]:
+  - @vanilla-extract/css@1.14.1
+
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies [[`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4), [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99)]:
+  - @vanilla-extract/css@1.14.0
+
 ## 0.0.22
 
 ### Patch Changes

@@ -1,5 +1,101 @@
 # @vanilla-extract/integration
 
+## 7.1.1
+
+### Patch Changes
+
+- [#1319](https://github.com/vanilla-extract-css/vanilla-extract/pull/1319) [`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b) Thanks [@joeldavuk](https://github.com/joeldavuk)! - Update Babel dependencies to address https://github.com/advisories/GHSA-67hx-6x53-jw92
+
+- Updated dependencies [[`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.5
+
+## 7.1.0
+
+### Minor Changes
+
+- [#1314](https://github.com/vanilla-extract-css/vanilla-extract/pull/1314) [`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2) Thanks [@mrm007](https://github.com/mrm007)! - A Vite config object can be passed to the vite-node compiler via the `viteConfig` option
+
+  `viteResolve` and `vitePlugins` options are deprecated and will be removed in a future version.
+
+## 7.0.0
+
+### Major Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Use absolute paths internally to make sure Vite resolves modules correctly
+
+  This change only affects integrations that use the vite-node compiler, which is currently the esbuild (next) and Vite plugins
+
+## 6.5.0
+
+### Minor Changes
+
+- [#1304](https://github.com/vanilla-extract-css/vanilla-extract/pull/1304) [`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491) Thanks [@fukumasuya](https://github.com/fukumasuya)! - Add a `viteResolve` option to the vite-node compiler
+
+  This allows integrations to provide a Vite `resolve` config to the vite-node compiler, which will be used for resolving imports. These options include [`resolve.alias`], [`resolve.dedupe`], [`resolve.conditions`], [`resolve.mainFields`], [`resolve.extensions`], and others.
+
+  [`resolve.alias`]: https://vitejs.dev/config/shared-options.html#resolve-alias
+  [`resolve.dedupe`]: https://vitejs.dev/config/shared-options.html#resolve-dedupe
+  [`resolve.conditions`]: https://vitejs.dev/config/shared-options.html#resolve-conditions
+  [`resolve.mainFields`]: https://vitejs.dev/config/shared-options.html#resolve-mainfields
+  [`resolve.extensions`]: https://vitejs.dev/config/shared-options.html#resolve-extensions
+
+## 6.4.0
+
+### Minor Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Export a `normalizePath` function that converts path separators to forward slashes
+
+  **Example usage**
+
+  ```ts
+  import { normalizePath } from '@vanilla-extract/integration';
+
+  normalizePath('foo\\bar'); // 'foo/bar'
+  normalizePath('foo/bar'); // 'foo/bar'
+  ```
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
+## 6.3.0
+
+### Minor Changes
+
+- [#1273](https://github.com/vanilla-extract-css/vanilla-extract/pull/1273) [`959c646`](https://github.com/vanilla-extract-css/vanilla-extract/commit/959c646ad6154ef0f8e357660319c7049e8b0459) Thanks [@lars-berger](https://github.com/lars-berger)! - Allow `conditions` option to be passed through to esbuild
+
+### Patch Changes
+
+- [#1252](https://github.com/vanilla-extract-css/vanilla-extract/pull/1252) [`5bc98a4`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5bc98a4af30a339336ab4ef7c387d3e809586a83) Thanks [@Ethan-PageUp](https://github.com/Ethan-PageUp)! - Unpin esbuild and broaden the version range
+
+- [#1243](https://github.com/vanilla-extract-css/vanilla-extract/pull/1243) [`1566f92`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1566f9238078a3cfefec9ae5023b56aba02875d4) Thanks [@askoufis](https://github.com/askoufis)! - Experimental `vite-node` compiler: Skip transforming CSS for files that won't generate any CSS
+
+## 6.2.5
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Upgrade Vite and vite-node
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.4
+
+## 6.2.4
+
+### Patch Changes
+
+- [#1238](https://github.com/vanilla-extract-css/vanilla-extract/pull/1238) [`fd5d9fc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5d9fc389b84d7de92ec86d89305185d6c4cfd4) Thanks [@askoufis](https://github.com/askoufis)! - Disable config file resolution in experimental `vite-node` compiler
+
+## 6.2.3
+
+### Patch Changes
+
+- [#1195](https://github.com/vanilla-extract-css/vanilla-extract/pull/1195) [`c446b5e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c446b5e95ee4e64f7af0da484d2dda81a7f6a522) Thanks [@HelloWorld017](https://github.com/HelloWorld017)! - Ensure userland babel config can not affect integration transforms
+
+- Updated dependencies [[`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4), [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99)]:
+  - @vanilla-extract/css@1.14.0
+
 ## 6.2.2
 
 ### Patch Changes

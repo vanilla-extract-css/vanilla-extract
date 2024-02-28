@@ -1,5 +1,8 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
+// Prevent Vite from attempting to clear the screen
+process.stdout.isTTY = false;
+
 const config: PlaywrightTestConfig = {
   testMatch: '**/*.playwright.ts',
   updateSnapshots: 'none',

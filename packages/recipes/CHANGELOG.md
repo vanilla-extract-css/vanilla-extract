@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.5.1
+
+### Patch Changes
+
+- [#1161](https://github.com/vanilla-extract-css/vanilla-extract/pull/1161) [`d16c22f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d16c22f19d86bf01c1fc4bf4c8914786fb0b9cc9) Thanks [@PrettyCoffee](https://github.com/PrettyCoffee)! - Improve IDE hover of `RecipeVariants` type by explicitly resolving its output
+
 ## 0.5.0
 
 ### Minor Changes

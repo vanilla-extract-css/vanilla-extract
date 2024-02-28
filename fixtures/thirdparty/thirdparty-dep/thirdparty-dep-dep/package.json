@@ -1,0 +1,15 @@
+{
+  "name": "@fixtures/thirdparty-dep-dep",
+  "version": "0.0.2",
+  "exports": {
+    ".": {
+      "import": "./index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@vanilla-extract/css": "1.14.1"
+  }
+}

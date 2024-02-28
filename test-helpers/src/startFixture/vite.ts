@@ -1,9 +1,10 @@
 import path from 'path';
 import http from 'http';
 
-import { createServer, build, InlineConfig } from 'vite';
+import type { InlineConfig } from 'vite';
 import handler from 'serve-handler';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import inspect from 'vite-plugin-inspect';
 
 import { TestServer } from './types';
 
@@ -42,15 +43,18 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [vanillaExtractPlugin()],
+    plugins: [vanillaExtractPlugin(), mode === 'development' && inspect()],
     server: {
       port,
-      force: true,
+      strictPort: true,
     },
     build: {
       cssCodeSplit: false,
+      minify: false,
     },
   };
+
+  const { createServer, build } = await import('vite');
 
   if (mode === 'development') {
     const server = await createServer(config);

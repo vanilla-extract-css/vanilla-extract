@@ -53,9 +53,9 @@ export function vanillaExtractPlugin({
       build.onLoad(
         { filter: /.*/, namespace: vanillaCssNamespace },
         async ({ path }) => {
-          const [rootRelativePath] = path.split('.vanilla.css');
+          const [vanillaModulePath] = path.split('.vanilla.css');
 
-          let { css, filePath } = compiler.getCssForFile(rootRelativePath);
+          let { css, filePath } = compiler.getCssForFile(vanillaModulePath);
 
           if (typeof processCss === 'function') {
             css = await processCss(css);
