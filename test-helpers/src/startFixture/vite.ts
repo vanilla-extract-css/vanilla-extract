@@ -8,7 +8,7 @@ import inspect from 'vite-plugin-inspect';
 
 import { TestServer } from './types';
 
-const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
+export const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
   new Promise<() => Promise<void>>((resolve) => {
     const server = http.createServer((request, response) => {
       return handler(request, response, {
