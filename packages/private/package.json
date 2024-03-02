@@ -5,6 +5,7 @@
   "sideEffects": false,
   "main": "dist/vanilla-extract-private.cjs.js",
   "module": "dist/vanilla-extract-private.esm.js",
+  "types": "dist/vanilla-extract-private.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
