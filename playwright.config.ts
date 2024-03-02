@@ -47,8 +47,7 @@ const config: PlaywrightTestConfig = defineConfig({
       name: '',
       grep: /@agnostic/,
       // put css snapshots in test filename subdirectories
-      snapshotPathTemplate:
-        '{testFileDir}/{testFileName}-snapshots/{arg}{-projectName}{ext}',
+      snapshotPathTemplate: '{testFileDir}/{testFileName}-snapshots/{arg}{ext}',
       use: {
         browserName: 'chromium',
         channel: 'chrome',
