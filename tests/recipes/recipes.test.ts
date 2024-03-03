@@ -24,6 +24,13 @@ describe('recipes', () => {
     );
   });
 
+  it('should not fall on arbitrary fields', () => {
+    // @ts-expect-error Field should be not defined in this test
+    expect(basic({ notHere: 'arbitrary-prop' })).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1"`,
+    );
+  });
+
   it('should return requested variants', () => {
     expect(
       basic({
