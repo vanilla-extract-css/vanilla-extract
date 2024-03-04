@@ -46,7 +46,7 @@ export type RecipeClassNames<Variants extends VariantGroups> = {
 };
 
 export type RuntimeFn<Variants extends VariantGroups> = ((
-  options?: VariantSelection<Variants>,
+  options?: Resolve<VariantSelection<Variants>>,
 ) => string) & {
   variants: () => (keyof Variants)[];
   classNames: RecipeClassNames<Variants>;
