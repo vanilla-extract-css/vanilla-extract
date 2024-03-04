@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.5.2
+
+### Patch Changes
+
+- [#1341](https://github.com/vanilla-extract-css/vanilla-extract/pull/1341) [`3f8b653`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3f8b65368b26100919debd4591245380322c2cd7) Thanks [@levrik](https://github.com/levrik)! - Resolve recipe function input type to simplify hover type
+
 ## 0.5.1
 
 ### Patch Changes
