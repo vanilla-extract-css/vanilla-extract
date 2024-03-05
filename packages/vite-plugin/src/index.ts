@@ -47,8 +47,10 @@ export function vanillaExtractPlugin({
     if (
       filePath.startsWith(config.root) ||
       // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
+      // Paths from vite are always normalized, so we have to use the posix path separator
       (path.isAbsolute(filePath) &&
-        filePath.split(path.sep)[1] === config.root.split(path.sep)[1])
+        filePath.split(path.posix.sep)[1] ===
+          config.root.split(path.posix.sep)[1])
     ) {
       resolvedId = filePath;
     } else {
