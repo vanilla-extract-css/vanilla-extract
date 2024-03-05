@@ -1,4 +1,5 @@
 import path from 'path';
+import os from 'os';
 
 import type {
   Plugin,
@@ -46,6 +47,8 @@ export function vanillaExtractPlugin({
 
     if (
       filePath.startsWith(config.root) ||
+      // In windows os, filePath with the first char / must not be an absolute path.
+      (!(os.platform() === 'win32' && filePath.startsWith('/'))) ||
       // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
       (path.isAbsolute(filePath) &&
         filePath.split(path.sep)[1] === config.root.split(path.sep)[1])
