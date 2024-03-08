@@ -556,7 +556,7 @@ const properties = defineProperties({
 
 Creates a type-safe function for accessing your [defined properties](#defineProperties). You can provide as many collections of properties as you like.
 
-> 🚧&nbsp;&nbsp;Ensure you define your properties as variables before passing them into `createSprinkles`.
+> 🚧&nbsp;&nbsp;Ensure properties are defined as variables before passing them into `createSprinkles`.
 > Calling `defineProperties` inside a `createSprinkles` call will cause types to be inferred incorrectly, resulting in a type-unsafe sprinkles function.
 
 ```ts
