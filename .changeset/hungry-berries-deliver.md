@@ -2,4 +2,4 @@
 "@vanilla-extract/vite-plugin": patch
 ---
 
-Fix a bug that could cause a `vite-node` compiler to be created but never destroyed
+Move `vite-node` compiler creation to a more appropriate plugin hook to ensure correct cleanup of resources
