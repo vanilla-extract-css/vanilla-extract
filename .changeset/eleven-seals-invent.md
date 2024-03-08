@@ -1,6 +1,6 @@
 ---
 '@vanilla-extract/webpack-plugin': patch
-'@vanilla-extract/next--plugin': patch
+'@vanilla-extract/next-plugin': patch
 ---
 
 Use a more accurate regex for detecting [webpack template strings] in paths
