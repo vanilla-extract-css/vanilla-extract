@@ -445,7 +445,7 @@ importers:
   packages/next-plugin:
     dependencies:
       '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.5
+        specifier: ^2.3.7
         version: link:../webpack-plugin
     devDependencies:
       next:
