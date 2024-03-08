@@ -115,7 +115,7 @@ export function vanillaExtractPlugin({
       packageName = getPackageInfo(config.root).name;
     },
     async buildStart() {
-      if (mode !== 'transform' && !compiler) {
+      if (mode !== 'transform') {
         const { loadConfigFromFile } = await vitePromise;
         const configFile = await loadConfigFromFile(
           {
