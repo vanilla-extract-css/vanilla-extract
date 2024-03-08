@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.5
+
+### Patch Changes
+
+- [#1353](https://github.com/vanilla-extract-css/vanilla-extract/pull/1353) [`94d5f06`](https://github.com/vanilla-extract-css/vanilla-extract/commit/94d5f0650fcc8ac736a0b6915bc495619c2a1880) Thanks [@himself65](https://github.com/himself65)! - Move `vite-node` compiler creation to a more appropriate plugin hook to ensure correct cleanup of resources
+
 ## 4.0.4
 
 ### Patch Changes
