@@ -48,7 +48,8 @@ export function vanillaExtractPlugin({
       filePath.startsWith(config.root) ||
       // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
       (path.isAbsolute(filePath) &&
-        filePath.split(path.posix.sep)[1] === config.root.split(path.posix.sep)[1])
+        filePath.split(path.posix.sep)[1] ===
+          config.root.split(path.posix.sep)[1])
     ) {
       resolvedId = filePath;
     } else {
