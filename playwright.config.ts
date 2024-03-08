@@ -12,7 +12,7 @@ const config: PlaywrightTestConfig = defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI ? 3 : undefined,
   snapshotDir: 'tests/e2e/snapshots',
   // put all snapshots in one directory
   // https://playwright.dev/docs/api/class-testconfig#test-config-snapshot-path-template
