@@ -70,7 +70,7 @@ jobs:
         run: pnpm test:unit
   playwright:
     name: Playwright tests
-    runs-on: macos-latest
+    runs-on: macos-14
     env:
       CI: true
     steps:
