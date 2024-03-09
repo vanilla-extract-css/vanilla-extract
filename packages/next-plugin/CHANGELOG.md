@@ -1,5 +1,19 @@
 # @vanilla-extract/next-plugin
 
+## 2.3.7
+
+### Patch Changes
+
+- [#1333](https://github.com/vanilla-extract-css/vanilla-extract/pull/1333) [`6ac9f66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6ac9f667cdfde0050e40cf5eaf8ae03078f5d26d) Thanks [@askoufis](https://github.com/askoufis)! - Use a more accurate regex for detecting [webpack template strings] in paths
+
+  We now use a modified version of the regex from the webpack source code to detect template strings in paths.
+  As long as the path isn't already escaped, we should detect it.
+
+  [webpack template strings]: https://webpack.js.org/configuration/output/#template-strings
+
+- Updated dependencies [[`6ac9f66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6ac9f667cdfde0050e40cf5eaf8ae03078f5d26d)]:
+  - @vanilla-extract/webpack-plugin@2.3.7
+
 ## 2.3.6
 
 ### Patch Changes
