@@ -9,7 +9,7 @@ parent: api
 
 Typically, if you try to export a function from one of your stylesheets, you'll get an error that you can only export plain objects, arrays, strings, numbers and `null`/`undefined`.
 
-If you're wanting to create higher level abstractions like [Sprinkles](../../packages/sprinkles) or [Recipes](../../packages/recipes), this is a big problem!
+If you're wanting to create higher level abstractions like [Sprinkles](/documentation/packages/sprinkles) or [Recipes](/documentation/packages/recipes), this is a big problem!
 
 To address this limitation, the `addFunctionSerializer` utility allows you to annotate your functions with instructions on how to serialize them.
 
