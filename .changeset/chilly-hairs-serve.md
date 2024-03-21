@@ -2,14 +2,14 @@
 '@vanilla-extract/private': patch
 ---
 
-**walkObject**: Use an empty object instead of calling the input object's `constructor` when mapping over it
+**walkObject**: Use an empty object to initialize a clone instead of calling the input object's `constructor`
 
 This allows `walkObject` to be used on module namespace objects:
 
 ```ts
 import * as ns from './foo';
 
-// Would sometimes cause a runtime error
+// Runtime error in `vite-node`
 walkObject(ns, myMappingFunction);
 ```
 
