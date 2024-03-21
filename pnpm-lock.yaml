@@ -933,6 +933,9 @@ importers:
       '@vanilla-extract/integration':
         specifier: '*'
         version: link:../packages/integration
+      '@vanilla-extract/private':
+        specifier: '*'
+        version: link:../packages/private
       '@vanilla-extract/recipes':
         specifier: '*'
         version: link:../packages/recipes
