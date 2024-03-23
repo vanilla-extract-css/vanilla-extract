@@ -146,7 +146,10 @@ export function vanillaExtractPlugin({
                 // If it _is_ loaded with a config file, it will create an infinite loop because it
                 // also has a child compiler which uses the same mechanism to load the config file.
                 // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
-                plugin.name !== 'remix',
+                // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
+                // the main Remix plugin, and may not function correctly without it. To address this, we
+                // filter out all Remix-related plugins.
+                !plugin.name.startsWith('remix'),
             ),
           },
         });
