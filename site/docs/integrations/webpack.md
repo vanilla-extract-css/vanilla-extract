@@ -65,7 +65,7 @@ module.exports = {
 };
 ```
 
-If you already have `css-loader` configured for actual CSS files, make sure to add `exclude: /\.vanilla\.css$/i` to that rules's configuration.
+If you already have `css-loader` configured, make sure to add `exclude: /\.vanilla\.css$/i` to that rule's configuration.
 
 ## Configuration
 
