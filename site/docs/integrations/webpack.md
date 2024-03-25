@@ -65,6 +65,8 @@ module.exports = {
 };
 ```
 
+If you already have `css-loader` configured, make sure to add `exclude: /\.vanilla\.css$/i` to that rule's configuration.
+
 ## Configuration
 
 ```js
