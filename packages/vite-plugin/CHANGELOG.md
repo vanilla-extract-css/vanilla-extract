@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.6
+
+### Patch Changes
+
+- [#1346](https://github.com/vanilla-extract-css/vanilla-extract/pull/1346) [`8c2ac42`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8c2ac42479b9646f54c6064b6848485560b15005) Thanks [@askoufis](https://github.com/askoufis)! - Fix `.css.ts` file resolution on Windows
+
 ## 4.0.5
 
 ### Patch Changes
