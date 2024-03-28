@@ -47,8 +47,10 @@ export function vanillaExtractPlugin({
     if (
       filePath.startsWith(config.root) ||
       // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
+      // Paths from vite are always normalized, so we have to use the posix path separator
       (path.isAbsolute(filePath) &&
-        filePath.split(path.sep)[1] === config.root.split(path.sep)[1])
+        filePath.split(path.posix.sep)[1] ===
+          config.root.split(path.posix.sep)[1])
     ) {
       resolvedId = filePath;
     } else {
@@ -113,7 +115,8 @@ export function vanillaExtractPlugin({
     async configResolved(_resolvedConfig) {
       config = _resolvedConfig;
       packageName = getPackageInfo(config.root).name;
-
+    },
+    async buildStart() {
       if (mode !== 'transform') {
         const { loadConfigFromFile } = await vitePromise;
         const configFile = await loadConfigFromFile(
@@ -143,7 +146,10 @@ export function vanillaExtractPlugin({
                 // If it _is_ loaded with a config file, it will create an infinite loop because it
                 // also has a child compiler which uses the same mechanism to load the config file.
                 // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
-                plugin.name !== 'remix',
+                // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
+                // the main Remix plugin, and may not function correctly without it. To address this, we
+                // filter out all Remix-related plugins.
+                !plugin.name.startsWith('remix'),
             ),
           },
         });
