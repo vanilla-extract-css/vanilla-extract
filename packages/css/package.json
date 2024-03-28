@@ -5,6 +5,7 @@
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
   "module": "dist/vanilla-extract-css.esm.js",
+  "types": "dist/vanilla-extract-css.cjs.d.ts",
   "browser": {
     "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
     "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
@@ -12,6 +13,7 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "types": "./dist/vanilla-extract-css.cjs.d.ts",
       "browser": {
         "module": "./dist/vanilla-extract-css.browser.esm.js",
         "default": "./dist/vanilla-extract-css.browser.cjs.js"
@@ -20,6 +22,7 @@
       "default": "./dist/vanilla-extract-css.cjs.js"
     },
     "./recipe": {
+      "types": "./recipe/dist/vanilla-extract-css-recipe.cjs.d.ts",
       "browser": {
         "module": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
         "default": "./recipe/dist/vanilla-extract-css-recipe.browser.cjs.js"
@@ -28,6 +31,7 @@
       "default": "./recipe/dist/vanilla-extract-css-recipe.cjs.js"
     },
     "./functionSerializer": {
+      "types": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.d.ts",
       "browser": {
         "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
         "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
@@ -36,6 +40,7 @@
       "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.js"
     },
     "./adapter": {
+      "types": "./adapter/dist/vanilla-extract-css-adapter.cjs.d.ts",
       "browser": {
         "module": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
         "default": "./adapter/dist/vanilla-extract-css-adapter.browser.cjs.js"
@@ -44,6 +49,7 @@
       "default": "./adapter/dist/vanilla-extract-css-adapter.cjs.js"
     },
     "./transformCss": {
+      "types": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.d.ts",
       "browser": {
         "module": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
         "default": "./transformCss/dist/vanilla-extract-css-transformCss.browser.cjs.js"
@@ -52,6 +58,7 @@
       "default": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.js"
     },
     "./fileScope": {
+      "types": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.d.ts",
       "browser": {
         "module": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
         "default": "./fileScope/dist/vanilla-extract-css-fileScope.browser.cjs.js"
@@ -61,6 +68,7 @@
     },
     "./fileScope/package.json": "./fileScope/package.json",
     "./injectStyles": {
+      "types": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.d.ts",
       "browser": {
         "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
         "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.cjs.js"
@@ -69,6 +77,7 @@
       "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.js"
     },
     "./disableRuntimeStyles": {
+      "types": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.d.ts",
       "browser": {
         "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
         "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"

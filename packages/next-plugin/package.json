@@ -4,6 +4,7 @@
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-next-plugin.cjs.js",
   "module": "dist/vanilla-extract-next-plugin.esm.js",
+  "types": "dist/vanilla-extract-next-plugin.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
       "index.ts"

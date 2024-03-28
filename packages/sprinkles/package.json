@@ -5,17 +5,21 @@
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
   "module": "dist/vanilla-extract-sprinkles.esm.js",
+  "types": "dist/vanilla-extract-sprinkles.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "types": "./dist/vanilla-extract-sprinkles.cjs.d.ts",
       "module": "./dist/vanilla-extract-sprinkles.esm.js",
       "default": "./dist/vanilla-extract-sprinkles.cjs.js"
     },
     "./createRuntimeSprinkles": {
+      "types": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles.cjs.d.ts",
       "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
       "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
     },
     "./createUtils": {
+      "types": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.d.ts",
       "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
       "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
     }

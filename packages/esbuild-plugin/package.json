@@ -4,6 +4,7 @@
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
+  "types": "dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
   "files": [
     "/dist"
   ],

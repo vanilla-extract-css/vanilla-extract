@@ -5,11 +5,13 @@
   "sideEffects": false,
   "main": "dist/vanilla-extract-dynamic.cjs.js",
   "module": "dist/vanilla-extract-dynamic.esm.js",
+  "types": "dist/vanilla-extract-dynamic.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "module": "./dist/vanilla-extract-dynamic.esm.js",
-      "default": "./dist/vanilla-extract-dynamic.cjs.js"
+      "default": "./dist/vanilla-extract-dynamic.cjs.js",
+      "types": "./dist/vanilla-extract-dynamic.cjs.d.ts"
     }
   },
   "files": [

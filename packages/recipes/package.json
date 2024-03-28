@@ -5,6 +5,7 @@
   "sideEffects": false,
   "main": "dist/vanilla-extract-recipes.cjs.js",
   "module": "dist/vanilla-extract-recipes.esm.js",
+  "types": "dist/vanilla-extract-recipes.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
