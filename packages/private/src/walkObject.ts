@@ -11,7 +11,7 @@ export function walkObject<T extends Walkable, MapTo>(
   fn: (value: Primitive, path: Array<string>) => MapTo,
   path: Array<string> = [],
 ): MapLeafNodes<T, MapTo> {
-  const clone = obj.constructor();
+  const clone = {} as any;
 
   for (let key in obj) {
     const value = obj[key];
