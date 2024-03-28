@@ -11,8 +11,7 @@ const testCases = [
   {
     type: 'next-pages-router',
     mode: 'development',
-    // @TODO - enable after next plugin fix
-    clientSideRouting: false,
+    clientSideRouting: true,
   },
   {
     type: 'next-app-router',
