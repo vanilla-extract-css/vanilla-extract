@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.4.0
+
+### Minor Changes
+
+- [#1365](https://github.com/vanilla-extract-css/vanilla-extract/pull/1365) [`ed67731`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ed67731efe19c319a4ed5015e00b8a19a4116dd1) Thanks [@renrizzolo](https://github.com/renrizzolo)! - Pages router: use next-style-loader in dev, output css in ssr
+
 ## 2.3.7
 
 ### Patch Changes
