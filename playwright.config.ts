@@ -1,4 +1,5 @@
 import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
+import { cpus } from 'os';
 
 // Prevent Vite from attempting to clear the screen
 process.stdout.isTTY = false;
@@ -12,6 +13,7 @@ const config: PlaywrightTestConfig = defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
+  workers: process.env.CI ? cpus().length : undefined,
   snapshotDir: 'tests/e2e/snapshots',
   // put all snapshots in one directory
   // https://playwright.dev/docs/api/class-testconfig#test-config-snapshot-path-template
