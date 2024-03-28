@@ -17,7 +17,7 @@ const DIST_DIR = 'dist';
 
 // these are the fixtures that are currently
 // configured as routes in the @fixtures/next-* apps
-export const nextFixtures = ['recipes'] as const;
+export const nextFixtures = ['sprinkles', 'recipes', 'features'] as const;
 
 export interface NextFixtureOptions {
   type: 'next-app-router' | 'next-pages-router';
