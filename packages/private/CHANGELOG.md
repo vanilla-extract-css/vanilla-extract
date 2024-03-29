@@ -1,5 +1,26 @@
 # @vanilla-extract/private
 
+## 1.0.4
+
+### Patch Changes
+
+- [#1368](https://github.com/vanilla-extract-css/vanilla-extract/pull/1368) [`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed) Thanks [@askoufis](https://github.com/askoufis)! - **walkObject**: Use an empty object to initialize a clone instead of calling the input object's `constructor`
+
+  This allows `walkObject` to be used on module namespace objects:
+
+  ```ts
+  import { walkObject } from '@vanilla-extract/private';
+  import * as ns from './foo';
+
+  // Runtime error in `vite-node`
+  walkObject(ns, myMappingFunction);
+  ```
+
+  The previous implementation did not work with these objects because [they do not have a `constructor` function][es6 spec].
+  `esbuild` seems to have papered over this issue by providing a `constructor` function on these objects, but this seems to not be the case with `vite-node`, hence the need for this fix.
+
+  [es6 spec]: https://262.ecma-international.org/6.0/#sec-module-namespace-objects
+
 ## 1.0.3
 
 ### Patch Changes
