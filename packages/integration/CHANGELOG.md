@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 7.1.2
+
+### Patch Changes
+
+- [#1374](https://github.com/vanilla-extract-css/vanilla-extract/pull/1374) [`c8aefe0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c8aefe0c5fb6d8b8b82dd0f05ae837e7e2f03a9f) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/css` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/css@1.14.2
+
 ## 7.1.1
 
 ### Patch Changes

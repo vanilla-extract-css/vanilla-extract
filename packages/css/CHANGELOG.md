@@ -1,5 +1,14 @@
 # @vanilla-extract/css
 
+## 1.14.2
+
+### Patch Changes
+
+- [#1368](https://github.com/vanilla-extract-css/vanilla-extract/pull/1368) [`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/private` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/private@1.0.4
+
 ## 1.14.1
 
 ### Patch Changes
