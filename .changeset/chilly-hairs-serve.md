@@ -7,6 +7,7 @@
 This allows `walkObject` to be used on module namespace objects:
 
 ```ts
+import { walkObject } from '@vanilla-extract/private';
 import * as ns from './foo';
 
 // Runtime error in `vite-node`
