@@ -33,23 +33,53 @@ function getSupportedBrowsers(dir: string, isDevelopment: boolean) {
 const getVanillaExtractCssLoaders = (
   options: WebpackConfigContext,
   assetPrefix: string,
+  hasAppDir: boolean,
 ) => {
   const loaders: webpack.RuleSetUseItem[] = [];
 
   // Adopt from Next.js' getClientStyleLoader
   // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/client.ts#L3
   if (!options.isServer) {
-    // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/client.ts#L44
-    // next-style-loader will mess up css order in development mode.
-    // Next.js appDir doesn't use next-style-loader either.
-    // So we always use css-loader here, to simplify things and get proper order of output CSS
-    loaders.push({
-      loader: NextMiniCssExtractPlugin.loader,
-      options: {
-        publicPath: `${assetPrefix}/_next/`,
-        esModule: false,
-      },
-    });
+    // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/client.ts#L16
+    // Keep next-style-loader for development mode in `pages/`
+    if (options.dev && !hasAppDir) {
+      loaders.push({
+        loader: 'next-style-loader',
+        options: {
+          insert: function (element: Node) {
+            // By default, style-loader injects CSS into the bottom
+            // of <head>. This causes ordering problems between dev
+            // and prod. To fix this, we render a <noscript> tag as
+            // an anchor for the styles to be placed before. These
+            // styles will be applied _before_ <style jsx global>.
+
+            // These elements should always exist. If they do not,
+            // this code should fail.
+            const anchorElement = document.querySelector(
+              '#__next_css__DO_NOT_USE__',
+            )!;
+            const parentNode = anchorElement.parentNode!; // Normally <head>
+
+            // Each style tag should be placed right before our
+            // anchor. By inserting before and not after, we do not
+            // need to track the last inserted element.
+            parentNode.insertBefore(element, anchorElement);
+          },
+        },
+      });
+    } else {
+      // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/client.ts#L44
+      // next-style-loader will mess up css order in development mode.
+      // Next.js appDir doesn't use next-style-loader either.
+      // So we always use css-loader here, to simplify things and get proper order of output CSS
+      loaders.push({
+        loader: NextMiniCssExtractPlugin.loader,
+        options: {
+          publicPath: `${assetPrefix}/_next/`,
+          esModule: false,
+        },
+      });
+    }
   }
 
   const postcss = () =>
@@ -105,7 +135,7 @@ export const createVanillaExtractPlugin = (
   return (nextConfig: NextConfig = {}): NextConfig => ({
     ...nextConfig,
     webpack(config: any, options: WebpackConfigContext) {
-      const { dir, dev, isServer, config: resolvedNextConfig } = options;
+      const { dir, dev, config: resolvedNextConfig } = options;
 
       // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/index.ts#L336
       // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/webpack-config.ts#L626
@@ -118,11 +148,7 @@ export const createVanillaExtractPlugin = (
       // Skip nextConfig check since appDir is stable feature after Next.js 13.4
       const hasAppDir = !!(findPagesDirResult && findPagesDirResult.appDir);
 
-      const outputCss = hasAppDir
-        ? // Always output css since Next.js App Router needs to collect Server CSS from React Server Components
-          true
-        : // There is no appDir, do not output css on server build
-          !isServer;
+      const outputCss = true;
 
       // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/helpers.ts#L12-L21
       const cssRules = config.module.rules.find(
@@ -143,6 +169,7 @@ export const createVanillaExtractPlugin = (
         use: getVanillaExtractCssLoaders(
           options,
           resolvedNextConfig.assetPrefix,
+          hasAppDir,
         ),
       });
 

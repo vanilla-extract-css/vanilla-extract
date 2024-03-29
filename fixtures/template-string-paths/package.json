@@ -1,11 +1,11 @@
 {
   "name": "@fixtures/template-string-paths",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.14.1"
+    "@vanilla-extract/css": "1.14.2"
   }
 }
