@@ -10,10 +10,6 @@ We've made sure that both treat and vanilla-extract can run simultaneously in th
 
 The file extension has changed from `*.treat.ts` to `*.css.ts`.
 
-## Babel plugin is required
-
-The Babel plugin was optional in treat, but it's required in vanilla-extract.
-
 ## `.css.ts` files can import other `.css.ts` files
 
 This wasn't possible in treat with `*.treat.ts` files. If you've had to work around this limitation in the past, you don't need to worry anymore!
