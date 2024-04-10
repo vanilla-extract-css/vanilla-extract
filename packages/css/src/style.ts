@@ -121,11 +121,18 @@ export function fontFace(
   return fontFamily;
 }
 
-export function globalFontFace(fontFamily: string, rule: FontFaceRule) {
-  appendCss(
-    { type: 'fontFace', rule: { ...rule, fontFamily } },
-    getFileScope(),
-  );
+export function globalFontFace(
+  fontFamily: string,
+  rule: FontFaceRule | FontFaceRule[],
+) {
+  const rules = Array.isArray(rule) ? rule : [rule];
+
+  for (const singleRule of rules) {
+    appendCss(
+      { type: 'fontFace', rule: { ...singleRule, fontFamily } },
+      getFileScope(),
+    );
+  }
 }
 
 export function keyframes(rule: CSSKeyframes, debugId?: string) {
