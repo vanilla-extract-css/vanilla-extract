@@ -41,7 +41,6 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.9.5",
-    "@vanilla-extract/jest-transform": "*",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@vanilla-extract/jest-transform": "workspace:*",
     "babel-jest": "^29.7.0",
