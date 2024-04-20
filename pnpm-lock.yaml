@@ -44,9 +44,6 @@ importers:
       '@types/node':
         specifier: ^20.9.5
         version: 20.9.5
-      '@types/testing-library__jest-dom':
-        specifier: ^5.14.5
-        version: 5.14.9
       '@vanilla-extract/jest-transform':
         specifier: workspace:*
         version: link:packages/jest-transform
@@ -6691,12 +6688,6 @@ packages:
 
   /@types/tapable@1.0.8:
     resolution: {integrity: sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==}
-    dev: false
-
-  /@types/testing-library__jest-dom@5.14.9:
-    resolution: {integrity: sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw==}
-    dependencies:
-      '@types/jest': 29.5.12
     dev: false
 
   /@types/tough-cookie@4.0.2:
