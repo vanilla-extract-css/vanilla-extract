@@ -57,9 +57,9 @@
   },
   "dependencies": {
     "@vanilla-extract/integration": "^7.0.0",
-    "chalk": "^4.1.1",
     "debug": "^4.3.1",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.0",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
