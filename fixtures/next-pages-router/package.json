@@ -13,20 +13,20 @@
     "clean:prod": "rm -rf dist"
   },
   "dependencies": {
-    "@fixtures/features": "*",
-    "@fixtures/recipes": "*",
-    "@fixtures/sprinkles": "*",
-    "@vanilla-extract/css": "*",
-    "@vanilla-extract/recipes": "*",
-    "@vanilla-extract/sprinkles": "*",
+    "@fixtures/features": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/recipes": "workspace:*",
+    "@vanilla-extract/sprinkles": "workspace:*",
     "next": "12.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
-    "@vanilla-extract/next-plugin": "*",
-    "@vanilla-extract/webpack-plugin": "*"
+    "@vanilla-extract/next-plugin": "workspace:*",
+    "@vanilla-extract/webpack-plugin": "workspace:*"
   },
   "browserslist": [
     ">0.3%",
