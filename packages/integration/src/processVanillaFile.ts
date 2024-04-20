@@ -3,7 +3,7 @@ import { transformCss } from '@vanilla-extract/css/transformCss';
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import isPlainObject from 'lodash/isPlainObject';
-import outdent from 'outdent';
+import dedent from 'dedent';
 
 import { hash } from './hash';
 import { serializeCss } from './serialize';
@@ -248,7 +248,7 @@ function stringifyExports(
         }
       }
 
-      throw new Error(outdent`
+      throw new Error(dedent`
         Invalid exports.
 
         You can only export plain objects, arrays, strings, numbers and null/undefined.
