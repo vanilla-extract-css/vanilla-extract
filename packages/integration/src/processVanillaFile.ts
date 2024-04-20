@@ -2,7 +2,6 @@ import { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
-import isPlainObject from 'lodash/isPlainObject';
 import outdent from 'outdent';
 
 import { hash } from './hash';
@@ -10,6 +9,24 @@ import { serializeCss } from './serialize';
 import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
+
+function isPlainObject(value: unknown) {
+  if (typeof value !== 'object' || value === null) return false;
+
+  if (Object.prototype.toString.call(value) !== '[object Object]') return false;
+
+  const proto = Object.getPrototypeOf(value);
+  if (proto === null) return true;
+
+  const Ctor =
+    Object.prototype.hasOwnProperty.call(proto, 'constructor') &&
+    proto.constructor;
+  return (
+    typeof Ctor === 'function' &&
+    Ctor instanceof Ctor &&
+    Function.prototype.call(Ctor) === Function.prototype.call(value)
+  );
+}
 
 export function stringifyFileScope({
   packageName,
