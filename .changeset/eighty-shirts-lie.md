@@ -2,4 +2,4 @@
 '@vanilla-extract/css': minor
 ---
 
-Supports passing multiple font face rules to `globalFontFace`
+Add support for passing multiple font face rules to `globalFontFace`
