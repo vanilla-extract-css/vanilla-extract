@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.9
+
+### Patch Changes
+
+- [#1399](https://github.com/vanilla-extract-css/vanilla-extract/pull/1399) [`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e) Thanks [@askoufis](https://github.com/askoufis)! - Ensure the compiler instance is re-used between builds
+
 ## 4.0.8
 
 ### Patch Changes
