@@ -1,5 +1,12 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.48
+
+### Patch Changes
+
+- Updated dependencies [[`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e)]:
+  - @vanilla-extract/vite-plugin@4.0.9
+
 ## 0.0.47
 
 ### Patch Changes
