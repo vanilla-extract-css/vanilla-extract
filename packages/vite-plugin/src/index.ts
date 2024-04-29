@@ -156,7 +156,14 @@ export function vanillaExtractPlugin({
       }
     },
     buildEnd() {
-      compiler?.close();
+      // When using the rollup watcher, we don't want to close the compiler after every build.
+      // Instead, we close it when the watcher is closed via the closeWatcher hook.
+      if (!config.build.watch) {
+        compiler?.close();
+      }
+    },
+    closeWatcher() {
+      return compiler?.close();
     },
     async transform(code, id) {
       const [validId] = id.split('?');
