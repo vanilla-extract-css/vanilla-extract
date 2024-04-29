@@ -109,7 +109,6 @@
   "dependencies": {
     "@emotion/hash": "^0.9.0",
     "@vanilla-extract/private": "^1.0.4",
-    "chalk": "^4.1.1",
     "css-what": "^6.1.0",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
@@ -117,7 +116,8 @@
     "deep-object-diff": "^1.1.9",
     "deepmerge": "^4.2.2",
     "media-query-parser": "^2.0.2",
-    "modern-ahocorasick": "^1.0.0"
+    "modern-ahocorasick": "^1.0.0",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0"

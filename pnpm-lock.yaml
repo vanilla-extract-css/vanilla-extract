@@ -392,9 +392,6 @@ importers:
       '@vanilla-extract/private':
         specifier: ^1.0.4
         version: link:../private
-      chalk:
-        specifier: ^4.1.1
-        version: 4.1.2
       css-what:
         specifier: ^6.1.0
         version: 6.1.0
@@ -417,6 +414,9 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       modern-ahocorasick:
+        specifier: ^1.0.0
+        version: 1.0.0
+      picocolors:
         specifier: ^1.0.0
         version: 1.0.0
     devDependencies:
@@ -588,15 +588,15 @@ importers:
       '@vanilla-extract/integration':
         specifier: ^7.0.0
         version: link:../integration
-      chalk:
-        specifier: ^4.1.1
-        version: 4.1.2
       debug:
         specifier: ^4.3.1
         version: 4.3.4(supports-color@9.2.3)
       loader-utils:
         specifier: ^2.0.0
         version: 2.0.2
+      picocolors:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@types/debug':
         specifier: ^4.1.5
@@ -6808,8 +6808,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vanilla-extract/css@1.14.2:
-    resolution: {integrity: sha512-OasEW4ojGqqRiUpsyEDUMrSkLnmwbChtafkogpCZ1eDAgAZ9eY9CHLYodj2nB8aV5T25kQ5shm92k25ngjYhhg==}
+  /@vanilla-extract/css@1.15.0:
+    resolution: {integrity: sha512-B21dRQTiRJ9xMlW3RGOYMfGo11S2Bgcke6YrEJxGBovJFMsMwaex2mQC4XnVvreWMlYef+Na+zBUFDw7tfKMcw==}
     dependencies:
       '@emotion/hash': 0.9.0
       '@vanilla-extract/private': 1.0.4
@@ -6830,7 +6830,7 @@ packages:
       '@babel/core': 7.23.9
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.23.9)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
-      '@vanilla-extract/css': 1.14.2
+      '@vanilla-extract/css': 1.15.0
       esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
