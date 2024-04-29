@@ -13,7 +13,6 @@ const config: PlaywrightTestConfig = defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
-  fullyParallel: true,
   workers: process.env.CI ? cpus().length : undefined,
   retries: process.env.CI ? 2 : 0,
   forbidOnly: !!process.env.CI,
