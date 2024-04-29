@@ -404,6 +404,9 @@ importers:
       csstype:
         specifier: ^3.0.7
         version: 3.0.10
+      dedent:
+        specifier: ^1.5.1
+        version: 1.5.1
       deep-object-diff:
         specifier: ^1.1.9
         version: 1.1.9
@@ -416,9 +419,6 @@ importers:
       modern-ahocorasick:
         specifier: ^1.0.0
         version: 1.0.0
-      outdent:
-        specifier: ^0.8.0
-        version: 0.8.0
     devDependencies:
       '@types/cssesc':
         specifier: ^3.0.0
@@ -468,6 +468,9 @@ importers:
       '@vanilla-extract/css':
         specifier: ^1.14.2
         version: link:../css
+      dedent:
+        specifier: ^1.5.1
+        version: 1.5.1
       esbuild:
         specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0
         version: 0.19.12
@@ -483,9 +486,6 @@ importers:
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
-      outdent:
-        specifier: ^0.8.0
-        version: 0.8.0
       vite:
         specifier: ^5.0.11
         version: 5.1.4(@types/node@20.9.5)
@@ -15717,6 +15717,7 @@ packages:
 
   /outdent@0.8.0:
     resolution: {integrity: sha512-KiOAIsdpUTcAXuykya5fnVVT+/5uS0Q1mrkRHcF89tpieSmY33O/tmc54CqwA+bfhbtEfZUNLHaPUiB9X3jt1A==}
+    dev: true
 
   /p-all@2.1.0:
     resolution: {integrity: sha512-HbZxz5FONzz/z2gJfk6bFca0BCiSRF8jU3yCsWOen/vR6lZjfPOu/e7L3uFzTW1i0H8TlC3vqQstEJPQL4/uLA==}

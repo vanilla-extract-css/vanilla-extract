@@ -1,6 +1,6 @@
 import { posix, relative, win32 } from 'path';
 import { detectSyntax } from 'mlly';
-import outdent from 'outdent';
+import dedent from 'dedent';
 
 // Inlined from @rollup/pluginutils
 // https://github.com/rollup/plugins/blob/33174f956304ab4aad4bbaba656f627c31679dc5/packages/pluginutils/src/normalizePath.ts#L5-L7
@@ -33,14 +33,14 @@ export function addFileScope({
     );
   } else {
     if (hasESM && !isMixed) {
-      source = outdent`
+      source = dedent`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
         setFileScope("${normalizedPath}", "${packageName}");
         ${source}
         endFileScope();
       `;
     } else {
-      source = outdent`
+      source = dedent`
         const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
         __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
         ${source}
@@ -55,7 +55,7 @@ export function addFileScope({
         ? 'import * as __vanilla_css_adapter__ from "@vanilla-extract/css/adapter";'
         : 'const __vanilla_css_adapter__ = require("@vanilla-extract/css/adapter");';
 
-    source = outdent`
+    source = dedent`
       ${adapterImport}
       __vanilla_css_adapter__.setAdapter(${globalAdapterIdentifier});
       ${source}

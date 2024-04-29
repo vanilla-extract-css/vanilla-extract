@@ -113,11 +113,11 @@
     "css-what": "^6.1.0",
     "cssesc": "^3.0.0",
     "csstype": "^3.0.7",
+    "dedent": "^1.5.1",
     "deep-object-diff": "^1.1.9",
     "deepmerge": "^4.2.2",
     "media-query-parser": "^2.0.2",
-    "modern-ahocorasick": "^1.0.0",
-    "outdent": "^0.8.0"
+    "modern-ahocorasick": "^1.0.0"
   },
   "devDependencies": {
     "@types/cssesc": "^3.0.0"
