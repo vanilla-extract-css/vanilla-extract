@@ -10,21 +10,29 @@ import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
 
+// Copied from https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/blob/51f83bd3db728fd7ee177de1ffc253fdb99c537f/README.md#_isplainobject
 function isPlainObject(value: unknown) {
-  if (typeof value !== 'object' || value === null) return false;
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
 
-  if (Object.prototype.toString.call(value) !== '[object Object]') return false;
+  if (Object.prototype.toString.call(value) !== '[object Object]') {
+    return false;
+  }
 
-  const proto = Object.getPrototypeOf(value);
-  if (proto === null) return true;
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype === null) {
+    return true;
+  }
 
-  const Ctor =
-    Object.prototype.hasOwnProperty.call(proto, 'constructor') &&
-    proto.constructor;
+  const constructor =
+    Object.prototype.hasOwnProperty.call(prototype, 'constructor') &&
+    prototype.constructor;
+
   return (
-    typeof Ctor === 'function' &&
-    Ctor instanceof Ctor &&
-    Function.prototype.call(Ctor) === Function.prototype.call(value)
+    typeof constructor === 'function' &&
+    constructor instanceof constructor &&
+    Function.prototype.call(constructor) === Function.prototype.call(value)
   );
 }
 
