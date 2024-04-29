@@ -1,5 +1,28 @@
 # @vanilla-extract/css
 
+## 1.15.0
+
+### Minor Changes
+
+- [#1379](https://github.com/vanilla-extract-css/vanilla-extract/pull/1379) [`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214) Thanks [@ronci](https://github.com/ronci)! - Add support for passing multiple font face rules to `globalFontFace`
+
+  **EXAMPLE USAGE:**
+
+  ```ts
+  const gentium = 'GlobalGentium';
+
+  globalFontFace(gentium, [
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+  ```
+
 ## 1.14.2
 
 ### Patch Changes
