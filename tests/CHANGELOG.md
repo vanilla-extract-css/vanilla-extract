@@ -1,5 +1,14 @@
 # @vanilla-extract-private/tests
 
+## 0.0.48
+
+### Patch Changes
+
+- Updated dependencies [[`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214)]:
+  - @vanilla-extract/css@1.15.0
+  - @vanilla-extract/dynamic@2.1.0
+  - @vanilla-extract-private/test-helpers@0.0.46
+
 ## 0.0.47
 
 ### Patch Changes

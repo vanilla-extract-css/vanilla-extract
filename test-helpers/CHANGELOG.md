@@ -1,5 +1,22 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.46
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.26
+  - @fixtures/layers@0.0.9
+  - @fixtures/low-level@0.0.26
+  - @fixtures/next-app-router@0.0.1
+  - @fixtures/next-pages-router@0.0.1
+  - @fixtures/recipes@0.0.30
+  - @fixtures/sprinkles@0.0.31
+  - @fixtures/template-string-paths@0.0.3
+  - @fixtures/themed@0.0.26
+  - @fixtures/thirdparty@0.0.4
+  - @fixtures/unused-modules@1.0.26
+
 ## 0.0.45
 
 ### Patch Changes
