@@ -117,7 +117,8 @@ export function vanillaExtractPlugin({
       packageName = getPackageInfo(config.root).name;
     },
     async buildStart() {
-      if (mode !== 'transform') {
+      // Ensure we re-use the compiler instance between builds, e.g. in watch mode
+      if (mode !== 'transform' && !compiler) {
         const { loadConfigFromFile } = await vitePromise;
         const configFile = await loadConfigFromFile(
           {
