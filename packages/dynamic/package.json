@@ -26,6 +26,6 @@
     "@vanilla-extract/private": "^1.0.3"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "*"
+    "@vanilla-extract/css": "workspace:*"
   }
 }
