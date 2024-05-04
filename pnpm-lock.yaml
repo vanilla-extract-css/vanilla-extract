@@ -402,8 +402,8 @@ importers:
         specifier: ^3.0.7
         version: 3.0.10
       dedent:
-        specifier: ^1.5.1
-        version: 1.5.1
+        specifier: ^1.5.3
+        version: 1.5.3
       deep-object-diff:
         specifier: ^1.1.9
         version: 1.1.9
@@ -469,8 +469,8 @@ importers:
         specifier: ^1.15.1
         version: link:../css
       dedent:
-        specifier: ^1.5.1
-        version: 1.5.1
+        specifier: ^1.5.3
+        version: 1.5.3
       esbuild:
         specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0
         version: 0.19.12
@@ -623,8 +623,8 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       dedent:
-        specifier: ^1.5.1
-        version: 1.5.1
+        specifier: ^1.5.3
+        version: 1.5.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5751,6 +5751,7 @@ packages:
       ws: 7.5.6
     transitivePeerDependencies:
       - '@types/node'
+      - babel-plugin-macros
       - bluebird
       - bufferutil
       - less
@@ -6808,20 +6809,22 @@ packages:
       - supports-color
     dev: true
 
-  /@vanilla-extract/css@1.15.0:
-    resolution: {integrity: sha512-B21dRQTiRJ9xMlW3RGOYMfGo11S2Bgcke6YrEJxGBovJFMsMwaex2mQC4XnVvreWMlYef+Na+zBUFDw7tfKMcw==}
+  /@vanilla-extract/css@1.15.1:
+    resolution: {integrity: sha512-puAfTKAUtsMr2+D+grQNjU5umsdw9zdVgQflUlbzS/tGORaAHdgaYz7jfKPmz1c4ZcpJ6uFNOiI50NDOAzzhyg==}
     dependencies:
       '@emotion/hash': 0.9.0
       '@vanilla-extract/private': 1.0.4
-      chalk: 4.1.2
       css-what: 6.1.0
       cssesc: 3.0.0
       csstype: 3.0.10
+      dedent: 1.5.3
       deep-object-diff: 1.1.9
       deepmerge: 4.2.2
       media-query-parser: 2.0.2
       modern-ahocorasick: 1.0.0
-      outdent: 0.8.0
+      picocolors: 1.0.0
+    transitivePeerDependencies:
+      - babel-plugin-macros
     dev: true
 
   /@vanilla-extract/integration@6.5.0(@types/node@20.9.5):
@@ -6830,7 +6833,7 @@ packages:
       '@babel/core': 7.23.9
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.23.9)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
-      '@vanilla-extract/css': 1.15.0
+      '@vanilla-extract/css': 1.15.1
       esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
@@ -6842,6 +6845,7 @@ packages:
       vite-node: 1.5.0(@types/node@20.9.5)
     transitivePeerDependencies:
       - '@types/node'
+      - babel-plugin-macros
       - less
       - lightningcss
       - sass
@@ -9277,14 +9281,13 @@ packages:
       strip-dirs: 2.1.0
     dev: true
 
-  /dedent@1.5.1:
-    resolution: {integrity: sha512-+LxW+KLWxu3HW3M2w2ympwtqPrqYRzU8fqi6Fhd18fBALe15blJPI/I4+UHveMVG6lJqB4JNd4UG0S5cnVHwIg==}
+  /dedent@1.5.3:
+    resolution: {integrity: sha512-NHQtfOOW68WD8lgypbLA5oT+Bt0xXJhiYvoR6SmmNXZfpzOGXwdKWmcwG8N7PwVVWV3eF/68nmD9BaJSsTBhyQ==}
     peerDependencies:
       babel-plugin-macros: ^3.1.0
     peerDependenciesMeta:
       babel-plugin-macros:
         optional: true
-    dev: false
 
   /deep-eql@4.1.3:
     resolution: {integrity: sha512-WaEtAOpRA1MQ0eohqZjpGD8zdI0Ovsm8mmFhaDN8dvDZzyoUMcYDnf5Y6iu7HTXxf8JDS23qWa4a+hKCDyOPzw==}
@@ -12677,7 +12680,7 @@ packages:
       '@types/node': 20.9.5
       chalk: 4.1.2
       co: 4.6.0
-      dedent: 1.5.1
+      dedent: 1.5.3
       is-generator-fn: 2.1.0
       jest-each: 29.7.0
       jest-matcher-utils: 29.7.0

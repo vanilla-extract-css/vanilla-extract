@@ -147,6 +147,24 @@ describe('ESM', () => {
       vanillaFileScope.endFileScope();
     `);
   });
+
+  test('should preserve non-template strings that contain newline characters', () => {
+    const source = `export const multiLineString = "\\nfoo\\n";`;
+
+    expect(
+      addFileScope({
+        source,
+        rootPath: '/the-root',
+        filePath: '/the-root/app/app.css.ts',
+        packageName: 'my-package',
+      }),
+    ).toMatchInlineSnapshot(`
+      import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+      setFileScope("app/app.css.ts", "my-package");
+      export const multiLineString = "\\nfoo\\n";
+      endFileScope();
+    `);
+  });
 });
 
 describe('CJS', () => {
@@ -263,6 +281,24 @@ describe('CJS', () => {
 
       const myStyle = _css.style({});
       exports.myStyle = myStyle;
+      __vanilla_filescope__.endFileScope();
+    `);
+  });
+
+  test('should preserve non-template strings that contain newline characters', () => {
+    const source = `exports.multiLineString =  "\\nfoo\\n";`;
+
+    expect(
+      addFileScope({
+        source,
+        rootPath: '/the-root',
+        filePath: '/the-root/app/app.css.ts',
+        packageName: 'my-package',
+      }),
+    ).toMatchInlineSnapshot(`
+      const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+      __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
+      exports.multiLineString =  "\\nfoo\\n";
       __vanilla_filescope__.endFileScope();
     `);
   });
