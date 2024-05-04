@@ -1,5 +1,13 @@
 # @vanilla-extract/integration
 
+## 7.1.4
+
+### Patch Changes
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - `addFileScope`: Fixes a bug where non-template strings that contained a newline where being mangled
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - Bump `dedent` dependency to `^1.5.3`
+
 ## 7.1.3
 
 ### Patch Changes

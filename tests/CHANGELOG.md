@@ -1,5 +1,12 @@
 # @vanilla-extract-private/tests
 
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies [[`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29), [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29)]:
+  - @vanilla-extract/integration@7.1.4
+
 ## 0.0.50
 
 ### Patch Changes
