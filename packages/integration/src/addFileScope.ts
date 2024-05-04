@@ -33,19 +33,19 @@ export function addFileScope({
     );
   } else {
     if (hasESM && !isMixed) {
-      source = dedent`
+      source = dedent(`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
         setFileScope("${normalizedPath}", "${packageName}");
         ${source}
         endFileScope();
-      `;
+      `);
     } else {
-      source = dedent`
+      source = dedent(`
         const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
         __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
         ${source}
         __vanilla_filescope__.endFileScope();
-      `;
+      `);
     }
   }
 
@@ -55,12 +55,12 @@ export function addFileScope({
         ? 'import * as __vanilla_css_adapter__ from "@vanilla-extract/css/adapter";'
         : 'const __vanilla_css_adapter__ = require("@vanilla-extract/css/adapter");';
 
-    source = dedent`
+    source = dedent(`
       ${adapterImport}
       __vanilla_css_adapter__.setAdapter(${globalAdapterIdentifier});
       ${source}
       __vanilla_css_adapter__.removeAdapter();
-    `;
+    `);
   }
 
   return source;
