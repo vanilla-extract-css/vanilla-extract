@@ -9,9 +9,9 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "types": "./dist/vanilla-extract-dynamic.cjs.d.ts",
       "module": "./dist/vanilla-extract-dynamic.esm.js",
-      "default": "./dist/vanilla-extract-dynamic.cjs.js",
-      "types": "./dist/vanilla-extract-dynamic.cjs.d.ts"
+      "default": "./dist/vanilla-extract-dynamic.cjs.js"
     }
   },
   "files": [
