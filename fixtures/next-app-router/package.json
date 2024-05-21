@@ -1,0 +1,37 @@
+{
+  "name": "@fixtures/next-app-router",
+  "description": "Next app router fixtures",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean-build": "pnpm clean && pnpm build",
+    "clean": "pnpm clean:dev && pnpm clean:prod",
+    "clean:dev": "rm -rf .next",
+    "clean:prod": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fixtures/features": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/recipes": "workspace:*",
+    "@vanilla-extract/sprinkles": "workspace:*",
+    "next": "npm:next@13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@vanilla-extract/next-plugin": "workspace:*",
+    "@vanilla-extract/webpack-plugin": "workspace:*"
+  },
+  "browserslist": [
+    ">0.3%",
+    "ie 11",
+    "safari 4",
+    "not op_mini all"
+  ]
+}

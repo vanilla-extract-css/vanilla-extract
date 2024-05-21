@@ -1,9 +1,9 @@
-import outdent from 'outdent';
+import dedent from 'dedent';
 import { toAST } from 'media-query-parser';
 
 const createMediaQueryError = (mediaQuery: string, msg: string) =>
   new Error(
-    outdent`
+    dedent`
     Invalid media query: "${mediaQuery}"
 
     ${msg}

@@ -1,5 +1,33 @@
 # @vanilla-extract/integration
 
+## 7.1.4
+
+### Patch Changes
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - `addFileScope`: Fixes a bug where non-template strings that contained a newline where being mangled
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - Bump `dedent` dependency to `^1.5.3`
+
+## 7.1.3
+
+### Patch Changes
+
+- [#1388](https://github.com/vanilla-extract-css/vanilla-extract/pull/1388) [`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd) Thanks [@askoufis](https://github.com/askoufis)! - Remove `lodash` dependency
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- Updated dependencies [[`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/css@1.15.1
+
+## 7.1.2
+
+### Patch Changes
+
+- [#1374](https://github.com/vanilla-extract-css/vanilla-extract/pull/1374) [`c8aefe0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c8aefe0c5fb6d8b8b82dd0f05ae837e7e2f03a9f) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/css` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/css@1.14.2
+
 ## 7.1.1
 
 ### Patch Changes

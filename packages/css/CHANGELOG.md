@@ -1,5 +1,45 @@
 # @vanilla-extract/css
 
+## 1.15.1
+
+### Patch Changes
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- [#1385](https://github.com/vanilla-extract-css/vanilla-extract/pull/1385) [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a) Thanks [@askoufis](https://github.com/askoufis)! - Replace `chalk` dependency with `picocolors`
+
+## 1.15.0
+
+### Minor Changes
+
+- [#1379](https://github.com/vanilla-extract-css/vanilla-extract/pull/1379) [`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214) Thanks [@ronci](https://github.com/ronci)! - Add support for passing multiple font face rules to `globalFontFace`
+
+  **EXAMPLE USAGE:**
+
+  ```ts
+  const gentium = 'GlobalGentium';
+
+  globalFontFace(gentium, [
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+  ```
+
+## 1.14.2
+
+### Patch Changes
+
+- [#1368](https://github.com/vanilla-extract-css/vanilla-extract/pull/1368) [`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/private` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/private@1.0.4
+
 ## 1.14.1
 
 ### Patch Changes

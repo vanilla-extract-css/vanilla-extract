@@ -1,5 +1,47 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.9
+
+### Patch Changes
+
+- [#1399](https://github.com/vanilla-extract-css/vanilla-extract/pull/1399) [`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e) Thanks [@askoufis](https://github.com/askoufis)! - Ensure the compiler instance is re-used between builds
+
+## 4.0.8
+
+### Patch Changes
+
+- [#1397](https://github.com/vanilla-extract-css/vanilla-extract/pull/1397) [`2232ef4aa0b8410ff791626a951a15cc03dfbb09`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2232ef4aa0b8410ff791626a951a15cc03dfbb09) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that was causing output CSS files to not update during watch mode
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb)]:
+  - @vanilla-extract/integration@7.1.3
+
+## 4.0.7
+
+### Patch Changes
+
+- [#1369](https://github.com/vanilla-extract-css/vanilla-extract/pull/1369) [`05ef2f0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/05ef2f01bcf7cdf21ac0092ce0b23d8accded58d) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where an internal Remix plugin would throw an error inside the `vite-node` compiler
+
+- [#1368](https://github.com/vanilla-extract-css/vanilla-extract/pull/1368) [`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/integration` dependency
+
+  This fixes a bug where APIs that used the `walkObject` utility (e.g. `createTheme`) would fail when used with module namespace objects inside `vite-node`. This was due to the previous implementation using the input object's `constructor` to initialize a clone, which does not work with module namespace objects because [they do not have a `constructor` function][es6 spec].
+
+  [es6 spec]: https://262.ecma-international.org/6.0/#sec-module-namespace-objects
+
+- Updated dependencies [[`c8aefe0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c8aefe0c5fb6d8b8b82dd0f05ae837e7e2f03a9f)]:
+  - @vanilla-extract/integration@7.1.2
+
+## 4.0.6
+
+### Patch Changes
+
+- [#1346](https://github.com/vanilla-extract-css/vanilla-extract/pull/1346) [`8c2ac42`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8c2ac42479b9646f54c6064b6848485560b15005) Thanks [@askoufis](https://github.com/askoufis)! - Fix `.css.ts` file resolution on Windows
+
+## 4.0.5
+
+### Patch Changes
+
+- [#1353](https://github.com/vanilla-extract-css/vanilla-extract/pull/1353) [`94d5f06`](https://github.com/vanilla-extract-css/vanilla-extract/commit/94d5f0650fcc8ac736a0b6915bc495619c2a1880) Thanks [@himself65](https://github.com/himself65)! - Move `vite-node` compiler creation to a more appropriate plugin hook to ensure correct cleanup of resources
+
 ## 4.0.4
 
 ### Patch Changes
