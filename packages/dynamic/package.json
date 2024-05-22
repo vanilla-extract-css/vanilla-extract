@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/dynamic",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
   "main": "dist/vanilla-extract-dynamic.cjs.js",
@@ -25,7 +25,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/private": "^1.0.3"
+    "@vanilla-extract/private": "^1.0.5"
   },
   "devDependencies": {
     "@vanilla-extract/css": "workspace:*"

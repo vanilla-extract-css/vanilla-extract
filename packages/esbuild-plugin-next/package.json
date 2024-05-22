@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@vanilla-extract/esbuild-plugin-next",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-esbuild-plugin-next.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin-next.esm.js",
@@ -17,7 +17,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^7.0.0"
+    "@vanilla-extract/integration": "^7.1.5"
   },
   "peerDependencies": {
     "esbuild": ">=0.17.6"
