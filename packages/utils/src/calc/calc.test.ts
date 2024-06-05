@@ -110,12 +110,12 @@ describe('class UnitCalc', () => {
   describe('negate()', () => {
     it.each`
       calc                   | expectedExpressions  | expectedBuilt
-      ${calc(1)}             | ${['1', '-1']}       | ${'calc(1 * -1)'}
-      ${calc(1).add(3)}      | ${['(1 + 3)', '-1']} | ${'calc((1 + 3) * -1)'}
-      ${calc(1).subtract(3)} | ${['(1 - 3)', '-1']} | ${'calc((1 - 3) * -1)'}
-      ${calc(1).multiply(3)} | ${['1 * 3', '-1']}   | ${'calc(1 * 3 * -1)'}
-      ${calc(1).divide(3)}   | ${['1 / 3', '-1']}   | ${'calc(1 / 3 * -1)'}
-      ${calc(css)}           | ${[css, '-1']}       | ${'calc(var(--some-css-var) * -1)'}
+      ${calc(1)}             | ${['-1', '1']}       | ${'calc(-1 * 1)'}
+      ${calc(1).add(3)}      | ${['-1', '(1 + 3)']} | ${'calc(-1 * (1 + 3))'}
+      ${calc(1).subtract(3)} | ${['-1', '(1 - 3)']} | ${'calc(-1 * (1 - 3))'}
+      ${calc(1).multiply(3)} | ${['-1', '1 * 3']}   | ${'calc(-1 * 1 * 3)'}
+      ${calc(1).divide(3)}   | ${['-1', '1 / 3']}   | ${'calc(-1 * 1 / 3)'}
+      ${calc(css)}           | ${['-1', css]}       | ${'calc(-1 * var(--some-css-var))'}
     `(
       'should negate $calc to get $expectedBuilt',
       ({ calc, expectedExpressions, expectedBuilt }) => {
@@ -138,7 +138,7 @@ describe('class UnitCalc', () => {
       ${calc(1).subtract(3)} | ${'calc(1 - 3)'}
       ${calc(1).multiply(3)} | ${'calc(1 * 3)'}
       ${calc(1).divide(3)}   | ${'calc(1 / 3)'}
-      ${calc(1).negate()}    | ${'calc(1 * -1)'}
+      ${calc(1).negate()}    | ${'calc(-1 * 1)'}
     `('should build $calc to get $expected', ({ calc, expected }) => {
       expect(calc.toString()).toBe(expected);
     });

@@ -135,7 +135,7 @@ class Calc {
    * ```
    */
   public negate(): Calc {
-    return new Calc([this, -1], '*');
+    return new Calc([-1, this], '*');
   }
 
   /**
