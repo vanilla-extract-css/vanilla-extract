@@ -16,22 +16,33 @@
 type Operand = string | number | Calc;
 
 class Calc {
-  expressions: string[];
+  private static isTerm(op: Operand): op is Calc {
+    return op instanceof Calc && (op.operator === '+' || op.operator === '-');
+  }
+
+  private static isFactor(op: Operand): op is Calc {
+    return op instanceof Calc && (op.operator === '*' || op.operator === '/');
+  }
+
+  /**
+   * The expressions to combine with the operator
+   */
+  private readonly expressions: string[];
 
   constructor(
     exprs: Operand[],
+    /**
+     * The operator to use when combining the expressions. If undefined, the
+     * Calc instance only has one expression.
+     */
     private readonly operator?: '+' | '-' | '*' | '/',
   ) {
-    const isMultiplyDivide = operator === '*' || operator === '/';
+    const thisIsFactor = Calc.isFactor(this);
 
     this.expressions = exprs.map((e) => {
-      if (e instanceof Calc) {
-        const childIsAddSub = e.operator === '+' || e.operator === '-';
-
-        if (isMultiplyDivide && childIsAddSub) {
-          return `(${e.build()})`;
-        }
-
+      if (thisIsFactor && Calc.isTerm(e)) {
+        return `(${e.build()})`;
+      } else if (e instanceof Calc) {
         return e.build();
       }
 
