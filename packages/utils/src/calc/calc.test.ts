@@ -24,7 +24,7 @@ describe('class UnitCalc', () => {
           expressions: expectedExpressions,
           operator: '+',
         });
-        expect(result.build()).toBe(expectedBuilt);
+        expect(result.toString()).toBe(expectedBuilt);
       },
     );
   });
@@ -50,7 +50,7 @@ describe('class UnitCalc', () => {
           expressions: expectedExpressions,
           operator: '-',
         });
-        expect(result.build()).toBe(expectedBuilt);
+        expect(result.toString()).toBe(expectedBuilt);
       },
     );
   });
@@ -76,7 +76,7 @@ describe('class UnitCalc', () => {
           expressions: expectedExpressions,
           operator: '*',
         });
-        expect(result.build()).toBe(expectedBuilt);
+        expect(result.toString()).toBe(expectedBuilt);
       },
     );
   });
@@ -102,7 +102,7 @@ describe('class UnitCalc', () => {
           expressions: expectedExpressions,
           operator: '/',
         });
-        expect(result.build()).toBe(expectedBuilt);
+        expect(result.toString()).toBe(expectedBuilt);
       },
     );
   });
@@ -125,12 +125,12 @@ describe('class UnitCalc', () => {
           expressions: expectedExpressions,
           operator: '*',
         });
-        expect(result.build()).toBe(expectedBuilt);
+        expect(result.toString()).toBe(expectedBuilt);
       },
     );
   });
 
-  describe('build()', () => {
+  describe('toString()', () => {
     it.each`
       calc                   | expected
       ${calc(1)}             | ${'calc(1)'}
@@ -140,11 +140,11 @@ describe('class UnitCalc', () => {
       ${calc(1).divide(3)}   | ${'calc(1 / 3)'}
       ${calc(1).negate()}    | ${'calc(1 * -1)'}
     `('should build $calc to get $expected', ({ calc, expected }) => {
-      expect(calc.build()).toBe(expected);
+      expect(calc.toString()).toBe(expected);
     });
   });
 
-  describe('toString()', () => {
+  describe('build()', () => {
     it.each`
       calc                   | expected
       ${calc(1)}             | ${'1'}
@@ -153,7 +153,7 @@ describe('class UnitCalc', () => {
       ${calc(1).multiply(3)} | ${'1 * 3'}
       ${calc(1).divide(3)}   | ${'1 / 3'}
     `('should convert $calc to string $expected', ({ calc, expected }) => {
-      expect(calc.toString()).toBe(expected);
+      expect(calc.build()).toBe(expected);
     });
   });
 });

@@ -30,7 +30,9 @@ class Calc {
     exprs: Operand[],
     private readonly operator?: '+' | '-' | '*' | '/' | '',
   ) {
-    this.expressions = exprs.map((e) => e.toString());
+    this.expressions = exprs.map((e) =>
+      e instanceof Calc ? e.build() : e.toString(),
+    );
   }
 
   /**
@@ -42,12 +44,12 @@ class Calc {
    * ```ts
    * const result = calc(1).add(3);
    *
-   * expect(result.toString()).toBe('1 + 3');
-   * expect(result.build()).toBe('calc(1 + 3)');
+   * expect(result.build()).toBe('1 + 3');
+   * expect(result.toString()).toBe('calc(1 + 3)');
    * ```
    */
   public add(...operands: Operand[]): Calc {
-    return new Calc([this.toString(), ...operands], '+');
+    return new Calc([this.build(), ...operands], '+');
   }
 
   /**
@@ -59,12 +61,12 @@ class Calc {
    * ```ts
    * const result = calc(1).subtract(3);
    *
-   * expect(result.toString()).toBe('1 - 3');
-   * expect(result.build()).toBe('calc(1 - 3)');
+   * expect(result.build()).toBe('1 - 3');
+   * expect(result.toString()).toBe('calc(1 - 3)');
    * ```
    */
   public subtract(...operands: Operand[]): Calc {
-    return new Calc([this.toString(), ...operands], '-');
+    return new Calc([this.build(), ...operands], '-');
   }
 
   /**
@@ -78,22 +80,20 @@ class Calc {
    * ```ts
    * const result = calc(1).multiply(3);
    *
-   * expect(result.toString()).toBe('1 * 3');
-   * expect(result.build()).toBe('calc(1 * 3)');
+   * expect(result.build()).toBe('1 * 3');
+   * expect(result.toString()).toBe('calc(1 * 3)');
    *
    * const result2 = calc(1).add(2, 3).multiply(4);
    *
-   * expect(result2.toString()).toBe('(1 + 2 + 3) * 4');
-   * expect(result2.build()).toBe('calc((1 + 2 + 3) * 4)');
+   * expect(result2.build()).toBe('(1 + 2 + 3) * 4');
+   * expect(result2.toString()).toBe('calc((1 + 2 + 3) * 4)');
    * ```
    */
   public multiply(...operands: Operand[]): Calc {
     return new Calc(
       [
-        this.toString(),
-        ...operands.map((e) =>
-          Calc.isAddSubCalc(e) ? `(${e.toString()})` : e,
-        ),
+        this.build(),
+        ...operands.map((e) => (Calc.isAddSubCalc(e) ? `(${e.build()})` : e)),
       ],
       '*',
     );
@@ -110,17 +110,15 @@ class Calc {
    * ```ts
    * const result = calc(1).divide(2);
    *
-   * expect(result.toString()).toBe('1 / 2');
-   * expect(result.build()).toBe('calc(1 / 2)');
+   * expect(result.build()).toBe('1 / 2');
+   * expect(result.toString()).toBe('calc(1 / 2)');
    * ```
    */
   public divide(...operands: Operand[]): Calc {
     return new Calc(
       [
-        this.toString(),
-        ...operands.map((e) =>
-          Calc.isAddSubCalc(e) ? `(${e.toString()})` : e,
-        ),
+        this.build(),
+        ...operands.map((e) => (Calc.isAddSubCalc(e) ? `(${e.build()})` : e)),
       ],
       '/',
     );
@@ -135,18 +133,18 @@ class Calc {
    * ```ts
    * const result = calc(1).negate();
    *
-   * expect(result.toString()).toBe('1 * -1');
-   * expect(result.build()).toBe('calc(1 * -1)');
+   * expect(result.build()).toBe('1 * -1');
+   * expect(result.toString()).toBe('calc(1 * -1)');
    *
    * const result2 = calc(1).add(3).negate();
    *
-   * expect(result2.toString()).toBe('(1 + 3) * -1');
-   * expect(result2.build()).toBe('calc((1 + 3) * -1)');
+   * expect(result2.build()).toBe('(1 + 3) * -1');
+   * expect(result2.toString()).toBe('calc((1 + 3) * -1)');
    * ```
    */
   public negate(): Calc {
     return new Calc(
-      [Calc.isAddSub(this) ? `(${this.toString()})` : this.toString(), -1],
+      [Calc.isAddSub(this) ? `(${this.build()})` : this.build(), -1],
       '*',
     );
   }
@@ -159,11 +157,11 @@ class Calc {
    * ```ts
    * const result = calc(1).add(3);
    *
-   * expect(result.build()).toBe('calc(1 + 3)');
+   * expect(result.toString()).toBe('calc(1 + 3)');
    * ```
    */
-  public build(): string {
-    return `calc(${this.toString()})`;
+  public toString(): string {
+    return `calc(${this.build()})`;
   }
 
   /**
@@ -177,10 +175,10 @@ class Calc {
    * ```ts
    * const result = calc(1).add(3);
    *
-   * expect(result.toString()).toBe('1 + 3');
+   * expect(result.build()).toBe('1 + 3');
    * ```
    */
-  public toString(): string {
+  public build(): string {
     if (this.operator === undefined) {
       return this.expressions[0] ?? '';
     }
