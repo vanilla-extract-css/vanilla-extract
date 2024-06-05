@@ -18,21 +18,25 @@ type Operand = string | number | Calc;
 class Calc {
   expressions: string[];
 
-  private static isAddSubCalc(expr: Operand): expr is Calc {
-    return expr instanceof Calc && Calc.isAddSub(expr);
-  }
-
-  private static isAddSub(calc: Calc): boolean {
-    return calc.operator === '+' || calc.operator === '-';
-  }
-
   constructor(
     exprs: Operand[],
-    private readonly operator?: '+' | '-' | '*' | '/' | '',
+    private readonly operator?: '+' | '-' | '*' | '/',
   ) {
-    this.expressions = exprs.map((e) =>
-      e instanceof Calc ? e.build() : e.toString(),
-    );
+    const isMultiplyDivide = operator === '*' || operator === '/';
+
+    this.expressions = exprs.map((e) => {
+      if (e instanceof Calc) {
+        const childIsAddSub = e.operator === '+' || e.operator === '-';
+
+        if (isMultiplyDivide && childIsAddSub) {
+          return `(${e.build()})`;
+        }
+
+        return e.build();
+      }
+
+      return e.toString();
+    });
   }
 
   /**
@@ -49,7 +53,7 @@ class Calc {
    * ```
    */
   public add(...operands: Operand[]): Calc {
-    return new Calc([this.build(), ...operands], '+');
+    return new Calc([this, ...operands], '+');
   }
 
   /**
@@ -66,7 +70,7 @@ class Calc {
    * ```
    */
   public subtract(...operands: Operand[]): Calc {
-    return new Calc([this.build(), ...operands], '-');
+    return new Calc([this, ...operands], '-');
   }
 
   /**
@@ -90,13 +94,7 @@ class Calc {
    * ```
    */
   public multiply(...operands: Operand[]): Calc {
-    return new Calc(
-      [
-        this.build(),
-        ...operands.map((e) => (Calc.isAddSubCalc(e) ? `(${e.build()})` : e)),
-      ],
-      '*',
-    );
+    return new Calc([this, ...operands], '*');
   }
 
   /**
@@ -115,13 +113,7 @@ class Calc {
    * ```
    */
   public divide(...operands: Operand[]): Calc {
-    return new Calc(
-      [
-        this.build(),
-        ...operands.map((e) => (Calc.isAddSubCalc(e) ? `(${e.build()})` : e)),
-      ],
-      '/',
-    );
+    return new Calc([this, ...operands], '/');
   }
 
   /**
@@ -143,10 +135,7 @@ class Calc {
    * ```
    */
   public negate(): Calc {
-    return new Calc(
-      [Calc.isAddSub(this) ? `(${this.build()})` : this.build(), -1],
-      '*',
-    );
+    return new Calc([this, -1], '*');
   }
 
   /**
