@@ -204,6 +204,5 @@ class Calc {
  * ```
  */
 export function calc(x: Operand): Calc {
-  // "Ensure" that this is the only way to create a Calc instance
   return new Calc([x]);
 }
