@@ -5,7 +5,7 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@fixtures/thirdparty-dep": "0.0.6",
+    "@fixtures/thirdparty-dep": "workspace:*",
     "@vanilla-extract/css": "1.15.2"
   }
 }
