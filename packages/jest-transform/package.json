@@ -21,7 +21,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^7.1.5",
+    "@vanilla-extract/integration": "workspace:^",
     "esbuild": "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0"
   },
   "devDependencies": {
