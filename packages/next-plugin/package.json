@@ -21,7 +21,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/webpack-plugin": "^2.3.9"
+    "@vanilla-extract/webpack-plugin": "workspace:^"
   },
   "peerDependencies": {
     "next": ">=12.1.7"
