@@ -117,22 +117,13 @@ export abstract class AbstractVanillaExtractPlugin {
       'vanilla.virtual.css',
     );
 
-    const resetStyles: string[] = [];
-
     const vanillaExtractCompiler = createCompiler({
       // Not sure if an absolute path will work here, hopefully it will
       root: compiler.context,
       identifiers: this.identifiers,
       cssImportSpecifier: async (cssDepModuleId, moduleId, source) => {
-        if (cssDepModuleId.includes('reset')) {
-          if (!resetStyles.includes(source)) {
-            resetStyles.push(source);
-            console.log({ new: { cssDepModuleId, moduleId }, resetStyles });
-          }
-        }
         const serializedCss = await serializeCss(source);
-        // `moduleId` won't change between css imports, so we should optimize around this fact
-        // somehow
+        // `moduleId` won't change between css imports, so we should optimize around this fact somehow
         const moduleContext = path.dirname(moduleId);
 
         if (virtualLoader === 'virtualFileLoader') {
