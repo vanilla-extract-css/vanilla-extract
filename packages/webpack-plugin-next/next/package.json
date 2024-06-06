@@ -1,0 +1,4 @@
+{
+  "main": "dist/vanilla-extract-webpack-plugin-next-next.cjs.js",
+  "module": "dist/vanilla-extract-webpack-plugin-next-next.esm.js"
+}

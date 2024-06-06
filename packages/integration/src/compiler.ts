@@ -171,6 +171,10 @@ export interface Compiler {
     filePath: string,
     options?: {
       outputCss?: boolean;
+      serializeVirtualCssPath?: (file: {
+        fileName: string;
+        source: string;
+      }) => string | Promise<string>;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
@@ -184,7 +188,11 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
-  cssImportSpecifier?: (filePath: string) => string;
+  cssImportSpecifier?: (
+    cssDepModuleId: string,
+    moduleId: string,
+    source: string,
+  ) => string | Promise<string>;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -333,6 +341,11 @@ export const createCompiler = ({
           const { cssDeps, watchFiles } = scanModule(moduleNode);
 
           for (const cssDep of cssDeps) {
+            // Somehow the webpack plugin's extracted.js file has undefined cssDeps
+            if (!cssDep) {
+              continue;
+            }
+
             const cssDepModuleId = normalizePath(cssDep);
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
@@ -368,7 +381,12 @@ export const createCompiler = ({
 
             if (cssObjs || cachedCss?.css) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+                `import '${await cssImportSpecifier(
+                  cssDepModuleId,
+                  moduleId,
+                  // Should try get rid of the `!`, but I think it's safe for now
+                  cachedCss?.css ?? cssCache.get(cssDepModuleId)!.css,
+                )}';`,
               );
             }
           }
