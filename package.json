@@ -64,7 +64,7 @@
       "packages/*"
     ]
   },
-  "packageManager": "pnpm@8.10.2",
+  "packageManager": "pnpm@9.2.0",
   "pnpm": {},
   "volta": {
     "node": "20.9.0"
