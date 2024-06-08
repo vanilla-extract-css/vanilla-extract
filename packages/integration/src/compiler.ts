@@ -171,6 +171,10 @@ export interface Compiler {
     filePath: string,
     options?: {
       outputCss?: boolean;
+      serializeVirtualCssPath?: (file: {
+        fileName: string;
+        source: string;
+      }) => string | Promise<string>;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
@@ -184,7 +188,11 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
-  cssImportSpecifier?: (filePath: string) => string;
+  cssImportSpecifier?: (
+    cssDepModuleId: string,
+    moduleId: string,
+    source: string,
+  ) => string | Promise<string>;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -332,7 +340,9 @@ export const createCompiler = ({
 
           const { cssDeps, watchFiles } = scanModule(moduleNode);
 
-          for (const cssDep of cssDeps) {
+          // Filter falsy css deps, webpack plugin's extracted.js file has undefined cssDeps for
+          // some reason
+          for (const cssDep of cssDeps.filter(Boolean)) {
             const cssDepModuleId = normalizePath(cssDep);
             const cssObjs = cssByModuleId.get(cssDepModuleId);
             const cachedCss = cssCache.get(cssDepModuleId);
@@ -343,9 +353,9 @@ export const createCompiler = ({
               continue;
             }
 
-            if (cssObjs) {
-              let css = '';
+            let css = cachedCss?.css || '';
 
+            if (cssObjs) {
               if (cssObjs.length > 0) {
                 css = transformCss({
                   localClassNames: Array.from(localClassNames),
@@ -366,9 +376,13 @@ export const createCompiler = ({
               );
             }
 
-            if (cssObjs || cachedCss?.css) {
+            if (css) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+                `import '${await cssImportSpecifier(
+                  cssDepModuleId,
+                  moduleId,
+                  css,
+                )}';`,
               );
             }
           }
