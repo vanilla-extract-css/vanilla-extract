@@ -1,4 +1,5 @@
-import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
+import { VanillaExtractPlugin as VanillaExtractPluginCurrent } from '@vanilla-extract/webpack-plugin';
+import { VanillaExtractPlugin as VanillaExtractPluginNext } from '@vanilla-extract/webpack-plugin-next';
 import WDS from 'webpack-dev-server';
 import webpack, { Configuration } from 'webpack';
 import webpackMerge from 'webpack-merge';
@@ -33,7 +34,12 @@ const defaultWebpackConfig: Configuration = {
 };
 
 export interface WebpackFixtureOptions {
-  type: 'browser' | 'mini-css-extract' | 'style-loader';
+  type:
+    | 'browser'
+    | 'mini-css-extract'
+    | 'mini-css-extract-next'
+    | 'style-loader'
+    | 'style-loader-next';
   hot?: boolean;
   mode?: 'development' | 'production';
   port: number;
@@ -53,6 +59,9 @@ export const startWebpackFixture = (
     const fixtureEntry = require.resolve(
       `@fixtures/${fixtureName}/src/index.ts`,
     );
+    const VanillaExtractPlugin = type.includes('next')
+      ? VanillaExtractPluginNext
+      : VanillaExtractPluginCurrent;
     const config = webpackMerge<Configuration>(defaultWebpackConfig, {
       entry: fixtureEntry,
       infrastructureLogging: {

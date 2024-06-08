@@ -142,6 +142,7 @@ export abstract class AbstractVanillaExtractPlugin {
           );
           const relativeVirtualResourceLoader = `${relativeVirtualFileLoader}?${JSON.stringify(
             {
+              filePath: cssDepModuleId,
               source: serializedCss,
             },
           )}`;
@@ -162,7 +163,10 @@ export abstract class AbstractVanillaExtractPlugin {
             // Causing the resourceQuery to be abnormally split, so uri encoding is required.
             // https://github.com/vanilla-extract-css/vanilla-extract/blob/58005eb5e7456cf2b3c04ea7aef29677db37cc3c/packages/integration/src/serialize.ts#L15
             `${relativeVirtualNextFileLoaderExtractionFile}?${encodeURIComponent(
-              JSON.stringify({ source: serializedCss }),
+              JSON.stringify({
+                filePath: cssDepModuleId,
+                source: serializedCss,
+              }),
             )}`;
           return request;
         }
@@ -174,7 +178,7 @@ export abstract class AbstractVanillaExtractPlugin {
       test: this.test,
       use: [
         {
-          loader: require.resolve('../loader2'),
+          loader: require.resolve('../loader'),
           options: {
             outputCss: this.outputCss,
             identifiers: this.identifiers,
