@@ -109,7 +109,7 @@ export abstract class AbstractVanillaExtractPlugin {
     });
 
     const virtualFileLoader = require.resolve(
-      `@vanilla-extract/webpack-plugin/${virtualLoader}`,
+      `@vanilla-extract/webpack-plugin-next/${virtualLoader}`,
     );
 
     const virtualFileLoaderExtractionFile = path.join(

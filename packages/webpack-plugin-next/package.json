@@ -1,0 +1,74 @@
+{
+  "name": "@vanilla-extract/webpack-plugin-next",
+  "version": "0.0.0",
+  "description": "Zero-runtime Stylesheets-in-TypeScript",
+  "main": "dist/vanilla-extract-webpack-plugin-next.cjs.js",
+  "module": "dist/vanilla-extract-webpack-plugin-next.esm.js",
+  "types": "dist/vanilla-extract-webpack-plugin-next.cjs.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/vanilla-extract-webpack-plugin-next.cjs.d.ts",
+      "module": "./dist/vanilla-extract-webpack-plugin-next.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin-next.cjs.js"
+    },
+    "./loader": {
+      "types": "./loader/dist/vanilla-extract-webpack-plugin-next-loader.cjs.d.ts",
+      "module": "./loader/dist/vanilla-extract-webpack-plugin-next-loader.esm.js",
+      "default": "./loader/dist/vanilla-extract-webpack-plugin-next-loader.cjs.js"
+    },
+    "./virtualFileLoader": {
+      "types": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualFileLoader.cjs.d.ts",
+      "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualFileLoader.esm.js",
+      "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualFileLoader.cjs.js"
+    },
+    "./next": {
+      "types": "./next/dist/vanilla-extract-webpack-plugin-next-next.cjs.d.ts",
+      "module": "./next/dist/vanilla-extract-webpack-plugin-next-next.esm.js",
+      "default": "./next/dist/vanilla-extract-webpack-plugin-next-next.cjs.js"
+    },
+    "./virtualNextFileLoader": {
+      "types": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualNextFileLoader.cjs.d.ts",
+      "module": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualNextFileLoader.esm.js",
+      "default": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-next-virtualNextFileLoader.cjs.js"
+    }
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "loader.ts",
+      "virtualFileLoader.ts",
+      "next.ts",
+      "virtualNextFileLoader.ts"
+    ]
+  },
+  "files": [
+    "/dist",
+    "/loader",
+    "/virtualFileLoader",
+    "/next",
+    "/virtualNextFileLoader",
+    "extracted.js",
+    "vanilla.virtual.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/webpack-plugin-next"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "peerDependencies": {
+    "webpack": "^4.30.0 || ^5.20.2"
+  },
+  "dependencies": {
+    "@vanilla-extract/integration": "workspace:^",
+    "debug": "^4.3.1",
+    "loader-utils": "^2.0.0",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "webpack": "^5.90.0"
+  }
+}

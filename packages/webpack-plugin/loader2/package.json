@@ -1,4 +1,0 @@
-{
-  "main": "dist/vanilla-extract-webpack-plugin-loader2.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin-loader2.esm.js"
-}
