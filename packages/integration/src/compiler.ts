@@ -376,7 +376,7 @@ export const createCompiler = ({
               );
             }
 
-            if (css) {
+            if (cssObjs || cachedCss?.css) {
               cssImports.push(
                 `import '${await cssImportSpecifier(
                   cssDepModuleId,
