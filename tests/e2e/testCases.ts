@@ -2,6 +2,9 @@ export const webpack = [
   { type: 'mini-css-extract', mode: 'development', snapshotCss: true },
   { type: 'mini-css-extract', mode: 'production', snapshotCss: true },
   { type: 'style-loader', mode: 'development', snapshotCss: false },
+  { type: 'mini-css-extract-next', mode: 'development', snapshotCss: true },
+  { type: 'mini-css-extract-next', mode: 'production', snapshotCss: true },
+  { type: 'style-loader-next', mode: 'development', snapshotCss: false },
 ] as const;
 
 export const all = [
