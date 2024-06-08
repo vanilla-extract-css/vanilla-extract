@@ -73,7 +73,7 @@ export const startWebpackFixture = (
           {
             test: /\.vanilla\.css$/i,
             use: [
-              type === 'mini-css-extract'
+              type.startsWith('mini-css-extract')
                 ? MiniCssExtractPlugin.loader
                 : require.resolve('style-loader'),
               {
