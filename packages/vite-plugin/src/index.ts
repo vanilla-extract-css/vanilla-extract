@@ -135,7 +135,8 @@ export function vanillaExtractPlugin({
       packageName = getPackageInfo(config.root).name;
     },
     async buildStart() {
-      if (mode !== 'transform') {
+      // Ensure we re-use the compiler instance between builds, e.g. in watch mode
+      if (mode !== 'transform' && !compiler) {
         const { loadConfigFromFile } = await vitePromise;
 
         let configForViteCompiler: UserConfig | undefined;
@@ -174,7 +175,14 @@ export function vanillaExtractPlugin({
       }
     },
     buildEnd() {
-      compiler?.close();
+      // When using the rollup watcher, we don't want to close the compiler after every build.
+      // Instead, we close it when the watcher is closed via the closeWatcher hook.
+      if (!config.build.watch) {
+        compiler?.close();
+      }
+    },
+    closeWatcher() {
+      return compiler?.close();
     },
     async transform(code, id) {
       const [validId] = id.split('?');

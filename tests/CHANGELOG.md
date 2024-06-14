@@ -1,5 +1,51 @@
 # @vanilla-extract-private/tests
 
+## 0.0.52
+
+### Patch Changes
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+  - @vanilla-extract/sprinkles@1.6.2
+  - @vanilla-extract/dynamic@2.1.1
+  - @vanilla-extract/private@1.0.5
+  - @vanilla-extract/recipes@0.5.3
+  - @vanilla-extract/css@1.15.2
+  - @vanilla-extract-private/test-helpers@0.0.49
+
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies [[`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29), [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29)]:
+  - @vanilla-extract/integration@7.1.4
+
+## 0.0.50
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.48
+
+## 0.0.49
+
+### Patch Changes
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/integration@7.1.3
+  - @vanilla-extract/css@1.15.1
+  - @vanilla-extract/dynamic@2.1.0
+  - @vanilla-extract-private/test-helpers@0.0.47
+
+## 0.0.48
+
+### Patch Changes
+
+- Updated dependencies [[`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214)]:
+  - @vanilla-extract/css@1.15.0
+  - @vanilla-extract/dynamic@2.1.0
+  - @vanilla-extract-private/test-helpers@0.0.46
+
 ## 0.0.47
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-import { outdent } from 'outdent';
+import dedent from 'dedent';
 import { sep, posix, win32 } from 'path';
 
 import { addFileScope, normalizePath } from './addFileScope';
@@ -13,7 +13,7 @@ expect.addSnapshotSerializer({
 
 describe('ESM', () => {
   test('should add missing fileScope', () => {
-    const source = outdent`
+    const source = dedent`
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -37,7 +37,7 @@ describe('ESM', () => {
   });
 
   test('should add global adapter setup when "globalAdapterIdentifier" is provided', () => {
-    const source = outdent`
+    const source = dedent`
     import {style} from '@vanilla-extract/css';
 
     export const myStyle = style({});
@@ -65,7 +65,7 @@ describe('ESM', () => {
   });
 
   test('should update existing fileScope', () => {
-    const source = outdent`
+    const source = dedent`
     import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
     setFileScope("some-weird-file", "some-weird-package");
     import {style} from '@vanilla-extract/css';
@@ -92,7 +92,7 @@ describe('ESM', () => {
   });
 
   test('should update existing fileScope with newlines', () => {
-    const source = outdent`
+    const source = dedent`
       import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
       setFileScope(
         "some-weird-file",
@@ -122,7 +122,7 @@ describe('ESM', () => {
   });
 
   test('should handle namespaced filescope calls', () => {
-    const source = outdent`
+    const source = dedent`
     import * as vanillaFileScope from "@vanilla-extract/css/fileScope";
     vanillaFileScope.setFileScope("some-weird-file");
     import {style} from '@vanilla-extract/css';
@@ -147,11 +147,29 @@ describe('ESM', () => {
       vanillaFileScope.endFileScope();
     `);
   });
+
+  test('should preserve non-template strings that contain newline characters', () => {
+    const source = `export const multiLineString = "\\nfoo\\n";`;
+
+    expect(
+      addFileScope({
+        source,
+        rootPath: '/the-root',
+        filePath: '/the-root/app/app.css.ts',
+        packageName: 'my-package',
+      }),
+    ).toMatchInlineSnapshot(`
+      import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
+      setFileScope("app/app.css.ts", "my-package");
+      export const multiLineString = "\\nfoo\\n";
+      endFileScope();
+    `);
+  });
 });
 
 describe('CJS', () => {
   test('should add missing fileScope', () => {
-    const source = outdent`
+    const source = dedent`
     const _css = require('@vanilla-extract/css');
 
     var myStyle = _css.style({});
@@ -177,7 +195,7 @@ describe('CJS', () => {
   });
 
   test('should add global adapter setup when "globalAdapterIdentifier" is provided', () => {
-    const source = outdent`
+    const source = dedent`
     const _css = require('@vanilla-extract/css');
 
     var myStyle = _css.style({});
@@ -207,7 +225,7 @@ describe('CJS', () => {
   });
 
   test('should update existing fileScope', () => {
-    const source = outdent`
+    const source = dedent`
     const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
     __vanilla_filescope__.setFileScope("some-weird-file", "some-weird-package");
     const _css = require('@vanilla-extract/css');
@@ -236,7 +254,7 @@ describe('CJS', () => {
   });
 
   test('should update existing fileScope with newlines', () => {
-    const source = outdent`
+    const source = dedent`
       const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
       __vanilla_filescope__.setFileScope(
         "some-weird-file",
@@ -266,6 +284,24 @@ describe('CJS', () => {
       __vanilla_filescope__.endFileScope();
     `);
   });
+
+  test('should preserve non-template strings that contain newline characters', () => {
+    const source = `exports.multiLineString =  "\\nfoo\\n";`;
+
+    expect(
+      addFileScope({
+        source,
+        rootPath: '/the-root',
+        filePath: '/the-root/app/app.css.ts',
+        packageName: 'my-package',
+      }),
+    ).toMatchInlineSnapshot(`
+      const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+      __vanilla_filescope__.setFileScope("app/app.css.ts", "my-package");
+      exports.multiLineString =  "\\nfoo\\n";
+      __vanilla_filescope__.endFileScope();
+    `);
+  });
 });
 
 test('platform-specific relative path', () => {
@@ -280,7 +316,7 @@ test('platform-specific relative path', () => {
     },
   }[sep];
 
-  const source = outdent`
+  const source = dedent`
     import { style } from '@vanilla-extract/css';
 
     export const myStyle = style({});

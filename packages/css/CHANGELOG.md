@@ -1,5 +1,45 @@
 # @vanilla-extract/css
 
+## 1.15.2
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/private@1.0.5
+
+## 1.15.1
+
+### Patch Changes
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- [#1385](https://github.com/vanilla-extract-css/vanilla-extract/pull/1385) [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a) Thanks [@askoufis](https://github.com/askoufis)! - Replace `chalk` dependency with `picocolors`
+
+## 1.15.0
+
+### Minor Changes
+
+- [#1379](https://github.com/vanilla-extract-css/vanilla-extract/pull/1379) [`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214) Thanks [@ronci](https://github.com/ronci)! - Add support for passing multiple font face rules to `globalFontFace`
+
+  **EXAMPLE USAGE:**
+
+  ```ts
+  const gentium = 'GlobalGentium';
+
+  globalFontFace(gentium, [
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+  ```
+
 ## 1.14.2
 
 ### Patch Changes

@@ -1,5 +1,29 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.10
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+
+## 4.0.9
+
+### Patch Changes
+
+- [#1399](https://github.com/vanilla-extract-css/vanilla-extract/pull/1399) [`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e) Thanks [@askoufis](https://github.com/askoufis)! - Ensure the compiler instance is re-used between builds
+
+## 4.0.8
+
+### Patch Changes
+
+- [#1397](https://github.com/vanilla-extract-css/vanilla-extract/pull/1397) [`2232ef4aa0b8410ff791626a951a15cc03dfbb09`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2232ef4aa0b8410ff791626a951a15cc03dfbb09) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that was causing output CSS files to not update during watch mode
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb)]:
+  - @vanilla-extract/integration@7.1.3
+
 ## 4.0.7
 
 ### Patch Changes

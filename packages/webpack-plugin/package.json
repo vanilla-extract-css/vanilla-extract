@@ -1,28 +1,34 @@
 {
   "name": "@vanilla-extract/webpack-plugin",
-  "version": "2.3.7",
+  "version": "2.3.9",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-webpack-plugin.cjs.js",
   "module": "dist/vanilla-extract-webpack-plugin.esm.js",
+  "types": "dist/vanilla-extract-webpack-plugin.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "types": "./dist/vanilla-extract-webpack-plugin.cjs.d.ts",
       "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
       "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
     },
     "./loader": {
+      "types": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.d.ts",
       "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
       "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
     },
     "./virtualFileLoader": {
+      "types": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.d.ts",
       "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
       "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
     },
     "./next": {
+      "types": "./next/dist/vanilla-extract-webpack-plugin-next.cjs.d.ts",
       "module": "./next/dist/vanilla-extract-webpack-plugin-next.esm.js",
       "default": "./next/dist/vanilla-extract-webpack-plugin-next.cjs.js"
     },
     "./virtualNextFileLoader": {
+      "types": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.d.ts",
       "module": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.esm.js",
       "default": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.js"
     }
@@ -56,10 +62,10 @@
     "webpack": "^4.30.0 || ^5.20.2"
   },
   "dependencies": {
-    "@vanilla-extract/integration": "^7.0.0",
-    "chalk": "^4.1.1",
+    "@vanilla-extract/integration": "workspace:^",
     "debug": "^4.3.1",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.0",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
