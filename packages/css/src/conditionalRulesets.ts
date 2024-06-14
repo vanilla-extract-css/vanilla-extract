@@ -196,7 +196,10 @@ export class ConditionalRuleset {
       const selectors: any = {};
 
       for (const rule of rules) {
-        selectors[rule.selector] = rule.rule;
+        selectors[rule.selector] = {
+          ...selectors[rule.selector],
+          ...rule.rule,
+        };
       }
 
       Object.assign(selectors, ...children.renderToArray());

@@ -583,6 +583,7 @@ describe('transformCss', () => {
       @layer myLayer;
       @layer myLayer {
         .testClass {
+          color: red;
           font-size: 32px;
         }
       }
