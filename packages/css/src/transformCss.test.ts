@@ -549,6 +549,47 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should merge declarations with the same selector when merging conditional rules', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: '.testClass',
+            rule: {
+              '@layer': {
+                myLayer: {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.testClass',
+            rule: {
+              '@layer': {
+                myLayer: {
+                  fontSize: '32px',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer myLayer;
+      @layer myLayer {
+        .testClass {
+          color: red;
+          font-size: 32px;
+        }
+      }
+    `);
+  });
+
   it('should handle simple pseudos', () => {
     expect(
       transformCss({
