@@ -1,5 +1,27 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.49
+
+### Patch Changes
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/esbuild-plugin-next@0.0.6
+  - @vanilla-extract/parcel-transformer@1.0.5
+  - @vanilla-extract/esbuild-plugin@2.3.6
+  - @vanilla-extract/webpack-plugin@2.3.9
+  - @vanilla-extract/vite-plugin@4.0.10
+  - @fixtures/next-app-router@0.0.3
+  - @fixtures/next-pages-router@0.0.3
+  - @fixtures/sprinkles@0.0.33
+  - @fixtures/features@0.0.28
+  - @fixtures/themed@0.0.28
+  - @fixtures/recipes@0.0.32
+  - @fixtures/layers@0.0.11
+  - @fixtures/low-level@0.0.28
+  - @fixtures/template-string-paths@0.0.5
+  - @fixtures/thirdparty@0.0.6
+  - @fixtures/unused-modules@1.0.28
+
 ## 0.0.48
 
 ### Patch Changes
