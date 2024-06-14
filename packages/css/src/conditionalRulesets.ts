@@ -197,6 +197,7 @@ export class ConditionalRuleset {
 
       for (const rule of rules) {
         selectors[rule.selector] = {
+          // Preserve existing declarations if a rule with the same selector has already been added
           ...selectors[rule.selector],
           ...rule.rule,
         };
