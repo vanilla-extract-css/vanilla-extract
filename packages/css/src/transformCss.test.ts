@@ -549,7 +549,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it.only('should merge declarations with the same selector when merging conditional rules', () => {
+  it('should merge declarations with the same selector when merging conditional rules', () => {
     expect(
       transformCss({
         composedClassLists: [],
