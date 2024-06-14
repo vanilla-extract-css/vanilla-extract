@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.11
+
+### Patch Changes
+
+- [#1395](https://github.com/vanilla-extract-css/vanilla-extract/pull/1395) [`8d1731b44f8e93153c8087a533e0f9b2ed99767c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8d1731b44f8e93153c8087a533e0f9b2ed99767c) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that made the plugin incompatible with frameworks that use custom config files
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
 ## 4.0.10
 
 ### Patch Changes
