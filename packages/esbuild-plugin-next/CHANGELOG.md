@@ -1,5 +1,12 @@
 # @vanilla-extract/esbuild-plugin-next
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
 ## 0.0.6
 
 ### Patch Changes
