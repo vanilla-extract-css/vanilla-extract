@@ -41,15 +41,15 @@ export function createGlobalTheme(
   }
 }
 
-export function createTheme<ThemeTokens extends Tokens>(
-  tokens: ThemeTokens,
-  debugId?: string,
-): [className: string, vars: ThemeVars<ThemeTokens>];
 export function createTheme<ThemeContract extends Contract>(
   themeContract: ThemeContract,
   tokens: MapLeafNodes<ThemeContract, string>,
   debugId?: string,
 ): string;
+export function createTheme<ThemeTokens extends Tokens>(
+  tokens: ThemeTokens,
+  debugId?: string,
+): [className: string, vars: ThemeVars<ThemeTokens>];
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
   const themeClassName = generateIdentifier(
     typeof arg2 === 'object' ? arg3 : arg2,
