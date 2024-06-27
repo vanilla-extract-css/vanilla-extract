@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/jest-transform",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Jest transformer for vanilla-extract",
   "main": "dist/vanilla-extract-jest-transform.cjs.js",
   "module": "dist/vanilla-extract-jest-transform.esm.js",

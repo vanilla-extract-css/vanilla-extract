@@ -1,5 +1,12 @@
 # vanilla-extract-example-webpack-react
 
+## 0.0.32
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.11
+
 ## 0.0.31
 
 ### Patch Changes
