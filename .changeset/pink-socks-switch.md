@@ -3,4 +3,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-Update `esbuild` to v0.21
+Extend `esbuild` dependency range to include `~0.20.0` and `~0.21.0`
