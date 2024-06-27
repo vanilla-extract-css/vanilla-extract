@@ -1,5 +1,18 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/esbuild-plugin@2.3.8
+  - @vanilla-extract/esbuild-plugin-next@0.0.8
+  - @vanilla-extract/parcel-transformer@1.0.7
+  - @vanilla-extract/vite-plugin@4.0.12
+  - @vanilla-extract/webpack-plugin@2.3.11
+  - @fixtures/next-app-router@0.0.4
+  - @fixtures/next-pages-router@0.0.4
+
 ## 0.0.50
 
 ### Patch Changes

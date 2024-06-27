@@ -1,5 +1,12 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+
 ## 4.0.11
 
 ### Patch Changes
