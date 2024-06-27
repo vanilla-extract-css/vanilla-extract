@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/integration": "workspace:^",
-    "esbuild": "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0"
+    "esbuild": "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0 || ~0.20.0 || ~0.21.0"
   },
   "devDependencies": {
     "@jest/transform": "^29.0.3"
