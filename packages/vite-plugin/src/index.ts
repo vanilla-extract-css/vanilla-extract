@@ -213,8 +213,14 @@ export function vanillaExtractPlugin({
 
         addWatchFiles.call(this, absoluteId, watchFiles);
 
-        // We have to invalidate the virtual module, not the real one we just transformed
-        invalidateModule(fileIdToVirtualId(absoluteId));
+        // We have to invalidate the virtual module & deps, not the real one we just transformed
+        // The deps have to be invalidate in case one of them changing was the trigger causing
+        // the current transformation
+        Array.from(watchFiles).forEach((file) => {
+          if (file.endsWith('.css.ts')) {
+            invalidateModule(fileIdToVirtualId(file));
+          }
+        });
 
         return {
           code: source,
