@@ -45,7 +45,6 @@ export function vanillaExtractPlugin({
     name: 'vanilla-extract',
     setup(build) {
       build.onResolve({ filter: virtualCssFileFilter }, (args) => {
-        console.log(args)
         return {
           path: args.path,
           namespace: vanillaCssNamespace,
@@ -128,11 +127,4 @@ export function vanillaExtractPlugin({
       });
     },
   };
-}
-
-async function hashString(str: string) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(str);
-  const hash = await crypto.subtle.digest('SHA-256', data);
-  return hash;
 }
