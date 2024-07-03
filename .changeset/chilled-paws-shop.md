@@ -2,4 +2,4 @@
 '@vanilla-extract/vite-plugin': patch
 ---
 
-Correctly update rendered styles when changes are made to .css.ts files imported by .css.ts files
+Fixes a bug where changes to `.css.ts` dependencies of top-level `.css.ts` files would not generate new CSS
