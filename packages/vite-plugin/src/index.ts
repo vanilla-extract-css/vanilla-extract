@@ -196,7 +196,7 @@ export function vanillaExtractPlugin({
         const result: TransformResult = {
           code: source,
           map: { mappings: '' },
-        }
+        };
 
         // We don't need to watch files in build mode
         if (config.command === 'build' && !config.build.watch) {
@@ -204,7 +204,10 @@ export function vanillaExtractPlugin({
         }
 
         for (const file of watchFiles) {
-          if (!file.includes('node_modules') && normalizePath(file) !== absoluteId) {
+          if (
+            !file.includes('node_modules') &&
+            normalizePath(file) !== absoluteId
+          ) {
             this.addWatchFile(file);
           }
 
