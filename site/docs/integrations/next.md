@@ -85,14 +85,18 @@ export default function App() {
 
 ```js
 // next.config.js
-import createVanillaExtractPlugin from '@vanilla-extract/next-plugin';
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@company/design-system']
 };
 
 // Next.js Vanilla Extract integration will now compile @company/design-system styles
-module.exports = createVanillaExtractPlugin(nextConfig);
+module.exports = withVanillaExtract(nextConfig);
 ```
 
 [`transpilepackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages

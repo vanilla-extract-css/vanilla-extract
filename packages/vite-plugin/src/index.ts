@@ -5,8 +5,8 @@ import type {
   ResolvedConfig,
   ConfigEnv,
   ViteDevServer,
-  Rollup,
   PluginOption,
+  TransformResult,
   UserConfig,
 } from 'vite';
 import {
@@ -92,23 +92,6 @@ export function vanillaExtractPlugin({
         // Vite uses this timestamp to add `?t=` query string automatically for HMR.
         module.lastHMRTimestamp =
           module.lastInvalidationTimestamp || Date.now();
-      }
-    }
-  }
-
-  function addWatchFiles(
-    this: Rollup.PluginContext,
-    fromId: string,
-    files: Set<string>,
-  ) {
-    // We don't need to watch files in build mode
-    if (config.command === 'build' && !config.build.watch) {
-      return;
-    }
-
-    for (const file of files) {
-      if (!file.includes('node_modules') && normalizePath(file) !== fromId) {
-        this.addWatchFile(file);
       }
     }
   }
@@ -210,16 +193,33 @@ export function vanillaExtractPlugin({
           absoluteId,
           { outputCss: true },
         );
-
-        addWatchFiles.call(this, absoluteId, watchFiles);
-
-        // We have to invalidate the virtual module, not the real one we just transformed
-        invalidateModule(fileIdToVirtualId(absoluteId));
-
-        return {
+        const result: TransformResult = {
           code: source,
           map: { mappings: '' },
         };
+
+        // We don't need to watch files in build mode
+        if (config.command === 'build' && !config.build.watch) {
+          return result;
+        }
+
+        for (const file of watchFiles) {
+          if (
+            !file.includes('node_modules') &&
+            normalizePath(file) !== absoluteId
+          ) {
+            this.addWatchFile(file);
+          }
+
+          // We have to invalidate the virtual module & deps, not the real one we just transformed
+          // The deps have to be invalidated in case one of them changing was the trigger causing
+          // the current transformation
+          if (file.endsWith('.css.ts')) {
+            invalidateModule(fileIdToVirtualId(file));
+          }
+        }
+
+        return result;
       }
     },
     resolveId(source) {

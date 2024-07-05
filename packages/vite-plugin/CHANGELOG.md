@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.13
+
+### Patch Changes
+
+- [#1438](https://github.com/vanilla-extract-css/vanilla-extract/pull/1438) [`765b85610207992693a822fb3b1aec995ab48409`](https://github.com/vanilla-extract-css/vanilla-extract/commit/765b85610207992693a822fb3b1aec995ab48409) Thanks [@ArrayKnight](https://github.com/ArrayKnight)! - Fixes a bug where changes to `.css.ts` dependencies of top-level `.css.ts` files would not generate new CSS
+
 ## 4.0.12
 
 ### Patch Changes
