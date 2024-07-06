@@ -12,7 +12,9 @@ type BooleanMap<T> = T extends 'true' | 'false' ? boolean : T;
 
 export type VariantGroups = Record<string, VariantDefinitions>;
 export type VariantSelection<Variants extends VariantGroups> = {
-  [VariantGroup in keyof Variants]?: BooleanMap<keyof Variants[VariantGroup]>;
+  [VariantGroup in keyof Variants]?:
+    | BooleanMap<keyof Variants[VariantGroup]>
+    | undefined;
 };
 
 export type VariantsClassNames<Variants extends VariantGroups> = {
