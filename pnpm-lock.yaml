@@ -578,6 +578,9 @@ importers:
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
     devDependencies:
       vite:
         specifier: ^5.0.11
@@ -5321,6 +5324,10 @@ packages:
 
   deepmerge@4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
+    engines: {node: '>=0.10.0'}
+
+  deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
 
   default-browser-id@5.0.0:
@@ -13418,7 +13425,7 @@ snapshots:
     dependencies:
       chalk: 5.0.1
       cron-parser: 4.6.0
-      deepmerge: 4.2.2
+      deepmerge: 4.3.1
       dot-prop: 7.2.0
       execa: 6.1.0
       fast-safe-stringify: 2.1.1
@@ -14766,7 +14773,7 @@ snapshots:
       '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
       '@types/resolve': 1.17.1
       builtin-modules: 3.3.0
-      deepmerge: 4.2.2
+      deepmerge: 4.3.1
       is-module: 1.0.0
       resolve: 1.22.8
       rollup: 2.79.1
@@ -15337,7 +15344,7 @@ snapshots:
       csstype: 3.0.10
       dedent: 1.5.3
       deep-object-diff: 1.1.9
-      deepmerge: 4.2.2
+      deepmerge: 4.3.1
       media-query-parser: 2.0.2
       modern-ahocorasick: 1.0.0
       picocolors: 1.0.0
@@ -16984,6 +16991,8 @@ snapshots:
   deep-object-diff@1.1.9: {}
 
   deepmerge@4.2.2: {}
+
+  deepmerge@4.3.1: {}
 
   default-browser-id@5.0.0: {}
 
@@ -19190,7 +19199,7 @@ snapshots:
       babel-jest: 29.7.0(@babel/core@7.23.9)
       chalk: 4.1.2
       ci-info: 3.9.0
-      deepmerge: 4.2.2
+      deepmerge: 4.3.1
       glob: 7.2.0
       graceful-fs: 4.2.10
       jest-circus: 29.7.0
