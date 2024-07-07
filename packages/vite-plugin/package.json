@@ -16,7 +16,8 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "workspace:^"
+    "@vanilla-extract/integration": "workspace:^",
+    "deepmerge": "^4.3.1"
   },
   "devDependencies": {
     "vite": "^5.0.11"
