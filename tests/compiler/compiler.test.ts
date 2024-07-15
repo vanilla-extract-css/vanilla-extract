@@ -147,8 +147,8 @@ describe('compiler', () => {
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        {{__dirname}}/fixtures/class-composition/styles.css.ts,
         {{__dirname}}/fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
       ]
     `);
 
