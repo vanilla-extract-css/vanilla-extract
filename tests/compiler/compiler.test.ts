@@ -101,8 +101,8 @@ describe('compiler', () => {
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        {{__dirname}}/fixtures/class-composition/styles.css.ts,
         {{__dirname}}/fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
       ]
     `);
 
@@ -193,8 +193,8 @@ describe('compiler', () => {
     const localWatchFiles = getLocalFiles(output.watchFiles);
     expect(localWatchFiles).toMatchInlineSnapshot(`
       [
-        {{__dirname}}/fixtures/class-composition/styles.css.ts,
         {{__dirname}}/fixtures/class-composition/shared.css.ts,
+        {{__dirname}}/fixtures/class-composition/styles.css.ts,
       ]
     `);
 
@@ -340,7 +340,7 @@ describe('compiler', () => {
         .stepper_stepperContainer__p034sj0 {
           font-size: 32px;
         }
-        .stepper_stepperContainer__p034sj0 .base_base__1xukjx1 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
+        .stepper_stepperContainer__p034sj0 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
           border: 1px solid black;
         }
       `);
