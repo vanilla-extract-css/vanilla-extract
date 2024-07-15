@@ -53,7 +53,7 @@ const scanModule = (
     const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
       scanModule(dependencyNode, cache, currentPath);
 
-    dependencyCssDeps.forEach((dep) => {
+    dependencyCssDeps.reverse().forEach((dep) => {
       cssDeps.delete(dep);
       cssDeps.add(dep);
     });
