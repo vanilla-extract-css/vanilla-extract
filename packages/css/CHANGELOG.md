@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.15.3
+
+### Patch Changes
+
+- [#1425](https://github.com/vanilla-extract-css/vanilla-extract/pull/1425) [`b86f3f59c86420e12593996a14f8cdb5db2f7c25`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b86f3f59c86420e12593996a14f8cdb5db2f7c25) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where declarations with identical selectors would not be merged correctly inside conditional rules
+
+- [#1410](https://github.com/vanilla-extract-css/vanilla-extract/pull/1410) [`99e974b2ae56e1e851b376988216b7bd30813813`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99e974b2ae56e1e851b376988216b7bd30813813) Thanks [@pengooseDev](https://github.com/pengooseDev)! - Fixes a bug causing incorrect type inference when calling `createTheme` with a theme contract
+
 ## 1.15.2
 
 ### Patch Changes

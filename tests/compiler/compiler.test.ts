@@ -277,6 +277,79 @@ describe('compiler', () => {
     `);
   });
 
+  test('should replace class compositions correctly', async () => {
+    const compiler = compilers.default;
+
+    const baseCssPath = './fixtures/class-composition/base.css.ts';
+    const buttonCssPath = './fixtures/class-composition/button.css.ts';
+    const stepperCssPath = './fixtures/class-composition/stepper.css.ts';
+
+    const baseOutput = await compiler.processVanillaFile(baseCssPath);
+    expect(baseOutput.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/class-composition/base.css.ts.vanilla.css';
+      export var fontFamilyBase = 'base_fontFamilyBase__1xukjx0';
+      export var base = 'base_base__1xukjx1 base_fontFamilyBase__1xukjx0';
+    `);
+
+    const buttonOutput = await compiler.processVanillaFile(buttonCssPath);
+    expect(buttonOutput.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/class-composition/base.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/button.css.ts.vanilla.css';
+      export var button = 'button_button__59rihu0 base_base__1xukjx1 base_fontFamilyBase__1xukjx0';
+    `);
+
+    const stepperOutput = await compiler.processVanillaFile(stepperCssPath);
+    expect(stepperOutput.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/class-composition/base.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/button.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/stepper.css.ts.vanilla.css';
+      export var stepperContainer = 'stepper_stepperContainer__p034sj0 base_base__1xukjx1 base_fontFamilyBase__1xukjx0';
+      export var stepperButton = 'stepper_stepperButton__p034sj1';
+    `);
+
+    {
+      const { css, filePath } = compiler.getCssForFile(baseCssPath);
+      expect(css).toMatchInlineSnapshot(`
+        .base_fontFamilyBase__1xukjx0 {
+          font-family: Arial, sans-serif;
+        }
+        .base_base__1xukjx1 {
+          background: blue;
+        }
+      `);
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `{{__dirname}}/fixtures/class-composition/base.css.ts`,
+      );
+    }
+
+    {
+      const { css, filePath } = compiler.getCssForFile(buttonCssPath);
+      expect(css).toMatchInlineSnapshot(`
+        .button_button__59rihu0 {
+          color: red;
+        }
+      `);
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `{{__dirname}}/fixtures/class-composition/button.css.ts`,
+      );
+    }
+
+    {
+      const { css, filePath } = compiler.getCssForFile(stepperCssPath);
+      expect(css).toMatchInlineSnapshot(`
+        .stepper_stepperContainer__p034sj0 {
+          font-size: 32px;
+        }
+        .stepper_stepperContainer__p034sj0 .base_base__1xukjx1 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
+          border: 1px solid black;
+        }
+      `);
+      expect(normalizePath(filePath)).toMatchInlineSnapshot(
+        `{{__dirname}}/fixtures/class-composition/stepper.css.ts`,
+      );
+    }
+  });
+
   test('does not remove unused composition classes', async () => {
     const compiler = compilers.default;
 

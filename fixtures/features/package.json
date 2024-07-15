@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/features",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",

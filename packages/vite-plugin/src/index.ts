@@ -6,6 +6,8 @@ import type {
   ConfigEnv,
   ViteDevServer,
   Rollup,
+  PluginOption,
+  UserConfig,
 } from 'vite';
 import {
   cssFileFilter,
@@ -23,6 +25,22 @@ const isVirtualId = (id: string) => id.endsWith(virtualExtCss);
 const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
 const virtualIdToFileId = (virtualId: string) =>
   virtualId.slice(0, -virtualExtCss.length);
+
+const removeIncompatiblePlugins = (plugin: PluginOption) =>
+  typeof plugin === 'object' &&
+  plugin !== null &&
+  'name' in plugin &&
+  // Prevent an infinite loop where the compiler creates a new instance of the plugin,
+  // which creates a new compiler, which creates a new instance of the plugin, etc.
+  plugin.name !== 'vanilla-extract' &&
+  // Skip Remix because it throws an error if it's not loaded with a config file.
+  // If it _is_ loaded with a config file, it will create an infinite loop because it
+  // also has a child compiler which uses the same mechanism to load the config file.
+  // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
+  // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
+  // the main Remix plugin, and may not function correctly without it. To address this, we
+  // filter out all Remix-related plugins.
+  !plugin.name.startsWith('remix');
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -120,39 +138,39 @@ export function vanillaExtractPlugin({
       // Ensure we re-use the compiler instance between builds, e.g. in watch mode
       if (mode !== 'transform' && !compiler) {
         const { loadConfigFromFile } = await vitePromise;
-        const configFile = await loadConfigFromFile(
-          {
-            command: config.command,
-            mode: config.mode,
-            isSsrBuild: configEnv.isSsrBuild,
-          },
-          config.configFile,
-        );
+
+        let configForViteCompiler: UserConfig | undefined;
+
+        // The user has a vite config file
+        if (config.configFile) {
+          const configFile = await loadConfigFromFile(
+            {
+              command: config.command,
+              mode: config.mode,
+              isSsrBuild: configEnv.isSsrBuild,
+            },
+            config.configFile,
+          );
+
+          configForViteCompiler = configFile?.config;
+        }
+        // The user is using a vite-based framework that has a custom config file
+        else {
+          configForViteCompiler = config.inlineConfig;
+        }
+
+        const viteConfig = {
+          ...configForViteCompiler,
+          plugins: configForViteCompiler?.plugins
+            ?.flat()
+            .filter(removeIncompatiblePlugins),
+        };
 
         compiler = createCompiler({
           root: config.root,
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
-          viteConfig: {
-            ...configFile?.config,
-            plugins: configFile?.config.plugins?.flat().filter(
-              (plugin) =>
-                typeof plugin === 'object' &&
-                plugin !== null &&
-                'name' in plugin &&
-                // Prevent an infinite loop where the compiler creates a new instance of the plugin,
-                // which creates a new compiler, which creates a new instance of the plugin, etc.
-                plugin.name !== 'vanilla-extract' &&
-                // Skip Remix because it throws an error if it's not loaded with a config file.
-                // If it _is_ loaded with a config file, it will create an infinite loop because it
-                // also has a child compiler which uses the same mechanism to load the config file.
-                // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
-                // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
-                // the main Remix plugin, and may not function correctly without it. To address this, we
-                // filter out all Remix-related plugins.
-                !plugin.name.startsWith('remix'),
-            ),
-          },
+          viteConfig,
         });
       }
     },
