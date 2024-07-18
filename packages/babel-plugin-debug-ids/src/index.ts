@@ -39,6 +39,13 @@ const debuggableFunctionConfig = {
   createContainer: {
     maxParams: 1,
   },
+  createViewTransition: {
+    maxParams: 2,
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
+  },
   layer: {
     maxParams: 2,
     hasDebugId: ({ arguments: args }) => {

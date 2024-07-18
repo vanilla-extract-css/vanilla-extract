@@ -230,6 +230,16 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle createViewTransition assigned to const', () => {
+    const source = `
+      import { createViewTransition } from '@vanilla-extract/css';
+
+      const myViewTransition = createViewTransition("title");
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot();
+  });
+
   it('should handle fontFace assigned to const', () => {
     const source = `
       import { fontFace } from '@vanilla-extract/css';
