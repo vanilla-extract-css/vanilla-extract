@@ -237,7 +237,10 @@ describe('babel plugin', () => {
       const myViewTransition = createViewTransition("title");
     `;
 
-    expect(transform(source)).toMatchInlineSnapshot();
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { createViewTransition } from '@vanilla-extract/css';
+      const myViewTransition = createContainer("title", "myViewTransition");
+    `);
   });
 
   it('should handle fontFace assigned to const', () => {
