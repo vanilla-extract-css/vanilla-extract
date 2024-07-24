@@ -1,10 +1,10 @@
-.styles_depBlock__vg1esd1 {
-  --depColor__vg1esd0: green;
-  background-color: var(--depColor__vg1esd0);
-}
 .styles_depdepBlock__7q0fkw1 {
   --depdepColor__7q0fkw0: blue;
   background-color: var(--depdepColor__7q0fkw0);
+}
+.styles_depBlock__vg1esd1 {
+  --depColor__vg1esd0: green;
+  background-color: var(--depColor__vg1esd0);
 }
 .styles_block__1vrxmse1 {
   --color__1vrxmse0: red;
