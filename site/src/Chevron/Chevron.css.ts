@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 export const root = style({
   transition: 'transform .15s ease',
@@ -6,9 +6,9 @@ export const root = style({
   top: '1px',
 });
 
-export const direction = {
-  down: null,
-  up: style({ transform: 'rotate(180deg)' }),
-  left: style({ transform: 'rotate(90deg)' }),
-  right: style({ transform: 'rotate(270deg)' }),
-};
+export const direction = styleVariants({
+  down: {},
+  up: { transform: 'rotate(180deg)' },
+  left: { transform: 'rotate(90deg)' },
+  right: { transform: 'rotate(270deg)' },
+});

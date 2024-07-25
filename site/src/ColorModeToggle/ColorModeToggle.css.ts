@@ -1,35 +1,41 @@
-import { createVar, style } from '@vanilla-extract/css';
+import { assignVars, createThemeContract, style } from '@vanilla-extract/css';
 import { darkMode } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
 
-const toggleBrightness = createVar();
-const toggleContent = createVar();
-const focusRingColor = createVar();
+const themeVars = createThemeContract({
+  toggleBrightness: null,
+  toggleContent: null,
+  focusRingColor: null,
+});
+
+const lightVars = assignVars(themeVars, {
+  toggleBrightness: '0',
+  toggleContent: '"☀️"',
+  focusRingColor: vars.palette.pink400,
+});
+
+const darkVars = assignVars(themeVars, {
+  toggleBrightness: '10',
+  toggleContent: '"🌙"',
+  focusRingColor: vars.palette.pink500,
+});
 
 export const root = style({
   outline: 'none',
   fontSize: 24,
   height: 42,
   width: 42,
-  vars: {
-    [toggleBrightness]: '0',
-    [toggleContent]: '"☀️"',
-    [focusRingColor]: vars.palette.pink400,
-  },
+  vars: lightVars,
   ':focus-visible': {
-    boxShadow: `0px 0px 0px 3px ${focusRingColor}`,
+    boxShadow: `0px 0px 0px 3px ${themeVars.focusRingColor}`,
   },
   '::before': {
-    content: toggleContent,
-    filter: `contrast(0) brightness(${toggleBrightness})`,
+    content: themeVars.toggleContent,
+    filter: `contrast(0) brightness(${themeVars.toggleBrightness})`,
   },
   selectors: {
     [`.${darkMode} &`]: {
-      vars: {
-        [toggleBrightness]: '10',
-        [toggleContent]: '"🌙"',
-        [focusRingColor]: vars.palette.pink500,
-      },
+      vars: darkVars,
     },
   },
 });

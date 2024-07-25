@@ -7,13 +7,15 @@ export const homePage = style({});
 
 export const shadowColorVar = createVar();
 
-export const featureKeyLine = style({
-  transform: 'skew(15deg)',
-  ...responsiveStyle({
+export const featureKeyLine = style([
+  {
+    transform: 'skew(15deg)',
+  },
+  responsiveStyle({
     mobile: { height: vars.text.standard.mobile.lineHeight },
     desktop: { height: vars.text.standard.desktop.lineHeight },
   }),
-});
+]);
 
 export const skewedContainer = style({
   ':after': {

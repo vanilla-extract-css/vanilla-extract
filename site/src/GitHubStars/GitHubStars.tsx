@@ -19,7 +19,7 @@ export const GitHubStars = () => {
   const [stars, setStars] = useState<string | null>(null);
 
   useEffect(() => {
-    const getCount = async () => {
+    (async () => {
       const res = await fetch(
         `https://api.github.com/repos/vanilla-extract-css/vanilla-extract`,
       );
@@ -32,8 +32,7 @@ export const GitHubStars = () => {
             : `${Math.sign(count) * Math.abs(count)}`,
         );
       }
-    };
-    getCount();
+    })();
   }, []);
 
   return (

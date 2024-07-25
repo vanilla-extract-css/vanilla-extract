@@ -22,8 +22,8 @@ export const header = style({
   height: headerHeight,
 });
 
-export const headerBg = style({
-  ...responsiveStyle({
+export const headerBg = style(
+  responsiveStyle({
     mobile: {
       width: '100%',
       clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 100%)',
@@ -35,7 +35,7 @@ export const headerBg = style({
       backdropFilter: 'blur(4px)',
     },
   }),
-});
+);
 
 export const container = style(
   responsiveStyle({
@@ -45,8 +45,8 @@ export const container = style(
   }),
 );
 
-export const sidebar = style({
-  ...responsiveStyle({
+export const sidebar = style(
+  responsiveStyle({
     mobile: {
       width: `clamp(300px, 40vw, 400px)`,
       transition: 'transform .15s ease, opacity .15s ease',
@@ -59,7 +59,7 @@ export const sidebar = style({
       top: `${calc(headerHeight).add(vars.spacing.large)}`,
     },
   }),
-});
+);
 
 export const showOnWideScreens = style({
   '@media': {
