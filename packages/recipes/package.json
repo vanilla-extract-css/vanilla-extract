@@ -9,11 +9,11 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/vanilla-extract-recipes.esm.js",
+      "import": "./dist/vanilla-extract-recipes.esm.js",
       "default": "./dist/vanilla-extract-recipes.cjs.js"
     },
     "./createRuntimeFn": {
-      "module": "./createRuntimeFn/dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
+      "import": "./createRuntimeFn/dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
       "default": "./createRuntimeFn/dist/vanilla-extract-recipes-createRuntimeFn.cjs.js"
     }
   },

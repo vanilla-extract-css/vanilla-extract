@@ -48,7 +48,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^2.8.8",
-    "resolve.exports": "^1.1.0",
+    "resolve.exports": "^2.0.2",
     "rollup": "^2.7.0",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-node-externals": "^5.0.0",

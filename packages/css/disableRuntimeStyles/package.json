@@ -9,10 +9,10 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "module": "./dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
+        "import": "./dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
         "default": "./dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"
       },
-      "module": "./dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
+      "import": "./dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
       "default": "./dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
     }
   }
