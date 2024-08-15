@@ -22,62 +22,70 @@ type ModuleScanResult = {
   watchFiles: Set<string>;
 };
 
-const scanModule = (
-  moduleNode: ModuleNode,
-  cache = new Map<string, ModuleScanResult>(),
-  path: string[] = [],
-): ModuleScanResult => {
-  const watchFiles = new Set<string>();
-  const cacheKey = moduleNode.id ?? moduleNode.file;
+const createModuleScanner = () => {
+  const cache = new Map<string, ModuleScanResult>();
 
-  if (
-    !cacheKey ||
-    moduleNode.id?.includes('@vanilla-extract/') ||
-    path.includes(cacheKey)
-  ) {
-    return {
-      cssDeps: [],
+  const scanModule = (
+    moduleNode: ModuleNode,
+    path: string[] = [],
+  ): ModuleScanResult => {
+    const watchFiles = new Set<string>();
+    const cacheKey = moduleNode.id ?? moduleNode.file;
+
+    if (
+      !cacheKey ||
+      moduleNode.id?.includes('@vanilla-extract/') ||
+      path.includes(cacheKey)
+    ) {
+      return {
+        cssDeps: [],
+        watchFiles,
+      };
+    }
+
+    if (cache.has(cacheKey)) {
+      return cache.get(cacheKey)!;
+    }
+
+    const cssDeps: string[] = [];
+
+    const currentPath = [...path, cacheKey];
+
+    for (const dependencyNode of moduleNode.importedModules) {
+      const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
+        scanModule(dependencyNode, currentPath);
+
+      dependencyCssDeps.forEach((dep) => {
+        if (cssDeps.includes(dep)) {
+          cssDeps.unshift(dep);
+        }
+
+        cssDeps.push(dep);
+      });
+      dependencyWatchFiles.forEach((file) => watchFiles.add(file));
+    }
+
+    const cssDepsArray = Array.from(new Set(cssDeps));
+
+    if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
+      cssDepsArray.push(moduleNode.id);
+    }
+
+    if (moduleNode.file) {
+      watchFiles.add(moduleNode.file);
+    }
+
+    const scanResult = {
+      cssDeps: cssDepsArray,
       watchFiles,
     };
-  }
 
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey)!;
-  }
+    cache.set(cacheKey, scanResult);
 
-  const cssDeps = new Set<string>();
-
-  const currentPath = [...path, cacheKey];
-
-  for (const dependencyNode of moduleNode.importedModules) {
-    const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
-      scanModule(dependencyNode, cache, currentPath);
-
-    dependencyCssDeps.reverse().forEach((dep) => {
-      cssDeps.delete(dep);
-      cssDeps.add(dep);
-    });
-    dependencyWatchFiles.forEach((file) => watchFiles.add(file));
-  }
-
-  const cssDepsArray = Array.from(cssDeps).reverse();
-
-  if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
-    cssDepsArray.push(moduleNode.id);
-  }
-
-  if (moduleNode.file) {
-    watchFiles.add(moduleNode.file);
-  }
-
-  const scanResult = {
-    cssDeps: cssDepsArray,
-    watchFiles,
+    return scanResult;
   };
 
-  cache.set(cacheKey, scanResult);
-
-  return scanResult;
+  return scanModule;
 };
 
 const createViteServer = async ({
@@ -353,6 +361,7 @@ export const createCompiler = ({
       const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
           runner.cssAdapter = cssAdapter;
+          const scanModule = createModuleScanner();
 
           const fileExports = await runner.executeFile(filePath);
 
