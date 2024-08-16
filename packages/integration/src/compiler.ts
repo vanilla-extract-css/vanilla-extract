@@ -47,7 +47,7 @@ const createModuleScanner = () => {
       return cache.get(cacheKey)!;
     }
 
-    const cssDeps: string[] = [];
+    const cssDeps = new Set<string>();
 
     const currentPath = [...path, cacheKey];
 
@@ -55,11 +55,11 @@ const createModuleScanner = () => {
       const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
         scanModule(dependencyNode, currentPath);
 
-      cssDeps.unshift(...dependencyCssDeps);
+      dependencyCssDeps.forEach((file) => cssDeps.add(file));
       dependencyWatchFiles.forEach((file) => watchFiles.add(file));
     }
 
-    const cssDepsArray = Array.from(new Set(cssDeps));
+    const cssDepsArray = Array.from(cssDeps);
 
     if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
       cssDepsArray.push(moduleNode.id);
