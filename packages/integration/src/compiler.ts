@@ -47,6 +47,11 @@ const createModuleScanner = () => {
       return cache.get(cacheKey)!;
     }
 
+    cache.set(cacheKey, {
+      cssDeps: [],
+      watchFiles,
+    });
+
     const cssDeps = new Set<string>();
 
     const currentPath = [...path, cacheKey];
@@ -355,7 +360,6 @@ export const createCompiler = ({
       const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
           runner.cssAdapter = cssAdapter;
-          const scanModule = createModuleScanner();
 
           const fileExports = await runner.executeFile(filePath);
 
@@ -369,6 +373,7 @@ export const createCompiler = ({
           const cssImports = [];
           const orderedComposedClassLists = [];
 
+          const scanModule = createModuleScanner();
           const { cssDeps, watchFiles } = scanModule(moduleNode);
 
           for (const cssDep of cssDeps) {
