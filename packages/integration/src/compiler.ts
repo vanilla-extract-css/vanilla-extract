@@ -55,13 +55,7 @@ const createModuleScanner = () => {
       const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
         scanModule(dependencyNode, currentPath);
 
-      dependencyCssDeps.forEach((dep) => {
-        if (cssDeps.includes(dep)) {
-          cssDeps.unshift(dep);
-        }
-
-        cssDeps.push(dep);
-      });
+      cssDeps.unshift(...dependencyCssDeps);
       dependencyWatchFiles.forEach((file) => watchFiles.add(file));
     }
 
