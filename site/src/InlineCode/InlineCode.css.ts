@@ -22,5 +22,15 @@ export const code = style({
     [`.${darkMode} &::before`]: {
       background: vars.palette.gray800,
     },
+    [`a > &`]: {
+      textDecoration: 'underline 0.05em',
+    },
+    ['a:hover > &']: {
+      color: 'currentcolor',
+    },
+    ['a:focus > &']: {
+      outline: 'none',
+      color: 'currentcolor',
+    },
   },
 });
