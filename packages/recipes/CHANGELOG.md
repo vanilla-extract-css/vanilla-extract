@@ -1,5 +1,11 @@
 # @vanilla-extract/recipes
 
+## 0.5.4
+
+### Patch Changes
+
+- [#1443](https://github.com/vanilla-extract-css/vanilla-extract/pull/1443) [`2a7acc989fba707220186f2d0b824bc4cc37ad66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2a7acc989fba707220186f2d0b824bc4cc37ad66) Thanks [@DominikRusso](https://github.com/DominikRusso)! - Enable passing `undefined` variant values to recipe functions when TypeScript's `exactOptionalPropertyTypes` is enabled.
+
 ## 0.5.3
 
 ### Patch Changes
