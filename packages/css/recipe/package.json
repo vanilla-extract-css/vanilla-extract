@@ -9,10 +9,10 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "import": "./dist/vanilla-extract-css-recipe.browser.esm.js",
+        "module": "./dist/vanilla-extract-css-recipe.browser.esm.js",
         "default": "./dist/vanilla-extract-css-recipe.browser.cjs.js"
       },
-      "import": "./dist/vanilla-extract-css-recipe.esm.js",
+      "module": "./dist/vanilla-extract-css-recipe.esm.js",
       "default": "./dist/vanilla-extract-css-recipe.cjs.js"
     }
   }

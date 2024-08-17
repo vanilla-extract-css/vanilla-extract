@@ -15,74 +15,74 @@
     ".": {
       "types": "./dist/vanilla-extract-css.cjs.d.ts",
       "browser": {
-        "import": "./dist/vanilla-extract-css.browser.esm.js",
+        "module": "./dist/vanilla-extract-css.browser.esm.js",
         "default": "./dist/vanilla-extract-css.browser.cjs.js"
       },
-      "import": "./dist/vanilla-extract-css.esm.js",
+      "module": "./dist/vanilla-extract-css.esm.js",
       "default": "./dist/vanilla-extract-css.cjs.js"
     },
     "./recipe": {
       "types": "./recipe/dist/vanilla-extract-css-recipe.cjs.d.ts",
       "browser": {
-        "import": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
+        "module": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
         "default": "./recipe/dist/vanilla-extract-css-recipe.browser.cjs.js"
       },
-      "import": "./recipe/dist/vanilla-extract-css-recipe.esm.js",
+      "module": "./recipe/dist/vanilla-extract-css-recipe.esm.js",
       "default": "./recipe/dist/vanilla-extract-css-recipe.cjs.js"
     },
     "./functionSerializer": {
       "types": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.d.ts",
       "browser": {
-        "import": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
+        "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
         "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
       },
-      "import": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.esm.js",
+      "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.esm.js",
       "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.js"
     },
     "./adapter": {
       "types": "./adapter/dist/vanilla-extract-css-adapter.cjs.d.ts",
       "browser": {
-        "import": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
+        "module": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
         "default": "./adapter/dist/vanilla-extract-css-adapter.browser.cjs.js"
       },
-      "import": "./adapter/dist/vanilla-extract-css-adapter.esm.js",
+      "module": "./adapter/dist/vanilla-extract-css-adapter.esm.js",
       "default": "./adapter/dist/vanilla-extract-css-adapter.cjs.js"
     },
     "./transformCss": {
       "types": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.d.ts",
       "browser": {
-        "import": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
+        "module": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
         "default": "./transformCss/dist/vanilla-extract-css-transformCss.browser.cjs.js"
       },
-      "import": "./transformCss/dist/vanilla-extract-css-transformCss.esm.js",
+      "module": "./transformCss/dist/vanilla-extract-css-transformCss.esm.js",
       "default": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.js"
     },
     "./fileScope": {
       "types": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.d.ts",
       "browser": {
-        "import": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
+        "module": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
         "default": "./fileScope/dist/vanilla-extract-css-fileScope.browser.cjs.js"
       },
-      "import": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
+      "module": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
       "default": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.js"
     },
     "./fileScope/package.json": "./fileScope/package.json",
     "./injectStyles": {
       "types": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.d.ts",
       "browser": {
-        "import": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
+        "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
         "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.cjs.js"
       },
-      "import": "./injectStyles/dist/vanilla-extract-css-injectStyles.esm.js",
+      "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.esm.js",
       "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.js"
     },
     "./disableRuntimeStyles": {
       "types": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.d.ts",
       "browser": {
-        "import": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
+        "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
         "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"
       },
-      "import": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
+      "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
       "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
     }
   },

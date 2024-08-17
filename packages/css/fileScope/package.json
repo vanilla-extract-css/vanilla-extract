@@ -10,10 +10,10 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "import": "./dist/vanilla-extract-css-fileScope.browser.esm.js",
+        "module": "./dist/vanilla-extract-css-fileScope.browser.esm.js",
         "default": "./dist/vanilla-extract-css-fileScope.browser.cjs.js"
       },
-      "import": "./dist/vanilla-extract-css-fileScope.esm.js",
+      "module": "./dist/vanilla-extract-css-fileScope.esm.js",
       "default": "./dist/vanilla-extract-css-fileScope.cjs.js"
     }
   }
