@@ -22,7 +22,7 @@
     "@fixtures/themed": "workspace:*",
     "@rollup/plugin-json": "^4.1.0",
     "@vanilla-extract/css": "workspace:^",
-    "esbuild": "~0.21.5",
+    "esbuild": "~0.23.1",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
   },
