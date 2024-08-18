@@ -1,5 +1,13 @@
 # @fixtures/thirdparty-dep
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+  - @fixtures/thirdparty-dep-dep@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes

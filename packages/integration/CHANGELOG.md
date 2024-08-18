@@ -1,5 +1,16 @@
 # @vanilla-extract/integration
 
+## 7.1.8
+
+### Patch Changes
+
+- [#1461](https://github.com/vanilla-extract-css/vanilla-extract/pull/1461) [`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b) Thanks [@askoufis](https://github.com/askoufis)! - Widen `esbuild` dependency range to include `~0.22.0` and `~0.23.0`
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+
 ## 7.1.7
 
 ### Patch Changes
