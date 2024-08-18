@@ -112,7 +112,7 @@ export const startWebpackFixture = (
             url: `http://localhost:${port}`,
             close: () =>
               new Promise<void>((resolveClose) =>
-                server.close(() => {
+                server.stopCallback(() => {
                   compiler.close(() => resolveClose());
                 }),
               ),
