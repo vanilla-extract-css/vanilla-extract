@@ -472,7 +472,7 @@ importers:
         specifier: ^1.5.3
         version: 1.5.3
       esbuild:
-        specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0 || ~0.20.0 || ~0.21.0
+        specifier: npm:esbuild@>=0.17.6 <0.24.0
         version: 0.21.5
       eval:
         specifier: 0.1.8
@@ -503,7 +503,7 @@ importers:
         specifier: workspace:^
         version: link:../integration
       esbuild:
-        specifier: npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0 || ~0.20.0 || ~0.21.0
+        specifier: npm:esbuild@>=0.17.6 <0.24.0
         version: 0.21.5
     devDependencies:
       '@jest/transform':
