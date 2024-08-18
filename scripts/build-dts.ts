@@ -6,7 +6,7 @@ import glob from 'fast-glob';
 import { legacy, resolve } from 'resolve.exports';
 import { rollup } from 'rollup';
 import dts from 'rollup-plugin-dts';
-import { externals } from 'rollup-plugin-node-externals';
+import { nodeExternals } from 'rollup-plugin-node-externals';
 
 function resolveEntry<PackageJson>(
   pkg: PackageJson,
@@ -45,7 +45,7 @@ async function buildEntry(packageDir: string, entryPath: string) {
     const bundle = await rollup({
       input: dtsEntryPath,
       plugins: [
-        externals({
+        nodeExternals({
           packagePath: path.resolve(packageDir, 'package.json'),
           deps: true,
           devDeps: false,

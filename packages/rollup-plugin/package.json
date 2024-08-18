@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "@fixtures/themed": "workspace:*",
-    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-json": "^6.1.0",
     "@vanilla-extract/css": "workspace:^",
     "esbuild": "~0.23.1",
-    "rollup": "^2.7.0",
-    "rollup-plugin-esbuild": "^4.9.1"
+    "rollup": "^4.20.0",
+    "rollup-plugin-esbuild": "^6.1.1"
   },
   "peerDependencies": {
     "rollup": "^2.0.0 || ^3.0.0 || ^4.0.0"

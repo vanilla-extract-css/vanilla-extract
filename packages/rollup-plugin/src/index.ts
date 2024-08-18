@@ -101,7 +101,7 @@ export function vanillaExtractPlugin({
 
       return {
         code: output,
-        map: chunkInfo.map ?? null,
+        map: null,
       };
     },
   };
