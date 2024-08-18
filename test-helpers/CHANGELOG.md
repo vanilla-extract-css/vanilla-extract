@@ -1,5 +1,14 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.53
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/next-app-router@0.0.5
+  - @fixtures/next-pages-router@0.0.5
+  - @fixtures/recipes@0.0.34
+
 ## 0.0.52
 
 ### Patch Changes
