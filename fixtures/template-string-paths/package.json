@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/template-string-paths",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",
