@@ -17,32 +17,74 @@ type Composition = Parameters<Adapter['registerComposition']>[0];
 
 const globalAdapterIdentifier = '__vanilla_globalCssAdapter__';
 
-const scanModule = (entryModule: ModuleNode) => {
-  const queue = new Set([entryModule]);
-  const cssDeps = new Set<string>();
-  const watchFiles = new Set<string>();
+type ModuleScanResult = {
+  cssDeps: string[];
+  watchFiles: Set<string>;
+};
 
-  for (const moduleNode of queue) {
-    if (moduleNode.id?.includes('@vanilla-extract/')) {
-      continue;
+const createModuleScanner = () => {
+  const cache = new Map<string, ModuleScanResult>();
+
+  const scanModule = (
+    moduleNode: ModuleNode,
+    path: string[] = [],
+  ): ModuleScanResult => {
+    const watchFiles = new Set<string>();
+    const cacheKey = moduleNode.id ?? moduleNode.file;
+
+    if (
+      !cacheKey ||
+      moduleNode.id?.includes('@vanilla-extract/') ||
+      path.includes(cacheKey)
+    ) {
+      return {
+        cssDeps: [],
+        watchFiles,
+      };
     }
+
+    if (cache.has(cacheKey)) {
+      return cache.get(cacheKey)!;
+    }
+
+    cache.set(cacheKey, {
+      cssDeps: [],
+      watchFiles,
+    });
+
+    const cssDeps = new Set<string>();
+
+    const currentPath = [...path, cacheKey];
+
+    for (const dependencyNode of moduleNode.importedModules) {
+      const { cssDeps: dependencyCssDeps, watchFiles: dependencyWatchFiles } =
+        scanModule(dependencyNode, currentPath);
+
+      dependencyCssDeps.forEach((file) => cssDeps.add(file));
+      dependencyWatchFiles.forEach((file) => watchFiles.add(file));
+    }
+
+    const cssDepsArray = Array.from(cssDeps);
 
     if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
-      cssDeps.add(moduleNode.id);
+      cssDepsArray.push(moduleNode.id);
     }
+
     if (moduleNode.file) {
       watchFiles.add(moduleNode.file);
     }
 
-    for (const dep of moduleNode.importedModules) {
-      queue.add(dep);
-    }
-  }
+    const scanResult = {
+      cssDeps: cssDepsArray,
+      watchFiles,
+    };
 
-  // This ensures the root module's styles are last in terms of CSS ordering
-  const [head, ...tail] = cssDeps;
+    cache.set(cacheKey, scanResult);
 
-  return { cssDeps: [...tail, head], watchFiles };
+    return scanResult;
+  };
+
+  return scanModule;
 };
 
 const createViteServer = async ({
@@ -329,7 +371,9 @@ export const createCompiler = ({
           }
 
           const cssImports = [];
+          const orderedComposedClassLists = [];
 
+          const scanModule = createModuleScanner();
           const { cssDeps, watchFiles } = scanModule(moduleNode);
 
           for (const cssDep of cssDeps) {
@@ -338,6 +382,12 @@ export const createCompiler = ({
             const cachedCss = cssCache.get(cssDepModuleId);
             const cachedClassRegistrations =
               classRegistrationsByModuleId.get(cssDepModuleId);
+
+            if (cachedClassRegistrations) {
+              orderedComposedClassLists.push(
+                ...cachedClassRegistrations.composedClassLists,
+              );
+            }
 
             if (!cssObjs && !cachedCss && !cachedClassRegistrations) {
               continue;
@@ -349,7 +399,7 @@ export const createCompiler = ({
               if (cssObjs.length > 0) {
                 css = transformCss({
                   localClassNames: Array.from(localClassNames),
-                  composedClassLists,
+                  composedClassLists: orderedComposedClassLists,
                   cssObjs,
                 }).join('\n');
               }
