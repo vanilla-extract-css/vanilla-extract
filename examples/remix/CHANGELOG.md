@@ -1,5 +1,12 @@
 # vanilla-extract-example-remix
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+
 ## 0.0.4
 
 ### Patch Changes

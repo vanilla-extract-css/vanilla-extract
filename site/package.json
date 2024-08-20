@@ -43,11 +43,10 @@
     "@vanilla-extract/sprinkles": "workspace:*",
     "@vanilla-extract/webpack-plugin": "workspace:*",
     "babel-loader": "^9.1.3",
-    "copy-webpack-plugin": "^8.1.0",
-    "css-loader": "^6.9.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
     "csstype": "^3.0.7",
     "eval": "0.1.8",
-    "file-loader": "^6.2.0",
     "github-slugger": "^1.3.0",
     "gray-matter": "^4.0.2",
     "html-render-webpack-plugin": "^3.0.2",
@@ -60,7 +59,7 @@
     "webpack": "^5.90.0",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-node-externals": "^2.5.2"
+    "webpack-dev-server": "^5.0.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }

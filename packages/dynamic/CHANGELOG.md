@@ -1,5 +1,12 @@
 # @vanilla-extract/dynamic
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/private@1.0.6
+
 ## 2.1.1
 
 ### Patch Changes
