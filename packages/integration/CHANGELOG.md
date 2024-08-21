@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 7.1.9
+
+### Patch Changes
+
+- [#1431](https://github.com/vanilla-extract-css/vanilla-extract/pull/1431) [`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047) Thanks [@otaviomad](https://github.com/otaviomad)! - Fixes a bug in the `vite-node` compiler resulting in incorrectly ordered class compositions in certain cases
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+
 ## 7.1.8
 
 ### Patch Changes

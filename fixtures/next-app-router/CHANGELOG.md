@@ -1,5 +1,17 @@
 # @fixtures/next-app-router
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+  - @fixtures/features@0.0.31
+  - @fixtures/recipes@0.0.36
+  - @fixtures/sprinkles@0.0.36
+  - @vanilla-extract/recipes@0.5.5
+  - @vanilla-extract/sprinkles@1.6.3
+
 ## 0.0.6
 
 ### Patch Changes
