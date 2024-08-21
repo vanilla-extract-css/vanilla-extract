@@ -2,6 +2,7 @@ import hash from '@emotion/hash';
 
 import { getIdentOption } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
+import { getDebugFileName } from './getDebugFileName';
 
 function getDevPrefix({
   debugId,
@@ -15,13 +16,11 @@ function getDevPrefix({
   if (debugFileName) {
     const { filePath } = getFileScope();
 
-    const matches = filePath.match(
-      /(?<dir>[^\/\\]*)?[\/\\]?(?<file>[^\/\\]*)\.css\.(ts|js|tsx|jsx|cjs|mjs)$/,
-    );
+    const debugFileName = getDebugFileName(filePath);
 
-    if (matches && matches.groups) {
-      const { dir, file } = matches.groups;
-      parts.unshift(file && file !== 'index' ? file : dir);
+    // debugFileName could be an empty string
+    if (debugFileName) {
+      parts.unshift(debugFileName);
     }
   }
 
