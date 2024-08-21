@@ -26,7 +26,6 @@ const getLastSlashBeforeIndex = (path: string, index: number) => {
  */
 const _getDebugFileName = (path: string): string => {
   let file: string;
-  let dir: string | undefined;
 
   const lastIndexOfDotCss = path.lastIndexOf('.css');
 
@@ -45,7 +44,7 @@ const _getDebugFileName = (path: string): string => {
   let secondLastSlashIndex = getLastSlashBeforeIndex(path, lastSlashIndex - 1);
   // If secondLastSlashIndex is -1, it means that the path looks like `directory/file.css.ts`,
   // in which case dir will still be sliced starting at 0, which is what we want
-  dir = path.slice(secondLastSlashIndex + 1, lastSlashIndex);
+  const dir = path.slice(secondLastSlashIndex + 1, lastSlashIndex);
 
   const debugFileName = file !== 'index' ? file : dir;
 
@@ -53,7 +52,7 @@ const _getDebugFileName = (path: string): string => {
 };
 
 const memoizedGetDebugFileName = () => {
-  const cache = new LRUCache<string, ReturnType<typeof _getDebugFileName>>({
+  const cache = new LRUCache<string, string>({
     max: 500,
   });
 
