@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/parcel-transformer",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-parcel-transformer.cjs.js",
   "module": "dist/vanilla-extract-parcel-transformer.esm.js",

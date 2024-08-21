@@ -1,5 +1,12 @@
 # @fixtures/unused-modules
 
+## 1.0.31
+
+### Patch Changes
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+
 ## 1.0.30
 
 ### Patch Changes

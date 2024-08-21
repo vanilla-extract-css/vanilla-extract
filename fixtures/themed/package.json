@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/themed",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "main": "src/index.ts",
   "sideEffects": true,
   "author": "SEEK",

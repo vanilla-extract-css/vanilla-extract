@@ -1,5 +1,14 @@
 # vanilla-extract-example-webpack-react
 
+## 0.0.34
+
+### Patch Changes
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+  - @vanilla-extract/webpack-plugin@2.3.13
+  - @vanilla-extract/sprinkles@1.6.3
+
 ## 0.0.33
 
 ### Patch Changes
