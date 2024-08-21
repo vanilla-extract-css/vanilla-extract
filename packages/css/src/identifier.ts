@@ -2,7 +2,7 @@ import hash from '@emotion/hash';
 
 import { getIdentOption } from './adapter';
 import { getAndIncrementRefCounter, getFileScope } from './fileScope';
-import { getFileAndDirFromPath } from './getFileAndDirFromPath';
+import { getDebugFileName } from './getDebugFileName';
 
 function getDevPrefix({
   debugId,
@@ -16,12 +16,11 @@ function getDevPrefix({
   if (debugFileName) {
     const { filePath } = getFileScope();
 
-    const fileAndDir = getFileAndDirFromPath(filePath);
+    const debugFileName = getDebugFileName(filePath);
 
-    if (fileAndDir) {
-      const { dir, file } = fileAndDir;
-      const part = (file !== 'index' ? file : dir) || file;
-      parts.unshift(part);
+    // debugFileName could be an empty string
+    if (debugFileName) {
+      parts.unshift(debugFileName);
     }
   }
 
