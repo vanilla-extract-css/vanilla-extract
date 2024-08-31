@@ -23,6 +23,7 @@ export interface ColumnsProps {
   collapseOnMobile?: boolean;
   collapseOnTablet?: boolean;
 }
+
 export const Columns = ({
   children,
   space,

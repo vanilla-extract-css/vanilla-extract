@@ -1,6 +1,6 @@
 import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
+  Link as ReactRouterLink,
+  LinkProps as ReactRouterLinkProps,
 } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
@@ -8,7 +8,7 @@ import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
 import { sprinkles } from '../system/styles/sprinkles.css';
 
-export interface LinkProps extends RouterLinkProps {
+export interface LinkProps extends ReactRouterLinkProps {
   baseline?: boolean;
   size?: 'standard' | 'small' | 'xsmall';
   underline?: 'always' | 'hover' | 'never';
@@ -50,7 +50,7 @@ export const Link = ({
   }
 
   return (
-    <RouterLink
+    <ReactRouterLink
       onClick={() => window.scrollTo(0, 0)}
       to={to}
       {...restProps}
