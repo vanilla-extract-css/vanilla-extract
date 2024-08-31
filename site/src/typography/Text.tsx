@@ -42,7 +42,7 @@ export const useTextStyles = ({
     styles.weight[weight],
   );
 
-export default ({
+export const Text = ({
   component = 'span',
   size,
   color,
