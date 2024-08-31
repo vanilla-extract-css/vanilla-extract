@@ -65,7 +65,7 @@ export const ColorModeToggle = () => {
       borderRadius="full"
       cursor="pointer"
       className={styles.root}
-      title="Toggle colour mode"
+      title="Toggle color mode"
       onClick={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
     />
   );
