@@ -1,7 +1,6 @@
 import { Children, ReactNode } from 'react';
-import { Box } from '../';
-import { BoxProps } from '../Box/Box';
-import { mapResponsiveValue, ResponsiveValue } from '../styles/sprinkles.css';
+import { Box, type BoxProps } from './Box';
+import { mapResponsiveValue, ResponsiveValue } from './styles/sprinkles.css';
 
 const alignToFlexAlign = {
   left: 'flex-start',
@@ -9,15 +8,13 @@ const alignToFlexAlign = {
   right: 'flex-end',
 } as const;
 
-export const Stack = ({
-  children,
-  space,
-  align,
-}: {
+export interface StackProps {
   children: ReactNode;
   space: BoxProps['paddingBottom'];
   align?: ResponsiveValue<'left' | 'center' | 'right'>;
-}) => {
+}
+
+export const Stack = ({ children, space, align }: StackProps) => {
   const stackItems = Children.toArray(children);
   const alignItems = align
     ? mapResponsiveValue(align, (value) => alignToFlexAlign[value])

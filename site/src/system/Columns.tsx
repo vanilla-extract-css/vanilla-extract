@@ -1,19 +1,10 @@
 import { Children, ReactNode } from 'react';
-import { Box } from '../Box/Box';
+import { Box } from './Box';
 import {
   mapResponsiveValue,
   ResponsiveValue,
   Space,
-} from '../styles/sprinkles.css';
-
-interface Props {
-  children: ReactNode;
-  space: Space;
-  alignY?: ResponsiveValue<'top' | 'center' | 'bottom'>;
-  reverseX?: boolean;
-  collapseOnMobile?: boolean;
-  collapseOnTablet?: boolean;
-}
+} from './styles/sprinkles.css';
 
 const alignYToFlexAlign = {
   top: 'flex-start',
@@ -24,6 +15,14 @@ const alignYToFlexAlign = {
 const negate = (space: Space) =>
   space === 'none' ? ('none' as const) : (`-${space}` as const);
 
+export interface ColumnsProps {
+  children: ReactNode;
+  space: Space;
+  alignY?: ResponsiveValue<'top' | 'center' | 'bottom'>;
+  reverseX?: boolean;
+  collapseOnMobile?: boolean;
+  collapseOnTablet?: boolean;
+}
 export const Columns = ({
   children,
   space,
@@ -31,7 +30,7 @@ export const Columns = ({
   collapseOnTablet = false,
   reverseX = false,
   alignY = 'top',
-}: Props) => {
+}: ColumnsProps) => {
   const columns = Children.toArray(children);
   const row = reverseX ? 'row-reverse' : 'row';
 

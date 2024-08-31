@@ -1,17 +1,18 @@
 import { ReactNode } from 'react';
-import { Box } from '../';
+import { Box, type BoxProps } from './Box';
 import * as styles from './ContentBlock.css';
-import { BoxProps } from '../Box/Box';
+
+export interface ContentBlockProps {
+  children: ReactNode;
+  withGutters?: boolean;
+  size?: BoxProps['maxWidth'];
+}
 
 export const ContentBlock = ({
   children,
   withGutters = false,
   size = 'standard',
-}: {
-  children: ReactNode;
-  withGutters?: boolean;
-  size?: BoxProps['maxWidth'];
-}) => {
+}: ContentBlockProps) => {
   return (
     <Box
       maxWidth={size}

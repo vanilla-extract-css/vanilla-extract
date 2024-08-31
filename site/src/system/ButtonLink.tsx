@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import classnames from 'classnames';
 import { Link, NavLinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { Box } from '..';
+import { Box } from '.';
 import * as styles from './ButtonLink.css';
-import { sprinkles } from '../styles/sprinkles.css';
+import { sprinkles } from './styles';
 
-interface ButtonLinkProps extends NavLinkProps {
+export interface ButtonLinkProps extends NavLinkProps {
   variant?: 'solid' | 'transparent';
   icon?: ReactNode;
   children: ReactNode;
