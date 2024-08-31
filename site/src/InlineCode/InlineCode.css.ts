@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/sprinkles.css';
+import { darkMode } from '../system/styles';
 import { vars } from '../themes.css';
 
 export const code = style({

@@ -1,7 +1,7 @@
 import { Box } from '../system';
 import * as styles from './Divider.css';
 
-export default () => {
+export const Divider = () => {
   return (
     <Box
       component="hr"

@@ -1,23 +1,27 @@
 // @ts-ignore
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter/dist/esm/index';
+import { PrismLight } from 'react-syntax-highlighter/dist/esm/index';
 // @ts-ignore
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 // @ts-ignore
 import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
-SyntaxHighlighter.registerLanguage('tsx', tsx);
-SyntaxHighlighter.registerLanguage('ts', ts);
+PrismLight.registerLanguage('tsx', tsx);
+PrismLight.registerLanguage('ts', ts);
 
 import { Box } from '../system';
-import Text from '../Typography/Text';
+import { Text } from '../typography';
 import * as styles from './SyntaxHighlighter.css';
 
-export interface CodeProps {
+export interface SyntaxHighlighterProps {
   language: string;
   children: string;
   tokenized?: boolean;
 }
 
-export default ({ language, children, tokenized }: CodeProps) => {
+export const SyntaxHighlighter = ({
+  language,
+  children,
+  tokenized,
+}: SyntaxHighlighterProps) => {
   return (
     <Box className={styles.root}>
       <Text size="code" component="div" baseline={false}>
@@ -28,12 +32,12 @@ export default ({ language, children, tokenized }: CodeProps) => {
             dangerouslySetInnerHTML={{ __html: children }}
           />
         ) : (
-          <SyntaxHighlighter
+          <PrismLight
             language={language}
             style={{ [`pre[class*="language-"]`]: {} }}
           >
             {children}
-          </SyntaxHighlighter>
+          </PrismLight>
         )}
       </Text>
     </Box>

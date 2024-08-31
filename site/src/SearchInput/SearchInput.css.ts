@@ -1,6 +1,6 @@
 import { createVar, globalStyle } from '@vanilla-extract/css';
 import { homePage } from '../HomePage/HomePage.css';
-import { darkMode as darkModeClass } from '../system/styles/sprinkles.css';
+import { darkMode as darkModeClass } from '../system/styles';
 import { vars } from '../themes.css';
 import { responsiveStyle } from '../themeUtils';
 

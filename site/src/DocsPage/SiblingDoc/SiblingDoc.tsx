@@ -1,6 +1,5 @@
-import Link from '../../Typography/Link';
-import Text from '../../Typography/Text';
 import { Chevron } from '../../Chevron/Chevron';
+import { Link, Text } from '../../typography';
 import { Box } from '../../system';
 
 export interface SiblingDocProps {
@@ -9,7 +8,12 @@ export interface SiblingDocProps {
   direction: 'left' | 'right';
   subtitle?: string;
 }
-export default ({ title, route, subtitle, direction }: SiblingDocProps) => (
+export const SiblingDoc = ({
+  title,
+  route,
+  subtitle,
+  direction,
+}: SiblingDocProps) => (
   <Box
     display="flex"
     alignItems="center"

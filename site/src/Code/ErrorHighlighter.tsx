@@ -1,12 +1,15 @@
 import { useRef, useEffect, ReactNode } from 'react';
 import * as styles from './ErrorHighlighter.css';
 
-export interface CodeProps {
+export interface ErrorHighlighterProps {
   children: ReactNode;
   tokens: Array<string>;
 }
 
-export const ErrorHighlighter = ({ tokens, children }: CodeProps) => {
+export const ErrorHighlighter = ({
+  tokens,
+  children,
+}: ErrorHighlighterProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

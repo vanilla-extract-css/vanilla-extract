@@ -2,7 +2,11 @@ import { ReactNode } from 'react';
 import { Box } from '../system';
 import * as styles from './Blockquote.css';
 
-export default (props: { children: ReactNode }) => {
+export interface BlockquoteProps {
+  children: ReactNode;
+}
+
+export const Blockquote = (props: BlockquoteProps) => {
   return (
     <Box
       paddingX={{ mobile: 'large', tablet: 'xlarge' }}

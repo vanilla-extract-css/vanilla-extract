@@ -21,7 +21,11 @@ export const ColorModeContext = createContext<ColorModeContextValues>({
   setColorMode: () => {},
 });
 
-export function ColorModeProvider({ children }: { children: ReactNode }) {
+export interface ColorModeProviderProps {
+  children: ReactNode;
+}
+
+export const ColorModeProvider = ({ children }: ColorModeProviderProps) => {
   const [colorMode, setColorMode] = useState<ColorMode | null>(null);
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export function ColorModeProvider({ children }: { children: ReactNode }) {
       {children}
     </ColorModeContext.Provider>
   );
-}
+};
 
 export const ColorModeToggle = () => {
   const { colorMode, setColorMode } = useContext(ColorModeContext);

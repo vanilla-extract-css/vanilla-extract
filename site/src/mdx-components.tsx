@@ -7,16 +7,19 @@ import {
   Children,
 } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import Text, { useTextStyles } from './Typography/Text';
-import { Box } from './system';
-import InlineCode from './InlineCode/InlineCode';
-import Link from './Typography/Link';
-import Blockquote from './Blockquote/Blockquote';
-import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
-import Divider from './Divider/Divider';
+import { Box, type BoxProps } from './system';
+import {
+  Text,
+  useTextStyles,
+  useHeadingStyles,
+  type HeadingLevel,
+  Link,
+} from './typography';
+import { InlineCode } from './InlineCode/InlineCode';
+import { Blockquote } from './Blockquote/Blockquote';
+import { Divider } from './Divider/Divider';
 import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
-import { BoxProps } from './system/Box/Box';
-import { sprinkles } from './system/styles/sprinkles.css';
+import { sprinkles } from './system/styles';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
 
@@ -120,7 +123,7 @@ const Heading = ({ level, component, children, href }: HeadingProps) => {
   );
 };
 
-export default {
+export const mdxComponents = {
   hr: () => (
     <Block>
       <Divider />

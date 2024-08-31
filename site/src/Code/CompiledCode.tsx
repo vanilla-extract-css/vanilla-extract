@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Box, Stack } from '../system';
-import Text from '../Typography/Text';
-import SyntaxHighlighter from './SyntaxHighlighter';
+import { Text } from '../typography';
+import { SyntaxHighlighter } from './SyntaxHighlighter';
 
 import * as styles from './CompiledCode.css';
 import { vars } from '../themes.css';

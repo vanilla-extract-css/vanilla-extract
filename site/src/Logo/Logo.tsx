@@ -1,6 +1,10 @@
 import { Box } from '../system';
 
-export default ({ height = '100%' }: { height?: string | number }) => (
+export interface LogoProps {
+  height?: string | number;
+}
+
+export const Logo = ({ height = '100%' }: LogoProps) => (
   <Box display="flex">
     <svg
       xmlns="http://www.w3.org/2000/svg"

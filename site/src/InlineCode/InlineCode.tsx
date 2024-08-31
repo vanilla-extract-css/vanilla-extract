@@ -6,7 +6,7 @@ export interface InlineCodeProps {
   children: ReactNode;
   inline?: boolean;
 }
-export default ({ children }: InlineCodeProps) => {
+export const InlineCode = ({ children }: InlineCodeProps) => {
   return (
     <Box
       component="code"
