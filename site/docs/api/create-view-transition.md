@@ -25,10 +25,7 @@ export const pageTitle = style({
 });
 
 // navigation.css.ts
-import {
-  style,
-  createContainer
-} from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { titleViewTransition } from './itemPage.css.ts';
 
 export const navigationLinkTitle = style({
