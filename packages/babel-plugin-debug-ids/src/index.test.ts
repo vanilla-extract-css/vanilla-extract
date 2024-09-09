@@ -234,12 +234,12 @@ describe('babel plugin', () => {
     const source = `
       import { createViewTransition } from '@vanilla-extract/css';
 
-      const myViewTransition = createViewTransition("title");
+      const myViewTransition = createViewTransition();
     `;
 
     expect(transform(source)).toMatchInlineSnapshot(`
       import { createViewTransition } from '@vanilla-extract/css';
-      const myViewTransition = createViewTransition("title", "myViewTransition");
+      const myViewTransition = createViewTransition("myViewTransition");
     `);
   });
 
