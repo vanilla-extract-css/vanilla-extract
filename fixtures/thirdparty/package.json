@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/thirdparty",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "main": "src/index.ts",
   "author": "SEEK",
   "private": true,
