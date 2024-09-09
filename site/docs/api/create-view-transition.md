@@ -5,7 +5,8 @@ parent: api
 
 # createViewTransition
 
-Creates a single scoped view transition name for use with [CSS View Transitions]. This avoids potential naming collisions with other containers.
+Creates a single scoped view transition name for use with [CSS View Transitions].
+This avoids potential naming collisions with other view transitions.
 
 > 🚧&nbsp;&nbsp;Ensure your target browsers [support view transitions].
 > Vanilla-extract supports the [container query syntax][css view transition] but does not polyfill the feature in unsupported browsers.
