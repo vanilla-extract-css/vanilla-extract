@@ -35,6 +35,7 @@ const simplePseudoMap = {
   '::-ms-track': true,
   '::-ms-value': true,
   '::-webkit-backdrop': true,
+  '::-webkit-calendar-picker-indicator': true,
   '::-webkit-inner-spin-button': true,
   '::-webkit-input-placeholder': true,
   '::-webkit-meter-bar': true,
@@ -58,6 +59,7 @@ const simplePseudoMap = {
   '::-webkit-search-results-button': true,
   '::-webkit-slider-runnable-track': true,
   '::-webkit-slider-thumb': true,
+  
   '::after': true,
   '::backdrop': true,
   '::before': true,
