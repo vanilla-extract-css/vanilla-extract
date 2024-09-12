@@ -59,7 +59,6 @@ const simplePseudoMap = {
   '::-webkit-search-results-button': true,
   '::-webkit-slider-runnable-track': true,
   '::-webkit-slider-thumb': true,
-  
   '::after': true,
   '::backdrop': true,
   '::before': true,
