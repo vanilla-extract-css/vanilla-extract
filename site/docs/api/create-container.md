@@ -21,7 +21,7 @@ export const sidebarContainer = createContainer();
 
 export const sidebar = style({
   containerName: sidebarContainer,
- containerType: 'inline-size'
+  containerType: 'inline-size'
 });
 
 // navigation.css.ts
