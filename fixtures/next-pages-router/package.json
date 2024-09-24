@@ -1,7 +1,7 @@
 {
   "name": "@fixtures/next-pages-router",
   "description": "Next pages router fixtures",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "private": true,
   "scripts": {
     "dev": "next dev",

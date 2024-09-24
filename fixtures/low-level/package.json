@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/low-level",
-  "version": "0.0.29",
+  "version": "0.0.31",
   "main": "src/index.ts",
   "author": "SEEK",
   "private": true,

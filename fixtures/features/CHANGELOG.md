@@ -1,5 +1,21 @@
 # @fixtures/features
 
+## 0.0.31
+
+### Patch Changes
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+  - @vanilla-extract/dynamic@2.1.2
+
+## 0.0.30
+
+### Patch Changes
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+  - @vanilla-extract/dynamic@2.1.2
+
 ## 0.0.29
 
 ### Patch Changes

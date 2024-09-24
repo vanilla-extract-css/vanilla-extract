@@ -1,5 +1,20 @@
 # @vanilla-extract/css
 
+## 1.15.5
+
+### Patch Changes
+
+- [#1466](https://github.com/vanilla-extract-css/vanilla-extract/pull/1466) [`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c) Thanks [@askoufis](https://github.com/askoufis)! - Speed up dev prefix generation for long file paths
+
+## 1.15.4
+
+### Patch Changes
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/private@1.0.6
+
 ## 1.15.3
 
 ### Patch Changes

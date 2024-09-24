@@ -109,6 +109,10 @@ export const pink = style({
 });
 ```
 
+## Assigning variables dynamically
+
+CSS variables can also be assigned dynamically using APIs in [the `@vanilla-extract/dynamic` package](/documentation/packages/dynamic).
+
 ## CSS Properties
 
 You can also create typed css [@property](https://developer.mozilla.org/en-US/docs/Web/CSS/@property) using `createVar`:

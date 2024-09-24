@@ -3,7 +3,7 @@
 exports[`rollup-plugin should build with preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-16598c42.css",
+    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -15,7 +15,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
+    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -73,7 +73,7 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
+    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
     ":root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
   --colors-text__cvta172: white;
@@ -188,7 +188,7 @@ render();
   ],
   [
     "src/shared.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-16598c42.css';
+    "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 
 var shadow = "shared_shadow__4dtfen0";
 
@@ -197,9 +197,9 @@ export { shadow };
   ],
   [
     "src/styles.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-16598c42.css';
-import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
-import './../assets/src/styles.css.ts.vanilla-3ab8b079.css';
+    "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './../assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
+import './../assets/src/styles.css.ts.vanilla-BFtGQ1T7.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
@@ -210,7 +210,7 @@ export { button, container, opacity };
   ],
   [
     "src/themes.css.js",
-    "import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
+    "import './../assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";
@@ -517,36 +517,56 @@ export { altTheme, responsiveTheme, theme, vars };
 exports[`rollup-plugin should build with sourcemaps 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-16598c42.css",
+    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
     "",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
+    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
     "",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
+    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
     "",
   ],
   [
     "src/index.js",
-    "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",
+    ";;;;;;AAiBA,MAAM,WAAA,GAAc,iBAAiB,IAAM,EAAA;AAAA,EACzC,MAAQ,EAAA;AAAA,IACN,eAAiB,EAAA,QAAA;AAAA,IACjB,IAAM,EAAA,OAAA;AAAA,GACR;AAAA,EACA,KAAO,EAAA;AAAA,IACL,CAAG,EAAA,KAAA;AAAA,IACH,CAAG,EAAA,KAAA;AAAA,IACH,CAAG,EAAA,MAAA;AAAA,GACL;AACF,CAAC,CAAA,CAAA;AAED,SAAS,MAAS,GAAA;AAChB,EAAA,QAAA,CAAS,KAAK,SAAY,GAAA,CAAA;AAAA,WACf,EAAA,SAAA,CAAU,IAAI,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA;AAAA,aAE9B,EAAA,SAAA,CAAU,aAAa,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,kBACvC,EAAA,SAAA,CAAU,UAAU,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,kBAAA,EACtC,QAAQ,CAAA;AAAA;AAAA,iBAET,EAAA,SAAA,CAAU,YAAY,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,sBACtC,EAAA,SAAA,CAAU,SAAS,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,sBAAA,EACrC,KAAK,CAAA;AAAA;AAAA,qBAEN,EAAA,SAAA,CAAU,mBAAmB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,0BAC7C,EAAA,SAAA,CAAU,gBAAgB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,wBAAA,EAC9C,WAAW,CAAA;AAAA;AAAA,yBAEV,EAAA,SAAA,CAAU,oBAAoB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,8BAAA,EAC9C,UAAU,iBAAiB,CAAA,SAAA,EAAY,MAAM,CAAI,CAAA,EAAA,OAAA,CAAQ,KAAK,CAAC,CAAA;AAAA;AAAA;AAAA,6BAGhE,EAAA,SAAA,CAAU,oBAAoB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,kCAC9C,EAAA,SAAA,CAAU,iBAAiB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,8BAAA,EACjD,eAAe,CAAA;AAAA;AAAA,yBAEpB,EAAA,SAAA,CAAU,wBAAwB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,8BAClD,EAAA,SAAA,CAAU,qBAAqB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,CAAA,CAAA;AAiB/E,EAAA,MAAM,uBAAuB,QAAS,CAAA,cAAA;AAAA,IACpC,SAAU,CAAA,oBAAA;AAAA,GACZ,CAAA;AAEA,EAAA,IAAI,CAAC,oBAAsB,EAAA;AACzB,IAAM,MAAA,IAAI,MAAM,mCAAmC,CAAA,CAAA;AAAA,GACrD;AAEA,EAAA,cAAA,CAAe,sBAAsB,IAAM,EAAA;AAAA,IACzC,MAAQ,EAAA;AAAA,MACN,eAAiB,EAAA,aAAA;AAAA,MACjB,IAAM,EAAA,YAAA;AAAA,KACR;AAAA,IACA,KAAO,EAAA;AAAA,MACL,CAAG,EAAA,KAAA;AAAA,MACH,CAAG,EAAA,MAAA;AAAA,MACH,CAAG,EAAA,MAAA;AAAA,KACL;AAAA,GACD,CAAA,CAAA;AAED,EAAA,cAAA,CAAe,oBAAsB,EAAA;AAAA,IACnC,CAAC,IAAA,CAAK,MAAO,CAAA,eAAe,GAAG,YAAA;AAAA,GAChC,CAAA,CAAA;AACH,CAAA;AAEA,MAAO,EAAA",
+  ],
+  [
+    "src/index.js.map",
+    "",
   ],
   [
     "src/shared.css.js",
     ";;;;;;",
   ],
   [
+    "src/shared.css.js.map",
+    "",
+  ],
+  [
     "src/styles.css.js",
     ";;;;;;;;;;",
+  ],
+  [
+    "src/styles.css.js.map",
+    "",
   ],
   [
     "src/themes.css.js",
     ";;;;;;;;;",
   ],
   [
+    "src/themes.css.js.map",
+    "",
+  ],
+  [
     "test-nodes.json.js",
     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+  ],
+  [
+    "test-nodes.json.js.map",
+    "",
   ],
 ]
 `;
@@ -554,7 +574,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
 exports[`rollup-plugin should build without preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-16598c42.css",
+    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -566,7 +586,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
+    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -624,7 +644,7 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-3ad7ca47.css",
+    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
     ":root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
   --colors-text__cvta172: white;
@@ -656,9 +676,9 @@ html .styles_opacity_1\\/4__jteyb17 {
   [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
-import './assets/src/themes.css.ts.vanilla-3ad7ca47.css';
-import './assets/src/shared.css.ts.vanilla-16598c42.css';
-import './assets/src/styles.css.ts.vanilla-3ab8b079.css';
+import './assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
+import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './assets/src/styles.css.ts.vanilla-BFtGQ1T7.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";
