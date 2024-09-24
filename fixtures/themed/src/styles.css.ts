@@ -64,7 +64,11 @@ globalStyle(`body ${iDunno}:after`, {
   content: "'I am content'",
 });
 
-const blankVar1 = createVar();
+const blankVar1 = createVar({
+  syntax: '<number>',
+  inherits: false,
+  initialValue: '0',
+});
 const blankVar2 = createVar();
 
 export const opacity = styleVariants(

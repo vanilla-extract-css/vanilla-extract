@@ -31,7 +31,11 @@ const debuggableFunctionConfig = {
     maxParams: 2,
   },
   createVar: {
-    maxParams: 1,
+    maxParams: 2,
+    hasDebugId: ({ arguments: args }) => {
+      const previousArg = args[args.length - 1];
+      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
+    },
   },
   recipe: {
     maxParams: 2,

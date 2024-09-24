@@ -15,7 +15,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-1b9864b6.css",
+    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -23,6 +23,11 @@ body, button {
 @font-face {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -194,7 +199,7 @@ export { shadow };
     "src/styles.css.js",
     "import './../assets/src/shared.css.ts.vanilla-16598c42.css';
 import './../assets/src/themes.css.ts.vanilla-3ad7ca47.css';
-import './../assets/src/styles.css.ts.vanilla-1b9864b6.css';
+import './../assets/src/styles.css.ts.vanilla-3ab8b079.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
@@ -382,6 +387,11 @@ export { button, container, opacity };
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
 .styles_container__jteyb11 {
   display: flex;
   flex-direction: column;
@@ -511,7 +521,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
     "",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-1b9864b6.css",
+    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
     "",
   ],
   [
@@ -556,7 +566,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-1b9864b6.css",
+    "assets/src/styles.css.ts.vanilla-3ab8b079.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -564,6 +574,11 @@ body, button {
 @font-face {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -643,7 +658,7 @@ html .styles_opacity_1\\/4__jteyb17 {
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-3ad7ca47.css';
 import './assets/src/shared.css.ts.vanilla-16598c42.css';
-import './assets/src/styles.css.ts.vanilla-1b9864b6.css';
+import './assets/src/styles.css.ts.vanilla-3ab8b079.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";

@@ -108,3 +108,59 @@ export const pink = style({
   }
 });
 ```
+
+## CSS Properties
+
+You can also create typed css [@property](https://developer.mozilla.org/en-US/docs/Web/CSS/@property) using `createVar`:
+
+```ts compiled
+// accent.css.ts
+
+import { createVar, style } from '@vanilla-extract/css';
+
+export const accentVar = createVar({
+  syntax: '<color>',
+  inherits: false,
+  initialValue: 'blue'
+});
+```
+
+CSS properties created with `createVar` can be used in the same way as a regular css variable:
+
+```ts compiled
+export const pink = style({
+  vars: {
+    [accentVar]: 'pink'
+  }
+});
+``` 
+
+The main benefit of using `createVar` to create typed css properties is that they can be animated via `keyframes`.
+
+```ts compiled
+const angle = createVar({
+  syntax: '<angle>',
+  inherits: false,
+  initialValue: '0deg',
+});
+
+const angleKeyframes = keyframes({
+  '0%': {
+    [getVarName(angle)]: '0deg',
+  },
+  '100%': {
+    [getVarName(angle)]: '360deg',
+  },
+});
+
+export const root = style({
+  backgroundImage: `linear-gradient(${angle}, rgba(153, 70, 198, 0.35) 0%, rgba(28, 56, 240, 0.46) 100%)`,
+  animation: `${angleKeyframes} 7s infinite ease-in-out both`,
+  
+  vars: {
+    // This will fallback to 180deg if the @property is not supported by the browser
+    [angle]: fallbackVar(angle, '180deg'),
+  }
+});
+
+```

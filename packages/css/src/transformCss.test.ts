@@ -6,6 +6,11 @@ import { style } from './style';
 setFileScope('test');
 
 const testVar = createVar();
+const testPropertyVar = createVar({
+  syntax: '<angle>',
+  inherits: false,
+  initialValue: '0deg',
+}, 'test-property');
 const style1 = style({});
 const style2 = style({});
 
@@ -2022,7 +2027,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle css vars', () => {
+  it('should handle simple css properties', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -2071,6 +2076,60 @@ describe('transformCss', () => {
         .testClass {
           --my-var: yellow;
           --skkcyc0: blue;
+        }
+      }
+    `);
+  });
+  
+  it('should handle complicated css properties', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'block',
+              vars: {
+                '--my-var': 'red',
+                [testPropertyVar]: '10deg',
+              },
+              selectors: {
+                '&:nth-child(3)': {
+                  vars: {
+                    '--my-var': 'orange',
+                    [testPropertyVar]: '20deg',
+                  },
+                },
+              },
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  vars: {
+                    '--my-var': 'yellow',
+                    [testPropertyVar]: '50deg',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        --my-var: red;
+        --test-property__skkcyc1: 10deg;
+        display: block;
+      }
+      .testClass:nth-child(3) {
+        --my-var: orange;
+        --test-property__skkcyc1: 20deg;
+      }
+      @media screen and (min-width: 700px) {
+        .testClass {
+          --my-var: yellow;
+          --test-property__skkcyc1: 50deg;
         }
       }
     `);
@@ -2288,13 +2347,13 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+      .skkcyc3 .skkcyc2:before, .skkcyc3 .skkcyc2:after {
         background: black;
       }
-      ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      ._1g1ptzo1._1g1ptzo10 .skkcyc2 {
         background: blue;
       }
-      ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
+      ._1g1ptzo10._1g1ptzo1 .skkcyc2 {
         background: blue;
       }
     `);
