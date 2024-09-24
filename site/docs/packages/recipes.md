@@ -9,7 +9,7 @@ Create multi-variant styles with a type-safe runtime API, heavily inspired by [S
 
 As with the rest of vanilla-extract, all styles are generated at build time.
 
-> 💡 Recipes is an optional package built on top of vanilla-extract using its [function serialization API.](../../api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations.
+> 💡 Recipes is an optional package built on top of vanilla-extract using its [function serialization API.](/documentation/api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations.
 
 ## Setup
 
@@ -116,6 +116,28 @@ export const button = recipe({
     size: 'medium'
   }
 });
+```
+
+The recipes function also exposes an array property `variants` that includes all the variants from your recipe.
+
+```ts
+button.variants();
+// -> ['color', 'size']
+```
+
+## Recipe class name selection
+
+Recipes function exposes internal class names in `classNames` property.
+The property has two predefined props: `base` and `variants`. The `base` prop includes base class name. It is always defined even if you do not have any base styles. The `variants` prop includes class names for each defined variant.
+
+```ts
+// app.css.ts
+console.log(button.classNames.base);
+// -> app_button__129pj250
+console.log(button.classNames.variants.color.neutral);
+// -> app_button_color_neutral__129pj251
+console.log(button.classNames.variants.size.small);
+// -> app_button_size_small__129pj254
 ```
 
 ## RecipeVariants

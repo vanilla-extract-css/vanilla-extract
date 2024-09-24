@@ -1,5 +1,119 @@
 # @vanilla-extract/css
 
+## 1.15.3
+
+### Patch Changes
+
+- [#1425](https://github.com/vanilla-extract-css/vanilla-extract/pull/1425) [`b86f3f59c86420e12593996a14f8cdb5db2f7c25`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b86f3f59c86420e12593996a14f8cdb5db2f7c25) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where declarations with identical selectors would not be merged correctly inside conditional rules
+
+- [#1410](https://github.com/vanilla-extract-css/vanilla-extract/pull/1410) [`99e974b2ae56e1e851b376988216b7bd30813813`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99e974b2ae56e1e851b376988216b7bd30813813) Thanks [@pengooseDev](https://github.com/pengooseDev)! - Fixes a bug causing incorrect type inference when calling `createTheme` with a theme contract
+
+## 1.15.2
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/private@1.0.5
+
+## 1.15.1
+
+### Patch Changes
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- [#1385](https://github.com/vanilla-extract-css/vanilla-extract/pull/1385) [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a) Thanks [@askoufis](https://github.com/askoufis)! - Replace `chalk` dependency with `picocolors`
+
+## 1.15.0
+
+### Minor Changes
+
+- [#1379](https://github.com/vanilla-extract-css/vanilla-extract/pull/1379) [`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214) Thanks [@ronci](https://github.com/ronci)! - Add support for passing multiple font face rules to `globalFontFace`
+
+  **EXAMPLE USAGE:**
+
+  ```ts
+  const gentium = 'GlobalGentium';
+
+  globalFontFace(gentium, [
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+  ```
+
+## 1.14.2
+
+### Patch Changes
+
+- [#1368](https://github.com/vanilla-extract-css/vanilla-extract/pull/1368) [`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/private` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/private@1.0.4
+
+## 1.14.1
+
+### Patch Changes
+
+- [#1254](https://github.com/vanilla-extract-css/vanilla-extract/pull/1254) [`f373d7f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f373d7f6b59f43236dc713e1b421ef4631f392c0) Thanks [@EvgenNoskov](https://github.com/EvgenNoskov)! - Allow hyphens in class names when using a custom identifier
+
+## 1.14.0
+
+### Minor Changes
+
+- [#1207](https://github.com/vanilla-extract-css/vanilla-extract/pull/1207) [`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4) Thanks [@CroModder](https://github.com/CroModder)! - Add some missing [simple pseudo selectors]
+
+  [simple pseudo selectors]: https://vanilla-extract.style/documentation/styling/#simple-pseudo-selectors
+
+### Patch Changes
+
+- [#1215](https://github.com/vanilla-extract-css/vanilla-extract/pull/1215) [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99) Thanks [@mrm007](https://github.com/mrm007)! - Replace dependency `ahocorasick` with `modern-ahocorasick`
+
+## 1.13.0
+
+### Minor Changes
+
+- [#1160](https://github.com/vanilla-extract-css/vanilla-extract/pull/1160) [`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180) Thanks [@SombreroElGringo](https://github.com/SombreroElGringo)! - Users can now provide a custom identifier hashing function
+
+## 1.12.0
+
+### Minor Changes
+
+- [#1114](https://github.com/vanilla-extract-css/vanilla-extract/pull/1114) [`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3) Thanks [@taylorfsteele](https://github.com/taylorfsteele)! - Supports passing multiple font face rules to `fontFace`
+
+  **Example usage**
+
+  ```ts
+  import { fontFace, style } from '@vanilla-extract/css';
+
+  const gentium = fontFace([
+    {
+      src: 'local("Gentium")',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'local("Gentium Bold")',
+      fontWeight: 'bold',
+    },
+  ]);
+
+  export const font = style({
+    fontFamily: gentium,
+  });
+  ```
+
+## 1.11.1
+
+### Patch Changes
+
+- [#1106](https://github.com/vanilla-extract-css/vanilla-extract/pull/1106) [`8b1c965`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b1c9651112edd9fa294e8ffbb8c873c6ab18cc7) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix "Invalid selector" errors on pseudo-elements with params
+
 ## 1.11.0
 
 ### Minor Changes
@@ -31,7 +145,7 @@
 
   [cascade layers]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
   [layer]: https://vanilla-extract.style/documentation/api/layer
-  [globalLayer]: https://vanilla-extract.style/documentation/global-api/global-layer
+  [globallayer]: https://vanilla-extract.style/documentation/global-api/global-layer
 
 ## 1.10.0
 
@@ -360,7 +474,7 @@
         body: 'font-body',
       },
     },
-    value => `prefix-${value}`,
+    (value) => `prefix-${value}`,
   );
   ```
 

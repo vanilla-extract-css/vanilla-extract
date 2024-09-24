@@ -65,6 +65,8 @@ module.exports = {
 };
 ```
 
+If you already have `css-loader` configured, make sure to add `exclude: /\.vanilla\.css$/i` to that rule's configuration.
+
 ## Configuration
 
 ```js
@@ -91,5 +93,12 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 
 - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
+- A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
+
+```ts
+new VanillaExtractPlugin({
+  identifiers: ({ hash }) => `prefix_${hash}`
+});
+```
 
 Each integration will set a default value based on the configuration options passed to the bundler.

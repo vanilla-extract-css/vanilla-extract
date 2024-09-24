@@ -1,0 +1,16 @@
+{
+  "name": "@fixtures/thirdparty-dep",
+  "version": "0.0.7",
+  "exports": {
+    ".": {
+      "import": "./index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@fixtures/thirdparty-dep-dep": "workspace:*",
+    "@vanilla-extract/css": "workspace:^"
+  }
+}

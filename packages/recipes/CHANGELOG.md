@@ -1,5 +1,31 @@
 # @vanilla-extract/recipes
 
+## 0.5.3
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+## 0.5.2
+
+### Patch Changes
+
+- [#1341](https://github.com/vanilla-extract-css/vanilla-extract/pull/1341) [`3f8b653`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3f8b65368b26100919debd4591245380322c2cd7) Thanks [@levrik](https://github.com/levrik)! - Resolve recipe function input type to simplify hover type
+
+## 0.5.1
+
+### Patch Changes
+
+- [#1161](https://github.com/vanilla-extract-css/vanilla-extract/pull/1161) [`d16c22f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d16c22f19d86bf01c1fc4bf4c8914786fb0b9cc9) Thanks [@PrettyCoffee](https://github.com/PrettyCoffee)! - Improve IDE hover of `RecipeVariants` type by explicitly resolving its output
+
+## 0.5.0
+
+### Minor Changes
+
+- [#1104](https://github.com/vanilla-extract-css/vanilla-extract/pull/1104) [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb) Thanks [@aspirisen](https://github.com/aspirisen)! - Expose recipe's class names to allow their selection
+
+* [#1104](https://github.com/vanilla-extract-css/vanilla-extract/pull/1104) [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb) Thanks [@aspirisen](https://github.com/aspirisen)! - Always create a base class name for a recipe
+
 ## 0.4.0
 
 ### Minor Changes

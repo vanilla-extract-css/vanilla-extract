@@ -28,7 +28,9 @@ export const startParcelFixture = async (
     },
     defaultTargetOptions: {
       distDir,
+      shouldOptimize: false,
     },
+    shouldDisableCache: true,
     logLevel: 'verbose',
   });
 

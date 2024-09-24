@@ -13,15 +13,15 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.VANILLA_EXTRACT_CI_GITHUB_TOKEN }}
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@main
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -30,7 +30,7 @@ jobs:
         run: pnpm i
 
       - name: Create release PR or publish to npm
-        uses: changesets/action@c2918239208f2162b9d27a87f491375c51592434
+        uses: changesets/action@v1
         with:
           version: pnpm run version
           publish: pnpm release

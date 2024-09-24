@@ -1,5 +1,132 @@
 # @vanilla-extract-private/tests
 
+## 0.0.55
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.52
+
+## 0.0.54
+
+### Patch Changes
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+  - @vanilla-extract-private/test-helpers@0.0.51
+
+## 0.0.53
+
+### Patch Changes
+
+- Updated dependencies [[`b86f3f59c86420e12593996a14f8cdb5db2f7c25`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b86f3f59c86420e12593996a14f8cdb5db2f7c25), [`99e974b2ae56e1e851b376988216b7bd30813813`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99e974b2ae56e1e851b376988216b7bd30813813)]:
+  - @vanilla-extract/css@1.15.3
+  - @vanilla-extract/dynamic@2.1.1
+  - @vanilla-extract/integration@7.1.6
+  - @vanilla-extract/recipes@0.5.3
+  - @vanilla-extract/sprinkles@1.6.2
+  - @vanilla-extract-private/test-helpers@0.0.50
+
+## 0.0.52
+
+### Patch Changes
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+  - @vanilla-extract/sprinkles@1.6.2
+  - @vanilla-extract/dynamic@2.1.1
+  - @vanilla-extract/private@1.0.5
+  - @vanilla-extract/recipes@0.5.3
+  - @vanilla-extract/css@1.15.2
+  - @vanilla-extract-private/test-helpers@0.0.49
+
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies [[`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29), [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29)]:
+  - @vanilla-extract/integration@7.1.4
+
+## 0.0.50
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.48
+
+## 0.0.49
+
+### Patch Changes
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/integration@7.1.3
+  - @vanilla-extract/css@1.15.1
+  - @vanilla-extract/dynamic@2.1.0
+  - @vanilla-extract-private/test-helpers@0.0.47
+
+## 0.0.48
+
+### Patch Changes
+
+- Updated dependencies [[`df9fe3ee3fc0057bc14a2333a405f8229f80c214`](https://github.com/vanilla-extract-css/vanilla-extract/commit/df9fe3ee3fc0057bc14a2333a405f8229f80c214)]:
+  - @vanilla-extract/css@1.15.0
+  - @vanilla-extract/dynamic@2.1.0
+  - @vanilla-extract-private/test-helpers@0.0.46
+
+## 0.0.47
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.45
+
+## 0.0.46
+
+### Patch Changes
+
+- Updated dependencies [[`53fd2a6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/53fd2a6a3387a47745387f792d723deaf37d84a2)]:
+  - @vanilla-extract/integration@6.2.2
+
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [[`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180)]:
+  - @vanilla-extract/css@1.13.0
+  - @vanilla-extract-private/test-helpers@0.0.44
+
+## 0.0.44
+
+### Patch Changes
+
+- Updated dependencies [[`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb), [`fd5fac5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5fac56573c65f3cd9326cfaa1d2835a7212bcb)]:
+  - @vanilla-extract/recipes@0.5.0
+  - @vanilla-extract-private/test-helpers@0.0.43
+
+## 0.0.43
+
+### Patch Changes
+
+- Updated dependencies [[`001be83`](https://github.com/vanilla-extract-css/vanilla-extract/commit/001be8338a869f41acf19091707a2e097fd80de3), [`8a35dff`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8a35dff7f8b4f75691b7ba6ecdc98f45d6e8c5f4)]:
+  - @vanilla-extract/css@1.12.0
+  - @vanilla-extract/sprinkles@1.6.1
+  - @vanilla-extract-private/test-helpers@0.0.42
+
+## 0.0.42
+
+### Patch Changes
+
+- Updated dependencies [[`8b1c965`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b1c9651112edd9fa294e8ffbb8c873c6ab18cc7)]:
+  - @vanilla-extract/css@1.11.1
+  - @vanilla-extract-private/test-helpers@0.0.41
+
+## 0.0.41
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract-private/test-helpers@0.0.40
+
 ## 0.0.40
 
 ### Patch Changes

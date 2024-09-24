@@ -51,28 +51,12 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 
 - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
+- A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
+
+```ts
+vanillaExtractPlugin({
+  identifiers: ({ hash }) => `prefix_${hash}`
+});
+```
 
 Each integration will set a default value based on the configuration options passed to the bundler.
-
-### emitCssInSsr
-
-Historically, extracting CSS was a side effect of building the browser bundle, with the server or static build process only needing the JavaScript references. However, many frameworks are now moving the evaluation of CSS to be a server-side or compile-time responsibility.
-
-For the most common frameworks, Vanilla Extract will set this flag internally based on the plugins it discovers in the consumers Vite configuration.
-This makes the plugin essentially zero config for the majority of cases.
-
-For other cases, such as newer frameworks, it may be necessary to manually opt in to emitting CSS during server side rendering:
-
-```js
-// vite.config.js
-
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
-
-export default {
-  plugins: [
-    vanillaExtractPlugin({
-      emitCssInSsr: true
-    })
-  ]
-};
-```

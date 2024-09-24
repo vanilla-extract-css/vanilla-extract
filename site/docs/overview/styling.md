@@ -237,6 +237,35 @@ globalStyle(`${parent} a[href]`, {
 });
 ```
 
+### Circular Selectors
+
+If your selectors are dependent on each other you can use [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) to define them:
+
+```ts compiled
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+export const child = style({
+  background: 'blue',
+  get selectors() {
+    return {
+      [`${parent} &`]: {
+        color: 'red'
+      }
+    };
+  }
+});
+
+export const parent = style({
+  background: 'yellow',
+  selectors: {
+    [`&:has(${child})`]: {
+      padding: 10
+    }
+  }
+});
+```
+
 ## Container Queries
 
 Container queries work the same as [media queries] and are nested inside the `@container` key.

@@ -1,13 +1,13 @@
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HeadProvider } from 'react-head';
 import App from './App';
 
-ReactDom.hydrate(
+ReactDOM.hydrateRoot(
+  document.getElementById('app')!,
   <BrowserRouter>
     <HeadProvider>
       <App />
     </HeadProvider>
   </BrowserRouter>,
-  document.getElementById('app'),
 );

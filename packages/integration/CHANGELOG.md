@@ -1,5 +1,158 @@
 # @vanilla-extract/integration
 
+## 7.1.7
+
+### Patch Changes
+
+- [#1436](https://github.com/vanilla-extract-css/vanilla-extract/pull/1436) [`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e) Thanks [@SimenB](https://github.com/SimenB)! - Extend `esbuild` dependency range to include `~0.20.0` and `~0.21.0`
+
+## 7.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`b86f3f59c86420e12593996a14f8cdb5db2f7c25`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b86f3f59c86420e12593996a14f8cdb5db2f7c25), [`99e974b2ae56e1e851b376988216b7bd30813813`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99e974b2ae56e1e851b376988216b7bd30813813)]:
+  - @vanilla-extract/css@1.15.3
+
+## 7.1.5
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.6
+  - @vanilla-extract/css@1.15.2
+
+## 7.1.4
+
+### Patch Changes
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - `addFileScope`: Fixes a bug where non-template strings that contained a newline where being mangled
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - Bump `dedent` dependency to `^1.5.3`
+
+## 7.1.3
+
+### Patch Changes
+
+- [#1388](https://github.com/vanilla-extract-css/vanilla-extract/pull/1388) [`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd) Thanks [@askoufis](https://github.com/askoufis)! - Remove `lodash` dependency
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- Updated dependencies [[`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/css@1.15.1
+
+## 7.1.2
+
+### Patch Changes
+
+- [#1374](https://github.com/vanilla-extract-css/vanilla-extract/pull/1374) [`c8aefe0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c8aefe0c5fb6d8b8b82dd0f05ae837e7e2f03a9f) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/css` dependency
+
+- Updated dependencies [[`90f0315`](https://github.com/vanilla-extract-css/vanilla-extract/commit/90f03153bb7c4a8d5b448eab228c46203e9cdaed)]:
+  - @vanilla-extract/css@1.14.2
+
+## 7.1.1
+
+### Patch Changes
+
+- [#1319](https://github.com/vanilla-extract-css/vanilla-extract/pull/1319) [`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b) Thanks [@joeldavuk](https://github.com/joeldavuk)! - Update Babel dependencies to address https://github.com/advisories/GHSA-67hx-6x53-jw92
+
+- Updated dependencies [[`6f7f738`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6f7f7382495582759cececa421ef83142935772b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.5
+
+## 7.1.0
+
+### Minor Changes
+
+- [#1314](https://github.com/vanilla-extract-css/vanilla-extract/pull/1314) [`e8a6850`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e8a6850ea360ede0ed4385421e41c069008772f2) Thanks [@mrm007](https://github.com/mrm007)! - A Vite config object can be passed to the vite-node compiler via the `viteConfig` option
+
+  `viteResolve` and `vitePlugins` options are deprecated and will be removed in a future version.
+
+## 7.0.0
+
+### Major Changes
+
+- [#1309](https://github.com/vanilla-extract-css/vanilla-extract/pull/1309) [`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14) Thanks [@mrm007](https://github.com/mrm007)! - Use absolute paths internally to make sure Vite resolves modules correctly
+
+  This change only affects integrations that use the vite-node compiler, which is currently the esbuild (next) and Vite plugins
+
+## 6.5.0
+
+### Minor Changes
+
+- [#1304](https://github.com/vanilla-extract-css/vanilla-extract/pull/1304) [`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491) Thanks [@fukumasuya](https://github.com/fukumasuya)! - Add a `viteResolve` option to the vite-node compiler
+
+  This allows integrations to provide a Vite `resolve` config to the vite-node compiler, which will be used for resolving imports. These options include [`resolve.alias`], [`resolve.dedupe`], [`resolve.conditions`], [`resolve.mainFields`], [`resolve.extensions`], and others.
+
+  [`resolve.alias`]: https://vitejs.dev/config/shared-options.html#resolve-alias
+  [`resolve.dedupe`]: https://vitejs.dev/config/shared-options.html#resolve-dedupe
+  [`resolve.conditions`]: https://vitejs.dev/config/shared-options.html#resolve-conditions
+  [`resolve.mainFields`]: https://vitejs.dev/config/shared-options.html#resolve-mainfields
+  [`resolve.extensions`]: https://vitejs.dev/config/shared-options.html#resolve-extensions
+
+## 6.4.0
+
+### Minor Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Export a `normalizePath` function that converts path separators to forward slashes
+
+  **Example usage**
+
+  ```ts
+  import { normalizePath } from '@vanilla-extract/integration';
+
+  normalizePath('foo\\bar'); // 'foo/bar'
+  normalizePath('foo/bar'); // 'foo/bar'
+  ```
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
+## 6.3.0
+
+### Minor Changes
+
+- [#1273](https://github.com/vanilla-extract-css/vanilla-extract/pull/1273) [`959c646`](https://github.com/vanilla-extract-css/vanilla-extract/commit/959c646ad6154ef0f8e357660319c7049e8b0459) Thanks [@lars-berger](https://github.com/lars-berger)! - Allow `conditions` option to be passed through to esbuild
+
+### Patch Changes
+
+- [#1252](https://github.com/vanilla-extract-css/vanilla-extract/pull/1252) [`5bc98a4`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5bc98a4af30a339336ab4ef7c387d3e809586a83) Thanks [@Ethan-PageUp](https://github.com/Ethan-PageUp)! - Unpin esbuild and broaden the version range
+
+- [#1243](https://github.com/vanilla-extract-css/vanilla-extract/pull/1243) [`1566f92`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1566f9238078a3cfefec9ae5023b56aba02875d4) Thanks [@askoufis](https://github.com/askoufis)! - Experimental `vite-node` compiler: Skip transforming CSS for files that won't generate any CSS
+
+## 6.2.5
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Upgrade Vite and vite-node
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.4
+
+## 6.2.4
+
+### Patch Changes
+
+- [#1238](https://github.com/vanilla-extract-css/vanilla-extract/pull/1238) [`fd5d9fc`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd5d9fc389b84d7de92ec86d89305185d6c4cfd4) Thanks [@askoufis](https://github.com/askoufis)! - Disable config file resolution in experimental `vite-node` compiler
+
+## 6.2.3
+
+### Patch Changes
+
+- [#1195](https://github.com/vanilla-extract-css/vanilla-extract/pull/1195) [`c446b5e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c446b5e95ee4e64f7af0da484d2dda81a7f6a522) Thanks [@HelloWorld017](https://github.com/HelloWorld017)! - Ensure userland babel config can not affect integration transforms
+
+- Updated dependencies [[`906d288`](https://github.com/vanilla-extract-css/vanilla-extract/commit/906d28881d2c3cc1f5a49f00b8b697df66a5baa4), [`911c8b7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/911c8b7b95b1164d2ad5fbf555209df9e8b3ad99)]:
+  - @vanilla-extract/css@1.14.0
+
+## 6.2.2
+
+### Patch Changes
+
+- [#1167](https://github.com/vanilla-extract-css/vanilla-extract/pull/1167) [`53fd2a6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/53fd2a6a3387a47745387f792d723deaf37d84a2) Thanks [@askoufis](https://github.com/askoufis)! - Bump `eval` to `0.1.8`
+
 ## 6.2.1
 
 ### Patch Changes

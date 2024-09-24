@@ -1,9 +1,10 @@
 {
   "name": "@vanilla-extract/rollup-plugin",
-  "version": "1.2.2",
+  "version": "1.3.7",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
   "module": "dist/vanilla-extract-rollup-plugin.esm.js",
+  "types": "dist/vanilla-extract-rollup-plugin.cjs.d.ts",
   "files": [
     "/dist"
   ],
@@ -15,17 +16,17 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "^6.2.0"
+    "@vanilla-extract/integration": "workspace:^"
   },
   "devDependencies": {
-    "@fixtures/themed": "*",
+    "@fixtures/themed": "workspace:*",
     "@rollup/plugin-json": "^4.1.0",
-    "@vanilla-extract/css": "^1.11.0",
-    "esbuild": "0.17.6",
+    "@vanilla-extract/css": "workspace:^",
+    "esbuild": "~0.21.5",
     "rollup": "^2.7.0",
     "rollup-plugin-esbuild": "^4.9.1"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0 || ^3.0.0"
+    "rollup": "^2.0.0 || ^3.0.0 || ^4.0.0"
   }
 }

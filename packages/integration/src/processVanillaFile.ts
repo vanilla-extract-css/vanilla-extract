@@ -1,16 +1,40 @@
 import { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-// @ts-expect-error
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
-import isPlainObject from 'lodash/isPlainObject';
-import outdent from 'outdent';
+import dedent from 'dedent';
 
 import { hash } from './hash';
 import { serializeCss } from './serialize';
 import type { IdentifierOption } from './types';
 
 const originalNodeEnv = process.env.NODE_ENV;
+
+// Copied from https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/blob/51f83bd3db728fd7ee177de1ffc253fdb99c537f/README.md#_isplainobject
+function isPlainObject(value: unknown) {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  if (Object.prototype.toString.call(value) !== '[object Object]') {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype === null) {
+    return true;
+  }
+
+  const constructor =
+    Object.prototype.hasOwnProperty.call(prototype, 'constructor') &&
+    prototype.constructor;
+
+  return (
+    typeof constructor === 'function' &&
+    constructor instanceof constructor &&
+    Function.prototype.call(constructor) === Function.prototype.call(value)
+  );
+}
 
 export function stringifyFileScope({
   packageName,
@@ -95,7 +119,7 @@ export async function processVanillaFile({
     filePath,
     { console, process, __adapter__: cssAdapter },
     true,
-  );
+  ) as Record<string, unknown>;
 
   process.env.NODE_ENV = currentNodeEnv;
 
@@ -249,7 +273,7 @@ function stringifyExports(
         }
       }
 
-      throw new Error(outdent`
+      throw new Error(dedent`
         Invalid exports.
 
         You can only export plain objects, arrays, strings, numbers and null/undefined.

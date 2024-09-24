@@ -1,5 +1,105 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.11
+
+### Patch Changes
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+
+## 2.3.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
+## 2.3.9
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+
+## 2.3.8
+
+### Patch Changes
+
+- [#1385](https://github.com/vanilla-extract-css/vanilla-extract/pull/1385) [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a) Thanks [@askoufis](https://github.com/askoufis)! - Replace `chalk` dependency with `picocolors`
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb)]:
+  - @vanilla-extract/integration@7.1.3
+
+## 2.3.7
+
+### Patch Changes
+
+- [#1333](https://github.com/vanilla-extract-css/vanilla-extract/pull/1333) [`6ac9f66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6ac9f667cdfde0050e40cf5eaf8ae03078f5d26d) Thanks [@askoufis](https://github.com/askoufis)! - Use a more accurate regex for detecting [webpack template strings] in paths
+
+  We now use a modified version of the regex from the webpack source code to detect template strings in paths.
+  As long as the path isn't already escaped, we should detect it.
+
+  [webpack template strings]: https://webpack.js.org/configuration/output/#template-strings
+
+## 2.3.6
+
+### Patch Changes
+
+- Updated dependencies [[`fdafb6d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fdafb6dff4d3e4455a1a2f5e48e446e11add2c14)]:
+  - @vanilla-extract/integration@7.0.0
+
+## 2.3.5
+
+### Patch Changes
+
+- [#1247](https://github.com/vanilla-extract-css/vanilla-extract/pull/1247) [`f0c3be9`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f0c3be99ca437fb1f61ecde58fdf58cccc3256bb) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that was causing style compilation to fail on paths containing [webpack template strings] such as `[id]` or [Next.js dynamic routes] such as `[slug]`.
+
+  [webpack template strings]: https://webpack.js.org/configuration/output/#template-strings
+  [next.js dynamic routes]: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+
+- Updated dependencies [[`545bf82`](https://github.com/vanilla-extract-css/vanilla-extract/commit/545bf82f127598ac72265164c72e1a1aad558491)]:
+  - @vanilla-extract/integration@6.5.0
+
+## 2.3.4
+
+### Patch Changes
+
+- [#1264](https://github.com/vanilla-extract-css/vanilla-extract/pull/1264) [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a) Thanks [@mrm007](https://github.com/mrm007)! - Update dependencies
+
+- Updated dependencies [[`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a), [`e531c41`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e531c4170da11ba6446e256b3af04a288841491a)]:
+  - @vanilla-extract/integration@6.4.0
+
+## 2.3.3
+
+### Patch Changes
+
+- [#1291](https://github.com/vanilla-extract-css/vanilla-extract/pull/1291) [`00af971`](https://github.com/vanilla-extract-css/vanilla-extract/commit/00af9715e522d9caf6e90cb138dee13580b8dea1) Thanks [@mrm007](https://github.com/mrm007)! - Update dependency `@vanilla-extract/integration`
+
+- [#1254](https://github.com/vanilla-extract-css/vanilla-extract/pull/1254) [`f373d7f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f373d7f6b59f43236dc713e1b421ef4631f392c0) Thanks [@EvgenNoskov](https://github.com/EvgenNoskov)! - Allow hyphens in class names when using a custom identifier
+
+## 2.3.2
+
+### Patch Changes
+
+- [#1262](https://github.com/vanilla-extract-css/vanilla-extract/pull/1262) [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e) Thanks [@mrm007](https://github.com/mrm007)! - Update Babel config to target Node.js 14
+
+- Updated dependencies [[`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e), [`610c50b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/610c50b0012ece0d06530faab3f5e442a55fc39e)]:
+  - @vanilla-extract/integration@6.2.5
+
+## 2.3.1
+
+### Patch Changes
+
+- [#1180](https://github.com/vanilla-extract-css/vanilla-extract/pull/1180) [`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241) Thanks [@syfxlin](https://github.com/syfxlin)! - Fixes Next.js 13 CSS output on Windows when using React Server Components
+
+## 2.3.0
+
+### Minor Changes
+
+- [#1160](https://github.com/vanilla-extract-css/vanilla-extract/pull/1160) [`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180) Thanks [@SombreroElGringo](https://github.com/SombreroElGringo)! - Users can now provide a custom identifier hashing function
+
 ## 2.2.0
 
 ### Minor Changes

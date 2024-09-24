@@ -11,7 +11,7 @@ Generate a static set of custom utility classes and compose them either statical
 
 Basically, it’s like building your own zero-runtime, type-safe version of [Tailwind], [Styled System], etc.
 
-> 💡 Sprinkles is an optional package built on top of vanilla-extract using its [function serialization API.](../../api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations, e.g. [Rainbow Sprinkles.](https://github.com/wayfair/rainbow-sprinkles)
+> 💡 Sprinkles is an optional package built on top of vanilla-extract using its [function serialization API.](/documentation/api/add-function-serializer) It doesn't have privileged access to vanilla-extract internals so you're also free to build alternative implementations, e.g. [Rainbow Sprinkles.](https://github.com/wayfair/rainbow-sprinkles)
 
 ## Setup
 
@@ -555,6 +555,9 @@ const properties = defineProperties({
 ## createSprinkles
 
 Creates a type-safe function for accessing your [defined properties](#defineProperties). You can provide as many collections of properties as you like.
+
+> 🚧&nbsp;&nbsp;Ensure properties are defined as variables before passing them into `createSprinkles`.
+> Calling `defineProperties` inside a `createSprinkles` call will cause types to be inferred incorrectly, resulting in a type-unsafe sprinkles function.
 
 ```ts
 // sprinkles.css.ts

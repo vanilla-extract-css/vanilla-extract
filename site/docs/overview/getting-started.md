@@ -32,7 +32,7 @@ A stylesheet can be made by adding a `.css.ts` file into your project.
 For example:
 
 ```ts compiled
-// app.css.ts
+// styles.css.ts
 import { style } from '@vanilla-extract/css';
 
 export const container = style({

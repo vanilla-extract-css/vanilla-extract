@@ -1,6 +1,5 @@
 import type { AtRule } from 'csstype';
 
-
 import {
   get,
   walkObject,

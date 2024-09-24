@@ -4,6 +4,7 @@ import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
 import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
 import { startViteFixture, ViteFixtureOptions } from './vite';
 import { startParcelFixture, ParcelFixtureOptions } from './parcel';
+import { NextFixtureOptions, startNextFixture } from './next';
 
 import { TestServer } from './types';
 
@@ -18,7 +19,8 @@ type FixtureOptions = SharedOptions &
     | EsbuildFixtureOptions
     | WebpackFixtureOptions
     | ViteFixtureOptions
-    | ParcelFixtureOptions,
+    | ParcelFixtureOptions
+    | NextFixtureOptions,
     'port'
   >;
 export async function startFixture(
@@ -66,5 +68,14 @@ export async function startFixture(
       mode: options.mode,
     });
   }
+
+  if (type === 'next-pages-router' || type === 'next-app-router') {
+    return startNextFixture({
+      type,
+      port,
+      mode: options.mode,
+    });
+  }
+
   return startWebpackFixture(fixtureName, { type, ...options, port });
 }

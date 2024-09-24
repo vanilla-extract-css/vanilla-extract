@@ -11,3 +11,4 @@ site/docs-manifest.json
 pnpm-lock.yaml
 *-snapshots
 test-results
+examples/remix/build

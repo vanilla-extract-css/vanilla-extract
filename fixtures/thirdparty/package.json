@@ -1,0 +1,11 @@
+{
+  "name": "@fixtures/thirdparty",
+  "version": "0.0.7",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@fixtures/thirdparty-dep": "workspace:*",
+    "@vanilla-extract/css": "workspace:*"
+  }
+}

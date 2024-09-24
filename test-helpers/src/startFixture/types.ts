@@ -1,13 +1,15 @@
+import { EsbuildFixtureOptions } from './esbuild';
+import { NextFixtureOptions } from './next';
+import { ParcelFixtureOptions } from './parcel';
+import { ViteFixtureOptions } from './vite';
+import { WebpackFixtureOptions } from './webpack';
+
 type BuildType =
-  | 'browser'
-  | 'mini-css-extract'
-  | 'style-loader'
-  | 'esbuild'
-  | 'esbuild-next'
-  | 'esbuild-runtime'
-  | 'esbuild-next-runtime'
-  | 'vite'
-  | 'parcel';
+  | WebpackFixtureOptions['type']
+  | EsbuildFixtureOptions['type']
+  | ViteFixtureOptions['type']
+  | ParcelFixtureOptions['type']
+  | NextFixtureOptions['type'];
 
 export interface TestServer {
   type: BuildType;

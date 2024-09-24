@@ -1,23 +1,25 @@
-import { describe, beforeAll, afterAll, test, expect } from 'vitest';
 import path from 'path';
-import { createCompiler } from '@vanilla-extract/integration';
+import { describe, beforeAll, afterAll, test, expect } from 'vitest';
+import { createCompiler, normalizePath } from '@vanilla-extract/integration';
 
-function toPosix(filePath: string) {
-  return filePath.split(path.sep).join(path.posix.sep);
-}
+// Vitest has trouble with snapshots that don't contain wrapping quotes. See this regex and the functions above/below it:
+// https://github.com/vitest-dev/vitest/blob/ae73f2737607a878ba589d548aa6f8ba639dc07c/packages/snapshot/src/port/inlineSnapshot.ts#L96
+// We want to replace __dirname in strings, so we need to add a snapshot serializer for strings.
+// But we also need to add quotes around the string to make sure Vitest doesn't get confused.
+// In fact, just updating the snapshot from now on will mangle the test file ¯\_(ツ)_/¯
+expect.addSnapshotSerializer({
+  test: (val) => typeof val === 'string',
+  print: (val) =>
+    '"' +
+    (val as string).replaceAll(normalizePath(__dirname), '{{__dirname}}') +
+    '"',
+});
 
-function getLocalFiles(files: Set<string>) {
-  const posixDirname = toPosix(__dirname);
-
-  return [...files]
-    .map(toPosix)
-    .filter((file) => file.startsWith(posixDirname))
-    .map((file) => file.replace(posixDirname, ''));
-}
-
-describe('compiler', () => {
+// ! These tests are to ensure that the compiler works correctly in Vitest.
+// ! Please add tests to `compiler.test.ts` going forward.
+describe('compiler running in Vitest', () => {
   let compilers: Record<
-    'default' | 'cssImportSpecifier' | 'shortIdentifiers',
+    'default' | 'vitePlugins' | 'viteResolve',
     ReturnType<typeof createCompiler>
   >;
 
@@ -26,254 +28,104 @@ describe('compiler', () => {
       default: createCompiler({
         root: __dirname,
       }),
-
-      cssImportSpecifier: createCompiler({
+      vitePlugins: createCompiler({
         root: __dirname,
-        cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
+        vitePlugins: [
+          {
+            name: 'test-plugin',
+            resolveId(id) {
+              if (id === '~/vars') {
+                return '\0resolved-vars';
+              }
+            },
+            load: (id) => {
+              if (id === '\0resolved-vars') {
+                return `export const color = "green"`;
+              }
+            },
+          },
+        ],
       }),
-
-      shortIdentifiers: createCompiler({
+      viteResolve: createCompiler({
         root: __dirname,
-        identifiers: 'short',
+        viteResolve: {
+          alias: {
+            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+          },
+        },
       }),
     };
-  });
-
-  test('absolute paths', async () => {
-    const compiler = compilers.default;
-
-    const cssPath = path.join(
-      __dirname,
-      'fixtures/class-composition/styles.css.ts',
-    );
-    const sharedCssPath = path.join(
-      __dirname,
-      'fixtures/class-composition/shared.css.ts',
-    );
-
-    const output = await compiler.processVanillaFile(cssPath);
-    expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
-    `);
-    const localWatchFiles = getLocalFiles(output.watchFiles);
-    expect(localWatchFiles).toMatchInlineSnapshot(`
-      [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
-      ]
-    `);
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
-          color: red;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
-      );
-    })();
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
-          background: blue;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
-      );
-    })();
-  });
-
-  test('root relative paths', async () => {
-    const compiler = compilers.default;
-
-    const cssPath = 'fixtures/class-composition/styles.css.ts';
-    const sharedCssPath = 'fixtures/class-composition/shared.css.ts';
-
-    const output = await compiler.processVanillaFile(cssPath);
-    expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
-    `);
-
-    const localWatchFiles = getLocalFiles(output.watchFiles);
-    expect(localWatchFiles).toMatchInlineSnapshot(`
-      [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
-      ]
-    `);
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
-          color: red;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
-      );
-    })();
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
-          background: blue;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
-      );
-    })();
-  });
-
-  test('root relative paths starting with dot', async () => {
-    const compiler = compilers.default;
-
-    const cssPath = './fixtures/class-composition/styles.css.ts';
-    const sharedCssPath = './fixtures/class-composition/shared.css.ts';
-
-    const output = await compiler.processVanillaFile(cssPath);
-    expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
-    `);
-
-    const localWatchFiles = getLocalFiles(output.watchFiles);
-    expect(localWatchFiles).toMatchInlineSnapshot(`
-      [
-        "/fixtures/class-composition/styles.css.ts",
-        "/fixtures/class-composition/shared.css.ts",
-      ]
-    `);
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(cssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".styles_className__q7x3ow0 {
-          color: red;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/styles.css.ts',
-      );
-    })();
-
-    await (async () => {
-      const { css, filePath } = await compiler.getCssForFile(sharedCssPath);
-      expect(css).toMatchInlineSnapshot(`
-        ".shared_shared__16bmd920 {
-          background: blue;
-        }"
-      `);
-      expect(toPosix(filePath)).toBe(
-        'fixtures/class-composition/shared.css.ts',
-      );
-    })();
-  });
-
-  test('throws on getCssForFile when file does not exist', async () => {
-    const compiler = compilers.default;
-    let error: Error | undefined;
-
-    try {
-      await compiler.getCssForFile('does-not-exist.css.ts');
-    } catch (_error) {
-      error = _error as Error;
-    }
-
-    expect(
-      toPosix(error?.message.replace(__dirname, '{{__dirname}}') ?? ''),
-    ).toMatchInlineSnapshot(
-      `"No CSS for file: {{__dirname}}/does-not-exist.css.ts"`,
-    );
-  });
-
-  test('short identifiers', async () => {
-    const compiler = compilers.shortIdentifiers;
-
-    const cssPath = path.join(
-      __dirname,
-      'fixtures/class-composition/styles.css.ts',
-    );
-    const output = await compiler.processVanillaFile(cssPath);
-    expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.vanilla.css';
-      import 'fixtures/class-composition/styles.css.ts.vanilla.css';
-      export var className = 'q7x3ow0 _16bmd920';"
-    `);
-    const { css } = await compiler.getCssForFile(cssPath);
-    expect(css).toMatchInlineSnapshot(`
-      ".q7x3ow0 {
-        color: red;
-      }"
-    `);
-  });
-
-  test('custom cssImportSpecifier', async () => {
-    const compiler = compilers.cssImportSpecifier;
-
-    const cssPath = path.join(
-      __dirname,
-      'fixtures/class-composition/styles.css.ts',
-    );
-    const output = await compiler.processVanillaFile(cssPath);
-    expect(output.source).toMatchInlineSnapshot(`
-      "import 'fixtures/class-composition/shared.css.ts.custom-extension.css';
-      import 'fixtures/class-composition/styles.css.ts.custom-extension.css';
-      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
-    `);
-  });
-
-  test('does not remove unused composition classes', async () => {
-    const compiler = compilers.default;
-
-    const cssPathA = './fixtures/unused-compositions/styles_a.css.ts';
-    const cssPathB = './fixtures/unused-compositions/styles_b.css.ts';
-    const sharedCssPath = './fixtures/unused-compositions/shared.css.ts';
-
-    // Process the file multiple times with different args to test caching
-    await compiler.processVanillaFile(cssPathA, { outputCss: false });
-    const outputA = await compiler.processVanillaFile(cssPathA);
-
-    // The `root` className string should be a composition of multiple classes:
-    expect(outputA.source).toMatchInlineSnapshot(`
-      "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';"
-    `);
-
-    // Process the file multiple times with different args to test caching
-    await compiler.processVanillaFile(cssPathB, { outputCss: false });
-    const outputB = await compiler.processVanillaFile(cssPathB);
-
-    // The `root` className string should be a composition of multiple classes:
-    expect(outputB.source).toMatchInlineSnapshot(`
-      "import 'fixtures/unused-compositions/shared.css.ts.vanilla.css';
-      export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';"
-    `);
-
-    const { css } = await compiler.getCssForFile(sharedCssPath);
-    expect(css).toMatchInlineSnapshot(`
-      ".shared_shared__5i7sy00 {
-        padding: 20px;
-        background: peachpuff;
-      }"
-    `);
   });
 
   afterAll(async () => {
     await Promise.allSettled(
       Object.values(compilers).map((compiler) => compiler.close()),
     );
+  });
+
+  test('with no plugins', async () => {
+    const compiler = compilers.default;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/class-composition/styles.css.ts',
+    );
+
+    const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(source).toMatchInlineSnapshot(`
+      "import '{{__dirname}}/fixtures/class-composition/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/class-composition/styles.css.ts.vanilla.css';
+      export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".styles_className__q7x3ow0 {
+        color: red;
+      }"
+    `);
+  });
+
+  test('with Vite plugins', async () => {
+    const compiler = compilers.vitePlugins;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/plugin.css.ts');
+
+    const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(source).toMatchInlineSnapshot(`
+      "import '{{__dirname}}/fixtures/vite-config/plugin.css.ts.vanilla.css';
+      export var root = 'plugin_root__1e902gk0';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".plugin_root__1e902gk0 {
+        color: green;
+      }"
+    `);
+  });
+
+  test('with Vite resolve', async () => {
+    const compiler = compilers.viteResolve;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/alias.css.ts');
+
+    const { source } = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(source).toMatchInlineSnapshot(`
+      "import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
+      export var root = 'alias_root__ez4dr20';"
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      ".alias_root__ez4dr20 {
+        --border__13z1r1g0: 1px solid black;
+        border: var(--border__13z1r1g0);
+      }"
+    `);
   });
 });

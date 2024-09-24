@@ -147,7 +147,9 @@ async function loader(source) {
     let currIndex = 0;
 
     for (const { code, language, startIndex, endIndex } of codeBlocks) {
-      if (language !== 'ts compiled') {
+      // Check for `tsx compiled` too so we can correctly highlight `tsx` code blocks but still
+      // compile subsequent `.css.ts` files
+      if (language !== 'ts compiled' && language !== 'tsx compiled') {
         continue;
       }
 

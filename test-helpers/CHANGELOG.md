@@ -1,5 +1,175 @@
 # @vanilla-extract-private/test-helpers
 
+## 0.0.52
+
+### Patch Changes
+
+- Updated dependencies [[`765b85610207992693a822fb3b1aec995ab48409`](https://github.com/vanilla-extract-css/vanilla-extract/commit/765b85610207992693a822fb3b1aec995ab48409)]:
+  - @vanilla-extract/vite-plugin@4.0.13
+
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/esbuild-plugin@2.3.8
+  - @vanilla-extract/esbuild-plugin-next@0.0.8
+  - @vanilla-extract/parcel-transformer@1.0.7
+  - @vanilla-extract/vite-plugin@4.0.12
+  - @vanilla-extract/webpack-plugin@2.3.11
+  - @fixtures/next-app-router@0.0.4
+  - @fixtures/next-pages-router@0.0.4
+
+## 0.0.50
+
+### Patch Changes
+
+- Updated dependencies [[`8d1731b44f8e93153c8087a533e0f9b2ed99767c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8d1731b44f8e93153c8087a533e0f9b2ed99767c)]:
+  - @vanilla-extract/vite-plugin@4.0.11
+  - @fixtures/features@0.0.29
+  - @fixtures/layers@0.0.12
+  - @fixtures/low-level@0.0.29
+  - @fixtures/next-app-router@0.0.4
+  - @fixtures/next-pages-router@0.0.4
+  - @fixtures/recipes@0.0.33
+  - @fixtures/sprinkles@0.0.34
+  - @fixtures/template-string-paths@0.0.6
+  - @fixtures/themed@0.0.29
+  - @fixtures/thirdparty@0.0.7
+  - @fixtures/unused-modules@1.0.29
+  - @vanilla-extract/esbuild-plugin@2.3.7
+  - @vanilla-extract/esbuild-plugin-next@0.0.7
+  - @vanilla-extract/parcel-transformer@1.0.6
+  - @vanilla-extract/webpack-plugin@2.3.10
+
+## 0.0.49
+
+### Patch Changes
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/esbuild-plugin-next@0.0.6
+  - @vanilla-extract/parcel-transformer@1.0.5
+  - @vanilla-extract/esbuild-plugin@2.3.6
+  - @vanilla-extract/webpack-plugin@2.3.9
+  - @vanilla-extract/vite-plugin@4.0.10
+  - @fixtures/next-app-router@0.0.3
+  - @fixtures/next-pages-router@0.0.3
+  - @fixtures/sprinkles@0.0.33
+  - @fixtures/features@0.0.28
+  - @fixtures/themed@0.0.28
+  - @fixtures/recipes@0.0.32
+  - @fixtures/layers@0.0.11
+  - @fixtures/low-level@0.0.28
+  - @fixtures/template-string-paths@0.0.5
+  - @fixtures/thirdparty@0.0.6
+  - @fixtures/unused-modules@1.0.28
+
+## 0.0.48
+
+### Patch Changes
+
+- Updated dependencies [[`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e)]:
+  - @vanilla-extract/vite-plugin@4.0.9
+
+## 0.0.47
+
+### Patch Changes
+
+- Updated dependencies [[`2232ef4aa0b8410ff791626a951a15cc03dfbb09`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2232ef4aa0b8410ff791626a951a15cc03dfbb09), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/vite-plugin@4.0.8
+  - @vanilla-extract/webpack-plugin@2.3.8
+  - @fixtures/features@0.0.27
+  - @fixtures/layers@0.0.10
+  - @fixtures/low-level@0.0.27
+  - @fixtures/next-app-router@0.0.2
+  - @fixtures/next-pages-router@0.0.2
+  - @fixtures/recipes@0.0.31
+  - @fixtures/sprinkles@0.0.32
+  - @fixtures/template-string-paths@0.0.4
+  - @fixtures/themed@0.0.27
+  - @fixtures/thirdparty@0.0.5
+  - @fixtures/unused-modules@1.0.27
+
+## 0.0.46
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.26
+  - @fixtures/layers@0.0.9
+  - @fixtures/low-level@0.0.26
+  - @fixtures/next-app-router@0.0.1
+  - @fixtures/next-pages-router@0.0.1
+  - @fixtures/recipes@0.0.30
+  - @fixtures/sprinkles@0.0.31
+  - @fixtures/template-string-paths@0.0.3
+  - @fixtures/themed@0.0.26
+  - @fixtures/thirdparty@0.0.4
+  - @fixtures/unused-modules@1.0.26
+
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [[`89224fe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/89224fe9d68d984f818ec3d4496952e4e919a241)]:
+  - @vanilla-extract/webpack-plugin@2.3.1
+
+## 0.0.44
+
+### Patch Changes
+
+- Updated dependencies [[`e391bae`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e391baec32463c60503f631ace578a71952f8180)]:
+  - @vanilla-extract/webpack-plugin@2.3.0
+  - @vanilla-extract/esbuild-plugin@2.3.0
+  - @vanilla-extract/vite-plugin@3.9.0
+  - @fixtures/features@0.0.22
+  - @fixtures/layers@0.0.5
+  - @fixtures/low-level@0.0.22
+  - @fixtures/recipes@0.0.25
+  - @fixtures/sprinkles@0.0.27
+  - @fixtures/themed@0.0.22
+  - @fixtures/unused-modules@1.0.22
+
+## 0.0.43
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/recipes@0.0.24
+
+## 0.0.42
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.21
+  - @fixtures/layers@0.0.4
+  - @fixtures/low-level@0.0.21
+  - @fixtures/recipes@0.0.23
+  - @fixtures/sprinkles@0.0.26
+  - @fixtures/themed@0.0.21
+  - @fixtures/unused-modules@1.0.21
+
+## 0.0.41
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @fixtures/features@0.0.20
+  - @fixtures/layers@0.0.3
+  - @fixtures/low-level@0.0.20
+  - @fixtures/recipes@0.0.22
+  - @fixtures/sprinkles@0.0.25
+  - @fixtures/themed@0.0.20
+  - @fixtures/unused-modules@1.0.20
+
+## 0.0.40
+
+### Patch Changes
+
+- Updated dependencies [[`8bed6f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8bed6f5ef36287006db458093e67bef5231e206c)]:
+  - @vanilla-extract/vite-plugin@3.8.2
+
 ## 0.0.39
 
 ### Patch Changes

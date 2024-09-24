@@ -28,6 +28,10 @@ function getDevPrefix({
   return parts.join('_');
 }
 
+function normalizeIdentifier(identifier: string) {
+  return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
+}
+
 interface GenerateIdentifierOptions {
   debugId?: string;
   debugFileName?: boolean;
@@ -38,6 +42,7 @@ export function generateIdentifier(options?: GenerateIdentifierOptions): string;
 export function generateIdentifier(
   arg?: string | GenerateIdentifierOptions,
 ): string {
+  const identOption = getIdentOption();
   const { debugId, debugFileName = true } = {
     ...(typeof arg === 'string' ? { debugId: arg } : null),
     ...(typeof arg === 'object' ? arg : null),
@@ -53,13 +58,31 @@ export function generateIdentifier(
 
   let identifier = `${fileScopeHash}${refCount}`;
 
-  if (getIdentOption() === 'debug') {
+  if (identOption === 'debug') {
     const devPrefix = getDevPrefix({ debugId, debugFileName });
 
     if (devPrefix) {
       identifier = `${devPrefix}__${identifier}`;
     }
+
+    return normalizeIdentifier(identifier);
+  }
+  if (typeof identOption === 'function') {
+    identifier = identOption({
+      hash: identifier,
+      debugId,
+      filePath,
+      packageName,
+    });
+
+    if (!identifier.match(/^[A-Z_][0-9A-Z_-]+$/i)) {
+      throw new Error(
+        `Identifier function returned invalid indentifier: "${identifier}"`,
+      );
+    }
+
+    return identifier;
   }
 
-  return identifier.match(/^[0-9]/) ? `_${identifier}` : identifier;
+  return normalizeIdentifier(identifier);
 }

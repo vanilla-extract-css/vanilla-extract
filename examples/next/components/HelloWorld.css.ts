@@ -20,8 +20,6 @@ export const root = style({
   transition: `opacity .1s ease, color .1s ease`, // Testing autoprefixer
   backgroundImage: `linear-gradient(${angle}, rgba(153, 70, 198, 0.35) 0%, rgba(28, 56, 240, 0.46) 100%)`,
   animation: `${angleKeyframes} 7s infinite ease-in-out both`,
-
-
   ':hover': {
     opacity: 0.8,
     color: color,

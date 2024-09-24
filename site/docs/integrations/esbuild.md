@@ -100,10 +100,17 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 
 - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
 - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `myfile_mystyle_hnw5tz3`
+- A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
+
+```ts
+vanillaExtractPlugin({
+  identifiers: ({ hash }) => `prefix_${hash}`
+});
+```
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
 ### esbuildOptions
 
 esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
-Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader` and `tsconfig`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader`, `tsconfig` and `conditions`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.

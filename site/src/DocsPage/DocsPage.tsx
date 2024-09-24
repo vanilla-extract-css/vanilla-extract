@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import {
   Link as ReactRouterLink,
   Route,
-  RouteChildrenProps,
+  Routes,
+  useLocation,
 } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';
@@ -381,7 +382,8 @@ const SecondaryNav = ({
   ) : null;
 };
 
-export const DocsPage = ({ location }: RouteChildrenProps) => {
+export const DocsPage = () => {
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
@@ -445,37 +447,38 @@ export const DocsPage = ({ location }: RouteChildrenProps) => {
           >
             <Box paddingBottom="xxxlarge">
               <MDXProvider components={mdxComponents}>
-                {pages.map(({ route, Component, title, sections }, index) => {
-                  const prevDoc = pages[index - 1];
-                  const nextDoc = pages[index + 1];
-                  const pageTitle = `${
-                    title ? `${title} — ` : ''
-                  }vanilla-extract`.trim();
-                  const hashes = sections
-                    .filter(({ level }) => level === 2 || level === 3)
-                    .map(({ hash }) => hash);
+                <Routes>
+                  {pages.map(({ route, Component, title, sections }, index) => {
+                    const prevDoc = pages[index - 1];
+                    const nextDoc = pages[index + 1];
+                    const pageTitle = `${
+                      title ? `${title} — ` : ''
+                    }vanilla-extract`.trim();
+                    const hashes = sections
+                      .filter(({ level }) => level === 2 || level === 3)
+                      .map(({ hash }) => hash);
 
-                  return (
-                    <Route
-                      key={route}
-                      path={route}
-                      exact
-                      render={() => (
-                        <>
-                          <Title>{pageTitle}</Title>
-                          <Meta property="og:title" content={pageTitle} />
-                          <Meta name="twitter:title" content={pageTitle} />
-                          <DocsRoute
-                            nextDoc={nextDoc}
-                            prevDoc={prevDoc}
-                            hashes={hashes}
-                            component={Component}
-                          />
-                        </>
-                      )}
-                    />
-                  );
-                })}
+                    return (
+                      <Route
+                        key={route}
+                        path={route}
+                        element={
+                          <>
+                            <Title>{pageTitle}</Title>
+                            <Meta property="og:title" content={pageTitle} />
+                            <Meta name="twitter:title" content={pageTitle} />
+                            <DocsRoute
+                              nextDoc={nextDoc}
+                              prevDoc={prevDoc}
+                              hashes={hashes}
+                              component={Component}
+                            />
+                          </>
+                        }
+                      />
+                    );
+                  })}
+                </Routes>
               </MDXProvider>
             </Box>
           </ContentBlock>
