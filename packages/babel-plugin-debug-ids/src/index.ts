@@ -40,11 +40,10 @@ const debuggableFunctionConfig = {
     maxParams: 1,
   },
   createViewTransition: {
-    maxParams: 2,
-    hasDebugId: ({ arguments: args }) => {
-      const previousArg = args[args.length - 1];
-      return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
-    },
+    maxParams: 1,
+  },
+  viewTransition: {
+    maxParams: 1,
   },
   layer: {
     maxParams: 2,

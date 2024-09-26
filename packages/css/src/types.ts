@@ -103,12 +103,22 @@ export type CSSLayerDeclaration = {
   name: string;
 };
 
+export interface CSSViewTransition {
+  navigation: 'auto' | 'none';
+}
+
+export type CSSViewTransitionDeclaration = {
+  type: 'view-transition';
+  rule: CSSViewTransition;
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
   | CSSSelectorBlock
-  | CSSLayerDeclaration;
+  | CSSLayerDeclaration
+  | CSSViewTransitionDeclaration;
 
 export type FileScope = {
   packageName?: string;
