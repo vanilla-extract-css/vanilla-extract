@@ -1,4 +1,4 @@
-import { style, createVar, keyframes, getVarName, fallbackVar } from '@vanilla-extract/css';
+import { style, createVar, keyframes, fallbackVar } from '@vanilla-extract/css';
 
 const color = createVar();
 const angle = createVar({
@@ -9,7 +9,9 @@ const angle = createVar({
 
 const angleKeyframes = keyframes({
   '100%': {
-    [getVarName(angle)]: '360deg',
+    vars: {
+      [angle]: '360deg',
+    }
   },
 });
 

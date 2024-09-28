@@ -1,5 +1,3 @@
-export { getVarName } from '@vanilla-extract/private';
-
 import './runtimeAdapter';
 
 export type {

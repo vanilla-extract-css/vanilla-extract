@@ -137,34 +137,6 @@ export const pink = style({
     [accentVar]: 'pink'
   }
 });
-``` 
-
-The main benefit of using `createVar` to create typed css properties is that they can be animated via `keyframes`.
-
-```ts compiled
-const angle = createVar({
-  syntax: '<angle>',
-  inherits: false,
-  initialValue: '0deg',
-});
-
-const angleKeyframes = keyframes({
-  '0%': {
-    [getVarName(angle)]: '0deg',
-  },
-  '100%': {
-    [getVarName(angle)]: '360deg',
-  },
-});
-
-export const root = style({
-  backgroundImage: `linear-gradient(${angle}, rgba(153, 70, 198, 0.35) 0%, rgba(28, 56, 240, 0.46) 100%)`,
-  animation: `${angleKeyframes} 7s infinite ease-in-out both`,
-  
-  vars: {
-    // This will fallback to 180deg if the @property is not supported by the browser
-    [angle]: fallbackVar(angle, '180deg'),
-  }
-});
-
 ```
+
+The main benefit of using `createVar` to create typed css properties is that they can be [animated via keyframes](/documentation/api/keyframes#animating-variables).

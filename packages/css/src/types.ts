@@ -23,7 +23,7 @@ export type CSSProperties = {
 };
 
 export interface CSSKeyframes {
-  [time: string]: CSSProperties;
+  [time: string]: CSSPropertiesWithVars;
 }
 
 export type CSSPropertiesWithVars = CSSProperties & {

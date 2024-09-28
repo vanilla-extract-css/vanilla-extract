@@ -15,7 +15,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
+    "assets/src/styles.css.ts.vanilla-BPHcBqBf.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -27,7 +27,6 @@ body, button {
 @property --blankVar1__jteyb14 {
   syntax: "<number>";
   inherits: false;
-  initial-value: 0;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -199,7 +198,7 @@ export { shadow };
     "src/styles.css.js",
     "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 import './../assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
-import './../assets/src/styles.css.ts.vanilla-BFtGQ1T7.css';
+import './../assets/src/styles.css.ts.vanilla-BPHcBqBf.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
@@ -390,7 +389,6 @@ export { button, container, opacity };
 @property --blankVar1__jteyb14 {
   syntax: "<number>";
   inherits: false;
-  initial-value: 0;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -521,7 +519,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
     "",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
+    "assets/src/styles.css.ts.vanilla-BPHcBqBf.css",
     "",
   ],
   [
@@ -586,7 +584,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BFtGQ1T7.css",
+    "assets/src/styles.css.ts.vanilla-BPHcBqBf.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -598,7 +596,6 @@ body, button {
 @property --blankVar1__jteyb14 {
   syntax: "<number>";
   inherits: false;
-  initial-value: 0;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -678,7 +675,7 @@ html .styles_opacity_1\\/4__jteyb17 {
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
 import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './assets/src/styles.css.ts.vanilla-BFtGQ1T7.css';
+import './assets/src/styles.css.ts.vanilla-BPHcBqBf.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta177";

@@ -163,7 +163,7 @@ class Stylesheet {
     if (root.type === 'keyframes') {
       root.rule = Object.fromEntries(
         Object.entries(root.rule).map(([keyframe, rule]) => {
-          return [keyframe, this.transformProperties(rule)];
+          return [keyframe, this.transformVars(this.transformProperties(rule))];
         }),
       );
       this.keyframesRules.push(root);

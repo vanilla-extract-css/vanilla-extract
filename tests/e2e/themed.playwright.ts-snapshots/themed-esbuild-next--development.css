@@ -44,6 +44,10 @@ button {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+}
 .styles_container__jteyb11 {
   display: flex;
   flex-direction: column;

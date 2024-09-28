@@ -67,7 +67,6 @@ globalStyle(`body ${iDunno}:after`, {
 const blankVar1 = createVar({
   syntax: '<number>',
   inherits: false,
-  initialValue: '0',
 });
 const blankVar2 = createVar();
 

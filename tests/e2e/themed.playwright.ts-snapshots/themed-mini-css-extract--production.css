@@ -44,6 +44,10 @@ button {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blj6yb4 {
+  syntax: "<number>";
+  inherits: false;
+}
 .blj6yb1 {
   display: flex;
   flex-direction: column;

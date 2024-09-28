@@ -25,7 +25,7 @@ type VarDeclaration = {
 const buildPropertyRule = ({ syntax, inherits, initialValue }: VarDeclaration): AtRule.Property => ({
   syntax: `"${Array.isArray(syntax) ? syntax.join(' | ') : syntax}"`,
   inherits: inherits ? 'true' : 'false',
-  initialValue,
+  ...(initialValue != null && { initialValue }),
 })
 
 export function createVar(declaration: VarDeclaration, debugId?: string): CSSVarFunction
