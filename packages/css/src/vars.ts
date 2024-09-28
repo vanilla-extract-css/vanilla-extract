@@ -17,9 +17,13 @@ import { PropertySyntax } from './types';
 import { appendCss } from './adapter';
 
 type VarDeclaration = {
-  syntax: PropertySyntax | Array<PropertySyntax>;
+  syntax: '*';
   inherits: boolean;
   initialValue?: string
+} | {
+  syntax: Omit<PropertySyntax, | '*'> | Array<PropertySyntax>;
+  inherits: boolean;
+  initialValue: string
 };
 
 const buildPropertyRule = ({ syntax, inherits, initialValue }: VarDeclaration): AtRule.Property => ({

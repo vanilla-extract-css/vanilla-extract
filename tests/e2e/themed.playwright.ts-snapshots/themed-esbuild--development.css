@@ -47,6 +47,7 @@ button {
 @property --blankVar1__jteyb14 {
   syntax: "<number>";
   inherits: false;
+  initial-value: 0.5;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -78,7 +79,7 @@ body .styles_iDunno__jteyb12:after {
   content: "I am content";
 }
 html .styles_opacity_1\/2__jteyb16 {
-  opacity: var(--blankVar1__jteyb14, 0.5);
+  opacity: var(--blankVar1__jteyb14);
 }
 html .styles_opacity_1\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));

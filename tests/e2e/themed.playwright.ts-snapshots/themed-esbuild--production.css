@@ -47,6 +47,7 @@ button {
 @property --jteyb14 {
   syntax: "<number>";
   inherits: false;
+  initial-value: 0.5;
 }
 .jteyb11 {
   display: flex;
@@ -72,7 +73,7 @@ body .jteyb12:after {
   content: "I am content";
 }
 html .jteyb16 {
-  opacity: var(--jteyb14, 0.5);
+  opacity: var(--jteyb14);
 }
 html .jteyb17 {
   opacity: var(--jteyb14, var(--jteyb15, 0.25));
