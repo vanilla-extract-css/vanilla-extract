@@ -11,7 +11,7 @@ const angleKeyframes = keyframes({
   '100%': {
     vars: {
       [angle]: '360deg',
-    }
+    },
   },
 });
 
@@ -26,9 +26,9 @@ export const root = style({
     opacity: 0.8,
     color: color,
   },
-  
+
   vars: {
     [color]: '#fef',
     [angle]: fallbackVar(angle, '138deg'),
-  }
+  },
 });

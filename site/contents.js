@@ -36,6 +36,7 @@ const contents = [
       'create-global-theme',
       'create-global-theme-contract',
       'global-font-face',
+      'create-global-var',
       'global-keyframes',
       'global-layer',
     ],

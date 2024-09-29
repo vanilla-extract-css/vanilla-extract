@@ -16,52 +16,88 @@ import { generateIdentifier } from './identifier';
 import { PropertySyntax } from './types';
 import { appendCss } from './adapter';
 
-type VarDeclaration = {
-  syntax: '*';
-  inherits: boolean;
-  initialValue?: string
-} | {
-  syntax: Omit<PropertySyntax, | '*'> | Array<PropertySyntax>;
-  inherits: boolean;
-  initialValue: string
-};
+type VarDeclaration =
+  | {
+      syntax: '*';
+      inherits: boolean;
+      initialValue?: string;
+    }
+  | {
+      syntax: Exclude<PropertySyntax, '*'> | Array<PropertySyntax>;
+      inherits: boolean;
+      initialValue: string;
+    };
 
-const buildPropertyRule = ({ syntax, inherits, initialValue }: VarDeclaration): AtRule.Property => ({
+const buildPropertyRule = ({
+  syntax,
+  inherits,
+  initialValue,
+}: VarDeclaration): AtRule.Property => ({
   syntax: `"${Array.isArray(syntax) ? syntax.join(' | ') : syntax}"`,
   inherits: inherits ? 'true' : 'false',
-  ...(initialValue != null && { initialValue }),
-})
+  ...(initialValue != null ? { initialValue } : {}),
+});
 
-export function createVar(declaration: VarDeclaration, debugId?: string): CSSVarFunction
-export function createVar(debugId?: string): CSSVarFunction
-export function createVar(debugIdOrDeclaration?: string | VarDeclaration, debugId?: string): CSSVarFunction {  
+export function createVar(
+  declaration: VarDeclaration,
+  debugId?: string,
+): CSSVarFunction;
+export function createVar(debugId?: string): CSSVarFunction;
+export function createVar(
+  debugIdOrDeclaration?: string | VarDeclaration,
+  debugId?: string,
+): CSSVarFunction {
   const cssVarName = cssesc(
     generateIdentifier({
-      debugId: typeof debugIdOrDeclaration === 'string' ? debugIdOrDeclaration : debugId,
+      debugId:
+        typeof debugIdOrDeclaration === 'string'
+          ? debugIdOrDeclaration
+          : debugId,
       debugFileName: false,
     }),
     { isIdentifier: true },
   );
 
   if (debugIdOrDeclaration && typeof debugIdOrDeclaration === 'object') {
-    appendCss({ type: 'property', name: `--${cssVarName}`, rule: buildPropertyRule(debugIdOrDeclaration) }, getFileScope());
+    appendCss(
+      {
+        type: 'property',
+        name: `--${cssVarName}`,
+        rule: buildPropertyRule(debugIdOrDeclaration),
+      },
+      getFileScope(),
+    );
   }
 
   return `var(--${cssVarName})` as const;
 }
 
-export function createGlobalVar(name: string): CSSVarFunction
-export function createGlobalVar(name: string, declaration: VarDeclaration): CSSVarFunction
-export function createGlobalVar(name: string, declaration?: VarDeclaration): string {
+export function createGlobalVar(name: string): CSSVarFunction;
+export function createGlobalVar(
+  name: string,
+  declaration: VarDeclaration,
+): CSSVarFunction;
+export function createGlobalVar(
+  name: string,
+  declaration?: VarDeclaration,
+): CSSVarFunction {
   if (declaration && typeof declaration === 'object') {
-    appendCss({ type: 'property', name: `--${name}`, rule: buildPropertyRule(declaration) }, getFileScope());
+    appendCss(
+      {
+        type: 'property',
+        name: `--${name}`,
+        rule: buildPropertyRule(declaration),
+      },
+      getFileScope(),
+    );
   }
-
 
   return `var(--${name})`;
 }
 
-export function assertVarName(value: unknown): asserts value is `var(--${string})` {
+export function assertVarName(
+  value: unknown,
+): asserts value is `var(--${string})` {
   if (typeof value !== 'string' || !/^var\(--.*\)$/.test(value)) {
     throw new Error(`Invalid variable name: ${value}`);
   }
@@ -76,7 +112,7 @@ export function fallbackVar(
     if (finalValue === '') {
       finalValue = String(value);
     } else {
-      assertVarName(value)
+      assertVarName(value);
 
       finalValue = value.replace(/\)$/, `, ${finalValue})`);
     }

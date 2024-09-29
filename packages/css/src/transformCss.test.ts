@@ -6,11 +6,14 @@ import { style } from './style';
 setFileScope('test');
 
 const testVar = createVar();
-const testPropertyVar = createVar({
-  syntax: '<angle>',
-  inherits: false,
-  initialValue: '0deg',
-}, 'test-property');
+const testPropertyVar = createVar(
+  {
+    syntax: '<angle>',
+    inherits: false,
+    initialValue: '0deg',
+  },
+  'test-property',
+);
 const style1 = style({});
 const style2 = style({});
 
@@ -1850,6 +1853,46 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle animations with vars', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'keyframes',
+            name: 'myAnimation',
+            rule: {
+              from: {
+                vars: {
+                  '--my-var': 'red',
+                  [testVar]: 'green',
+                },
+              },
+              to: {
+                vars: {
+                  '--my-var': 'orange',
+                  [testVar]: 'blue',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @keyframes myAnimation {
+        from {
+          --my-var: red;
+          --skkcyc0: green;
+        }
+        to {
+          --my-var: orange;
+          --skkcyc0: blue;
+        }
+      }
+    `);
+  });
+
   it('should handle font face', () => {
     expect(
       transformCss({
@@ -2080,7 +2123,7 @@ describe('transformCss', () => {
       }
     `);
   });
-  
+
   it('should handle complicated css properties', () => {
     expect(
       transformCss({

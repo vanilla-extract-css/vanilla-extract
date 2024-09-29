@@ -106,7 +106,7 @@ export type CSSLayerDeclaration = {
 export type CSSPropertyBlock = {
   type: 'property';
   name: string;
-  rule: AtRule.Property
+  rule: AtRule.Property;
 };
 
 export type CSS =
@@ -163,21 +163,21 @@ export type ClassNames = string | Array<ClassNames>;
 
 export type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
 
-export type PropertySyntax = 
-    | '<length>'
-    | '<number>' 
-    | '<percentage>' 
-    | '<length-percentage>' 
-    | '<color>' 
-    | '<image>' 
-    | '<url>' 
-    | '<integer>' 
-    | '<angle>' 
-    | '<time>' 
-    | '<resolution>' 
-    | '<transform-function>' 
-    | '<custom-ident>' 
-    | '<transform-list>' 
-    | '*'
-    // needs this to make TS suggestions work
-    | (string & Record<never, never>);
+export type PropertySyntax =
+  | '<length>'
+  | '<number>'
+  | '<percentage>'
+  | '<length-percentage>'
+  | '<color>'
+  | '<image>'
+  | '<url>'
+  | '<integer>'
+  | '<angle>'
+  | '<time>'
+  | '<resolution>'
+  | '<transform-function>'
+  | '<custom-ident>'
+  | '<transform-list>'
+  | '*'
+  // needs this to make TS suggestions work
+  | (string & Record<never, never>);
