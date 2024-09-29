@@ -1,5 +1,5 @@
 ---
-"@vanilla-extract/css": patch
+"@vanilla-extract/css": minor
 ---
 
 Add support for a `vars` property to steps within `keyframes` declarations
