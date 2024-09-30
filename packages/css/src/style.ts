@@ -9,7 +9,6 @@ import type {
   GlobalStyleRule,
   ClassNames,
   ComplexStyleRule,
-  CSSViewTransition,
 } from './types';
 import {
   registerClassName,

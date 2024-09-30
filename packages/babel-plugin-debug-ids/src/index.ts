@@ -42,9 +42,6 @@ const debuggableFunctionConfig = {
   createViewTransition: {
     maxParams: 1,
   },
-  viewTransition: {
-    maxParams: 1,
-  },
   layer: {
     maxParams: 2,
     hasDebugId: ({ arguments: args }) => {
