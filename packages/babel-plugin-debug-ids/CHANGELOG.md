@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin-debug-ids
 
+## 1.1.0
+
+### Minor Changes
+
+- [#1450](https://github.com/vanilla-extract-css/vanilla-extract/pull/1450) [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415) Thanks [@wuz](https://github.com/wuz)! - Add support for the new `createViewTransition` API
+
 ## 1.0.6
 
 ### Patch Changes

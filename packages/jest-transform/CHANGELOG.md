@@ -1,5 +1,12 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
 ## 1.1.9
 
 ### Patch Changes
