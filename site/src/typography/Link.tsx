@@ -1,11 +1,14 @@
-import { Link, LinkProps } from 'react-router-dom';
+import {
+  Link as ReactRouterLink,
+  LinkProps as ReactRouterLinkProps,
+} from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
 import { TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
 import { sprinkles } from '../system/styles/sprinkles.css';
 
-interface Props extends LinkProps {
+export interface LinkProps extends ReactRouterLinkProps {
   baseline?: boolean;
   size?: 'standard' | 'small' | 'xsmall';
   underline?: 'always' | 'hover' | 'never';
@@ -16,7 +19,7 @@ interface Props extends LinkProps {
   inline?: boolean;
   highlightOnFocus?: boolean;
 }
-export default ({
+export const Link = ({
   to,
   baseline = false,
   size = 'standard',
@@ -28,7 +31,7 @@ export default ({
   inline = false,
   className,
   ...restProps
-}: Props) => {
+}: LinkProps) => {
   const classNames = classnames(
     inline ? undefined : sprinkles({ display: 'block' }),
     underline === 'hover' ? styles.underlineOnHover : undefined,
@@ -47,7 +50,7 @@ export default ({
   }
 
   return (
-    <Link
+    <ReactRouterLink
       onClick={() => window.scrollTo(0, 0)}
       to={to}
       {...restProps}

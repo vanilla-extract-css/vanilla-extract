@@ -2,13 +2,12 @@ import classnames from 'classnames';
 import { Box } from '../system';
 import * as styles from './Fab.css';
 
-export const Fab = ({
-  open,
-  onClick,
-}: {
+export interface FabProps {
   open: boolean;
   onClick: () => void;
-}) => {
+}
+
+export const Fab = ({ open, onClick }: FabProps) => {
   return (
     <Box
       component="button"
