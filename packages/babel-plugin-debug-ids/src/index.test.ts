@@ -217,6 +217,22 @@ describe('babel plugin', () => {
     `);
   });
 
+  it('should handle typed createVar assigned to const', () => {
+    const source = `
+      import { createVar } from '@vanilla-extract/css';
+
+      const myVar = createVar({ syntax: '*', inherits: true });
+    `;
+
+    expect(transform(source)).toMatchInlineSnapshot(`
+      import { createVar } from '@vanilla-extract/css';
+      const myVar = createVar({
+        syntax: '*',
+        inherits: true
+      }, "myVar");
+    `);
+  });
+
   it('should handle createContainer assigned to const', () => {
     const source = `
       import { createContainer } from '@vanilla-extract/css';

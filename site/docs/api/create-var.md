@@ -112,3 +112,31 @@ export const pink = style({
 ## Assigning variables dynamically
 
 CSS variables can also be assigned dynamically using APIs in [the `@vanilla-extract/dynamic` package](/documentation/packages/dynamic).
+
+## CSS Properties
+
+You can also create typed css [@property](https://developer.mozilla.org/en-US/docs/Web/CSS/@property) using `createVar`:
+
+```ts compiled
+// accent.css.ts
+
+import { createVar, style } from '@vanilla-extract/css';
+
+export const accentVar = createVar({
+  syntax: '<color>',
+  inherits: false,
+  initialValue: 'blue'
+});
+```
+
+CSS properties created with `createVar` can be used in the same way as a regular css variable:
+
+```ts compiled
+export const pink = style({
+  vars: {
+    [accentVar]: 'pink'
+  }
+});
+```
+
+The main benefit of using `createVar` to create typed css properties is that they can be [animated via keyframes](/documentation/api/keyframes#animating-variables).
