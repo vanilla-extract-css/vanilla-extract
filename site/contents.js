@@ -25,6 +25,7 @@ const contents = [
       'keyframes',
       'create-container',
       'layer',
+      'create-view-transition',
       'add-function-serializer',
     ],
   },
