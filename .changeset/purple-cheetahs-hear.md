@@ -1,5 +1,5 @@
 ---
-"@vanilla-extract/css": patch
+"@vanilla-extract/css": minor
 ---
 
 Add `createViewTransition` API
