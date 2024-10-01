@@ -214,7 +214,7 @@ export function vanillaExtractPlugin({
           // We have to invalidate the virtual module & deps, not the real one we just transformed
           // The deps have to be invalidated in case one of them changing was the trigger causing
           // the current transformation
-          if (file.endsWith('.css.ts')) {
+          if (cssFileFilter.test(file)) {
             invalidateModule(fileIdToVirtualId(file));
           }
         }
