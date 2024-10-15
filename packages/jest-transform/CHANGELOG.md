@@ -1,5 +1,53 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
+## 1.1.9
+
+### Patch Changes
+
+- Updated dependencies [[`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047)]:
+  - @vanilla-extract/integration@7.1.9
+
+## 1.1.8
+
+### Patch Changes
+
+- [#1461](https://github.com/vanilla-extract-css/vanilla-extract/pull/1461) [`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b) Thanks [@askoufis](https://github.com/askoufis)! - Widen `esbuild` dependency range to include `~0.22.0` and `~0.23.0`
+
+- Updated dependencies [[`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b), [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/integration@7.1.8
+
+## 1.1.7
+
+### Patch Changes
+
+- [#1436](https://github.com/vanilla-extract-css/vanilla-extract/pull/1436) [`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e) Thanks [@SimenB](https://github.com/SimenB)! - Extend `esbuild` dependency range to include `~0.20.0` and `~0.21.0`
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
+## 1.1.5
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+
 ## 1.1.4
 
 ### Patch Changes

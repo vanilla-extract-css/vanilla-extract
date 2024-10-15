@@ -1,5 +1,75 @@
 # @vanilla-extract/integration
 
+## 7.1.10
+
+### Patch Changes
+
+- Updated dependencies [[`cd9d8b2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cd9d8b231bbd7a7ac6674d2b28f77cff93e5be9e), [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415), [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415)]:
+  - @vanilla-extract/css@1.16.0
+  - @vanilla-extract/babel-plugin-debug-ids@1.1.0
+
+## 7.1.9
+
+### Patch Changes
+
+- [#1431](https://github.com/vanilla-extract-css/vanilla-extract/pull/1431) [`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047) Thanks [@otaviomad](https://github.com/otaviomad)! - Fixes a bug in the `vite-node` compiler resulting in incorrectly ordered class compositions in certain cases
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+
+## 7.1.8
+
+### Patch Changes
+
+- [#1461](https://github.com/vanilla-extract-css/vanilla-extract/pull/1461) [`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b) Thanks [@askoufis](https://github.com/askoufis)! - Widen `esbuild` dependency range to include `~0.22.0` and `~0.23.0`
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+
+## 7.1.7
+
+### Patch Changes
+
+- [#1436](https://github.com/vanilla-extract-css/vanilla-extract/pull/1436) [`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e) Thanks [@SimenB](https://github.com/SimenB)! - Extend `esbuild` dependency range to include `~0.20.0` and `~0.21.0`
+
+## 7.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`b86f3f59c86420e12593996a14f8cdb5db2f7c25`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b86f3f59c86420e12593996a14f8cdb5db2f7c25), [`99e974b2ae56e1e851b376988216b7bd30813813`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99e974b2ae56e1e851b376988216b7bd30813813)]:
+  - @vanilla-extract/css@1.15.3
+
+## 7.1.5
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.0.6
+  - @vanilla-extract/css@1.15.2
+
+## 7.1.4
+
+### Patch Changes
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - `addFileScope`: Fixes a bug where non-template strings that contained a newline where being mangled
+
+- [#1406](https://github.com/vanilla-extract-css/vanilla-extract/pull/1406) [`5e06ada9309c46b20d318051f80121886da4ff29`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5e06ada9309c46b20d318051f80121886da4ff29) Thanks [@askoufis](https://github.com/askoufis)! - Bump `dedent` dependency to `^1.5.3`
+
+## 7.1.3
+
+### Patch Changes
+
+- [#1388](https://github.com/vanilla-extract-css/vanilla-extract/pull/1388) [`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd) Thanks [@askoufis](https://github.com/askoufis)! - Remove `lodash` dependency
+
+- [#1386](https://github.com/vanilla-extract-css/vanilla-extract/pull/1386) [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb) Thanks [@askoufis](https://github.com/askoufis)! - Replace `outdent` dependency with `dedent`
+
+- Updated dependencies [[`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb), [`3df9b4ebc5ad7e03e5c908c10216447b7089132a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/3df9b4ebc5ad7e03e5c908c10216447b7089132a)]:
+  - @vanilla-extract/css@1.15.1
+
 ## 7.1.2
 
 ### Patch Changes
@@ -348,15 +418,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 

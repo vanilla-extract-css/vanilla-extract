@@ -1,6 +1,6 @@
 import { Contract, walkObject } from '@vanilla-extract/private';
 import { diff } from 'deep-object-diff';
-import chalk from 'chalk';
+import pc from 'picocolors';
 
 const normaliseObject = (obj: Contract) => walkObject(obj, () => '');
 
@@ -20,11 +20,11 @@ function diffLine(value: string, nesting: number, type?: '+' | '-') {
 
   if (process.env.NODE_ENV !== 'test') {
     if (type === '-') {
-      return chalk.red(line);
+      return pc.red(line);
     }
 
     if (type === '+') {
-      return chalk.green(line);
+      return pc.green(line);
     }
   }
 

@@ -1,5 +1,23 @@
 # @vanilla-extract/recipes
 
+## 0.5.5
+
+### Patch Changes
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+## 0.5.4
+
+### Patch Changes
+
+- [#1443](https://github.com/vanilla-extract-css/vanilla-extract/pull/1443) [`2a7acc989fba707220186f2d0b824bc4cc37ad66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2a7acc989fba707220186f2d0b824bc4cc37ad66) Thanks [@DominikRusso](https://github.com/DominikRusso)! - Enable passing `undefined` variant values to recipe functions when TypeScript's `exactOptionalPropertyTypes` is enabled.
+
+## 0.5.3
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
 ## 0.5.2
 
 ### Patch Changes

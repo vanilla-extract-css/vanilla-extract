@@ -1,5 +1,49 @@
 # @vanilla-extract/esbuild-plugin
 
+## 2.3.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
+## 2.3.10
+
+### Patch Changes
+
+- Updated dependencies [[`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047)]:
+  - @vanilla-extract/integration@7.1.9
+
+## 2.3.9
+
+### Patch Changes
+
+- Updated dependencies [[`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b), [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/integration@7.1.8
+
+## 2.3.8
+
+### Patch Changes
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+
+## 2.3.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
+## 2.3.6
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+
 ## 2.3.5
 
 ### Patch Changes
@@ -76,7 +120,7 @@
 
   // redBox ~= 'styles_redBox_asdfgj'
   const redBox = style({
-    background: 'red',
+    background: 'red'
   });
   ```
 
@@ -172,15 +216,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 
@@ -198,14 +249,19 @@
   **Example for postcss with autoprefixer:**
 
   ```js
-  const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
+  const {
+    vanillaExtractPlugin
+  } = require('@vanilla-extract/esbuild-plugin');
   const postcss = require('postcss');
   const autoprefixer = require('autoprefixer');
 
   async function processCss(css) {
-    const result = await postcss([autoprefixer]).process(css, {
-      from: undefined /* suppress source map warning */,
-    });
+    const result = await postcss([autoprefixer]).process(
+      css,
+      {
+        from: undefined /* suppress source map warning */
+      }
+    );
 
     return result.css;
   }
@@ -216,10 +272,10 @@
       bundle: true,
       plugins: [
         vanillaExtractPlugin({
-          processCss,
-        }),
+          processCss
+        })
       ],
-      outfile: 'out.js',
+      outfile: 'out.js'
     })
     .catch(() => process.exit(1));
   ```

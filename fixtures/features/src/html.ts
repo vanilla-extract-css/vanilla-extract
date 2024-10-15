@@ -10,3 +10,9 @@ export default `
     <div id="${testNodes.styleCompositionInSelector}" class="${styles.styleCompositionInSelector}">Style composition in selector</div>
     <div id="${testNodes.styleVariantsCompositionInSelector}" class="${styles.styleVariantsCompositionInSelector.variant}">Style variants composition in selector</div>
   `;
+
+// @ts-expect-error Vite env not defined
+if (import.meta.hot) {
+  // @ts-expect-error Vite env not defined
+  import.meta.hot.accept();
+}

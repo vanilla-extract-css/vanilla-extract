@@ -1,5 +1,74 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.16
+
+### Patch Changes
+
+- [#1482](https://github.com/vanilla-extract-css/vanilla-extract/pull/1482) [`30c0305`](https://github.com/vanilla-extract-css/vanilla-extract/commit/30c0305577638ada06393729f8eaaa7a72d69369) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where Vanilla Extract files with extensions other than `css.ts` were not being invalidated during HMR
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
+## 4.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047)]:
+  - @vanilla-extract/integration@7.1.9
+
+## 4.0.14
+
+### Patch Changes
+
+- Updated dependencies [[`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b), [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/integration@7.1.8
+
+## 4.0.13
+
+### Patch Changes
+
+- [#1438](https://github.com/vanilla-extract-css/vanilla-extract/pull/1438) [`765b85610207992693a822fb3b1aec995ab48409`](https://github.com/vanilla-extract-css/vanilla-extract/commit/765b85610207992693a822fb3b1aec995ab48409) Thanks [@ArrayKnight](https://github.com/ArrayKnight)! - Fixes a bug where changes to `.css.ts` dependencies of top-level `.css.ts` files would not generate new CSS
+
+## 4.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`124c31c2d9fee24d937c4626cec524d527d4e55e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/124c31c2d9fee24d937c4626cec524d527d4e55e)]:
+  - @vanilla-extract/integration@7.1.7
+
+## 4.0.11
+
+### Patch Changes
+
+- [#1395](https://github.com/vanilla-extract-css/vanilla-extract/pull/1395) [`8d1731b44f8e93153c8087a533e0f9b2ed99767c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8d1731b44f8e93153c8087a533e0f9b2ed99767c) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that made the plugin incompatible with frameworks that use custom config files
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.6
+
+## 4.0.10
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
+- Updated dependencies [[`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17)]:
+  - @vanilla-extract/integration@7.1.5
+
+## 4.0.9
+
+### Patch Changes
+
+- [#1399](https://github.com/vanilla-extract-css/vanilla-extract/pull/1399) [`ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ce738ba9e9a6b5c72cc7868bed724c816ca3cc4e) Thanks [@askoufis](https://github.com/askoufis)! - Ensure the compiler instance is re-used between builds
+
+## 4.0.8
+
+### Patch Changes
+
+- [#1397](https://github.com/vanilla-extract-css/vanilla-extract/pull/1397) [`2232ef4aa0b8410ff791626a951a15cc03dfbb09`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2232ef4aa0b8410ff791626a951a15cc03dfbb09) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that was causing output CSS files to not update during watch mode
+
+- Updated dependencies [[`606660618dc5efa6c529f77cebf9d2b8dc379dbd`](https://github.com/vanilla-extract-css/vanilla-extract/commit/606660618dc5efa6c529f77cebf9d2b8dc379dbd), [`e58cf9013c6f6cdfacb2a7936b3354e71138e9fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e58cf9013c6f6cdfacb2a7936b3354e71138e9fb)]:
+  - @vanilla-extract/integration@7.1.3
+
 ## 4.0.7
 
 ### Patch Changes
@@ -177,9 +246,9 @@
   export default {
     plugins: [
       vanillaExtractPlugin({
-        emitCssInSsr: true,
-      }),
-    ],
+        emitCssInSsr: true
+      })
+    ]
   };
   ```
 
@@ -224,7 +293,7 @@
 
   // redBox ~= 'styles_redBox_asdfgj'
   const redBox = style({
-    background: 'red',
+    background: 'red'
   });
   ```
 
@@ -496,15 +565,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 

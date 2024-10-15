@@ -1,5 +1,17 @@
 # @vanilla-extract/babel-plugin-debug-ids
 
+## 1.1.0
+
+### Minor Changes
+
+- [#1450](https://github.com/vanilla-extract-css/vanilla-extract/pull/1450) [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415) Thanks [@wuz](https://github.com/wuz)! - Add support for the new `createViewTransition` API
+
+## 1.0.6
+
+### Patch Changes
+
+- [#1335](https://github.com/vanilla-extract-css/vanilla-extract/pull/1335) [`b8a99e4980710a34692034d5da43e584edbc3d17`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b8a99e4980710a34692034d5da43e584edbc3d17) Thanks [@askoufis](https://github.com/askoufis)! - Add `types` field to `package.json`
+
 ## 1.0.5
 
 ### Patch Changes

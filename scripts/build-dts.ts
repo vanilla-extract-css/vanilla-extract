@@ -6,15 +6,22 @@ import glob from 'fast-glob';
 import { legacy, resolve } from 'resolve.exports';
 import { rollup } from 'rollup';
 import dts from 'rollup-plugin-dts';
-import { externals } from 'rollup-plugin-node-externals';
+import { nodeExternals } from 'rollup-plugin-node-externals';
 
-function resolveEntry<PackageJson>(pkg: PackageJson, entryName?: string) {
+function resolveEntry<PackageJson>(
+  pkg: PackageJson,
+  entryName?: string,
+): string {
   const entryPath = entryName
-    ? resolve(pkg, entryName, { conditions: ['node', 'default'] })
+    ? resolve(pkg, entryName, { browser: false, require: true })
     : legacy(pkg, { browser: false, fields: ['main'] })!;
 
-  if (!entryPath) {
+  if (!entryPath || entryPath.length === 0) {
     throw new Error('No entry found. Invalid package.json?');
+  }
+
+  if (Array.isArray(entryPath)) {
+    return entryPath[0];
   }
 
   return entryPath;
@@ -27,7 +34,10 @@ async function buildEntry(packageDir: string, entryPath: string) {
   const dtsEntryPath = path.relative(process.cwd(), dtsEntryPathAbsolute);
   const outDir = path.dirname(dtsEntryPath);
 
-  if (!existsSync(dtsEntryPath)) return;
+  if (!existsSync(dtsEntryPath)) {
+    console.warn('Skipping', dtsEntryPath, '(Not Found)');
+    return;
+  }
 
   console.log('Bundling', dtsEntryPath);
 
@@ -35,7 +45,7 @@ async function buildEntry(packageDir: string, entryPath: string) {
     const bundle = await rollup({
       input: dtsEntryPath,
       plugins: [
-        externals({
+        nodeExternals({
           packagePath: path.resolve(packageDir, 'package.json'),
           deps: true,
           devDeps: false,

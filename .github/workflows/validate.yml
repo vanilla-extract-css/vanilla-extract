@@ -15,12 +15,12 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@master
+      - uses: pnpm/action-setup@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@main
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -49,12 +49,12 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@master
+      - uses: pnpm/action-setup@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@main
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -75,12 +75,12 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@master
+      - uses: pnpm/action-setup@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@main
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -97,7 +97,7 @@ jobs:
       - name: Playwright tests
         run: pnpm test:playwright
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: test-results

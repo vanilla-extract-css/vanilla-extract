@@ -70,7 +70,7 @@ module.exports = [
         },
         {
           test: /\.(png?)$/,
-          use: ['file-loader'],
+          type: 'asset/resource',
         },
       ],
     },
@@ -139,7 +139,7 @@ module.exports = [
         },
         {
           test: /\.(png?)$/,
-          use: ['file-loader'],
+          type: 'asset/resource',
         },
       ],
     },

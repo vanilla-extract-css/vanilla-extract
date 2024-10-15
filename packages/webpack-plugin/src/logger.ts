@@ -1,8 +1,8 @@
 import createDebug from 'debug';
-import chalk from 'chalk';
+import pc from 'picocolors';
 
 export const formatResourcePath = (i: string) =>
-  chalk.blue(`"${i.replace(/.*\//, '')}"`);
+  pc.blue(`"${i.replace(/.*\//, '')}"`);
 
 createDebug.formatters.r = (r: string) => formatResourcePath(r);
 

@@ -1,6 +1,6 @@
 {
   "name": "@fixtures/thirdparty-dep-dep",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "exports": {
     ".": {
       "import": "./index.mjs"
@@ -10,6 +10,6 @@
   "author": "SEEK",
   "private": true,
   "dependencies": {
-    "@vanilla-extract/css": "1.14.2"
+    "@vanilla-extract/css": "workspace:^"
   }
 }
