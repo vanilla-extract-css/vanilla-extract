@@ -40,7 +40,10 @@ const removeIncompatiblePlugins = (plugin: PluginOption) =>
   // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
   // the main Remix plugin, and may not function correctly without it. To address this, we
   // filter out all Remix-related plugins.
-  !plugin.name.startsWith('remix');
+  !plugin.name.startsWith('remix') &&
+  // As React-Router plugin works the same as Remix plugin, also ignore it.
+  !plugin.name.startsWith('react-router');
+
 
 interface Options {
   identifiers?: IdentifierOption;
