@@ -44,7 +44,6 @@ const removeIncompatiblePlugins = (plugin: PluginOption) =>
   // As React-Router plugin works the same as Remix plugin, also ignore it.
   !plugin.name.startsWith('react-router');
 
-
 interface Options {
   identifiers?: IdentifierOption;
   unstable_mode?: 'transform' | 'emitCss';
