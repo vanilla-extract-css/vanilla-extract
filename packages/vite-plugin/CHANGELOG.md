@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.17
+
+### Patch Changes
+
+- [#1492](https://github.com/vanilla-extract-css/vanilla-extract/pull/1492) [`1fd348a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1fd348a91036a1370e61de85199ca6f78533ed8e) Thanks [@kube](https://github.com/kube)! - Filter out `react-router` Vite plugin when creating the `vite-node` compiler
+
 ## 4.0.16
 
 ### Patch Changes
