@@ -49,7 +49,15 @@ export interface CompileOptions {
   cwd?: string;
   esbuildOptions?: Pick<
     EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader' | 'tsconfig' | 'conditions' | 'logLevel' | 'logLimit' | 'logOverride'
+    | 'plugins'
+    | 'external'
+    | 'define'
+    | 'loader'
+    | 'tsconfig'
+    | 'conditions'
+    | 'logLevel'
+    | 'logLimit'
+    | 'logOverride'
   >;
 }
 export async function compile({
