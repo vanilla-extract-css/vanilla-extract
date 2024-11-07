@@ -40,7 +40,9 @@ const removeIncompatiblePlugins = (plugin: PluginOption) =>
   // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
   // the main Remix plugin, and may not function correctly without it. To address this, we
   // filter out all Remix-related plugins.
-  !plugin.name.startsWith('remix');
+  !plugin.name.startsWith('remix') &&
+  // As React-Router plugin works the same as Remix plugin, also ignore it.
+  !plugin.name.startsWith('react-router');
 
 interface Options {
   identifiers?: IdentifierOption;
@@ -196,7 +198,7 @@ export function vanillaExtractPlugin({
         const result: TransformResult = {
           code: source,
           map: { mappings: '' },
-        }
+        };
 
         // We don't need to watch files in build mode
         if (config.command === 'build' && !config.build.watch) {
@@ -204,14 +206,17 @@ export function vanillaExtractPlugin({
         }
 
         for (const file of watchFiles) {
-          if (!file.includes('node_modules') && normalizePath(file) !== absoluteId) {
+          if (
+            !file.includes('node_modules') &&
+            normalizePath(file) !== absoluteId
+          ) {
             this.addWatchFile(file);
           }
 
           // We have to invalidate the virtual module & deps, not the real one we just transformed
           // The deps have to be invalidated in case one of them changing was the trigger causing
           // the current transformation
-          if (file.endsWith('.css.ts')) {
+          if (cssFileFilter.test(file)) {
             invalidateModule(fileIdToVirtualId(file));
           }
         }
