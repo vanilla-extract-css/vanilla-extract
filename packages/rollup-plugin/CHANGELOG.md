@@ -1,5 +1,12 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.3.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
 ## 1.3.10
 
 ### Patch Changes

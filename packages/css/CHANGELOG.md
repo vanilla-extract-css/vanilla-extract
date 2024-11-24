@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.16.1
+
+### Patch Changes
+
+- [#1505](https://github.com/vanilla-extract-css/vanilla-extract/pull/1505) [`103ce57`](https://github.com/vanilla-extract-css/vanilla-extract/commit/103ce57c98bf632a56fab1d71ae44039a77f5291) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that caused invalid selectors to be generated when adjacent classnames contained a substring equal to another local classname
+
 ## 1.16.0
 
 ### Minor Changes

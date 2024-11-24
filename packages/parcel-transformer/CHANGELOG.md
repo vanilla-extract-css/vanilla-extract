@@ -1,5 +1,12 @@
 # @vanilla-extract/parcel-transformer
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
 ## 1.0.10
 
 ### Patch Changes
