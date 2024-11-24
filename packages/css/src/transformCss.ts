@@ -13,6 +13,7 @@ import type {
   CSSSelectorBlock,
   Composition,
   WithQueries,
+  CSSPropertyBlock,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
@@ -119,6 +120,7 @@ class Stylesheet {
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
   layers: Map<string, Array<string>>;
+  propertyRules: Array<CSSPropertyBlock>;
 
   constructor(
     localClassNames: Array<string>,
@@ -128,6 +130,7 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
+    this.propertyRules = [];
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
@@ -150,10 +153,17 @@ class Stylesheet {
 
       return;
     }
+
+    if (root.type === 'property') {
+      this.propertyRules.push(root);
+
+      return;
+    }
+
     if (root.type === 'keyframes') {
       root.rule = Object.fromEntries(
         Object.entries(root.rule).map(([keyframe, rule]) => {
-          return [keyframe, this.transformProperties(rule)];
+          return [keyframe, this.transformVars(this.transformProperties(rule))];
         }),
       );
       this.keyframesRules.push(root);
@@ -580,6 +590,11 @@ class Stylesheet {
     // Render font-face rules
     for (const fontFaceRule of this.fontFaceRules) {
       css.push(renderCss({ '@font-face': fontFaceRule }));
+    }
+
+    // Render property rules
+    for (const property of this.propertyRules) {
+      css.push(renderCss({ [`@property ${property.name}`]: property.rule }));
     }
 
     // Render keyframes
