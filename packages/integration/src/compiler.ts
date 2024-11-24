@@ -103,6 +103,7 @@ const createViteServer = async ({
     root,
     server: {
       hmr: false,
+      watch: null,
     },
     logLevel: 'silent',
     optimizeDeps: {
