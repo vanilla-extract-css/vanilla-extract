@@ -317,11 +317,20 @@ class Stylesheet {
       const [endIndex, [firstMatch]] = results[i];
       const startIndex = endIndex - firstMatch.length + 1;
 
-      if (startIndex >= lastReplaceIndex) {
-        // Class names can be substrings of other class names
-        // e.g. '_1g1ptzo1' and '_1g1ptzo10'
-        // If the startIndex >= lastReplaceIndex, then
-        // this is the case and this replace should be skipped
+      // Class names can be substrings of other class names
+      // e.g. '_1g1ptzo1' and '_1g1ptzo10'
+      //
+      // Additionally, concatenated classnames can contain substrings equal to other classnames
+      // e.g. '&&' where '&' is 'debugName_hash1' and 'debugName_hash1d' is also a local classname
+      // Before transforming the selector, this would look like `debugName_hash1debugName_hash1`
+      // which contains the substring `debugName_hash1d`’.
+      //
+      // In either of these cases, the last replace index will occur either before or within the
+      // current replacement range (from `startIndex` to `endIndex`).
+      // If this occurs, we skip the replacement to avoid transforming the selector incorrectly.
+      const skipReplacement = lastReplaceIndex <= endIndex;
+
+      if (skipReplacement) {
         continue;
       }
 

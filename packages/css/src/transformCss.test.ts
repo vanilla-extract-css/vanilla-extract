@@ -2299,6 +2299,61 @@ describe('transformCss', () => {
       }
     `);
   });
+
+  it('should handle adjacent classnames containing a separate local classname as a substring', () => {
+    // Note that `classname2` starts and ends with the same character, so when two `classname1`s are
+    // adjacent, the resulting string will contain `classname2` as a substring
+    const classname1 = 'debugName_hash1';
+    const classname2 = 'debugName_hash1d';
+
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [classname1, classname2],
+
+        cssObjs: [
+          {
+            type: 'local',
+            selector: classname1,
+            rule: {
+              selectors: {
+                ['&&']: {
+                  background: 'black',
+                },
+                [`${classname2}&`]: {
+                  background: 'orange',
+                },
+                [`&${classname2}&`]: {
+                  background: 'orange',
+                },
+                [`${classname2}${classname2}&`]: {
+                  background: 'orange',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: classname2,
+            rule: {},
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .debugName_hash1.debugName_hash1 {
+        background: black;
+      }
+      .debugName_hash1d.debugName_hash1 {
+        background: orange;
+      }
+      .debugName_hash1.debugName_hash1d.debugName_hash1 {
+        background: orange;
+      }
+      .debugName_hash1d.debugName_hash1d.debugName_hash1 {
+        background: orange;
+      }
+    `);
+  });
 });
 
 endFileScope();
