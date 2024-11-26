@@ -1,5 +1,40 @@
 # @vanilla-extract/integration
 
+## 7.1.11
+
+### Patch Changes
+
+- Updated dependencies [[`103ce57`](https://github.com/vanilla-extract-css/vanilla-extract/commit/103ce57c98bf632a56fab1d71ae44039a77f5291)]:
+  - @vanilla-extract/css@1.16.1
+
+## 7.1.10
+
+### Patch Changes
+
+- Updated dependencies [[`cd9d8b2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cd9d8b231bbd7a7ac6674d2b28f77cff93e5be9e), [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415), [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415)]:
+  - @vanilla-extract/css@1.16.0
+  - @vanilla-extract/babel-plugin-debug-ids@1.1.0
+
+## 7.1.9
+
+### Patch Changes
+
+- [#1431](https://github.com/vanilla-extract-css/vanilla-extract/pull/1431) [`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047) Thanks [@otaviomad](https://github.com/otaviomad)! - Fixes a bug in the `vite-node` compiler resulting in incorrectly ordered class compositions in certain cases
+
+- Updated dependencies [[`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c)]:
+  - @vanilla-extract/css@1.15.5
+
+## 7.1.8
+
+### Patch Changes
+
+- [#1461](https://github.com/vanilla-extract-css/vanilla-extract/pull/1461) [`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b) Thanks [@askoufis](https://github.com/askoufis)! - Widen `esbuild` dependency range to include `~0.22.0` and `~0.23.0`
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/css@1.15.4
+
 ## 7.1.7
 
 ### Patch Changes
@@ -390,15 +425,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 

@@ -1,5 +1,33 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
+## 2.3.14
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
+## 2.3.13
+
+### Patch Changes
+
+- Updated dependencies [[`96dd466127374b21ad7e48e5dd168a03a96af047`](https://github.com/vanilla-extract-css/vanilla-extract/commit/96dd466127374b21ad7e48e5dd168a03a96af047)]:
+  - @vanilla-extract/integration@7.1.9
+
+## 2.3.12
+
+### Patch Changes
+
+- Updated dependencies [[`6668e9e069276b0fd9ccd9668403b4eeb840a11b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6668e9e069276b0fd9ccd9668403b4eeb840a11b), [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/integration@7.1.8
+
 ## 2.3.11
 
 ### Patch Changes
@@ -259,15 +287,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 

@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/css",
-  "version": "1.15.3",
+  "version": "1.16.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": true,
   "main": "dist/vanilla-extract-css.cjs.js",
@@ -124,6 +124,7 @@
     "dedent": "^1.5.3",
     "deep-object-diff": "^1.1.9",
     "deepmerge": "^4.2.2",
+    "lru-cache": "^10.4.3",
     "media-query-parser": "^2.0.2",
     "modern-ahocorasick": "^1.0.0",
     "picocolors": "^1.0.0"

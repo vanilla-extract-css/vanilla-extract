@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/jest-transform",
-  "version": "1.1.7",
+  "version": "1.1.11",
   "description": "Jest transformer for vanilla-extract",
   "main": "dist/vanilla-extract-jest-transform.cjs.js",
   "module": "dist/vanilla-extract-jest-transform.esm.js",
@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@vanilla-extract/integration": "workspace:^",
-    "esbuild": "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0 || ~0.20.0 || ~0.21.0"
+    "esbuild": "npm:esbuild@>=0.17.6 <0.24.0"
   },
   "devDependencies": {
     "@jest/transform": "^29.0.3"

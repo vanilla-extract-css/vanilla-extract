@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/next-plugin",
-  "version": "2.4.3",
+  "version": "2.4.7",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-next-plugin.cjs.js",
   "module": "dist/vanilla-extract-next-plugin.esm.js",

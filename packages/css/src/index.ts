@@ -13,4 +13,5 @@ export * from './theme';
 export * from './style';
 export * from './vars';
 export { createContainer } from './container';
+export { createViewTransition } from './viewTransition';
 export * from './layer';

@@ -1,5 +1,49 @@
 # @vanilla-extract/css
 
+## 1.16.1
+
+### Patch Changes
+
+- [#1505](https://github.com/vanilla-extract-css/vanilla-extract/pull/1505) [`103ce57`](https://github.com/vanilla-extract-css/vanilla-extract/commit/103ce57c98bf632a56fab1d71ae44039a77f5291) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that caused invalid selectors to be generated when adjacent classnames contained a substring equal to another local classname
+
+## 1.16.0
+
+### Minor Changes
+
+- [#1475](https://github.com/vanilla-extract-css/vanilla-extract/pull/1475) [`cd9d8b2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cd9d8b231bbd7a7ac6674d2b28f77cff93e5be9e) Thanks [@corradopetrelli](https://github.com/corradopetrelli)! - Add `::-webkit-calendar-picker-indicator` as a valid pseudo-element
+
+- [#1450](https://github.com/vanilla-extract-css/vanilla-extract/pull/1450) [`7b256d2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7b256d2a8ee815911ee96199abe78d6b7246c415) Thanks [@wuz](https://github.com/wuz)! - Add `createViewTransition` API
+
+  `createViewTransition` creates a single scoped view transition name for use with CSS View Transitions. This avoids potential naming collisions with other view transitions.
+
+  ```ts
+  import {
+    style,
+    createViewTransition
+  } from '@vanilla-extract/css';
+
+  export const titleViewTransition = createViewTransition();
+
+  export const pageTitle = style({
+    viewTransitionName: titleViewTransition
+  });
+  ```
+
+## 1.15.5
+
+### Patch Changes
+
+- [#1466](https://github.com/vanilla-extract-css/vanilla-extract/pull/1466) [`6432199fa0717f424fb3f45fbe36410b03b01c1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6432199fa0717f424fb3f45fbe36410b03b01c1c) Thanks [@askoufis](https://github.com/askoufis)! - Speed up dev prefix generation for long file paths
+
+## 1.15.4
+
+### Patch Changes
+
+- [#1463](https://github.com/vanilla-extract-css/vanilla-extract/pull/1463) [`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a) Thanks [@askoufis](https://github.com/askoufis)! - Export types with `export { type T }` syntax
+
+- Updated dependencies [[`61878f5fb21a33190ef242551c639e216ba4748a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/61878f5fb21a33190ef242551c639e216ba4748a)]:
+  - @vanilla-extract/private@1.0.6
+
 ## 1.15.3
 
 ### Patch Changes
@@ -39,12 +83,12 @@
   globalFontFace(gentium, [
     {
       src: 'local("Gentium")',
-      fontWeight: 'normal',
+      fontWeight: 'normal'
     },
     {
       src: 'local("Gentium Bold")',
-      fontWeight: 'bold',
-    },
+      fontWeight: 'bold'
+    }
   ]);
   ```
 
@@ -95,16 +139,16 @@
   const gentium = fontFace([
     {
       src: 'local("Gentium")',
-      fontWeight: 'normal',
+      fontWeight: 'normal'
     },
     {
       src: 'local("Gentium Bold")',
-      fontWeight: 'bold',
-    },
+      fontWeight: 'bold'
+    }
   ]);
 
   export const font = style({
-    fontFamily: gentium,
+    fontFamily: gentium
   });
   ```
 
@@ -137,9 +181,9 @@
   export const standard = style({
     '@layer': {
       [typography]: {
-        fontSize: '1rem',
-      },
-    },
+        fontSize: '1rem'
+      }
+    }
   });
   ```
 
@@ -210,7 +254,7 @@
 
   const identifier = generateIdentifier({
     debugId,
-    debugFileName: false,
+    debugFileName: false
   });
   ```
 
@@ -229,20 +273,23 @@
   `createContainer` creates a single scoped container name for use with CSS Container Queries. This avoids potential naming collisions with other containers.
 
   ```ts
-  import { style, createContainer } from '@vanilla-extract/css';
+  import {
+    style,
+    createContainer
+  } from '@vanilla-extract/css';
 
   export const sidebarContainer = createContainer();
 
   export const sidebar = style({
-    containerName: sidebarContainer,
+    containerName: sidebarContainer
   });
 
   export const navigation = style({
     '@container': {
       [`${sidebarContainer} (min-width: 400px)`]: {
-        display: 'flex',
-      },
-    },
+        display: 'flex'
+      }
+    }
   });
   ```
 
@@ -254,9 +301,9 @@
   export const myStyle = style({
     '@container': {
       '(min-width: 400px)': {
-        display: 'flex',
-      },
-    },
+        display: 'flex'
+      }
+    }
   });
   ```
 
@@ -394,9 +441,15 @@
 
   const base = style({ padding: 12 });
 
-  export const primary = style([base, { background: 'blue' }]);
+  export const primary = style([
+    base,
+    { background: 'blue' }
+  ]);
 
-  export const secondary = style([base, { background: 'aqua' }]);
+  export const secondary = style([
+    base,
+    { background: 'aqua' }
+  ]);
   ```
 
   When composed styles are used in selectors, they are assigned an additional class if required so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
@@ -410,7 +463,7 @@
   export const container = style([background, padding]);
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 
@@ -435,25 +488,25 @@
   // themes.css.ts
   import {
     createGlobalThemeContract,
-    createGlobalTheme,
+    createGlobalTheme
   } from '@vanilla-extract/css';
 
   export const vars = createGlobalThemeContract({
     color: {
-      brand: 'color-brand',
+      brand: 'color-brand'
     },
     font: {
-      body: 'font-body',
-    },
+      body: 'font-body'
+    }
   });
 
   createGlobalTheme(':root', vars, {
     color: {
-      brand: 'blue',
+      brand: 'blue'
     },
     font: {
-      body: 'arial',
-    },
+      body: 'arial'
+    }
   });
   ```
 
@@ -468,13 +521,13 @@
   export const vars = createGlobalThemeContract(
     {
       color: {
-        brand: 'color-brand',
+        brand: 'color-brand'
       },
       font: {
-        body: 'font-body',
-      },
+        body: 'font-body'
+      }
     },
-    (value) => `prefix-${value}`,
+    (value) => `prefix-${value}`
   );
   ```
 
@@ -487,13 +540,13 @@
   export const vars = createGlobalThemeContract(
     {
       color: {
-        brand: null,
+        brand: null
       },
       font: {
-        body: null,
-      },
+        body: null
+      }
     },
-    (_value, path) => `prefix-${path.join('-')}`,
+    (_value, path) => `prefix-${path.join('-')}`
   );
   ```
 
@@ -526,15 +579,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 
