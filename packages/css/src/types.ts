@@ -3,6 +3,10 @@ import type { AtRule, Properties } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
+export type Resolve<T> = {
+  [Key in keyof T]: T[Key];
+} & {};
+
 // csstype is yet to ship container property types as they are not in
 // the output MDN spec files yet. Remove this once that's done.
 // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
