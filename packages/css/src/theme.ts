@@ -1,55 +1,77 @@
 import type { Contract, MapLeafNodes } from '@vanilla-extract/private';
-import type { ThemeVars, Tokens } from './types';
+import type { GlobalStyleRule, Resolve, ThemeVars, Tokens } from './types';
 import { appendCss, registerClassName } from './adapter';
 import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { createThemeContract, assignVars } from './vars';
 
+type WithOptionalLayer<T extends Tokens> = T & {
+  '@layer'?: string;
+};
+
+type WithoutLayer<T> = Omit<T, '@layer'>;
+
 export function createGlobalTheme<ThemeTokens extends Tokens>(
   selector: string,
-  tokens: ThemeTokens,
-): ThemeVars<ThemeTokens>;
+  tokens: WithOptionalLayer<ThemeTokens>,
+): Resolve<WithoutLayer<ThemeVars<ThemeTokens>>>;
 export function createGlobalTheme<ThemeContract extends Contract>(
   selector: string,
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string>,
+  tokens: WithOptionalLayer<MapLeafNodes<ThemeContract, string>>,
 ): void;
 export function createGlobalTheme(
   selector: string,
   arg2: any,
   arg3?: any,
 ): any {
-  const shouldCreateVars = Boolean(!arg3);
+  const themeContractProvided = Boolean(arg3);
 
-  const themeVars = shouldCreateVars
-    ? createThemeContract(arg2)
-    : (arg2 as ThemeVars<any>);
+  const tokenArg = (
+    themeContractProvided ? arg3 : arg2
+  ) as WithOptionalLayer<Tokens>;
 
-  const tokens = shouldCreateVars ? arg2 : arg3;
+  const { layerName, tokens } = extractLayerFromTokens(tokenArg);
+
+  const themeContract = themeContractProvided
+    ? (arg2 as ThemeVars<any>)
+    : createThemeContract(tokens);
+
+  let rule: GlobalStyleRule = {
+    vars: assignVars(themeContract, tokens),
+  };
+
+  if (layerName) {
+    rule = {
+      '@layer': {
+        [layerName]: rule,
+      },
+    };
+  }
 
   appendCss(
     {
       type: 'global',
       selector: selector,
-      rule: { vars: assignVars(themeVars, tokens) },
+      rule,
     },
     getFileScope(),
   );
 
-  if (shouldCreateVars) {
-    return themeVars;
+  if (!themeContractProvided) {
+    return themeContract;
   }
 }
 
 export function createTheme<ThemeContract extends Contract>(
   themeContract: ThemeContract,
-  tokens: MapLeafNodes<ThemeContract, string>,
+  tokens: WithOptionalLayer<MapLeafNodes<ThemeContract, string>>,
   debugId?: string,
 ): string;
 export function createTheme<ThemeTokens extends Tokens>(
-  tokens: ThemeTokens,
+  tokens: WithOptionalLayer<ThemeTokens>,
   debugId?: string,
-): [className: string, vars: ThemeVars<ThemeTokens>];
+): [className: string, vars: Resolve<WithoutLayer<ThemeVars<ThemeTokens>>>];
 export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
   const themeClassName = generateIdentifier(
     typeof arg2 === 'object' ? arg3 : arg2,
@@ -63,4 +85,19 @@ export function createTheme(arg1: any, arg2?: any, arg3?: string): any {
       : createGlobalTheme(themeClassName, arg1);
 
   return vars ? [themeClassName, vars] : themeClassName;
+}
+
+function extractLayerFromTokens(
+  tokens: WithOptionalLayer<MapLeafNodes<any, string>>,
+): {
+  layerName?: string;
+  tokens: MapLeafNodes<any, string>;
+} {
+  if ('@layer' in tokens) {
+    const { '@layer': layerName, ...rest } = tokens;
+
+    return { layerName, tokens: rest };
+  }
+
+  return { tokens };
 }
