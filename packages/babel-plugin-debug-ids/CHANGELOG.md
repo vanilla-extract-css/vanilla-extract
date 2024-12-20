@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin-debug-ids
 
+## 1.2.0
+
+### Minor Changes
+
+- [#1092](https://github.com/vanilla-extract-css/vanilla-extract/pull/1092) [`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b) Thanks [@z4o4z](https://github.com/z4o4z)! - Add support for `createVar` calls that declare `@property` rules
+
 ## 1.1.0
 
 ### Minor Changes
