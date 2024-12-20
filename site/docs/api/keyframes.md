@@ -42,6 +42,12 @@ import {
   style
 } from '@vanilla-extract/css';
 
+const angle = createVar({
+  syntax: '<angle>',
+  inherits: false,
+  initialValue: '0deg'
+});
+
 const angleKeyframes = keyframes({
   '0%': {
     vars: {
