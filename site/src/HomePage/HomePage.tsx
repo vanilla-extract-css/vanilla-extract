@@ -1,19 +1,17 @@
 import { ReactNode } from 'react';
 import dedent from 'dedent';
 import { Box, Stack, ContentBlock, Columns, ButtonLink } from '../system';
-import { Heading } from '../Typography/Heading';
+import { Heading, Link, Text } from '../typography';
 import { Chevron } from '../Chevron/Chevron';
-import Link from '../Typography/Link';
-import Text from '../Typography/Text';
-import Logo from '../Logo/Logo';
+import { Logo } from '../Logo/Logo';
 import { Tweet } from '../Tweet/Tweet';
 import { groups, pages } from '../docs-store';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
 import { CompiledCode } from '../Code/CompiledCode';
 import { ErrorHighlighter } from '../Code/ErrorHighlighter';
-import * as styles from './HomePage.css';
 import { SearchInput } from '../SearchInput/SearchInput';
+import * as styles from './HomePage.css';
 
 const InstallPrompt = () => {
   return (

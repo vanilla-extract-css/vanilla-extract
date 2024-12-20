@@ -1,5 +1,6 @@
-export { Box } from './Box/Box';
-export { ButtonLink } from './ButtonLink/ButtonLink';
-export { ContentBlock } from './ContentBlock/ContentBlock';
-export { Columns } from './Columns/Columns';
-export { Stack } from './Stack/Stack';
+export * from './styles';
+export { Box, type BoxProps } from './Box';
+export { ButtonLink, type ButtonLinkProps } from './ButtonLink';
+export { Columns, type ColumnsProps } from './Columns';
+export { ContentBlock, type ContentBlockProps } from './ContentBlock';
+export { Stack, type StackProps } from './Stack';
