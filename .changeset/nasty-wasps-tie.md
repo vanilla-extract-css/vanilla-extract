@@ -24,7 +24,7 @@ export const [themeA, vars] = createTheme({
   }
 });
 
-export const vars = createGlobalTheme(':root', {
+export const vars2 = createGlobalTheme(':root', {
   '@layer': themeLayer,
   space: {
     small: '10px',
