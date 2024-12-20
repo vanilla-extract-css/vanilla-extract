@@ -68,8 +68,10 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
-    ":root, .themes_theme__cvta170 {
+    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
   --colors-text__cvta172: white;
   --space-1__cvta173: 4px;
@@ -83,15 +85,33 @@ html .styles_opacity_1\\/4__jteyb17 {
   --space-2__cvta174: 12px;
   --space-3__cvta175: 16px;
 }
-.themes_responsiveTheme__cvta177 {
+.themes_responsiveTheme__cvta17e {
   --colors-backgroundColor__cvta171: pink;
   --colors-text__cvta172: purple;
   --space-1__cvta173: 6px;
   --space-2__cvta174: 12px;
   --space-3__cvta175: 18px;
 }
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .themes_responsiveTheme__cvta177 {
+  .themes_responsiveTheme__cvta17e {
     --colors-backgroundColor__cvta171: purple;
     --colors-text__cvta172: pink;
   }
@@ -193,7 +213,7 @@ export { shadow };
   [
     "src/styles.css.js",
     "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './../assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
+import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
 import './../assets/src/styles.css.ts.vanilla-C7NI1Ovc.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
@@ -205,10 +225,10 @@ export { button, container, opacity };
   ],
   [
     "src/themes.css.js",
-    "import './../assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
+    "import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
 
 var altTheme = "themes_altTheme__cvta176";
-var responsiveTheme = "themes_responsiveTheme__cvta177";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
 var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
@@ -464,7 +484,7 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
     "import './themes.css.ts.vanilla.css';
 
 var altTheme = "themes_altTheme__cvta176";
-var responsiveTheme = "themes_responsiveTheme__cvta177";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
 var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 
@@ -473,7 +493,9 @@ export { altTheme, responsiveTheme, theme, vars };
   ],
   [
     "themes.css.ts.vanilla.css",
-    ":root, .themes_theme__cvta170 {
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
   --colors-text__cvta172: white;
   --space-1__cvta173: 4px;
@@ -487,15 +509,33 @@ export { altTheme, responsiveTheme, theme, vars };
   --space-2__cvta174: 12px;
   --space-3__cvta175: 16px;
 }
-.themes_responsiveTheme__cvta177 {
+.themes_responsiveTheme__cvta17e {
   --colors-backgroundColor__cvta171: pink;
   --colors-text__cvta172: purple;
   --space-1__cvta173: 6px;
   --space-2__cvta174: 12px;
   --space-3__cvta175: 18px;
 }
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .themes_responsiveTheme__cvta177 {
+  .themes_responsiveTheme__cvta17e {
     --colors-backgroundColor__cvta171: purple;
     --colors-text__cvta172: pink;
   }
@@ -515,7 +555,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
     "",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
+    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
     "",
   ],
   [
@@ -629,8 +669,10 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-DMMXGwB8.css",
-    ":root, .themes_theme__cvta170 {
+    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
   --colors-backgroundColor__cvta171: blue;
   --colors-text__cvta172: white;
   --space-1__cvta173: 4px;
@@ -644,15 +686,33 @@ html .styles_opacity_1\\/4__jteyb17 {
   --space-2__cvta174: 12px;
   --space-3__cvta175: 16px;
 }
-.themes_responsiveTheme__cvta177 {
+.themes_responsiveTheme__cvta17e {
   --colors-backgroundColor__cvta171: pink;
   --colors-text__cvta172: purple;
   --space-1__cvta173: 6px;
   --space-2__cvta174: 12px;
   --space-3__cvta175: 18px;
 }
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .themes_responsiveTheme__cvta177 {
+  .themes_responsiveTheme__cvta17e {
     --colors-backgroundColor__cvta171: purple;
     --colors-text__cvta172: pink;
   }
@@ -661,12 +721,12 @@ html .styles_opacity_1\\/4__jteyb17 {
   [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
-import './assets/src/themes.css.ts.vanilla-DMMXGwB8.css';
+import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
 import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 import './assets/src/styles.css.ts.vanilla-C7NI1Ovc.css';
 
 var altTheme = "themes_altTheme__cvta176";
-var responsiveTheme = "themes_responsiveTheme__cvta177";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
 var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
 

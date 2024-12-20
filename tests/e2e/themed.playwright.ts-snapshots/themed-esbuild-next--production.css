@@ -1,3 +1,5 @@
+@layer cvta177;
+@layer globalThemeLayer;
 :root,
 .cvta170 {
   --cvta171: blue;
@@ -13,15 +15,33 @@
   --cvta174: 12px;
   --cvta175: 16px;
 }
-.cvta177 {
+.cvta17e {
   --cvta171: pink;
   --cvta172: purple;
   --cvta173: 6px;
   --cvta174: 12px;
   --cvta175: 18px;
 }
+@layer cvta177 {
+  .cvta178 {
+    --cvta179: green;
+    --cvta17a: white;
+    --cvta17b: 8px;
+    --cvta17c: 12px;
+    --cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --cvta179: green;
+    --cvta17a: white;
+    --cvta17b: 8px;
+    --cvta17c: 12px;
+    --cvta17d: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .cvta177 {
+  .cvta17e {
     --cvta171: purple;
     --cvta172: pink;
   }
