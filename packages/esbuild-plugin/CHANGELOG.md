@@ -1,5 +1,19 @@
 # @vanilla-extract/esbuild-plugin
 
+## 2.3.12
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
+## 2.3.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
 ## 2.3.10
 
 ### Patch Changes
@@ -113,7 +127,7 @@
 
   // redBox ~= 'styles_redBox_asdfgj'
   const redBox = style({
-    background: 'red',
+    background: 'red'
   });
   ```
 
@@ -209,15 +223,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 
@@ -235,14 +256,19 @@
   **Example for postcss with autoprefixer:**
 
   ```js
-  const { vanillaExtractPlugin } = require('@vanilla-extract/esbuild-plugin');
+  const {
+    vanillaExtractPlugin
+  } = require('@vanilla-extract/esbuild-plugin');
   const postcss = require('postcss');
   const autoprefixer = require('autoprefixer');
 
   async function processCss(css) {
-    const result = await postcss([autoprefixer]).process(css, {
-      from: undefined /* suppress source map warning */,
-    });
+    const result = await postcss([autoprefixer]).process(
+      css,
+      {
+        from: undefined /* suppress source map warning */
+      }
+    );
 
     return result.css;
   }
@@ -253,10 +279,10 @@
       bundle: true,
       plugins: [
         vanillaExtractPlugin({
-          processCss,
-        }),
+          processCss
+        })
       ],
-      outfile: 'out.js',
+      outfile: 'out.js'
     })
     .catch(() => process.exit(1));
   ```

@@ -1,5 +1,27 @@
 # @vanilla-extract/vite-plugin
 
+## 4.0.18
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
+## 4.0.17
+
+### Patch Changes
+
+- [#1492](https://github.com/vanilla-extract-css/vanilla-extract/pull/1492) [`1fd348a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1fd348a91036a1370e61de85199ca6f78533ed8e) Thanks [@kube](https://github.com/kube)! - Filter out `react-router` Vite plugin when creating the `vite-node` compiler
+
+## 4.0.16
+
+### Patch Changes
+
+- [#1482](https://github.com/vanilla-extract-css/vanilla-extract/pull/1482) [`30c0305`](https://github.com/vanilla-extract-css/vanilla-extract/commit/30c0305577638ada06393729f8eaaa7a72d69369) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where Vanilla Extract files with extensions other than `css.ts` were not being invalidated during HMR
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
 ## 4.0.15
 
 ### Patch Changes
@@ -237,9 +259,9 @@
   export default {
     plugins: [
       vanillaExtractPlugin({
-        emitCssInSsr: true,
-      }),
-    ],
+        emitCssInSsr: true
+      })
+    ]
   };
   ```
 
@@ -284,7 +306,7 @@
 
   // redBox ~= 'styles_redBox_asdfgj'
   const redBox = style({
-    background: 'red',
+    background: 'red'
   });
   ```
 
@@ -556,15 +578,22 @@
   When style compositions are used in selectors, they are now assigned an additional class so they can be uniquely identified. When selectors are processed internally, the composed classes are removed, only leaving behind the unique identifier classes. This allows you to treat them as if they were a single class within vanilla-extract selectors.
 
   ```ts
-  import { style, globalStyle, composeStyles } from '@vanilla-extract/css';
+  import {
+    style,
+    globalStyle,
+    composeStyles
+  } from '@vanilla-extract/css';
 
   const background = style({ background: 'mintcream' });
   const padding = style({ padding: 12 });
 
-  export const container = composeStyles(background, padding);
+  export const container = composeStyles(
+    background,
+    padding
+  );
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 

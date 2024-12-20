@@ -1,5 +1,19 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.3.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.11
+
+## 1.3.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@7.1.10
+
 ## 1.3.9
 
 ### Patch Changes
@@ -103,7 +117,7 @@
 
   // redBox ~= 'styles_redBox_asdfgj'
   const redBox = style({
-    background: 'red',
+    background: 'red'
   });
   ```
 
