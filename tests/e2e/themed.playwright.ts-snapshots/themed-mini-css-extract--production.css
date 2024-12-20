@@ -64,6 +64,11 @@ button {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blj6yb4 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
 .blj6yb1 {
   display: flex;
   flex-direction: column;
@@ -88,7 +93,7 @@ body .blj6yb2:after {
   content: "I am content";
 }
 html .blj6yb6 {
-  opacity: var(--blj6yb4, 0.5);
+  opacity: var(--blj6yb4);
 }
 html .blj6yb7 {
   opacity: var(--blj6yb4, var(--blj6yb5, 0.25));

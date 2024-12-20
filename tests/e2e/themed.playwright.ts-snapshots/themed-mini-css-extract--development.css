@@ -64,6 +64,11 @@ button {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blankVar1__blj6yb4 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
 .styles_container__blj6yb1 {
   display: flex;
   flex-direction: column;
@@ -94,7 +99,7 @@ body .styles_iDunno__blj6yb2:after {
   content: "I am content";
 }
 html .styles_opacity_1\/2__blj6yb6 {
-  opacity: var(--blankVar1__blj6yb4, 0.5);
+  opacity: var(--blankVar1__blj6yb4);
 }
 html .styles_opacity_1\/4__blj6yb7 {
   opacity: var(--blankVar1__blj6yb4, var(--blankVar2__blj6yb5, 0.25));

@@ -15,7 +15,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-C7NI1Ovc.css",
+    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -23,6 +23,11 @@ body, button {
 @font-face {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -48,7 +53,7 @@ body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
 html .styles_opacity_1\\/2__jteyb16 {
-  opacity: var(--blankVar1__jteyb14, 0.5);
+  opacity: var(--blankVar1__jteyb14);
 }
 html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
@@ -214,7 +219,7 @@ export { shadow };
     "src/styles.css.js",
     "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
-import './../assets/src/styles.css.ts.vanilla-C7NI1Ovc.css';
+import './../assets/src/styles.css.ts.vanilla-BfisGtko.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
@@ -402,6 +407,11 @@ export { button, container, opacity };
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
 }
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
 .styles_container__jteyb11 {
   display: flex;
   flex-direction: column;
@@ -426,7 +436,7 @@ body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
 html .styles_opacity_1\\/2__jteyb16 {
-  opacity: var(--blankVar1__jteyb14, 0.5);
+  opacity: var(--blankVar1__jteyb14);
 }
 html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
@@ -551,7 +561,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
     "",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-C7NI1Ovc.css",
+    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
     "",
   ],
   [
@@ -616,7 +626,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-C7NI1Ovc.css",
+    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -624,6 +634,11 @@ body, button {
 @font-face {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
 }
 .styles_container__jteyb11 {
   display: flex;
@@ -649,7 +664,7 @@ body .styles_iDunno__jteyb12:after {
   content: 'I am content';
 }
 html .styles_opacity_1\\/2__jteyb16 {
-  opacity: var(--blankVar1__jteyb14, 0.5);
+  opacity: var(--blankVar1__jteyb14);
 }
 html .styles_opacity_1\\/4__jteyb17 {
   opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
@@ -723,7 +738,7 @@ html .styles_opacity_1\\/4__jteyb17 {
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
 import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './assets/src/styles.css.ts.vanilla-C7NI1Ovc.css';
+import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";

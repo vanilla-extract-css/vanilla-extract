@@ -27,3 +27,41 @@ export const spinAgain = style({
   animation: `${rotate} 3s`
 });
 ```
+
+## Animating CSS variables
+
+CSS variables can be animated by setting their values within the `vars` property of a keyframe step:
+
+```ts compiled
+// animation.css.ts
+
+import {
+  createVar,
+  fallbackVar,
+  keyframes,
+  style
+} from '@vanilla-extract/css';
+
+const angleKeyframes = keyframes({
+  '0%': {
+    vars: {
+      [angle]: '0deg'
+    }
+  },
+  '100%': {
+    vars: {
+      [angle]: '360deg'
+    }
+  }
+});
+
+export const root = style({
+  backgroundImage: `linear-gradient(${angle}, rgba(153, 70, 198, 0.35) 0%, rgba(28, 56, 240, 0.46) 100%)`,
+  animation: `${angleKeyframes} 7s infinite ease-in-out both`,
+
+  vars: {
+    // This will fallback to 180deg if @property is not supported by the browser
+    [angle]: fallbackVar(angle, '180deg')
+  }
+});
+```
