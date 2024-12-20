@@ -1,5 +1,13 @@
 # @vanilla-extract/integration
 
+## 7.1.12
+
+### Patch Changes
+
+- Updated dependencies [[`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b), [`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b), [`4abfc0b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4abfc0b47c675f9a7bfdb4c3316b1c62d2b8e558), [`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b)]:
+  - @vanilla-extract/babel-plugin-debug-ids@1.2.0
+  - @vanilla-extract/css@1.17.0
+
 ## 7.1.11
 
 ### Patch Changes
