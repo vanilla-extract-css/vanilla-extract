@@ -28,16 +28,19 @@ export const spinAgain = style({
 });
 ```
 
-## Animating variables
+## Animating CSS variables
 
-It is also possible to animate [typed CSS property](/documentation/api/create-var#css-property) using keyframes:
+CSS variables can be animated by setting their values within the `vars` property of a keyframe step:
 
 ```ts compiled
-const angle = createVar({
-  syntax: '<angle>',
-  inherits: false,
-  initialValue: '0deg'
-});
+// animation.css.ts
+
+import {
+  createVar,
+  fallbackVar,
+  keyframes,
+  style
+} from '@vanilla-extract/css';
 
 const angleKeyframes = keyframes({
   '0%': {
@@ -57,7 +60,7 @@ export const root = style({
   animation: `${angleKeyframes} 7s infinite ease-in-out both`,
 
   vars: {
-    // This will fallback to 180deg if the @property is not supported by the browser
+    // This will fallback to 180deg if @property is not supported by the browser
     [angle]: fallbackVar(angle, '180deg')
   }
 });

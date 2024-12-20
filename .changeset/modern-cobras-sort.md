@@ -2,18 +2,20 @@
 "@vanilla-extract/css": minor
 ---
 
-Add support for a `vars` property to steps within `keyframes` declarations
+`keyframes`: Add support for a `vars` property to steps within `keyframes` declarations
 
 Example usage:
 
 ```ts
+import { createVar, keyframes } from '@vanilla-extract/css';
+
 const angle = createVar({
   syntax: '<angle>',
   inherits: false,
   initialValue: '0deg'
 });
 
-const angleKeyframes = keyframes({
+export const angleKeyframes = keyframes({
   '0%': {
     vars: {
       [angle]: '0deg'

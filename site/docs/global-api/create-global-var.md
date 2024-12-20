@@ -5,7 +5,7 @@ parent: global-api
 
 # createGlobalVar
 
-Similar to `createVar`, `createGlobalVar` creates a single global CSS Variable reference.
+Similar to [`createVar`], `createGlobalVar` creates a global CSS variable reference:
 
 ```ts compiled
 // vars.css.ts
@@ -22,7 +22,7 @@ export const content = style({
 });
 ```
 
-It's also possible to define typed CSS properties via `createGlobalVar`:
+[@property] rules can also be created using `createGlobalVar`:
 
 ```ts compiled
 // vars.css.ts
@@ -42,3 +42,6 @@ export const content = style({
   opacity: opacityVar
 });
 ```
+
+[`createVar`]: /documentation/api/create-var
+[@property]: https://developer.mozilla.org/en-US/docs/Web/CSS/@property

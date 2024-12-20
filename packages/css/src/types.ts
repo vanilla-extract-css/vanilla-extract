@@ -163,21 +163,27 @@ export type ClassNames = string | Array<ClassNames>;
 
 export type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
 
-export type PropertySyntax =
+type _PropertySyntax =
+  | '<angle>'
+  | '<color>'
+  | '<custom-ident>'
+  | '<image>'
+  | '<integer>'
+  | '<length-percentage>'
   | '<length>'
   | '<number>'
   | '<percentage>'
-  | '<length-percentage>'
-  | '<color>'
-  | '<image>'
-  | '<url>'
-  | '<integer>'
-  | '<angle>'
-  | '<time>'
   | '<resolution>'
+  | '<string>'
+  | '<time>'
   | '<transform-function>'
-  | '<custom-ident>'
   | '<transform-list>'
-  | '*'
-  // needs this to make TS suggestions work
-  | (string & Record<never, never>);
+  | '<url>'
+  | '*';
+
+/** Suggests elements of the provided string union `Suggestions` while still accepting any string */
+type LooseAutocomplete<Suggestions extends string> =
+  | Suggestions
+  | Omit<string, Suggestions>;
+
+export type PropertySyntax = LooseAutocomplete<_PropertySyntax>;

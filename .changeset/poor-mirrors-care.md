@@ -1,17 +1,15 @@
 ---
-"@vanilla-extract/babel-plugin-debug-ids": minor
+"@vanilla-extract/css": minor
 ---
 
-Add support for property definitions to `createVar`
-
-When a property definition is provided to `createVar`, a `@property` CSS rule will be generated.
+`createVar`: Add support for defining [`@property`] rules
 
 Example usage:
 
 ```ts
 import { createVar } from '@vanilla-extract/css';
 
-export myVar = createVar({
+export const myVar = createVar({
   syntax: '<number>',
   inherits: false,
   initialValue: '0.5',
@@ -19,6 +17,7 @@ export myVar = createVar({
 ```
 
 This will generate the following CSS:
+
 ```css
 @property --myVar__jteyb14 {
   syntax: "<number>";
@@ -26,3 +25,5 @@ This will generate the following CSS:
   initial-value: 0.5;
 }
 ```
+
+[`@property`]: https://developer.mozilla.org/en-US/docs/Web/CSS/@property
