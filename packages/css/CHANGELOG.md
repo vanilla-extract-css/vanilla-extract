@@ -1,5 +1,123 @@
 # @vanilla-extract/css
 
+## 1.17.0
+
+### Minor Changes
+
+- [#1092](https://github.com/vanilla-extract-css/vanilla-extract/pull/1092) [`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b) Thanks [@z4o4z](https://github.com/z4o4z)! - `keyframes`: Add support for a `vars` property to steps within `keyframes` declarations
+
+  Example usage:
+
+  ```ts
+  import {
+    createVar,
+    keyframes
+  } from '@vanilla-extract/css';
+
+  const angle = createVar({
+    syntax: '<angle>',
+    inherits: false,
+    initialValue: '0deg'
+  });
+
+  export const angleKeyframes = keyframes({
+    '0%': {
+      vars: {
+        [angle]: '0deg'
+      }
+    },
+    '100%': {
+      vars: {
+        [angle]: '360deg'
+      }
+    }
+  });
+  ```
+
+- [#1512](https://github.com/vanilla-extract-css/vanilla-extract/pull/1512) [`4abfc0b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4abfc0b47c675f9a7bfdb4c3316b1c62d2b8e558) Thanks [@askoufis](https://github.com/askoufis)! - `createTheme`, `createGlobalTheme`: Add support for assigning themes to a layer
+
+  Themes can now be assigned to a layer by name using the `@layer` key at the top-level of the theme definition.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  // themes.css.ts
+  import {
+    createTheme,
+    createGlobalTheme,
+    layer
+  } from '@vanilla-extract/css';
+
+  export const themeLayer = layer();
+
+  export const [themeA, vars] = createTheme({
+    '@layer': themeLayer,
+    color: {
+      brand: 'blue'
+    },
+    font: {
+      body: 'arial'
+    }
+  });
+
+  export const vars2 = createGlobalTheme(':root', {
+    '@layer': themeLayer,
+    space: {
+      small: '10px',
+      large: '20px'
+    }
+  });
+  ```
+
+  This will generate the following CSS:
+
+  ```css
+  @layer themes_themeLayer__1k6oxph0;
+  @layer themes_themeLayer__1k6oxph0 {
+    .themes_themeA__1k6oxph1 {
+      --color-brand__1k6oxph2: blue;
+      --font-body__1k6oxph3: arial;
+    }
+
+    :root {
+      --space-small__z05zdf1: 10px;
+      --space-large__z05zdf2: 20px;
+    }
+  }
+  ```
+
+- [#1092](https://github.com/vanilla-extract-css/vanilla-extract/pull/1092) [`fd673f6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fd673f658da3b0019d19a0c7d6d9208d1685ff5b) Thanks [@z4o4z](https://github.com/z4o4z)! - `createVar`: Add support for defining [`@property`] rules
+
+  Example usage:
+
+  ```ts
+  import { createVar } from '@vanilla-extract/css';
+
+  export const myVar = createVar({
+    syntax: '<number>',
+    inherits: false,
+    initialValue: '0.5'
+  });
+  ```
+
+  This will generate the following CSS:
+
+  ```css
+  @property --myVar__jteyb14 {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0.5;
+  }
+  ```
+
+  [`@property`]: https://developer.mozilla.org/en-US/docs/Web/CSS/@property
+
+## 1.16.1
+
+### Patch Changes
+
+- [#1505](https://github.com/vanilla-extract-css/vanilla-extract/pull/1505) [`103ce57`](https://github.com/vanilla-extract-css/vanilla-extract/commit/103ce57c98bf632a56fab1d71ae44039a77f5291) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug that caused invalid selectors to be generated when adjacent classnames contained a substring equal to another local classname
+
 ## 1.16.0
 
 ### Minor Changes
