@@ -1,5 +1,5 @@
 import { assignVars, createThemeContract, style } from '@vanilla-extract/css';
-import { darkMode } from '../system/styles/sprinkles.css';
+import { darkMode } from '../system/styles';
 import { vars } from '../themes.css';
 
 const themeVars = createThemeContract({

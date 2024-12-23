@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box } from '../system';
-import Text from '../Typography/Text';
+import { Text } from '../typography';
 
 const Star = () => (
   <svg
