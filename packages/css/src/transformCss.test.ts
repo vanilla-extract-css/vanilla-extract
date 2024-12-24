@@ -6,6 +6,14 @@ import { style } from './style';
 setFileScope('test');
 
 const testVar = createVar();
+const testPropertyVar = createVar(
+  {
+    syntax: '<angle>',
+    inherits: false,
+    initialValue: '0deg',
+  },
+  'test-property',
+);
 const style1 = style({});
 const style2 = style({});
 
@@ -1845,6 +1853,46 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle animations with vars', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'keyframes',
+            name: 'myAnimation',
+            rule: {
+              from: {
+                vars: {
+                  '--my-var': 'red',
+                  [testVar]: 'green',
+                },
+              },
+              to: {
+                vars: {
+                  '--my-var': 'orange',
+                  [testVar]: 'blue',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @keyframes myAnimation {
+        from {
+          --my-var: red;
+          --skkcyc0: green;
+        }
+        to {
+          --my-var: orange;
+          --skkcyc0: blue;
+        }
+      }
+    `);
+  });
+
   it('should handle font face', () => {
     expect(
       transformCss({
@@ -2022,7 +2070,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle css vars', () => {
+  it('should handle simple css properties', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -2071,6 +2119,60 @@ describe('transformCss', () => {
         .testClass {
           --my-var: yellow;
           --skkcyc0: blue;
+        }
+      }
+    `);
+  });
+
+  it('should handle complicated css properties', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'block',
+              vars: {
+                '--my-var': 'red',
+                [testPropertyVar]: '10deg',
+              },
+              selectors: {
+                '&:nth-child(3)': {
+                  vars: {
+                    '--my-var': 'orange',
+                    [testPropertyVar]: '20deg',
+                  },
+                },
+              },
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  vars: {
+                    '--my-var': 'yellow',
+                    [testPropertyVar]: '50deg',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        --my-var: red;
+        --test-property__skkcyc1: 10deg;
+        display: block;
+      }
+      .testClass:nth-child(3) {
+        --my-var: orange;
+        --test-property__skkcyc1: 20deg;
+      }
+      @media screen and (min-width: 700px) {
+        .testClass {
+          --my-var: yellow;
+          --test-property__skkcyc1: 50deg;
         }
       }
     `);
@@ -2288,14 +2390,69 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      .skkcyc2 .skkcyc1:before, .skkcyc2 .skkcyc1:after {
+      .skkcyc3 .skkcyc2:before, .skkcyc3 .skkcyc2:after {
         background: black;
       }
-      ._1g1ptzo1._1g1ptzo10 .skkcyc1 {
+      ._1g1ptzo1._1g1ptzo10 .skkcyc2 {
         background: blue;
       }
-      ._1g1ptzo10._1g1ptzo1 .skkcyc1 {
+      ._1g1ptzo10._1g1ptzo1 .skkcyc2 {
         background: blue;
+      }
+    `);
+  });
+
+  it('should handle adjacent classnames containing a separate local classname as a substring', () => {
+    // Note that `classname2` starts and ends with the same character, so when two `classname1`s are
+    // adjacent, the resulting string will contain `classname2` as a substring
+    const classname1 = 'debugName_hash1';
+    const classname2 = 'debugName_hash1d';
+
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [classname1, classname2],
+
+        cssObjs: [
+          {
+            type: 'local',
+            selector: classname1,
+            rule: {
+              selectors: {
+                ['&&']: {
+                  background: 'black',
+                },
+                [`${classname2}&`]: {
+                  background: 'orange',
+                },
+                [`&${classname2}&`]: {
+                  background: 'orange',
+                },
+                [`${classname2}${classname2}&`]: {
+                  background: 'orange',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: classname2,
+            rule: {},
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .debugName_hash1.debugName_hash1 {
+        background: black;
+      }
+      .debugName_hash1d.debugName_hash1 {
+        background: orange;
+      }
+      .debugName_hash1.debugName_hash1d.debugName_hash1 {
+        background: orange;
+      }
+      .debugName_hash1d.debugName_hash1d.debugName_hash1 {
+        background: orange;
       }
     `);
   });
