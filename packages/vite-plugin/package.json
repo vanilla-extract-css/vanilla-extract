@@ -19,9 +19,9 @@
     "@vanilla-extract/integration": "workspace:^"
   },
   "devDependencies": {
-    "vite": "^5.0.11"
+    "vite": "^6.0.10"
   },
   "peerDependencies": {
-    "vite": "^4.0.3 || ^5.0.0"
+    "vite": "^5.0.0 || ^6.0.0"
   }
 }
