@@ -106,7 +106,7 @@ const createViteServer = async ({
     },
     logLevel: 'silent',
     optimizeDeps: {
-      disabled: true,
+      noDiscovery: true,
     },
     build: {
       dynamicImportVarsOptions: {
