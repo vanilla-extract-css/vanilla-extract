@@ -16,6 +16,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@vanilla-extract/compiler": "workspace:^",
     "@vanilla-extract/integration": "workspace:^"
   },
   "devDependencies": {

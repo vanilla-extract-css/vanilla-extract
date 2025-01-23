@@ -4,13 +4,15 @@ import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, UserConfig as ViteUserConfig } from 'vite';
 
-import type { IdentifierOption } from './types';
-import { cssFileFilter } from './filters';
-import { getPackageInfo } from './packageInfo';
-import { transform } from './transform';
-import { normalizePath } from './addFileScope';
+import {
+  cssFileFilter,
+  transform,
+  normalizePath,
+  getPackageInfo,
+  serializeVanillaModule,
+  type IdentifierOption,
+} from '@vanilla-extract/integration';
 import { lock } from './lock';
-import { serializeVanillaModule } from './processVanillaFile';
 
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];

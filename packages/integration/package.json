@@ -24,9 +24,7 @@
     "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
-    "mlly": "^1.4.2",
-    "vite": "^5.0.11",
-    "vite-node": "^1.2.0"
+    "mlly": "^1.4.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5"

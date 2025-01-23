@@ -4,6 +4,7 @@ tsconfig.tsbuildinfo
 packages/**/README.md
 !packages/sprinkles/README.md
 !packages/integration/README.md
+!packages/compiler/README.md
 test-results
 .parcel-cache
 

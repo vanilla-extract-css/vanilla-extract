@@ -384,6 +384,21 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
 
+  packages/compiler:
+    dependencies:
+      '@vanilla-extract/css':
+        specifier: workspace:^
+        version: link:../css
+      '@vanilla-extract/integration':
+        specifier: workspace:^
+        version: link:../integration
+      vite:
+        specifier: ^5.0.11
+        version: 5.1.4(@types/node@20.9.5)(terser@5.26.0)
+      vite-node:
+        specifier: ^1.2.0
+        version: 1.5.0(@types/node@20.9.5)(terser@5.26.0)
+
   packages/css:
     dependencies:
       '@emotion/hash':
@@ -449,6 +464,9 @@ importers:
 
   packages/esbuild-plugin-next:
     dependencies:
+      '@vanilla-extract/compiler':
+        specifier: workspace:^
+        version: link:../compiler
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
@@ -489,12 +507,6 @@ importers:
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
-      vite:
-        specifier: ^5.0.11
-        version: 5.1.4(@types/node@20.9.5)(terser@5.26.0)
-      vite-node:
-        specifier: ^1.2.0
-        version: 1.5.0(@types/node@20.9.5)(terser@5.26.0)
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.5
@@ -578,6 +590,9 @@ importers:
 
   packages/vite-plugin:
     dependencies:
+      '@vanilla-extract/compiler':
+        specifier: workspace:^
+        version: link:../compiler
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
@@ -912,6 +927,9 @@ importers:
       '@vanilla-extract-private/test-helpers':
         specifier: workspace:*
         version: link:../test-helpers
+      '@vanilla-extract/compiler':
+        specifier: workspace:*
+        version: link:../packages/compiler
       '@vanilla-extract/css':
         specifier: workspace:*
         version: link:../packages/css

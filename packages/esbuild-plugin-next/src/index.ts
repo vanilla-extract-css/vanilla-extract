@@ -1,11 +1,13 @@
 import { dirname } from 'path';
 
 import {
-  cssFileFilter,
+  type CreateCompilerOptions,
   createCompiler,
+} from '@vanilla-extract/compiler';
+import {
+  cssFileFilter,
   vanillaExtractTransformPlugin,
   IdentifierOption,
-  CreateCompilerOptions,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
