@@ -403,6 +403,11 @@ class Stylesheet {
         conditions,
       );
       this.transformMedia(selectorRoot, selectorRule['@media'], conditions);
+      this.transformContainer(
+        selectorRoot,
+        selectorRule['@container'],
+        conditions,
+      );
     });
   }
 
