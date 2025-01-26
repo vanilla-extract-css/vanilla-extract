@@ -18,6 +18,7 @@ import {
   createCompiler,
   normalizePath,
 } from '@vanilla-extract/integration';
+import deepmerge from 'deepmerge';
 
 const virtualExtCss = '.vanilla.css';
 
@@ -47,10 +48,12 @@ const removeIncompatiblePlugins = (plugin: PluginOption) =>
 interface Options {
   identifiers?: IdentifierOption;
   unstable_mode?: 'transform' | 'emitCss';
+  viteConfigOverrides?: Partial<UserConfig>;
 }
 export function vanillaExtractPlugin({
   identifiers,
   unstable_mode: mode = 'emitCss',
+  viteConfigOverrides = {},
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
@@ -144,12 +147,15 @@ export function vanillaExtractPlugin({
           configForViteCompiler = config.inlineConfig;
         }
 
-        const viteConfig = {
-          ...configForViteCompiler,
-          plugins: configForViteCompiler?.plugins
-            ?.flat()
-            .filter(removeIncompatiblePlugins),
-        };
+        const viteConfig = deepmerge(
+          {
+            ...configForViteCompiler,
+            plugins: configForViteCompiler?.plugins
+              ?.flat()
+              .filter(removeIncompatiblePlugins),
+          },
+          viteConfigOverrides,
+        );
 
         compiler = createCompiler({
           root: config.root,
