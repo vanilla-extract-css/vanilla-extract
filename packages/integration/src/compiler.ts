@@ -110,6 +110,11 @@ const createViteServer = async ({
     },
     ssr: {
       noExternal: true,
+      // `cssesc` is CJS-only, so we need to mark it as external as Vite's transform pipeline
+      // can't handle CJS during dev-time.
+      // See https://github.com/withastro/astro/blob/0879cc2ce7e15a2e7330c68d6667d9a2edea52ab/packages/astro/src/core/create-vite.ts#L86
+      // and https://github.com/withastro/astro/issues/11395
+      external: ['cssesc'],
     },
     plugins: [
       {
