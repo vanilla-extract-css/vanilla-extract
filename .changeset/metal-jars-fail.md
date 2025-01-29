@@ -4,4 +4,4 @@
 
 Change the plugin name from `"vanilla-extract"` to the more [conventional][plugin conventions] `"vite-plugin-vanilla-extract"`
 
-[plugin convetions]: https://vite.dev/guide/api-plugin.html#conventions
+[plugin conventions]: https://vite.dev/guide/api-plugin.html#conventions
