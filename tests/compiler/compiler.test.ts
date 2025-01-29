@@ -1,5 +1,6 @@
 import path from 'path';
-import { createCompiler, normalizePath } from '@vanilla-extract/integration';
+import { createCompiler } from '@vanilla-extract/compiler';
+import { normalizePath } from '@vanilla-extract/integration';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',

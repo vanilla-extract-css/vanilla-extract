@@ -1,6 +1,7 @@
 import path from 'path';
 import { describe, beforeAll, afterAll, test, expect } from 'vitest';
-import { createCompiler, normalizePath } from '@vanilla-extract/integration';
+import { createCompiler } from '@vanilla-extract/compiler';
+import { normalizePath } from '@vanilla-extract/integration';
 
 // Vitest has trouble with snapshots that don't contain wrapping quotes. See this regex and the functions above/below it:
 // https://github.com/vitest-dev/vitest/blob/ae73f2737607a878ba589d548aa6f8ba639dc07c/packages/snapshot/src/port/inlineSnapshot.ts#L96

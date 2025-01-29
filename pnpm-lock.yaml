@@ -143,7 +143,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vite-plugin
       vite:
-        specifier: ^6.0.10
+        specifier: ^5.0.0 || ^6.0.0
         version: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
 
   examples/webpack-react:
@@ -384,6 +384,21 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
 
+  packages/compiler:
+    dependencies:
+      '@vanilla-extract/css':
+        specifier: workspace:^
+        version: link:../css
+      '@vanilla-extract/integration':
+        specifier: workspace:^
+        version: link:../integration
+      vite:
+        specifier: ^5.0.0 || ^6.0.0
+        version: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
+      vite-node:
+        specifier: ^3.0.4
+        version: 3.0.4(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
+
   packages/css:
     dependencies:
       '@emotion/hash':
@@ -444,18 +459,21 @@ importers:
         version: link:../integration
     devDependencies:
       esbuild:
-        specifier: ~0.23.1
-        version: 0.23.1
+        specifier: ~0.24.2
+        version: 0.24.2
 
   packages/esbuild-plugin-next:
     dependencies:
+      '@vanilla-extract/compiler':
+        specifier: workspace:^
+        version: link:../compiler
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
     devDependencies:
       esbuild:
-        specifier: ~0.23.1
-        version: 0.23.1
+        specifier: ~0.24.2
+        version: 0.24.2
 
   packages/integration:
     dependencies:
@@ -475,8 +493,8 @@ importers:
         specifier: ^1.5.3
         version: 1.5.3
       esbuild:
-        specifier: npm:esbuild@>=0.17.6 <0.24.0
-        version: 0.23.1
+        specifier: npm:esbuild@>=0.17.6 <0.25.0
+        version: 0.24.2
       eval:
         specifier: 0.1.8
         version: 0.1.8
@@ -489,12 +507,6 @@ importers:
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
-      vite:
-        specifier: ^6.0.10
-        version: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
-      vite-node:
-        specifier: ^3.0.2
-        version: 3.0.2(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.5
@@ -506,8 +518,8 @@ importers:
         specifier: workspace:^
         version: link:../integration
       esbuild:
-        specifier: npm:esbuild@>=0.17.6 <0.24.0
-        version: 0.23.1
+        specifier: npm:esbuild@>=0.17.6 <0.25.0
+        version: 0.24.2
     devDependencies:
       '@jest/transform':
         specifier: ^29.0.3
@@ -559,14 +571,14 @@ importers:
         specifier: workspace:^
         version: link:../css
       esbuild:
-        specifier: ~0.23.1
-        version: 0.23.1
+        specifier: ~0.24.2
+        version: 0.24.2
       rollup:
         specifier: ^4.20.0
         version: 4.30.1
       rollup-plugin-esbuild:
         specifier: ^6.1.1
-        version: 6.1.1(esbuild@0.23.1)(rollup@4.30.1)
+        version: 6.1.1(esbuild@0.24.2)(rollup@4.30.1)
 
   packages/sprinkles:
     devDependencies:
@@ -578,12 +590,15 @@ importers:
 
   packages/vite-plugin:
     dependencies:
+      '@vanilla-extract/compiler':
+        specifier: workspace:^
+        version: link:../compiler
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
     devDependencies:
       vite:
-        specifier: ^6.0.10
+        specifier: ^5.0.0 || ^6.0.0
         version: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
 
   packages/webpack-plugin:
@@ -808,7 +823,7 @@ importers:
         version: 2.11.0
       '@types/mini-css-extract-plugin':
         specifier: ^1.2.2
-        version: 1.4.3(esbuild@0.23.1)
+        version: 1.4.3(esbuild@0.24.2)
       '@types/webpack-dev-server':
         specifier: ^3.11.1
         version: 3.11.6
@@ -829,10 +844,10 @@ importers:
         version: link:../packages/webpack-plugin
       babel-loader:
         specifier: ^9.1.3
-        version: 9.1.3(@babel/core@7.23.9)(webpack@5.90.0(esbuild@0.23.1))
+        version: 9.1.3(@babel/core@7.23.9)(webpack@5.90.0(esbuild@0.24.2))
       css-loader:
         specifier: ^7.1.2
-        version: 7.1.2(webpack@5.90.0(esbuild@0.23.1))
+        version: 7.1.2(webpack@5.90.0(esbuild@0.24.2))
       cssnano:
         specifier: ^5.1.15
         version: 5.1.15(postcss@8.5.1)
@@ -840,17 +855,17 @@ importers:
         specifier: ^2.1.3
         version: 2.1.3(postcss@8.5.1)
       esbuild:
-        specifier: ~0.23.1
-        version: 0.23.1
+        specifier: ~0.24.2
+        version: 0.24.2
       got:
         specifier: ^11.8.2
         version: 11.8.3
       html-webpack-plugin:
         specifier: ^5.3.1
-        version: 5.5.0(webpack@5.90.0(esbuild@0.23.1))
+        version: 5.5.0(webpack@5.90.0(esbuild@0.24.2))
       mini-css-extract-plugin:
         specifier: ^2.7.7
-        version: 2.7.7(webpack@5.90.0(esbuild@0.23.1))
+        version: 2.7.7(webpack@5.90.0(esbuild@0.24.2))
       minimist:
         specifier: ^1.2.5
         version: 1.2.8
@@ -871,19 +886,19 @@ importers:
         version: 6.1.3
       style-loader:
         specifier: ^2.0.0
-        version: 2.0.0(webpack@5.90.0(esbuild@0.23.1))
+        version: 2.0.0(webpack@5.90.0(esbuild@0.24.2))
       vite:
-        specifier: ^6.0.10
+        specifier: ^5.0.0 || ^6.0.0
         version: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
       vite-plugin-inspect:
         specifier: ^0.8.1
         version: 0.8.9(rollup@4.30.1)(vite@6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0))
       webpack:
         specifier: ^5.90.0
-        version: 5.90.0(esbuild@0.23.1)
+        version: 5.90.0(esbuild@0.24.2)
       webpack-dev-server:
         specifier: ^5.0.4
-        version: 5.0.4(webpack@5.90.0(esbuild@0.23.1))
+        version: 5.0.4(webpack@5.90.0(esbuild@0.24.2))
       webpack-merge:
         specifier: ^6.0.1
         version: 6.0.1
@@ -912,6 +927,9 @@ importers:
       '@vanilla-extract-private/test-helpers':
         specifier: workspace:*
         version: link:../test-helpers
+      '@vanilla-extract/compiler':
+        specifier: workspace:*
+        version: link:../packages/compiler
       '@vanilla-extract/css':
         specifier: workspace:*
         version: link:../packages/css
@@ -9164,6 +9182,9 @@ packages:
   pathe@2.0.1:
     resolution: {integrity: sha512-6jpjMpOth5S9ITVu5clZ7NOgHNsv5vRQdheL9ztp2vZmM6fRbLvyua1tiBIL4lk8SAe3ARzeXEly6siXCjDHDw==}
 
+  pathe@2.0.2:
+    resolution: {integrity: sha512-15Ztpk+nov8DR524R4BF7uEuzESgzUEAV4Ah7CUMNGXdE5ELuvxElxGXndBl32vMSsWa1jpNf22Z+Er3sKwq+w==}
+
   pathval@2.0.0:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
@@ -11312,6 +11333,11 @@ packages:
 
   vite-node@3.0.2:
     resolution: {integrity: sha512-hsEQerBAHvVAbv40m3TFQe/lTEbOp7yDpyqMJqr2Tnd+W58+DEYOt+fluQgekOePcsNBmR77lpVAnIU2Xu4SvQ==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+
+  vite-node@3.0.4:
+    resolution: {integrity: sha512-7JZKEzcYV2Nx3u6rlvN8qdo3QV7Fxyt6hx+CCKz9fbWxdX5IvUOmTWEAxMrWxaiSf7CKGLJQ5rFu8prb/jBjOA==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
@@ -15525,11 +15551,11 @@ snapshots:
 
   '@types/mime@1.3.2': {}
 
-  '@types/mini-css-extract-plugin@1.4.3(esbuild@0.23.1)':
+  '@types/mini-css-extract-plugin@1.4.3(esbuild@0.24.2)':
     dependencies:
       '@types/node': 20.9.5
       tapable: 2.2.1
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -16256,12 +16282,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.1.3(@babel/core@7.23.9)(webpack@5.90.0(esbuild@0.23.1)):
+  babel-loader@9.1.3(@babel/core@7.23.9)(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       '@babel/core': 7.23.9
       find-cache-dir: 4.0.0
       schema-utils: 4.2.0
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   babel-loader@9.1.3(@babel/core@7.23.9)(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -17121,7 +17147,7 @@ snapshots:
     dependencies:
       postcss: 8.5.1
 
-  css-loader@7.1.2(webpack@5.90.0(esbuild@0.23.1)):
+  css-loader@7.1.2(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.1)
       postcss: 8.5.1
@@ -17132,7 +17158,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.6.0
     optionalDependencies:
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   css-loader@7.1.2(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -18837,14 +18863,14 @@ snapshots:
 
   html-void-elements@1.0.5: {}
 
-  html-webpack-plugin@5.5.0(webpack@5.90.0(esbuild@0.23.1)):
+  html-webpack-plugin@5.5.0(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
       lodash: 4.17.21
       pretty-error: 4.0.0
       tapable: 2.2.1
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   html-webpack-plugin@5.5.0(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -20769,10 +20795,10 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  mini-css-extract-plugin@2.7.7(webpack@5.90.0(esbuild@0.23.1)):
+  mini-css-extract-plugin@2.7.7(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       schema-utils: 4.2.0
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   mini-css-extract-plugin@2.7.7(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -21698,6 +21724,8 @@ snapshots:
   pathe@1.1.1: {}
 
   pathe@2.0.1: {}
+
+  pathe@2.0.2: {}
 
   pathval@2.0.0: {}
 
@@ -22658,12 +22686,12 @@ snapshots:
     optionalDependencies:
       '@babel/code-frame': 7.24.7
 
-  rollup-plugin-esbuild@6.1.1(esbuild@0.23.1)(rollup@4.30.1):
+  rollup-plugin-esbuild@6.1.1(esbuild@0.24.2)(rollup@4.30.1):
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
       debug: 4.4.0(supports-color@9.2.3)
       es-module-lexer: 1.6.0
-      esbuild: 0.23.1
+      esbuild: 0.24.2
       get-tsconfig: 4.7.6
       rollup: 4.30.1
     transitivePeerDependencies:
@@ -23215,11 +23243,11 @@ snapshots:
     dependencies:
       escape-string-regexp: 1.0.5
 
-  style-loader@2.0.0(webpack@5.90.0(esbuild@0.23.1)):
+  style-loader@2.0.0(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       loader-utils: 2.0.2
       schema-utils: 3.3.0
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   style-to-object@0.3.0:
     dependencies:
@@ -23434,16 +23462,16 @@ snapshots:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.2.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.23.1)(webpack@5.90.0(esbuild@0.23.1)):
+  terser-webpack-plugin@5.3.10(esbuild@0.24.2)(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.22
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.26.0
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
     optionalDependencies:
-      esbuild: 0.23.1
+      esbuild: 0.24.2
 
   terser-webpack-plugin@5.3.10(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -24107,6 +24135,27 @@ snapshots:
       - tsx
       - yaml
 
+  vite-node@3.0.4(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0):
+    dependencies:
+      cac: 6.7.14
+      debug: 4.4.0(supports-color@9.2.3)
+      es-module-lexer: 1.6.0
+      pathe: 2.0.2
+      vite: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   vite-plugin-inspect@0.8.9(rollup@4.30.1)(vite@6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)):
     dependencies:
       '@antfu/utils': 0.7.10
@@ -24293,7 +24342,7 @@ snapshots:
     optionalDependencies:
       webpack-dev-server: 5.0.4(webpack-cli@5.1.4)(webpack@5.90.0)
 
-  webpack-dev-middleware@7.3.0(webpack@5.90.0(esbuild@0.23.1)):
+  webpack-dev-middleware@7.3.0(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       colorette: 2.0.16
       memfs: 4.11.1
@@ -24302,7 +24351,7 @@ snapshots:
       range-parser: 1.2.1
       schema-utils: 4.2.0
     optionalDependencies:
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
 
   webpack-dev-middleware@7.3.0(webpack@5.90.0(webpack-cli@5.1.4)):
     dependencies:
@@ -24356,7 +24405,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  webpack-dev-server@5.0.4(webpack@5.90.0(esbuild@0.23.1)):
+  webpack-dev-server@5.0.4(webpack@5.90.0(esbuild@0.24.2)):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -24386,10 +24435,10 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 7.3.0(webpack@5.90.0(esbuild@0.23.1))
+      webpack-dev-middleware: 7.3.0(webpack@5.90.0(esbuild@0.24.2))
       ws: 8.16.0
     optionalDependencies:
-      webpack: 5.90.0(esbuild@0.23.1)
+      webpack: 5.90.0(esbuild@0.24.2)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -24442,7 +24491,7 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.90.0(esbuild@0.23.1):
+  webpack@5.90.0(esbuild@0.24.2):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.6
@@ -24465,7 +24514,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.23.1)(webpack@5.90.0(esbuild@0.23.1))
+      terser-webpack-plugin: 5.3.10(esbuild@0.24.2)(webpack@5.90.0(esbuild@0.24.2))
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:

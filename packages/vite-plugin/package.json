@@ -16,10 +16,11 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@vanilla-extract/compiler": "workspace:^",
     "@vanilla-extract/integration": "workspace:^"
   },
   "devDependencies": {
-    "vite": "^6.0.10"
+    "vite": "^5.0.0 || ^6.0.0"
   },
   "peerDependencies": {
     "vite": "^5.0.0 || ^6.0.0"

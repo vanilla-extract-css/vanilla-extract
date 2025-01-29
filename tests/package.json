@@ -9,6 +9,7 @@
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@vanilla-extract-private/test-helpers": "workspace:*",
+    "@vanilla-extract/compiler": "workspace:*",
     "@vanilla-extract/css": "workspace:*",
     "@vanilla-extract/dynamic": "workspace:*",
     "@vanilla-extract/integration": "workspace:*",

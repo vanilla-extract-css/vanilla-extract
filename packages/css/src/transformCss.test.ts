@@ -1166,6 +1166,50 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle container queries inside selectors', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              containerName: 'myContainer',
+              '@container': {
+                'myContainer (min-width: 700px)': {
+                  color: 'red',
+                },
+              },
+              selectors: {
+                ['h1 &']: {
+                  '@container': {
+                    'myContainer (min-width: 700px)': {
+                      color: 'blue',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        container-name: myContainer;
+      }
+      @container myContainer (min-width: 700px) {
+        .testClass {
+          color: red;
+        }
+        h1 .testClass {
+          color: blue;
+        }
+      }
+    `);
+  });
+
   it('should handle @layer declarations', () => {
     expect(
       transformCss({
