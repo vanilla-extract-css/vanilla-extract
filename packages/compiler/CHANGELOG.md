@@ -1,5 +1,13 @@
 # @vanilla-extract/compiler
 
+## 0.1.1
+
+### Patch Changes
+
+- [#1529](https://github.com/vanilla-extract-css/vanilla-extract/pull/1529) [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7) Thanks [@askoufis](https://github.com/askoufis)! - Update `vite-node` dependency
+
+- [#1529](https://github.com/vanilla-extract-css/vanilla-extract/pull/1529) [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7) Thanks [@askoufis](https://github.com/askoufis)! - Include `^6.0.0` in `vite` dependency range
+
 ## 0.1.0
 
 ### Minor Changes
