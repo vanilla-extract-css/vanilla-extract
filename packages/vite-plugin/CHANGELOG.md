@@ -1,5 +1,54 @@
 # @vanilla-extract/vite-plugin
 
+## 5.0.0
+
+### Major Changes
+
+- [#1537](https://github.com/vanilla-extract-css/vanilla-extract/pull/1537) [`7810b7c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7810b7c8b8344dc2b5618b25d2945ecc3d81b469) Thanks [@askoufis](https://github.com/askoufis)! - Change the plugin name from `"vanilla-extract"` to the more [conventional][plugin conventions] `"vite-plugin-vanilla-extract"`
+
+  [plugin conventions]: https://vite.dev/guide/api-plugin.html#conventions
+
+- [#1529](https://github.com/vanilla-extract-css/vanilla-extract/pull/1529) [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7) Thanks [@askoufis](https://github.com/askoufis)! - Update `vite` peer dependency range to `^5.0.0 || ^6.0.0`
+
+  BREAKING CHANGE: Vite 4 is no longer supported. Please upgrade to at least Vite 5.
+
+- [#1537](https://github.com/vanilla-extract-css/vanilla-extract/pull/1537) [`7810b7c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7810b7c8b8344dc2b5618b25d2945ecc3d81b469) Thanks [@askoufis](https://github.com/askoufis)! - BREAKING CHANGE: User-configured vite plugins are no longer forwarded through to the Vanilla Extract compiler by default. This should not affect most consumers.
+
+  Previously, all vite plugins except for a select few incompatible plugins were forwarded through. This resulted in a constant game of whack-a-mole as new plugins were added to the list of incompatible plugins as issues were discovered.
+
+  Framework-specific plugins, as well as plugins that handle assets and build output, tend not to be relevant to Vanilla Extract code, and in some cases cause more harm than good.
+
+  For that reason, in this release only the `vite-tsconfig-paths` plugin is fowarded through by default. This is a relatively common plugin that is know to be compatible with the Vanilla Extract compiler.
+
+  In most cases users should not need to forward any additional plugins through to the Vanilla Extract compiler. However, if such a case arises, a plugin filter function can be provided via the `unstable_pluginFilter` option:
+
+  ```ts
+  // vite.config.ts
+
+  import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+  import { vitePluginFoo } from 'vite-plugin-foo';
+
+  export default defineConfig({
+    plugins: [
+      vitePluginFoo(),
+      vanillaExtractPlugin({
+        // Only forward the `vite-plugin-foo` plugin through to the Vanilla Extract compiler
+        unstable_pluginFilter: ({ name, mode }) =>
+          plugin.name === 'vite-plugin-foo'
+      })
+    ]
+  });
+  ```
+
+  When providing a plugin filter function, the `vite-tsconfig-paths` plugin will no longer be forwarded through by default. If you wish to forward this plugin, you must include it in your filter function.
+
+  **NOTE**: The `unstable_pluginFilter` API is considered unstable and may be changed or removed without notice in a future non-major version.
+
+### Patch Changes
+
+- Updated dependencies [[`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7), [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7)]:
+  - @vanilla-extract/compiler@0.1.1
+
 ## 4.0.20
 
 ### Patch Changes
