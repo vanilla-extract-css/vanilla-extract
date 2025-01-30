@@ -16,6 +16,6 @@
     "@vanilla-extract/private": "workspace:*",
     "@vanilla-extract/recipes": "workspace:*",
     "@vanilla-extract/sprinkles": "workspace:*",
-    "vite-tsconfig-paths": "^4.3.1"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

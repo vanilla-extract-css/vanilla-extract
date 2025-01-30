@@ -108,7 +108,15 @@ const createViteServer = async ({
     },
     logLevel: 'silent',
     optimizeDeps: {
-      disabled: true,
+      noDiscovery: true,
+    },
+    build: {
+      dynamicImportVarsOptions: {
+        // Temporary workaround for https://github.com/vitejs/vite/issues/19245.
+        // Shouldn't affect functionality as it's equivalent to the default value.
+        // Can be removed once https://github.com/vitejs/vite/pull/19247 is released.
+        exclude: [/node_modules/],
+      },
     },
     ssr: {
       noExternal: true,
