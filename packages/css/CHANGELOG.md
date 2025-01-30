@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.17.1
+
+### Patch Changes
+
+- [#1533](https://github.com/vanilla-extract-css/vanilla-extract/pull/1533) [`c432ff3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c432ff33a8aead2c94fa6a4fcc9fcb1d7990427d) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where `@container` queries inside `selectors` were not being generated
+
 ## 1.17.0
 
 ### Minor Changes

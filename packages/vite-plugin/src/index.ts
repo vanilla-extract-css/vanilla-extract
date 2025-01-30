@@ -9,13 +9,12 @@ import type {
   TransformResult,
   UserConfig,
 } from 'vite';
+import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
-  IdentifierOption,
+  type IdentifierOption,
   getPackageInfo,
   transform,
-  type Compiler,
-  createCompiler,
   normalizePath,
 } from '@vanilla-extract/integration';
 
