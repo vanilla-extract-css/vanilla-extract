@@ -29,9 +29,6 @@ export default defineConfig({
 });
 ```
 
-> [!NOTE]
-> When providing a plugin filter function, the `vite-tsconfig-paths` plugin will no longer be forwarded through by default.
-> If you wish to forward this plugin through, you must include it in your filter function.
+When providing a plugin filter function, the `vite-tsconfig-paths` plugin will no longer be forwarded through by default. If you wish to forward this plugin, you must include it in your filter function.
 
-> [!IMPORTANT]
-> The `unstable_pluginFilter` API is considered unstable and may be changed or removed without notice in a future non-major version.
+**NOTE**: The `unstable_pluginFilter` API is considered unstable and may be changed or removed without notice in a future non-major version.
