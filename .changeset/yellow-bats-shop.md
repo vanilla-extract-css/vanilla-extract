@@ -2,4 +2,4 @@
 '@vanilla-extract/compiler': patch
 ---
 
-Update `vite-node` dependency
+Include `^6.0.0` in `vite` dependency range
