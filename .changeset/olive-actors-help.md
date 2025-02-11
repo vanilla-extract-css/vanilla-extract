@@ -5,4 +5,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-Update ESBuild version to 0.25
+Update `esbuild` version to 0.25
