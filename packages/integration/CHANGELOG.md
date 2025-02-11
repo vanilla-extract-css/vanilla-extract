@@ -1,5 +1,11 @@
 # @vanilla-extract/integration
 
+## 8.0.1
+
+### Patch Changes
+
+- [#1545](https://github.com/vanilla-extract-css/vanilla-extract/pull/1545) [`965fd03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/965fd03ff26dd324ec24734aa7700f1fe89bd483) Thanks [@askoufis](https://github.com/askoufis)! - Extend `esbuild` dependency range to include `0.25.x`
+
 ## 8.0.0
 
 ### Major Changes
