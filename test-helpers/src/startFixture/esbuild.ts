@@ -68,7 +68,7 @@ export const startEsbuildFixture = async (
 
   return {
     type: 'esbuild',
-    url: `http://${server.host}:${port}`,
+    url: `http://${server.hosts[0]}:${port}`,
     stylesheet: 'index.css',
     close: () => {
       ctx.dispose();
