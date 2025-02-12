@@ -1,5 +1,14 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.14
+
+### Patch Changes
+
+- [#1545](https://github.com/vanilla-extract-css/vanilla-extract/pull/1545) [`965fd03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/965fd03ff26dd324ec24734aa7700f1fe89bd483) Thanks [@askoufis](https://github.com/askoufis)! - Extend `esbuild` dependency range to include `0.25.x`
+
+- Updated dependencies [[`965fd03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/965fd03ff26dd324ec24734aa7700f1fe89bd483)]:
+  - @vanilla-extract/integration@8.0.1
+
 ## 1.1.13
 
 ### Patch Changes

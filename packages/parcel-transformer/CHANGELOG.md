@@ -1,5 +1,12 @@
 # @vanilla-extract/parcel-transformer
 
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies [[`965fd03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/965fd03ff26dd324ec24734aa7700f1fe89bd483)]:
+  - @vanilla-extract/integration@8.0.1
+
 ## 1.0.13
 
 ### Patch Changes
