@@ -9,16 +9,16 @@ import type {
   TransformResult,
   UserConfig,
 } from 'vite';
+import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
-  IdentifierOption,
+  type IdentifierOption,
   getPackageInfo,
   transform,
-  type Compiler,
-  createCompiler,
   normalizePath,
 } from '@vanilla-extract/integration';
 
+const PLUGIN_NAME = 'vite-plugin-vanilla-extract';
 const virtualExtCss = '.vanilla.css';
 
 const isVirtualId = (id: string) => id.endsWith(virtualExtCss);
@@ -26,30 +26,40 @@ const fileIdToVirtualId = (id: string) => `${id}${virtualExtCss}`;
 const virtualIdToFileId = (virtualId: string) =>
   virtualId.slice(0, -virtualExtCss.length);
 
-const removeIncompatiblePlugins = (plugin: PluginOption) =>
-  typeof plugin === 'object' &&
-  plugin !== null &&
-  'name' in plugin &&
-  // Prevent an infinite loop where the compiler creates a new instance of the plugin,
-  // which creates a new compiler, which creates a new instance of the plugin, etc.
-  plugin.name !== 'vanilla-extract' &&
-  // Skip Remix because it throws an error if it's not loaded with a config file.
-  // If it _is_ loaded with a config file, it will create an infinite loop because it
-  // also has a child compiler which uses the same mechanism to load the config file.
-  // https://github.com/remix-run/remix/pull/7990#issuecomment-1809356626
-  // Additionally, some internal Remix plugins rely on a `ctx` object to be initialized by
-  // the main Remix plugin, and may not function correctly without it. To address this, we
-  // filter out all Remix-related plugins.
-  !plugin.name.startsWith('remix') &&
-  // As React-Router plugin works the same as Remix plugin, also ignore it.
-  !plugin.name.startsWith('react-router');
+const isPluginObject = (plugin: PluginOption): plugin is Plugin =>
+  typeof plugin === 'object' && plugin !== null && 'name' in plugin;
+
+type PluginFilter = (filterProps: {
+  /** The name of the plugin */
+  name: string;
+  /**
+   * The `mode` vite is running in.
+   * @see https://vite.dev/guide/env-and-mode.html#modes
+   */
+  mode: string;
+}) => boolean;
 
 interface Options {
   identifiers?: IdentifierOption;
+  unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss';
 }
+
+// Plugins that we know are compatible with the `vite-node` compiler
+// and don't need to be filtered out.
+const COMPATIBLE_PLUGINS = ['vite-tsconfig-paths'];
+
+const defaultPluginFilter: PluginFilter = ({ name }) =>
+  COMPATIBLE_PLUGINS.includes(name);
+
+const withUserPluginFilter =
+  ({ mode, pluginFilter }: { mode: string; pluginFilter: PluginFilter }) =>
+  (plugin: Plugin) =>
+    pluginFilter({ name: plugin.name, mode });
+
 export function vanillaExtractPlugin({
   identifiers,
+  unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
@@ -99,7 +109,7 @@ export function vanillaExtractPlugin({
   }
 
   return {
-    name: 'vanilla-extract',
+    name: PLUGIN_NAME,
     configureServer(_server) {
       server = _server;
     },
@@ -148,7 +158,8 @@ export function vanillaExtractPlugin({
           ...configForViteCompiler,
           plugins: configForViteCompiler?.plugins
             ?.flat()
-            .filter(removeIncompatiblePlugins),
+            .filter(isPluginObject)
+            .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
         };
 
         compiler = createCompiler({

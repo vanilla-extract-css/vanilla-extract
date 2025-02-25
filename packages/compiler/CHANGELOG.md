@@ -1,0 +1,28 @@
+# @vanilla-extract/compiler
+
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`965fd03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/965fd03ff26dd324ec24734aa7700f1fe89bd483)]:
+  - @vanilla-extract/integration@8.0.1
+
+## 0.1.1
+
+### Patch Changes
+
+- [#1529](https://github.com/vanilla-extract-css/vanilla-extract/pull/1529) [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7) Thanks [@askoufis](https://github.com/askoufis)! - Update `vite-node` dependency
+
+- [#1529](https://github.com/vanilla-extract-css/vanilla-extract/pull/1529) [`d5b6e70`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d5b6e70f44a3d4f03e113fe78e0605b358e9c0d7) Thanks [@askoufis](https://github.com/askoufis)! - Include `^6.0.0` in `vite` dependency range
+
+## 0.1.0
+
+### Minor Changes
+
+- [#1536](https://github.com/vanilla-extract-css/vanilla-extract/pull/1536) [`a8248be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a8248befac51aa51d771b9b22a46209b1fd1e3b3) Thanks [@askoufis](https://github.com/askoufis)! - Initial release
+
+### Patch Changes
+
+- Updated dependencies [[`5f66abb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/5f66abbd607e76d491bbb7b9bfe9c64c882a53e8), [`a8248be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a8248befac51aa51d771b9b22a46209b1fd1e3b3), [`c432ff3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c432ff33a8aead2c94fa6a4fcc9fcb1d7990427d), [`ec0b024`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ec0b024fd19c133c233445f9e860626d104f9d97), [`a8248be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a8248befac51aa51d771b9b22a46209b1fd1e3b3)]:
+  - @vanilla-extract/integration@8.0.0
+  - @vanilla-extract/css@1.17.1

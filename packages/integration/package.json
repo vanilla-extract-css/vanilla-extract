@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/integration",
-  "version": "7.1.11",
+  "version": "8.0.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-integration.cjs.js",
   "types": "dist/vanilla-extract-integration.cjs.d.ts",
@@ -20,13 +20,11 @@
     "@vanilla-extract/babel-plugin-debug-ids": "workspace:^",
     "@vanilla-extract/css": "workspace:^",
     "dedent": "^1.5.3",
-    "esbuild": "npm:esbuild@>=0.17.6 <0.24.0",
+    "esbuild": "npm:esbuild@>=0.17.6 <0.26.0",
     "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
-    "mlly": "^1.4.2",
-    "vite": "^5.0.11",
-    "vite-node": "^1.2.0"
+    "mlly": "^1.4.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5"

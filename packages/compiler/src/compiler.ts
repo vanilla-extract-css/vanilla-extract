@@ -4,13 +4,15 @@ import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import type { ModuleNode, UserConfig as ViteUserConfig } from 'vite';
 
-import type { IdentifierOption } from './types';
-import { cssFileFilter } from './filters';
-import { getPackageInfo } from './packageInfo';
-import { transform } from './transform';
-import { normalizePath } from './addFileScope';
+import {
+  cssFileFilter,
+  transform,
+  normalizePath,
+  getPackageInfo,
+  serializeVanillaModule,
+  type IdentifierOption,
+} from '@vanilla-extract/integration';
 import { lock } from './lock';
-import { serializeVanillaModule } from './processVanillaFile';
 
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];
@@ -106,10 +108,23 @@ const createViteServer = async ({
     },
     logLevel: 'silent',
     optimizeDeps: {
-      disabled: true,
+      noDiscovery: true,
+    },
+    build: {
+      dynamicImportVarsOptions: {
+        // Temporary workaround for https://github.com/vitejs/vite/issues/19245.
+        // Shouldn't affect functionality as it's equivalent to the default value.
+        // Can be removed once https://github.com/vitejs/vite/pull/19247 is released.
+        exclude: [/node_modules/],
+      },
     },
     ssr: {
       noExternal: true,
+      // `cssesc` is CJS-only, so we need to mark it as external as Vite's transform pipeline
+      // can't handle CJS during dev-time.
+      // See https://github.com/withastro/astro/blob/0879cc2ce7e15a2e7330c68d6667d9a2edea52ab/packages/astro/src/core/create-vite.ts#L86
+      // and https://github.com/withastro/astro/issues/11395
+      external: ['cssesc'],
     },
     plugins: [
       {

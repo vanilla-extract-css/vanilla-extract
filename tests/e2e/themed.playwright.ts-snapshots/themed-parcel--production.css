@@ -1,3 +1,5 @@
+@layer cdwe0v7;
+@layer globalThemeLayer;
 :root,
 .cdwe0v0 {
   --cdwe0v1: blue;
@@ -13,15 +15,33 @@
   --cdwe0v4: 12px;
   --cdwe0v5: 16px;
 }
-.cdwe0v7 {
+.cdwe0ve {
   --cdwe0v1: pink;
   --cdwe0v2: purple;
   --cdwe0v3: 6px;
   --cdwe0v4: 12px;
   --cdwe0v5: 18px;
 }
+@layer cdwe0v7 {
+  .cdwe0v8 {
+    --cdwe0v9: green;
+    --cdwe0va: white;
+    --cdwe0vb: 8px;
+    --cdwe0vc: 12px;
+    --cdwe0vd: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --cdwe0v9: green;
+    --cdwe0va: white;
+    --cdwe0vb: 8px;
+    --cdwe0vc: 12px;
+    --cdwe0vd: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .cdwe0v7 {
+  .cdwe0ve {
     --cdwe0v1: purple;
     --cdwe0v2: pink;
   }
@@ -36,6 +56,8 @@ body,
 button {
   line-height: 16px;
 }
+@layer cdwe0v7;
+@layer globalThemeLayer;
 :root,
 .cdwe0v0 {
   --cdwe0v1: blue;
@@ -51,15 +73,33 @@ button {
   --cdwe0v4: 12px;
   --cdwe0v5: 16px;
 }
-.cdwe0v7 {
+.cdwe0ve {
   --cdwe0v1: pink;
   --cdwe0v2: purple;
   --cdwe0v3: 6px;
   --cdwe0v4: 12px;
   --cdwe0v5: 18px;
 }
+@layer cdwe0v7 {
+  .cdwe0v8 {
+    --cdwe0v9: green;
+    --cdwe0va: white;
+    --cdwe0vb: 8px;
+    --cdwe0vc: 12px;
+    --cdwe0vd: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --cdwe0v9: green;
+    --cdwe0va: white;
+    --cdwe0vb: 8px;
+    --cdwe0vc: 12px;
+    --cdwe0vd: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .cdwe0v7 {
+  .cdwe0ve {
     --cdwe0v1: purple;
     --cdwe0v2: pink;
   }
@@ -71,6 +111,11 @@ button {
 @font-face {
   src: local(Comic Sans MS);
   font-family: MyGlobalComicSans;
+}
+@property --blj6yb4 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
 }
 .blj6yb1 {
   gap: var(--cdwe0v4);
@@ -96,7 +141,7 @@ body .blj6yb2:after {
   content: "I am content";
 }
 html .blj6yb6 {
-  opacity: var(--blj6yb4, 0.5);
+  opacity: var(--blj6yb4);
 }
 html .blj6yb7 {
   opacity: var(--blj6yb4, var(--blj6yb5, 0.25));

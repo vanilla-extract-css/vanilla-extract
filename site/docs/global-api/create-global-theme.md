@@ -61,3 +61,33 @@ createGlobalTheme(':root', vars, {
   }
 });
 ```
+
+## @layer
+
+Global themes can be assigned to a layer by name using the `@layer` key at the top-level of the theme definition.
+
+> 🚧&nbsp;&nbsp;Ensure your target browsers [support layers].
+> Vanilla Extract supports the [layers syntax][layer] but does not polyfill the feature in unsupported browsers.
+
+```ts compiled
+// theme.css.ts
+import {
+  createGlobalTheme,
+  layer
+} from '@vanilla-extract/css';
+
+export const themeLayer = layer();
+
+export const vars = createGlobalTheme(':root', {
+  '@layer': themeLayer,
+  color: {
+    brand: 'blue'
+  },
+  font: {
+    body: 'arial'
+  }
+});
+```
+
+[support layers]: https://caniuse.com/css-cascade-layers
+[layer]: https://developer.mozilla.org/en-US/docs/Web/CSS/@layer

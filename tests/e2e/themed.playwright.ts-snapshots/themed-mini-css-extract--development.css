@@ -1,3 +1,5 @@
+@layer themes_themeLayer__cdwe0v7;
+@layer globalThemeLayer;
 :root,
 .themes_theme__cdwe0v0 {
   --colors-backgroundColor__cdwe0v1: blue;
@@ -13,15 +15,33 @@
   --space-2__cdwe0v4: 12px;
   --space-3__cdwe0v5: 16px;
 }
-.themes_responsiveTheme__cdwe0v7 {
+.themes_responsiveTheme__cdwe0ve {
   --colors-backgroundColor__cdwe0v1: pink;
   --colors-text__cdwe0v2: purple;
   --space-1__cdwe0v3: 6px;
   --space-2__cdwe0v4: 12px;
   --space-3__cdwe0v5: 18px;
 }
+@layer themes_themeLayer__cdwe0v7 {
+  .themes_altTheme2Class__cdwe0v8 {
+    --colors-backgroundColor__cdwe0v9: green;
+    --colors-text__cdwe0va: white;
+    --space-1__cdwe0vb: 8px;
+    --space-2__cdwe0vc: 12px;
+    --space-3__cdwe0vd: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cdwe0v9: green;
+    --colors-text__cdwe0va: white;
+    --space-1__cdwe0vb: 8px;
+    --space-2__cdwe0vc: 12px;
+    --space-3__cdwe0vd: 16px;
+  }
+}
 @media screen and (min-width: 768px) {
-  .themes_responsiveTheme__cdwe0v7 {
+  .themes_responsiveTheme__cdwe0ve {
     --colors-backgroundColor__cdwe0v1: purple;
     --colors-text__cdwe0v2: pink;
   }
@@ -43,6 +63,11 @@ button {
 @font-face {
   src: local("Comic Sans MS");
   font-family: MyGlobalComicSans;
+}
+@property --blankVar1__blj6yb4 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
 }
 .styles_container__blj6yb1 {
   display: flex;
@@ -74,7 +99,7 @@ body .styles_iDunno__blj6yb2:after {
   content: "I am content";
 }
 html .styles_opacity_1\/2__blj6yb6 {
-  opacity: var(--blankVar1__blj6yb4, 0.5);
+  opacity: var(--blankVar1__blj6yb4);
 }
 html .styles_opacity_1\/4__blj6yb7 {
   opacity: var(--blankVar1__blj6yb4, var(--blankVar2__blj6yb5, 0.25));

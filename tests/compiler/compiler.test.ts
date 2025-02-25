@@ -1,6 +1,6 @@
 import path from 'path';
-import { createCompiler, normalizePath } from '@vanilla-extract/integration';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { createCompiler } from '@vanilla-extract/compiler';
+import { normalizePath } from '@vanilla-extract/integration';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
@@ -28,6 +28,8 @@ describe('compiler', () => {
   >;
 
   beforeAll(async () => {
+    const tsconfigPaths = (await import('vite-tsconfig-paths')).default;
+
     compilers = {
       default: createCompiler({
         root: __dirname,
