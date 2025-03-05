@@ -3813,6 +3813,7 @@ packages:
   '@playwright/test@1.43.1':
     resolution: {integrity: sha512-HgtQzFgNEEo4TE22K/X7sYTYNqEMMTZmFS8kTq6m8hXj+m1D8TgwgIbumHddJa9h4yl4GkKb8/bgAl2+g7eDgA==}
     engines: {node: '>=16'}
+    deprecated: Please update to the latest version of Playwright to test up-to-date browsers.
     hasBin: true
 
   '@pnpm/config.env-replace@1.1.0':
@@ -9395,9 +9396,6 @@ packages:
 
   pathe@1.1.1:
     resolution: {integrity: sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==}
-
-  pathe@2.0.1:
-    resolution: {integrity: sha512-6jpjMpOth5S9ITVu5clZ7NOgHNsv5vRQdheL9ztp2vZmM6fRbLvyua1tiBIL4lk8SAe3ARzeXEly6siXCjDHDw==}
 
   pathe@2.0.2:
     resolution: {integrity: sha512-15Ztpk+nov8DR524R4BF7uEuzESgzUEAV4Ah7CUMNGXdE5ELuvxElxGXndBl32vMSsWa1jpNf22Z+Er3sKwq+w==}
@@ -16207,13 +16205,13 @@ snapshots:
   '@vitest/runner@3.0.2':
     dependencies:
       '@vitest/utils': 3.0.2
-      pathe: 2.0.1
+      pathe: 2.0.2
 
   '@vitest/snapshot@3.0.2':
     dependencies:
       '@vitest/pretty-format': 3.0.2
       magic-string: 0.30.17
-      pathe: 2.0.1
+      pathe: 2.0.2
 
   '@vitest/spy@3.0.2':
     dependencies:
@@ -22130,8 +22128,6 @@ snapshots:
 
   pathe@1.1.1: {}
 
-  pathe@2.0.1: {}
-
   pathe@2.0.2: {}
 
   pathval@2.0.0: {}
@@ -24538,7 +24534,7 @@ snapshots:
       cac: 6.7.14
       debug: 4.4.0(supports-color@9.2.3)
       es-module-lexer: 1.6.0
-      pathe: 2.0.1
+      pathe: 2.0.2
       vite: 6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0)
     transitivePeerDependencies:
       - '@types/node'
@@ -24636,7 +24632,7 @@ snapshots:
       debug: 4.4.0(supports-color@9.2.3)
       expect-type: 1.1.0
       magic-string: 0.30.17
-      pathe: 2.0.1
+      pathe: 2.0.2
       std-env: 3.8.0
       tinybench: 2.9.0
       tinyexec: 0.3.2
