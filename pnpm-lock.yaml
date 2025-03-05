@@ -87,6 +87,21 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(@types/node@20.9.5)(jsdom@20.0.3)(terser@5.26.0)(tsx@4.17.0)
 
+  benchmarks:
+    dependencies:
+      '@arktype/attest':
+        specifier: ^0.43.3
+        version: 0.43.3(typescript@5.5.4)
+      '@vanilla-extract/css':
+        specifier: workspace:*
+        version: link:../packages/css
+      tsx:
+        specifier: ^4.17.0
+        version: 4.17.0
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
+
   examples/next:
     dependencies:
       next:
@@ -1035,6 +1050,21 @@ packages:
 
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
+
+  '@ark/fs@0.43.3':
+    resolution: {integrity: sha512-ypenAnHxiq41TlnLNVfbvmSMKI71LqX5s96L2dihsfVYaMVAy4OzAHrX35Bg1KKMbvvDZYn50b7Pd6FyEEFnIg==}
+
+  '@ark/schema@0.43.3':
+    resolution: {integrity: sha512-6h5dDQmbBs51C/nrZspcpGxsoODDqUgQ6DSfD0+Nml7MAPR2BJx9qS+q4KssQt6kOaOod6EpUpHrZaaUhUUNcg==}
+
+  '@ark/util@0.43.3':
+    resolution: {integrity: sha512-QdfJzSvz1B1zTzufZ4W3zVTccAnQ8ifpSToDLtzXACjT82RE2vuOlowqX2/w1/4q3Ws3ZPCI8G3hJe+g9Hl6zw==}
+
+  '@arktype/attest@0.43.3':
+    resolution: {integrity: sha512-iY41kXHYsFhx4hzVSiIlWMPxOBztelyOBkx7MZbITkKNNE9/0YwHmoo67C/LzLKDRuvPM5krP8ww8P0A9Au0wQ==}
+    hasBin: true
+    peerDependencies:
+      typescript: '*'
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -3807,6 +3837,11 @@ packages:
   '@preconstruct/hook@0.4.0':
     resolution: {integrity: sha512-a7mrlPTM3tAFJyz43qb4pPVpUx8j8TzZBFsNFqcKcE/sEakNXRlQAuCT4RGZRf9dQiiUnBahzSIWawU4rENl+Q==}
 
+  '@prettier/sync@0.5.2':
+    resolution: {integrity: sha512-Yb569su456XNx5BsH/Vyem7xD6g/y9iLmLUzRKM1a/dhU/D7HqqvkAG72znulXlMXztbV0iiu9O5AL8K98TzZQ==}
+    peerDependencies:
+      prettier: '*'
+
   '@remix-run/dev@2.8.0':
     resolution: {integrity: sha512-kZtmK/7vKk7QV8CGCyC9Or3wP7EwL4rOJS9vObmTRAPv8mLyznR8bJxeNVWA7ICnCGejF8s2X3abVJrkEMiFlg==}
     engines: {node: '>=18.0.0'}
@@ -4463,6 +4498,15 @@ packages:
     resolution: {integrity: sha512-MxnrdIyArnTi+XyFLR+kt/uNAcdOnmT+879os7qDRI+EYySR4crXJq9BXPfRzzLGq0wgxkwidrCJ9WCAoacm1w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@typescript/analyze-trace@0.10.1':
+    resolution: {integrity: sha512-RnlSOPh14QbopGCApgkSx5UBgGda5MX1cHqp2fsqfiDyCwGL/m1jaeB9fzu7didVS81LQqGZZuxFBcg8YU8EVw==}
+    hasBin: true
+
+  '@typescript/vfs@1.6.0':
+    resolution: {integrity: sha512-hvJUjNVeBMp77qPINuUvYXj4FyWeeMMKZkxEATEU3hqBAQ7qdTBCUFT7Sp0Zu0faeEtFf+ldXxMEDr/bk73ISg==}
+    peerDependencies:
+      typescript: '*'
+
   '@vanilla-extract/babel-plugin-debug-ids@1.0.6':
     resolution: {integrity: sha512-C188vUEYmw41yxg3QooTs8r1IdbDQQ2mH7L5RkORBnHx74QlmsNfqVmKwAVTgrlYt8JoRaWMtPfGm/Ql0BNQrA==}
 
@@ -4818,6 +4862,9 @@ packages:
 
   aria-query@5.3.0:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
+
+  arktype@2.1.3:
+    resolution: {integrity: sha512-BnyskWms/1oYaVq2zKQ9qmYBWWOiYMsXusZLQothveeuACOM18DjKWTpoBO9jpC4dF1MoB7d0CwJaVf7CYHdpw==}
 
   arr-diff@4.0.0:
     resolution: {integrity: sha512-YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==}
@@ -5351,6 +5398,9 @@ packages:
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
+
+  cliui@7.0.4:
+    resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
 
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
@@ -7888,6 +7938,15 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
+  jsonparse@1.3.1:
+    resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
+    engines: {'0': node >= 0.2.0}
+
+  jsonstream-next@3.0.0:
+    resolution: {integrity: sha512-aAi6oPhdt7BKyQn1SrIIGZBt0ukKuOUE1qV6kJ3GgioSOYzsRc8z9Hfr1BVmacA/jLe9nARfmgMGgn68BqIAgg==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   jsonwebtoken@8.5.1:
     resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
     engines: {node: '>=4', npm: '>=1.4.28'}
@@ -8267,6 +8326,9 @@ packages:
 
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
+
+  make-synchronized@0.2.9:
+    resolution: {integrity: sha512-4wczOs8SLuEdpEvp3vGo83wh8rjJ78UsIk7DIX5fxdfmfMJGog4bQzxfvOwq7Q3yCHLC4jp1urPHIxRS/A93gA==}
 
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
@@ -9720,6 +9782,11 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-error@4.0.0:
     resolution: {integrity: sha512-AoJ5YMAcXKYxKhuJGdcvse+Voc6v1RgnsR3nWcYU7q4t6z0Q6T86sv5Zq8VIRbOWWFpvdGE83LtdSMNd+6Y0xw==}
 
@@ -10555,6 +10622,9 @@ packages:
   split2@1.1.1:
     resolution: {integrity: sha512-cfurE2q8LamExY+lJ9Ex3ZfBwqAPduzOKVscPDXNCLLMvyaeD3DTz1yk7fVIs6Chco+12XeD0BB6HEoYzPYbXA==}
 
+  split2@3.2.2:
+    resolution: {integrity: sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==}
+
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
@@ -10914,6 +10984,9 @@ packages:
   through2@2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
 
+  through2@4.0.2:
+    resolution: {integrity: sha512-iOqSav00cVxEEICeD7TjLB1sueEL+81Wpzp2bY17uZjZN0pWZPuo4suZ/61VujxmqSGFfgOcNuTZ85QJwNZQpw==}
+
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
@@ -11034,6 +11107,10 @@ packages:
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
+
+  treeify@1.1.0:
+    resolution: {integrity: sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==}
+    engines: {node: '>=0.6'}
 
   trim-lines@1.1.3:
     resolution: {integrity: sha512-E0ZosSWYK2mkSu+KEtQ9/KqarVjA9HztOSX+9FDdNacRAq29RRV6ZQNgob3iuW8Htar9vAfEa6yyt5qBAHZDBA==}
@@ -11890,9 +11967,17 @@ packages:
     resolution: {integrity: sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==}
     engines: {node: '>=6'}
 
+  yargs-parser@20.2.9:
+    resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
+    engines: {node: '>=10'}
+
   yargs-parser@21.1.1:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
+
+  yargs@16.2.0:
+    resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}
+    engines: {node: '>=10'}
 
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
@@ -12033,6 +12118,27 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.22
 
   '@antfu/utils@0.7.10': {}
+
+  '@ark/fs@0.43.3': {}
+
+  '@ark/schema@0.43.3':
+    dependencies:
+      '@ark/util': 0.43.3
+
+  '@ark/util@0.43.3': {}
+
+  '@arktype/attest@0.43.3(typescript@5.5.4)':
+    dependencies:
+      '@ark/fs': 0.43.3
+      '@ark/util': 0.43.3
+      '@prettier/sync': 0.5.2(prettier@3.4.2)
+      '@typescript/analyze-trace': 0.10.1
+      '@typescript/vfs': 1.6.0(typescript@5.5.4)
+      arktype: 2.1.3
+      prettier: 3.4.2
+      typescript: 5.5.4
+    transitivePeerDependencies:
+      - supports-color
 
   '@babel/code-frame@7.24.7':
     dependencies:
@@ -15215,6 +15321,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@prettier/sync@0.5.2(prettier@3.4.2)':
+    dependencies:
+      make-synchronized: 0.2.9
+      prettier: 3.4.2
+
   '@remix-run/dev@2.8.0(@remix-run/serve@2.8.0(typescript@5.5.4))(@types/node@20.9.5)(terser@5.26.0)(ts-node@10.9.1(@types/node@20.9.5)(typescript@5.5.4))(typescript@5.5.4)(vite@6.0.10(@types/node@20.9.5)(terser@5.26.0)(tsx@4.17.0))':
     dependencies:
       '@babel/core': 7.23.9
@@ -15988,6 +16099,24 @@ snapshots:
       '@typescript-eslint/types': 5.38.0
       eslint-visitor-keys: 3.3.0
 
+  '@typescript/analyze-trace@0.10.1':
+    dependencies:
+      chalk: 4.1.2
+      exit: 0.1.2
+      jsonparse: 1.3.1
+      jsonstream-next: 3.0.0
+      p-limit: 3.1.0
+      split2: 3.2.2
+      treeify: 1.1.0
+      yargs: 16.2.0
+
+  '@typescript/vfs@1.6.0(typescript@5.5.4)':
+    dependencies:
+      debug: 4.4.0(supports-color@9.2.3)
+      typescript: 5.5.4
+    transitivePeerDependencies:
+      - supports-color
+
   '@vanilla-extract/babel-plugin-debug-ids@1.0.6':
     dependencies:
       '@babel/core': 7.23.9
@@ -16438,6 +16567,11 @@ snapshots:
   aria-query@5.3.0:
     dependencies:
       dequal: 2.0.3
+
+  arktype@2.1.3:
+    dependencies:
+      '@ark/schema': 0.43.3
+      '@ark/util': 0.43.3
 
   arr-diff@4.0.0: {}
 
@@ -17069,6 +17203,12 @@ snapshots:
   cli-width@2.2.1: {}
 
   client-only@0.0.1: {}
+
+  cliui@7.0.4:
+    dependencies:
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wrap-ansi: 7.0.0
 
   cliui@8.0.1:
     dependencies:
@@ -20126,6 +20266,13 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.10
 
+  jsonparse@1.3.1: {}
+
+  jsonstream-next@3.0.0:
+    dependencies:
+      jsonparse: 1.3.1
+      through2: 4.0.2
+
   jsonwebtoken@8.5.1:
     dependencies:
       jws: 3.2.2
@@ -20517,6 +20664,8 @@ snapshots:
       semver: 6.3.1
 
   make-error@1.3.6: {}
+
+  make-synchronized@0.2.9: {}
 
   makeerror@1.0.12:
     dependencies:
@@ -22356,6 +22505,8 @@ snapshots:
 
   prettier@2.8.8: {}
 
+  prettier@3.4.2: {}
+
   pretty-error@4.0.0:
     dependencies:
       lodash: 4.17.21
@@ -23349,6 +23500,10 @@ snapshots:
     dependencies:
       through2: 2.0.5
 
+  split2@3.2.2:
+    dependencies:
+      readable-stream: 3.6.0
+
   sprintf-js@1.0.3: {}
 
   srcset@4.0.0: {}
@@ -23785,6 +23940,10 @@ snapshots:
       readable-stream: 2.3.7
       xtend: 4.0.2
 
+  through2@4.0.2:
+    dependencies:
+      readable-stream: 3.6.0
+
   through@2.3.8: {}
 
   thunky@1.1.0: {}
@@ -23880,6 +24039,8 @@ snapshots:
   tree-dump@1.0.2(tslib@2.5.0):
     dependencies:
       tslib: 2.5.0
+
+  treeify@1.1.0: {}
 
   trim-lines@1.1.3: {}
 
@@ -24964,7 +25125,19 @@ snapshots:
       camelcase: 5.3.1
       decamelize: 1.2.0
 
+  yargs-parser@20.2.9: {}
+
   yargs-parser@21.1.1: {}
+
+  yargs@16.2.0:
+    dependencies:
+      cliui: 7.0.4
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 20.2.9
 
   yargs@17.7.2:
     dependencies:
