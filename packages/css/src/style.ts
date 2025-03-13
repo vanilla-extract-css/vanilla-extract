@@ -27,15 +27,11 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const classList = [];
   const styleRules = [];
 
-  // `flat(Infinity)` fails to compile because of TS2589
-  const flattenedRules = rules.flat(Infinity as 20) as Array<
-    StyleRule | string
-  >;
-  for (const rule of flattenedRules) {
-    if (typeof rule === 'string') {
-      classList.push(rule);
-    } else {
+  for (const rule of rules) {
+    if (typeof rule !== 'string' && !Array.isArray(rule)) {
       styleRules.push(rule);
+    } else {
+      classList.push(rule);
     }
   }
 
