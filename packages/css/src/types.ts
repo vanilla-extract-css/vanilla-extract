@@ -166,6 +166,7 @@ export type ThemeVars<ThemeContract extends NullableTokens> = MapLeafNodes<
 export type ClassNames = string | Array<ClassNames>;
 
 export type ComplexStyleRule = StyleRule | Array<StyleRule | ClassNames>;
+export type ComplexGlobalStyleRule = GlobalStyleRule | Array<GlobalStyleRule>;
 
 type _PropertySyntax =
   | '<angle>'
