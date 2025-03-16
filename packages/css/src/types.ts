@@ -62,18 +62,16 @@ interface AllQueries<StyleType>
 export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
 interface SelectorMap {
-  [selector: string]: CSSPropertiesWithVars &
-    WithQueries<CSSPropertiesWithVars>;
+  [selector: string]: WithQueries<CSSPropertiesWithVars>;
 }
 
 export interface StyleWithSelectors extends CSSPropertiesAndPseudos {
   selectors?: SelectorMap;
 }
 
-export type StyleRule = StyleWithSelectors & WithQueries<StyleWithSelectors>;
+export type StyleRule = WithQueries<StyleWithSelectors>;
 
-export type GlobalStyleRule = CSSPropertiesWithVars &
-  WithQueries<CSSPropertiesWithVars>;
+export type GlobalStyleRule = WithQueries<CSSPropertiesWithVars>;
 
 export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
   Required<Pick<AtRule.FontFaceFallback, 'src'>>;
