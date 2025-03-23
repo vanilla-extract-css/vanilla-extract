@@ -11,7 +11,7 @@ interface AddFileScopeParams {
   source: string;
   filePath: string;
   rootPath: string;
-  packageName: string;
+  packageName?: string;
   globalAdapterIdentifier?: string;
 }
 export function addFileScope({
@@ -29,20 +29,26 @@ export function addFileScope({
   if (source.includes('@vanilla-extract/css/fileScope')) {
     source = source.replace(
       /setFileScope\(((\n|.)*?)\)/,
-      `setFileScope("${normalizedPath}", "${packageName}")`,
+      `setFileScope("${normalizedPath}"${
+        packageName ? `, "${packageName}"` : ''
+      })`,
     );
   } else {
     if (hasESM && !isMixed) {
       source = dedent(`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${normalizedPath}", "${packageName}");
+        setFileScope("${normalizedPath}"${
+          packageName ? `, "${packageName}"` : ''
+        });
         ${source}
         endFileScope();
       `);
     } else {
       source = dedent(`
         const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
-        __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
+        __vanilla_filescope__.setFileScope("${normalizedPath}"${
+          packageName ? `, "${packageName}"` : ''
+        });
         ${source}
         __vanilla_filescope__.endFileScope();
       `);

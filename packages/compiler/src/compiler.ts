@@ -154,7 +154,7 @@ const createViteServer = async ({
               source: code,
               rootPath: root,
               filePath: id,
-              packageName: pkg.name,
+              packageName: pkg?.name,
               identOption: identifiers,
               globalAdapterIdentifier,
             });
