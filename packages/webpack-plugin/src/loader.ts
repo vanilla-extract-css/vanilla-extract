@@ -49,7 +49,7 @@ const defaultIdentifierOption = (
 export default function (this: LoaderContext, source: string) {
   const { identifiers } = loaderUtils.getOptions(this) as InternalLoaderOptions;
 
-  const { name } = getPackageInfo(this.rootContext);
+  const packageInfo = getPackageInfo(this.rootContext);
 
   const callback = this.async();
 
@@ -57,7 +57,7 @@ export default function (this: LoaderContext, source: string) {
     source,
     filePath: this.resourcePath,
     rootPath: this.rootContext,
-    packageName: name,
+    packageName: packageInfo?.name,
     identOption: defaultIdentifierOption(this.mode, identifiers),
   })
     .then((code) => {
