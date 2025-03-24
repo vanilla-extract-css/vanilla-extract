@@ -38,8 +38,8 @@ export function addFileScope({
       source = dedent(`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
         setFileScope("${normalizedPath}"${
-          packageName ? `, "${packageName}"` : ''
-        });
+        packageName ? `, "${packageName}"` : ''
+      });
         ${source}
         endFileScope();
       `);
@@ -47,8 +47,8 @@ export function addFileScope({
       source = dedent(`
         const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
         __vanilla_filescope__.setFileScope("${normalizedPath}"${
-          packageName ? `, "${packageName}"` : ''
-        });
+        packageName ? `, "${packageName}"` : ''
+      });
         ${source}
         __vanilla_filescope__.endFileScope();
       `);
