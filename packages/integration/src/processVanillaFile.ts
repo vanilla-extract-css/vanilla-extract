@@ -11,7 +11,7 @@ import type { IdentifierOption } from './types';
 const originalNodeEnv = process.env.NODE_ENV;
 
 // Copied from https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/blob/51f83bd3db728fd7ee177de1ffc253fdb99c537f/README.md#_isplainobject
-function isPlainObject(value: unknown) {
+function isPlainObject(value: unknown): value is object {
   if (typeof value !== 'object' || value === null) {
     return false;
   }
@@ -33,6 +33,16 @@ function isPlainObject(value: unknown) {
     typeof constructor === 'function' &&
     constructor instanceof constructor &&
     Function.prototype.call(constructor) === Function.prototype.call(value)
+  );
+}
+
+function isExoticReactComponent(
+  value: unknown,
+): value is React.ExoticComponent {
+  return (
+    isPlainObject(value) &&
+    'render' in value &&
+    typeof value.render === 'function'
   );
 }
 
@@ -186,7 +196,7 @@ export async function processVanillaFile({
 
 function stringifyExports(
   functionSerializationImports: Set<string>,
-  value: any,
+  value: unknown,
   unusedCompositionRegex: RegExp | null,
   key: string,
   exportLookup: Map<any, string>,
@@ -206,31 +216,8 @@ function stringifyExports(
         return next(value);
       }
 
-      if (Array.isArray(value) || isPlainObject(value)) {
-        const reusedExport = exportLookup.get(value);
-
-        if (reusedExport && reusedExport !== key) {
-          exportDependencyGraph.addDependency(key, reusedExport);
-          return reusedExport;
-        }
-        return next(value);
-      }
-
-      if (Symbol.toStringTag in Object(value)) {
-        const { [Symbol.toStringTag]: _tag, ...valueWithoutTag } = value;
-        return next(valueWithoutTag);
-      }
-
-      if (valueType === 'string') {
-        return next(
-          unusedCompositionRegex
-            ? value.replace(unusedCompositionRegex, '')
-            : value,
-        );
-      }
-
       if (
-        valueType === 'function' &&
+        (valueType === 'function' || isExoticReactComponent(value)) &&
         (value.__function_serializer__ || value.__recipe__)
       ) {
         const { importPath, importName, args } =
@@ -271,6 +258,29 @@ function stringifyExports(
 
           throw new Error('Invalid function serialization params');
         }
+      }
+
+      if (Array.isArray(value) || isPlainObject(value)) {
+        const reusedExport = exportLookup.get(value);
+
+        if (reusedExport && reusedExport !== key) {
+          exportDependencyGraph.addDependency(key, reusedExport);
+          return reusedExport;
+        }
+        return next(value);
+      }
+
+      if (Symbol.toStringTag in Object(value)) {
+        const { [Symbol.toStringTag]: _tag, ...valueWithoutTag } = value;
+        return next(valueWithoutTag);
+      }
+
+      if (valueType === 'string') {
+        return next(
+          unusedCompositionRegex
+            ? value.replace(unusedCompositionRegex, '')
+            : value,
+        );
       }
 
       throw new Error(dedent`
