@@ -7,3 +7,4 @@ packages:
   - 'site'
   - 'examples/*'
   - 'tests'
+  - 'benchmarks'
