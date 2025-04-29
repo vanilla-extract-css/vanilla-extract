@@ -160,6 +160,8 @@ export function vanillaExtractPlugin({
             ?.flat()
             .filter(isPluginObject)
             .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
+          // Does this get reset to the default of '/', or does it do something ese?
+          base: undefined,
         };
 
         compiler = createCompiler({
