@@ -3,10 +3,10 @@ import {
   cssFileFilter,
   processVanillaFile,
   compile,
-  IdentifierOption,
+  type IdentifierOption,
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
-  CompileOptions,
+  type CompileOptions,
 } from '@vanilla-extract/integration';
 import { posix } from 'path';
 

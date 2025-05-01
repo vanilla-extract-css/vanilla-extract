@@ -1,4 +1,9 @@
-import { createVar, fallbackVar, style, StyleRule } from '@vanilla-extract/css';
+import {
+  createVar,
+  fallbackVar,
+  style,
+  type StyleRule,
+} from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { darkMode, sprinkles } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';

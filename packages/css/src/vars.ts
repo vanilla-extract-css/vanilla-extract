@@ -3,17 +3,17 @@ import type { AtRule } from 'csstype';
 import {
   get,
   walkObject,
-  Contract,
-  MapLeafNodes,
-  CSSVarFunction,
+  type Contract,
+  type MapLeafNodes,
+  type CSSVarFunction,
 } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
 
-import { Tokens, NullableTokens, ThemeVars } from './types';
+import type { Tokens, NullableTokens, ThemeVars } from './types';
 import { validateContract } from './validateContract';
 import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
-import { PropertySyntax } from './types';
+import type { PropertySyntax } from './types';
 import { appendCss } from './adapter';
 
 type VarDeclaration =

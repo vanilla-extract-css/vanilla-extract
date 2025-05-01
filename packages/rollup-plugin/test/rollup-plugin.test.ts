@@ -1,4 +1,4 @@
-import { rollup, OutputOptions } from 'rollup';
+import { rollup, type OutputOptions } from 'rollup';
 import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import path from 'path';

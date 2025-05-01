@@ -1,4 +1,4 @@
-import { useRef, useEffect, ReactNode } from 'react';
+import { useRef, useEffect, type ReactNode } from 'react';
 import * as styles from './ErrorHighlighter.css';
 
 export interface CodeProps {

@@ -1,8 +1,8 @@
 import {
-  ReactNode,
-  ComponentProps,
-  AllHTMLAttributes,
-  ElementType,
+  type ReactNode,
+  type ComponentProps,
+  type AllHTMLAttributes,
+  type ElementType,
   createElement,
   Children,
 } from 'react';
@@ -12,10 +12,10 @@ import { Box } from './system';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
-import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
+import { type HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
-import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
-import { BoxProps } from './system/Box/Box';
+import { CompiledCode, type CompiledCodeProps } from './Code/CompiledCode';
+import { type BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';

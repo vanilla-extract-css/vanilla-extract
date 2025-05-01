@@ -1,7 +1,7 @@
 /*
     This file is for validating types, it is not designed to be executed
 */
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+import { recipe, type RecipeVariants } from '@vanilla-extract/recipes';
 
 // @ts-expect-error Unused args
 const noop = (...args: Array<any>) => {};

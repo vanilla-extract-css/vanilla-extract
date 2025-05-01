@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Parcel } from '@parcel/core';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export interface ParcelFixtureOptions {
   type: 'parcel';

@@ -5,7 +5,7 @@ import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { vanillaExtractPlugin as vanillaExtractPluginNext } from '@vanilla-extract/esbuild-plugin-next';
 import * as esbuild from 'esbuild';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export interface EsbuildFixtureOptions {
   type: 'esbuild' | 'esbuild-runtime' | 'esbuild-next' | 'esbuild-next-runtime';

@@ -1,4 +1,4 @@
-import { FileScope, Adapter } from '@vanilla-extract/css';
+import type { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
