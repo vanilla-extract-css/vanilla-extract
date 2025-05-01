@@ -1,6 +1,7 @@
 {
   "name": "@vanilla-extract/scripts",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "fast-glob": "^3.2.7",
     "resolve.exports": "^2.0.2",
