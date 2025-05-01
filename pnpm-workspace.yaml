@@ -1,4 +1,4 @@
-prefer-workspace-packages: true
+preferWorkspacePackages: true
 packages:
   - 'packages/*'
   - 'test-helpers'

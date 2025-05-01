@@ -67,9 +67,5 @@
   "manypkg": {
     "workspaceProtocol": "require"
   },
-  "packageManager": "pnpm@9.2.0",
-  "pnpm": {},
-  "volta": {
-    "node": "20.9.0"
-  }
+  "packageManager": "pnpm@10.10.0"
 }
