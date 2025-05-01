@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import glob from 'fast-glob';
+import { glob } from 'tinyglobby';
 
 const packages = await glob('packages/*', {
   onlyDirectories: true,
