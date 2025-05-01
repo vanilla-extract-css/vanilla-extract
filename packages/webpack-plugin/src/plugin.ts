@@ -1,8 +1,11 @@
-import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
+import {
+  cssFileFilter,
+  type IdentifierOption,
+} from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
 
 import { ChildCompiler } from './compiler';
-import createCompat, { WebpackCompat } from './compat';
+import createCompat, { type WebpackCompat } from './compat';
 
 const pluginName = 'VanillaExtractPlugin';
 

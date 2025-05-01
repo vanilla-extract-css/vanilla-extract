@@ -1,4 +1,4 @@
-import { Contract, walkObject } from '@vanilla-extract/private';
+import { type Contract, walkObject } from '@vanilla-extract/private';
 import { diff } from 'deep-object-diff';
 import pc from 'picocolors';
 

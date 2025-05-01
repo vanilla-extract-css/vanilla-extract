@@ -1,7 +1,7 @@
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classnames from 'classnames';
-import { TextProps, useTextStyles } from './Text';
+import { type TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
 import { sprinkles } from '../system/styles/sprinkles.css';
 

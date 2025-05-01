@@ -2,7 +2,7 @@ import { createGlobalTheme } from '@vanilla-extract/css';
 import colors from 'tailwindcss/colors';
 import { precomputeValues } from '@capsizecss/vanilla-extract';
 
-import { Breakpoint } from './themeUtils';
+import type { Breakpoint } from './themeUtils';
 
 const grid = 4;
 const px = (value: string | number) => `${value}px`;

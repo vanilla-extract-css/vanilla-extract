@@ -1,7 +1,7 @@
 import {
   nextFixtures,
   startFixture,
-  TestServer,
+  type TestServer,
 } from '@vanilla-extract-private/test-helpers';
 import { expect } from '@playwright/test';
 

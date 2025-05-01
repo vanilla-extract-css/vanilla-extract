@@ -2,8 +2,8 @@ import {
   get,
   walkObject,
   getVarName,
-  Contract,
-  MapLeafNodes,
+  type Contract,
+  type MapLeafNodes,
 } from '@vanilla-extract/private';
 
 function setVar(element: HTMLElement, variable: string, value: string) {

@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { HeadProvider } from 'react-head';
 import App from './App';
-import { StatsCompilation } from 'webpack';
+import type { StatsCompilation } from 'webpack';
 import { darkMode, lightMode } from './system/styles/sprinkles.css';
 import { themeKey } from './ColorModeToggle/ColorModeToggle';
 
