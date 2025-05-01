@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
-import path from 'path';
+import path from 'node:path/posix';
 
 import glob from 'fast-glob';
 import { legacy, resolve } from 'resolve.exports';
