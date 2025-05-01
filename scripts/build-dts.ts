@@ -1,6 +1,7 @@
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
-import path from 'node:path/posix';
+import path from 'path';
+import { pathToFileURL } from 'url';
 
 import glob from 'fast-glob';
 import { legacy, resolve } from 'resolve.exports';
@@ -98,9 +99,13 @@ const packages = await glob('packages/*', {
 const entryPaths: [string, string][] = [];
 
 for (const packageDir of packages) {
-  const pkg = await import(path.resolve(packageDir, 'package.json'), {
-    with: { type: 'json' },
-  });
+  const pkg = await import(
+    // oathToFileURL enables the result of `path.resolve` to work with `import()` on windows
+    pathToFileURL(path.resolve(packageDir, 'package.json')).toString(),
+    {
+      with: { type: 'json' },
+    }
+  );
 
   if (pkg.exports) {
     const pkgExports = Object.keys(pkg.exports);

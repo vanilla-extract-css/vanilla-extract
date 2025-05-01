@@ -1,14 +1,14 @@
 import glob from 'fast-glob';
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import path from 'path';
 
 // We need to use distinct next plugins for each next fixutre
 // due to different next versions / mini-css-extract-plugin serializer registration
-const nextPluginDistDir = join(__dirname, '../packages/next-plugin/dist');
+const nextPluginDistDir = path.join(
+  import.meta.dirname,
+  '../packages/next-plugin/dist',
+);
 
 if (!existsSync(nextPluginDistDir)) {
   throw new Error('packages/next-plugin/dist is missing.');
@@ -24,7 +24,7 @@ if (nextFixtureDirs.length === 0) {
 }
 
 for (const dir of nextFixtureDirs) {
-  await fs.cp(nextPluginDistDir, join(dir, 'next-plugin', 'dist'), {
+  await fs.cp(nextPluginDistDir, path.join(dir, 'next-plugin', 'dist'), {
     recursive: true,
   });
 }
