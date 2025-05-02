@@ -1,7 +1,7 @@
-import { createElement, AllHTMLAttributes, ElementType } from 'react';
+import { createElement, type AllHTMLAttributes, type ElementType } from 'react';
 import classnames from 'classnames';
 import * as resetStyles from '../styles/reset.css';
-import { sprinkles, Sprinkles } from '../styles/sprinkles.css';
+import { sprinkles, type Sprinkles } from '../styles/sprinkles.css';
 
 export interface BoxProps
   extends Omit<

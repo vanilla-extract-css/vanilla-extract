@@ -1,12 +1,12 @@
 import portfinder from 'portfinder';
 
-import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
-import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
-import { startViteFixture, ViteFixtureOptions } from './vite';
-import { startParcelFixture, ParcelFixtureOptions } from './parcel';
-import { NextFixtureOptions, startNextFixture } from './next';
+import { startWebpackFixture, type WebpackFixtureOptions } from './webpack';
+import { startEsbuildFixture, type EsbuildFixtureOptions } from './esbuild';
+import { startViteFixture, type ViteFixtureOptions } from './vite';
+import { startParcelFixture, type ParcelFixtureOptions } from './parcel';
+import { type NextFixtureOptions, startNextFixture } from './next';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export * from './types';
 

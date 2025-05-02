@@ -2,8 +2,8 @@ import {
   walkObject,
   get,
   getVarName,
-  Contract,
-  MapLeafNodes,
+  type Contract,
+  type MapLeafNodes,
 } from '@vanilla-extract/private';
 
 type Styles = { [cssVarName: string]: string };

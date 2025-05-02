@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
-import { StyleRule } from '@vanilla-extract/css';
-import { Properties } from 'csstype';
+import type { StyleRule } from '@vanilla-extract/css';
+import type { Properties } from 'csstype';
 import mapValues from 'lodash/mapValues';
 
 export const breakpoints = {
