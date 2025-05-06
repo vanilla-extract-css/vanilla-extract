@@ -1,5 +1,12 @@
 # @vanilla-extract/integration
 
+## 8.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8), [`c66be53`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c66be53d600802b2922da1d6034e2a5ff3fbbcae)]:
+  - @vanilla-extract/css@1.17.2
+
 ## 8.0.1
 
 ### Patch Changes
