@@ -1,5 +1,11 @@
 # @vanilla-extract/private
 
+## 1.0.7
+
+### Patch Changes
+
+- [#1557](https://github.com/vanilla-extract-css/vanilla-extract/pull/1557) [`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8) Thanks [@askoufis](https://github.com/askoufis)! - Simplify `CSSVarFunction` type to improve type-checking performance
+
 ## 1.0.6
 
 ### Patch Changes

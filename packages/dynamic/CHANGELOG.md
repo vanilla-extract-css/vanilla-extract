@@ -1,5 +1,12 @@
 # @vanilla-extract/dynamic
 
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8)]:
+  - @vanilla-extract/private@1.0.7
+
 ## 2.1.2
 
 ### Patch Changes
@@ -28,7 +35,11 @@
 
   ```tsx
   import { assignInlineVars } from '@vanilla-extract/dynamic';
-  import { container, brandColor, textColor } from './styles.css.ts';
+  import {
+    container,
+    brandColor,
+    textColor
+  } from './styles.css.ts';
 
   // If `tone` is `undefined`, the following inline style becomes:
   // { '--brandColor__8uideo0': 'pink' }
@@ -38,7 +49,7 @@
       className={container}
       style={assignInlineVars({
         [brandColor]: 'pink',
-        [textColor]: tone === 'critical' ? 'red' : null,
+        [textColor]: tone === 'critical' ? 'red' : null
       })}
     >
       ...
@@ -60,7 +71,7 @@
 
   setElementVars(el, {
     [brandColor]: 'pink',
-    [textColor]: null,
+    [textColor]: null
   });
   ```
 
@@ -107,7 +118,7 @@
     <section
       style={assignInlineVars({
         [vars.colors.brand]: 'pink',
-        [vars.colors.accent]: 'green',
+        [vars.colors.accent]: 'green'
       })}
     >
       ...
@@ -127,7 +138,7 @@
     <section
       style={assignInlineVars(vars.colors, {
         brand: 'pink',
-        accent: 'green',
+        accent: 'green'
       })}
     >
       ...
@@ -146,7 +157,7 @@
   document.write(`
     <section style="${assignInlineVars({
       [vars.colors.brand]: 'pink',
-      [vars.colors.accent]: 'green',
+      [vars.colors.accent]: 'green'
     })}">
       ...
     </section>
@@ -167,7 +178,7 @@
 
   setElementVars(el, {
     [vars.colors.brand]: 'pink',
-    [vars.colors.accent]: 'green',
+    [vars.colors.accent]: 'green'
   });
   ```
 
@@ -183,7 +194,7 @@
 
   setElementVars(el, vars.colors, {
     brand: 'pink',
-    accent: 'green',
+    accent: 'green'
   });
   ```
 
