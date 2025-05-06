@@ -2500,6 +2500,363 @@ describe('transformCss', () => {
       }
     `);
   });
+
+  it('should handle @position-try declaration', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  positionArea: 'left',
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @position-try --custom-left {
+        .testClass {
+          position-area: left;
+          width: 100px;
+          margin: 0 10px 0 0;
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside media queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@position-try': {
+                    '--custom-left': {
+                      positionArea: 'left',
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @media screen and (min-width: 700px) {
+        @position-try --custom-left {
+          .testClass {
+            position-area: left;
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside container queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@container': {
+                'sidebar (min-width: 700px)': {
+                  '@position-try': {
+                    '--custom-left': {
+                      positionArea: 'left',
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @container sidebar (min-width: 700px) {
+        @position-try --custom-left {
+          .testClass {
+            position-area: left;
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside a layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                'mock-layer': {
+                  '@position-try': {
+                    '--custom-left': {
+                      positionArea: 'left',
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer mock-layer;
+      @layer mock-layer {
+        @position-try --custom-left {
+          .testClass {
+            position-area: left;
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should throw an error when a at-rule is use inside @position-try scope', () => {
+    expect(() =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  positionArea: 'left',
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      'Nested at-rules (e.g. "@media") are not allowed inside @position-try block.',
+    );
+  });
+
+  it('should handle @starting-style declaration', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              opacity: 1,
+              top: '100%',
+              '@starting-style': {
+                opacity: 0,
+                top: '50%',
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        opacity: 1;
+        top: 100%;
+        @starting-style {
+          opacity: 0;
+          top: 50%;
+        }
+      }
+    `);
+  });
+
+  it('should handle @starting-style inside media queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  top: '0',
+                  '@starting-style': {
+                    top: '100%',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @media screen and (min-width: 700px) {
+        .testClass {
+          top: 0;
+          @starting-style {
+            top: 100%;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @starting-style inside container queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@container': {
+                'sidebar (min-width: 700px)': {
+                  top: '0',
+                  '@starting-style': {
+                    top: '100%',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @container sidebar (min-width: 700px) {
+        .testClass {
+          top: 0;
+          @starting-style {
+            top: 100%;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @starting-style inside a layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                'mock-layer': {
+                  top: '0',
+                  '@starting-style': {
+                    top: '100%',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer mock-layer;
+      @layer mock-layer {
+        .testClass {
+          top: 0;
+          @starting-style {
+            top: 100%;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should throw an error when a at-rule is use inside @starting-style scope', () => {
+    expect(() =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@starting-style': {
+                // @ts-expect-error - Using a media query inside @starting-style for testing purposes
+                '@media': {
+                  'screen and (min-width: 700px)': {
+                    display: 'grid',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      'Nested at-rules (e.g. "@media") are not allowed inside @starting-style.',
+    );
+  });
 });
 
 endFileScope();
