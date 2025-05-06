@@ -1,4 +1,4 @@
-import glob from 'fast-glob';
+import { glob } from 'tinyglobby';
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
 import path from 'path';
