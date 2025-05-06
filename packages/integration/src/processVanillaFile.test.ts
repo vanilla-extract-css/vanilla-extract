@@ -138,6 +138,30 @@ describe('serializeVanillaModule', () => {
     `);
   });
 
+  test('should handle function serialization', () => {
+    const component = { render: () => null };
+
+    Object.defineProperty(component, '__function_serializer__', {
+      value: {
+        importPath: 'my-package',
+        importName: 'myFunction',
+        args: ['arg1', 'arg2'],
+      },
+      writable: false,
+    });
+
+    const exports = {
+      component,
+    };
+
+    expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
+      .toMatchInlineSnapshot(`
+      "import "./styles.css"
+      import { myFunction as _86bce } from 'my-package';
+      export var component = _86bce('arg1','arg2');"
+    `);
+  });
+
   test('should re-use exports in handle serialized function args', () => {
     const complexExport = {
       my: {
