@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { pathToFileURL } from 'url';
 
-import glob from 'fast-glob';
+import { glob } from 'tinyglobby';
 import { legacy, resolve } from 'resolve.exports';
 import { rollup } from 'rollup';
 import dts from 'rollup-plugin-dts';
