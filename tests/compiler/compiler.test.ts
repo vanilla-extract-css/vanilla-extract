@@ -23,7 +23,8 @@ describe('compiler', () => {
     | 'shortIdentifiers'
     | 'viteResolve'
     | 'vitePlugins'
-    | 'tsconfigPaths',
+    | 'tsconfigPaths'
+    | 'basePath',
     ReturnType<typeof createCompiler>
   >;
 
@@ -71,6 +72,12 @@ describe('compiler', () => {
       tsconfigPaths: createCompiler({
         root: __dirname,
         vitePlugins: [tsconfigPaths()],
+      }),
+      basePath: createCompiler({
+        root: __dirname,
+        viteConfig: {
+          base: '/assets/',
+        },
       }),
     };
   });
@@ -518,6 +525,29 @@ describe('compiler', () => {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+      }
+    `);
+  });
+
+  test('base path should be ignored', async () => {
+    const compiler = compilers.basePath;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/image.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/vite-config/image.css.ts.vanilla.css';
+      export var imageStyle1 = 'image_imageStyle1__1lseqzh0';
+      export var imageStyle2 = 'image_imageStyle2__1lseqzh1';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .image_imageStyle1__1lseqzh0 {
+        background-image: url('/fixtures/vite-config/test.jpg');
+      }
+      .image_imageStyle2__1lseqzh1 {
+        background-image: url('/fixtures/vite-config/test.jpg');
       }
     `);
   });
