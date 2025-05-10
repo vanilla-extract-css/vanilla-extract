@@ -1,5 +1,6 @@
 import type { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
+import { removeAdapter, setAdapter } from '@vanilla-extract/css/adapter';
 import evalCode from 'eval';
 import { stringify } from 'javascript-stringify';
 import dedent from 'dedent';
@@ -121,17 +122,33 @@ export async function processVanillaFile({
     true,
   ) as Record<string, unknown>;
 
+  // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
+  // for requires executed within the eval and all CSS can be lost.
+  evalCode(
+    `const { removeAdapter } = require('@vanilla-extract/css/adapter');
+    // Backwards compat with older versions of @vanilla-extract/css
+    if (removeAdapter) {
+      removeAdapter();
+    }
+  `,
+    filePath,
+    { console, process },
+    true,
+  );
+
   process.env.NODE_ENV = currentNodeEnv;
 
   const cssImports = [];
 
   for (const [serialisedFileScope, fileScopeCss] of cssByFileScope) {
     const fileScope = parseFileScope(serialisedFileScope);
+    setAdapter(cssAdapter);
     const css = transformCss({
       localClassNames: Array.from(localClassNames),
       composedClassLists,
       cssObjs: fileScopeCss,
     }).join('\n');
+    removeAdapter();
 
     const fileName = `${fileScope.filePath}.vanilla.css`;
 
@@ -157,20 +174,6 @@ export async function processVanillaFile({
 
     cssImports.push(virtualCssFilePath);
   }
-
-  // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
-  // for requires executed within the eval and all CSS can be lost.
-  evalCode(
-    `const { removeAdapter } = require('@vanilla-extract/css/adapter');
-    // Backwards compat with older versions of @vanilla-extract/css
-    if (removeAdapter) {
-      removeAdapter();
-    }
-  `,
-    filePath,
-    { console, process },
-    true,
-  );
 
   const unusedCompositions = composedClassLists
     .filter(({ identifier }) => !usedCompositions.has(identifier))
