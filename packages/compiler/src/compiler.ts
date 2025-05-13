@@ -101,6 +101,9 @@ const createViteServer = async ({
 
   const server = await vite.createServer({
     ...viteConfig,
+    // The vite-node server should not rewrite imported asset URLs within VE stylesheets.
+    // Doing so interferes with Vite's resolution and bundling of these assets at build time.
+    base: undefined,
     configFile: false,
     root,
     server: {
