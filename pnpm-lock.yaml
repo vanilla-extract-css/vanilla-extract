@@ -509,7 +509,7 @@ importers:
         version: 1.4.2
     devDependencies:
       '@fixtures/sprinkles':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../fixtures/sprinkles
       '@types/babel__core':
         specifier: ^7.20.5
