@@ -53,7 +53,7 @@ export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
 export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
 export type Layers<StyleType> = Query<'@layer', StyleType>;
 
-interface AllQueries<StyleType>
+export interface AllQueries<StyleType>
   extends MediaQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
