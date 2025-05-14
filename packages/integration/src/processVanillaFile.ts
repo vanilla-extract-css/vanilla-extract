@@ -111,8 +111,13 @@ export async function processVanillaFile({
   process.env.NODE_ENV = originalNodeEnv;
 
   const adapterBoundSource = `
-    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+    const { setAdapter, removeAdapter } = require('@vanilla-extract/css/adapter');
+    setAdapter(__adapter__);
     ${source}
+    // Backwards compat with older versions of @vanilla-extract/css
+    if (removeAdapter) {
+      removeAdapter();
+    }
   `;
 
   const evalResult = evalCode(
@@ -121,20 +126,6 @@ export async function processVanillaFile({
     { console, process, __adapter__: cssAdapter },
     true,
   ) as Record<string, unknown>;
-
-  // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
-  // for requires executed within the eval and all CSS can be lost.
-  evalCode(
-    `const { removeAdapter } = require('@vanilla-extract/css/adapter');
-    // Backwards compat with older versions of @vanilla-extract/css
-    if (removeAdapter) {
-      removeAdapter();
-    }
-  `,
-    filePath,
-    { console, process },
-    true,
-  );
 
   process.env.NODE_ENV = currentNodeEnv;
 
