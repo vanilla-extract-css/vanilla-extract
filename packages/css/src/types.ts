@@ -1,5 +1,5 @@
 import type { CSSVarFunction, MapLeafNodes } from '@vanilla-extract/private';
-import type { AtRule, Properties } from 'csstype';
+import type { AtRule, Globals, Properties } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
@@ -16,8 +16,32 @@ interface ContainerProperties {
   containerName?: string;
 }
 
+interface AnchorProperties {
+  anchorName?: 'none' | `--${string}` | Globals | (string & {});
+  positionAnchor?: 'auto' | `--${string}` | Globals;
+  positionArea?:
+    | 'none'
+    | 'all'
+    | 'bottom'
+    | 'center'
+    | 'end'
+    | 'left'
+    | 'right'
+    | 'self-end'
+    | 'self-start'
+    | 'start'
+    | 'top'
+    | 'x-end'
+    | 'x-start'
+    | 'y-end'
+    | 'y-start'
+    | Globals
+    | (string & {});
+}
+
 type CSSTypeProperties = Properties<number | (string & {})> &
-  ContainerProperties;
+  ContainerProperties &
+  AnchorProperties;
 
 export type CSSProperties = {
   [Property in keyof CSSTypeProperties]:
