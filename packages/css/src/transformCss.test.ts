@@ -1,7 +1,7 @@
-import { setFileScope, endFileScope } from './fileScope';
-import { createVar } from './vars';
-import { transformCss } from './transformCss';
+import { endFileScope, setFileScope } from './fileScope';
 import { style } from './style';
+import { transformCss } from './transformCss';
+import { createVar } from './vars';
 
 setFileScope('test');
 
@@ -2499,6 +2499,285 @@ describe('transformCss', () => {
         background: orange;
       }
     `);
+  });
+
+  it('should handle @position-try declaration', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @position-try --custom-left {
+        .testClass {
+          width: 100px;
+          margin: 0 10px 0 0;
+        }
+      }
+    `);
+  });
+
+  it('should multiple custom position inside @position-try declaration', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                },
+                '--custom-right': {
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @position-try --custom-left {
+        .testClass {
+          width: 100px;
+          margin: 0 10px 0 0;
+        }
+      }
+      @position-try --custom-right {
+        .testClass {
+          width: 100px;
+          margin: 0 10px 0 0;
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside media queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@position-try': {
+                    '--custom-left': {
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @media screen and (min-width: 700px) {
+        @position-try --custom-left {
+          .testClass {
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside container queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@container': {
+                'sidebar (min-width: 700px)': {
+                  '@position-try': {
+                    '--custom-left': {
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @container sidebar (min-width: 700px) {
+        @position-try --custom-left {
+          .testClass {
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should handle @position-try inside a layer', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@layer': {
+                'mock-layer': {
+                  '@position-try': {
+                    '--custom-left': {
+                      width: '100px',
+                      margin: '0 10px 0 0',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @layer mock-layer;
+      @layer mock-layer {
+        @position-try --custom-left {
+          .testClass {
+            width: 100px;
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should throw an error when not using a <dashed-ident> type in @position-try scope', () => {
+    expect(() =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                // @ts-expect-error This test is to cover the error for non-allowed properties inside @position-try scope
+                invalidName: {
+                  backgroundColor: 'blue',
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      'Invalid @position-try name: "invalidName". Position names must follow the <dashed-ident> type (--custom-name).',
+    );
+  });
+
+  it('should throw an error when using a non allowed property inside @position-try scope', () => {
+    expect(() =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  // @ts-expect-error This test is to cover the error for non-allowed properties inside @position-try scope
+                  backgroundColor: 'blue',
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      'Invalid properties in @position-try --custom-left rule: backgroundColor. Only inset, margin, sizing, self-alignment, position-anchor, and position-area properties are allowed.',
+    );
+  });
+
+  it('should throw an error when a at-rule is use inside @position-try scope', () => {
+    expect(() =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@position-try': {
+                '--custom-left': {
+                  width: '100px',
+                  margin: '0 10px 0 0',
+                  // @ts-expect-error This test is to cover the error when a at-rule is used inside @position-try scope
+                  '@media': {
+                    'screen and (min-width: 700px)': {
+                      display: 'grid',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      'Nested at-rules (e.g. "@media") are not allowed inside @position-try block.',
+    );
   });
 });
 
