@@ -2,25 +2,25 @@ import { getVarName } from '@vanilla-extract/private';
 import cssesc from 'cssesc';
 import AhoCorasick from 'modern-ahocorasick';
 
+import { markCompositionUsed } from './adapter';
+import { ConditionalRuleset } from './conditionalRulesets';
+import { simplePseudoLookup, simplePseudos } from './simplePseudos';
 import type {
   CSS,
-  CSSStyleBlock,
   CSSKeyframesBlock,
   CSSPropertiesWithVars,
+  CSSPropertyBlock,
+  CSSSelectorBlock,
+  CSSStyleBlock,
+  Composition,
+  GlobalFontFaceRule,
   StyleRule,
   StyleWithSelectors,
-  GlobalFontFaceRule,
-  CSSSelectorBlock,
-  Composition,
   WithQueries,
-  CSSPropertyBlock,
 } from './types';
-import { markCompositionUsed } from './adapter';
-import { forEach, omit, mapKeys } from './utils';
-import { validateSelector } from './validateSelector';
-import { ConditionalRuleset } from './conditionalRulesets';
-import { simplePseudos, simplePseudoLookup } from './simplePseudos';
+import { forEach, mapKeys, omit } from './utils';
 import { validateMediaQuery } from './validateMediaQuery';
+import { validateSelector } from './validateSelector';
 
 const DECLARATION = '__DECLARATION';
 
@@ -74,6 +74,35 @@ const UNITLESS: Record<string, boolean> = {
   strokeWidth: true,
 };
 
+// List of properties allowed in @position-try according to the spec
+const POSITION_TRY_PROPERTIES = [
+  // Inset properties
+  'top',
+  'right',
+  'bottom',
+  'left',
+  'inset',
+  // Margin properties
+  'margin',
+  'marginTop',
+  'marginRight',
+  'marginBottom',
+  'marginLeft',
+  // Sizing properties
+  'width',
+  'height',
+  'minWidth',
+  'minHeight',
+  'maxWidth',
+  'maxHeight',
+  // Self-alignment properties
+  'alignSelf',
+  'justifySelf',
+  // Anchor positioning properties
+  'positionAnchor',
+  'positionArea',
+];
+
 function dashify(str: string) {
   return str
     .replace(/([A-Z])/g, '-$1')
@@ -101,6 +130,7 @@ const specialKeys = [
   '@media',
   '@supports',
   '@container',
+  '@position-try',
   'selectors',
 ];
 
@@ -188,6 +218,7 @@ class Stylesheet {
       this.transformMedia(root, root.rule['@media']);
       this.transformSupports(root, root.rule['@supports']);
       this.transformContainer(root, root.rule['@container']);
+      this.transformPositionTry(root, root.rule['@position-try']);
 
       this.transformSimplePseudos(root, root.rule);
       this.transformSelectors(root, root.rule);
@@ -408,6 +439,11 @@ class Stylesheet {
         selectorRule['@container'],
         conditions,
       );
+      this.transformPositionTry(
+        root,
+        selectorRule!['@position-try'],
+        conditions,
+      );
     });
   }
 
@@ -445,6 +481,11 @@ class Stylesheet {
         this.transformLayer(root, mediaRule!['@layer'], conditions);
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
+        this.transformPositionTry(
+          root,
+          mediaRule!['@position-try'],
+          conditions,
+        );
       }
     }
   }
@@ -481,6 +522,11 @@ class Stylesheet {
         this.transformLayer(root, containerRule!['@layer'], conditions);
         this.transformSupports(root, containerRule!['@supports'], conditions);
         this.transformMedia(root, containerRule!['@media'], conditions);
+        this.transformPositionTry(
+          root,
+          containerRule!['@position-try'],
+          conditions,
+        );
       });
     }
   }
@@ -516,6 +562,11 @@ class Stylesheet {
         this.transformMedia(root, layerRule!['@media'], conditions);
         this.transformSupports(root, layerRule!['@supports'], conditions);
         this.transformContainer(root, layerRule!['@container'], conditions);
+        this.transformPositionTry(
+          root,
+          layerRule!['@position-try'],
+          conditions,
+        );
       });
     }
   }
@@ -550,6 +601,11 @@ class Stylesheet {
         this.transformLayer(root, supportsRule!['@layer'], conditions);
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
+        this.transformPositionTry(
+          root,
+          supportsRule!['@position-try'],
+          conditions,
+        );
       });
     }
   }
@@ -586,6 +642,70 @@ class Stylesheet {
           });
         }
       }
+    }
+  }
+
+  transformPositionTry(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@position-try'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((name) => `@position-try ${name}`),
+      );
+
+      forEach(rules, (positionRule, name) => {
+        const nestedAtRuleKey = Object.keys(positionRule).find((key) =>
+          key.startsWith('@'),
+        );
+        if (nestedAtRuleKey) {
+          throw new Error(
+            `Nested at-rules (e.g. "${nestedAtRuleKey}") are not allowed inside @position-try block.`,
+          );
+        }
+
+        // Check if position name starts with double dash
+        if (!name.startsWith('--')) {
+          throw new Error(
+            `Invalid @position-try name: "${name}". Position names must follow the <dashed-ident> type (--custom-name).`,
+          );
+        }
+
+        // Check for invalid properties inside the custom position
+        const ruleProps = Object.keys(positionRule);
+        const invalidProps = ruleProps.filter(
+          (prop) =>
+            !POSITION_TRY_PROPERTIES.includes(prop) &&
+            !specialKeys.includes(prop) &&
+            !prop.startsWith(':'),
+        );
+
+        if (invalidProps.length > 0) {
+          throw new Error(
+            `Invalid properties in @position-try ${name} rule: ${invalidProps.join(
+              ', ',
+            )}. ` +
+              `Only inset, margin, sizing, self-alignment, position-anchor, and position-area properties are allowed.`,
+          );
+        }
+
+        const conditions = [...parentConditions, `@position-try ${name}`];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(positionRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePseudos(root, positionRule, conditions);
+          this.transformSelectors(root, positionRule, conditions);
+        }
+      });
     }
   }
 
