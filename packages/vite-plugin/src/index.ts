@@ -1,5 +1,5 @@
 import path from 'path';
-
+import fs from 'fs/promises';
 import type {
   Plugin,
   ResolvedConfig,
@@ -16,6 +16,7 @@ import {
   getPackageInfo,
   transform,
   normalizePath,
+  hash
 } from '@vanilla-extract/integration';
 
 const PLUGIN_NAME = 'vite-plugin-vanilla-extract';
@@ -41,6 +42,13 @@ type PluginFilter = (filterProps: {
 
 interface Options {
   identifiers?: IdentifierOption;
+  /**
+   * Enables hash-based (MD5) caching of `.css.ts` file contents in dev mode to avoid unnecessary module
+   * reloads. Helpful in large projects where the same `.css.ts` files (e.g. sprinkles) are imported
+   * in many places and we don't want the dev client to have to re-download them every time they're imported.
+   * @default false
+   */
+  enableDevCache?: boolean;
   unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss';
 }
@@ -59,6 +67,7 @@ const withUserPluginFilter =
 
 export function vanillaExtractPlugin({
   identifiers,
+  enableDevCache = false,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode: mode = 'emitCss',
 }: Options = {}): Plugin {
@@ -91,6 +100,46 @@ export function vanillaExtractPlugin({
     return normalizePath(resolvedId);
   };
 
+  // Cache for file content hashes to avoid unnecessary invalidations
+  const fileContentHashes = new Map<string, string>();
+
+  // Helper to hash file contents
+  async function getFileHash(filePath: string): Promise<string | undefined> {
+    try {
+      const content = await fs.readFile(filePath, 'utf8');
+      return hash(content);
+    } catch {
+      console.warn('Unable to read file for hash calculation:', filePath);
+      // If file can't be read, treat as changed
+      return undefined;
+    }
+  }
+
+  // Helper to determine if a module should be invalidated based on dev cache
+  async function shouldInvalidateModule(moduleId: string): Promise<boolean> {
+    if (
+      !enableDevCache ||
+      !moduleId
+    ) {
+      return true;
+    }
+
+    const hash = await getFileHash(moduleId);
+
+    if (!hash) {
+      return true;
+    }
+
+    const prevHash = fileContentHashes.get(moduleId);
+
+    if (hash !== prevHash) {
+      fileContentHashes.set(moduleId, hash);
+      return true;
+    }
+    
+    return false;
+  }
+
   function invalidateModule(absoluteId: string) {
     if (!server) return;
 
@@ -98,7 +147,7 @@ export function vanillaExtractPlugin({
     const modules = moduleGraph.getModulesByFile(absoluteId);
 
     if (modules) {
-      for (const module of modules) {
+      for (const module of modules) {        
         moduleGraph.invalidateModule(module);
 
         // Vite uses this timestamp to add `?t=` query string automatically for HMR.
@@ -217,9 +266,10 @@ export function vanillaExtractPlugin({
         }
 
         for (const file of watchFiles) {
+          const normalizedFilePath = normalizePath(file);
           if (
             !file.includes('node_modules') &&
-            normalizePath(file) !== absoluteId
+            normalizedFilePath !== absoluteId
           ) {
             this.addWatchFile(file);
           }
@@ -228,6 +278,12 @@ export function vanillaExtractPlugin({
           // The deps have to be invalidated in case one of them changing was the trigger causing
           // the current transformation
           if (cssFileFilter.test(file)) {
+            const shouldInvalidate = await shouldInvalidateModule(normalizedFilePath);
+
+            if (!shouldInvalidate) {
+              continue;
+            }
+
             invalidateModule(fileIdToVirtualId(file));
           }
         }
