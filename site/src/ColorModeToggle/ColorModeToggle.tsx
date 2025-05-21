@@ -3,7 +3,7 @@ import {
   useState,
   createContext,
   useContext,
-  ReactNode,
+  type ReactNode,
 } from 'react';
 import { Box } from '../system';
 import * as styles from './ColorModeToggle.css';

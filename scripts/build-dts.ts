@@ -1,8 +1,9 @@
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
 import path from 'path';
+import { pathToFileURL } from 'url';
 
-import glob from 'fast-glob';
+import { glob } from 'tinyglobby';
 import { legacy, resolve } from 'resolve.exports';
 import { rollup } from 'rollup';
 import dts from 'rollup-plugin-dts';
@@ -90,41 +91,45 @@ async function removePreconstructDeclarations(
   });
 }
 
-(async () => {
-  const packages = await glob('packages/*', {
-    onlyDirectories: true,
-    absolute: true,
-  });
+const packages = await glob('packages/*', {
+  onlyDirectories: true,
+  absolute: true,
+});
 
-  const entryPaths: [string, string][] = [];
+const entryPaths: [string, string][] = [];
 
-  for (const packageDir of packages) {
-    const pkg = require(path.resolve(packageDir, 'package.json'));
-
-    if (pkg.exports) {
-      const pkgExports = Object.keys(pkg.exports);
-
-      for (const entryName of pkgExports) {
-        if (entryName.endsWith('package.json')) continue;
-
-        entryPaths.push([packageDir, resolveEntry(pkg, entryName)]);
-      }
-    } else {
-      entryPaths.push([packageDir, resolveEntry(pkg)]);
+for (const packageDir of packages) {
+  const pkg = await import(
+    // oathToFileURL enables the result of `path.resolve` to work with `import()` on windows
+    pathToFileURL(path.resolve(packageDir, 'package.json')).toString(),
+    {
+      with: { type: 'json' },
     }
-  }
-
-  await Promise.all(
-    entryPaths.map(([packageDir, entryPath]) =>
-      buildEntry(packageDir, entryPath),
-    ),
-  ).then((writes) => writes.map((write) => write?.()));
-
-  // Entry points might reference each other so remove old declaration files
-  // after we're done with everything
-  await Promise.all(
-    entryPaths.map(([packageDir, entryPath]) =>
-      removePreconstructDeclarations(packageDir, entryPath),
-    ),
   );
-})();
+
+  if (pkg.exports) {
+    const pkgExports = Object.keys(pkg.exports);
+
+    for (const entryName of pkgExports) {
+      if (entryName.endsWith('package.json')) continue;
+
+      entryPaths.push([packageDir, resolveEntry(pkg, entryName)]);
+    }
+  } else {
+    entryPaths.push([packageDir, resolveEntry(pkg)]);
+  }
+}
+
+await Promise.all(
+  entryPaths.map(([packageDir, entryPath]) =>
+    buildEntry(packageDir, entryPath),
+  ),
+).then((writes) => writes.map((write) => write?.()));
+
+// Entry points might reference each other so remove old declaration files
+// after we're done with everything
+await Promise.all(
+  entryPaths.map(([packageDir, entryPath]) =>
+    removePreconstructDeclarations(packageDir, entryPath),
+  ),
+);

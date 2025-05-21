@@ -6,7 +6,7 @@ import handler from 'serve-handler';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import inspect from 'vite-plugin-inspect';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
   new Promise<() => Promise<void>>((resolve) => {

@@ -1,0 +1,13 @@
+{
+  "name": "@vanilla-extract-private/benchmarks",
+  "private": true,
+  "version": "0.0.1",
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@arktype/attest": "^0.43.3",
+    "@vanilla-extract/css": "workspace:*",
+    "tsx": "^4.17.0",
+    "typescript": "^5.8.3"
+  }
+}

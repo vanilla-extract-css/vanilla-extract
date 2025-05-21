@@ -1,4 +1,4 @@
-prefer-workspace-packages: true
+preferWorkspacePackages: true
 packages:
   - 'packages/*'
   - 'test-helpers'
@@ -7,3 +7,5 @@ packages:
   - 'site'
   - 'examples/*'
   - 'tests'
+  - 'benchmarks'
+  - 'scripts'

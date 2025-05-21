@@ -5,8 +5,8 @@ import {
   defineProperties,
   createMapValueFn,
   createNormalizeValueFn,
-  ConditionalValue,
-  RequiredConditionalValue,
+  type ConditionalValue,
+  type RequiredConditionalValue,
 } from '@vanilla-extract/sprinkles';
 import { createSprinkles } from '@vanilla-extract/sprinkles';
 

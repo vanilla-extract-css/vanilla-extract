@@ -1,0 +1,12 @@
+{
+  "name": "@vanilla-extract/scripts",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "resolve.exports": "^2.0.2",
+    "rollup": "^4.20.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-node-externals": "^7.1.3",
+    "tinyglobby": "^0.2.13"
+  }
+}

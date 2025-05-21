@@ -1,6 +1,6 @@
 import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 import './SearchInput.css';
 

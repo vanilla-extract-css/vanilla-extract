@@ -3,7 +3,7 @@ import path from 'path';
 import loaderUtils from 'loader-utils';
 import {
   getPackageInfo,
-  IdentifierOption,
+  type IdentifierOption,
   processVanillaFile,
   serializeCss,
   transform,

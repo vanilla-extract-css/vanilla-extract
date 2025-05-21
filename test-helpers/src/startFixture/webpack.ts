@@ -1,12 +1,12 @@
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import WDS from 'webpack-dev-server';
-import webpack, { Configuration } from 'webpack';
+import webpack, { type Configuration } from 'webpack';
 import webpackMerge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import { stylesheetName } from '../getStylesheet';
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export const getTestNodes = (fixture: string) =>
   require(`@fixtures/${fixture}/test-nodes.json`);
