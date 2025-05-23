@@ -180,7 +180,7 @@ export function vanillaExtractPlugin({
     closeWatcher() {
       return compiler?.close();
     },
-    async transform(code, id) {
+    async transform(code, id, options) {
       const [validId] = id.split('?');
 
       if (!cssFileFilter.test(validId)) {
@@ -188,8 +188,9 @@ export function vanillaExtractPlugin({
       }
 
       const identOption = getIdentOption();
+      const { ssr } = options ?? {};
 
-      if (mode === 'transform') {
+      if (ssr || mode === 'transform') {
         return transform({
           source: code,
           filePath: normalizePath(validId),
