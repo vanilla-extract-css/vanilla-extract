@@ -8,7 +8,7 @@ const unzip = promisify(gunzip);
 const compressionThreshold = 1000;
 const compressionFlag = '#';
 
-export async function serializeCss(source: string) {
+export async function serializeCss(source: string): Promise<string> {
   if (source.length > compressionThreshold) {
     const compressedSource = await zip(source);
 
@@ -18,7 +18,7 @@ export async function serializeCss(source: string) {
   return Buffer.from(source, 'utf-8').toString('base64');
 }
 
-export async function deserializeCss(source: string) {
+export async function deserializeCss(source: string): Promise<string> {
   if (source.indexOf(compressionFlag) > -1) {
     const decompressedSource = await unzip(
       Buffer.from(source.replace(compressionFlag, ''), 'base64'),

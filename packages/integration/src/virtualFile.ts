@@ -1,6 +1,9 @@
 import { deserializeCss } from './serialize';
 
-export async function getSourceFromVirtualCssFile(id: string) {
+export async function getSourceFromVirtualCssFile(id: string): Promise<{
+  fileName: string;
+  source: string;
+}> {
   const match = id.match(/^(?<fileName>.*)\?source=(?<source>.*)$/);
 
   if (!match || !match.groups) {

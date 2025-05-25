@@ -3,9 +3,9 @@
   "version": "0.1.4",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-css-utils.cjs.js",
-  "module": "dist/vanilla-extract-css-utils.esm.js",
-  "types": "dist/vanilla-extract-css-utils.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
@@ -20,5 +20,12 @@
     "directory": "packages/utils"
   },
   "author": "SEEK",
-  "license": "MIT"
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

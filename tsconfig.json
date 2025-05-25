@@ -11,10 +11,11 @@
     "esModuleInterop": true,
     "moduleResolution": "bundler", // Again, bundling handles module resolution
     "jsx": "react-jsx",
-    "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "isolatedDeclarations": true,
+    "declaration": true,
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true
