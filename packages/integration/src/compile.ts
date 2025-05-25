@@ -57,7 +57,10 @@ export async function compile({
   identOption,
   cwd = process.cwd(),
   esbuildOptions,
-}: CompileOptions) {
+}: CompileOptions): Promise<{
+  source: string;
+  watchFiles: string[];
+}> {
   const result = await esbuild({
     entryPoints: [filePath],
     metafile: true,

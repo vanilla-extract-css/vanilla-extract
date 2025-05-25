@@ -27,7 +27,7 @@ export class ConditionalRuleset {
     this.precedenceLookup = new Map();
   }
 
-  findOrCreateCondition(conditionQuery: Query) {
+  findOrCreateCondition(conditionQuery: Query): Condition {
     let targetCondition = this.ruleset.get(conditionQuery);
 
     if (!targetCondition) {
@@ -43,7 +43,7 @@ export class ConditionalRuleset {
     return targetCondition;
   }
 
-  getConditionalRulesetByPath(conditionPath: Array<Query>) {
+  getConditionalRulesetByPath(conditionPath: Array<Query>): ConditionalRuleset {
     let currRuleset: ConditionalRuleset = this;
 
     for (const query of conditionPath) {
@@ -55,7 +55,11 @@ export class ConditionalRuleset {
     return currRuleset;
   }
 
-  addRule(rule: Rule, conditionQuery: Query, conditionPath: Array<Query>) {
+  addRule(
+    rule: Rule,
+    conditionQuery: Query,
+    conditionPath: Array<Query>,
+  ): void {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
     const targetCondition = ruleset.findOrCreateCondition(conditionQuery);
 
@@ -69,7 +73,7 @@ export class ConditionalRuleset {
   addConditionPrecedence(
     conditionPath: Array<Query>,
     conditionOrder: Array<Query>,
-  ) {
+  ): void {
     const ruleset = this.getConditionalRulesetByPath(conditionPath);
 
     for (let i = 0; i < conditionOrder.length; i++) {
@@ -86,7 +90,7 @@ export class ConditionalRuleset {
     }
   }
 
-  isCompatible(incomingRuleset: ConditionalRuleset) {
+  isCompatible(incomingRuleset: ConditionalRuleset): boolean {
     for (const [
       condition,
       orderPrecedence,
@@ -117,7 +121,7 @@ export class ConditionalRuleset {
     return true;
   }
 
-  merge(incomingRuleset: ConditionalRuleset) {
+  merge(incomingRuleset: ConditionalRuleset): void {
     // Merge rulesets into one array
     for (const { query, rules, children } of incomingRuleset.ruleset.values()) {
       const matchingCondition = this.ruleset.get(query);
@@ -150,7 +154,7 @@ export class ConditionalRuleset {
    *
    * @returns true if successful, false if the ruleset is incompatible
    */
-  mergeIfCompatible(incomingRuleset: ConditionalRuleset) {
+  mergeIfCompatible(incomingRuleset: ConditionalRuleset): boolean {
     if (!this.isCompatible(incomingRuleset)) {
       return false;
     }
@@ -160,7 +164,7 @@ export class ConditionalRuleset {
     return true;
   }
 
-  getSortedRuleset() {
+  getSortedRuleset(): Condition[] {
     const sortedRuleset: Array<Condition> = [];
 
     // Loop through all queries and add them to the sorted ruleset
@@ -189,11 +193,11 @@ export class ConditionalRuleset {
     return sortedRuleset;
   }
 
-  renderToArray() {
-    const arr: any = [];
+  renderToArray(): Array<Record<string, Record<string, any>>> {
+    const arr: Array<Record<string, Record<string, any>>> = [];
 
     for (const { query, rules, children } of this.getSortedRuleset()) {
-      const selectors: any = {};
+      const selectors: Record<string, any> = {};
 
       for (const rule of rules) {
         selectors[rule.selector] = {

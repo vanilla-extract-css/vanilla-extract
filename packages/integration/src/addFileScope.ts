@@ -4,7 +4,7 @@ import dedent from 'dedent';
 
 // Inlined from @rollup/pluginutils
 // https://github.com/rollup/plugins/blob/33174f956304ab4aad4bbaba656f627c31679dc5/packages/pluginutils/src/normalizePath.ts#L5-L7
-export const normalizePath = (filename: string) =>
+export const normalizePath = (filename: string): string =>
   filename.split(win32.sep).join(posix.sep);
 
 interface AddFileScopeParams {
@@ -20,7 +20,7 @@ export function addFileScope({
   rootPath,
   packageName,
   globalAdapterIdentifier,
-}: AddFileScopeParams) {
+}: AddFileScopeParams): string {
   // Encode windows file paths as posix
   const normalizedPath = normalizePath(relative(rootPath, filePath));
 

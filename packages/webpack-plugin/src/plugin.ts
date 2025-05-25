@@ -88,7 +88,7 @@ export abstract class AbstractVanillaExtractPlugin {
   protected inject(
     compiler: Compiler,
     virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader',
-  ) {
+  ): void {
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );
@@ -99,7 +99,7 @@ export abstract class AbstractVanillaExtractPlugin {
       test: this.test,
       use: [
         {
-          loader: require.resolve('../loader'),
+          loader: require.resolve('./loader'),
           options: {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,

@@ -19,7 +19,7 @@ const multiply = (...operands: Array<Operand>) =>
 const divide = (...operands: Array<Operand>) =>
   `calc(${toExpression('/', ...operands)})`;
 
-const negate = (x: Operand) => multiply(x, -1);
+const negate = (x: Operand): string => multiply(x, -1);
 
 type CalcChain = {
   add: (...operands: Array<Operand>) => CalcChain;

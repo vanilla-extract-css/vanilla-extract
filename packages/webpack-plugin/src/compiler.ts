@@ -20,13 +20,16 @@ export class ChildCompiler {
     this.externals = externals;
   }
 
-  isChildCompiler(name: string | undefined) {
+  isChildCompiler(name: string | undefined): boolean {
     return (
       typeof name === 'string' && name.startsWith('vanilla-extract-compiler')
     );
   }
 
-  async getCompiledSource(loader: LoaderContext) {
+  async getCompiledSource(loader: LoaderContext): Promise<{
+    source: string;
+    dependencies: string[];
+  }> {
     const { source, fileDependencies, contextDependencies } =
       await compileVanillaSource(loader, this.externals);
 
@@ -60,7 +63,7 @@ function getRootCompilation(loader: LoaderContext) {
 // https://github.com/webpack/webpack/blob/87660921808566ef3b8796f8df61bd79fc026108/lib/TemplatedPathPlugin.js#L19
 const templateStringRegexp = /\[([\w:]+)\]/g;
 
-export const escapeWebpackTemplateString = (s: string) =>
+export const escapeWebpackTemplateString = (s: string): string =>
   s.replaceAll(templateStringRegexp, '[\\$1\\]');
 
 function compileVanillaSource(

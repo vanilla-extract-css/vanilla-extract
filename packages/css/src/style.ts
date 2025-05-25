@@ -67,7 +67,7 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   return result;
 }
 
-export function style(rule: ComplexStyleRule, debugId?: string) {
+export function style(rule: ComplexStyleRule, debugId?: string): string {
   if (Array.isArray(rule)) {
     return composedStyle(rule, debugId);
   }
@@ -83,20 +83,20 @@ export function style(rule: ComplexStyleRule, debugId?: string) {
 /**
  * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
  */
-export function composeStyles(...classNames: Array<ClassNames>) {
+export function composeStyles(...classNames: Array<ClassNames>): string {
   const compose = hasFileScope() ? composedStyle : dudupeAndJoinClassList;
 
   return compose(classNames);
 }
 
-export function globalStyle(selector: string, rule: GlobalStyleRule) {
+export function globalStyle(selector: string, rule: GlobalStyleRule): void {
   appendCss({ type: 'global', selector, rule }, getFileScope());
 }
 
 export function fontFace(
   rule: FontFaceRule | FontFaceRule[],
   debugId?: string,
-) {
+): string {
   const fontFamily = `"${cssesc(generateIdentifier(debugId), {
     quotes: 'double',
   })}"`;
@@ -124,7 +124,7 @@ export function fontFace(
 export function globalFontFace(
   fontFamily: string,
   rule: FontFaceRule | FontFaceRule[],
-) {
+): void {
   const rules = Array.isArray(rule) ? rule : [rule];
 
   for (const singleRule of rules) {
@@ -135,7 +135,7 @@ export function globalFontFace(
   }
 }
 
-export function keyframes(rule: CSSKeyframes, debugId?: string) {
+export function keyframes(rule: CSSKeyframes, debugId?: string): string {
   const name = cssesc(generateIdentifier(debugId), {
     isIdentifier: true,
   });
@@ -145,7 +145,7 @@ export function keyframes(rule: CSSKeyframes, debugId?: string) {
   return name;
 }
 
-export function globalKeyframes(name: string, rule: CSSKeyframes) {
+export function globalKeyframes(name: string, rule: CSSKeyframes): void {
   appendCss({ type: 'keyframes', name, rule }, getFileScope());
 }
 
