@@ -12,6 +12,7 @@ export interface EsbuildFixtureOptions {
   mode?: 'development' | 'production';
   port: number;
 }
+
 export const startEsbuildFixture = async (
   fixtureName: string,
   { type, mode = 'development', port = 3000 }: EsbuildFixtureOptions,
@@ -48,7 +49,16 @@ export const startEsbuildFixture = async (
     outdir,
   });
 
+  await ctx.watch();
+
   const server = await ctx.serve({ servedir: outdir, port });
+
+  const esbuildLiveReloadScript = `
+    <script type="module">
+      new EventSource('/esbuild').addEventListener('change', () =>
+      location.reload(),
+      );
+    </script>`;
 
   await fs.writeFile(
     path.join(outdir, 'index.html'),
@@ -58,6 +68,7 @@ export const startEsbuildFixture = async (
       <meta charset="utf-8">
       <title>esbuild - ${fixtureName}</title>
       <link rel="stylesheet" type="text/css" href="index.css" />
+      ${mode !== 'production' ? esbuildLiveReloadScript : ''}
       </head>
     <body>
       <script src="index.js"></script>
