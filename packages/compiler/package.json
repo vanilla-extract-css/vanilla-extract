@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/compiler",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-compiler.cjs.js",
   "module": "dist/vanilla-extract-compiler.esm.js",
