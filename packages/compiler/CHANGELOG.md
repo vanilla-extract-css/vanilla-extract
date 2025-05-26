@@ -1,5 +1,23 @@
 # @vanilla-extract/compiler
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1592](https://github.com/vanilla-extract-css/vanilla-extract/pull/1592) [`35d6b3f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/35d6b3fe5d297dc76f1629a9f54f21d0f97e7c9f) Thanks [@askoufis](https://github.com/askoufis)! - `createCompiler`: Add `enableFileWatcher` option
+
+  By default, the compiler sets up its own file watcher.
+  This option allows you to disable it if necessary, such as during a production build.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  const compiler = createCompiler({
+    root: process.cwd(),
+    enableFileWatcher: false
+  });
+  ```
+
 ## 0.1.3
 
 ### Patch Changes
