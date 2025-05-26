@@ -1,4 +1,4 @@
-export type CSSVarFunction = `var(--${string})` | `var(--${string}, ${string})`;
+export type CSSVarFunction = `var(--${string})`;
 
 export type Contract = {
   [key: string]: CSSVarFunction | null | Contract;
