@@ -28,7 +28,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Build
         run: pnpm build && node ./site/makeDocsManifest
@@ -63,7 +63,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Build
         run: pnpm build
@@ -89,7 +89,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Install Browsers
         run: pnpm playwright install chromium

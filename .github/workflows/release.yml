@@ -28,7 +28,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Create release PR or publish to npm
         uses: changesets/action@v1
