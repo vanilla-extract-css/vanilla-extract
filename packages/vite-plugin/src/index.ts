@@ -60,13 +60,14 @@ const withUserPluginFilter =
 export function vanillaExtractPlugin({
   identifiers,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
-  unstable_mode: mode = 'emitCss',
+  unstable_mode = 'emitCss',
 }: Options = {}): Plugin {
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
+  let isBuild: boolean;
   const vitePromise = import('vite');
 
   const getIdentOption = () =>
@@ -127,11 +128,12 @@ export function vanillaExtractPlugin({
     },
     async configResolved(_resolvedConfig) {
       config = _resolvedConfig;
+      isBuild = config.command === 'build' && !config.build.watch;
       packageName = getPackageInfo(config.root).name;
     },
     async buildStart() {
       // Ensure we re-use the compiler instance between builds, e.g. in watch mode
-      if (mode !== 'transform' && !compiler) {
+      if (unstable_mode !== 'transform' && !compiler) {
         const { loadConfigFromFile } = await vitePromise;
 
         let configForViteCompiler: UserConfig | undefined;
@@ -167,6 +169,7 @@ export function vanillaExtractPlugin({
           identifiers: getIdentOption(),
           cssImportSpecifier: fileIdToVirtualId,
           viteConfig,
+          enableFileWatcher: !isBuild,
         });
       }
     },
@@ -189,7 +192,7 @@ export function vanillaExtractPlugin({
 
       const identOption = getIdentOption();
 
-      if (mode === 'transform') {
+      if (unstable_mode === 'transform') {
         return transform({
           source: code,
           filePath: normalizePath(validId),
@@ -212,7 +215,7 @@ export function vanillaExtractPlugin({
         };
 
         // We don't need to watch files in build mode
-        if (config.command === 'build' && !config.build.watch) {
+        if (isBuild) {
           return result;
         }
 
