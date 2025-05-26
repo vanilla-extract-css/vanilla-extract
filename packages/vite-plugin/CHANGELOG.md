@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 5.0.3
+
+### Patch Changes
+
+- [#1592](https://github.com/vanilla-extract-css/vanilla-extract/pull/1592) [`35d6b3f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/35d6b3fe5d297dc76f1629a9f54f21d0f97e7c9f) Thanks [@askoufis](https://github.com/askoufis)! - Disable the compiler's file watcher during builds
+
+- Updated dependencies [[`35d6b3f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/35d6b3fe5d297dc76f1629a9f54f21d0f97e7c9f)]:
+  - @vanilla-extract/compiler@0.2.0
+
 ## 5.0.2
 
 ### Patch Changes
