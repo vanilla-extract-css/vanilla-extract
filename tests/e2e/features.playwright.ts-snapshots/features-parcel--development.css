@@ -41,7 +41,13 @@ body .features_styleCompositionInSelector__87f2ru7 {
 body .features_styleVariantsCompositionInSelector_variant__87f2rua {
   font-size: 24px;
 }
-@media screen and (min-width: 700px) {
+.features_styleWithStartingStyle__87f2rub {
+  background-color: #000;
+  @starting-style {
+    background-color: #fff;
+  }
+}
+@media screen and (width >= 700px) {
   .features_mergedStyle__87f2ru0 {
     color: plum;
   }
