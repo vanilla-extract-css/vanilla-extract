@@ -1,6 +1,7 @@
 type Primitive = string | number | boolean | null | undefined;
 
 type Serializable =
+  | Primitive
   | {
       [Key in string | number]: Primitive | Serializable;
     }
