@@ -60,3 +60,23 @@ vanillaExtractPlugin({
 ```
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### enableDevCache
+
+This option can help mitigate dev mode [performance issues](https://github.com/vanilla-extract-css/vanilla-extract/issues/1488) in large projects, especially those using `sprinkles` or other common `.css.ts` imports. It ensures that `.vanilla.css` virtual files are only invalidated and re-fetched when their contents have actually change. This is accomplished by creating a map of `.css.ts` file paths to MD5 hashes of their content.
+
+The trade-offs for this option include more filesystem operations and potentially higher memory usage in the plugin.
+
+```js
+// vite.config.js
+
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+
+export default {
+  plugins: [
+    vanillaExtractPlugin({
+      enableDevCache: true
+    })
+  ]
+};
+```
