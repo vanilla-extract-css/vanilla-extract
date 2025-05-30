@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
   "module": "dist/vanilla-extract-rollup-plugin.esm.js",
   "types": "dist/vanilla-extract-rollup-plugin.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-rollup-plugin.cjs.d.ts",
+      "import": "./dist/vanilla-extract-rollup-plugin.esm.js",
+      "default": "./dist/vanilla-extract-rollup-plugin.cjs.js"
+    },
+    "./*": "./*"
+  },
   "files": [
     "/dist"
   ],

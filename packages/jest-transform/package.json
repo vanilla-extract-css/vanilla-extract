@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-jest-transform.cjs.js",
   "module": "dist/vanilla-extract-jest-transform.esm.js",
   "types": "dist/vanilla-extract-jest-transform.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-jest-transform.cjs.d.ts",
+      "import": "./dist/vanilla-extract-jest-transform.esm.js",
+      "default": "./dist/vanilla-extract-jest-transform.cjs.js"
+    },
+    "./*": "./*"
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts"

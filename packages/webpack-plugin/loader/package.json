@@ -1,4 +1,10 @@
 {
   "main": "dist/vanilla-extract-webpack-plugin-loader.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin-loader.esm.js"
+  "module": "dist/vanilla-extract-webpack-plugin-loader.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-webpack-plugin-loader.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin-loader.cjs.js"
+    }
+  }
 }

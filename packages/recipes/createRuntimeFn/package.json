@@ -1,4 +1,10 @@
 {
   "main": "dist/vanilla-extract-recipes-createRuntimeFn.cjs.js",
-  "module": "dist/vanilla-extract-recipes-createRuntimeFn.esm.js"
+  "module": "dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
+      "default": "./dist/vanilla-extract-recipes-createRuntimeFn.cjs.js"
+    }
+  }
 }
