@@ -9,9 +9,11 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
+        "import": "./dist/vanilla-extract-css-injectStyles.browser.esm.js",
         "module": "./dist/vanilla-extract-css-injectStyles.browser.esm.js",
         "default": "./dist/vanilla-extract-css-injectStyles.browser.cjs.js"
       },
+      "import": "./dist/vanilla-extract-css-injectStyles.esm.js",
       "module": "./dist/vanilla-extract-css-injectStyles.esm.js",
       "default": "./dist/vanilla-extract-css-injectStyles.cjs.js"
     }

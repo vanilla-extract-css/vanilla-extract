@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-parcel-transformer.cjs.js",
   "module": "dist/vanilla-extract-parcel-transformer.esm.js",
   "types": "dist/vanilla-extract-parcel-transformer.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-parcel-transformer.cjs.d.ts",
+      "import": "./dist/vanilla-extract-parcel-transformer.esm.js",
+      "default": "./dist/vanilla-extract-parcel-transformer.cjs.js"
+    },
+    "./*": "./*"
+  },
   "files": [
     "/dist"
   ],

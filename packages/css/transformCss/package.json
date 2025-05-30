@@ -10,9 +10,11 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
+        "import": "./dist/vanilla-extract-css-transformCss.browser.esm.js",
         "module": "./dist/vanilla-extract-css-transformCss.browser.esm.js",
         "default": "./dist/vanilla-extract-css-transformCss.browser.cjs.js"
       },
+      "import": "./dist/vanilla-extract-css-transformCss.esm.js",
       "module": "./dist/vanilla-extract-css-transformCss.esm.js",
       "default": "./dist/vanilla-extract-css-transformCss.cjs.js"
     }

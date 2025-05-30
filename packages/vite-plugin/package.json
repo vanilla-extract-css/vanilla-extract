@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-vite-plugin.cjs.js",
   "module": "dist/vanilla-extract-vite-plugin.esm.js",
   "types": "dist/vanilla-extract-vite-plugin.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-vite-plugin.cjs.d.ts",
+      "import": "./dist/vanilla-extract-vite-plugin.esm.js",
+      "default": "./dist/vanilla-extract-vite-plugin.cjs.js"
+    },
+    "./*": "./*"
+  },
   "files": [
     "/dist"
   ],
