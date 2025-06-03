@@ -1,6 +1,6 @@
 type AsyncFunction<T> = () => Promise<T>;
 
-const queue: Array<() => void> = [];
+const queue: Array<() => Promise<void>> = [];
 let isProcessingQueue = false;
 
 export async function lock<T>(fn: AsyncFunction<T>): Promise<T> {
@@ -31,7 +31,7 @@ async function processQueue() {
   }
 
   isProcessingQueue = true;
-  const fn = queue.shift()!;
+  const fn = queue.shift();
 
-  await fn();
+  await fn?.();
 }
