@@ -12,7 +12,7 @@
       "import": "./dist/vanilla-extract-esbuild-plugin-next.esm.js",
       "default": "./dist/vanilla-extract-esbuild-plugin-next.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "files": [
     "/dist"

@@ -11,7 +11,7 @@
       "import": "./dist/vanilla-extract-jest-transform.esm.js",
       "default": "./dist/vanilla-extract-jest-transform.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "preconstruct": {
     "entrypoints": [

@@ -11,7 +11,7 @@
       "import": "./dist/vanilla-extract-next-plugin.esm.js",
       "default": "./dist/vanilla-extract-next-plugin.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "preconstruct": {
     "entrypoints": [

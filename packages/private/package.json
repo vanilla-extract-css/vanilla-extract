@@ -12,7 +12,7 @@
       "import": "./dist/vanilla-extract-private.esm.js",
       "default": "./dist/vanilla-extract-private.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "preconstruct": {
     "entrypoints": [

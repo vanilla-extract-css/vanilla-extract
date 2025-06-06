@@ -5,6 +5,7 @@
     ".": {
       "import": "./dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.esm.js",
       "default": "./dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.js"
-    }
+    },
+    "./package.json": "./package.json"
   }
 }

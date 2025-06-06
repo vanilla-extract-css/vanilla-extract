@@ -5,6 +5,7 @@
     ".": {
       "import": "./dist/vanilla-extract-recipes-createRuntimeFn.esm.js",
       "default": "./dist/vanilla-extract-recipes-createRuntimeFn.cjs.js"
-    }
+    },
+    "./package.json": "./package.json"
   }
 }

@@ -11,7 +11,7 @@
       "import": "./dist/vanilla-extract-vite-plugin.esm.js",
       "default": "./dist/vanilla-extract-vite-plugin.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "files": [
     "/dist"

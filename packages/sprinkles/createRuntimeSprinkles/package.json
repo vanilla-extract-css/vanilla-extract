@@ -5,6 +5,7 @@
     ".": {
       "import": "./dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
       "default": "./dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
-    }
+    },
+    "./package.json": "./package.json"
   }
 }

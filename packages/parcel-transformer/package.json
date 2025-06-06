@@ -11,7 +11,7 @@
       "import": "./dist/vanilla-extract-parcel-transformer.esm.js",
       "default": "./dist/vanilla-extract-parcel-transformer.cjs.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "files": [
     "/dist"
