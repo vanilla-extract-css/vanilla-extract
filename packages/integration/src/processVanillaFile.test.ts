@@ -1,3 +1,4 @@
+import { addFunctionSerializer } from '../../css/src/functionSerializer';
 import { serializeVanillaModule } from './processVanillaFile';
 
 describe('serializeVanillaModule', () => {
@@ -121,11 +122,11 @@ describe('serializeVanillaModule', () => {
 
   test('should handle function serialization', () => {
     const sprinkles = () => {};
-    sprinkles.__function_serializer__ = {
+    addFunctionSerializer(sprinkles, {
       importPath: 'my-package',
       importName: 'myFunction',
       args: ['arg1', 'arg2'],
-    };
+    });
     const exports = {
       sprinkles,
     };
@@ -156,11 +157,11 @@ describe('serializeVanillaModule', () => {
     };
 
     const sprinkles = () => {};
-    sprinkles.__function_serializer__ = {
+    addFunctionSerializer(sprinkles, {
       importPath: 'my-package',
       importName: 'myFunction',
       args: [complexExport, otherComplexExport],
-    };
+    });
     const exports = {
       default: complexExport,
       otherComplexExport,
@@ -203,11 +204,11 @@ describe('serializeVanillaModule', () => {
     const reReExport = reExport;
 
     const sprinkles = () => {};
-    sprinkles.__function_serializer__ = {
+    addFunctionSerializer(sprinkles, {
       importPath: 'my-package',
       importName: 'myFunction',
       args: [complexExport, otherComplexExport, someOtherExport, reReExport],
-    };
+    });
     const exports = {
       sprinkles,
       complexExport,
