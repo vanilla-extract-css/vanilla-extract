@@ -41,7 +41,13 @@ body ._87f2ru7 {
 body ._87f2rua {
   font-size: 24px;
 }
-@media screen and (min-width: 700px) {
+._87f2rub {
+  background-color: #000;
+  @starting-style {
+    background-color: #fff;
+  }
+}
+@media screen and (width >= 700px) {
   ._87f2ru0 {
     color: plum;
   }
