@@ -1,4 +1,11 @@
 {
   "main": "dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js"
+  "module": "dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
+      "default": "./dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
   "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
   "types": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-babel-plugin-debug-ids.cjs.d.ts",
+      "import": "./dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
+      "default": "./dist/vanilla-extract-babel-plugin-debug-ids.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts"

@@ -6,6 +6,14 @@
   "main": "dist/vanilla-extract-esbuild-plugin-next.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin-next.esm.js",
   "types": "dist/vanilla-extract-esbuild-plugin-next.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-esbuild-plugin-next.cjs.d.ts",
+      "import": "./dist/vanilla-extract-esbuild-plugin-next.esm.js",
+      "default": "./dist/vanilla-extract-esbuild-plugin-next.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "/dist"
   ],

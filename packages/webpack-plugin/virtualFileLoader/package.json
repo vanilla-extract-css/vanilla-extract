@@ -1,4 +1,11 @@
 {
   "main": "dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js"
+  "module": "dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
+    },
+    "./package.json": "./package.json"
+  }
 }
