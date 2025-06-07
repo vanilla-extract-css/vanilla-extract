@@ -4,6 +4,7 @@ export type {
   StyleRule,
   ComplexStyleRule,
   GlobalStyleRule,
+  ComplexGlobalStyleRule,
   Adapter,
   FileScope,
   CSSProperties,

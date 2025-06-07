@@ -9,6 +9,8 @@ import type {
   GlobalStyleRule,
   ClassNames,
   ComplexStyleRule,
+  ComplexGlobalStyleRule,
+  CSSPropertiesWithVars,
 } from './types';
 import {
   registerClassName,
@@ -19,6 +21,13 @@ import {
 import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dudupeAndJoinClassList } from './utils';
+
+function composedStyleRule(rules: Array<CSSPropertiesWithVars>) {
+  return deepmerge.all(rules, {
+    // Replace arrays rather than merging
+    arrayMerge: (_, sourceArray) => sourceArray,
+  });
+}
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
@@ -56,10 +65,10 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   }
 
   if (styleRules.length > 0) {
-    const rule = deepmerge.all(styleRules, {
-      // Replace arrays rather than merging
-      arrayMerge: (_, sourceArray) => sourceArray,
-    });
+    // Remove type cast below (and this assertion) when this assertion becomes invalid
+    // @ts-expect-error
+    styleRules satisfies Array<StyleRule>;
+    const rule = composedStyleRule(styleRules as Array<StyleRule>);
 
     appendCss({ type: 'local', selector: className, rule }, getFileScope());
   }
@@ -89,8 +98,12 @@ export function composeStyles(...classNames: Array<ClassNames>) {
   return compose(classNames);
 }
 
-export function globalStyle(selector: string, rule: GlobalStyleRule) {
-  appendCss({ type: 'global', selector, rule }, getFileScope());
+export function globalStyle(selector: string, rule: ComplexGlobalStyleRule) {
+  const composedRule: GlobalStyleRule = Array.isArray(rule)
+    ? composedStyleRule(rule)
+    : rule;
+
+  appendCss({ type: 'global', selector, rule: composedRule }, getFileScope());
 }
 
 export function fontFace(
