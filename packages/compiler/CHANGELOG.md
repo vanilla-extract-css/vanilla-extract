@@ -1,5 +1,35 @@
 # @vanilla-extract/compiler
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1592](https://github.com/vanilla-extract-css/vanilla-extract/pull/1592) [`35d6b3f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/35d6b3fe5d297dc76f1629a9f54f21d0f97e7c9f) Thanks [@askoufis](https://github.com/askoufis)! - `createCompiler`: Add `enableFileWatcher` option
+
+  By default, the compiler sets up its own file watcher.
+  This option allows you to disable it if necessary, such as during a production build.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  const compiler = createCompiler({
+    root: process.cwd(),
+    enableFileWatcher: false
+  });
+  ```
+
+## 0.1.3
+
+### Patch Changes
+
+- [#1583](https://github.com/vanilla-extract-css/vanilla-extract/pull/1583) [`6488e28`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6488e28337106582231b418778c884f26e393219) Thanks [@askoufis](https://github.com/askoufis)! - Ignore Vite `base` config
+
+  Fixes a bug where imported asset URLs would be transformed by the compiler when setting the `base` option in Vite, resulting in incorrect resolution and bundling of these assets during the build process.
+
+- Updated dependencies [[`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8), [`c66be53`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c66be53d600802b2922da1d6034e2a5ff3fbbcae)]:
+  - @vanilla-extract/css@1.17.2
+  - @vanilla-extract/integration@8.0.2
+
 ## 0.1.2
 
 ### Patch Changes

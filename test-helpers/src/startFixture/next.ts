@@ -6,7 +6,7 @@ import { existsSync } from 'fs';
 import { Server as _Server, createServer } from 'http';
 import path from 'path';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 import { serveAssets } from './vite';
 
 type Server = _Server & {

@@ -1,5 +1,5 @@
 import { addRecipe } from '@vanilla-extract/css/recipe';
-import {
+import type {
   ResponsiveArrayByMaxLength,
   RequiredResponsiveArrayByMaxLength,
 } from './types';

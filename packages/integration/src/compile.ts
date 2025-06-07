@@ -3,8 +3,8 @@ import { promises as fs } from 'fs';
 
 import {
   build as esbuild,
-  Plugin,
-  BuildOptions as EsbuildOptions,
+  type Plugin,
+  type BuildOptions as EsbuildOptions,
 } from 'esbuild';
 
 import type { IdentifierOption } from './types';

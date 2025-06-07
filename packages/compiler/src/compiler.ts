@@ -93,18 +93,24 @@ const createViteServer = async ({
   root,
   identifiers,
   viteConfig,
+  enableFileWatcher = true,
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
->) => {
+> &
+  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
   const server = await vite.createServer({
     ...viteConfig,
+    // The vite-node server should not rewrite imported asset URLs within VE stylesheets.
+    // Doing so interferes with Vite's resolution and bundling of these assets at build time.
+    base: undefined,
     configFile: false,
     root,
     server: {
       hmr: false,
+      watch: enableFileWatcher ? undefined : null,
     },
     logLevel: 'silent',
     optimizeDeps: {
@@ -191,9 +197,11 @@ const createViteServer = async ({
     },
   });
 
-  server.watcher.on('change', (filePath) => {
-    runner.moduleCache.invalidateDepTree([filePath]);
-  });
+  if (enableFileWatcher) {
+    server.watcher.on('change', (filePath) => {
+      runner.moduleCache.invalidateDepTree([filePath]);
+    });
+  }
 
   return {
     server,
@@ -241,6 +249,13 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
+  /**
+   * By default, the compiler sets up its own file watcher. This option allows you to disable it if
+   * necessary, such as during a production build.
+   *
+   * @default true
+   */
+  enableFileWatcher?: boolean;
   cssImportSpecifier?: (filePath: string) => string;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
@@ -254,6 +269,7 @@ export const createCompiler = ({
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
   viteConfig,
+  enableFileWatcher,
   viteResolve,
   vitePlugins,
 }: CreateCompilerOptions): Compiler => {
@@ -269,6 +285,7 @@ export const createCompiler = ({
       resolve: viteResolve,
       plugins: vitePlugins,
     },
+    enableFileWatcher,
   });
 
   const processVanillaFileCache = new Map<
@@ -385,8 +402,8 @@ export const createCompiler = ({
             throw new Error(`Can't find ModuleNode for ${filePath}`);
           }
 
-          const cssImports = [];
-          const orderedComposedClassLists = [];
+          const cssImports: string[] = [];
+          const orderedComposedClassLists: Composition[] = [];
 
           const scanModule = createModuleScanner();
           const { cssDeps, watchFiles } = scanModule(moduleNode);

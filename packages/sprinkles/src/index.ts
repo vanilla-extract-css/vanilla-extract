@@ -1,17 +1,17 @@
 import {
   style,
   composeStyles,
-  CSSProperties,
-  StyleRule,
+  type CSSProperties,
+  type StyleRule,
 } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
-  SprinklesFn,
+  type SprinklesFn,
   createSprinkles as internalCreateSprinkles,
 } from './createSprinkles';
-import { SprinklesProperties, ResponsiveArrayConfig } from './types';
+import type { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';

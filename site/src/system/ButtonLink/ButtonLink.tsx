@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import classnames from 'classnames';
-import { Link, NavLinkProps } from 'react-router-dom';
+import { Link, type NavLinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { Box } from '..';
 import * as styles from './ButtonLink.css';

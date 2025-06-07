@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNEXT" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
-    "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
-    "lib": ["es2021", "dom"],
+    "target": "ES2022",
+    "module": "Preserve", // Vanilla Extract is bundled with preconstruct (effectively Rollup)
+    "lib": ["ES2023", "dom", "dom.iterable"], // ES2023 aligns with Node 22, and we need DOM APIs for fixtures and the docs site
     "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true /* Enable all strict type-checking options. */,
-    "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
-    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "bundler", // Again, bundling handles module resolution
     "jsx": "react-jsx",
     "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "moduleDetection": "force",
     "isolatedModules": true,
-    "downlevelIteration": true
+    "verbatimModuleSyntax": true
   },
   "exclude": [
     "node_modules",
