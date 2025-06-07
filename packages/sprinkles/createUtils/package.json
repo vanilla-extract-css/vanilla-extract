@@ -1,4 +1,11 @@
 {
   "main": "dist/vanilla-extract-sprinkles-createUtils.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles-createUtils.esm.js"
+  "module": "dist/vanilla-extract-sprinkles-createUtils.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-sprinkles-createUtils.esm.js",
+      "default": "./dist/vanilla-extract-sprinkles-createUtils.cjs.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

@@ -10,26 +10,31 @@
     ".": {
       "types": "./dist/vanilla-extract-webpack-plugin.cjs.d.ts",
       "module": "./dist/vanilla-extract-webpack-plugin.esm.js",
+      "import": "./dist/vanilla-extract-webpack-plugin.esm.js",
       "default": "./dist/vanilla-extract-webpack-plugin.cjs.js"
     },
     "./loader": {
       "types": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.d.ts",
       "module": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
+      "import": "./loader/dist/vanilla-extract-webpack-plugin-loader.esm.js",
       "default": "./loader/dist/vanilla-extract-webpack-plugin-loader.cjs.js"
     },
     "./virtualFileLoader": {
       "types": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.d.ts",
       "module": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
+      "import": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.esm.js",
       "default": "./virtualFileLoader/dist/vanilla-extract-webpack-plugin-virtualFileLoader.cjs.js"
     },
     "./next": {
       "types": "./next/dist/vanilla-extract-webpack-plugin-next.cjs.d.ts",
       "module": "./next/dist/vanilla-extract-webpack-plugin-next.esm.js",
+      "import": "./next/dist/vanilla-extract-webpack-plugin-next.esm.js",
       "default": "./next/dist/vanilla-extract-webpack-plugin-next.cjs.js"
     },
     "./virtualNextFileLoader": {
       "types": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.d.ts",
       "module": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.esm.js",
+      "import": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.esm.js",
       "default": "./virtualNextFileLoader/dist/vanilla-extract-webpack-plugin-virtualNextFileLoader.cjs.js"
     }
   },
