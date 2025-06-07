@@ -223,11 +223,11 @@ describe('serializeVanillaModule', () => {
     const reReExport = reExport;
 
     const sprinkles = () => {};
-    addFunctionSerializer(sprinkles, {
+    sprinkles.__function_serializer__ = {
       importPath: 'my-package',
       importName: 'myFunction',
       args: [complexExport, otherComplexExport, someOtherExport, reReExport],
-    });
+    };
     const exports = {
       sprinkles,
       complexExport,
