@@ -1,3 +1,4 @@
+import { addFunctionSerializer } from '../../css/src/functionSerializer';
 import { serializeVanillaModule } from './processVanillaFile';
 
 describe('serializeVanillaModule', () => {
@@ -126,6 +127,28 @@ describe('serializeVanillaModule', () => {
       importName: 'myFunction',
       args: ['arg1', 'arg2'],
     };
+    const exports = {
+      sprinkles,
+    };
+
+    expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
+      .toMatchInlineSnapshot(`
+      "import "./styles.css"
+      import { myFunction as _86bce } from 'my-package';
+      export var sprinkles = _86bce('arg1','arg2');"
+    `);
+  });
+
+  test('should handle deprecated __recipe__ function serialization', () => {
+    const sprinkles = () => {};
+    // Once support for `__recipe__` is removed, this test can be removed,
+    // and all other tests that use `__function_serializer__` should be updated
+    // to use `addFunctionSerializer`
+    addFunctionSerializer(sprinkles, {
+      importPath: 'my-package',
+      importName: 'myFunction',
+      args: ['arg1', 'arg2'],
+    });
     const exports = {
       sprinkles,
     };
