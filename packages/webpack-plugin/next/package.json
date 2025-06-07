@@ -1,4 +1,11 @@
 {
   "main": "dist/vanilla-extract-webpack-plugin-next.cjs.js",
-  "module": "dist/vanilla-extract-webpack-plugin-next.esm.js"
+  "module": "dist/vanilla-extract-webpack-plugin-next.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-extract-webpack-plugin-next.esm.js",
+      "default": "./dist/vanilla-extract-webpack-plugin-next.cjs.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

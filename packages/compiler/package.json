@@ -5,6 +5,14 @@
   "main": "dist/vanilla-extract-compiler.cjs.js",
   "module": "dist/vanilla-extract-compiler.esm.js",
   "types": "dist/vanilla-extract-compiler.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-compiler.cjs.d.ts",
+      "import": "./dist/vanilla-extract-compiler.esm.js",
+      "default": "./dist/vanilla-extract-compiler.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "/dist"
   ],
