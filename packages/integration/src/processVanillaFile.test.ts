@@ -122,6 +122,25 @@ describe('serializeVanillaModule', () => {
 
   test('should handle function serialization', () => {
     const sprinkles = () => {};
+    sprinkles.__function_serializer__ = {
+      importPath: 'my-package',
+      importName: 'myFunction',
+      args: ['arg1', 'arg2'],
+    };
+    const exports = {
+      sprinkles,
+    };
+
+    expect(serializeVanillaModule(['import "./styles.css"'], exports, null))
+      .toMatchInlineSnapshot(`
+      "import "./styles.css"
+      import { myFunction as _86bce } from 'my-package';
+      export var sprinkles = _86bce('arg1','arg2');"
+    `);
+  });
+
+  test('should handle deprecated __recipe__ function serialization', () => {
+    const sprinkles = () => {};
     addFunctionSerializer(sprinkles, {
       importPath: 'my-package',
       importName: 'myFunction',
@@ -157,11 +176,11 @@ describe('serializeVanillaModule', () => {
     };
 
     const sprinkles = () => {};
-    addFunctionSerializer(sprinkles, {
+    sprinkles.__function_serializer__ = {
       importPath: 'my-package',
       importName: 'myFunction',
       args: [complexExport, otherComplexExport],
-    });
+    };
     const exports = {
       default: complexExport,
       otherComplexExport,
