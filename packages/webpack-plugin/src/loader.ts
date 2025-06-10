@@ -46,7 +46,7 @@ const defaultIdentifierOption = (
 ): IdentifierOption =>
   identifiers ?? (mode === 'production' ? 'short' : 'debug');
 
-export default function (this: LoaderContext, source: string) {
+export default function (this: LoaderContext, source: string): void {
   const { identifiers } = loaderUtils.getOptions(this) as InternalLoaderOptions;
 
   const { name } = getPackageInfo(this.rootContext);
@@ -68,7 +68,7 @@ export default function (this: LoaderContext, source: string) {
     });
 }
 
-export function pitch(this: LoaderContext) {
+export function pitch(this: LoaderContext): void {
   const { childCompiler, outputCss, identifiers, virtualLoader } =
     loaderUtils.getOptions(this) as InternalLoaderOptions;
 
