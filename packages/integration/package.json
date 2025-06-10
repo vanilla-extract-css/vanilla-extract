@@ -2,8 +2,8 @@
   "name": "@vanilla-extract/integration",
   "version": "8.0.3",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-integration.cjs.js",
-  "types": "dist/vanilla-extract-integration.cjs.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],
@@ -28,5 +28,10 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5"
+  },
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   }
 }

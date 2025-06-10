@@ -1,6 +1,6 @@
 import type { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import evalCode from 'eval';
+import { evalCode } from './evalAtHome';
 import { stringify } from 'javascript-stringify';
 import dedent from 'dedent';
 
@@ -119,7 +119,7 @@ export async function processVanillaFile({
     filePath,
     { console, process, __adapter__: cssAdapter },
     true,
-  ) as Record<string, unknown>;
+  );
 
   process.env.NODE_ENV = currentNodeEnv;
 
@@ -159,8 +159,8 @@ export async function processVanillaFile({
   }
 
   // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
-  // for requires executed within the eval and all CSS can be lost.
   evalCode(
+    // for requires executed within the eval and all CSS can be lost.
     `const { removeAdapter } = require('@vanilla-extract/css/adapter');
     // Backwards compat with older versions of @vanilla-extract/css
     if (removeAdapter) {

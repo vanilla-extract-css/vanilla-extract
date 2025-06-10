@@ -99,7 +99,7 @@ export abstract class AbstractVanillaExtractPlugin {
       test: this.test,
       use: [
         {
-          loader: require.resolve('../loader'),
+          loader: require.resolve('./loader'),
           options: {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,

@@ -2,14 +2,13 @@
   "name": "@vanilla-extract/next-plugin",
   "version": "2.4.12",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-next-plugin.cjs.js",
-  "module": "dist/vanilla-extract-next-plugin.esm.js",
-  "types": "dist/vanilla-extract-next-plugin.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-next-plugin.cjs.d.ts",
-      "import": "./dist/vanilla-extract-next-plugin.esm.js",
-      "default": "./dist/vanilla-extract-next-plugin.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

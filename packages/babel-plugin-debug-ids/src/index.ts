@@ -58,9 +58,27 @@ const debuggableFunctionConfig = {
       return t.isStringLiteral(previousArg) || t.isTemplateLiteral(previousArg);
     },
   },
-} satisfies Record<string, DebugConfig>;
+} satisfies Record<string, DebugConfig | null>;
 
-const styleFunctions = [
+const styleFunctions: Array<
+  | 'fontFace'
+  | 'keyframes'
+  | 'layer'
+  | 'style'
+  | 'createTheme'
+  | 'styleVariants'
+  | 'createVar'
+  | 'recipe'
+  | 'createContainer'
+  | 'createViewTransition'
+  | 'globalStyle'
+  | 'createGlobalTheme'
+  | 'createThemeContract'
+  | 'globalFontFace'
+  | 'globalKeyframes'
+  | 'globalLayer'
+  | 'recipe'
+> = [
   ...(Object.keys(debuggableFunctionConfig) as Array<
     keyof typeof debuggableFunctionConfig
   >),
@@ -71,7 +89,7 @@ const styleFunctions = [
   'globalKeyframes',
   'globalLayer',
   'recipe',
-] as const;
+];
 
 type StyleFunction = (typeof styleFunctions)[number];
 

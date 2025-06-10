@@ -3,29 +3,23 @@
   "version": "1.6.4",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-sprinkles.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles.esm.js",
-  "types": "dist/vanilla-extract-sprinkles.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "./package.json": "./package.json",
     ".": {
-      "types": "./dist/vanilla-extract-sprinkles.cjs.d.ts",
-      "import": "./dist/vanilla-extract-sprinkles.esm.js",
-      "module": "./dist/vanilla-extract-sprinkles.esm.js",
-      "default": "./dist/vanilla-extract-sprinkles.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./createRuntimeSprinkles": {
-      "types": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles.cjs.d.ts",
-      "import": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
-      "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
-      "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
+      "import": "./dist/createRuntimeSprinkles.mjs",
+      "require": "./dist/createRuntimeSprinkles.js"
     },
     "./createUtils": {
-      "types": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.d.ts",
-      "import": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
-      "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
-      "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
-    }
+      "import": "./dist/createUtils.mjs",
+      "require": "./dist/createUtils.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "/dist",

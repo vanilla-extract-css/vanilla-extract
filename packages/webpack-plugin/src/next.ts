@@ -3,10 +3,7 @@ import { AbstractVanillaExtractPlugin } from './plugin';
 import type { Compiler } from 'webpack';
 
 const virtualNextFileLoader = require.resolve(
-  path.join(
-    path.dirname(require.resolve('../../package.json')),
-    'virtualNextFileLoader',
-  ),
+  '@vanilla-extract/webpack-plugin/virtualNextFileLoader',
 );
 
 export class VanillaExtractPlugin extends AbstractVanillaExtractPlugin {

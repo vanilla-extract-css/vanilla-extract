@@ -3,17 +3,15 @@
   "version": "2.1.4",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
-  "main": "dist/vanilla-extract-dynamic.cjs.js",
-  "module": "dist/vanilla-extract-dynamic.esm.js",
-  "types": "dist/vanilla-extract-dynamic.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "./package.json": "./package.json",
     ".": {
-      "types": "./dist/vanilla-extract-dynamic.cjs.d.ts",
-      "import": "./dist/vanilla-extract-dynamic.esm.js",
-      "module": "./dist/vanilla-extract-dynamic.esm.js",
-      "default": "./dist/vanilla-extract-dynamic.cjs.js"
-    }
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "/dist"

@@ -3,14 +3,13 @@
   "name": "@vanilla-extract/esbuild-plugin-next",
   "version": "0.0.10",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin-next.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin-next.esm.js",
-  "types": "dist/vanilla-extract-esbuild-plugin-next.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-esbuild-plugin-next.cjs.d.ts",
-      "import": "./dist/vanilla-extract-esbuild-plugin-next.esm.js",
-      "default": "./dist/vanilla-extract-esbuild-plugin-next.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

@@ -2,14 +2,13 @@
   "name": "@vanilla-extract/jest-transform",
   "version": "1.1.16",
   "description": "Jest transformer for vanilla-extract",
-  "main": "dist/vanilla-extract-jest-transform.cjs.js",
-  "module": "dist/vanilla-extract-jest-transform.esm.js",
-  "types": "dist/vanilla-extract-jest-transform.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-jest-transform.cjs.d.ts",
-      "import": "./dist/vanilla-extract-jest-transform.esm.js",
-      "default": "./dist/vanilla-extract-jest-transform.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

@@ -5,10 +5,9 @@
   "author": "SEEK",
   "license": "MIT",
   "scripts": {
-    "dev": "preconstruct dev",
-    "build": "preconstruct build && pnpm build:dts",
-    "build:dts": "tsx ./scripts/build-dts",
-    "watch": "preconstruct watch",
+    "dev": "DEV=true tsdown",
+    "build": "tsdown",
+    "watch": "tsdown --watch",
     "start-fixture": "tsx ./test-helpers/src/startFixtureCLI",
     "start": "pnpm start-fixture themed",
     "start-site": "pnpm --filter=site start",
@@ -37,7 +36,6 @@
     "@changesets/cli": "^2.27.8",
     "@manypkg/cli": "^0.21.4",
     "@playwright/test": "^1.43.1",
-    "@preconstruct/cli": "^2.8.2",
     "@testing-library/jest-dom": "^6.4.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.15.3",
@@ -51,16 +49,11 @@
     "typescript": "^5.8.3",
     "vitest": "^3.0.2"
   },
-  "preconstruct": {
-    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
-      "keepDynamicImportAsDynamicImportInCommonJS": true
-    },
-    "packages": [
-      "packages/*"
-    ]
-  },
   "manypkg": {
     "workspaceProtocol": "require"
   },
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "tsdown": "^0.12.7"
+  }
 }

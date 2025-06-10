@@ -2,14 +2,13 @@
   "name": "@vanilla-extract/babel-plugin-debug-ids",
   "version": "1.2.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.js",
-  "module": "dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
-  "types": "dist/vanilla-extract-babel-plugin-debug-ids.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-babel-plugin-debug-ids.cjs.d.ts",
-      "import": "./dist/vanilla-extract-babel-plugin-debug-ids.esm.js",
-      "default": "./dist/vanilla-extract-babel-plugin-debug-ids.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

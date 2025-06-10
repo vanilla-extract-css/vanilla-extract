@@ -2,14 +2,13 @@
   "name": "@vanilla-extract/esbuild-plugin",
   "version": "2.3.17",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
-  "types": "dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
-      "import": "./dist/vanilla-extract-esbuild-plugin.esm.js",
-      "default": "./dist/vanilla-extract-esbuild-plugin.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

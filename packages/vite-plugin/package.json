@@ -2,14 +2,13 @@
   "name": "@vanilla-extract/vite-plugin",
   "version": "5.0.5",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-vite-plugin.cjs.js",
-  "module": "dist/vanilla-extract-vite-plugin.esm.js",
-  "types": "dist/vanilla-extract-vite-plugin.cjs.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vanilla-extract-vite-plugin.cjs.d.ts",
-      "import": "./dist/vanilla-extract-vite-plugin.esm.js",
-      "default": "./dist/vanilla-extract-vite-plugin.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

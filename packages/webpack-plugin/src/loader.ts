@@ -14,19 +14,16 @@ import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
 
 const virtualFileLoader = require.resolve(
-  path.join(
-    path.dirname(require.resolve('../../package.json')),
-    'virtualFileLoader',
-  ),
+  '@vanilla-extract/webpack-plugin/virtualFileLoader',
 );
 
 const virtualFileLoaderExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
+  path.dirname(require.resolve('@vanilla-extract/webpack-plugin/package.json')),
   'extracted.js',
 );
 
 const virtualNextFileLoaderExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
+  path.dirname(require.resolve('@vanilla-extract/webpack-plugin/package.json')),
   'vanilla.virtual.css',
 );
 
