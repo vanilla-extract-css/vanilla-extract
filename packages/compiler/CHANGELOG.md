@@ -1,5 +1,21 @@
 # @vanilla-extract/compiler
 
+## 0.2.2
+
+### Patch Changes
+
+- [#1605](https://github.com/vanilla-extract-css/vanilla-extract/pull/1605) [`9bf58ee`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9bf58ee1e9a8371f4ddc245b0a96afcfcf5eac29) Thanks [@sapphi-red](https://github.com/sapphi-red)! - Update `vite-node` dependency to `^3.2.2`
+
+## 0.2.1
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`f0533be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f0533be939e6835ae961e3dd10b764c0c052ee75), [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/css@1.17.3
+  - @vanilla-extract/integration@8.0.3
+
 ## 0.2.0
 
 ### Minor Changes

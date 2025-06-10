@@ -5,7 +5,7 @@ type BasicObj = { [key: string]: any };
 export function forEach<Input extends BasicObj>(
   obj: Input | undefined,
   fn: <Key extends keyof Input>(value: Input[Key], key: string) => void,
-) {
+): void {
   for (const key in obj) {
     fn(obj[key], key);
   }

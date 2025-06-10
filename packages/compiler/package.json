@@ -1,10 +1,18 @@
 {
   "name": "@vanilla-extract/compiler",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-compiler.cjs.js",
   "module": "dist/vanilla-extract-compiler.esm.js",
   "types": "dist/vanilla-extract-compiler.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla-extract-compiler.cjs.d.ts",
+      "import": "./dist/vanilla-extract-compiler.esm.js",
+      "default": "./dist/vanilla-extract-compiler.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "/dist"
   ],
@@ -19,6 +27,6 @@
     "@vanilla-extract/css": "workspace:^",
     "@vanilla-extract/integration": "workspace:^",
     "vite": "^5.0.0 || ^6.0.0",
-    "vite-node": "^3.0.4"
+    "vite-node": "^3.2.2"
   }
 }

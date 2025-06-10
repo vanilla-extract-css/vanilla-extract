@@ -1,5 +1,16 @@
 # @vanilla-extract/css
 
+## 1.17.3
+
+### Patch Changes
+
+- [#1596](https://github.com/vanilla-extract-css/vanilla-extract/pull/1596) [`f0533be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f0533be939e6835ae961e3dd10b764c0c052ee75) Thanks [@cqh963852](https://github.com/cqh963852)! - `addFunctionSerializer`: Fix `args` type to support arrays of primitive values
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`9d16de8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9d16de85b149b531f2e049e8d93bdb862667ff1f), [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/private@1.0.8
+
 ## 1.17.2
 
 ### Patch Changes

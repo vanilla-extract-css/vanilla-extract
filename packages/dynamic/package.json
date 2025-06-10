@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/dynamic",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
   "main": "dist/vanilla-extract-dynamic.cjs.js",
@@ -10,6 +10,7 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/vanilla-extract-dynamic.cjs.d.ts",
+      "import": "./dist/vanilla-extract-dynamic.esm.js",
       "module": "./dist/vanilla-extract-dynamic.esm.js",
       "default": "./dist/vanilla-extract-dynamic.cjs.js"
     }

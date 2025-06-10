@@ -1,5 +1,14 @@
 # @vanilla-extract/dynamic
 
+## 2.1.4
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`9d16de8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9d16de85b149b531f2e049e8d93bdb862667ff1f), [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/private@1.0.8
+
 ## 2.1.3
 
 ### Patch Changes
