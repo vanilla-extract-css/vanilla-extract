@@ -22,13 +22,13 @@ const currentAdapter = () => {
 
 let hasConfiguredAdapter = false;
 
-export const setAdapterIfNotSet = (newAdapter: Adapter) => {
+export const setAdapterIfNotSet = (newAdapter: Adapter): void => {
   if (!hasConfiguredAdapter) {
     setAdapter(newAdapter);
   }
 };
 
-export const setAdapter = (newAdapter: Adapter) => {
+export const setAdapter = (newAdapter: Adapter): void => {
   if (!newAdapter) {
     throw new Error('No adapter provided when calling "setAdapter"');
   }
@@ -38,7 +38,7 @@ export const setAdapter = (newAdapter: Adapter) => {
   adapterStack.push(newAdapter);
 };
 
-export const removeAdapter = () => {
+export const removeAdapter = (): void => {
   adapterStack.pop();
 };
 

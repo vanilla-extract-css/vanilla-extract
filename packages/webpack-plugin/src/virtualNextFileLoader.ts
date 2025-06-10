@@ -1,6 +1,6 @@
 import { deserializeCss } from '@vanilla-extract/integration';
 
-export default function (this: any) {
+export default function (this: any): void {
   const callback = this.async();
   const resourceQuery = this.resourceQuery.slice(1);
 

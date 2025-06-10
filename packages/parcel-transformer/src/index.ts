@@ -1,7 +1,7 @@
 import { Transformer } from '@parcel/plugin';
 import { compile, processVanillaFile } from '@vanilla-extract/integration';
 
-export default new Transformer({
+const vanillaExtractParcelTransformer: Transformer<unknown> = new Transformer({
   async transform({ asset, options }) {
     const identOption = options.mode === 'development' ? 'debug' : 'short';
     const { source, watchFiles } = await compile({
@@ -50,3 +50,5 @@ export default new Transformer({
     return [asset, ...css];
   },
 });
+
+export default vanillaExtractParcelTransformer;
