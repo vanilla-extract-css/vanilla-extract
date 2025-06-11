@@ -7,6 +7,7 @@ import { startParcelFixture, type ParcelFixtureOptions } from './parcel';
 import { type NextFixtureOptions, startNextFixture } from './next';
 
 import type { TestServer } from './types';
+import { startViteSsrFixture, type ViteSsrFixtureOptions } from './vite-ssr';
 
 export * from './types';
 
@@ -14,19 +15,28 @@ type SharedOptions = {
   basePort: number;
 };
 
+// Regular Omit doesn't distribute over union types, but using `extends` forces distribution
+// over the union, which is what we want here. Without distributing, the union type is collapsed and
+// then `port` is omitted, which means we can't discriminate over the `type` field and extract
+// bundler-specific options when needed.
+type DistributedOmit<T, K extends keyof T> = T extends any ? Omit<T, K> : never;
+
+type BundleFixtureOptions =
+  | EsbuildFixtureOptions
+  | WebpackFixtureOptions
+  | ViteFixtureOptions
+  | ViteSsrFixtureOptions
+  | ParcelFixtureOptions
+  | NextFixtureOptions;
+
 type FixtureOptions = SharedOptions &
-  Omit<
-    | EsbuildFixtureOptions
-    | WebpackFixtureOptions
-    | ViteFixtureOptions
-    | ParcelFixtureOptions
-    | NextFixtureOptions,
-    'port'
-  >;
+  DistributedOmit<BundleFixtureOptions, 'port'>;
+
 export async function startFixture(
   fixtureName: string,
-  { type, basePort, ...options }: FixtureOptions,
+  options: FixtureOptions,
 ): Promise<TestServer> {
+  const { type, basePort, ...restOptions } = options;
   const port = await portfinder.getPortPromise({ port: basePort });
 
   console.log(
@@ -35,7 +45,7 @@ export async function startFixture(
       ...Object.entries({
         type,
         port,
-        ...options,
+        ...restOptions,
       }).map(([key, value]) => `- ${key}: ${value}`),
     ].join('\n'),
   );
@@ -49,7 +59,7 @@ export async function startFixture(
     return startEsbuildFixture(fixtureName, {
       type,
       port,
-      mode: options.mode,
+      ...restOptions,
     });
   }
 
@@ -57,7 +67,20 @@ export async function startFixture(
     return startViteFixture(fixtureName, {
       type,
       port,
-      mode: options.mode,
+      ...restOptions,
+    });
+  }
+
+  if (type === 'vite-ssr') {
+    if (fixtureName !== 'vite-react-ssr') {
+      throw new Error(
+        'Currently only the "vite-react-ssr" fixture is supported for vite-ssr',
+      );
+    }
+    return startViteSsrFixture(fixtureName, {
+      type,
+      port,
+      ...restOptions,
     });
   }
 
@@ -65,7 +88,7 @@ export async function startFixture(
     return startParcelFixture(fixtureName, {
       type,
       port,
-      mode: options.mode,
+      ...restOptions,
     });
   }
 
@@ -73,9 +96,9 @@ export async function startFixture(
     return startNextFixture({
       type,
       port,
-      mode: options.mode,
+      ...restOptions,
     });
   }
 
-  return startWebpackFixture(fixtureName, { type, ...options, port });
+  return startWebpackFixture(fixtureName, { type, port, ...restOptions });
 }

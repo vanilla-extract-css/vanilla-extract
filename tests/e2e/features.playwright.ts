@@ -6,7 +6,7 @@ import {
 } from '@vanilla-extract-private/test-helpers';
 
 import test from './fixture';
-import { all as testCases } from './testCases';
+import { all as testCases, viteInlineCssInDev } from './testCases';
 
 testCases.forEach(({ type, mode, snapshotCss = true }) => {
   test.describe(`features - ${type} (${mode})`, () => {
@@ -33,6 +33,36 @@ testCases.forEach(({ type, mode, snapshotCss = true }) => {
         ).toMatchSnapshot(`features-${type}--${mode}.css`);
       });
     }
+
+    test.afterAll(async () => {
+      await server.close();
+    });
+  });
+});
+
+viteInlineCssInDev.forEach(({ type, mode, inlineCssInDev }) => {
+  test.describe(`features - ${type} (${mode}) inlineCssInDev: ${inlineCssInDev}`, () => {
+    let server: TestServer;
+
+    test.beforeAll(async ({ port }) => {
+      server = await startFixture('features', {
+        type,
+        mode,
+        basePort: port,
+        inlineCssInDev,
+      });
+    });
+
+    test('screenshot', async ({ page }) => {
+      const response = await page.goto(server.url);
+
+      if (!response) {
+        throw new Error('Failed to load the page');
+      }
+      expect(await response.body()).toMatchSnapshot(
+        `features-${type}--${mode}-inlineCssInDev-${inlineCssInDev}.html`,
+      );
+    });
 
     test.afterAll(async () => {
       await server.close();

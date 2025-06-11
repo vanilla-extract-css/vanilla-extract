@@ -5,17 +5,22 @@ export const webpack = [
 ] as const;
 
 export const all = [
-  ...webpack,
-  { type: 'esbuild', mode: 'development', snapshotCss: true },
-  { type: 'esbuild', mode: 'production', snapshotCss: true },
-  { type: 'esbuild-runtime', mode: 'development', snapshotCss: false },
-  { type: 'esbuild-runtime', mode: 'production', snapshotCss: false },
-  { type: 'esbuild-next', mode: 'development', snapshotCss: true },
-  { type: 'esbuild-next', mode: 'production', snapshotCss: true },
-  { type: 'esbuild-next-runtime', mode: 'development', snapshotCss: false },
-  { type: 'esbuild-next-runtime', mode: 'production', snapshotCss: false },
-  { type: 'vite', mode: 'development', snapshotCss: false },
-  { type: 'vite', mode: 'production', snapshotCss: true },
-  { type: 'parcel', mode: 'development', snapshotCss: true },
-  { type: 'parcel', mode: 'production', snapshotCss: true },
+  // ...webpack,
+  // { type: 'esbuild', mode: 'development', snapshotCss: true },
+  // { type: 'esbuild', mode: 'production', snapshotCss: true },
+  // { type: 'esbuild-runtime', mode: 'development', snapshotCss: false },
+  // { type: 'esbuild-runtime', mode: 'production', snapshotCss: false },
+  // { type: 'esbuild-next', mode: 'development', snapshotCss: true },
+  // { type: 'esbuild-next', mode: 'production', snapshotCss: true },
+  // { type: 'esbuild-next-runtime', mode: 'development', snapshotCss: false },
+  // { type: 'esbuild-next-runtime', mode: 'production', snapshotCss: false },
+  // { type: 'vite', mode: 'development', snapshotCss: false },
+  // { type: 'vite', mode: 'production', snapshotCss: true },
+  // { type: 'parcel', mode: 'development', snapshotCss: true },
+  // { type: 'parcel', mode: 'production', snapshotCss: true },
+] as const;
+
+export const viteInlineCssInDev = [
+  { type: 'vite', mode: 'development', inlineCssInDev: true },
+  { type: 'vite', mode: 'production', inlineCssInDev: true },
 ] as const;

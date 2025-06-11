@@ -18,6 +18,7 @@
     "test:vitest": "vitest --watch=false",
     "test:playwright": "NODE_OPTIONS=--no-experimental-fetch pnpm test:build-next && playwright test",
     "test:build-next": "tsx scripts/copy-next-plugin && pnpm --filter=@fixtures/next-* clean-build",
+    "test:build-vite-ssr": "pnpm --filter=@fixtures/vite-react-ssr build",
     "format": "prettier --write .",
     "lint": "pnpm run '/^lint:.*/'",
     "lint:manypkg": "manypkg check",

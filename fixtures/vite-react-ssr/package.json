@@ -1,0 +1,34 @@
+{
+  "name": "@fixtures/vite-react-ssr",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "preview": "cross-env NODE_ENV=production node server"
+  },
+  "dependencies": {
+    "compression": "^1.8.0",
+    "express": "^5.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sirv": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/integration": "workspace:*",
+    "@vanilla-extract/vite-plugin": "workspace:*",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "cross-env": "^7.0.3",
+    "resolve-from": "^5.0.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.1.1"
+  }
+}

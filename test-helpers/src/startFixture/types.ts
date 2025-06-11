@@ -2,12 +2,14 @@ import type { EsbuildFixtureOptions } from './esbuild';
 import type { NextFixtureOptions } from './next';
 import type { ParcelFixtureOptions } from './parcel';
 import type { ViteFixtureOptions } from './vite';
+import type { ViteSsrFixtureOptions } from './vite-ssr';
 import type { WebpackFixtureOptions } from './webpack';
 
 type BuildType =
   | WebpackFixtureOptions['type']
   | EsbuildFixtureOptions['type']
   | ViteFixtureOptions['type']
+  | ViteSsrFixtureOptions['type']
   | ParcelFixtureOptions['type']
   | NextFixtureOptions['type'];
 
