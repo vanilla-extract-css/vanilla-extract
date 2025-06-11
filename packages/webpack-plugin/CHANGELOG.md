@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.21
+
+### Patch Changes
+
+- [#1602](https://github.com/vanilla-extract-css/vanilla-extract/pull/1602) [`7a78ebe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7a78ebeaad015d072664206cdbe59642399b405b) Thanks [@Pnlvfx](https://github.com/Pnlvfx)! - Fix `require is not defined` error in ESM bundles by calling `createRequire`
+
 ## 2.3.20
 
 ### Patch Changes
