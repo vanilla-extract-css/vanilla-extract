@@ -11,6 +11,9 @@ import type {
   NextConfig,
   WebpackConfigContext,
 } from 'next/dist/server/config-shared';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0];
 
