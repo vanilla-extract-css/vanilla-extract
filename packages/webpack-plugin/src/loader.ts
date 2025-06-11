@@ -12,6 +12,9 @@ import {
 import type { LoaderContext } from './types';
 import { debug, formatResourcePath } from './logger';
 import { ChildCompiler } from './compiler';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 const virtualFileLoader = require.resolve(
   path.join(
