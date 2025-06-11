@@ -374,8 +374,9 @@ export function createSprinkles<
   });
 }
 
-/** @deprecated - Use `defineProperties` */
-export const createAtomicStyles = defineProperties;
-
-/** @deprecated - Use `createSprinkles` */
-export const createAtomsFn = createSprinkles;
+export {
+  /** @deprecated - Use `defineProperties` */
+  defineProperties as createAtomicStyles,
+  /** @deprecated - Use `createSprinkles` */
+  createSprinkles as createAtomsFn,
+};

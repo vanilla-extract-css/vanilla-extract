@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.2.2
+
+### Patch Changes
+
+- [#1605](https://github.com/vanilla-extract-css/vanilla-extract/pull/1605) [`9bf58ee`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9bf58ee1e9a8371f4ddc245b0a96afcfcf5eac29) Thanks [@sapphi-red](https://github.com/sapphi-red)! - Update `vite-node` dependency to `^3.2.2`
+
 ## 0.2.1
 
 ### Patch Changes

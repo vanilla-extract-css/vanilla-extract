@@ -12,5 +12,7 @@ export const createSprinkles = <
   ...args: Args
 ): SprinklesFn<Args> => internalCreateSprinkles(composeStyles)(...args);
 
-/** @deprecated - Use `createSprinkles` */
-export const createAtomsFn = createSprinkles;
+export {
+  /** @deprecated - Use `createSprinkles` */
+  createSprinkles as createAtomsFn,
+};

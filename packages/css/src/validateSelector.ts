@@ -7,7 +7,10 @@ function escapeRegex(string: string) {
   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
-export const validateSelector = (selector: string, targetClassName: string) => {
+export const validateSelector = (
+  selector: string,
+  targetClassName: string,
+): void => {
   const replaceTarget = () => {
     const targetRegex = new RegExp(
       `.${escapeRegex(cssesc(targetClassName, { isIdentifier: true }))}`,

@@ -10,9 +10,9 @@ const virtualNextFileLoader = require.resolve(
 );
 
 export class VanillaExtractPlugin extends AbstractVanillaExtractPlugin {
-  static loader = virtualNextFileLoader;
+  static loader: string = virtualNextFileLoader;
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     this.inject(compiler, 'virtualNextFileLoader');
   }
 }

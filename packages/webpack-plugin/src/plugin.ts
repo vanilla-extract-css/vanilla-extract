@@ -92,7 +92,7 @@ export abstract class AbstractVanillaExtractPlugin {
   protected inject(
     compiler: Compiler,
     virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader',
-  ) {
+  ): void {
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );
