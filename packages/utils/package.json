@@ -6,14 +6,6 @@
   "main": "dist/vanilla-extract-css-utils.cjs.js",
   "module": "dist/vanilla-extract-css-utils.esm.js",
   "types": "dist/vanilla-extract-css-utils.cjs.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/vanilla-extract-css-utils.cjs.d.ts",
-      "import": "./dist/vanilla-extract-css-utils.esm.js",
-      "default": "./dist/vanilla-extract-css-utils.cjs.js"
-    },
-    "./package.json": "./package.json"
-  },
   "preconstruct": {
     "entrypoints": [
       "index.ts"
