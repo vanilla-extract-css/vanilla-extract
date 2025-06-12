@@ -7,6 +7,7 @@ const packages = await glob('packages/*', {
   onlyDirectories: true,
   absolute: true,
   ignore: ['packages/sprinkles', 'packages/integration', 'packages/compiler'],
+  expandDirectories: false,
 });
 
 for (const packageDir of packages) {

@@ -17,6 +17,7 @@ if (!existsSync(nextPluginDistDir)) {
 const nextFixtureDirs = await glob('fixtures/next-*', {
   onlyDirectories: true,
   absolute: true,
+  expandDirectories: false,
 });
 
 if (nextFixtureDirs.length === 0) {
