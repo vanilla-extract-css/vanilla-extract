@@ -1,5 +1,11 @@
 # @vanilla-extract/babel-plugin-debug-ids
 
+## 1.2.2
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
 ## 1.2.1
 
 ### Patch Changes

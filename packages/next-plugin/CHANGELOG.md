@@ -1,5 +1,14 @@
 # @vanilla-extract/next-plugin
 
+## 2.4.14
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+- Updated dependencies [[`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd)]:
+  - @vanilla-extract/webpack-plugin@2.3.22
+
 ## 2.4.13
 
 ### Patch Changes
