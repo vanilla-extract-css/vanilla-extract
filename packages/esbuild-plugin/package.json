@@ -5,14 +5,6 @@
   "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
   "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
   "types": "dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
-      "import": "./dist/vanilla-extract-esbuild-plugin.esm.js",
-      "default": "./dist/vanilla-extract-esbuild-plugin.cjs.js"
-    },
-    "./package.json": "./package.json"
-  },
   "files": [
     "/dist"
   ],

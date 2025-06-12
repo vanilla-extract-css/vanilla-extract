@@ -9,11 +9,9 @@
     "./package.json": "./package.json",
     ".": {
       "browser": {
-        "import": "./dist/vanilla-extract-css-functionSerializer.browser.esm.js",
         "module": "./dist/vanilla-extract-css-functionSerializer.browser.esm.js",
         "default": "./dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
       },
-      "import": "./dist/vanilla-extract-css-functionSerializer.esm.js",
       "module": "./dist/vanilla-extract-css-functionSerializer.esm.js",
       "default": "./dist/vanilla-extract-css-functionSerializer.cjs.js"
     }
