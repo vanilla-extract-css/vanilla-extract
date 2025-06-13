@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/sprinkles",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Zero-runtime atomic CSS framework for vanilla-extract",
   "sideEffects": false,
   "main": "dist/vanilla-extract-sprinkles.cjs.js",
@@ -10,19 +10,16 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/vanilla-extract-sprinkles.cjs.d.ts",
-      "import": "./dist/vanilla-extract-sprinkles.esm.js",
       "module": "./dist/vanilla-extract-sprinkles.esm.js",
       "default": "./dist/vanilla-extract-sprinkles.cjs.js"
     },
     "./createRuntimeSprinkles": {
       "types": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles.cjs.d.ts",
-      "import": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
       "module": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js",
       "default": "./createRuntimeSprinkles/dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js"
     },
     "./createUtils": {
       "types": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.d.ts",
-      "import": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
       "module": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.esm.js",
       "default": "./createUtils/dist/vanilla-extract-sprinkles-createUtils.cjs.js"
     }

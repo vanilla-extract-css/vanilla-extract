@@ -1,19 +1,11 @@
 {
   "name": "@vanilla-extract/private",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
   "main": "dist/vanilla-extract-private.cjs.js",
   "module": "dist/vanilla-extract-private.esm.js",
   "types": "dist/vanilla-extract-private.cjs.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/vanilla-extract-private.cjs.d.ts",
-      "import": "./dist/vanilla-extract-private.esm.js",
-      "default": "./dist/vanilla-extract-private.cjs.js"
-    },
-    "./package.json": "./package.json"
-  },
   "preconstruct": {
     "entrypoints": [
       "index.ts"

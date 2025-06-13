@@ -1,18 +1,10 @@
 {
   "name": "@vanilla-extract/rollup-plugin",
-  "version": "1.3.16",
+  "version": "1.3.17",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
   "module": "dist/vanilla-extract-rollup-plugin.esm.js",
   "types": "dist/vanilla-extract-rollup-plugin.cjs.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/vanilla-extract-rollup-plugin.cjs.d.ts",
-      "import": "./dist/vanilla-extract-rollup-plugin.esm.js",
-      "default": "./dist/vanilla-extract-rollup-plugin.cjs.js"
-    },
-    "./package.json": "./package.json"
-  },
   "files": [
     "/dist"
   ],
