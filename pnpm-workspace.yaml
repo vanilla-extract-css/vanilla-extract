@@ -1,11 +1,13 @@
-preferWorkspacePackages: true
 packages:
-  - 'packages/*'
-  - 'test-helpers'
-  - 'fixtures/*'
-  - 'fixtures/thirdparty/**'
-  - 'site'
-  - 'examples/*'
-  - 'tests'
-  - 'benchmarks'
-  - 'scripts'
+  - packages/*
+  - test-helpers
+  - fixtures/*
+  - fixtures/thirdparty/**
+  - site
+  - examples/*
+  - tests
+  - benchmarks
+  - scripts
+onlyBuiltDependencies:
+  - esbuild
+preferWorkspacePackages: true
