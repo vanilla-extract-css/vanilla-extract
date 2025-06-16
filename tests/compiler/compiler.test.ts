@@ -24,7 +24,8 @@ describe('compiler', () => {
     | 'viteResolve'
     | 'vitePlugins'
     | 'tsconfigPaths'
-    | 'basePath',
+    | 'basePath'
+    | 'getAllCss',
     ReturnType<typeof createCompiler>
   >;
 
@@ -78,6 +79,9 @@ describe('compiler', () => {
         viteConfig: {
           base: '/assets/',
         },
+      }),
+      getAllCss: createCompiler({
+        root: __dirname,
       }),
     };
   });
@@ -549,6 +553,26 @@ describe('compiler', () => {
       .image_imageStyle2__1lseqzh1 {
         background-image: url('/fixtures/vite-config/test.jpg');
       }
+    `);
+  });
+
+  test('getAllCss should return all CSS that has been processed', async () => {
+    const compiler = compilers.getAllCss;
+
+    const buttonCssPath = './fixtures/class-composition/button.css.ts';
+    await compiler.processVanillaFile(buttonCssPath);
+
+    expect(compiler.getAllCss()).toMatchInlineSnapshot(`
+      .base_fontFamilyBase__1xukjx0 {
+        font-family: Arial, sans-serif;
+      }
+      .base_base__1xukjx1 {
+        background: blue;
+      }
+      .button_button__59rihu0 {
+        color: red;
+      }
+
     `);
   });
 });
