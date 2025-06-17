@@ -561,6 +561,8 @@ describe('compiler', () => {
 
     const buttonCssPath = './fixtures/class-composition/button.css.ts';
     await compiler.processVanillaFile(buttonCssPath);
+    const stepperCssPath = './fixtures/class-composition/stepper.css.ts';
+    await compiler.processVanillaFile(stepperCssPath);
 
     expect(compiler.getAllCss()).toMatchInlineSnapshot(`
       .base_fontFamilyBase__1xukjx0 {
@@ -571,6 +573,12 @@ describe('compiler', () => {
       }
       .button_button__59rihu0 {
         color: red;
+      }
+      .stepper_stepperContainer__p034sj0 {
+        font-size: 32px;
+      }
+      .stepper_stepperContainer__p034sj0 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
+        border: 1px solid black;
       }
 
     `);
