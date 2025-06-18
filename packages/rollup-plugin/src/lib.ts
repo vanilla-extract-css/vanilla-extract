@@ -22,9 +22,10 @@ export function generateCssBundle(
 
   // 2. build bundle from import order
   for (const id of sortModules(cssFiles)) {
-    const { importedIdResolutions } = plugin.getModuleInfo(id) ?? {};
-    for (const resolution of importedIdResolutions ?? []) {
-      if (resolution.meta.css && !extractedCssIds.has(resolution.id)) {
+    const { importedIds } = plugin.getModuleInfo(id) ?? {};
+    for (const importedId of importedIds ?? []) {
+      const resolution = plugin.getModuleInfo(importedId);
+      if (resolution?.meta.css && !extractedCssIds.has(resolution.id)) {
         extractedCssIds.add(resolution.id);
         cssBundle.addSource({
           filename: resolution.id,
