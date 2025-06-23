@@ -311,6 +311,28 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webpack-plugin
 
+  fixtures/react-library-example:
+    dependencies:
+      '@vanilla-extract/css':
+        specifier: workspace:*
+        version: link:../../packages/css
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.2.55
+      '@types/react-dom':
+        specifier: ^18.2.19
+        version: 18.2.19
+
   fixtures/recipes:
     dependencies:
       '@vanilla-extract/css':
@@ -533,7 +555,7 @@ importers:
     devDependencies:
       next:
         specifier: 12.3.4
-        version: 12.3.4(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 12.3.4(@babel/core@7.23.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       webpack:
         specifier: ^5.90.0
         version: 5.90.0(webpack-cli@5.1.4)
@@ -560,6 +582,9 @@ importers:
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
+      magic-string:
+        specifier: ^0.30.17
+        version: 0.30.17
     devDependencies:
       '@fixtures/themed':
         specifier: workspace:*
@@ -5428,6 +5453,10 @@ packages:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
+
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -9977,6 +10006,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
+  react-dom@19.1.0:
+    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
+    peerDependencies:
+      react: ^19.1.0
+
   react-error-overlay@6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
 
@@ -10029,6 +10063,10 @@ packages:
 
   react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+    engines: {node: '>=0.10.0'}
+
+  react@19.1.0:
+    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
 
   read-package-json-fast@2.0.3:
@@ -10392,6 +10430,9 @@ packages:
 
   scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+
+  scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
   schema-utils@3.3.0:
     resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}
@@ -17252,6 +17293,8 @@ snapshots:
 
   clone@2.1.2: {}
 
+  clsx@2.1.1: {}
+
   co@4.6.0: {}
 
   code-point-at@1.1.0: {}
@@ -21585,6 +21628,34 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
+  next@12.3.4(@babel/core@7.23.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@next/env': 12.3.4
+      '@swc/helpers': 0.4.11
+      caniuse-lite: 1.0.30001587
+      postcss: 8.4.14
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      styled-jsx: 5.0.7(@babel/core@7.23.9)(react@19.1.0)
+      use-sync-external-store: 1.2.0(react@19.1.0)
+    optionalDependencies:
+      '@next/swc-android-arm-eabi': 12.3.4
+      '@next/swc-android-arm64': 12.3.4
+      '@next/swc-darwin-arm64': 12.3.4
+      '@next/swc-darwin-x64': 12.3.4
+      '@next/swc-freebsd-x64': 12.3.4
+      '@next/swc-linux-arm-gnueabihf': 12.3.4
+      '@next/swc-linux-arm64-gnu': 12.3.4
+      '@next/swc-linux-arm64-musl': 12.3.4
+      '@next/swc-linux-x64-gnu': 12.3.4
+      '@next/swc-linux-x64-musl': 12.3.4
+      '@next/swc-win32-arm64-msvc': 12.3.4
+      '@next/swc-win32-ia32-msvc': 12.3.4
+      '@next/swc-win32-x64-msvc': 12.3.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
   next@13.5.4(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@next/env': 13.5.4
@@ -22705,6 +22776,11 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
+  react-dom@19.1.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      scheduler: 0.26.0
+
   react-error-overlay@6.0.9: {}
 
   react-head@3.4.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
@@ -22753,6 +22829,8 @@ snapshots:
   react@18.2.0:
     dependencies:
       loose-envify: 1.4.0
+
+  react@19.1.0: {}
 
   read-package-json-fast@2.0.3:
     dependencies:
@@ -23214,6 +23292,8 @@ snapshots:
   scheduler@0.23.0:
     dependencies:
       loose-envify: 1.4.0
+
+  scheduler@0.26.0: {}
 
   schema-utils@3.3.0:
     dependencies:
@@ -23705,6 +23785,12 @@ snapshots:
   styled-jsx@5.0.7(@babel/core@7.23.9)(react@18.2.0):
     dependencies:
       react: 18.2.0
+    optionalDependencies:
+      '@babel/core': 7.23.9
+
+  styled-jsx@5.0.7(@babel/core@7.23.9)(react@19.1.0):
+    dependencies:
+      react: 19.1.0
     optionalDependencies:
       '@babel/core': 7.23.9
 
@@ -24447,6 +24533,10 @@ snapshots:
   use-sync-external-store@1.2.0(react@18.2.0):
     dependencies:
       react: 18.2.0
+
+  use-sync-external-store@1.2.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   use@3.1.1: {}
 
