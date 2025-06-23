@@ -8,7 +8,7 @@ import {
   virtualCssFileFilter,
   type CompileOptions,
 } from '@vanilla-extract/integration';
-import { posix } from 'path';
+import { posix, sep } from 'path';
 
 const { relative, normalize, dirname } = posix;
 
@@ -86,7 +86,7 @@ export function vanillaExtractPlugin({
     },
     // Replace .css import paths with relative paths to emitted css files
     renderChunk(code, chunkInfo) {
-      const chunkPath = dirname(chunkInfo.fileName);
+      const chunkPath = dirname(chunkInfo.fileName.replaceAll(sep, posix.sep));
       const output = chunkInfo.imports.reduce((codeResult, importPath) => {
         const moduleInfo = this.getModuleInfo(importPath);
         if (!moduleInfo?.meta.assetId) {
