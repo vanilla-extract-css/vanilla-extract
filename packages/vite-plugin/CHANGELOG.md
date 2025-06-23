@@ -1,5 +1,13 @@
 # @vanilla-extract/vite-plugin
 
+## 5.0.7
+
+### Patch Changes
+
+- [#1617](https://github.com/vanilla-extract-css/vanilla-extract/pull/1617) [`f4bd196`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f4bd196f041eaec5fb7dcd8182cd2a4d1d3d167f) Thanks [@askoufis](https://github.com/askoufis)! - Don't watch files or invalidate VE modules during SSR
+
+  Fixes a bug where a dependent of a Vanilla Extract module could be evaulated multiple times during `ssrLoadModule`, potentially causing bugs with singleton variables such as React context.
+
 ## 5.0.6
 
 ### Patch Changes
