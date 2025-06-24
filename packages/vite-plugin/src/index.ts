@@ -125,7 +125,10 @@ export function vanillaExtractPlugin({
           {
             tag: 'style',
             children: allCss,
-            attrs: { type: 'text/css' },
+            attrs: {
+              type: 'text/css',
+              'data-vanilla-extract-inline-dev-css': true,
+            },
             injectTo: 'head-prepend',
           },
         ];
