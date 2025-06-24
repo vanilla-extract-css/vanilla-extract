@@ -1,5 +1,907 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`rollup-plugin should be compatible with rolldown should build with preserveModules 1`] = `
+[
+  [
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
+    ".shared_shadow__4dtfen0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+body, button {
+  line-height: 16px;
+}",
+  ],
+  [
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
+    "@font-face {
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
+}
+@font-face {
+  src: local("Comic Sans MS");
+  font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
+.styles_container__jteyb11 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
+}
+.styles_iDunno__jteyb12 {
+  z-index: 1;
+  position: relative;
+}
+.styles_button__jteyb13 {
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  color: var(--colors-text__cvta172);
+  border-radius: 9999px;
+}
+.themes_altTheme__cvta176 .themes_theme__cvta170 .styles_container__jteyb11 .styles_button__jteyb13 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles_iDunno__jteyb12:after {
+  content: 'I am content';
+}
+html .styles_opacity_1\\/2__jteyb16 {
+  opacity: var(--blankVar1__jteyb14);
+}
+html .styles_opacity_1\\/4__jteyb17 {
+  opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
+  }
+  .styles_button__jteyb13 {
+    padding: var(--space-1__cvta173);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles_button__jteyb13 {
+    padding: var(--space-2__cvta174);
+  }
+}",
+  ],
+  [
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes_altTheme__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes_responsiveTheme__cvta17e {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__cvta17e {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}",
+  ],
+  [
+    "src/index.js",
+    "import { altTheme, responsiveTheme, theme, vars } from "./themes.css.js";
+import { button, container, opacity } from "./styles.css.js";
+import { shadow } from "./shared.css.js";
+import test_nodes_default from "../test-nodes.js";
+import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
+
+//#region fixtures/themed/src/index.ts
+const inlineTheme = assignInlineVars(vars, {
+	colors: {
+		backgroundColor: "orange",
+		text: "black"
+	},
+	space: {
+		1: "4px",
+		2: "8px",
+		3: "12px"
+	}
+});
+function render() {
+	document.body.innerHTML = \`
+  <div id="\${test_nodes_default.root}" class="\${shadow}"> 
+    Root theme
+    <div id="\${test_nodes_default.rootContainer}" class="\${container}">
+      <button id="\${test_nodes_default.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
+        Alt theme
+        <div id="\${test_nodes_default.altContainer}" class="\${container}">
+          <button id="\${test_nodes_default.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
+            Back to root theme
+            <div id="\${test_nodes_default.nestedRootContainer}" class="\${container}">
+              <button id="\${test_nodes_default.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
+              Inline theme
+                <div id="\${test_nodes_default.inlineThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id="\${test_nodes_default.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${test_nodes_default.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
+              Responsive theme
+                <div id="\${test_nodes_default.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+	const dynamicVarsContainer = document.getElementById(test_nodes_default.dynamicVarsContainer);
+	if (!dynamicVarsContainer) throw new Error("Dynamic vars container not found.");
+	setElementVars(dynamicVarsContainer, vars, {
+		colors: {
+			backgroundColor: "transparent",
+			text: "papayawhip"
+		},
+		space: {
+			1: "5px",
+			2: "10px",
+			3: "15px"
+		}
+	});
+	setElementVars(dynamicVarsContainer, { [vars.colors.backgroundColor]: "darksalmon" });
+}
+render();
+
+//#endregion",
+  ],
+  [
+    "src/shared.css.js",
+    "import "./../assets/shared.css.ts.vanilla-G_Gyt4-e.css";
+
+//#region fixtures/themed/src/shared.css.ts
+var shadow = "shared_shadow__4dtfen0";
+
+//#endregion
+export { shadow };",
+  ],
+  [
+    "src/styles.css.js",
+    "import "./../assets/themes.css.ts.vanilla-s9rcEmBH.css";
+import "./../assets/shared.css.ts.vanilla-G_Gyt4-e.css";
+import "./../assets/styles.css.ts.vanilla-BfisGtko.css";
+
+//#region fixtures/themed/src/styles.css.ts
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = {
+	"1/2": "styles_opacity_1/2__jteyb16",
+	"1/4": "styles_opacity_1/4__jteyb17"
+};
+
+//#endregion
+export { button, container, opacity };",
+  ],
+  [
+    "src/themes.css.js",
+    "import "./../assets/themes.css.ts.vanilla-s9rcEmBH.css";
+
+//#region fixtures/themed/src/themes.css.ts
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
+var theme = "themes_theme__cvta170";
+var vars = {
+	colors: {
+		backgroundColor: "var(--colors-backgroundColor__cvta171)",
+		text: "var(--colors-text__cvta172)"
+	},
+	space: {
+		"1": "var(--space-1__cvta173)",
+		"2": "var(--space-2__cvta174)",
+		"3": "var(--space-3__cvta175)"
+	}
+};
+
+//#endregion
+export { altTheme, responsiveTheme, theme, vars };",
+  ],
+  [
+    "test-nodes.js",
+    "//#region fixtures/themed/test-nodes.json
+var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
+var test_nodes_default = {
+	root,
+	rootContainer,
+	rootButton,
+	altContainer,
+	altButton,
+	nestedRootContainer,
+	nestedRootButton,
+	inlineThemeContainer,
+	inlineThemeButton,
+	dynamicVarsContainer,
+	dynamicVarsButton,
+	responsiveThemeContainer,
+	responsiveThemeButton
+};
+
+//#endregion
+export { test_nodes_default as default };",
+  ],
+]
+`;
+
+exports[`rollup-plugin should be compatible with rolldown should build with preserveModules and assetFileNames 1`] = `
+[
+  [
+    "index.js",
+    "import { altTheme, responsiveTheme, theme, vars } from "./themes.css.js";
+import { button, container, opacity } from "./styles.css.js";
+import { shadow } from "./shared.css.js";
+import test_nodes_default from "./test-nodes.js";
+import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
+
+//#region fixtures/themed/src/index.ts
+const inlineTheme = assignInlineVars(vars, {
+	colors: {
+		backgroundColor: "orange",
+		text: "black"
+	},
+	space: {
+		1: "4px",
+		2: "8px",
+		3: "12px"
+	}
+});
+function render() {
+	document.body.innerHTML = \`
+  <div id="\${test_nodes_default.root}" class="\${shadow}"> 
+    Root theme
+    <div id="\${test_nodes_default.rootContainer}" class="\${container}">
+      <button id="\${test_nodes_default.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
+        Alt theme
+        <div id="\${test_nodes_default.altContainer}" class="\${container}">
+          <button id="\${test_nodes_default.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
+            Back to root theme
+            <div id="\${test_nodes_default.nestedRootContainer}" class="\${container}">
+              <button id="\${test_nodes_default.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
+              Inline theme
+                <div id="\${test_nodes_default.inlineThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id="\${test_nodes_default.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${test_nodes_default.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
+              Responsive theme
+                <div id="\${test_nodes_default.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+	const dynamicVarsContainer = document.getElementById(test_nodes_default.dynamicVarsContainer);
+	if (!dynamicVarsContainer) throw new Error("Dynamic vars container not found.");
+	setElementVars(dynamicVarsContainer, vars, {
+		colors: {
+			backgroundColor: "transparent",
+			text: "papayawhip"
+		},
+		space: {
+			1: "5px",
+			2: "10px",
+			3: "15px"
+		}
+	});
+	setElementVars(dynamicVarsContainer, { [vars.colors.backgroundColor]: "darksalmon" });
+}
+render();
+
+//#endregion",
+  ],
+  [
+    "shared.css.js",
+    "import "./shared.css.ts.vanilla.css";
+
+//#region fixtures/themed/src/shared.css.ts
+var shadow = "shared_shadow__4dtfen0";
+
+//#endregion
+export { shadow };",
+  ],
+  [
+    "shared.css.ts.vanilla.css",
+    ".shared_shadow__4dtfen0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+body, button {
+  line-height: 16px;
+}",
+  ],
+  [
+    "styles.css.js",
+    "import "./themes.css.ts.vanilla.css";
+import "./shared.css.ts.vanilla.css";
+import "./styles.css.ts.vanilla.css";
+
+//#region fixtures/themed/src/styles.css.ts
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = {
+	"1/2": "styles_opacity_1/2__jteyb16",
+	"1/4": "styles_opacity_1/4__jteyb17"
+};
+
+//#endregion
+export { button, container, opacity };",
+  ],
+  [
+    "styles.css.ts.vanilla.css",
+    "@font-face {
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
+}
+@font-face {
+  src: local("Comic Sans MS");
+  font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
+.styles_container__jteyb11 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
+}
+.styles_iDunno__jteyb12 {
+  z-index: 1;
+  position: relative;
+}
+.styles_button__jteyb13 {
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  color: var(--colors-text__cvta172);
+  border-radius: 9999px;
+}
+.themes_altTheme__cvta176 .themes_theme__cvta170 .styles_container__jteyb11 .styles_button__jteyb13 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles_iDunno__jteyb12:after {
+  content: 'I am content';
+}
+html .styles_opacity_1\\/2__jteyb16 {
+  opacity: var(--blankVar1__jteyb14);
+}
+html .styles_opacity_1\\/4__jteyb17 {
+  opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
+  }
+  .styles_button__jteyb13 {
+    padding: var(--space-1__cvta173);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles_button__jteyb13 {
+    padding: var(--space-2__cvta174);
+  }
+}",
+  ],
+  [
+    "test-nodes.js",
+    "//#region fixtures/themed/test-nodes.json
+var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
+var test_nodes_default = {
+	root,
+	rootContainer,
+	rootButton,
+	altContainer,
+	altButton,
+	nestedRootContainer,
+	nestedRootButton,
+	inlineThemeContainer,
+	inlineThemeButton,
+	dynamicVarsContainer,
+	dynamicVarsButton,
+	responsiveThemeContainer,
+	responsiveThemeButton
+};
+
+//#endregion
+export { test_nodes_default as default };",
+  ],
+  [
+    "themes.css.js",
+    "import "./themes.css.ts.vanilla.css";
+
+//#region fixtures/themed/src/themes.css.ts
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
+var theme = "themes_theme__cvta170";
+var vars = {
+	colors: {
+		backgroundColor: "var(--colors-backgroundColor__cvta171)",
+		text: "var(--colors-text__cvta172)"
+	},
+	space: {
+		"1": "var(--space-1__cvta173)",
+		"2": "var(--space-2__cvta174)",
+		"3": "var(--space-3__cvta175)"
+	}
+};
+
+//#endregion
+export { altTheme, responsiveTheme, theme, vars };",
+  ],
+  [
+    "themes.css.ts.vanilla.css",
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes_altTheme__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes_responsiveTheme__cvta17e {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__cvta17e {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}",
+  ],
+]
+`;
+
+exports[`rollup-plugin should be compatible with rolldown should build with sourcemaps 1`] = `
+[
+  [
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
+    "",
+  ],
+  [
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
+    "",
+  ],
+  [
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
+    "",
+  ],
+  [
+    "src/index.js",
+    ";;;;;;;AAiBA,MAAM,cAAc,iBAAiB,MAAM;CACzC,QAAQ;EACN,iBAAiB;EACjB,MAAM;CACP;CACD,OAAO;EACL,GAAG;EACH,GAAG;EACH,GAAG;CACJ;AACF,EAAC;AAEF,SAAS,SAAS;AAChB,UAAS,KAAK,aAAa;aAChBA,mBAAU,KAAK,WAAW,OAAO;;eAE/BA,mBAAU,cAAc,WAAW,UAAU;oBACxCA,mBAAU,WAAW,WAAW,OAAO;oBACvC,SAAS;;mBAEVA,mBAAU,aAAa,WAAW,UAAU;wBACvCA,mBAAU,UAAU,WAAW,OAAO;wBACtC,MAAM;;uBAEPA,mBAAU,oBAAoB,WAAW,UAAU;4BAC9CA,mBAAU,iBAAiB,WAAW,OAAO;0BAC/C,YAAY;;2BAEXA,mBAAU,qBAAqB,WAAW,UAAU;gCAC/CA,mBAAU,kBAAkB,WAAW,OAAO,GAAG,QAAQ,OAAO;;;+BAGjEA,mBAAU,qBAAqB,WAAW,UAAU;oCAC/CA,mBAAU,kBAAkB,WAAW,OAAO;gCAClD,gBAAgB;;2BAErBA,mBAAU,yBAAyB,WAAW,UAAU;gCACnDA,mBAAU,sBAAsB,WAAW,OAAO;;;;;;;;;;;;;;;;CAiBhF,MAAM,uBAAuB,SAAS,eACpCA,mBAAU,qBACX;AAED,MAAK,qBACH,OAAM,IAAI,MAAM;AAGlB,gBAAe,sBAAsB,MAAM;EACzC,QAAQ;GACN,iBAAiB;GACjB,MAAM;EACP;EACD,OAAO;GACL,GAAG;GACH,GAAG;GACH,GAAG;EACJ;CACF,EAAC;AAEF,gBAAe,sBAAsB,GAClC,KAAK,OAAO,kBAAkB,aAChC,EAAC;AACH;AAED,QAAQ",
+  ],
+  [
+    "src/index.js.map",
+    "",
+  ],
+  [
+    "src/shared.css.js",
+    "",
+  ],
+  [
+    "src/shared.css.js.map",
+    "",
+  ],
+  [
+    "src/styles.css.js",
+    "",
+  ],
+  [
+    "src/styles.css.js.map",
+    "",
+  ],
+  [
+    "src/themes.css.js",
+    "",
+  ],
+  [
+    "src/themes.css.js.map",
+    "",
+  ],
+  [
+    "test-nodes.js",
+    ";WACU;oBACS;iBACH;mBACE;gBACH;0BACU;uBACH;2BACI;wBACH;2BACG;wBACH;+BACO;4BACH;yBAb3B;;;;;;;;;;;;;;AAcC",
+  ],
+  [
+    "test-nodes.js.map",
+    "",
+  ],
+]
+`;
+
+exports[`rollup-plugin should be compatible with rolldown should build without preserveModules 1`] = `
+[
+  [
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
+    ".shared_shadow__4dtfen0 {
+  box-shadow: 0 0 5px red;
+}
+body {
+  background-color: skyblue;
+}
+body, button {
+  line-height: 16px;
+}",
+  ],
+  [
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
+    "@font-face {
+  src: local("Impact");
+  font-family: "styles_impact__jteyb10";
+}
+@font-face {
+  src: local("Comic Sans MS");
+  font-family: MyGlobalComicSans;
+}
+@property --blankVar1__jteyb14 {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.5;
+}
+.styles_container__jteyb11 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2__cvta174);
+  padding: var(--space-3__cvta175);
+}
+.styles_iDunno__jteyb12 {
+  z-index: 1;
+  position: relative;
+}
+.styles_button__jteyb13 {
+  font-family: "styles_impact__jteyb10";
+  background-color: var(--colors-backgroundColor__cvta171, "THIS FALLBACK VALUE SHOULD NEVER BE USED");
+  color: var(--colors-text__cvta172);
+  border-radius: 9999px;
+}
+.themes_altTheme__cvta176 .themes_theme__cvta170 .styles_container__jteyb11 .styles_button__jteyb13 {
+  font-family: MyGlobalComicSans;
+  outline: 5px solid red;
+}
+body .styles_iDunno__jteyb12:after {
+  content: 'I am content';
+}
+html .styles_opacity_1\\/2__jteyb16 {
+  opacity: var(--blankVar1__jteyb14);
+}
+html .styles_opacity_1\\/4__jteyb17 {
+  opacity: var(--blankVar1__jteyb14, var(--blankVar2__jteyb15, 0.25));
+}
+@media only screen and (min-width: 500px) {
+  .styles_container__jteyb11 {
+    border: 1px solid var(--colors-backgroundColor__cvta171);
+  }
+  .styles_button__jteyb13 {
+    padding: var(--space-1__cvta173);
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .styles_button__jteyb13 {
+    padding: var(--space-2__cvta174);
+  }
+}",
+  ],
+  [
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
+    "@layer themes_themeLayer__cvta177;
+@layer globalThemeLayer;
+:root, .themes_theme__cvta170 {
+  --colors-backgroundColor__cvta171: blue;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 4px;
+  --space-2__cvta174: 8px;
+  --space-3__cvta175: 12px;
+}
+.themes_altTheme__cvta176 {
+  --colors-backgroundColor__cvta171: green;
+  --colors-text__cvta172: white;
+  --space-1__cvta173: 8px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 16px;
+}
+.themes_responsiveTheme__cvta17e {
+  --colors-backgroundColor__cvta171: pink;
+  --colors-text__cvta172: purple;
+  --space-1__cvta173: 6px;
+  --space-2__cvta174: 12px;
+  --space-3__cvta175: 18px;
+}
+@layer themes_themeLayer__cvta177 {
+  .themes_altTheme2Class__cvta178 {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@layer globalThemeLayer {
+  :root {
+    --colors-backgroundColor__cvta179: green;
+    --colors-text__cvta17a: white;
+    --space-1__cvta17b: 8px;
+    --space-2__cvta17c: 12px;
+    --space-3__cvta17d: 16px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .themes_responsiveTheme__cvta17e {
+    --colors-backgroundColor__cvta171: purple;
+    --colors-text__cvta172: pink;
+  }
+}",
+  ],
+  [
+    "index.js",
+    "import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
+import "./assets/themes.css.ts.vanilla-s9rcEmBH.css";
+import "./assets/shared.css.ts.vanilla-G_Gyt4-e.css";
+import "./assets/styles.css.ts.vanilla-BfisGtko.css";
+
+//#region fixtures/themed/src/themes.css.ts
+var altTheme = "themes_altTheme__cvta176";
+var responsiveTheme = "themes_responsiveTheme__cvta17e";
+var theme = "themes_theme__cvta170";
+var vars = {
+	colors: {
+		backgroundColor: "var(--colors-backgroundColor__cvta171)",
+		text: "var(--colors-text__cvta172)"
+	},
+	space: {
+		"1": "var(--space-1__cvta173)",
+		"2": "var(--space-2__cvta174)",
+		"3": "var(--space-3__cvta175)"
+	}
+};
+
+//#endregion
+//#region fixtures/themed/src/styles.css.ts
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = {
+	"1/2": "styles_opacity_1/2__jteyb16",
+	"1/4": "styles_opacity_1/4__jteyb17"
+};
+
+//#endregion
+//#region fixtures/themed/src/shared.css.ts
+var shadow = "shared_shadow__4dtfen0";
+
+//#endregion
+//#region fixtures/themed/test-nodes.json
+var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
+var test_nodes_default = {
+	root,
+	rootContainer,
+	rootButton,
+	altContainer,
+	altButton,
+	nestedRootContainer,
+	nestedRootButton,
+	inlineThemeContainer,
+	inlineThemeButton,
+	dynamicVarsContainer,
+	dynamicVarsButton,
+	responsiveThemeContainer,
+	responsiveThemeButton
+};
+
+//#endregion
+//#region fixtures/themed/src/index.ts
+const inlineTheme = assignInlineVars(vars, {
+	colors: {
+		backgroundColor: "orange",
+		text: "black"
+	},
+	space: {
+		1: "4px",
+		2: "8px",
+		3: "12px"
+	}
+});
+function render() {
+	document.body.innerHTML = \`
+  <div id="\${test_nodes_default.root}" class="\${shadow}"> 
+    Root theme
+    <div id="\${test_nodes_default.rootContainer}" class="\${container}">
+      <button id="\${test_nodes_default.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
+        Alt theme
+        <div id="\${test_nodes_default.altContainer}" class="\${container}">
+          <button id="\${test_nodes_default.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
+            Back to root theme
+            <div id="\${test_nodes_default.nestedRootContainer}" class="\${container}">
+              <button id="\${test_nodes_default.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
+              Inline theme
+                <div id="\${test_nodes_default.inlineThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <div>
+                  Dynamic vars
+                    <div id="\${test_nodes_default.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${test_nodes_default.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
+              Responsive theme
+                <div id="\${test_nodes_default.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+	const dynamicVarsContainer$1 = document.getElementById(test_nodes_default.dynamicVarsContainer);
+	if (!dynamicVarsContainer$1) throw new Error("Dynamic vars container not found.");
+	setElementVars(dynamicVarsContainer$1, vars, {
+		colors: {
+			backgroundColor: "transparent",
+			text: "papayawhip"
+		},
+		space: {
+			1: "5px",
+			2: "10px",
+			3: "15px"
+		}
+	});
+	setElementVars(dynamicVarsContainer$1, { [vars.colors.backgroundColor]: "darksalmon" });
+}
+render();
+
+//#endregion",
+  ],
+]
+`;
+
 exports[`rollup-plugin should build with preserveModules 1`] = `
 [
   [
