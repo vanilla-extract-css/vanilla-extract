@@ -1,5 +1,29 @@
 # @vanilla-extract/compiler
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1614](https://github.com/vanilla-extract-css/vanilla-extract/pull/1614) [`4e92cce`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4e92ccee6d7b0c2ee16163446e5938c7365224b3) Thanks [@askoufis](https://github.com/askoufis)! - Add new `getAllCss` API
+
+  The `Compiler` class now provides a `getAllCss` method that returns all the CSS currently stored by the compiler.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { createCompiler } from '@vanilla-extract/compiler';
+
+  const compiler = createCompiler({
+    root: process.cwd()
+  });
+
+  await compiler.processVanillaFile('foo.css.ts');
+  await compiler.processVanillaFile('bar.css.ts');
+
+  // Contains all CSS created by `foo.css.ts` and `bar.css.ts`
+  const allCss = compiler.getAllCss();
+  ```
+
 ## 0.2.3
 
 ### Patch Changes
