@@ -573,6 +573,9 @@ importers:
       esbuild:
         specifier: ~0.25.0
         version: 0.25.0
+      rolldown:
+        specifier: 1.0.0-beta.19
+        version: 1.0.0-beta.19
       rollup:
         specifier: ^4.20.0
         version: 4.30.1
@@ -608,7 +611,7 @@ importers:
         version: link:../integration
       debug:
         specifier: ^4.3.1
-        version: 4.4.0(supports-color@9.2.3)
+        version: 4.4.1(supports-color@9.2.3)
       loader-utils:
         specifier: ^2.0.0
         version: 2.0.2
@@ -1849,6 +1852,15 @@ packages:
       react-dom:
         optional: true
 
+  '@emnapi/core@1.4.3':
+    resolution: {integrity: sha512-4m62DuCE07lw01soJwPiBGC0nAww0Q+RY70VZ+n49yDIO13yyinhbWCeNnaob0lakDtWQzSdtNWzJeOJt2ma+g==}
+
+  '@emnapi/runtime@1.4.3':
+    resolution: {integrity: sha512-pBPWdu6MLKROBX05wSNKcNb++m5Er+KQ9QkB+WVM+pW2Kx9hoSrVTnu3BdkI5eBLZoKu/J6mW/B6i6bJB2ytXQ==}
+
+  '@emnapi/wasi-threads@1.0.2':
+    resolution: {integrity: sha512-5n3nTJblwRi8LlXkJ9eBzu+kZR8Yxcc7ubakyQTFzPMtIhFpUBRbsnc2Dv88IZDIbCDlBiWrknhB4Lsz7mg6BA==}
+
   '@emotion/hash@0.9.0':
     resolution: {integrity: sha512-14FtKiHhy2QoPIzdTcvh//8OyBlknNs2nXRwIhG904opCby3l+9Xaf/wuPvICBF0rc1ZCNBd3nKe9cd2mecVkQ==}
 
@@ -2993,6 +3005,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@napi-rs/wasm-runtime@0.2.11':
+    resolution: {integrity: sha512-9DPkXtvHydrcOsopiYpUgPHpmj0HWZKMUnL2dZqpvC42lsratuBG06V5ipyno0fUek5VlFsNQ+AcFATSrJXgMA==}
+
   '@netlify/binary-info@1.0.0':
     resolution: {integrity: sha512-4wMPu9iN3/HL97QblBsBay3E1etIciR84izI3U+4iALY+JHCrI+a2jO0qbAZ/nxKoegypYEaiiqWXylm+/zfrw==}
 
@@ -3453,6 +3468,13 @@ packages:
 
   '@octokit/types@6.41.0':
     resolution: {integrity: sha512-eJ2jbzjdijiL3B4PrSQaSjuF2sPEQPVCPzBvTHJD9Nz+9dw2SGH4K4xeQJ77YfTq5bRQ+bD8wT11JbeDPmxmGg==}
+
+  '@oxc-project/runtime@0.73.2':
+    resolution: {integrity: sha512-wbUN3K3zjMRHxAsNm1nKHebSnDY800b3LxQFTr9wSZpdQdhiQQAZpRIFsYjh0sAotoyqahN576sB1DmpPUhl5Q==}
+    engines: {node: '>=6.9.0'}
+
+  '@oxc-project/types@0.73.2':
+    resolution: {integrity: sha512-kU2FjfCb9VTNg/KbOTKVi2sYrKTkNQYq1Fi1v1jCKjbUGA9wqkNDqijNBLeDwagFtDuK2EIWvTzNDYU4k/918g==}
 
   '@parcel/bundler-default@2.8.3':
     resolution: {integrity: sha512-yJvRsNWWu5fVydsWk3O2L4yIy3UZiKWO2cPDukGOIWMgp/Vbpp+2Ct5IygVRtE22bnseW/E/oe0PV3d2IkEJGg==}
@@ -3929,6 +3951,69 @@ packages:
   '@remix-run/web-stream@1.1.0':
     resolution: {integrity: sha512-KRJtwrjRV5Bb+pM7zxcTJkhIqWWSy+MYsIxHK+0m5atcznsf15YwUBWHWulZerV2+vvHH1Lp1DD7pw6qKW8SgA==}
 
+  '@rolldown/binding-darwin-arm64@1.0.0-beta.19':
+    resolution: {integrity: sha512-Lr2bcnzrqa5fb/tyaOJxbAe6r+Zf5mbCDYnRW8u4hv19b519C6d+8LHl879mBDVWAmRaPt1LPsiQUZJQnKb/jQ==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@rolldown/binding-darwin-x64@1.0.0-beta.19':
+    resolution: {integrity: sha512-EMzFFW+Wshv0d0FnunDOKl3QQK5KW69c9NOo7SL+fXmeDRrhhKnjoAggi6IX+Vq3gz0PqfqsbElT2uFS5g1dcg==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@rolldown/binding-freebsd-x64@1.0.0-beta.19':
+    resolution: {integrity: sha512-aoILM0xYehAQdpMrD1rDU14SLJ5j8TsIAB6Ywc6ba85CV2Ks/1EFVSKp9iNL9/V4wqQf4Gk/s3A1kgSzwmw0lg==}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@rolldown/binding-linux-arm-gnueabihf@1.0.0-beta.19':
+    resolution: {integrity: sha512-p5PY3ezHgWN5DurWBMSxrZhnQcJTIuyl8d0aHrC53EXKMG8vMr80L7U545p0nqC14XtWjlMPFxumFxLD+zVL9g==}
+    cpu: [arm]
+    os: [linux]
+
+  '@rolldown/binding-linux-arm64-gnu@1.0.0-beta.19':
+    resolution: {integrity: sha512-TNZ3jlApVMpix2h9BclYsurjBYCyiRsz4H7opQY3Tf67Yi1UBe69yNwXZ9l+5fnEGipYzwAUPpTYSw35wbU6bQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@rolldown/binding-linux-arm64-musl@1.0.0-beta.19':
+    resolution: {integrity: sha512-4FowIEu7YIBKLYMG0659V2kN/drV/ghljDl9k9DGmUL/Mko0tG2itRmgLeZyjrkbQNTkXUTI3/0fEbwAg8Jazg==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@rolldown/binding-linux-x64-gnu@1.0.0-beta.19':
+    resolution: {integrity: sha512-7/P+dvNsReOZoUvr6p3EKqKHWT+dxjBC5nxelfNWqs32oyVKqv/MvPtayAUqNMv0F94fzQW/l4EOwzLfBHiIJA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@rolldown/binding-linux-x64-musl@1.0.0-beta.19':
+    resolution: {integrity: sha512-TztajvVHulPEn1hKCTxmpkomIUvMaeQ9Vv5TEn3bHBp/3T8W7zOwju0ExXNiLtSoD8Nk85T8O1DBPwuo0h+Uig==}
+    cpu: [x64]
+    os: [linux]
+
+  '@rolldown/binding-wasm32-wasi@1.0.0-beta.19':
+    resolution: {integrity: sha512-AqRQiUYEgxEkBPxkz8UvJcpFlknCRwxNDhcUj3ZRNsFWNqSeNFV7Nx41yxB7lpS7EHUNhUsEaydLBU3QeRiV5Q==}
+    engines: {node: '>=14.21.3'}
+    cpu: [wasm32]
+
+  '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.19':
+    resolution: {integrity: sha512-ak0Dv/IKcbVHr8JhP0rLUCgEQ++GsSQQ2O+VofTXmCeXhquOkVSxcicgDJ4yLgQDIM0DC2pFXWpAoHRGvkrEdQ==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@rolldown/binding-win32-ia32-msvc@1.0.0-beta.19':
+    resolution: {integrity: sha512-N8FaTCEpobYggCVAQpYNvwIhlPUDZbxO9Hugk5eT7rFBS2iosjiOailJGa44ppWxa8Ap3sPYjr5z0v/M6gxjhg==}
+    cpu: [ia32]
+    os: [win32]
+
+  '@rolldown/binding-win32-x64-msvc@1.0.0-beta.19':
+    resolution: {integrity: sha512-a+GPUvLUkG8Qh2XPn7JI9Ui8wz9HhbrB5iJPMWh7VSv/4uLJZYZqxkL1kC+K/dUjE0CSun/4zds+C0SW83S69A==}
+    cpu: [x64]
+    os: [win32]
+
+  '@rolldown/pluginutils@1.0.0-beta.19':
+    resolution: {integrity: sha512-3FL3mnMbPu0muGOCaKAhhFEYmqv9eTfPSJRJmANrCwtgK8VuxpsZDGK+m0LYAGoyO8+0j5uRe4PeyPDK1yA/hA==}
+
   '@rollup/plugin-alias@3.1.8':
     resolution: {integrity: sha512-tf7HeSs/06wO2LPqKNY3Ckbvy0JRe7Jyn98bXnt/gfrxbe+AJucoNJlsEVi9sdgbQtXemjbakCpO/76JVgnHpA==}
     engines: {node: '>=8.0.0'}
@@ -4202,6 +4287,9 @@ packages:
 
   '@tsconfig/node16@1.0.2':
     resolution: {integrity: sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==}
+
+  '@tybys/wasm-util@0.9.0':
+    resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
 
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -4818,6 +4906,10 @@ packages:
     resolution: {integrity: sha512-v6MqmEpNlxF+POuyhKkidusCHWWkaLcGRURzivcU3I9tv7k4JVhFcnukrM5Rlk2rUywdZuzYAZ+kbZqWCnfN3g==}
     engines: {node: '>=8.0.0'}
     hasBin: true
+
+  ansis@4.1.0:
+    resolution: {integrity: sha512-BGcItUBWSMRgOCe+SVZJ+S7yTRG0eGt9cXAHev72yuGcY23hnLA7Bky5L/xLyPINoSN95geovfBkqoTlNZYa7w==}
+    engines: {node: '>=14'}
 
   any-observable@0.3.0:
     resolution: {integrity: sha512-/FQM1EDkTsf63Ub2C6O7GuYFDsSXUwsaZDurV0np41ocwq0jthUAYCmhBX9f+KwlaCgIuWyr/4WlUQUBfKfZog==}
@@ -10312,6 +10404,10 @@ packages:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
     hasBin: true
 
+  rolldown@1.0.0-beta.19:
+    resolution: {integrity: sha512-rEBMUCfaK4LOf2rynaqcgKDGqwZ6GdWFdbgjfBOBvsY3Mr3AL0G6AKx516vDhOj1UVkAnxixfqDrXkZkH27n3w==}
+    hasBin: true
+
   rollup-plugin-dts@6.1.1:
     resolution: {integrity: sha512-aSHRcJ6KG2IHIioYlvAOcEq6U99sVtqDDKVhnwt70rW6tsz3tv5OSjEiWcgzfsHdLyGXZ/3b/7b/+Za3Y6r1XA==}
     engines: {node: '>=16'}
@@ -12193,7 +12289,7 @@ snapshots:
       '@babel/traverse': 7.23.9
       '@babel/types': 7.23.9
       convert-source-map: 1.8.0
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       lodash: 4.17.21
@@ -12216,7 +12312,7 @@ snapshots:
       '@babel/traverse': 7.23.9
       '@babel/types': 7.23.9
       convert-source-map: 2.0.0
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.0
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -12271,7 +12367,7 @@ snapshots:
       '@babel/core': 7.23.9
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.22.5
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -12997,7 +13093,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.9
       '@babel/types': 7.23.9
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -13234,6 +13330,22 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - '@algolia/client-search'
+
+  '@emnapi/core@1.4.3':
+    dependencies:
+      '@emnapi/wasi-threads': 1.0.2
+      tslib: 2.5.0
+    optional: true
+
+  '@emnapi/runtime@1.4.3':
+    dependencies:
+      tslib: 2.5.0
+    optional: true
+
+  '@emnapi/wasi-threads@1.0.2':
+    dependencies:
+      tslib: 2.5.0
+    optional: true
 
   '@emotion/hash@0.9.0': {}
 
@@ -14112,6 +14224,13 @@ snapshots:
   '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.2':
     optional: true
 
+  '@napi-rs/wasm-runtime@0.2.11':
+    dependencies:
+      '@emnapi/core': 1.4.3
+      '@emnapi/runtime': 1.4.3
+      '@tybys/wasm-util': 0.9.0
+    optional: true
+
   '@netlify/binary-info@1.0.0': {}
 
   '@netlify/build@27.18.5':
@@ -14637,6 +14756,10 @@ snapshots:
   '@octokit/types@6.41.0':
     dependencies:
       '@octokit/openapi-types': 12.11.0
+
+  '@oxc-project/runtime@0.73.2': {}
+
+  '@oxc-project/types@0.73.2': {}
 
   '@parcel/bundler-default@2.8.3(@parcel/core@2.11.0)':
     dependencies:
@@ -15522,6 +15645,46 @@ snapshots:
     dependencies:
       web-streams-polyfill: 3.2.1
 
+  '@rolldown/binding-darwin-arm64@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-darwin-x64@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-freebsd-x64@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-linux-arm-gnueabihf@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-linux-arm64-gnu@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-linux-arm64-musl@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-linux-x64-gnu@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-linux-x64-musl@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-wasm32-wasi@1.0.0-beta.19':
+    dependencies:
+      '@napi-rs/wasm-runtime': 0.2.11
+    optional: true
+
+  '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-win32-ia32-msvc@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/binding-win32-x64-msvc@1.0.0-beta.19':
+    optional: true
+
+  '@rolldown/pluginutils@1.0.0-beta.19': {}
+
   '@rollup/plugin-alias@3.1.8(rollup@2.79.1)':
     dependencies:
       rollup: 2.79.1
@@ -15749,6 +15912,11 @@ snapshots:
   '@tsconfig/node14@1.0.1': {}
 
   '@tsconfig/node16@1.0.2': {}
+
+  '@tybys/wasm-util@0.9.0':
+    dependencies:
+      tslib: 2.5.0
+    optional: true
 
   '@types/acorn@4.0.6':
     dependencies:
@@ -16123,7 +16291,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.38.0
       '@typescript-eslint/visitor-keys': 5.38.0
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.6.0
@@ -16151,7 +16319,7 @@ snapshots:
 
   '@typescript/vfs@1.6.0(typescript@5.8.3)':
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
@@ -16410,7 +16578,7 @@ snapshots:
 
   agent-base@6.0.2(supports-color@9.2.3):
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -16532,6 +16700,8 @@ snapshots:
   ansi-to-html@0.7.2:
     dependencies:
       entities: 2.2.0
+
+  ansis@4.1.0: {}
 
   any-observable@0.3.0(rxjs@6.6.7):
     optionalDependencies:
@@ -17686,15 +17856,15 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  debug@4.4.0(supports-color@9.2.3):
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
+
+  debug@4.4.1(supports-color@9.2.3):
     dependencies:
       ms: 2.1.3
     optionalDependencies:
       supports-color: 9.2.3
-
-  debug@4.4.1:
-    dependencies:
-      ms: 2.1.3
 
   decache@4.6.1:
     dependencies:
@@ -17878,7 +18048,7 @@ snapshots:
 
   detective-less@1.0.2(supports-color@9.2.3):
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       gonzales-pe: 4.3.0
       node-source-walk: 4.3.0
     transitivePeerDependencies:
@@ -18671,9 +18841,9 @@ snapshots:
     dependencies:
       from2: 2.3.0
 
-  follow-redirects@1.14.5(debug@4.4.0):
+  follow-redirects@1.14.5(debug@4.4.1):
     optionalDependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
 
   for-each@0.3.3:
     dependencies:
@@ -19373,24 +19543,24 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2(supports-color@9.2.3)
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
     transitivePeerDependencies:
       - supports-color
 
   http-proxy-middleware@1.3.1:
     dependencies:
       '@types/http-proxy': 1.17.9
-      http-proxy: 1.18.1(debug@4.4.0)
+      http-proxy: 1.18.1(debug@4.4.1)
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.5
     transitivePeerDependencies:
       - debug
 
-  http-proxy-middleware@2.0.6(@types/express@4.17.21)(debug@4.4.0):
+  http-proxy-middleware@2.0.6(@types/express@4.17.21)(debug@4.4.1):
     dependencies:
       '@types/http-proxy': 1.17.9
-      http-proxy: 1.18.1(debug@4.4.0)
+      http-proxy: 1.18.1(debug@4.4.1)
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.5
@@ -19399,10 +19569,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  http-proxy@1.18.1(debug@4.4.0):
+  http-proxy@1.18.1(debug@4.4.1):
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.5(debug@4.4.0)
+      follow-redirects: 1.14.5(debug@4.4.1)
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -19420,7 +19590,7 @@ snapshots:
   https-proxy-agent@5.0.1(supports-color@9.2.3):
     dependencies:
       agent-base: 6.0.2(supports-color@9.2.3)
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -19832,7 +20002,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       istanbul-lib-coverage: 3.2.0
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -21160,7 +21330,7 @@ snapshots:
   micromark@3.2.0:
     dependencies:
       '@types/debug': 4.1.7
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       decode-named-character-reference: 1.0.2
       micromark-core-commonmark: 1.1.0
       micromark-factory-space: 1.1.0
@@ -21431,7 +21601,7 @@ snapshots:
       cookie: 0.5.0
       copy-template-dir: 1.4.0
       cron-parser: 4.6.0
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       decache: 4.6.1
       del: 6.1.1
       dot-prop: 6.0.1
@@ -21453,8 +21623,8 @@ snapshots:
       gitconfiglocal: 2.1.0
       hasbin: 1.2.3
       hasha: 5.2.2
-      http-proxy: 1.18.1(debug@4.4.0)
-      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.0)
+      http-proxy: 1.18.1(debug@4.4.1)
+      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.1)
       https-proxy-agent: 5.0.1(supports-color@9.2.3)
       inquirer: 6.5.2
       inquirer-autocomplete-prompt: 1.4.0(inquirer@6.5.2)
@@ -23119,6 +23289,26 @@ snapshots:
     dependencies:
       glob: 10.3.10
 
+  rolldown@1.0.0-beta.19:
+    dependencies:
+      '@oxc-project/runtime': 0.73.2
+      '@oxc-project/types': 0.73.2
+      '@rolldown/pluginutils': 1.0.0-beta.19
+      ansis: 4.1.0
+    optionalDependencies:
+      '@rolldown/binding-darwin-arm64': 1.0.0-beta.19
+      '@rolldown/binding-darwin-x64': 1.0.0-beta.19
+      '@rolldown/binding-freebsd-x64': 1.0.0-beta.19
+      '@rolldown/binding-linux-arm-gnueabihf': 1.0.0-beta.19
+      '@rolldown/binding-linux-arm64-gnu': 1.0.0-beta.19
+      '@rolldown/binding-linux-arm64-musl': 1.0.0-beta.19
+      '@rolldown/binding-linux-x64-gnu': 1.0.0-beta.19
+      '@rolldown/binding-linux-x64-musl': 1.0.0-beta.19
+      '@rolldown/binding-wasm32-wasi': 1.0.0-beta.19
+      '@rolldown/binding-win32-arm64-msvc': 1.0.0-beta.19
+      '@rolldown/binding-win32-ia32-msvc': 1.0.0-beta.19
+      '@rolldown/binding-win32-x64-msvc': 1.0.0-beta.19
+
   rollup-plugin-dts@6.1.1(rollup@4.30.1)(typescript@5.8.3):
     dependencies:
       magic-string: 0.30.17
@@ -23130,7 +23320,7 @@ snapshots:
   rollup-plugin-esbuild@6.1.1(esbuild@0.25.0)(rollup@4.30.1):
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.0
       es-module-lexer: 1.6.0
       esbuild: 0.25.0
       get-tsconfig: 4.7.6
@@ -23505,7 +23695,7 @@ snapshots:
 
   spdy-transport@3.0.0:
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -23516,7 +23706,7 @@ snapshots:
 
   spdy@4.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -23767,7 +23957,7 @@ snapshots:
 
   tabtab@3.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       es6-promisify: 6.1.1
       inquirer: 6.5.2
       minimist: 1.2.8
@@ -24548,7 +24738,7 @@ snapshots:
   vite-node@1.5.0(@types/node@22.15.3)(terser@5.26.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       pathe: 1.1.1
       picocolors: 1.1.1
       vite: 5.4.11(@types/node@22.15.3)(terser@5.26.0)
@@ -24566,7 +24756,7 @@ snapshots:
   vite-node@3.0.2(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       es-module-lexer: 1.6.0
       pathe: 2.0.2
       vite: 6.0.10(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)
@@ -24587,7 +24777,7 @@ snapshots:
   vite-node@3.2.2(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.1
+      debug: 4.4.1(supports-color@9.2.3)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
       vite: 6.0.10(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)
@@ -24609,7 +24799,7 @@ snapshots:
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       error-stack-parser-es: 0.1.5
       fs-extra: 11.2.0
       open: 10.1.0
@@ -24623,7 +24813,7 @@ snapshots:
 
   vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@6.0.10(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)):
     dependencies:
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
       globrex: 0.1.2
       tsconfck: 3.1.4(typescript@5.8.3)
     optionalDependencies:
@@ -24663,7 +24853,7 @@ snapshots:
       '@vitest/spy': 3.0.2
       '@vitest/utils': 3.0.2
       chai: 5.1.2
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.0
       expect-type: 1.1.0
       magic-string: 0.30.17
       pathe: 2.0.2
@@ -24700,7 +24890,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       commander: 9.4.0
-      debug: 4.4.0(supports-color@9.2.3)
+      debug: 4.4.1(supports-color@9.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -24813,7 +25003,7 @@ snapshots:
       express: 4.18.2
       graceful-fs: 4.2.10
       html-entities: 2.4.0
-      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.0)
+      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.1)
       ipaddr.js: 2.1.0
       launch-editor: 2.6.1
       open: 10.1.0
@@ -24854,7 +25044,7 @@ snapshots:
       express: 4.18.2
       graceful-fs: 4.2.10
       html-entities: 2.4.0
-      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.0)
+      http-proxy-middleware: 2.0.6(@types/express@4.17.21)(debug@4.4.1)
       ipaddr.js: 2.1.0
       launch-editor: 2.6.1
       open: 10.1.0
