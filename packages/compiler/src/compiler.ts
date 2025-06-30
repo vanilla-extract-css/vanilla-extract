@@ -240,6 +240,7 @@ export interface Compiler {
   ): Promise<{ source: string; watchFiles: Set<string> }>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
+  getAllCss(): string;
 }
 
 interface ProcessedVanillaFile {
@@ -498,6 +499,17 @@ export const createCompiler = ({
       const { server } = await vitePromise;
 
       await server.close();
+    },
+    getAllCss() {
+      let allCss = '';
+
+      for (const { css } of cssCache.values()) {
+        if (css) {
+          allCss += css + '\n';
+        }
+      }
+
+      return allCss;
     },
   };
 };
