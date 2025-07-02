@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rollup-plugin should build with preserveModules 1`] = `
+exports[`rollup-plugin Rollup settings should build with preserveModules 1`] = `
 [
   [
     "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
@@ -277,7 +277,7 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 ]
 `;
 
-exports[`rollup-plugin should build with preserveModules and assetFileNames 1`] = `
+exports[`rollup-plugin Rollup settings should build with preserveModules and assetFileNames 1`] = `
 [
   [
     "index.js",
@@ -554,7 +554,7 @@ export { altTheme, responsiveTheme, theme, vars };
 ]
 `;
 
-exports[`rollup-plugin should build with sourcemaps 1`] = `
+exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
 [
   [
     "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
@@ -611,7 +611,7 @@ exports[`rollup-plugin should build with sourcemaps 1`] = `
 ]
 `;
 
-exports[`rollup-plugin should build without preserveModules 1`] = `
+exports[`rollup-plugin Rollup settings should build without preserveModules 1`] = `
 [
   [
     "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
@@ -854,6 +854,368 @@ function render() {
   });
 }
 render();
+",
+  ],
+]
+`;
+
+exports[`rollup-plugin options extract generates .css bundle 1`] = `
+[
+  [
+    "app.css",
+    "html, body {
+  font-size: 100%;
+  height: 100%;
+  line-height: 1;
+  margin: 0;
+}
+.vars__15dpm870 {
+  --color-black-100: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.050980392156862744);
+  --color-black-200: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.10196078431372549);
+  --color-black-300: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.2);
+  --color-black-400: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.4);
+  --color-black-500: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.6980392156862745);
+  --color-black-600: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.8);
+  --color-black-700: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.8509803921568627);
+  --color-black-800: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.8980392156862745);
+  --color-black-900: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744 / 0.9490196078431372);
+  --color-black-1000: color(srgb 0.047058823529411764 0.047058823529411764 0.050980392156862744);
+  --color-brand-100: color(srgb 0.9607843137254902 0.9607843137254902 0.9607843137254902);
+  --color-brand-200: color(srgb 0.9019607843137255 0.9019607843137255 0.9019607843137255);
+  --color-brand-300: color(srgb 0.8509803921568627 0.8509803921568627 0.8509803921568627);
+  --color-brand-400: color(srgb 0.7019607843137254 0.7019607843137254 0.7019607843137254);
+  --color-brand-500: color(srgb 0.4588235294117647 0.4588235294117647 0.4588235294117647);
+  --color-brand-600: color(srgb 0.26666666666666666 0.26666666666666666 0.26666666666666666);
+  --color-brand-700: color(srgb 0.2196078431372549 0.2196078431372549 0.2196078431372549);
+  --color-brand-800: color(srgb 0.17254901960784313 0.17254901960784313 0.17254901960784313);
+  --color-brand-900: color(srgb 0.11764705882352941 0.11764705882352941 0.11764705882352941);
+  --color-brand-1000: color(srgb 0.06666666666666667 0.06666666666666667 0.06666666666666667);
+  --color-gray-100: color(srgb 0.9607843137254902 0.9607843137254902 0.9607843137254902);
+  --color-gray-200: color(srgb 0.9019607843137255 0.9019607843137255 0.9019607843137255);
+  --color-gray-300: color(srgb 0.8509803921568627 0.8509803921568627 0.8509803921568627);
+  --color-gray-400: color(srgb 0.7019607843137254 0.7019607843137254 0.7019607843137254);
+  --color-gray-500: color(srgb 0.4588235294117647 0.4588235294117647 0.4588235294117647);
+  --color-gray-600: color(srgb 0.26666666666666666 0.26666666666666666 0.26666666666666666);
+  --color-gray-700: color(srgb 0.2196078431372549 0.2196078431372549 0.2196078431372549);
+  --color-gray-800: color(srgb 0.17254901960784313 0.17254901960784313 0.17254901960784313);
+  --color-gray-900: color(srgb 0.11764705882352941 0.11764705882352941 0.11764705882352941);
+  --color-gray-1000: color(srgb 0.06666666666666667 0.06666666666666667 0.06666666666666667);
+  --color-green-100: color(srgb 0.9215686274509803 1 0.9333333333333333);
+  --color-green-200: color(srgb 0.8117647058823529 0.9686274509803922 0.8274509803921568);
+  --color-green-300: color(srgb 0.6862745098039216 0.9568627450980393 0.7764705882352941);
+  --color-green-400: color(srgb 0.5215686274509804 0.8784313725490196 0.6392156862745098);
+  --color-green-500: color(srgb 0.0784313725490196 0.6823529411764706 0.3607843137254902);
+  --color-green-600: color(srgb 0 0.6 0.3176470588235294);
+  --color-green-700: color(srgb 0 0.5019607843137255 0.2627450980392157);
+  --color-green-800: color(srgb 0.00784313725490196 0.32941176470588235 0.17647058823529413);
+  --color-green-900: color(srgb 0.00784313725490196 0.25098039215686274 0.13725490196078433);
+  --color-green-1000: color(srgb 0.023529411764705882 0.17647058823529413 0.10588235294117647);
+  --color-pink-100: color(srgb 0.9882352941176471 0.9450980392156862 0.9921568627450981);
+  --color-pink-200: color(srgb 0.9803921568627451 0.8823529411764706 0.9803921568627451);
+  --color-pink-300: color(srgb 0.9607843137254902 0.7529411764705882 0.9372549019607843);
+  --color-pink-400: color(srgb 0.9450980392156862 0.6196078431372549 0.8627450980392157);
+  --color-pink-500: color(srgb 0.9176470588235294 0.24705882352941178 0.7215686274509804);
+  --color-pink-600: color(srgb 0.8431372549019608 0.19607843137254902 0.6588235294117647);
+  --color-pink-700: color(srgb 0.7294117647058823 0.16470588235294117 0.5725490196078431);
+  --color-pink-800: color(srgb 0.5411764705882353 0.13333333333333333 0.43529411764705883);
+  --color-pink-900: color(srgb 0.3411764705882353 0.09411764705882353 0.2901960784313726);
+  --color-pink-1000: color(srgb 0.24705882352941178 0.08235294117647059 0.21176470588235294);
+  --color-red-100: color(srgb 0.996078431372549 0.9137254901960784 0.9058823529411765);
+  --color-red-200: color(srgb 0.9921568627450981 0.8274509803921568 0.8156862745098039);
+  --color-red-300: color(srgb 0.9882352941176471 0.7019607843137254 0.6784313725490196);
+  --color-red-400: color(srgb 0.9568627450980393 0.4666666666666667 0.41568627450980394);
+  --color-red-500: color(srgb 0.9254901960784314 0.13333333333333333 0.12156862745098039);
+  --color-red-600: color(srgb 0.7529411764705882 0.058823529411764705 0.047058823529411764);
+  --color-red-700: color(srgb 0.5647058823529412 0.043137254901960784 0.03529411764705882);
+  --color-red-800: color(srgb 0.4117647058823529 0.03137254901960784 0.027450980392156862);
+  --color-red-900: color(srgb 0.30196078431372547 0.043137254901960784 0.0392156862745098);
+  --color-red-1000: color(srgb 0.18823529411764706 0.023529411764705882 0.011764705882352941);
+  --color-slate-100: color(srgb 0.9529411764705882 0.9529411764705882 0.9529411764705882);
+  --color-slate-200: color(srgb 0.8901960784313725 0.8901960784313725 0.8901960784313725);
+  --color-slate-300: color(srgb 0.803921568627451 0.803921568627451 0.803921568627451);
+  --color-slate-400: color(srgb 0.6980392156862745 0.6980392156862745 0.6980392156862745);
+  --color-slate-500: color(srgb 0.5803921568627451 0.5803921568627451 0.5803921568627451);
+  --color-slate-600: color(srgb 0.4627450980392157 0.4627450980392157 0.4627450980392157);
+  --color-slate-700: color(srgb 0.35294117647058826 0.35294117647058826 0.35294117647058826);
+  --color-slate-800: color(srgb 0.2627450980392157 0.2627450980392157 0.2627450980392157);
+  --color-slate-900: color(srgb 0.18823529411764706 0.18823529411764706 0.18823529411764706);
+  --color-slate-1000: color(srgb 0.1411764705882353 0.1411764705882353 0.1411764705882353);
+  --color-white-100: color(srgb 1 1 1 / 0.050980392156862744);
+  --color-white-200: color(srgb 1 1 1 / 0.10196078431372549);
+  --color-white-300: color(srgb 1 1 1 / 0.2);
+  --color-white-400: color(srgb 1 1 1 / 0.4);
+  --color-white-500: color(srgb 1 1 1 / 0.6980392156862745);
+  --color-white-600: color(srgb 1 1 1 / 0.8);
+  --color-white-700: color(srgb 1 1 1 / 0.8509803921568627);
+  --color-white-800: color(srgb 1 1 1 / 0.8980392156862745);
+  --color-white-900: color(srgb 1 1 1 / 0.9490196078431372);
+  --color-white-1000: color(srgb 1 1 1);
+  --color-yellow-100: color(srgb 1 0.984313725490196 0.9215686274509803);
+  --color-yellow-200: color(srgb 1 0.9450980392156862 0.7607843137254902);
+  --color-yellow-300: color(srgb 1 0.9098039215686274 0.6392156862745098);
+  --color-yellow-400: color(srgb 0.9098039215686274 0.7254901960784313 0.19215686274509805);
+  --color-yellow-500: color(srgb 0.8980392156862745 0.6274509803921569 0);
+  --color-yellow-600: color(srgb 0.7490196078431373 0.41568627450980394 0.00784313725490196);
+  --color-yellow-700: color(srgb 0.592156862745098 0.3176470588235294 0.00784313725490196);
+  --color-yellow-800: color(srgb 0.40784313725490196 0.17647058823529413 0.011764705882352941);
+  --color-yellow-900: color(srgb 0.3215686274509804 0.1450980392156863 0.01568627450980392);
+  --color-yellow-1000: color(srgb 0.25098039215686274 0.10588235294117647 0.00392156862745098);
+  --color-background-brand-default: var(--color-brand-800);
+  --color-background-default-default: var(--color-white-1000);
+  --color-border-default-default: var(--color-gray-300);
+  --color-text-brand-default: var(--color-brand-800);
+  --color-text-default-default: var(--color-gray-900);
+  --size-blur-100: 0.25rem;
+  --size-depth-0: 0;
+  --size-depth-100: 0.25rem;
+  --size-depth-200: 0.5rem;
+  --size-depth-400: 1rem;
+  --size-depth-800: 2rem;
+  --size-depth-1200: 3rem;
+  --size-depth-025: 0.0625rem;
+  --size-depth-negative-025: -0.0625rem;
+  --size-depth-negative-100: -0.25rem;
+  --size-depth-negative-200: -0.5rem;
+  --size-depth-negative-400: -1rem;
+  --size-depth-negative-800: -2rem;
+  --size-depth-negative-1200: -3rem;
+  --size-icon-small: 1.5rem;
+  --size-icon-medium: 2rem;
+  --size-icon-large: 2.5rem;
+  --size-radius-100: 0.25rem;
+  --size-radius-200: 0.5rem;
+  --size-radius-400: 1rem;
+  --size-radius-full: 624.9375rem;
+  --size-space-0: 0;
+  --size-space-100: 0.25rem;
+  --size-space-150: 0.375rem;
+  --size-space-200: 0.5rem;
+  --size-space-300: 0.75rem;
+  --size-space-400: 1rem;
+  --size-space-600: 1.5rem;
+  --size-space-800: 2rem;
+  --size-space-1200: 3rem;
+  --size-space-1600: 4rem;
+  --size-space-2400: 6rem;
+  --size-space-4000: 0;
+  --size-space-050: 0.125rem;
+  --size-space-negative-100: -0.25rem;
+  --size-space-negative-200: -0.5rem;
+  --size-space-negative-300: -0.75rem;
+  --size-space-negative-400: -1rem;
+  --size-space-negative-600: -1.5rem;
+  --size-stroke-border: 0.0625rem;
+  --size-stroke-focus-ring: 0.125rem;
+  --typography-body-small-font-family: var(--typography-family-sans);
+  --typography-body-small-font-size: var(--typography-scale-02);
+  --typography-body-small-font-weight: var(--typography-weight-regular);
+  --typography-body-medium-font-family: var(--typography-family-sans);
+  --typography-body-medium-font-size: var(--typography-scale-03);
+  --typography-body-medium-font-weight: var(--typography-weight-regular);
+  --typography-body-large-font-family: var(--typography-family-sans);
+  --typography-body-large-font-size: var(--typography-scale-04);
+  --typography-body-large-font-weight: var(--typography-weight-regular);
+  --typography-code-small-font-family: var(--typography-family-mono);
+  --typography-code-small-font-size: var(--typography-scale-02);
+  --typography-code-small-font-weight: var(--typography-weight-regular);
+  --typography-code-medium-font-family: var(--typography-family-mono);
+  --typography-code-medium-font-size: var(--typography-scale-03);
+  --typography-code-medium-font-weight: var(--typography-weight-regular);
+  --typography-code-large-font-family: var(--typography-family-mono);
+  --typography-code-large-font-size: var(--typography-scale-04);
+  --typography-code-large-font-weight: var(--typography-weight-regular);
+  --typography-family-mono: "roboto mono", monospace;
+  --typography-family-sans: inter, sans-serif;
+  --typography-family-serif: "noto serif", serif;
+  --typography-scale-10: 4.5rem;
+  --typography-scale-01: 0.75rem;
+  --typography-scale-02: 0.875rem;
+  --typography-scale-03: 1rem;
+  --typography-scale-04: 1.25rem;
+  --typography-scale-05: 1.5rem;
+  --typography-scale-06: 2rem;
+  --typography-scale-07: 2.5rem;
+  --typography-scale-08: 3rem;
+  --typography-scale-09: 4rem;
+  --typography-weight-thin: 100;
+  --typography-weight-extralight: 200;
+  --typography-weight-light: 300;
+  --typography-weight-regular: 400;
+  --typography-weight-medium: 500;
+  --typography-weight-semibold: 600;
+  --typography-weight-bold: 700;
+  --typography-weight-extrabold: 800;
+  --typography-weight-black: 900;
+}
+.button_btn__s626q60 {
+  background: var(--color-background-brand-default);
+  border-radius: var(--size-radius-200);
+  color: var(--color-text-brand-default);
+  font-family: var(--typography-body-medium-font-family);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  padding-block: var(--size-space-200);
+  padding-inline: var(--size-space-300);
+}
+.checkbox_label__8y0ume0 {
+  display: block;
+  font-family: var(--typography-body-medium-font-family);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+}
+.checkbox_label__8y0ume0::before {
+  content: "";
+  background: var(--color-background-brand-default);
+  border-color: var(--color-border-default-default);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--size-radius-200);
+  margin-right: var(--size-space-300);
+}
+.checkbox_input__8y0ume1 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.radio_label__1uatvdb0 {
+  display: block;
+  font-family: var(--typography-body-medium-font-family);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+}
+.radio_label__1uatvdb0::before {
+  content: "";
+  background: var(--color-background-brand-default);
+  border-color: var(--color-border-default-default);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--size-radius-full);
+  margin-right: var(--size-space-300);
+}
+.radio_input__1uatvdb1 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.utility_mt100__1vyatv80 {
+  margin-top: var(--size-space-100);
+}
+.utility_mt200__1vyatv81 {
+  margin-top: var(--size-space-200);
+}
+.utility_mt300__1vyatv82 {
+  margin-top: var(--size-space-300);
+}
+.utility_mt400__1vyatv83 {
+  margin-top: var(--size-space-400);
+}",
+  ],
+  [
+    "app.js",
+    "export { default as Button } from './button/button.js';
+export { default as Checkbox } from './checkbox/checkbox.js';
+export { default as Radio } from './radio/radio.js';
+",
+  ],
+  [
+    "button/button.css.js",
+    "var btn = "button_btn__s626q60";
+
+export { btn };
+",
+  ],
+  [
+    "button/button.js",
+    "import { jsx } from 'react/jsx-runtime';
+import clsx from 'clsx';
+import { btn } from './button.css.js';
+
+function Button({
+  className,
+  children,
+  type = "button",
+  ...props
+}) {
+  return /* @__PURE__ */ jsx("button", { ...props, type, className: clsx(btn, className), children });
+}
+
+export { Button as default };
+",
+  ],
+  [
+    "checkbox/checkbox.css.js",
+    "var input = "checkbox_input__8y0ume1";
+var label = "checkbox_label__8y0ume0";
+
+export { input, label };
+",
+  ],
+  [
+    "checkbox/checkbox.js",
+    "import { jsxs, Fragment, jsx } from 'react/jsx-runtime';
+import { useId } from 'react';
+import clsx from 'clsx';
+import { input, label } from './checkbox.css.js';
+
+function Radio({
+  children,
+  className,
+  id,
+  ...props
+}) {
+  const randomID = useId();
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        ...props,
+        className: input,
+        id: id ?? randomID,
+        type: "checkbox"
+      }
+    ),
+    /* @__PURE__ */ jsx("label", { className: clsx(label, className), htmlFor: id ?? randomID, children })
+  ] });
+}
+
+export { Radio as default };
+",
+  ],
+  [
+    "radio/radio.css.js",
+    "var input = "radio_input__1uatvdb1";
+var label = "radio_label__1uatvdb0";
+
+export { input, label };
+",
+  ],
+  [
+    "radio/radio.js",
+    "import { jsxs, Fragment, jsx } from 'react/jsx-runtime';
+import { useId } from 'react';
+import clsx from 'clsx';
+import { input, label } from './radio.css.js';
+
+function Radio({
+  children,
+  className,
+  id,
+  ...props
+}) {
+  const randomID = useId();
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        ...props,
+        className: input,
+        id: id ?? randomID,
+        type: "radio"
+      }
+    ),
+    /* @__PURE__ */ jsx("label", { className: clsx(label, className), htmlFor: id ?? randomID, children })
+  ] });
+}
+
+export { Radio as default };
 ",
   ],
 ]

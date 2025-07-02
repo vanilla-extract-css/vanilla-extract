@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "incremental": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src"]
+}
