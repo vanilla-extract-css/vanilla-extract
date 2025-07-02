@@ -67,6 +67,7 @@ describe('rollup-plugin', () => {
           input: { app: path.join(cwd, 'src/index.ts') },
           external: ['clsx', 'react', 'react/jsx-runtime', 'react-dom'],
           output: {
+            assetFileNames: '[name][extname]',
             format: 'esm',
             preserveModules: true, // not needed for output, just makes some assertions easier
           },

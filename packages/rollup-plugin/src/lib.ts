@@ -26,7 +26,7 @@ export function generateCssBundle({
   for (const id of sortModules(cssFiles)) {
     const { importedIdResolutions } = getModuleInfo(id) ?? {};
     for (const resolution of importedIdResolutions ?? []) {
-      if (resolution.meta.css) {
+      if (resolution.meta.css && !extractedCssIds.has(resolution.id)) {
         extractedCssIds.add(resolution.id);
         cssBundle.addSource({
           filename: resolution.id,
@@ -40,20 +40,23 @@ export function generateCssBundle({
 }
 
 /** [id, order] tuple meant for ordering imports */
-export type ImportChain = [string, number][];
+export type ImportChain = [id: string, order: number][];
 
 /** Trace a file back through its importers, building an ordered list */
 export function buildImportChain(
   id: string,
   { getModuleInfo, warn }: Pick<PluginContext, 'getModuleInfo' | 'warn'>,
 ): ImportChain {
-  let mod: ModuleInfo = getModuleInfo(id)!;
+  let mod: ModuleInfo | null = getModuleInfo(id)!;
+  if (!mod) {
+    return [];
+  }
   /** [id, order] */
   const chain: ImportChain = [[id, -1]];
   // resolve upwards to root entry
   while (!mod.isEntry) {
     const { id: currentId, importers } = mod;
-    const lastImporterId = importers.at(-1)!;
+    const lastImporterId = importers.at(-1);
     if (!lastImporterId) {
       break;
     }
@@ -65,7 +68,7 @@ export function buildImportChain(
       );
       break;
     }
-    mod = getModuleInfo(lastImporterId)!;
+    mod = getModuleInfo(lastImporterId);
     if (!mod) {
       break;
     }

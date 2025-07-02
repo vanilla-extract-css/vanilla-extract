@@ -164,14 +164,17 @@ export function vanillaExtractPlugin({
       const name = extract.name || 'bundle.css';
       this.emitFile({
         type: 'asset',
-        fileName: name,
+        name,
+        originalFileName: name,
         source: bundle.toString(),
       });
       if (extract.sourcemap) {
+        const sourcemapName = `${name}.map`;
         this.emitFile({
           type: 'asset',
-          fileName: `${name}.map`,
-          source: bundle.generateMap({ file: extract.name }).toString(),
+          name: sourcemapName,
+          originalFileName: sourcemapName,
+          source: bundle.generateMap({ file: name }).toString(),
         });
       }
     },
