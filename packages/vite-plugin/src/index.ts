@@ -100,11 +100,7 @@ export function vanillaExtractPlugin({
 
     if (modules) {
       for (const module of modules) {
-        moduleGraph.invalidateModule(module);
-
-        // Vite uses this timestamp to add `?t=` query string automatically for HMR.
-        module.lastHMRTimestamp =
-          module.lastInvalidationTimestamp || Date.now();
+        moduleGraph.invalidateModule(module, undefined, undefined, true);
       }
     }
   }
