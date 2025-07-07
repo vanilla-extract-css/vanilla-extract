@@ -93,10 +93,18 @@ Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loa
 
 ### extract
 
-Extract all generated `.css` into one bundle. Specify filename relative to `output.dir`.
+Extract all generated `.css` into one bundle. This also removes side effect `import '*.css'` statements.
 
 ```ts
 vanillaExtractPlugin({
-  extract: 'app.css'
+  extract: {
+    name: 'bundle.css',
+    sourcemap: false
+  }
 });
 ```
+
+| Option        | Type      | Default        | Description                                                                                                                       |
+| :------------ | :-------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| **name**      | `string`  | `'bundle.css'` | Name the bundled CSS. [output.assetFilenames](https://rollupjs.org/configuration-options/#output-assetfilenames) can affect this. |
+| **sourcemap** | `boolean` | `false`        | Set to `true` to also output `.css.map` file.                                                                                     |
