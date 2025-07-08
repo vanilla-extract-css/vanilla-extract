@@ -158,7 +158,7 @@ function render() {
             <div style="\${inlineTheme}">
               Inline theme
                 <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
-                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme <span class="{\${opacity["1/4"]}}">button</span></button>
                   <div>
                   Dynamic vars
                     <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
@@ -315,7 +315,7 @@ function render() {
             <div style="\${inlineTheme}">
               Inline theme
                 <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
-                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme <span class="{\${opacity["1/4"]}}">button</span></button>
                   <div>
                   Dynamic vars
                     <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
@@ -570,7 +570,7 @@ exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
   ],
   [
     "src/index.js",
-    "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",
+    "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",
   ],
   [
     "src/index.js.map",
@@ -808,7 +808,7 @@ function render() {
             <div style="\${inlineTheme}">
               Inline theme
                 <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
-                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme button</button>
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme <span class="{\${opacity["1/4"]}}">button</span></button>
                   <div>
                   Dynamic vars
                     <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
