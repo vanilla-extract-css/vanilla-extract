@@ -1,5 +1,22 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.4.0
+
+### Minor Changes
+
+- [#1604](https://github.com/vanilla-extract-css/vanilla-extract/pull/1604) [`4a020ba`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4a020ba48941e438fc6bdcfb472da50316db993d) Thanks [@drwpow](https://github.com/drwpow)! - Add "extract" option which bundles CSS into one bundle. Removes .css imports.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  vanillaExtractPlugin({
+    extract: {
+      name: 'bundle.css',
+      sourcemap: false
+    }
+  });
+  ```
+
 ## 1.3.17
 
 ### Patch Changes
