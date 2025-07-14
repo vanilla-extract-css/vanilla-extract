@@ -3,11 +3,9 @@ import MagicString, { Bundle as MagicStringBundle } from 'magic-string';
 import type { ModuleInfo, PluginContext } from 'rollup';
 
 /** Generate a CSS bundle from Rollup context */
-export function generateCssBundle({
-  getModuleIds,
-  getModuleInfo,
-  warn,
-}: Pick<PluginContext, 'getModuleIds' | 'getModuleInfo' | 'warn'>): {
+export function generateCssBundle(
+  plugin: Pick<PluginContext, 'getModuleIds' | 'getModuleInfo' | 'warn'>,
+): {
   bundle: MagicStringBundle;
   extractedCssIds: Set<string>;
 } {
@@ -16,15 +14,15 @@ export function generateCssBundle({
 
   // 1. identify CSS files to bundle
   const cssFiles: Record<string, ImportChain> = {};
-  for (const id of getModuleIds()) {
+  for (const id of plugin.getModuleIds()) {
     if (cssFileFilter.test(id)) {
-      cssFiles[id] = buildImportChain(id, { getModuleInfo, warn });
+      cssFiles[id] = buildImportChain(id, plugin);
     }
   }
 
   // 2. build bundle from import order
   for (const id of sortModules(cssFiles)) {
-    const { importedIdResolutions } = getModuleInfo(id) ?? {};
+    const { importedIdResolutions } = plugin.getModuleInfo(id) ?? {};
     for (const resolution of importedIdResolutions ?? []) {
       if (resolution.meta.css && !extractedCssIds.has(resolution.id)) {
         extractedCssIds.add(resolution.id);
@@ -45,9 +43,9 @@ export type ImportChain = [id: string, order: number][];
 /** Trace a file back through its importers, building an ordered list */
 export function buildImportChain(
   id: string,
-  { getModuleInfo, warn }: Pick<PluginContext, 'getModuleInfo' | 'warn'>,
+  plugin: Pick<PluginContext, 'getModuleInfo' | 'warn'>,
 ): ImportChain {
-  let mod: ModuleInfo | null = getModuleInfo(id)!;
+  let mod: ModuleInfo | null = plugin.getModuleInfo(id)!;
   if (!mod) {
     return [];
   }
@@ -61,14 +59,14 @@ export function buildImportChain(
       break;
     }
     if (chain.some(([id]) => id === lastImporterId)) {
-      warn(
+      plugin.warn(
         `Circular import detected. Can’t determine ideal import order of module.\n${chain
           .reverse()
           .join('\n  → ')}`,
       );
       break;
     }
-    mod = getModuleInfo(lastImporterId);
+    mod = plugin.getModuleInfo(lastImporterId);
     if (!mod) {
       break;
     }
