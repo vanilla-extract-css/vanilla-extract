@@ -16,7 +16,8 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/integration": "workspace:^"
+    "@vanilla-extract/integration": "workspace:^",
+    "magic-string": "^0.30.17"
   },
   "devDependencies": {
     "@fixtures/themed": "workspace:*",

@@ -311,6 +311,28 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webpack-plugin
 
+  fixtures/react-library-example:
+    dependencies:
+      '@vanilla-extract/css':
+        specifier: workspace:*
+        version: link:../../packages/css
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.2.55
+      '@types/react-dom':
+        specifier: ^18.2.19
+        version: 18.2.19
+
   fixtures/recipes:
     dependencies:
       '@vanilla-extract/css':
@@ -397,7 +419,7 @@ importers:
         version: 6.0.10(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)
       vite-node:
         specifier: ^3.2.2
-        version: 3.2.2(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)
+        version: 3.2.4(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0)
 
   packages/css:
     dependencies:
@@ -560,6 +582,9 @@ importers:
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
+      magic-string:
+        specifier: ^0.30.17
+        version: 0.30.17
     devDependencies:
       '@fixtures/themed':
         specifier: workspace:*
@@ -5427,6 +5452,10 @@ packages:
   clone@2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -11603,8 +11632,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-node@3.2.2:
-    resolution: {integrity: sha512-Xj/jovjZvDXOq2FgLXu8NsY4uHUMWtzVmMC2LkCu9HWdr9Qu1Is5sanX3Z4jOFKdohfaWDnEJWp9pRP0vVpAcA==}
+  vite-node@3.2.4:
+    resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
@@ -17251,6 +17280,8 @@ snapshots:
   clone@1.0.4: {}
 
   clone@2.1.2: {}
+
+  clsx@2.1.1: {}
 
   co@4.6.0: {}
 
@@ -24584,7 +24615,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite-node@3.2.2(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0):
+  vite-node@3.2.4(@types/node@22.15.3)(terser@5.26.0)(tsx@4.17.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.1
