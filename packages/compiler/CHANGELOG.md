@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.3.1
+
+### Patch Changes
+
+- [#1624](https://github.com/vanilla-extract-css/vanilla-extract/pull/1624) [`50f1234`](https://github.com/vanilla-extract-css/vanilla-extract/commit/50f12348894a9e77a36ec269fcdf2ad159e5211d) Thanks [@BPScott](https://github.com/BPScott)! - Include `^7.0.0` in `vite` dependency range
+
 ## 0.3.0
 
 ### Minor Changes
