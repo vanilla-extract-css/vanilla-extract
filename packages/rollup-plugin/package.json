@@ -24,6 +24,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@vanilla-extract/css": "workspace:^",
     "esbuild": "~0.25.0",
+    "rolldown": "1.0.0-beta.27",
     "rollup": "^4.20.0",
     "rollup-plugin-esbuild": "^6.1.1"
   },
