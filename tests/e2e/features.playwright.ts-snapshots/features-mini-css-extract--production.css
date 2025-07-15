@@ -41,11 +41,20 @@ body ._87f2ru7 {
 body ._87f2rua {
   font-size: 24px;
 }
+._87f2rub {
+  background-color: black;
+}
 @media screen and (min-width: 700px) {
   ._87f2ru0 {
     color: plum;
   }
   ._87f2ru0:after {
     content: "Above 700px";
+  }
+}
+@position-try --custom-left {
+  ._87f2rub {
+    width: 100px;
+    margin: 0 10px 0 0;
   }
 }
