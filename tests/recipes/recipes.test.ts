@@ -24,6 +24,13 @@ describe('recipes', () => {
     );
   });
 
+  it('should ignore unknown variants', () => {
+    const props = { other: 'unknown-option' } as Parameters<typeof basic>[0];
+    expect(basic(props)).toMatchInlineSnapshot(
+      `"recipes_basic__niwegb0 recipes_basic_spaceWithDefault_small__niwegb1"`,
+    );
+  });
+
   it('should return requested variants', () => {
     expect(
       basic({
