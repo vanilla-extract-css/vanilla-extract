@@ -60,3 +60,14 @@ export const styleVariantsCompositionInSelector = styleVariants({
 globalStyle(`body ${styleVariantsCompositionInSelector.variant}`, {
   fontSize: '24px',
 });
+
+// Style with position-try
+export const styleWithPositionTry = style({
+  backgroundColor: 'black',
+  '@position-try': {
+    '--custom-left': {
+      width: '100px',
+      margin: '0 10px 0 0',
+    },
+  },
+});
