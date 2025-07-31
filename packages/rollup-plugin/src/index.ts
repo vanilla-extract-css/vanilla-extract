@@ -174,7 +174,9 @@ export function vanillaExtractPlugin({
           type: 'asset',
           name: sourcemapName,
           originalFileName: sourcemapName,
-          source: bundle.generateMap({ file: name }).toString(),
+          source: bundle
+            .generateMap({ file: name, includeContent: true })
+            .toString(),
         });
       }
     },
