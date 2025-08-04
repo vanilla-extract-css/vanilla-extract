@@ -116,30 +116,21 @@ export function vanillaExtractPlugin({
         },
       };
     },
-
-    // Emit .css assets
-    moduleParsed(moduleInfo) {
-      moduleInfo.importedIdResolutions.forEach((resolution) => {
-        if (resolution.meta.css && !extract) {
-          resolution.meta.assetId = this.emitFile({
-            type: 'asset',
-            name: resolution.id,
-            source: resolution.meta.css,
-          });
-        }
-      });
-    },
-
-    // Replace .css import paths with relative paths to emitted css files
+    // Emit .css assets and replace .css import paths with relative paths to emitted css files
     renderChunk(code, chunkInfo) {
       const chunkPath = dirname(chunkInfo.fileName);
       const output = chunkInfo.imports.reduce((codeResult, importPath) => {
         const moduleInfo = this.getModuleInfo(importPath);
-        if (!moduleInfo?.meta.assetId) {
+        if (!moduleInfo?.meta.css || extract) {
           return codeResult;
         }
 
-        const assetPath = this.getFileName(moduleInfo?.meta.assetId);
+        const assetId = this.emitFile({
+          type: 'asset',
+          name: moduleInfo.id,
+          source: moduleInfo.meta.css,
+        });
+        const assetPath = this.getFileName(assetId);
         const relativeAssetPath = `./${normalize(
           relative(chunkPath, assetPath),
         )}`;
