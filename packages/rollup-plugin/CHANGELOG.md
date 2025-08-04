@@ -1,5 +1,11 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.4.1
+
+### Patch Changes
+
+- [#1627](https://github.com/vanilla-extract-css/vanilla-extract/pull/1627) [`2fcf8e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2fcf8e89a3f09782bf9fbbf6e51c01dd4b1a2017) Thanks [@stipsan](https://github.com/stipsan)! - Include content in CSS sourcemap when bundling with the `extract` option
+
 ## 1.4.0
 
 ### Minor Changes
