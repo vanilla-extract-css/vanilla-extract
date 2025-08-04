@@ -2,4 +2,4 @@
 '@vanilla-extract/rollup-plugin': patch
 ---
 
-include content in css sourcemap when extracting
+Include content in CSS sourcemap when bundling with the `extract` option
