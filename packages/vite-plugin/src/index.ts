@@ -4,10 +4,11 @@ import type {
   Plugin,
   ResolvedConfig,
   ConfigEnv,
-  ViteDevServer,
   PluginOption,
   TransformResult,
   UserConfig,
+  ModuleNode,
+  ViteDevServer,
 } from 'vite';
 import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
@@ -70,6 +71,8 @@ export function vanillaExtractPlugin({
   let isBuild: boolean;
   const vitePromise = import('vite');
 
+  const transformedModules = new Set<string>();
+
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
   const getAbsoluteId = (filePath: string) => {
@@ -92,22 +95,38 @@ export function vanillaExtractPlugin({
     return normalizePath(resolvedId);
   };
 
-  function invalidateModule(absoluteId: string) {
-    if (!server) return;
-
+  /**
+   * Custom invalidation function that takes a chain of importers to invalidate. If an importer is a
+   * VE module, its virtual CSS is invalidated instead. Otherwise, the module is invalidated
+   * normally.
+   */
+  const invalidateImporterChain = ({
+    importerChain,
+    server,
+    timestamp,
+  }: {
+    importerChain: Set<ModuleNode>;
+    server: ViteDevServer;
+    timestamp: number;
+  }) => {
     const { moduleGraph } = server;
-    const modules = moduleGraph.getModulesByFile(absoluteId);
 
-    if (modules) {
-      for (const module of modules) {
-        moduleGraph.invalidateModule(module);
+    const seen = new Set<ModuleNode>();
 
-        // Vite uses this timestamp to add `?t=` query string automatically for HMR.
-        module.lastHMRTimestamp =
-          module.lastInvalidationTimestamp || Date.now();
+    for (const mod of importerChain) {
+      if (mod.id && cssFileFilter.test(mod.id)) {
+        const virtualModules = moduleGraph.getModulesByFile(
+          fileIdToVirtualId(mod.id),
+        );
+
+        for (const virtualModule of virtualModules ?? []) {
+          moduleGraph.invalidateModule(virtualModule, seen, timestamp, true);
+        }
+      } else {
+        moduleGraph.invalidateModule(mod, seen, timestamp, true);
       }
     }
-  }
+  };
 
   return [
     {
@@ -138,6 +157,10 @@ export function vanillaExtractPlugin({
       name: PLUGIN_NAMESPACE,
       configureServer(_server) {
         server = _server;
+
+        server.watcher.on('unlink', (file) => {
+          transformedModules.delete(file);
+        });
       },
       config(_userConfig, _configEnv) {
         configEnv = _configEnv;
@@ -151,7 +174,7 @@ export function vanillaExtractPlugin({
           },
         };
       },
-      async configResolved(_resolvedConfig) {
+      configResolved(_resolvedConfig) {
         config = _resolvedConfig;
         isBuild = config.command === 'build' && !config.build.watch;
         packageName = getPackageInfo(config.root).name;
@@ -218,52 +241,71 @@ export function vanillaExtractPlugin({
         }
 
         const identOption = getIdentOption();
+        const normalizedId = normalizePath(validId);
 
         if (unstable_mode === 'transform') {
+          transformedModules.add(normalizedId);
+
           return transform({
             source: code,
-            filePath: normalizePath(validId),
+            filePath: normalizedId,
             rootPath: config.root,
             packageName,
             identOption,
           });
         }
 
-        if (compiler) {
-          const absoluteId = getAbsoluteId(validId);
+        if (!compiler) {
+          return null;
+        }
 
-          const { source, watchFiles } = await compiler.processVanillaFile(
-            absoluteId,
-            { outputCss: true },
-          );
-          const result: TransformResult = {
-            code: source,
-            map: { mappings: '' },
-          };
+        const absoluteId = getAbsoluteId(validId);
 
-          // We don't need to watch files or invalidate modules in build mode or during SSR
-          if (isBuild || options.ssr) {
-            return result;
-          }
+        const { source, watchFiles } = await compiler.processVanillaFile(
+          absoluteId,
+          { outputCss: true },
+        );
 
-          for (const file of watchFiles) {
-            if (
-              !file.includes('node_modules') &&
-              normalizePath(file) !== absoluteId
-            ) {
-              this.addWatchFile(file);
-            }
+        transformedModules.add(normalizedId);
 
-            // We have to invalidate the virtual module & deps, not the real one we just transformed
-            // The deps have to be invalidated in case one of them changing was the trigger causing
-            // the current transformation
-            if (cssFileFilter.test(file)) {
-              invalidateModule(fileIdToVirtualId(file));
-            }
-          }
+        const result: TransformResult = {
+          code: source,
+          map: { mappings: '' },
+        };
 
+        // We don't need to watch files in build mode or during SSR
+        if (isBuild || options.ssr) {
           return result;
         }
+
+        for (const file of watchFiles) {
+          if (
+            !file.includes('node_modules') &&
+            normalizePath(file) !== absoluteId
+          ) {
+            this.addWatchFile(file);
+          }
+        }
+
+        return result;
+      },
+      // The compiler's module graph is always a subset of the consuming Vite dev server's module
+      // graph, so this early exit will be hit for any modules that aren't related to VE modules.
+      async handleHotUpdate({ file, server, timestamp }) {
+        const importerChain = await compiler?.findImporterTree(
+          normalizePath(file),
+          transformedModules,
+        );
+
+        if (!importerChain || importerChain.size === 0) {
+          return;
+        }
+
+        invalidateImporterChain({
+          importerChain,
+          server,
+          timestamp,
+        });
       },
       resolveId(source) {
         const [validId, query] = source.split('?');
