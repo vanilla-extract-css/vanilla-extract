@@ -3,7 +3,9 @@
 ---
 
 `style`: Add support for `@starting-style` rules
+
 **EXAMPLE USAGE**:
+
 ```ts
 import { style } from '@vanilla-extact/css';
 export const styleWithStartingStyle = style({
