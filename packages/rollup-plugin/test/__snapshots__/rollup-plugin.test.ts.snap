@@ -207,6 +207,11 @@ render();
 ",
   ],
   [
+    "src/nested/nested.js",
+    "export { button } from '../styles.css.js';
+",
+  ],
+  [
     "src/shared.css.js",
     "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 
@@ -361,6 +366,11 @@ function render() {
   });
 }
 render();
+",
+  ],
+  [
+    "nested/nested.js",
+    "export { button } from '../styles.css.js';
 ",
   ],
   [
@@ -577,6 +587,14 @@ exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
     "",
   ],
   [
+    "src/nested/nested.js",
+    "",
+  ],
+  [
+    "src/nested/nested.js.map",
+    "",
+  ],
+  [
     "src/shared.css.js",
     ";;;;;;",
   ],
@@ -737,6 +755,7 @@ html .styles_opacity_1\\/4__jteyb17 {
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
 import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
+import { c as container, b as button, o as opacity } from './styles.css-oQ3WSjqO.js';
 import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
 import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
 
@@ -744,10 +763,6 @@ var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
 var vars = { colors: { backgroundColor: "var(--colors-backgroundColor__cvta171)", text: "var(--colors-text__cvta172)" }, space: { "1": "var(--space-1__cvta173)", "2": "var(--space-2__cvta174)", "3": "var(--space-3__cvta175)" } };
-
-var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
-var container = "styles_container__jteyb11";
-var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
 
 var shadow = "shared_shadow__4dtfen0";
 
@@ -854,6 +869,27 @@ function render() {
   });
 }
 render();
+",
+  ],
+  [
+    "nested.js",
+    "export { b as button } from './styles.css-oQ3WSjqO.js';
+import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
+import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
+",
+  ],
+  [
+    "styles.css-oQ3WSjqO.js",
+    "import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
+import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
+
+var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
+var container = "styles_container__jteyb11";
+var opacity = { "1/2": "styles_opacity_1/2__jteyb16", "1/4": "styles_opacity_1/4__jteyb17" };
+
+export { button as b, container as c, opacity as o };
 ",
   ],
 ]

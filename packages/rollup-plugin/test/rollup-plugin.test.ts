@@ -25,7 +25,10 @@ async function build({
   ...pluginOptions
 }: BuildOptions) {
   const bundle = await rollup({
-    input: require.resolve('@fixtures/themed/src/index.ts'),
+    input: [
+      require.resolve('@fixtures/themed/src/index.ts'),
+      require.resolve('@fixtures/themed/src/nested/nested.ts'),
+    ],
     external: ['@vanilla-extract/dynamic'],
     ...rollupOptions,
     plugins: [
