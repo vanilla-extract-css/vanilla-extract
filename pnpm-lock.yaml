@@ -526,6 +526,9 @@ importers:
       javascript-stringify:
         specifier: ^2.0.1
         version: 2.1.0
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
