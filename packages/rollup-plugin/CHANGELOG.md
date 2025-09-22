@@ -1,5 +1,11 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.4.2
+
+### Patch Changes
+
+- [#1616](https://github.com/vanilla-extract-css/vanilla-extract/pull/1616) [`e2c439f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e2c439ffa96dce570f2d472d2ca6ee40c69e3ee9) Thanks [@radnan](https://github.com/radnan)! - allow plugin to work in rolldown
+
 ## 1.4.1
 
 ### Patch Changes

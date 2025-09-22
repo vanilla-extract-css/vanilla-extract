@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/rollup-plugin",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "main": "dist/vanilla-extract-rollup-plugin.cjs.js",
   "module": "dist/vanilla-extract-rollup-plugin.esm.js",
