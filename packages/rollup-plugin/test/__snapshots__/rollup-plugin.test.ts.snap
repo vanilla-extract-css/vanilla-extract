@@ -123,12 +123,12 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "src/index.js",
+    "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
-import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
-import { container, button, opacity } from './styles.css.js';
-import { shadow } from './shared.css.js';
-import testNodes from '../test-nodes.json.js';
+import { vars, altTheme, theme, responsiveTheme } from './src/themes.css.js';
+import { container, button, opacity } from './src/styles.css.js';
+import { shadow } from './src/shared.css.js';
+import testNodes from './test-nodes.json.js';
 
 const inlineTheme = assignInlineVars(vars, {
   colors: {
@@ -207,8 +207,8 @@ render();
 ",
   ],
   [
-    "src/nested/nested.js",
-    "export { button } from '../styles.css.js';
+    "nested/index.js",
+    "export { button } from '../src/styles.css.js';
 ",
   ],
   [
@@ -369,7 +369,7 @@ render();
 ",
   ],
   [
-    "nested/nested.js",
+    "nested/index.js",
     "export { button } from '../styles.css.js';
 ",
   ],
@@ -579,19 +579,19 @@ exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
     "",
   ],
   [
-    "src/index.js",
+    "index.js",
     ";;;;;;AAiBA,MAAM,WAAA,GAAc,iBAAiB,IAAA,EAAM;AAAA,EACzC,MAAA,EAAQ;AAAA,IACN,eAAA,EAAiB,QAAA;AAAA,IACjB,IAAA,EAAM;AAAA,GACR;AAAA,EACA,KAAA,EAAO;AAAA,IACL,CAAA,EAAG,KAAA;AAAA,IACH,CAAA,EAAG,KAAA;AAAA,IACH,CAAA,EAAG;AAAA;AAEP,CAAC,CAAA;AAED,SAAS,MAAA,GAAS;AAChB,EAAA,QAAA,CAAS,KAAK,SAAA,GAAY;AAAA,WAAA,EACf,SAAA,CAAU,IAAI,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA;AAAA,aAAA,EAE9B,SAAA,CAAU,aAAa,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,kBAAA,EACvC,SAAA,CAAU,UAAU,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,kBAAA,EACtC,QAAQ,CAAA;AAAA;AAAA,iBAAA,EAET,SAAA,CAAU,YAAY,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,sBAAA,EACtC,SAAA,CAAU,SAAS,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,sBAAA,EACrC,KAAK,CAAA;AAAA;AAAA,qBAAA,EAEN,SAAA,CAAU,mBAAmB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,0BAAA,EAC7C,SAAA,CAAU,gBAAgB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,wBAAA,EAC9C,WAAW,CAAA;AAAA;AAAA,yBAAA,EAEV,SAAA,CAAU,oBAAoB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,8BAAA,EAC9C,SAAA,CAAU,iBAAiB,CAAA,SAAA,EAAY,MAAM,CAAA,CAAA,EAAI,OAAA,CAAQ,KAAK,CAAC,CAAA,6BAAA,EAAgC,OAAA,CAAQ,KAAK,CAAC,CAAA;AAAA;AAAA;AAAA,6BAAA,EAG9G,SAAA,CAAU,oBAAoB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,kCAAA,EAC9C,SAAA,CAAU,iBAAiB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA,8BAAA,EACjD,eAAe,CAAA;AAAA;AAAA,yBAAA,EAEpB,SAAA,CAAU,wBAAwB,CAAA,SAAA,EAAY,SAAS,CAAA;AAAA,8BAAA,EAClD,SAAA,CAAU,qBAAqB,CAAA,SAAA,EAAY,MAAM,CAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,CAAA;AAiB/E,EAAA,MAAM,uBAAuB,QAAA,CAAS,cAAA;AAAA,IACpC,SAAA,CAAU;AAAA,GACZ;AAEA,EAAA,IAAI,CAAC,oBAAA,EAAsB;AACzB,IAAA,MAAM,IAAI,MAAM,mCAAmC,CAAA;AAAA,EACrD;AAEA,EAAA,cAAA,CAAe,sBAAsB,IAAA,EAAM;AAAA,IACzC,MAAA,EAAQ;AAAA,MACN,eAAA,EAAiB,aAAA;AAAA,MACjB,IAAA,EAAM;AAAA,KACR;AAAA,IACA,KAAA,EAAO;AAAA,MACL,CAAA,EAAG,KAAA;AAAA,MACH,CAAA,EAAG,MAAA;AAAA,MACH,CAAA,EAAG;AAAA;AACL,GACD,CAAA;AAED,EAAA,cAAA,CAAe,oBAAA,EAAsB;AAAA,IACnC,CAAC,IAAA,CAAK,MAAA,CAAO,eAAe,GAAG;AAAA,GAChC,CAAA;AACH;AAEA,MAAA,EAAO",
   ],
   [
-    "src/index.js.map",
+    "index.js.map",
     "",
   ],
   [
-    "src/nested/nested.js",
+    "nested/index.js",
     "",
   ],
   [
-    "src/nested/nested.js.map",
+    "nested/index.js.map",
     "",
   ],
   [
@@ -872,11 +872,11 @@ render();
 ",
   ],
   [
-    "nested.js",
-    "export { b as button } from './styles.css-oQ3WSjqO.js';
-import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
-import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
+    "nested/index.js",
+    "export { b as button } from '../styles.css-oQ3WSjqO.js';
+import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
+import './../assets/src/styles.css.ts.vanilla-BfisGtko.css';
 ",
   ],
   [
