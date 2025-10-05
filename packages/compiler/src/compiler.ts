@@ -110,7 +110,7 @@ const createViteServer = async ({
     root,
     server: {
       hmr: false,
-      watch: enableFileWatcher ? undefined : null,
+      watch: enableFileWatcher ? viteConfig.server?.watch : null,
     },
     logLevel: 'silent',
     optimizeDeps: {
