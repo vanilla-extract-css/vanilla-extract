@@ -549,6 +549,9 @@ importers:
 
   packages/next-plugin:
     dependencies:
+      '@vanilla-extract/turbopack-plugin':
+        specifier: workspace:^
+        version: link:../turbopack-plugin
       '@vanilla-extract/webpack-plugin':
         specifier: workspace:^
         version: link:../webpack-plugin
@@ -613,6 +616,19 @@ importers:
       '@vanilla-extract/css':
         specifier: workspace:^
         version: link:../css
+
+  packages/turbopack-plugin:
+    dependencies:
+      '@vanilla-extract/compiler':
+        specifier: workspace:^
+        version: link:../compiler
+      '@vanilla-extract/integration':
+        specifier: workspace:^
+        version: link:../integration
+    devDependencies:
+      next:
+        specifier: 12.3.4
+        version: 12.3.4(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   packages/utils: {}
 

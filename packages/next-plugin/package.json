@@ -21,6 +21,7 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
+    "@vanilla-extract/turbopack-plugin": "workspace:^",
     "@vanilla-extract/webpack-plugin": "workspace:^"
   },
   "peerDependencies": {
