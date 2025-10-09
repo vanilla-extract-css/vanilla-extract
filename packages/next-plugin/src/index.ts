@@ -17,7 +17,7 @@ import type { TurboLoaderOptions } from '@vanilla-extract/turbopack-plugin';
 const require = createRequire(import.meta.url);
 
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
-  turbopackGlob?: string;
+  turbopackGlob?: string[];
 };
 
 const NextMiniCssExtractPlugin = NextMiniCssExtractPluginDefault as any;
@@ -140,13 +140,13 @@ export const createVanillaExtractPlugin = (
 ) => {
   return (nextConfig: NextConfig = {}): NextConfig => {
     const {
-      turbopackGlob = '**/*.css.{ts,tsx,js,jsx}',
+      turbopackGlob = ['**/*.css.{ts,tsx,js,jsx}'],
       ...webpackPluginOptions
     } = pluginOptions;
     const turbopack = { ...(nextConfig.turbopack || {}) };
 
     if (
-      turbopack.rules?.[turbopackGlob] ||
+      turbopackGlob.some((glob) => turbopack.rules?.[glob]) ||
       turbopack.rules?.['vanilla.virtual.css']
     ) {
       throw new Error(
@@ -154,21 +154,25 @@ export const createVanillaExtractPlugin = (
       );
     }
 
+    const vanillaExtractRule = {
+      as: '*.js',
+      loaders: [
+        {
+          loader: require.resolve('@vanilla-extract/turbopack-plugin'),
+          options: {
+            nextEnv: nextConfig.env ?? null,
+            outputCss: pluginOptions.outputCss ?? null,
+            identifiers: pluginOptions.identifiers ?? null,
+          } satisfies TurboLoaderOptions,
+        },
+      ],
+    } as const;
+
     turbopack.rules = {
       ...(turbopack.rules || {}),
-      [turbopackGlob]: {
-        as: '*.js',
-        loaders: [
-          {
-            loader: require.resolve('@vanilla-extract/turbopack-plugin'),
-            options: {
-              nextEnv: nextConfig.env ?? null,
-              outputCss: pluginOptions.outputCss ?? null,
-              identifiers: pluginOptions.identifiers ?? null,
-            } satisfies TurboLoaderOptions,
-          },
-        ],
-      },
+      ...Object.fromEntries(
+        turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
+      ),
       'vanilla.virtual.css': {
         loaders: [require.resolve('@vanilla-extract/turbopack-plugin')],
       },
