@@ -152,9 +152,11 @@ export default async function turbopackVanillaExtractLoader(
         .relative(fromDir, virtualCssPath)
         .replace(/\\/g, '/');
       const importPath = relPath.startsWith('.') ? relPath : `./${relPath}`;
-      const importRequest = `${importPath}?ve-source=${serialized}`;
-      const importStmt = `import '${importRequest}';`;
-      transformed = `${importStmt};${veSource}`;
+      const importRequest = `${importPath}?ve-source=${encodeURIComponent(
+        serialized,
+      )}`;
+      const importStmt = `import '${importRequest}';\n`;
+      transformed = `${importStmt}${veSource}`;
     }
 
     callback(null, transformed);
