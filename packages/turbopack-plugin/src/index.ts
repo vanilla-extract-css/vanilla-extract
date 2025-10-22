@@ -9,6 +9,8 @@ import {
   deserializeCss,
   type IdentifierOption,
 } from '@vanilla-extract/integration';
+import { createNextFontVePlugins, type NextFontPluginState } from './next-font/plugin';
+import { buildValidationPrelude } from './next-font/devValidation';
 
 type LoaderContext<OptionsType> = {
   getOptions: (schema?: unknown) => OptionsType;
@@ -39,6 +41,7 @@ export type TurboLoaderOptions = {
 };
 
 let singletonCompiler: VeCompiler | undefined;
+let nextFontState: NextFontPluginState | undefined;
 
 const getCompiler = async (
   root: string,
@@ -59,6 +62,11 @@ const getCompiler = async (
     viteConfig: {
       define: defineEnv,
       plugins: [
+        ...(() => {
+          const created = createNextFontVePlugins();
+          nextFontState = created.state;
+          return created.plugins;
+        })(),
         {
           // avoid module resolution errors by letting turbopack resolve our modules for us
           name: 'vanilla-extract-turbo-resolve',
@@ -139,14 +147,26 @@ export default async function turbopackVanillaExtractLoader(
 
     watchFiles?.forEach((file) => this.addDependency(file));
 
+    // prepend next/font dev validation if this file used any providers
+    let veSourceWithValidation = veSource;
+    if (nextFontState && watchFiles && watchFiles.size > 0) {
+      const usedProviders = [...watchFiles].filter((f) => nextFontState!.fontProviders.has(f));
+      if (usedProviders.length > 0) {
+        const prelude = buildValidationPrelude(this.resourcePath, usedProviders, nextFontState.fontProviderDetails);
+        if (prelude) {
+          veSourceWithValidation = `${prelude}\n${veSource}`;
+        }
+      }
+    }
+
     // rewrite compiler-emitted .vanilla.css imports to the on-disk virtual stub with serialized CSS
     const fromDir = path.dirname(this.resourcePath);
     const relPath = path.relative(fromDir, virtualCssPath).replace(/\\/g, '/');
     const importPath = relPath.startsWith('.') ? relPath : `./${relPath}`;
 
-    let transformed = veSource;
+    let transformed = veSourceWithValidation;
     const importRegex = /import\s+['"](.+?\.vanilla\.css)['"];?/g;
-    const matches = Array.from(veSource.matchAll(importRegex));
+    const matches = Array.from(veSourceWithValidation.matchAll(importRegex));
 
     for (const match of matches) {
       const fullImport = match[0];
