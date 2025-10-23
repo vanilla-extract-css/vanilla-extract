@@ -167,7 +167,8 @@ export const createVanillaExtractPlugin = (
     const coerced = nextVersion ? semver.coerce(nextVersion) : null;
     const supportsTurbopackRules = !!coerced && semver.gte(coerced, '15.3.0');
     const enableTurbopack =
-      turbopackMode === 'on' || (turbopackMode === 'auto' && supportsTurbopackRules);
+      turbopackMode === 'on' ||
+      (turbopackMode === 'auto' && supportsTurbopackRules);
 
     let turbopack: typeof nextConfig.turbopack;
     if (enableTurbopack) {

@@ -5,7 +5,10 @@ import {
 import { type IdentifierOption } from '@vanilla-extract/integration';
 import * as path from 'node:path';
 import { buildValidationPrelude } from './next-font/devValidation';
-import { createNextFontVePlugins, type NextFontPluginState } from './next-font/plugin';
+import {
+  createNextFontVePlugins,
+  type NextFontPluginState,
+} from './next-font/plugin';
 
 type LoaderContext<OptionsType> = {
   getOptions: (schema?: unknown) => OptionsType;
@@ -118,9 +121,15 @@ export default async function turbopackVanillaExtractLoader(
     // prepend next/font dev validation if this file used any providers
     let veSourceWithValidation = veSource;
     if (nextFontState && watchFiles && watchFiles.size > 0) {
-      const usedProviders = [...watchFiles].filter((f) => nextFontState!.fontProviders.has(f));
+      const usedProviders = [...watchFiles].filter((f) =>
+        nextFontState!.fontProviders.has(f),
+      );
       if (usedProviders.length > 0) {
-        const prelude = buildValidationPrelude(this.resourcePath, usedProviders, nextFontState.fontProviderDetails);
+        const prelude = buildValidationPrelude(
+          this.resourcePath,
+          usedProviders,
+          nextFontState.fontProviderDetails,
+        );
         if (prelude) {
           veSourceWithValidation = `${prelude}\n${veSource}`;
         }

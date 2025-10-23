@@ -2,7 +2,10 @@ import { transformNextFont } from './transform';
 
 export type NextFontPluginState = {
   fontProviders: Set<string>;
-  fontProviderDetails: Map<string, { exportName: string; stubbedFamily: string }[]>;
+  fontProviderDetails: Map<
+    string,
+    { exportName: string; stubbedFamily: string }[]
+  >;
 };
 
 type Plugin = {
@@ -11,13 +14,22 @@ type Plugin = {
   transform?: (
     code: string,
     id: string,
-  ) => Promise<{ code: string; map: any } | null> | { code: string; map: any } | null;
+  ) =>
+    | Promise<{ code: string; map: any } | null>
+    | { code: string; map: any }
+    | null;
 };
 
-export function createNextFontVePlugins(): { plugins: Plugin[]; state: NextFontPluginState } {
+export function createNextFontVePlugins(): {
+  plugins: Plugin[];
+  state: NextFontPluginState;
+} {
   const state: NextFontPluginState = {
     fontProviders: new Set<string>(),
-    fontProviderDetails: new Map<string, { exportName: string; stubbedFamily: string }[]>(),
+    fontProviderDetails: new Map<
+      string,
+      { exportName: string; stubbedFamily: string }[]
+    >(),
   };
 
   const nextFontStubPlugin: Plugin = {
@@ -41,5 +53,3 @@ export function createNextFontVePlugins(): { plugins: Plugin[]; state: NextFontP
 
   return { plugins: [nextFontStubPlugin], state };
 }
-
-

@@ -12,3 +12,4 @@ pnpm-lock.yaml
 *-snapshots
 test-results
 examples/remix/build
+.pnpm-store

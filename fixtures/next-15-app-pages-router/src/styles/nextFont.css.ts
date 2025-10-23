@@ -20,5 +20,3 @@ export const pickedValues = Object.fromEntries(
     fontStyle: string;
   }
 >;
-
-

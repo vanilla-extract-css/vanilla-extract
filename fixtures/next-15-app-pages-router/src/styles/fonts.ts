@@ -1,5 +1,9 @@
 import localF from 'next/font/local';
-import { Roboto as R, Roboto_Flex as RF, Noto_Serif as NotoSerif } from 'next/font/google';
+import {
+  Roboto as R,
+  Roboto_Flex as RF,
+  Noto_Serif as NotoSerif,
+} from 'next/font/google';
 
 // intentionally odd local variable name to exercise transform edge-cases
 export const __Local_Font = localF({
@@ -43,18 +47,39 @@ export const _localDupFallback = localF({
   fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
 });
 
-export const _robotoDefaultStyle = R({ subsets: ['latin'], fallback: ['serif'] });
+export const _robotoDefaultStyle = R({
+  subsets: ['latin'],
+  fallback: ['serif'],
+});
 
-export const _robotoItalic = R({ subsets: ['latin'], fallback: ['sans-serif'], style: 'italic', weight: '400' });
+export const _robotoItalic = R({
+  subsets: ['latin'],
+  fallback: ['sans-serif'],
+  style: 'italic',
+  weight: '400',
+});
 
-export const _robotoMultiStyle = R({ subsets: ['latin'], fallback: ['monospace'], style: ['italic', 'normal'] });
+export const _robotoMultiStyle = R({
+  subsets: ['latin'],
+  fallback: ['monospace'],
+  style: ['italic', 'normal'],
+});
 
 export const _robotoWeightStr = R({ weight: '400' });
 
 export const _robotoWeightVar = R({ weight: 'variable' });
 
-export const _notoSerif = NotoSerif({ subsets: ['latin'], fallback: ['system-ui'] });
+export const _notoSerif = NotoSerif({
+  subsets: ['latin'],
+  fallback: ['system-ui'],
+});
 
-export const _robotoFallbackSpaces = R({ subsets: ['latin'], fallback: ['Times New Roman', 'Gill Sans', 'Avenir Next'] });
+export const _robotoFallbackSpaces = R({
+  subsets: ['latin'],
+  fallback: ['Times New Roman', 'Gill Sans', 'Avenir Next'],
+});
 
-export const _robotoDupFallback = R({ subsets: ['latin'], fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'] });
+export const _robotoDupFallback = R({
+  subsets: ['latin'],
+  fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
+});
