@@ -12,12 +12,19 @@ import type {
   WebpackConfigContext,
 } from 'next/dist/server/config-shared';
 import { createRequire } from 'node:module';
+import * as path from 'node:path';
 import type { TurboLoaderOptions } from '@vanilla-extract/turbopack-plugin';
+import semver from 'semver';
 
 const require = createRequire(import.meta.url);
 
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
   turbopackGlob?: string[];
+  // controls whether we attempt to configure turbopack
+  // auto: enable only when Next >= 15.3
+  // on: force enable regardless of detected Next version
+  // off: never configure turbopack, webpack only
+  turbopackMode?: 'auto' | 'on' | 'off';
 };
 
 const NextMiniCssExtractPlugin = NextMiniCssExtractPluginDefault as any;
@@ -140,47 +147,63 @@ export const createVanillaExtractPlugin = (
 ) => {
   return (nextConfig: NextConfig = {}): NextConfig => {
     const {
+      turbopackMode = 'auto',
       turbopackGlob = ['**/*.css.{ts,tsx,js,jsx}'],
       ...webpackPluginOptions
     } = pluginOptions;
-    const turbopack = { ...(nextConfig.turbopack || {}) };
+    // detect Next version and decide whether to configure turbopack
+    const nextVersion = (() => {
+      try {
+        // resolve from the consumer app's cwd, not this package
+        const requireFromCwd = createRequire(
+          path.join(process.cwd(), 'package.json'),
+        );
+        const pkg = requireFromCwd('next/package.json') as { version?: string };
+        return pkg?.version ?? null;
+      } catch {
+        return null;
+      }
+    })();
+    const coerced = nextVersion ? semver.coerce(nextVersion) : null;
+    const supportsTurbopackRules = !!coerced && semver.gte(coerced, '15.3.0');
+    const enableTurbopack =
+      turbopackMode === 'on' || (turbopackMode === 'auto' && supportsTurbopackRules);
 
-    if (
-      turbopackGlob.some((glob) => turbopack.rules?.[glob]) ||
-      turbopack.rules?.['vanilla.virtual.css']
-    ) {
-      throw new Error(
-        'Vanilla extract could not be applied automatically due to conflicting turbopack rules',
-      );
+    let turbopack: typeof nextConfig.turbopack;
+    if (enableTurbopack) {
+      turbopack = { ...(nextConfig.turbopack || {}) } as any;
+
+      if (turbopackGlob.some((glob) => turbopack.rules?.[glob])) {
+        throw new Error(
+          'Vanilla extract could not be applied automatically due to conflicting turbopack rules',
+        );
+      }
+
+      const vanillaExtractRule = {
+        as: '*.js',
+        loaders: [
+          {
+            loader: require.resolve('@vanilla-extract/turbopack-plugin'),
+            options: {
+              nextEnv: nextConfig.env ?? null,
+              outputCss: pluginOptions.outputCss ?? null,
+              identifiers: pluginOptions.identifiers ?? null,
+              distDir: nextConfig.distDir ?? null,
+            } satisfies TurboLoaderOptions,
+          },
+        ],
+      } as const;
+
+      turbopack.rules = {
+        ...(turbopack.rules || {}),
+        ...Object.fromEntries(
+          turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
+        ),
+      };
     }
 
-    const vanillaExtractRule = {
-      as: '*.js',
-      loaders: [
-        {
-          loader: require.resolve('@vanilla-extract/turbopack-plugin'),
-          options: {
-            nextEnv: nextConfig.env ?? null,
-            outputCss: pluginOptions.outputCss ?? null,
-            identifiers: pluginOptions.identifiers ?? null,
-          } satisfies TurboLoaderOptions,
-        },
-      ],
-    } as const;
-
-    turbopack.rules = {
-      ...(turbopack.rules || {}),
-      ...Object.fromEntries(
-        turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
-      ),
-      'vanilla.virtual.css': {
-        loaders: [require.resolve('@vanilla-extract/turbopack-plugin')],
-      },
-    };
-
-    return {
+    const baseConfig: NextConfig = {
       ...nextConfig,
-      turbopack,
       webpack(config: any, options: WebpackConfigContext) {
         const { dir, dev, config: resolvedNextConfig } = options;
 
@@ -271,5 +294,10 @@ export const createVanillaExtractPlugin = (
         return config;
       },
     };
+
+    if (enableTurbopack && turbopack) {
+      return { ...baseConfig, turbopack } as NextConfig;
+    }
+    return baseConfig;
   };
 };

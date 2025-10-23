@@ -1,16 +1,11 @@
-import * as path from 'node:path';
-import * as fs from 'node:fs/promises';
 import {
   createCompiler,
   type Compiler as VeCompiler,
 } from '@vanilla-extract/compiler';
-import {
-  serializeCss,
-  deserializeCss,
-  type IdentifierOption,
-} from '@vanilla-extract/integration';
-import { createNextFontVePlugins, type NextFontPluginState } from './next-font/plugin';
+import { type IdentifierOption } from '@vanilla-extract/integration';
+import * as path from 'node:path';
 import { buildValidationPrelude } from './next-font/devValidation';
+import { createNextFontVePlugins, type NextFontPluginState } from './next-font/plugin';
 
 type LoaderContext<OptionsType> = {
   getOptions: (schema?: unknown) => OptionsType;
@@ -38,6 +33,7 @@ export type TurboLoaderOptions = {
   identifiers: IdentifierOption | null;
   nextEnv: Record<string, string> | null;
   outputCss: boolean | null;
+  distDir: string | null;
 };
 
 let singletonCompiler: VeCompiler | undefined;
@@ -106,34 +102,6 @@ export default async function turbopackVanillaExtractLoader(
       options.identifiers ?? (this.mode === 'production' ? 'short' : 'debug');
     const outputCss = options.outputCss ?? true;
 
-    // process virtual css if needed
-    const rawQuery: string | undefined = this.resourceQuery;
-    if (typeof rawQuery === 'string') {
-      const query = rawQuery.startsWith('?') ? rawQuery.slice(1) : rawQuery;
-      const params = new URLSearchParams(query);
-      const encoded = params.get('ve-source');
-      if (encoded != null) {
-        const css = await deserializeCss(encoded);
-        return callback(null, css);
-      }
-    }
-
-    // turbopack has trouble resolving directly to our package and the import cannot be server relative
-    // we need to reference a real file, so write one to our next cache to reference
-    const virtualCssPath = path.join(
-      this.rootContext,
-      '.next',
-      'vanilla.virtual.css',
-    );
-    try {
-      await fs.writeFile(
-        virtualCssPath,
-        '/* Virtual CSS file for vanilla-extract */',
-      );
-    } catch {
-      // file already exists
-    }
-
     const compiler = await getCompiler(
       this.rootContext,
       identifiers,
@@ -159,10 +127,7 @@ export default async function turbopackVanillaExtractLoader(
       }
     }
 
-    // rewrite compiler-emitted .vanilla.css imports to the on-disk virtual stub with serialized CSS
-    const fromDir = path.dirname(this.resourcePath);
-    const relPath = path.relative(fromDir, virtualCssPath).replace(/\\/g, '/');
-    const importPath = relPath.startsWith('.') ? relPath : `./${relPath}`;
+    // rewrite compiler-emitted .vanilla.css imports to data URL side-effect imports
 
     let transformed = veSourceWithValidation;
     const importRegex = /import\s+['"](.+?\.vanilla\.css)['"];?/g;
@@ -181,11 +146,9 @@ export default async function turbopackVanillaExtractLoader(
       const { css } = compiler.getCssForFile(cssModulePath);
 
       if (css) {
-        const serialized = await serializeCss(css);
-        const importRequest = `${importPath}?ve-source=${encodeURIComponent(
-          serialized,
-        )}`;
-        const newImport = `import '${importRequest}';`;
+        const base64 = Buffer.from(css, 'utf8').toString('base64');
+        const dataUrl = `data:text/css;base64,${base64}`;
+        const newImport = `import '${dataUrl}';`;
         transformed = transformed.replace(fullImport, newImport);
       } else {
         // no css available for this import; drop it
