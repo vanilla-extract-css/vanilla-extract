@@ -19,7 +19,7 @@
     "@vanilla-extract/css": "workspace:*",
     "@vanilla-extract/recipes": "workspace:*",
     "@vanilla-extract/sprinkles": "workspace:*",
-    "next": "15.3.0",
+    "next": "npm:next@15.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -29,5 +29,3 @@
     "@vanilla-extract/webpack-plugin": "workspace:*"
   }
 }
-
-
