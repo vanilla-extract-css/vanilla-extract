@@ -16,6 +16,7 @@ import {
   getPackageInfo,
   transform,
   normalizePath,
+  isSourceVanillaFile,
 } from '@vanilla-extract/integration';
 
 const PLUGIN_NAMESPACE = 'vite-plugin-vanilla-extract';
@@ -213,7 +214,11 @@ export function vanillaExtractPlugin({
       async transform(code, id, options = {}) {
         const [validId] = id.split('?');
 
-        if (!cssFileFilter.test(validId)) {
+        if (
+          !isSourceVanillaFile(validId, {
+            code,
+          })
+        ) {
           return null;
         }
 
@@ -289,9 +294,12 @@ export function vanillaExtractPlugin({
 
         const absoluteId = getAbsoluteId(validId);
 
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
-
-        return css;
+        try {
+          const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+          return css;
+        } catch {
+          return null; // pass through
+        }
       },
     },
   ];
