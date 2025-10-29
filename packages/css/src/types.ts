@@ -12,7 +12,7 @@ export type Resolve<T> = {
 // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
 interface ContainerProperties {
   container?: string;
-  containerType?: 'size' | 'inline-size' | (string & {});
+  containerType?: 'size' | 'inline-size' | 'scroll-state' | (string & {});
   containerName?: string;
 }
 
