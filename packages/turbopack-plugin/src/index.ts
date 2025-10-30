@@ -69,6 +69,7 @@ const getCompiler = async (
         {
           // avoid module resolution errors by letting turbopack resolve our modules for us
           name: 'vanilla-extract-turbo-resolve',
+          enforce: 'pre',
           async resolveId(source: string, importer: string | undefined) {
             if (!getResolve || !importer) return null;
             const resolver = getResolve({});
