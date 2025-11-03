@@ -41,52 +41,69 @@ export type TurboLoaderOptions = {
 
 let singletonCompiler: VeCompiler | undefined;
 let nextFontState: NextFontPluginState | undefined;
+let processedPaths = new Set<string>();
 
 const getCompiler = async (
   root: string,
   identifiers: IdentifierOption,
-  getResolve?: LoaderContext<TurboLoaderOptions>['getResolve'],
-  nextEnv?: Record<string, string> | null,
+  getResolve: LoaderContext<TurboLoaderOptions>['getResolve'] | undefined,
+  nextEnv: Record<string, string> | null | undefined,
+  currentFilePath: string,
 ): Promise<VeCompiler> => {
-  if (singletonCompiler) return singletonCompiler;
-
-  const defineEnv: Record<string, string> = {};
-  for (const [key, value] of Object.entries(nextEnv ?? {})) {
-    defineEnv[`process.env.${key}`] = JSON.stringify(value);
+  // If we've already processed this file with the current compiler, create a fresh compiler.
+  if (singletonCompiler && processedPaths.has(currentFilePath)) {
+    try {
+      await singletonCompiler.close();
+    } catch {}
+    singletonCompiler = undefined;
+    processedPaths.clear();
+    // helpful log for diagnosing compiler resets during HMR
+    console.log('[vanilla-extract] Resetting style compiler');
   }
 
-  singletonCompiler = createCompiler({
-    root,
-    identifiers,
-    viteConfig: {
-      define: defineEnv,
-      plugins: [
-        ...(() => {
-          const created = createNextFontVePlugins();
-          nextFontState = created.state;
-          return created.plugins;
-        })(),
-        {
-          // avoid module resolution errors by letting turbopack resolve our modules for us
-          name: 'vanilla-extract-turbo-resolve',
-          enforce: 'pre',
-          async resolveId(source: string, importer: string | undefined) {
-            if (!getResolve || !importer) return null;
-            const resolver = getResolve({});
-            return new Promise((resolve) => {
-              resolver(
-                path.dirname(importer),
-                source,
-                (_err: any, result?: string) => {
-                  resolve(result);
-                },
-              );
-            });
+  if (!singletonCompiler) {
+    const defineEnv: Record<string, string> = {};
+    for (const [key, value] of Object.entries(nextEnv ?? {})) {
+      defineEnv[`process.env.${key}`] = JSON.stringify(value);
+    }
+
+    console.log('[vanilla-extract] Creating style compiler');
+    singletonCompiler = createCompiler({
+      root,
+      identifiers,
+      viteConfig: {
+        define: defineEnv,
+        plugins: [
+          ...(() => {
+            const created = createNextFontVePlugins();
+            nextFontState = created.state;
+            return created.plugins;
+          })(),
+          {
+            // avoid module resolution errors by letting turbopack resolve our modules for us
+            name: 'vanilla-extract-turbo-resolve',
+            enforce: 'pre',
+            async resolveId(source: string, importer: string | undefined) {
+              if (!getResolve || !importer) return null;
+              const resolver = getResolve({});
+              return new Promise((resolve) => {
+                resolver(
+                  path.dirname(importer),
+                  source,
+                  (_err: any, result?: string) => {
+                    resolve(result);
+                  },
+                );
+              });
+            },
           },
-        },
-      ],
-    },
-  });
+        ],
+      },
+    });
+  }
+
+  // record the file as processed for this compiler instance
+  processedPaths.add(currentFilePath);
 
   return singletonCompiler;
 };
@@ -111,6 +128,7 @@ export default async function turbopackVanillaExtractLoader(
       identifiers,
       this.getResolve,
       options.nextEnv,
+      this.resourcePath,
     );
     const { source: veSource, watchFiles } = await compiler.processVanillaFile(
       this.resourcePath,
