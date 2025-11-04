@@ -3,4 +3,4 @@
 '@vanilla-extract/next-plugin': minor
 ---
 
-turbopack support for next.js
+turbopack support for next.js >= 15.3

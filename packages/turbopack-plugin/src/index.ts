@@ -9,6 +9,7 @@ import {
   createNextFontVePlugins,
   type NextFontPluginState,
 } from './next-font/plugin';
+import { createNextStubsVePlugin } from './next-stubs/plugin';
 
 type LoaderContext<OptionsType> = {
   getOptions: (schema?: unknown) => OptionsType;
@@ -40,6 +41,7 @@ export type TurboLoaderOptions = {
 };
 
 let singletonCompiler: VeCompiler | undefined;
+// font state includes family, weight, and style for validation
 let nextFontState: NextFontPluginState | undefined;
 let processedPaths = new Set<string>();
 
@@ -74,6 +76,7 @@ const getCompiler = async (
       viteConfig: {
         define: defineEnv,
         plugins: [
+          createNextStubsVePlugin(),
           ...(() => {
             const created = createNextFontVePlugins();
             nextFontState = created.state;
@@ -82,9 +85,22 @@ const getCompiler = async (
           {
             // avoid module resolution errors by letting turbopack resolve our modules for us
             name: 'vanilla-extract-turbo-resolve',
-            enforce: 'pre',
+            // we cannot use enforce: 'pre' because turbopack doesn't support server relative imports
+            // so we'll let vite try to resolve first, then delegate
             async resolveId(source: string, importer: string | undefined) {
-              if (!getResolve || !importer) return null;
+              // never delegate virtual ids or our stub ids to turbopack
+              if (
+                source.startsWith('ve-stub:') ||
+                source.startsWith('\\0') ||
+                source.includes('\\0') ||
+                !getResolve ||
+                !importer ||
+                importer.startsWith('ve-stub:') ||
+                importer.startsWith('\\0') ||
+                importer.includes('\\0')
+              ) {
+                return null;
+              }
               const resolver = getResolve({});
               return new Promise((resolve) => {
                 resolver(

@@ -4,7 +4,12 @@ export type NextFontPluginState = {
   fontProviders: Set<string>;
   fontProviderDetails: Map<
     string,
-    { exportName: string; stubbedFamily: string }[]
+    {
+      exportName: string;
+      stubbedFamily: string;
+      stubbedWeight: number | undefined;
+      stubbedStyle: string | undefined;
+    }[]
   >;
 };
 
@@ -28,7 +33,12 @@ export function createNextFontVePlugins(): {
     fontProviders: new Set<string>(),
     fontProviderDetails: new Map<
       string,
-      { exportName: string; stubbedFamily: string }[]
+      {
+        exportName: string;
+        stubbedFamily: string;
+        stubbedWeight: number | undefined;
+        stubbedStyle: string | undefined;
+      }[]
     >(),
   };
 

@@ -1,124 +1,135 @@
-import local from 'next/font/local';
-import {
-  Inter as InterGoogle,
-  Roboto_Flex as Flex,
-  Noto_Serif as NotoSerif,
-} from 'next/font/google';
+// --- 1. Imports ---
+// Test weirdly named imports for both local and google fonts.
 
-// weirdly named local font variable to cover edge cases
-export const local__font$Weird = local({
-  src: [{ path: './fonts/Inter-Regular.woff2', weight: '400' }],
+import { Inter as Weird_Renamed_Font$8a_ } from 'next/font/google';
+import weird_renamed_local$3_ from 'next/font/local';
+
+// =================================================================
+// next/font/local (using weird_renamed_local$3_)
+// =================================================================
+
+// --- 2. Local: Variable Name Edge Cases (Export) ---
+// The import name is already tested. This tests weird export names.
+
+export const localSimple = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
+});
+
+export const $local_weird_EXPORT_name_ = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
   fallback: ['system-ui'],
 });
 
-// renamed google imports
-export const _googleInter = InterGoogle({
-  subsets: ['latin'],
+// --- 3. Local: Fallback Prop ---
+
+export const localFallbackOmitted = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
+  // fallback is omitted
+});
+
+export const localFallbackSingleArray = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
   fallback: ['system-ui'],
+});
+
+export const localFallbackMultiArray = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
+  fallback: ['Times New Roman', 'Gill Sans', 'emoji'],
+});
+
+// --- 4. Local: Style Prop ---
+
+export const localStyleOmitted = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
+  // style is omitted
+});
+
+export const localStyleSingle = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
   style: 'italic',
-  weight: 'variable',
-});
-export const _googleFlex = Flex({
-  subsets: ['latin'],
-  fallback: ['system-ui'],
 });
 
-// additional local next/font cases
-export const _localMultiFallback = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
-  fallback: ['system-ui', 'ui-monospace', 'third font'],
+// --- 5. Local: Weight Prop ---
+
+export const localWeightOmitted = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
+  // weight is omitted
 });
 
-export const _localExplicit = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
+export const localWeightSingle = weird_renamed_local$3_({
+  src: './fonts/Inter-Regular.woff2',
   weight: '400',
+});
+
+// =================================================================
+// next/font/google (using Weird_Renamed_Font$8a_)
+// =================================================================
+
+// --- 6. Google: Variable Name Edge Cases (Export) ---
+// The import name is already tested. This tests weird export names.
+
+export const googleSimple = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+});
+
+export const $google_weird_EXPORT_name_ = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+  fallback: ['system-ui'],
+});
+
+// --- 7. Google: Fallback Prop ---
+
+export const googleFallbackOmitted = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+  // fallback is omitted
+});
+
+export const googleFallbackSingleArray = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+  fallback: ['system-ui'],
+});
+
+export const googleFallbackMultiArray = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+  fallback: ['Times New Roman', 'Gill Sans', 'emoji'],
+});
+
+// --- 8. Google: Style Prop ---
+
+export const googleStyleOmitted = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
+  // style is omitted
+});
+
+export const googleStyleSingle = Weird_Renamed_Font$8a_({
+  subsets: ['latin'],
   style: 'italic',
-  fallback: ['Times New Roman', 'Gill Sans'],
 });
 
-export const _localDupFallback = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
-  fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
-});
-
-// additional google next/font cases (Inter)
-export const _googleInterDefaultStyle = InterGoogle({
+export const googleStyleArray = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
-  fallback: ['serif'],
-});
-
-export const _googleInterItalic = InterGoogle({
-  subsets: ['latin'],
-  fallback: ['sans-serif'],
-  style: 'italic',
-  weight: '400',
-});
-
-export const _googleInterMultiStyle = InterGoogle({
-  subsets: ['latin'],
-  fallback: ['monospace'],
   style: ['italic', 'normal'],
 });
 
-export const _googleInterWeightStr = InterGoogle({ weight: '400' });
+// --- 9. Google: Weight Prop ---
 
-export const _googleInterWeightVar = InterGoogle({ weight: 'variable' });
-
-export const _googleNotoSerif = NotoSerif({
+export const googleWeightOmitted = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
-  fallback: ['system-ui'],
+  // weight is omitted
 });
 
-export const _googleInterFallbackSpaces = InterGoogle({
+export const googleWeightSingle = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
-  fallback: ['Times New Roman', 'Gill Sans', 'Avenir Next'],
+  weight: '400',
 });
 
-export const _googleInterDupFallback = InterGoogle({
+export const googleWeightVariable = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
-  fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
+  weight: 'variable',
 });
 
-// local name edge-cases and option variations
-export const localSimple = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
-});
-
-export const _LocalCamelCase = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
-  fallback: ['serif'],
-});
-
-export const local$Dollar = local({
-  src: [{ path: './fonts/Inter-Regular.woff2' }],
-  fallback: ['ui-sans-serif', 'emoji'],
-});
-
-export const _local_underscore123 = local({
-  src: [
-    { path: './fonts/Inter-Regular.woff2', weight: '400' },
-    { path: './fonts/Inter-Regular.woff2', style: 'italic' },
-  ],
-  fallback: ['Times New Roman'],
-});
-
-// google extra coverage
-export const _googleFlexMultiWeights = Flex({
+export const googleWeightArray = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
-  weight: ['200', '300'],
-  fallback: ['system-ui'],
+  weight: ['400', '700', '900'],
 });
 
-export const _googleInterGenericFallbacks = InterGoogle({
-  subsets: ['latin'],
-  fallback: [
-    'ui-serif',
-    'ui-sans-serif',
-    'monospace',
-    'emoji',
-    'math',
-    'ui-rounded',
-  ],
-});
-
-export const _googleInterNoFallback = InterGoogle({ subsets: ['latin'] });
