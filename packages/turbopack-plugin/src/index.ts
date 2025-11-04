@@ -27,7 +27,6 @@ type LoaderContext<OptionsType> = {
     additionalData?: unknown,
   ) => void;
   addDependency: (file: string) => void;
-  mode: 'none' | 'development' | 'production';
   rootContext: string;
   resourcePath: string;
   resourceQuery?: string;
@@ -136,7 +135,8 @@ export default async function turbopackVanillaExtractLoader(
   try {
     const options = this.getOptions();
     const identifiers =
-      options.identifiers ?? (this.mode === 'production' ? 'short' : 'debug');
+      options.identifiers ??
+      (process.env.NODE_ENV === 'production' ? 'short' : 'debug');
     const outputCss = options.outputCss ?? true;
 
     const compiler = await getCompiler(
