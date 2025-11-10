@@ -639,7 +639,7 @@ class Stylesheet {
   }
 }
 
-function renderCss(v: any, indent: string = '') {
+function renderCss(v: Record<string, any>, indent: string = '') {
   const rules: Array<string> = [];
 
   for (const key of Object.keys(v)) {
@@ -679,7 +679,7 @@ export function transformCss({
   localClassNames,
   cssObjs,
   composedClassLists,
-}: TransformCSSParams) {
+}: TransformCSSParams): string[] {
   const stylesheet = new Stylesheet(localClassNames, composedClassLists);
 
   for (const root of cssObjs) {

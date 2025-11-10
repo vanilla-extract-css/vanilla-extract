@@ -90,3 +90,21 @@ Each integration will set a default value based on the configuration options pas
 
 esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
 Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader`, `tsconfig` and `conditions`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
+
+### extract
+
+Extract all generated `.css` into one bundle. This also removes side effect `import '*.css'` statements.
+
+```ts
+vanillaExtractPlugin({
+  extract: {
+    name: 'bundle.css',
+    sourcemap: false
+  }
+});
+```
+
+| Option        | Type      | Default        | Description                                                                                                                       |
+| :------------ | :-------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| **name**      | `string`  | `'bundle.css'` | Name the bundled CSS. [output.assetFilenames](https://rollupjs.org/configuration-options/#output-assetfilenames) can affect this. |
+| **sourcemap** | `boolean` | `false`        | Set to `true` to also output `.css.map` file.                                                                                     |

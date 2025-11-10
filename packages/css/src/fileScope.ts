@@ -6,7 +6,7 @@ let refCounter = 0;
 
 const fileScopes: Array<FileScope> = [];
 
-export function setFileScope(filePath: string, packageName?: string) {
+export function setFileScope(filePath: string, packageName?: string): void {
   refCounter = 0;
   const fileScope = {
     filePath,
@@ -16,13 +16,13 @@ export function setFileScope(filePath: string, packageName?: string) {
   onBeginFileScope(fileScope);
 }
 
-export function endFileScope() {
+export function endFileScope(): void {
   onEndFileScope(getFileScope());
   refCounter = 0;
   fileScopes.splice(0, 1);
 }
 
-export function hasFileScope() {
+export function hasFileScope(): boolean {
   return fileScopes.length > 0;
 }
 
@@ -41,6 +41,6 @@ export function getFileScope(): FileScope {
   return fileScopes[0];
 }
 
-export function getAndIncrementRefCounter() {
+export function getAndIncrementRefCounter(): number {
   return refCounter++;
 }

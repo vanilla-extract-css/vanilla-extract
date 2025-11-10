@@ -12,7 +12,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -21,7 +22,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Build packages
         run: pnpm run build

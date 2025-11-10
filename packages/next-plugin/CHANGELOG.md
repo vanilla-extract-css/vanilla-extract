@@ -1,5 +1,39 @@
 # @vanilla-extract/next-plugin
 
+## 2.4.14
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+- Updated dependencies [[`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd)]:
+  - @vanilla-extract/webpack-plugin@2.3.22
+
+## 2.4.13
+
+### Patch Changes
+
+- [#1602](https://github.com/vanilla-extract-css/vanilla-extract/pull/1602) [`7a78ebe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7a78ebeaad015d072664206cdbe59642399b405b) Thanks [@Pnlvfx](https://github.com/Pnlvfx)! - Fix `require is not defined` error in ESM bundles by calling `createRequire`
+
+- Updated dependencies [[`7a78ebe`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7a78ebeaad015d072664206cdbe59642399b405b)]:
+  - @vanilla-extract/webpack-plugin@2.3.21
+
+## 2.4.12
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/webpack-plugin@2.3.20
+
+## 2.4.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.19
+
 ## 2.4.10
 
 ### Patch Changes

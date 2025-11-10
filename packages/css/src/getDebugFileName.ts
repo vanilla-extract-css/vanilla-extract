@@ -56,7 +56,7 @@ const memoizedGetDebugFileName = () => {
     max: 500,
   });
 
-  return (path: string) => {
+  return (path: string): string => {
     const cachedResult = cache.get(path);
 
     if (cachedResult) {
@@ -70,4 +70,5 @@ const memoizedGetDebugFileName = () => {
   };
 };
 
-export const getDebugFileName = memoizedGetDebugFileName();
+export const getDebugFileName: (path: string) => string =
+  memoizedGetDebugFileName();

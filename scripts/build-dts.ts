@@ -94,6 +94,7 @@ async function removePreconstructDeclarations(
 const packages = await glob('packages/*', {
   onlyDirectories: true,
   absolute: true,
+  expandDirectories: false,
 });
 
 const entryPaths: [string, string][] = [];

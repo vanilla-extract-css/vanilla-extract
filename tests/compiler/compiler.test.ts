@@ -23,7 +23,9 @@ describe('compiler', () => {
     | 'shortIdentifiers'
     | 'viteResolve'
     | 'vitePlugins'
-    | 'tsconfigPaths',
+    | 'tsconfigPaths'
+    | 'basePath'
+    | 'getAllCss',
     ReturnType<typeof createCompiler>
   >;
 
@@ -71,6 +73,15 @@ describe('compiler', () => {
       tsconfigPaths: createCompiler({
         root: __dirname,
         vitePlugins: [tsconfigPaths()],
+      }),
+      basePath: createCompiler({
+        root: __dirname,
+        viteConfig: {
+          base: '/assets/',
+        },
+      }),
+      getAllCss: createCompiler({
+        root: __dirname,
       }),
     };
   });
@@ -519,6 +530,57 @@ describe('compiler', () => {
         margin: 0;
         padding: 0;
       }
+    `);
+  });
+
+  test('base path should be ignored', async () => {
+    const compiler = compilers.basePath;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/image.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/vite-config/image.css.ts.vanilla.css';
+      export var imageStyle1 = 'image_imageStyle1__1lseqzh0';
+      export var imageStyle2 = 'image_imageStyle2__1lseqzh1';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .image_imageStyle1__1lseqzh0 {
+        background-image: url('/fixtures/vite-config/test.jpg');
+      }
+      .image_imageStyle2__1lseqzh1 {
+        background-image: url('/fixtures/vite-config/test.jpg');
+      }
+    `);
+  });
+
+  test('getAllCss should return all CSS that has been processed', async () => {
+    const compiler = compilers.getAllCss;
+
+    const buttonCssPath = './fixtures/class-composition/button.css.ts';
+    await compiler.processVanillaFile(buttonCssPath);
+    const stepperCssPath = './fixtures/class-composition/stepper.css.ts';
+    await compiler.processVanillaFile(stepperCssPath);
+
+    expect(compiler.getAllCss()).toMatchInlineSnapshot(`
+      .base_fontFamilyBase__1xukjx0 {
+        font-family: Arial, sans-serif;
+      }
+      .base_base__1xukjx1 {
+        background: blue;
+      }
+      .button_button__59rihu0 {
+        color: red;
+      }
+      .stepper_stepperContainer__p034sj0 {
+        font-size: 32px;
+      }
+      .stepper_stepperContainer__p034sj0 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
+        border: 1px solid black;
+      }
+
     `);
   });
 });

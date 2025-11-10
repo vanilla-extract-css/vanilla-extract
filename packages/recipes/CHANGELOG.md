@@ -1,5 +1,17 @@
 # @vanilla-extract/recipes
 
+## 0.5.7
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+## 0.5.6
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
 ## 0.5.5
 
 ### Patch Changes
@@ -94,25 +106,30 @@
 
   ```ts
   // button.css.ts
-  import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+  import {
+    recipe,
+    RecipeVariants
+  } from '@vanilla-extract/recipes';
 
   export const button = recipe({
     variants: {
       color: {
         neutral: { background: 'whitesmoke' },
         brand: { background: 'blueviolet' },
-        accent: { background: 'slateblue' },
+        accent: { background: 'slateblue' }
       },
       size: {
         small: { padding: 12 },
         medium: { padding: 16 },
-        large: { padding: 24 },
-      },
-    },
+        large: { padding: 24 }
+      }
+    }
   });
 
   // Get the type
-  export type ButtonVariants = RecipeVariants<typeof button>;
+  export type ButtonVariants = RecipeVariants<
+    typeof button
+  >;
 
   // the above will result in a type equivalent to:
   export type ButtonVariants = {

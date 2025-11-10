@@ -7,6 +7,10 @@ import type { Compiler, RuleSetRule } from 'webpack';
 import { ChildCompiler } from './compiler';
 import createCompat, { type WebpackCompat } from './compat';
 
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+
 const pluginName = 'VanillaExtractPlugin';
 
 function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
@@ -88,7 +92,7 @@ export abstract class AbstractVanillaExtractPlugin {
   protected inject(
     compiler: Compiler,
     virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader',
-  ) {
+  ): void {
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );
