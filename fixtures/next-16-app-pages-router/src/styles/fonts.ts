@@ -132,4 +132,3 @@ export const googleWeightArray = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
   weight: ['400', '700', '900'],
 });
-

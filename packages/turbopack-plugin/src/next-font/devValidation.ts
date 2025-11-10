@@ -36,8 +36,14 @@ export function buildValidationPrelude(
 try {
   const realFont = ${importAlias}[${JSON.stringify(fontInfo.exportName)}];
   const stubbedFamily = ${JSON.stringify(fontInfo.stubbedFamily)};
-  const stubbedWeight = ${fontInfo.stubbedWeight !== undefined ? fontInfo.stubbedWeight : 'undefined'};
-  const stubbedStyle = ${fontInfo.stubbedStyle !== undefined ? JSON.stringify(fontInfo.stubbedStyle) : 'undefined'};
+  const stubbedWeight = ${
+    fontInfo.stubbedWeight !== undefined ? fontInfo.stubbedWeight : 'undefined'
+  };
+  const stubbedStyle = ${
+    fontInfo.stubbedStyle !== undefined
+      ? JSON.stringify(fontInfo.stubbedStyle)
+      : 'undefined'
+  };
   if (realFont && realFont.style) {
     let mismatches = [];
     if (realFont.style.fontFamily !== stubbedFamily) {
@@ -63,7 +69,9 @@ try {
     }
     if (mismatches.length > 0) {
       console.error('\\n[vanilla-extract] next/font style mismatch detected');
-      console.error('Location: ${path.basename(providerPath)} > ' + ${JSON.stringify(fontInfo.exportName)});
+      console.error('Location: ${path.basename(
+        providerPath,
+      )} > ' + ${JSON.stringify(fontInfo.exportName)});
       mismatches.forEach(function(m) {
         console.error('  ' + m.property + ':');
         console.error('    Turbopack\\'s Value:       ' + JSON.stringify(m.actual));

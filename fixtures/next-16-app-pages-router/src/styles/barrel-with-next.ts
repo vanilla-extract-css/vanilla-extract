@@ -17,4 +17,3 @@ export const spacing = {
   md: '16px',
   lg: '24px',
 } as const;
-

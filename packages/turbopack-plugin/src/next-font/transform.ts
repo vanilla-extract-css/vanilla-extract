@@ -22,9 +22,19 @@ function computeStubbedFamily(
 ): string {
   // Generic CSS font families that should not be quoted
   const genericFamilies = new Set([
-    'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
-    'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded',
-    'emoji', 'math', 'fangsong'
+    'serif',
+    'sans-serif',
+    'monospace',
+    'cursive',
+    'fantasy',
+    'system-ui',
+    'ui-serif',
+    'ui-sans-serif',
+    'ui-monospace',
+    'ui-rounded',
+    'emoji',
+    'math',
+    'fangsong',
   ]);
 
   const formatFamily = (s: string) => {
@@ -37,7 +47,7 @@ function computeStubbedFamily(
     // Quote everything else (custom fonts, fonts with spaces, etc.)
     return `'${clean}'`;
   };
-  
+
   const parts = [formatFamily(exportName)];
 
   if (isLocal) {
@@ -73,7 +83,10 @@ function computeStubbedWeight(weight: any): number | undefined {
   return undefined;
 }
 
-function computeStubbedStyle(style: any, isGoogleFont: boolean): string | undefined {
+function computeStubbedStyle(
+  style: any,
+  isGoogleFont: boolean,
+): string | undefined {
   // If a single style string is provided, use it
   if (typeof style === 'string' && style && !style.includes(' ')) {
     return style;
@@ -184,7 +197,8 @@ export async function transformNextFont(
   // Utilities to find fallback arrays
   const isIdentifierNamed = (node: any, name: string) =>
     node && node.type === 'Identifier' && node.value === name;
-  const unwrapExpr = (n: any) => (n && typeof n === 'object' && 'expression' in n ? (n as any).expression : n);
+  const unwrapExpr = (n: any) =>
+    n && typeof n === 'object' && 'expression' in n ? (n as any).expression : n;
   const toArrayOfStringLiterals = (node: any): string[] | undefined => {
     node = unwrapExpr(node);
     if (!node || node.type !== 'ArrayExpression') return undefined;
@@ -203,7 +217,11 @@ export async function transformNextFont(
       if (!expr) continue;
       if (expr.type === 'ObjectExpression') {
         for (const prop of expr.properties || []) {
-          if (!prop || (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')) continue;
+          if (
+            !prop ||
+            (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')
+          )
+            continue;
           const key = prop.key;
           let isFallback = false;
           if (key.type === 'Identifier' && key.value === 'fallback')
@@ -211,7 +229,8 @@ export async function transformNextFont(
           if (key.type === 'StringLiteral' && key.value === 'fallback')
             isFallback = true;
           if (isFallback) {
-            const valNode: any = 'value' in prop ? (prop as any).value : (prop as any).value;
+            const valNode: any =
+              'value' in prop ? (prop as any).value : (prop as any).value;
             const arr = toArrayOfStringLiterals(unwrapExpr(valNode));
             if (arr) return arr;
           }
@@ -227,13 +246,18 @@ export async function transformNextFont(
       if (!expr) continue;
       if (expr.type === 'ObjectExpression') {
         for (const prop of expr.properties || []) {
-          if (!prop || (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')) continue;
+          if (
+            !prop ||
+            (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')
+          )
+            continue;
           const key = prop.key;
           let isSrc = false;
           if (key.type === 'Identifier' && key.value === 'src') isSrc = true;
           if (key.type === 'StringLiteral' && key.value === 'src') isSrc = true;
           if (isSrc) {
-            const valNode: any = 'value' in prop ? (prop as any).value : (prop as any).value;
+            const valNode: any =
+              'value' in prop ? (prop as any).value : (prop as any).value;
             const val = unwrapExpr(valNode);
             return val?.type === 'StringLiteral';
           }
@@ -249,7 +273,11 @@ export async function transformNextFont(
       if (!expr) continue;
       if (expr.type === 'ObjectExpression') {
         for (const prop of expr.properties || []) {
-          if (!prop || (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')) continue;
+          if (
+            !prop ||
+            (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')
+          )
+            continue;
           const key = prop.key;
           let isWeight = false;
           if (key.type === 'Identifier' && key.value === 'weight')
@@ -257,7 +285,8 @@ export async function transformNextFont(
           if (key.type === 'StringLiteral' && key.value === 'weight')
             isWeight = true;
           if (isWeight) {
-            const valNode: any = 'value' in prop ? (prop as any).value : (prop as any).value;
+            const valNode: any =
+              'value' in prop ? (prop as any).value : (prop as any).value;
             const val = unwrapExpr(valNode);
             if (val.type === 'NumericLiteral') return val.value;
             if (val.type === 'StringLiteral') return val.value;
@@ -275,7 +304,11 @@ export async function transformNextFont(
       if (!expr) continue;
       if (expr.type === 'ObjectExpression') {
         for (const prop of expr.properties || []) {
-          if (!prop || (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')) continue;
+          if (
+            !prop ||
+            (prop.type !== 'KeyValueProperty' && prop.type !== 'Property')
+          )
+            continue;
           const key = prop.key;
           let isStyle = false;
           if (key.type === 'Identifier' && key.value === 'style')
@@ -283,7 +316,8 @@ export async function transformNextFont(
           if (key.type === 'StringLiteral' && key.value === 'style')
             isStyle = true;
           if (isStyle) {
-            const valNode: any = 'value' in prop ? (prop as any).value : (prop as any).value;
+            const valNode: any =
+              'value' in prop ? (prop as any).value : (prop as any).value;
             const val = unwrapExpr(valNode);
             if (val.type === 'StringLiteral') return val.value;
             if (val.type === 'ArrayExpression') {
@@ -314,11 +348,15 @@ export async function transformNextFont(
         const weight = findWeightInArgs(args);
         const style = findStyleInArgs(args);
         const singleSrcString = isLocalSrcSingleString(args);
-        
+
         const computedFamily = computeStubbedFamily(varName, fb, true);
-        const computedWeight = singleSrcString ? computeStubbedWeight(weight) : undefined;
-        const computedStyle = singleSrcString ? computeStubbedStyle(style, false) : undefined; // false = not a Google font
-        
+        const computedWeight = singleSrcString
+          ? computeStubbedWeight(weight)
+          : undefined;
+        const computedStyle = singleSrcString
+          ? computeStubbedStyle(style, false)
+          : undefined; // false = not a Google font
+
         details.push({
           exportName: varName,
           stubbedFamily: computedFamily,
@@ -345,7 +383,7 @@ export async function transformNextFont(
         }`;
         const parsed = await parseExpr(stubCode);
         if (parsed) d.init = parsed;
-        
+
         changed = true;
         usedNextFont = true;
         continue;
@@ -358,11 +396,11 @@ export async function transformNextFont(
           const fb = findFallbackInArgs(args);
           const weight = findWeightInArgs(args);
           const style = findStyleInArgs(args);
-          
+
           const computedFamily = computeStubbedFamily(spec.pretty, fb, false);
           const computedWeight = computeStubbedWeight(weight);
           const computedStyle = computeStubbedStyle(style, true); // true = Google font
-          
+
           details.push({
             exportName: varName,
             stubbedFamily: computedFamily,
@@ -389,7 +427,7 @@ export async function transformNextFont(
           }`;
           const parsed = await parseExpr(stubCode);
           if (parsed) d.init = parsed;
-          
+
           changed = true;
           usedNextFont = true;
           continue;

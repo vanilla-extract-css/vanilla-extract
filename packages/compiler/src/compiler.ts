@@ -303,6 +303,17 @@ export const createCompiler = ({
     composedClassLists: Array<Composition>;
   }>(root);
 
+  const collectWatchFiles = (moduleNode: ModuleNode | null | undefined) => {
+    if (!moduleNode) {
+      return new Set<string>();
+    }
+
+    const scanModule = createModuleScanner();
+    const { watchFiles } = scanModule(moduleNode);
+
+    return watchFiles;
+  };
+
   return {
     async processVanillaFile(
       filePath,
@@ -390,8 +401,13 @@ export const createCompiler = ({
         },
       };
 
-      const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
-        await lock(async () => {
+      try {
+        const {
+          fileExports,
+          cssImports,
+          watchFiles,
+          lastInvalidationTimestamp,
+        } = await lock(async () => {
           runner.cssAdapter = cssAdapter;
 
           const fileExports = await runner.executeFile(filePath);
@@ -464,21 +480,34 @@ export const createCompiler = ({
           };
         });
 
-      const result: ProcessedVanillaFile = {
-        source: serializeVanillaModule(
-          cssImports,
-          fileExports,
-          null, // This compiler currently retains all composition classes
-        ),
-        watchFiles,
-      };
+        const result: ProcessedVanillaFile = {
+          source: serializeVanillaModule(
+            cssImports,
+            fileExports,
+            null, // This compiler currently retains all composition classes
+          ),
+          watchFiles,
+        };
 
-      processVanillaFileCache.set(cacheKey, {
-        lastInvalidationTimestamp,
-        result,
-      });
+        processVanillaFileCache.set(cacheKey, {
+          lastInvalidationTimestamp,
+          result,
+        });
 
-      return result;
+        return result;
+      } catch (error) {
+        const moduleId = normalizePath(filePath);
+        const moduleNode = server.moduleGraph.getModuleById(moduleId);
+        const watchFiles = collectWatchFiles(moduleNode) ?? new Set<string>();
+
+        if (watchFiles.size === 0) {
+          watchFiles.add(filePath);
+        }
+
+        (error as Error & { watchFiles?: Set<string> }).watchFiles = watchFiles;
+
+        throw error;
+      }
     },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);

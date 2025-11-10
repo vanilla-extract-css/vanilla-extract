@@ -237,4 +237,3 @@ export function createNextStubsVePlugin(): Plugin {
     },
   };
 }
-

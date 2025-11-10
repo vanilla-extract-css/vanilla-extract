@@ -202,6 +202,18 @@ export default async function turbopackVanillaExtractLoader(
 
     callback(null, transformed);
   } catch (e) {
+    const errorWithWatchFiles = e as Error & {
+      watchFiles?: Iterable<string>;
+    };
+
+    if (errorWithWatchFiles.watchFiles) {
+      for (const file of errorWithWatchFiles.watchFiles) {
+        this.addDependency(file);
+      }
+    } else {
+      this.addDependency(this.resourcePath);
+    }
+
     callback(e as Error);
   }
 }

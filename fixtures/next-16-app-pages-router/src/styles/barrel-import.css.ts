@@ -12,4 +12,3 @@ export const header = style({
   color: colors.secondary,
   marginBottom: spacing.lg,
 });
-

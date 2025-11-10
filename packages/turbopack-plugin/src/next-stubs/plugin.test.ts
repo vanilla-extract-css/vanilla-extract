@@ -68,15 +68,24 @@ describe('next-stubs plugin', () => {
     const testEnv: Record<string, any> = {};
     const esmToCjs = (src: string) =>
       src
-        .replace(/^export\s+function\s+(\w+)\s*\(/gm, 'exports.$1 = function $1(')
+        .replace(
+          /^export\s+function\s+(\w+)\s*\(/gm,
+          'exports.$1 = function $1(',
+        )
         .replace(/^export\s+class\s+(\w+)/gm, 'exports.$1 = class $1')
         .replace(/^export\s+\{[^}]*\};?$/gm, '');
     const fn = new Function('exports', esmToCjs(headerStub!.code));
     fn(testEnv);
 
-    expect(() => testEnv.headers()).toThrow(/not available during vanilla-extract evaluation/);
-    expect(() => testEnv.cookies()).toThrow(/not available during vanilla-extract evaluation/);
-    expect(() => testEnv.draftMode()).toThrow(/not available during vanilla-extract evaluation/);
+    expect(() => testEnv.headers()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
+    expect(() => testEnv.cookies()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
+    expect(() => testEnv.draftMode()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
   });
 
   test('stub classes should throw when instantiated', () => {
@@ -86,15 +95,23 @@ describe('next-stubs plugin', () => {
     const testEnv: Record<string, any> = {};
     const esmToCjs = (src: string) =>
       src
-        .replace(/^export\s+function\s+(\w+)\s*\(/gm, 'exports.$1 = function $1(')
+        .replace(
+          /^export\s+function\s+(\w+)\s*\(/gm,
+          'exports.$1 = function $1(',
+        )
         .replace(/^export\s+class\s+(\w+)/gm, 'exports.$1 = class $1')
         .replace(/^export\s+\{[^}]*\};?$/gm, '');
     const fn = new Function('exports', esmToCjs(serverStub!.code));
     fn(testEnv);
 
-    expect(() => new testEnv.ImageResponse()).toThrow(/not available during vanilla-extract evaluation/);
-    expect(() => new testEnv.NextRequest()).toThrow(/not available during vanilla-extract evaluation/);
-    expect(() => new testEnv.NextResponse()).toThrow(/not available during vanilla-extract evaluation/);
+    expect(() => new testEnv.ImageResponse()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
+    expect(() => new testEnv.NextRequest()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
+    expect(() => new testEnv.NextResponse()).toThrow(
+      /not available during vanilla-extract evaluation/,
+    );
   });
 });
-

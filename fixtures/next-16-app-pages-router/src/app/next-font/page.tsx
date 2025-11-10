@@ -16,7 +16,11 @@ export default function NextFontChecks() {
 
   for (const [name, fromVe, direct] of pairs) {
     if (String(fromVe) !== String(direct)) {
-      throw new Error(`[next-font] mismatch for ${name}:\n${String(fromVe)} !==\n${String(direct)}`);
+      throw new Error(
+        `[next-font] mismatch for ${name}:\n${String(fromVe)} !==\n${String(
+          direct,
+        )}`,
+      );
     }
   }
 
