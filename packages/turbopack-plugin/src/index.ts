@@ -58,8 +58,6 @@ const getCompiler = async (
     } catch {}
     singletonCompiler = undefined;
     processedPaths.clear();
-    // helpful log for diagnosing compiler resets during HMR
-    console.log('[vanilla-extract] Resetting style compiler');
   }
 
   if (!singletonCompiler) {
@@ -68,7 +66,6 @@ const getCompiler = async (
       defineEnv[`process.env.${key}`] = JSON.stringify(value);
     }
 
-    console.log('[vanilla-extract] Creating style compiler');
     singletonCompiler = createCompiler({
       root,
       identifiers,
