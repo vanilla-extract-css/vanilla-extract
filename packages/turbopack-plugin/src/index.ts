@@ -81,11 +81,9 @@ const getCompiler = async (
           {
             // avoid module resolution errors by letting turbopack resolve our modules for us
             name: 'vanilla-extract-turbo-resolve',
-            enforce: 'pre',
+            // we cannot use enforce: 'pre' because turbopack doesn't support server relative imports
+            // so we'll let vite try to resolve first, then delegate
             async resolveId(source: string, importer: string | undefined) {
-              // turbopack cannot resolve server relative imports
-              if (source.startsWith('/')) return null;
-
               // never delegate virtual ids or our stub ids to turbopack
               if (
                 source.startsWith('ve-stub:') ||
