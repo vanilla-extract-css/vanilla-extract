@@ -109,6 +109,7 @@ const createViteServer = async ({
     configFile: false,
     root,
     server: {
+      ...(viteConfig.server ?? {}),
       hmr: false,
       watch: enableFileWatcher ? undefined : null,
     },
