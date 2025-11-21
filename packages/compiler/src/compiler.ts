@@ -257,7 +257,7 @@ export interface CreateCompilerOptions {
    * @default true
    */
   enableFileWatcher?: boolean;
-  cssImportSpecifier?: (filePath: string) => string;
+  cssImportSpecifier?: (filePath: string, css: string) => string;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -449,9 +449,13 @@ export const createCompiler = ({
               );
             }
 
-            if (cssObjs || cachedCss?.css) {
+            const cssContent = cssObjs
+              ? cssCache.get(cssDepModuleId)?.css
+              : cachedCss?.css;
+
+            if (cssContent) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+                `import '${cssImportSpecifier(cssDepModuleId, cssContent)}';`,
               );
             }
           }
