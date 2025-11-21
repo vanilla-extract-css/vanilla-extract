@@ -1,5 +1,4 @@
-import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
-import { NextConfig } from 'next';
+import { createVanillaExtractPlugin } from './next-plugin/dist/vanilla-extract-next-plugin.cjs.js';
 const withVanillaExtract = createVanillaExtractPlugin();
 
 export const config = {

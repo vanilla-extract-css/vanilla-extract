@@ -256,9 +256,7 @@ export const createVanillaExtractPlugin = (
         // RealContentHashPlugin to panic)
         if (
           !config.plugins.some(
-            (p: any) =>
-              p instanceof NextMiniCssExtractPlugin ||
-              p.constructor.name === 'NextMiniCssExtractPlugin',
+            (p: any) => p instanceof NextMiniCssExtractPlugin,
           )
         ) {
           // HMR reloads the CSS file when the content changes but does not use

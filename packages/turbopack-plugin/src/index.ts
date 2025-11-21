@@ -2,7 +2,7 @@ import {
   createCompiler,
   type Compiler as VeCompiler,
 } from '@vanilla-extract/compiler';
-import { type IdentifierOption } from '@vanilla-extract/integration';
+import type { IdentifierOption } from '@vanilla-extract/integration';
 import * as path from 'node:path';
 import { createNextFontVePlugin } from './next-font/plugin';
 import type fs from 'node:fs';
@@ -12,15 +12,6 @@ export type TurboLoaderContext<OptionsType> = {
     (): OptionsType;
   };
   getResolve: (options: unknown) => {
-    (
-      context: string,
-      request: string,
-      callback: (
-        err: Error | null,
-        res?: string | false,
-        req?: unknown,
-      ) => void,
-    ): void;
     (context: string, request: string): Promise<string>;
   };
 
