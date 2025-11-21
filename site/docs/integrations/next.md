@@ -83,7 +83,7 @@ You can control Turbopack autoconfiguration using `turbopackMode`:
 - `on`: force-enable Turbopack config
 - `off`: never configure Turbopack (Webpack-only)
 
-Disable Turbopack integration explicitly:
+For example, to disable Turbopack integration explicitly:
 
 ```ts
 // next.config.ts
@@ -96,24 +96,11 @@ const withVanillaExtract = createVanillaExtractPlugin({
 export default withVanillaExtract({});
 ```
 
-Force-enable Turbopack integration:
-
-```ts
-// next.config.ts
-import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
-
-const withVanillaExtract = createVanillaExtractPlugin({
-  turbopackMode: 'on'
-});
-
-export default withVanillaExtract({});
-```
-
-If you already manage `turbopack.rules` yourself for the same file globs, the plugin will throw to avoid rule conflicts. In that case, set `turbopackMode: 'off'` and apply your Turbopack config manually.
+If you already manage `turbopack.rules` yourself for the same file globs, the plugin may throw to avoid rule conflicts. In that case, set `turbopackMode: 'off'` and apply your Turbopack config manually.
 
 ### turbopackGlob
 
-By default Turbopack integration processes `**/*.css.{ts,tsx,js,jsx}`. You can override this via `turbopackGlob`:
+By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. You can override this via `turbopackGlob`:
 
 ```ts
 // next.config.ts

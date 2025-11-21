@@ -150,7 +150,7 @@ export const createVanillaExtractPlugin = (
   return (nextConfig: NextConfig = {}): NextConfig => {
     const {
       turbopackMode = 'auto',
-      turbopackGlob = ['**/*.css.{ts,tsx,js,jsx}'],
+      turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
       ...webpackPluginOptions
     } = pluginOptions;
     // detect Next version and decide whether to configure turbopack
