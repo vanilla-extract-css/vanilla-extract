@@ -6,6 +6,7 @@ import type { IdentifierOption } from '@vanilla-extract/integration';
 import * as path from 'node:path';
 import { createNextFontVePlugin } from './next-font/plugin';
 import type fs from 'node:fs';
+import { injectFontImports } from './next-font/inject';
 
 export type TurboLoaderContext<OptionsType> = {
   getOptions: {
@@ -114,9 +115,10 @@ export default async function turbopackVanillaExtractLoader(
     nextEnv: options.nextEnv,
     loaderContext: this,
   });
-  const { source } = await compiler.processVanillaFile(this.resourcePath, {
-    outputCss,
-  });
+  const { source, watchFiles } = await compiler.processVanillaFile(
+    this.resourcePath,
+    { outputCss },
+  );
 
-  return source;
+  return await injectFontImports(source, watchFiles, this);
 }

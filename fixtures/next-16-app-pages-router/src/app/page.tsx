@@ -10,6 +10,10 @@ export default function Home() {
       <Link href="/features">features</Link>
       <br />
       <Link href="/function-serializer">function serializer</Link>
+      <br />
+      <Link href="/creepster">creepster test</Link>
+      <br />
+      <Link href="/next-font">next font</Link>
     </>
   );
 }
