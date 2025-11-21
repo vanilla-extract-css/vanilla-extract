@@ -20,8 +20,8 @@
     "@vanilla-extract/recipes": "workspace:*",
     "@vanilla-extract/sprinkles": "workspace:*",
     "next": "npm:next@^16.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

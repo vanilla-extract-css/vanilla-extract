@@ -257,7 +257,7 @@ export interface CreateCompilerOptions {
    * @default true
    */
   enableFileWatcher?: boolean;
-  cssImportSpecifier?: (filePath: string) => string;
+  cssImportSpecifier?: (filePath: string, css: string) => string;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -302,17 +302,6 @@ export const createCompiler = ({
     localClassNames: Set<string>;
     composedClassLists: Array<Composition>;
   }>(root);
-
-  const collectWatchFiles = (moduleNode: ModuleNode | null | undefined) => {
-    if (!moduleNode) {
-      return new Set<string>();
-    }
-
-    const scanModule = createModuleScanner();
-    const { watchFiles } = scanModule(moduleNode);
-
-    return watchFiles;
-  };
 
   return {
     async processVanillaFile(
@@ -401,13 +390,8 @@ export const createCompiler = ({
         },
       };
 
-      try {
-        const {
-          fileExports,
-          cssImports,
-          watchFiles,
-          lastInvalidationTimestamp,
-        } = await lock(async () => {
+      const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
+        await lock(async () => {
           runner.cssAdapter = cssAdapter;
 
           const fileExports = await runner.executeFile(filePath);
@@ -465,9 +449,13 @@ export const createCompiler = ({
               );
             }
 
-            if (cssObjs || cachedCss?.css) {
+            const cssContent = cssObjs
+              ? cssCache.get(cssDepModuleId)?.css
+              : cachedCss?.css;
+
+            if (cssContent) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
+                `import '${cssImportSpecifier(cssDepModuleId, cssContent)}';`,
               );
             }
           }
@@ -480,34 +468,21 @@ export const createCompiler = ({
           };
         });
 
-        const result: ProcessedVanillaFile = {
-          source: serializeVanillaModule(
-            cssImports,
-            fileExports,
-            null, // This compiler currently retains all composition classes
-          ),
-          watchFiles,
-        };
+      const result: ProcessedVanillaFile = {
+        source: serializeVanillaModule(
+          cssImports,
+          fileExports,
+          null, // This compiler currently retains all composition classes
+        ),
+        watchFiles,
+      };
 
-        processVanillaFileCache.set(cacheKey, {
-          lastInvalidationTimestamp,
-          result,
-        });
+      processVanillaFileCache.set(cacheKey, {
+        lastInvalidationTimestamp,
+        result,
+      });
 
-        return result;
-      } catch (error) {
-        const moduleId = normalizePath(filePath);
-        const moduleNode = server.moduleGraph.getModuleById(moduleId);
-        const watchFiles = collectWatchFiles(moduleNode) ?? new Set<string>();
-
-        if (watchFiles.size === 0) {
-          watchFiles.add(filePath);
-        }
-
-        (error as Error & { watchFiles?: Set<string> }).watchFiles = watchFiles;
-
-        throw error;
-      }
+      return result;
     },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);

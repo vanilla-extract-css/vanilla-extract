@@ -4,109 +4,101 @@ import {
 } from '@vanilla-extract/compiler';
 import { type IdentifierOption } from '@vanilla-extract/integration';
 import * as path from 'node:path';
-import { buildValidationPrelude } from './next-font/devValidation';
-import {
-  createNextFontVePlugins,
-  type NextFontPluginState,
-} from './next-font/plugin';
-import { createNextStubsVePlugin } from './next-stubs/plugin';
+import { createNextFontVePlugin } from './next-font/plugin';
+import type fs from 'node:fs';
 
-type LoaderContext<OptionsType> = {
-  getOptions: (schema?: unknown) => OptionsType;
-  getResolve?: (
-    options?: unknown,
-  ) => (
-    context: string,
-    request: string,
-    callback: (err: any, result?: string) => void,
-  ) => void;
-  async: () => (
-    err?: Error | null,
-    content?: string,
-    sourceMap?: unknown,
-    additionalData?: unknown,
-  ) => void;
-  addDependency: (file: string) => void;
+export type TurboLoaderContext<OptionsType> = {
+  getOptions: {
+    (): OptionsType;
+  };
+  getResolve: (options: unknown) => {
+    (
+      context: string,
+      request: string,
+      callback: (
+        err: Error | null,
+        res?: string | false,
+        req?: unknown,
+      ) => void,
+    ): void;
+    (context: string, request: string): Promise<string>;
+  };
+
+  fs: {
+    readFile: typeof fs.readFile;
+  };
+
   rootContext: string;
   resourcePath: string;
-  resourceQuery?: string;
+
+  mode?: never; // turbopack doesn't support this, use process.env.NODE_ENV instead
 };
 
 export type TurboLoaderOptions = {
   identifiers: IdentifierOption | null;
-  nextEnv: Record<string, string> | null;
   outputCss: boolean | null;
-  distDir: string | null;
+  nextEnv: Record<string, string | undefined> | null;
 };
 
-let singletonCompiler: VeCompiler | undefined;
-// font state includes family, weight, and style for validation
-let nextFontState: NextFontPluginState | undefined;
-let processedPaths = new Set<string>();
+let globalCompiler: VeCompiler | undefined;
 
-const getCompiler = async (
-  root: string,
-  identifiers: IdentifierOption,
-  getResolve: LoaderContext<TurboLoaderOptions>['getResolve'] | undefined,
-  nextEnv: Record<string, string> | null | undefined,
-  currentFilePath: string,
-): Promise<VeCompiler> => {
-  // If we've already processed this file with the current compiler, create a fresh compiler.
-  if (singletonCompiler && processedPaths.has(currentFilePath)) {
-    try {
-      await singletonCompiler.close();
-    } catch {}
-    singletonCompiler = undefined;
-    processedPaths.clear();
-  }
-
-  if (!singletonCompiler) {
+const getOrMakeCompiler = async ({
+  identifiers,
+  nextEnv,
+  loaderContext,
+}: {
+  identifiers: IdentifierOption;
+  nextEnv: Record<string, string | undefined> | null;
+  loaderContext: TurboLoaderContext<TurboLoaderOptions>;
+}): Promise<VeCompiler> => {
+  if (!globalCompiler) {
     const defineEnv: Record<string, string> = {};
     for (const [key, value] of Object.entries(nextEnv ?? {})) {
       defineEnv[`process.env.${key}`] = JSON.stringify(value);
     }
 
-    singletonCompiler = createCompiler({
-      root,
+    globalCompiler = createCompiler({
+      root: loaderContext.rootContext,
       identifiers,
+      cssImportSpecifier: (_filePath, css) => {
+        const base64 = Buffer.from(css, 'utf8').toString('base64');
+        return `data:text/css;base64,${base64}`;
+      },
       viteConfig: {
         define: defineEnv,
         plugins: [
-          createNextStubsVePlugin(),
-          ...(() => {
-            const created = createNextFontVePlugins();
-            nextFontState = created.state;
-            return created.plugins;
-          })(),
+          createNextFontVePlugin(),
+          {
+            // route vite file reads through turbopack's fs to handle dependency tracking automatically
+            name: 'vanilla-extract-turbo-fs',
+            enforce: 'pre',
+            async load(id: string) {
+              return new Promise((resolve, reject) => {
+                loaderContext.fs.readFile(id, (error, data) => {
+                  if (error) {
+                    reject(error);
+                  } else if (typeof data === 'string') {
+                    resolve({ code: data });
+                  } else resolve(null);
+                });
+              });
+            },
+          },
           {
             // avoid module resolution errors by letting turbopack resolve our modules for us
             name: 'vanilla-extract-turbo-resolve',
-            // we cannot use enforce: 'pre' because turbopack doesn't support server relative imports
-            // so we'll let vite try to resolve first, then delegate
+            // do NOT enforce pre as it breaks builds on some projects (not sure why)
             async resolveId(source: string, importer: string | undefined) {
-              // never delegate virtual ids or our stub ids to turbopack
-              if (
-                source.startsWith('ve-stub:') ||
-                source.startsWith('\\0') ||
-                source.includes('\\0') ||
-                !getResolve ||
-                !importer ||
-                importer.startsWith('ve-stub:') ||
-                importer.startsWith('\\0') ||
-                importer.includes('\\0')
-              ) {
+              if (source.startsWith('/')) return null; // turbopack doesn't support server relative imports
+              if (!importer) return null;
+
+              // react is vendored by next, so we need to use the upstream version to avoid errors
+              if (source === 'react' || source === 'react-dom') {
                 return null;
               }
-              const resolver = getResolve({});
-              return new Promise((resolve) => {
-                resolver(
-                  path.dirname(importer),
-                  source,
-                  (_err: any, result?: string) => {
-                    resolve(result);
-                  },
-                );
-              });
+
+              const resolver = loaderContext.getResolve({});
+              return resolver(path.dirname(importer), source);
             },
           },
         ],
@@ -114,103 +106,26 @@ const getCompiler = async (
     });
   }
 
-  // record the file as processed for this compiler instance
-  processedPaths.add(currentFilePath);
-
-  return singletonCompiler;
+  return globalCompiler;
 };
 
-/**
- * The Turbopack-compatible loader for vanilla-extract.
- * - JS mode: processes .css.{ts,tsx,js,jsx} files, compiles and extracts CSS.
- * - CSS mode: when applied to a request with ?ve-source, emits the provided CSS.
- */
 export default async function turbopackVanillaExtractLoader(
-  this: LoaderContext<TurboLoaderOptions>,
+  this: TurboLoaderContext<TurboLoaderOptions>,
 ) {
-  const callback = this.async();
-  try {
-    const options = this.getOptions();
-    const identifiers =
-      options.identifiers ??
-      (process.env.NODE_ENV === 'production' ? 'short' : 'debug');
-    const outputCss = options.outputCss ?? true;
+  const options = this.getOptions() as TurboLoaderOptions;
+  const identifiers =
+    options.identifiers ??
+    (process.env.NODE_ENV === 'production' ? 'short' : 'debug');
+  const outputCss = options.outputCss ?? true;
 
-    const compiler = await getCompiler(
-      this.rootContext,
-      identifiers,
-      this.getResolve,
-      options.nextEnv,
-      this.resourcePath,
-    );
-    const { source: veSource, watchFiles } = await compiler.processVanillaFile(
-      this.resourcePath,
-      { outputCss },
-    );
+  const compiler = await getOrMakeCompiler({
+    identifiers,
+    nextEnv: options.nextEnv,
+    loaderContext: this,
+  });
+  const { source } = await compiler.processVanillaFile(this.resourcePath, {
+    outputCss,
+  });
 
-    watchFiles?.forEach((file) => this.addDependency(file));
-
-    // prepend next/font dev validation if this file used any providers
-    let veSourceWithValidation = veSource;
-    if (nextFontState && watchFiles && watchFiles.size > 0) {
-      const usedProviders = [...watchFiles].filter((f) =>
-        nextFontState!.fontProviders.has(f),
-      );
-      if (usedProviders.length > 0) {
-        const prelude = buildValidationPrelude(
-          this.resourcePath,
-          usedProviders,
-          nextFontState.fontProviderDetails,
-        );
-        if (prelude) {
-          veSourceWithValidation = `${prelude}\n${veSource}`;
-        }
-      }
-    }
-
-    // rewrite compiler-emitted .vanilla.css imports to data URL side-effect imports
-
-    let transformed = veSourceWithValidation;
-    const importRegex = /import\s+['"](.+?\.vanilla\.css)['"];?/g;
-    const matches = Array.from(veSourceWithValidation.matchAll(importRegex));
-
-    for (const match of matches) {
-      const fullImport = match[0];
-      const cssImportPath = match[1];
-      if (!fullImport || !cssImportPath) continue;
-
-      let cssModulePath = cssImportPath;
-      if (cssModulePath.endsWith('.vanilla.css')) {
-        cssModulePath = cssModulePath.slice(0, -'.vanilla.css'.length);
-      }
-
-      const { css } = compiler.getCssForFile(cssModulePath);
-
-      if (css) {
-        const base64 = Buffer.from(css, 'utf8').toString('base64');
-        const dataUrl = `data:text/css;base64,${base64}`;
-        const newImport = `import '${dataUrl}';`;
-        transformed = transformed.replace(fullImport, newImport);
-      } else {
-        // no css available for this import; drop it
-        transformed = transformed.replace(fullImport, '');
-      }
-    }
-
-    callback(null, transformed);
-  } catch (e) {
-    const errorWithWatchFiles = e as Error & {
-      watchFiles?: Iterable<string>;
-    };
-
-    if (errorWithWatchFiles.watchFiles) {
-      for (const file of errorWithWatchFiles.watchFiles) {
-        this.addDependency(file);
-      }
-    } else {
-      this.addDependency(this.resourcePath);
-    }
-
-    callback(e as Error);
-  }
+  return source;
 }

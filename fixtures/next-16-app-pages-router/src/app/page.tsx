@@ -8,6 +8,8 @@ export default function Home() {
       <Link href="/recipes">recipes</Link>
       <br />
       <Link href="/features">features</Link>
+      <br />
+      <Link href="/function-serializer">function serializer</Link>
     </>
   );
 }

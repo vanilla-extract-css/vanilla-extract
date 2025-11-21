@@ -49,8 +49,8 @@ export default withVanillaExtract(withMDX(nextConfig));
 
 ## Version Support
 
-- **Next.js >= 15.3**: Both Turbopack and Webpack are supported
-- **Next.js <= 15.2**: Webpack-only support
+- **Next.js >= 16.x**: Both Turbopack and Webpack are supported
+- **Next.js <= 15.x**: Webpack-only support
 
 ## Configuration
 

@@ -1,48 +1,8 @@
 import { transformNextFont } from './transform';
+import type { Plugin } from 'vite';
 
-export type NextFontPluginState = {
-  fontProviders: Set<string>;
-  fontProviderDetails: Map<
-    string,
-    {
-      exportName: string;
-      stubbedFamily: string;
-      stubbedWeight: number | undefined;
-      stubbedStyle: string | undefined;
-    }[]
-  >;
-};
-
-type Plugin = {
-  name: string;
-  enforce?: 'pre' | 'post';
-  transform?: (
-    code: string,
-    id: string,
-  ) =>
-    | Promise<{ code: string; map: any } | null>
-    | { code: string; map: any }
-    | null;
-};
-
-export function createNextFontVePlugins(): {
-  plugins: Plugin[];
-  state: NextFontPluginState;
-} {
-  const state: NextFontPluginState = {
-    fontProviders: new Set<string>(),
-    fontProviderDetails: new Map<
-      string,
-      {
-        exportName: string;
-        stubbedFamily: string;
-        stubbedWeight: number | undefined;
-        stubbedStyle: string | undefined;
-      }[]
-    >(),
-  };
-
-  const nextFontStubPlugin: Plugin = {
+export function createNextFontVePlugin(): Plugin {
+  return {
     name: 've-next-font-stub',
     enforce: 'pre',
     async transform(code: string, id: string) {
@@ -50,16 +10,7 @@ export function createNextFontVePlugins(): {
         return null;
       }
 
-      const result = await transformNextFont(code, id);
-      if (result.usedNextFont) {
-        state.fontProviders.add(id);
-        if (result.details.length > 0) {
-          state.fontProviderDetails.set(id, result.details);
-        }
-      }
-      return result.changed ? { code: result.code, map: null } : null;
+      return await transformNextFont(code, id);
     },
   };
-
-  return { plugins: [nextFontStubPlugin], state };
 }

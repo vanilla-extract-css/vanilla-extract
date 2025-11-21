@@ -12,7 +12,6 @@
     "@fixtures/low-level": "workspace:*",
     "@fixtures/next-12-pages-router": "workspace:*",
     "@fixtures/next-13-app-router": "workspace:*",
-    "@fixtures/next-15-app-pages-router": "workspace:*",
     "@fixtures/next-16-app-pages-router": "workspace:*",
     "@fixtures/recipes": "workspace:*",
     "@fixtures/sprinkles": "workspace:*",

@@ -1,7 +1,12 @@
 // --- 1. Imports ---
 // Test weirdly named imports for both local and google fonts.
 
-import { Inter as Weird_Renamed_Font$8a_ } from 'next/font/google';
+import {
+  Noto_Serif as NotoSerif,
+  Roboto as R,
+  Roboto_Flex as RF,
+  Inter as Weird_Renamed_Font$8a_,
+} from 'next/font/google';
 import weird_renamed_local$3_ from 'next/font/local';
 
 // =================================================================
@@ -131,4 +136,83 @@ export const googleWeightVariable = Weird_Renamed_Font$8a_({
 export const googleWeightArray = Weird_Renamed_Font$8a_({
   subsets: ['latin'],
   weight: ['400', '700', '900'],
+});
+
+// intentionally odd local variable name to exercise transform edge-cases
+export const __Local_Font = weird_renamed_local$3_({
+  src: [{ path: './fonts/Inter-Regular.woff2', weight: '400' }],
+  fallback: ['system-ui'],
+});
+
+// renamed imports
+export const _Roboto = R({
+  weight: '400',
+  subsets: ['latin'],
+  fallback: ['system-ui', 'skibidi', 'third font'],
+  style: ['italic', 'normal'],
+});
+
+export const _Flex = RF({
+  subsets: ['latin', 'greek'],
+  weight: ['200', '300'],
+  adjustFontFallback: false,
+  style: 'normal',
+  fallback: ['system-ui'],
+});
+
+// style properties are consumed dynamically in nextFont.css.ts via pickedValues
+
+// mirror additional cases from next-16
+export const _localMultiFallback = weird_renamed_local$3_({
+  src: [{ path: './fonts/Inter-Regular.woff2' }],
+  fallback: ['system-ui', 'ui-monospace', 'third font'],
+});
+
+export const _localExplicit = weird_renamed_local$3_({
+  src: [{ path: './fonts/Inter-Regular.woff2' }],
+  weight: '400',
+  style: 'italic',
+  fallback: ['Times New Roman', 'Gill Sans'],
+});
+
+export const _localDupFallback = weird_renamed_local$3_({
+  src: [{ path: './fonts/Inter-Regular.woff2' }],
+  fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
+});
+
+export const _robotoDefaultStyle = R({
+  subsets: ['latin'],
+  fallback: ['serif'],
+});
+
+export const _robotoItalic = R({
+  subsets: ['latin'],
+  fallback: ['sans-serif'],
+  style: 'italic',
+  weight: '400',
+});
+
+export const _robotoMultiStyle = R({
+  subsets: ['latin'],
+  fallback: ['monospace'],
+  style: ['italic', 'normal'],
+});
+
+export const _robotoWeightStr = R({ weight: '400' });
+
+export const _robotoWeightVar = R({ weight: 'variable' });
+
+export const _notoSerif = NotoSerif({
+  subsets: ['latin'],
+  fallback: ['system-ui'],
+});
+
+export const _robotoFallbackSpaces = R({
+  subsets: ['latin'],
+  fallback: ['Times New Roman', 'Gill Sans', 'Avenir Next'],
+});
+
+export const _robotoDupFallback = R({
+  subsets: ['latin'],
+  fallback: ['system-ui', 'system-ui', 'ui-serif', 'weird_font'],
 });
