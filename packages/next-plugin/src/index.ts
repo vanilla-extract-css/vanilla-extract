@@ -20,10 +20,12 @@ const require = createRequire(import.meta.url);
 
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
   turbopackGlob?: string[];
-  // controls whether we attempt to configure turbopack
-  // auto: enable only when Next >= 16.0.0
-  // on: force enable regardless of detected Next version
-  // off: never configure turbopack, webpack only
+  /**
+   * controls whether we attempt to configure turbopack
+   * auto: enable only when Next >= 16.0.0
+   * on: force enable regardless of detected Next version
+   * off: never configure turbopack, webpack only
+   */
   turbopackMode?: 'auto' | 'on' | 'off';
 };
 
@@ -254,7 +256,9 @@ export const createVanillaExtractPlugin = (
         // RealContentHashPlugin to panic)
         if (
           !config.plugins.some(
-            (p: any) => p instanceof NextMiniCssExtractPlugin,
+            (p: any) =>
+              p instanceof NextMiniCssExtractPlugin ||
+              p.constructor.name === 'NextMiniCssExtractPlugin',
           )
         ) {
           // HMR reloads the CSS file when the content changes but does not use
