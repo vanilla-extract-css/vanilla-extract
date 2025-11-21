@@ -174,7 +174,7 @@ export const createVanillaExtractPlugin = (
 
     let turbopack: typeof nextConfig.turbopack;
     if (enableTurbopack) {
-      turbopack = { ...(nextConfig.turbopack || {}) } as any;
+      turbopack = { ...(nextConfig.turbopack || {}) };
 
       if (turbopackGlob.some((glob) => turbopack.rules?.[glob])) {
         throw new Error(
@@ -209,7 +209,7 @@ export const createVanillaExtractPlugin = (
       webpack(config: any, options: WebpackConfigContext) {
         const { dir, dev, config: resolvedNextConfig } = options;
 
-        // https://github.com/vercel/next.js/blob/1f1632979c78b3edfe59fd85d8cce62efcdee688/packages/next/build/index.ts#L336
+        // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/index.ts#L336
         // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/webpack-config.ts#L626
         // https://github.com/vercel/next.js/pull/43916
         // on Next.js 12, findPagesDirResult is a string. on Next.js 13, findPagesDirResult is an object
