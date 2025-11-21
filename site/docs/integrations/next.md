@@ -79,7 +79,7 @@ Each integration will set a default value based on the configuration options pas
 
 You can control Turbopack autoconfiguration using `turbopackMode`:
 
-- `auto` (default): enable Turbopack config only when Next >= 15.3
+- `auto` (default): enable Turbopack config only when Next >= 16.0.0
 - `on`: force-enable Turbopack config
 - `off`: never configure Turbopack (Webpack-only)
 

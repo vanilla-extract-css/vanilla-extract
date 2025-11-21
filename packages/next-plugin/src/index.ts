@@ -21,7 +21,7 @@ const require = createRequire(import.meta.url);
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
   turbopackGlob?: string[];
   // controls whether we attempt to configure turbopack
-  // auto: enable only when Next >= 15.3
+  // auto: enable only when Next >= 16.0.0
   // on: force enable regardless of detected Next version
   // off: never configure turbopack, webpack only
   turbopackMode?: 'auto' | 'on' | 'off';
@@ -165,7 +165,7 @@ export const createVanillaExtractPlugin = (
       }
     })();
     const coerced = nextVersion ? semver.coerce(nextVersion) : null;
-    const supportsTurbopackRules = !!coerced && semver.gte(coerced, '15.3.0');
+    const supportsTurbopackRules = !!coerced && semver.gte(coerced, '16.0.0');
     const enableTurbopack =
       turbopackMode === 'on' ||
       (turbopackMode === 'auto' && supportsTurbopackRules);
@@ -189,7 +189,6 @@ export const createVanillaExtractPlugin = (
               nextEnv: nextConfig.env ?? null,
               outputCss: pluginOptions.outputCss ?? null,
               identifiers: pluginOptions.identifiers ?? null,
-              distDir: nextConfig.distDir ?? null,
             } satisfies TurboLoaderOptions,
           },
         ],
