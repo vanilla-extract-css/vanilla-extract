@@ -1,6 +1,6 @@
-import type { TurboLoaderContext, TurboLoaderOptions } from '../index';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import type { TurboLoaderContext, TurboLoaderOptions } from '../index';
 
 /**
  * we need to ensure that any next/font/google or next/font/local imports
@@ -20,17 +20,17 @@ export async function injectFontImports(
     Array.from(watchFiles).map(async (file) => {
       if (file.includes('node_modules')) return;
       if (file === loaderContext.resourcePath) return;
-      if (!/\.(js|ts)x?$/.test(file)) return;
+      if (!/\.(m|c)?(js|ts)x?$/.test(file)) return;
 
       const content = String(await readFile(file).catch(() => null));
-      if (
-        content.includes('from "next/font/google"') ||
-        content.includes('from "next/font/local"')
-      ) {
-        const relativeImport = path.relative(
-          path.dirname(file),
-          loaderContext.resourcePath,
+      if (/from\s+['"]next\/font\/(google|local)['"]/.test(content)) {
+        let relativeImport = path.relative(
+          path.dirname(loaderContext.resourcePath),
+          file,
         );
+
+        if (!relativeImport.startsWith('.'))
+          relativeImport = `./${relativeImport}`;
 
         importsToInject.push(relativeImport);
       }
