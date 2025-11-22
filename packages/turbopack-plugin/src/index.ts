@@ -32,8 +32,6 @@ export type TurboLoaderOptions = {
   nextEnv: Record<string, string | undefined> | null;
 };
 
-let globalCompiler: VeCompiler | undefined;
-
 const getOrMakeCompiler = async ({
   identifiers,
   nextEnv,
@@ -43,62 +41,60 @@ const getOrMakeCompiler = async ({
   nextEnv: Record<string, string | undefined> | null;
   loaderContext: TurboLoaderContext<TurboLoaderOptions>;
 }): Promise<VeCompiler> => {
-  if (!globalCompiler) {
-    const defineEnv: Record<string, string> = {};
-    for (const [key, value] of Object.entries(nextEnv ?? {})) {
-      defineEnv[`process.env.${key}`] = JSON.stringify(value);
-    }
-
-    globalCompiler = createCompiler({
-      root: loaderContext.rootContext,
-      identifiers,
-      cssImportSpecifier: (_filePath, css) => {
-        const base64 = Buffer.from(css, 'utf8').toString('base64');
-        return `data:text/css;base64,${base64}`;
-      },
-      viteConfig: {
-        define: defineEnv,
-        plugins: [
-          createNextFontVePlugin(),
-          {
-            // route vite file reads through turbopack's fs to handle dependency tracking automatically
-            name: 'vanilla-extract-turbo-fs',
-            enforce: 'pre',
-            async load(id: string) {
-              return new Promise((resolve, reject) => {
-                loaderContext.fs.readFile(id, (error, data) => {
-                  if (error) {
-                    reject(error);
-                  } else if (typeof data === 'string') {
-                    resolve({ code: data });
-                  } else resolve(null);
-                });
-              });
-            },
-          },
-          {
-            // avoid module resolution errors by letting turbopack resolve our modules for us
-            name: 'vanilla-extract-turbo-resolve',
-            // do NOT enforce pre as it breaks builds on some projects (not sure why)
-            async resolveId(source: string, importer: string | undefined) {
-              if (source.startsWith('/')) return null; // turbopack doesn't support server relative imports
-              if (!importer) return null;
-
-              // react is vendored by next, so we need to use the upstream version to avoid errors
-              if (source === 'react' || source === 'react-dom') {
-                return null;
-              }
-
-              const resolver = loaderContext.getResolve({});
-              return resolver(path.dirname(importer), source);
-            },
-          },
-        ],
-      },
-    });
+  const defineEnv: Record<string, string> = {};
+  for (const [key, value] of Object.entries(nextEnv ?? {})) {
+    defineEnv[`process.env.${key}`] = JSON.stringify(value);
   }
 
-  return globalCompiler;
+  const compiler = createCompiler({
+    root: loaderContext.rootContext,
+    identifiers,
+    cssImportSpecifier: (_filePath, css) => {
+      const base64 = Buffer.from(css, 'utf8').toString('base64');
+      return `data:text/css;base64,${base64}`;
+    },
+    viteConfig: {
+      define: defineEnv,
+      plugins: [
+        createNextFontVePlugin(),
+        {
+          // route vite file reads through turbopack's fs to handle dependency tracking automatically
+          name: 'vanilla-extract-turbo-fs',
+          enforce: 'pre',
+          async load(id: string) {
+            return new Promise((resolve, reject) => {
+              loaderContext.fs.readFile(id, (error, data) => {
+                if (error) {
+                  reject(error);
+                } else if (typeof data === 'string') {
+                  resolve({ code: data });
+                } else resolve(null);
+              });
+            });
+          },
+        },
+        {
+          // avoid module resolution errors by letting turbopack resolve our modules for us
+          name: 'vanilla-extract-turbo-resolve',
+          // do NOT enforce pre as it breaks builds on some projects (not sure why)
+          async resolveId(source: string, importer: string | undefined) {
+            if (source.startsWith('/')) return null; // turbopack doesn't support server relative imports
+            if (!importer) return null;
+
+            // react is vendored by next, so we need to use the upstream version to avoid errors
+            if (source === 'react' || source === 'react-dom') {
+              return null;
+            }
+
+            const resolver = loaderContext.getResolve({});
+            return resolver(path.dirname(importer), source);
+          },
+        },
+      ],
+    },
+  });
+
+  return compiler;
 };
 
 export default async function turbopackVanillaExtractLoader(
@@ -119,6 +115,8 @@ export default async function turbopackVanillaExtractLoader(
     this.resourcePath,
     { outputCss },
   );
+
+  await compiler.close();
 
   return await injectFontImports(source, watchFiles, this);
 }
