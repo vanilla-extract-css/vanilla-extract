@@ -22,14 +22,24 @@ export type TurboLoaderContext<OptionsType> = {
 
   rootContext: string;
   resourcePath: string;
-
-  mode?: never; // turbopack doesn't support this, use process.env.NODE_ENV instead
 };
 
 export type TurboLoaderOptions = {
   identifiers: IdentifierOption | null;
   outputCss: boolean | null;
   nextEnv: Record<string, string | undefined> | null;
+};
+
+let sharedCompiler: VeCompiler | null = null;
+
+/**
+ * reset the global state, used in tests to cleanup the compiler
+ */
+export const cleanupSharedCompiler = () => {
+  if (sharedCompiler) {
+    sharedCompiler.close();
+    sharedCompiler = null;
+  }
 };
 
 const getOrMakeCompiler = async ({
@@ -41,14 +51,17 @@ const getOrMakeCompiler = async ({
   nextEnv: Record<string, string | undefined> | null;
   loaderContext: TurboLoaderContext<TurboLoaderOptions>;
 }): Promise<VeCompiler> => {
+  if (sharedCompiler) return sharedCompiler;
+
   const defineEnv: Record<string, string> = {};
   for (const [key, value] of Object.entries(nextEnv ?? {})) {
     defineEnv[`process.env.${key}`] = JSON.stringify(value);
   }
 
-  const compiler = createCompiler({
+  sharedCompiler = createCompiler({
     root: loaderContext.rootContext,
     identifiers,
+    enableFileWatcher: false,
     cssImportSpecifier: (_filePath, css) => {
       const base64 = Buffer.from(css, 'utf8').toString('base64');
       return `data:text/css;base64,${base64}`;
@@ -63,6 +76,8 @@ const getOrMakeCompiler = async ({
           enforce: 'pre',
           async load(id: string) {
             return new Promise((resolve, reject) => {
+              // we can reuse this fs instance across all loader calls
+              // turbopack will associate dependencies to the file currently being loaded
               loaderContext.fs.readFile(id, (error, data) => {
                 if (error) {
                   reject(error);
@@ -94,7 +109,7 @@ const getOrMakeCompiler = async ({
     },
   });
 
-  return compiler;
+  return sharedCompiler;
 };
 
 export default async function turbopackVanillaExtractLoader(
@@ -111,12 +126,15 @@ export default async function turbopackVanillaExtractLoader(
     nextEnv: options.nextEnv,
     loaderContext: this,
   });
+
+  // if turbopack invokes the loader quickly, vite can't invalidate the module fast enough
+  // so we disable the internal file watcher and manually invalidate the module instead
+  await compiler.invalidateAllModules();
+
   const { source, watchFiles } = await compiler.processVanillaFile(
     this.resourcePath,
     { outputCss },
   );
-
-  await compiler.close();
 
   return await injectFontImports(source, watchFiles, this);
 }

@@ -238,6 +238,7 @@ export interface Compiler {
       outputCss?: boolean;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
+  invalidateAllModules(): Promise<void>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
   getAllCss(): string;
@@ -483,6 +484,21 @@ export const createCompiler = ({
       });
 
       return result;
+    },
+    async invalidateAllModules() {
+      const { server, runner } = await vitePromise;
+
+      for (const [key] of runner.moduleCache.entries()) {
+        if (!key.includes('node_modules')) {
+          runner.moduleCache.delete(key);
+        }
+      }
+
+      for (const [id, moduleNode] of server.moduleGraph.idToModuleMap) {
+        if (!id.includes('node_modules')) {
+          server.moduleGraph.invalidateModule(moduleNode);
+        }
+      }
     },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
