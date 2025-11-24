@@ -1,5 +1,13 @@
 # @vanilla-extract/vite-plugin
 
+## 5.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`46ef1db`](https://github.com/vanilla-extract-css/vanilla-extract/commit/46ef1db201ad83d50c4620e331ec53f9affe1d84), [`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/compiler@0.3.2
+  - @vanilla-extract/integration@8.0.5
+
 ## 5.1.1
 
 ### Patch Changes
