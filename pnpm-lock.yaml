@@ -436,8 +436,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       csstype:
-        specifier: ^3.0.7
-        version: 3.0.10
+        specifier: ^3.2.3
+        version: 3.2.3
       dedent:
         specifier: ^1.5.3
         version: 1.5.3
@@ -775,8 +775,8 @@ importers:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.90.0)
       csstype:
-        specifier: ^3.0.7
-        version: 3.0.10
+        specifier: ^3.2.3
+        version: 3.2.3
       eval:
         specifier: 0.1.8
         version: 0.1.8
@@ -5771,8 +5771,8 @@ packages:
     resolution: {integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==}
     engines: {node: '>=8'}
 
-  csstype@3.0.10:
-    resolution: {integrity: sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==}
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   cyclist@1.0.1:
     resolution: {integrity: sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==}
@@ -16095,7 +16095,7 @@ snapshots:
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
-      csstype: 3.0.10
+      csstype: 3.2.3
 
   '@types/resolve@1.17.1':
     dependencies:
@@ -16259,7 +16259,7 @@ snapshots:
       '@vanilla-extract/private': 1.0.5
       css-what: 6.1.0
       cssesc: 3.0.0
-      csstype: 3.0.10
+      csstype: 3.2.3
       dedent: 1.5.3
       deep-object-diff: 1.1.9
       deepmerge: 4.2.2
@@ -17763,7 +17763,7 @@ snapshots:
     dependencies:
       cssom: 0.3.8
 
-  csstype@3.0.10: {}
+  csstype@3.2.3: {}
 
   cyclist@1.0.1: {}
 
