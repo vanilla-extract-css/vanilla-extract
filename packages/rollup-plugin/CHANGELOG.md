@@ -1,5 +1,12 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.4.3
+
+### Patch Changes
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
 ## 1.4.2
 
 ### Patch Changes

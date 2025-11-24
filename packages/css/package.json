@@ -120,7 +120,7 @@
     "@vanilla-extract/private": "workspace:^",
     "css-what": "^6.1.0",
     "cssesc": "^3.0.0",
-    "csstype": "^3.0.7",
+    "csstype": "^3.2.3",
     "dedent": "^1.5.3",
     "deep-object-diff": "^1.1.9",
     "deepmerge": "^4.2.2",
