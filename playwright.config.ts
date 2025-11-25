@@ -17,6 +17,7 @@ const config: PlaywrightTestConfig = defineConfig({
   retries: process.env.CI ? 2 : 0,
   forbidOnly: !!process.env.CI,
   snapshotDir: 'tests/e2e/snapshots',
+  failOnFlakyTests: !!process.env.CI,
   // put all snapshots in one directory
   // https://playwright.dev/docs/api/class-testconfig#test-config-snapshot-path-template
   snapshotPathTemplate: '{snapshotDir}/{arg}-{projectName}-{platform}{ext}',
