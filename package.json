@@ -49,7 +49,7 @@
     "prettier": "^2.8.8",
     "tsx": "^4.20.6",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.13"
   },
   "preconstruct": {
     "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
