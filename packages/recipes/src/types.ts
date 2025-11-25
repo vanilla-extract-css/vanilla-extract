@@ -4,7 +4,7 @@ type Resolve<T> = {
   [Key in keyof T]: T[Key];
 } & {};
 
-type RecipeStyleRule = ComplexStyleRule | string;
+type RecipeStyleRule = ComplexStyleRule | string | { [key: string]: RecipeStyleRule };
 
 export type VariantDefinitions = Record<string, RecipeStyleRule>;
 
