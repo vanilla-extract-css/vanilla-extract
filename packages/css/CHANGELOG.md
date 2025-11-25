@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.17.5
+
+### Patch Changes
+
+- [#1655](https://github.com/vanilla-extract-css/vanilla-extract/pull/1655) [`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd) Thanks [@askoufis](https://github.com/askoufis)! - Update `csstype` dependency to `^3.2.3`
+
 ## 1.17.4
 
 ### Patch Changes
