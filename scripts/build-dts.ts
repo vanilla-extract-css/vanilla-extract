@@ -93,10 +93,7 @@ async function removePreconstructDeclarations(
 const entryPaths: [string, string][] = [];
 
 for await (const packageDir of fs.glob('packages/*')) {
-  console.log(
-    pathToFileURL(path.resolve(packageDir, 'package.json')).toString(),
-  );
-  const pkg = await import(
+  const { default: pkg } = await import(
     // pathToFileURL enables the result of `path.resolve` to work with `import()` on windows
     pathToFileURL(path.resolve(packageDir, 'package.json')).toString(),
     {
