@@ -3,7 +3,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import { pathToFileURL } from 'url';
 
-import { glob } from 'tinyglobby';
 import { legacy, resolve } from 'resolve.exports';
 import { rollup } from 'rollup';
 import dts from 'rollup-plugin-dts';
@@ -91,17 +90,11 @@ async function removePreconstructDeclarations(
   });
 }
 
-const packages = await glob('packages/*', {
-  onlyDirectories: true,
-  absolute: true,
-  expandDirectories: false,
-});
-
 const entryPaths: [string, string][] = [];
 
-for (const packageDir of packages) {
-  const pkg = await import(
-    // oathToFileURL enables the result of `path.resolve` to work with `import()` on windows
+for await (const packageDir of fs.glob('packages/*')) {
+  const { default: pkg } = await import(
+    // pathToFileURL enables the result of `path.resolve` to work with `import()` on windows
     pathToFileURL(path.resolve(packageDir, 'package.json')).toString(),
     {
       with: { type: 'json' },
