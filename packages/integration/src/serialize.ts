@@ -12,20 +12,20 @@ export async function serializeCss(source: string): Promise<string> {
   if (source.length > compressionThreshold) {
     const compressedSource = await zip(source);
 
-    return compressionFlag + compressedSource.toString('base64');
+    return compressionFlag + compressedSource.toString('base64url');
   }
 
-  return Buffer.from(source, 'utf-8').toString('base64');
+  return Buffer.from(source, 'utf-8').toString('base64url');
 }
 
 export async function deserializeCss(source: string): Promise<string> {
   if (source.indexOf(compressionFlag) > -1) {
     const decompressedSource = await unzip(
-      Buffer.from(source.replace(compressionFlag, ''), 'base64'),
+      Buffer.from(source.replace(compressionFlag, ''), 'base64url'),
     );
 
     return decompressedSource.toString('utf-8');
   }
 
-  return Buffer.from(source, 'base64').toString('utf-8');
+  return Buffer.from(source, 'base64url').toString('utf-8');
 }
