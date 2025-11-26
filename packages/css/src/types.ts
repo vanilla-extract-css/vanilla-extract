@@ -1,5 +1,5 @@
 import type { CSSVarFunction, MapLeafNodes } from '@vanilla-extract/private';
-import type { AtRule, Properties } from 'csstype';
+import type { AtRule, Globals, Properties } from 'csstype';
 
 import type { SimplePseudos } from './simplePseudos';
 
@@ -16,8 +16,54 @@ interface ContainerProperties {
   containerName?: string;
 }
 
+interface AnchorProperties {
+  positionTryFallbacks?: 'none' | Globals | (string & {});
+  positionTry?: 'none' | Globals | (string & {});
+  positionTryOrder?:
+    | 'normal'
+    | 'most-height'
+    | 'most-width'
+    | 'most-block-sise'
+    | 'most-inline-size'
+    | Globals
+    | (string & {});
+  positionVisibility?: 'always' | 'anchors-visible' | 'no-overflow' | Globals;
+}
+
+// Properties allowed in @position-try rule according to the CSS Anchor Positioning spec
+// https://www.w3.org/TR/css-anchor-position-1/#accepted-position-try-properties
+export type PositionTryProperties = Pick<
+  CSSProperties,
+  // Inset properties
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'inset'
+  // Margin properties
+  | 'margin'
+  | 'marginTop'
+  | 'marginRight'
+  | 'marginBottom'
+  | 'marginLeft'
+  // Sizing properties
+  | 'width'
+  | 'height'
+  | 'minWidth'
+  | 'minHeight'
+  | 'maxWidth'
+  | 'maxHeight'
+  // Self-alignment properties
+  | 'alignSelf'
+  | 'justifySelf'
+  // Anchor positioning properties
+  // | 'positionAnchor'
+  // | 'positionArea'
+>;
+
 type CSSTypeProperties = Properties<number | (string & {})> &
-  ContainerProperties;
+  ContainerProperties &
+  AnchorProperties;
 
 export type CSSProperties = {
   [Property in keyof CSSTypeProperties]:
@@ -47,17 +93,24 @@ type Query<Key extends string, StyleType> = {
     [query: string]: Omit<StyleType, Key>;
   };
 };
+type PositionTryQuery = {
+  '@position-try'?: {
+    [positionName: `--${string}`]: PositionTryProperties;
+  };
+};
 
 export type MediaQueries<StyleType> = Query<'@media', StyleType>;
 export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
 export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
 export type Layers<StyleType> = Query<'@layer', StyleType>;
+export type PositionTryQueries = PositionTryQuery;
 
 interface AllQueries<StyleType>
   extends MediaQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
-    Layers<StyleType & AllQueries<StyleType>> {}
+    Layers<StyleType & AllQueries<StyleType>>,
+    PositionTryQueries {}
 
 export type WithQueries<StyleType> = StyleType & AllQueries<StyleType>;
 
