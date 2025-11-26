@@ -147,6 +147,24 @@ describe('rollup-plugin', () => {
       });
     });
 
+    it('should build with preserveModules and inject filescopes', async () => {
+      // Preserve JS modules, don't generate any CSS assets and inject filescopes
+      await buildAndMatchSnapshot({
+        unstable_injectFilescopes: true,
+        rollup: {
+          output: {
+            format: 'esm',
+            preserveModules: true,
+          },
+          external: [
+            '@vanilla-extract/css/fileScope',
+            '@vanilla-extract/css',
+            '@vanilla-extract/dynamic',
+          ],
+        },
+      });
+    });
+
     it('should build with preserveModules and assetFileNames', async () => {
       // Preserve JS modules and place assets next to JS files instead of assets directory
       await buildAndMatchSnapshot({
@@ -192,7 +210,11 @@ describe('rollup-plugin', () => {
       rollup: RolldownInputOptions & { output: RolldownOutputOptions };
     }) {
       const bundle = await rolldown({
-        external: ['@vanilla-extract/dynamic'],
+        external: [
+          '@vanilla-extract/dynamic',
+          '@vanilla-extract/css',
+          '@vanilla-extract/css/fileScope',
+        ],
         input: require.resolve('@fixtures/themed/src/index.ts'),
         plugins: [
           vanillaExtractPlugin({
@@ -207,11 +229,17 @@ describe('rollup-plugin', () => {
       return output;
     }
 
-    async function buildAndMatchSnapshot(outputOptions: RolldownOutputOptions) {
+    async function buildAndMatchSnapshot(
+      outputOptions: RolldownOutputOptions,
+      { unstable_injectFilescopes }: { unstable_injectFilescopes?: boolean } = {
+        unstable_injectFilescopes: false,
+      },
+    ) {
       const output = await build({
         rollup: {
           output: outputOptions,
         },
+        unstable_injectFilescopes,
       });
       expect(
         output.map((chunkOrAsset) => [
@@ -301,6 +329,25 @@ describe('rollup-plugin', () => {
         format: 'esm',
         preserveModules: true,
       });
+    });
+
+    it('should build with preserveModules and inject filescopes', async () => {
+      // Preserve JS modules
+      await buildAndMatchSnapshot(
+        {
+          format: 'esm',
+          preserveModules: true,
+          preserveModulesRoot: path.dirname(
+            require.resolve('@fixtures/themed/src/index.ts'),
+          ),
+          assetFileNames({ names }) {
+            return names[0].replace(/^src\//, '') ?? '';
+          },
+        },
+        {
+          unstable_injectFilescopes: true,
+        },
+      );
     });
 
     it('should build with preserveModules and assetFileNames', async () => {

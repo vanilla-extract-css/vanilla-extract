@@ -7,5 +7,5 @@ This package contains scripts for benchmarking the runtime and type-checking per
 Run a benchmark by executing it with `tsx`:
 
 ```sh
-pnpm tsx ./src/css-var-string-literal.ts
+node ./src/css-var-string-literal.ts
 ```
