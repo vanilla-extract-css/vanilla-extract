@@ -306,6 +306,10 @@ export function vanillaExtractPlugin({
           server,
           timestamp,
         });
+
+        // return empty array to tell Vite we've handled HMR ourselves,
+        // preventing Vite's default propagation which causes double invalidation.
+        return [];
       },
       resolveId(source) {
         const [validId, query] = source.split('?');
