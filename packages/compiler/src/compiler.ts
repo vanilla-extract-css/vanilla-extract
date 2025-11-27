@@ -98,10 +98,13 @@ const createViteServer = async ({
   identifiers,
   viteConfig,
   enableFileWatcher = true,
+  onFileChange,
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
 > &
-  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
+  Pick<CreateCompilerOptions, 'enableFileWatcher'> & {
+    onFileChange?: (filePath: string) => void;
+  }) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
@@ -204,6 +207,7 @@ const createViteServer = async ({
   if (enableFileWatcher) {
     server.watcher.on('change', (filePath) => {
       runner.moduleCache.invalidateDepTree([filePath]);
+      onFileChange?.(filePath);
     });
   }
 
@@ -287,6 +291,14 @@ export const createCompiler = ({
     'viteConfig cannot be used with viteResolve or vitePlugins',
   );
 
+  const processVanillaFileCache = new Map<
+    string,
+    {
+      lastInvalidationTimestamp: number;
+      result: ProcessedVanillaFile;
+    }
+  >();
+
   const vitePromise = createViteServer({
     root,
     identifiers,
@@ -295,15 +307,15 @@ export const createCompiler = ({
       plugins: vitePlugins,
     },
     enableFileWatcher,
+    onFileChange: (changedFilePath) => {
+      const normalizedPath = normalizePath(changedFilePath);
+      for (const [cacheKey, cached] of processVanillaFileCache.entries()) {
+        if (cached.result.watchFiles.has(normalizedPath)) {
+          processVanillaFileCache.delete(cacheKey);
+        }
+      }
+    },
   });
-
-  const processVanillaFileCache = new Map<
-    string,
-    {
-      lastInvalidationTimestamp: number;
-      result: ProcessedVanillaFile;
-    }
-  >();
 
   const cssCache = new NormalizedMap<{ css: string }>(root);
   const classRegistrationsByModuleId = new NormalizedMap<{
