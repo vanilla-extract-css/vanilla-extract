@@ -25,7 +25,8 @@ describe('compiler', () => {
     | 'vitePlugins'
     | 'tsconfigPaths'
     | 'basePath'
-    | 'getAllCss',
+    | 'getAllCss'
+    | 'importerTree',
     ReturnType<typeof createCompiler>
   >;
 
@@ -81,6 +82,9 @@ describe('compiler', () => {
         },
       }),
       getAllCss: createCompiler({
+        root: __dirname,
+      }),
+      importerTree: createCompiler({
         root: __dirname,
       }),
     };
@@ -582,5 +586,118 @@ describe('compiler', () => {
       }
 
     `);
+  });
+
+  test('should generate correct importer trees', async () => {
+    const compiler = compilers.importerTree;
+
+    const stylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/styles.css.ts',
+    );
+    const moreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/moreStyles.css.ts',
+    );
+    const evenMoreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/evenMoreStyles.css.ts',
+    );
+
+    await Promise.all([
+      compiler.processVanillaFile(stylesPath),
+      compiler.processVanillaFile(moreStylesPath),
+      compiler.processVanillaFile(evenMoreStylesPath),
+    ]);
+
+    const transformedVeModules = new Set([
+      path.resolve(__dirname, stylesPath),
+      path.resolve(__dirname, evenMoreStylesPath),
+    ]);
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(stylesPath),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(moreStylesPath),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/moreStyles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(path.join(__dirname, 'fixtures/importer-tree/tokens.ts')),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(
+          path.join(__dirname, 'fixtures/importer-tree/otherTokens.ts'),
+        ),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/otherTokens.ts,
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+          {{__dirname}}/fixtures/importer-tree/moreStyles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(
+          path.join(__dirname, 'fixtures/importer-tree/moreStyles2.css.ts'),
+        ),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/moreStyles2.css.ts,
+          {{__dirname}}/fixtures/importer-tree/reExporter.ts,
+          {{__dirname}}/fixtures/importer-tree/evenMoreStyles.css.ts,
+        ]
+      `);
+    }
   });
 });
