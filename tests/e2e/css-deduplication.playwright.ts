@@ -11,23 +11,31 @@ const fixtureDir = path.resolve(
 );
 
 test.describe('CSS deduplication @agnostic', () => {
-  test('shared globalStyle should only appear once in production build', async () => {
-    const distDir = path.join(fixtureDir, 'dist');
+  const buildTypes = [
+    { name: 'webpack', distDir: 'dist/webpack' },
+    { name: 'turbopack', distDir: 'dist/turbo' },
+  ];
 
-    const cssFiles = globSync('**/*.css', { cwd: distDir });
-    expect(cssFiles.length).toBeGreaterThan(0);
+  buildTypes.forEach(({ name, distDir: distDirName }) => {
+    test(`shared globalStyle should only appear once in ${name} production build`, async () => {
+      const distDir = path.join(fixtureDir, distDirName);
 
-    let totalOccurrences = 0;
-    const cssPattern = /body\s*\{\s*background-color:\s*#0cdbcd;?\s*\}/g;
+      const cssFiles = globSync('**/*.css', { cwd: distDir });
+      expect(cssFiles.length).toBeGreaterThan(0);
+      console.log(name, cssFiles);
 
-    for (const cssFile of cssFiles) {
-      const content = readFileSync(path.join(distDir, cssFile), 'utf-8');
-      const matches = content.match(cssPattern);
-      if (matches) {
-        totalOccurrences += matches.length;
+      let totalOccurrences = 0;
+      const cssPattern = /body\s*\{\s*background-color:\s*#0cdbcd;?\s*\}/g;
+
+      for (const cssFile of cssFiles) {
+        const content = readFileSync(path.join(distDir, cssFile), 'utf-8');
+        const matches = content.match(cssPattern);
+        if (matches) {
+          totalOccurrences += matches.length;
+        }
       }
-    }
 
-    expect(totalOccurrences).toBe(1);
+      expect(totalOccurrences).toBe(1);
+    });
   });
 });
