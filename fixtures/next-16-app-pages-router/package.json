@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "clean-build": "pnpm clean && pnpm build --turbo && pnpm build --webpack",
+    "clean-build": "pnpm clean && pnpm build --webpack && pnpm build --turbo",
     "clean": "pnpm clean:dev && pnpm clean:prod",
     "clean:dev": "rm -rf .next",
     "clean:prod": "rm -rf dist"
