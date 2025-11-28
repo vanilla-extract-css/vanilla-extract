@@ -7,7 +7,7 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@babel/core':
         specifier: ^7.23.9
         version: 7.23.9
@@ -59,6 +59,9 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
+      node:
+        specifier: runtime:^24
+        version: runtime:24.11.1
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
@@ -9320,6 +9323,96 @@ packages:
   node-version-alias@1.0.1:
     resolution: {integrity: sha512-E9EhoJkpIIZyYplB298W8ZfhcojQrnKnUPcaOgJqVqICUZwPZkuj10nTzEscwdziOOj545v4tGPvNBG3ieUbSw==}
     engines: {node: '>=10.17.0'}
+
+  node@runtime:24.11.1:
+    resolution:
+      type: variations
+      variants:
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-mLqRmgOQ2MQi1LsxBexbd3I89UFDtMHkudd2kPoHUgY=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-aix-ppc64.tar.gz
+          targets:
+            - cpu: ppc64
+              os: aix
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-sFqjpm7+aAAj+TC9WvP9u9VCeU2lZEyirXEdaMvU3DU=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-darwin-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-CWCBttb83T9boPXx1EpH6DA3rS546tomZxwlL+ZN0RE=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-darwin-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-Dck+xceYsNNH8GjbbSBdA96ppxdl5qU5IraCuRJl1x8=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-zUFAfzNS3i8GbqJsXF0OqbY2I3TWthg4Wp8una0iBhY=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-ppc64le.tar.gz
+          targets:
+            - cpu: ppc64le
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-XUyLyl+PJZP5CB3uOYNHYOhaFvphyVDz6G7IWZbwBVA=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-s390x.tar.gz
+          targets:
+            - cpu: s390x
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-WKX/XMjyIA5Fi+oi4ynVwZlKobER1JnKRuwkEdWCOco=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: linux
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-zp7k5Ufr3/NVvrSOMJsWbCTfa+ApHJ6vEDzhXz3p5bQ=
+            prefix: node-v24.11.1-win-arm64
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-win-arm64.zip
+          targets:
+            - cpu: arm64
+              os: win32
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-U1WubXxJ7dz959NKw0hoIGAKgxv4HcO9ylyNtqm7DnY=
+            prefix: node-v24.11.1-win-x64
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-win-x64.zip
+          targets:
+            - cpu: x64
+              os: win32
+    version: 24.11.1
+    hasBin: true
 
   noop2@2.0.0:
     resolution: {integrity: sha512-2bu7Pfpf6uNqashWV8P7yYeutQ3XkLY9MBSYI5sOAFZxuWcW/uJfLbKj5m6SvMDT9U1Y0C+7UFG+7VSiIdXjtA==}
@@ -22379,6 +22472,8 @@ snapshots:
       normalize-node-version: 10.0.0
       path-exists: 4.0.0
       semver: 7.7.3
+
+  node@runtime:24.11.1: {}
 
   noop2@2.0.0: {}
 
