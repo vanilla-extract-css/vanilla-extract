@@ -234,7 +234,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/css
 
-  fixtures/next-16-app-pages-router:
+  fixtures/next-12-pages-router:
     dependencies:
       '@fixtures/features':
         specifier: workspace:*
@@ -255,14 +255,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/sprinkles
       next:
-        specifier: npm:next@^16.0.0
-        version: 16.0.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 12.3.4
+        version: 12.3.4(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
-        specifier: npm:react@^19.2.0
-        version: 19.2.0
+        specifier: ^18.2.0
+        version: 18.2.0
       react-dom:
-        specifier: npm:react-dom@^19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.55
@@ -274,7 +274,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webpack-plugin
 
-  fixtures/next-app-router:
+  fixtures/next-13-app-router:
     dependencies:
       '@fixtures/features':
         specifier: workspace:*
@@ -314,7 +314,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webpack-plugin
 
-  fixtures/next-pages-router:
+  fixtures/next-16-app-pages-router:
     dependencies:
       '@fixtures/features':
         specifier: workspace:*
@@ -335,14 +335,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/sprinkles
       next:
-        specifier: 12.3.4
-        version: 12.3.4(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: npm:next@^16.0.0
+        version: 16.0.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: npm:react@^19.2.0
+        version: 19.2.0
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: npm:react-dom@^19.2.0
+        version: 19.2.0(react@19.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.55
@@ -907,10 +907,10 @@ importers:
         version: link:../fixtures/low-level
       '@fixtures/next-12-pages-router':
         specifier: workspace:*
-        version: link:../fixtures/next-pages-router
+        version: link:../fixtures/next-12-pages-router
       '@fixtures/next-13-app-router':
         specifier: workspace:*
-        version: link:../fixtures/next-app-router
+        version: link:../fixtures/next-13-app-router
       '@fixtures/next-16-app-pages-router':
         specifier: workspace:*
         version: link:../fixtures/next-16-app-pages-router
@@ -13725,7 +13725,7 @@ snapshots:
 
   '@emnapi/runtime@1.7.1':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
     optional: true
 
   '@emnapi/wasi-threads@1.0.3':
@@ -14426,21 +14426,21 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@jsonjoy.com/base64@1.1.2(tslib@2.5.0)':
+  '@jsonjoy.com/base64@1.1.2(tslib@2.8.1)':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
-  '@jsonjoy.com/json-pack@1.1.0(tslib@2.5.0)':
+  '@jsonjoy.com/json-pack@1.1.0(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/base64': 1.1.2(tslib@2.5.0)
-      '@jsonjoy.com/util': 1.3.0(tslib@2.5.0)
+      '@jsonjoy.com/base64': 1.1.2(tslib@2.8.1)
+      '@jsonjoy.com/util': 1.3.0(tslib@2.8.1)
       hyperdyperid: 1.2.0
-      thingies: 1.21.0(tslib@2.5.0)
-      tslib: 2.5.0
+      thingies: 1.21.0(tslib@2.8.1)
+      tslib: 2.8.1
 
-  '@jsonjoy.com/util@1.3.0(tslib@2.5.0)':
+  '@jsonjoy.com/util@1.3.0(tslib@2.8.1)':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   '@jspm/core@2.0.1': {}
 
@@ -16357,11 +16357,11 @@ snapshots:
 
   '@swc/helpers@0.4.11':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   '@swc/helpers@0.4.14':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   '@swc/helpers@0.5.15':
     dependencies:
@@ -16369,7 +16369,7 @@ snapshots:
 
   '@swc/helpers@0.5.2':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   '@swc/types@0.1.25':
     dependencies:
@@ -18636,7 +18636,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   dot-prop@5.3.0:
     dependencies:
@@ -21275,7 +21275,7 @@ snapshots:
 
   lower-case@2.0.2:
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   lowercase-keys@1.0.0: {}
 
@@ -21559,10 +21559,10 @@ snapshots:
 
   memfs@4.11.1:
     dependencies:
-      '@jsonjoy.com/json-pack': 1.1.0(tslib@2.5.0)
-      '@jsonjoy.com/util': 1.3.0(tslib@2.5.0)
-      tree-dump: 1.0.2(tslib@2.5.0)
-      tslib: 2.5.0
+      '@jsonjoy.com/json-pack': 1.1.0(tslib@2.8.1)
+      '@jsonjoy.com/util': 1.3.0(tslib@2.8.1)
+      tree-dump: 1.0.2(tslib@2.8.1)
+      tslib: 2.8.1
 
   memoize-one@6.0.0: {}
 
@@ -22284,7 +22284,7 @@ snapshots:
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   node-addon-api@4.3.0: {}
 
@@ -22792,7 +22792,7 @@ snapshots:
   pascal-case@3.1.2:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   pascalcase@0.1.1: {}
 
@@ -24717,9 +24717,9 @@ snapshots:
 
   textr@0.3.0: {}
 
-  thingies@1.21.0(tslib@2.5.0):
+  thingies@1.21.0(tslib@2.8.1):
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   through2-filter@3.0.0:
     dependencies:
@@ -24835,9 +24835,9 @@ snapshots:
     dependencies:
       punycode: 2.1.1
 
-  tree-dump@1.0.2(tslib@2.5.0):
+  tree-dump@1.0.2(tslib@2.8.1):
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   treeify@1.1.0: {}
 

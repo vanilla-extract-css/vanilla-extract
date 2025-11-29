@@ -9,11 +9,15 @@ import test from './fixture';
 
 const testCases = [
   {
-    type: 'next-pages-router',
+    type: 'next-12-pages-router',
     mode: 'production',
   },
   {
-    type: 'next-app-router',
+    type: 'next-13-app-router',
+    mode: 'production',
+  },
+  {
+    type: 'next-16-app-pages-router',
     mode: 'production',
   },
 ] as const;
