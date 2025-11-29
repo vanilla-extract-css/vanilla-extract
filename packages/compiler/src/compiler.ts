@@ -464,14 +464,13 @@ export const createCompiler = ({
               );
             }
 
-            const cachedEntry = cssObjs
-              ? cssCache.get(cssDepModuleId)
-              : cachedCss;
+            const { css = '', cssRules = [] } =
+              cssCache.get(cssDepModuleId) ?? {};
 
-            if (cachedEntry && cachedEntry.css) {
-              if (splitCssPerRule && cachedEntry.cssRules.length > 0) {
+            if (cssObjs || css) {
+              if (splitCssPerRule) {
                 const importSpecifiers = await Promise.all(
-                  cachedEntry.cssRules.map((rule, i) =>
+                  cssRules.map((rule, i) =>
                     cssImportSpecifier(cssDepModuleId + `#${i}`, rule),
                   ),
                 );
@@ -479,10 +478,7 @@ export const createCompiler = ({
                   cssImports.push(`import '${specifier}';`);
                 }
               } else {
-                const specifier = await cssImportSpecifier(
-                  cssDepModuleId,
-                  cachedEntry.css,
-                );
+                const specifier = await cssImportSpecifier(cssDepModuleId, css);
                 cssImports.push(`import '${specifier}';`);
               }
             }
