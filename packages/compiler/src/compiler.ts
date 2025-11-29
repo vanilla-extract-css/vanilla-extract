@@ -450,13 +450,10 @@ export const createCompiler = ({
               );
             }
 
-            const cssContent = cssObjs
-              ? cssCache.get(cssDepModuleId)?.css
-              : cachedCss?.css;
-
-            if (cssContent) {
+            const css = cssCache.get(cssDepModuleId)?.css ?? '';
+            if (cssObjs || css) {
               cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId, cssContent)}';`,
+                `import '${cssImportSpecifier(cssDepModuleId, css)}';`,
               );
             }
           }
