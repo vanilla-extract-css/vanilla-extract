@@ -1,7 +1,7 @@
 import type {
   NextServer,
   NextServerOptions,
-} from '@fixtures/next-pages-router/node_modules/next/dist/server/next';
+} from '@fixtures/next-12-pages-router/node_modules/next/dist/server/next';
 import { existsSync } from 'fs';
 import { Server as _Server, createServer } from 'http';
 import path from 'path';
