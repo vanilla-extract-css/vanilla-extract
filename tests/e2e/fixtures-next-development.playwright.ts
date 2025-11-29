@@ -9,17 +9,12 @@ import test from './fixture';
 
 const testCases = [
   {
-    type: 'next-12-pages-router',
+    type: 'next-pages-router',
     mode: 'development',
     clientSideRouting: true,
   },
   {
-    type: 'next-13-app-router',
-    mode: 'development',
-    clientSideRouting: false,
-  },
-  {
-    type: 'next-16-app-pages-router',
+    type: 'next-app-router',
     mode: 'development',
     clientSideRouting: false,
   },

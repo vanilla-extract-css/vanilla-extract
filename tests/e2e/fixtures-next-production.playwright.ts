@@ -16,10 +16,6 @@ const testCases = [
     type: 'next-13-app-router',
     mode: 'production',
   },
-  {
-    type: 'next-16-app-pages-router',
-    mode: 'production',
-  },
 ] as const;
 
 testCases.forEach(({ type, mode }) => {
