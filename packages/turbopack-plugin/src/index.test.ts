@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { deserializeCss } from '@vanilla-extract/integration';
 import turbopackVanillaExtractLoader, {
   type TurboLoaderContext,
   type TurboLoaderOptions,
@@ -57,12 +58,13 @@ describe('turbopack-plugin stress test', () => {
 
         const result = await turbopackVanillaExtractLoader.call(mockContext);
 
-        expect(result).toContain('data:text/css;base64,');
-        const match = result.match(/import 'data:text\/css;base64,([^']+)';/);
+        expect(result).toContain('@vanilla-extract/css/vanilla.virtual.css?ve-css=');
+        const match = result.match(/import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/);
         expect(match).toBeTruthy();
 
         if (match) {
-          const decodedCss = Buffer.from(match[1], 'base64').toString('utf-8');
+          const encodedCss = decodeURIComponent(match[1]);
+          const decodedCss = await deserializeCss(encodedCss);
           expect(decodedCss).toContain(`content: "${uniqueId}"`);
         }
       }
@@ -116,12 +118,13 @@ describe('turbopack-plugin stress test', () => {
 
         const result = await turbopackVanillaExtractLoader.call(mockContext);
 
-        expect(result).toContain('data:text/css;base64,');
-        const match = result.match(/import 'data:text\/css;base64,([^']+)';/);
+        expect(result).toContain('@vanilla-extract/css/vanilla.virtual.css?ve-css=');
+        const match = result.match(/import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/);
         expect(match).toBeTruthy();
 
         if (match) {
-          const decodedCss = Buffer.from(match[1], 'base64').toString('utf-8');
+          const encodedCss = decodeURIComponent(match[1]);
+          const decodedCss = await deserializeCss(encodedCss);
           expect(decodedCss).toContain(`content: "${uniqueId}"`);
         }
       }

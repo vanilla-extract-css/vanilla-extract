@@ -28,14 +28,14 @@
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
     "release": "pnpm prepare-release && changeset publish"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.8",
-    "@manypkg/cli": "^0.21.4",
+    "@manypkg/cli": "^0.25.1",
     "@playwright/test": "^1.43.1",
     "@preconstruct/cli": "^2.8.2",
     "@testing-library/jest-dom": "^6.4.2",
@@ -64,12 +64,10 @@
   },
   "packageManager": "pnpm@10.24.0",
   "devEngines": {
-    "runtime": [
-      {
-        "name": "node",
-        "version": "^24",
-        "onFail": "download"
-      }
-    ]
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "download"
+    }
   }
 }
