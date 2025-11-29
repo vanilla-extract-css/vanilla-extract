@@ -58,8 +58,12 @@ describe('turbopack-plugin stress test', () => {
 
         const result = await turbopackVanillaExtractLoader.call(mockContext);
 
-        expect(result).toContain('@vanilla-extract/css/vanilla.virtual.css?ve-css=');
-        const match = result.match(/import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/);
+        expect(result).toContain(
+          '@vanilla-extract/css/vanilla.virtual.css?ve-css=',
+        );
+        const match = result.match(
+          /import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/,
+        );
         expect(match).toBeTruthy();
 
         if (match) {
@@ -118,8 +122,12 @@ describe('turbopack-plugin stress test', () => {
 
         const result = await turbopackVanillaExtractLoader.call(mockContext);
 
-        expect(result).toContain('@vanilla-extract/css/vanilla.virtual.css?ve-css=');
-        const match = result.match(/import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/);
+        expect(result).toContain(
+          '@vanilla-extract/css/vanilla.virtual.css?ve-css=',
+        );
+        const match = result.match(
+          /import '@vanilla-extract\/css\/vanilla\.virtual\.css\?ve-css=([^']+)';/,
+        );
         expect(match).toBeTruthy();
 
         if (match) {
