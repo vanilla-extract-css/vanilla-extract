@@ -22,7 +22,6 @@ test.describe('CSS deduplication @agnostic', () => {
 
       const cssFiles = globSync('**/*.css', { cwd: distDir });
       expect(cssFiles.length).toBeGreaterThan(0);
-      console.log(name, cssFiles);
 
       let totalOccurrences = 0;
       const cssPattern = /body\s*\{\s*background-color:\s*#0cdbcd;?\s*\}/g;

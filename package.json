@@ -28,7 +28,7 @@
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
     "release": "pnpm prepare-release && changeset publish"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
