@@ -198,7 +198,7 @@ export const createVanillaExtractPlugin = (
 
       const vanillaExtractCssRule = {
         as: '*.css',
-        loaders: ['@vanilla-extract/turbopack-plugin'],
+        loaders: [require.resolve('@vanilla-extract/turbopack-plugin')],
       } as const;
 
       turbopack.rules = {
