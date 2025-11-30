@@ -14,6 +14,8 @@ export default function NextFontChecks() {
     pairs.push([`${name} style`, vePicked.fontStyle, style.fontStyle]);
   }
 
+  pairs.sort((a, b) => a[0].localeCompare(b[0]));
+
   for (const [name, fromVe, direct] of pairs) {
     if (String(fromVe) !== String(direct)) {
       throw new Error(

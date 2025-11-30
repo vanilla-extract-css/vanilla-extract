@@ -4,12 +4,14 @@
   "private": true,
   "description": "Next 16 fixture with app + pages routers; supports webpack and turbopack builds",
   "scripts": {
-    "dev": "next dev",
+    "dev-webpack": "NEXT_DIST_DIR=.next/webpack next dev --webpack",
+    "dev-turbo": "NEXT_DIST_DIR=.next/turbo next dev --turbo",
     "build-webpack": "NEXT_DIST_DIR=dist/webpack next build --webpack",
     "start-webpack": "NEXT_DIST_DIR=dist/webpack next start",
     "build-turbo": "NEXT_DIST_DIR=dist/turbo next build --turbo",
     "start-turbo": "NEXT_DIST_DIR=dist/turbo next start",
-    "clean-build": "pnpm clean && pnpm build-turbo && pnpm build-webpack",
+    "clean-build-turbo": "pnpm clean   && sleep 1 && pnpm build-turbo",
+    "clean-build-webpack": "pnpm clean && sleep 1 && pnpm build-webpack",
     "clean": "pnpm clean:dev && pnpm clean:prod",
     "clean:dev": "rm -rf .next",
     "clean:prod": "rm -rf dist"
