@@ -1,6 +1,9 @@
 name: Deploy site
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   deploy-site:
