@@ -80,7 +80,7 @@ NEXT_SERVERS.map((server) => {
 
         await page.waitForURL(`http://localhost:${server.port}${route}`);
         await page.waitForLoadState('networkidle');
-        
+
         expect(await page.screenshot()).toMatchSnapshot(
           `${snapshotPrefix}.png`,
         );
