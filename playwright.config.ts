@@ -6,6 +6,7 @@ import { NEXT_SERVERS } from './tests/servers';
 process.stdout.isTTY = false;
 
 const config: PlaywrightTestConfig = defineConfig({
+  fullyParallel: true,
   testMatch: '**/*.playwright.ts',
   updateSnapshots: 'none',
   expect: {
@@ -19,6 +20,7 @@ const config: PlaywrightTestConfig = defineConfig({
     env: { NODE_ENV: server.isProduction ? 'production' : 'development' },
     url: `http://localhost:${server.port}`,
     reuseExistingServer: !process.env.CI,
+    name: server.name,
   })),
   workers: process.env.CI ? cpus().length : undefined,
   retries: process.env.CI ? 2 : 0,
