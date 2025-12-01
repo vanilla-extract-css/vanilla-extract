@@ -1,0 +1,32 @@
+{
+  "name": "@fixtures/next-16-app-pages-router",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Next 16 fixture with app + pages routers; supports webpack and turbopack builds",
+  "scripts": {
+    "dev-webpack": "NEXT_DIST_DIR=.next/webpack next dev --webpack",
+    "dev-turbo": "NEXT_DIST_DIR=.next/turbo next dev --turbo",
+    "build-webpack": "NEXT_DIST_DIR=dist/webpack next build --webpack",
+    "start-webpack": "NEXT_DIST_DIR=dist/webpack next start",
+    "build-turbo": "NEXT_DIST_DIR=dist/turbo next build --turbo",
+    "start-turbo": "NEXT_DIST_DIR=dist/turbo next start",
+    "clean:dev": "rm -rf .next",
+    "clean:prod": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fixtures/features": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@vanilla-extract/css": "workspace:*",
+    "@vanilla-extract/recipes": "workspace:*",
+    "@vanilla-extract/sprinkles": "workspace:*",
+    "next": "npm:next@^16.0.0",
+    "react": "npm:react@^19.2.0",
+    "react-dom": "npm:react-dom@^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@vanilla-extract/next-plugin": "workspace:*",
+    "@vanilla-extract/webpack-plugin": "workspace:*"
+  }
+}
