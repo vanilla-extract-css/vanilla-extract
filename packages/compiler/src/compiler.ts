@@ -2,7 +2,11 @@ import assert from 'assert';
 import { join, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import type { ModuleNode, UserConfig as ViteUserConfig } from 'vite';
+import type {
+  ModuleNode,
+  ViteDevServer,
+  UserConfig as ViteUserConfig,
+} from 'vite';
 
 import {
   cssFileFilter,
@@ -94,10 +98,13 @@ const createViteServer = async ({
   identifiers,
   viteConfig,
   enableFileWatcher = true,
+  onFileChange,
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
 > &
-  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
+  Pick<CreateCompilerOptions, 'enableFileWatcher'> & {
+    onFileChange?: (filePath: string) => void;
+  }) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
@@ -200,6 +207,7 @@ const createViteServer = async ({
   if (enableFileWatcher) {
     server.watcher.on('change', (filePath) => {
       runner.moduleCache.invalidateDepTree([filePath]);
+      onFileChange?.(filePath);
     });
   }
 
@@ -241,6 +249,10 @@ export interface Compiler {
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
   getAllCss(): string;
+  findImporterTree(
+    filePath: string,
+    transformedVeModules: Set<string>,
+  ): Promise<Set<ModuleNode>>;
 }
 
 interface ProcessedVanillaFile {
@@ -279,6 +291,14 @@ export const createCompiler = ({
     'viteConfig cannot be used with viteResolve or vitePlugins',
   );
 
+  const processVanillaFileCache = new Map<
+    string,
+    {
+      lastInvalidationTimestamp: number;
+      result: ProcessedVanillaFile;
+    }
+  >();
+
   const vitePromise = createViteServer({
     root,
     identifiers,
@@ -287,15 +307,15 @@ export const createCompiler = ({
       plugins: vitePlugins,
     },
     enableFileWatcher,
+    onFileChange: (changedFilePath) => {
+      const normalizedPath = normalizePath(changedFilePath);
+      for (const [cacheKey, cached] of processVanillaFileCache.entries()) {
+        if (cached.result.watchFiles.has(normalizedPath)) {
+          processVanillaFileCache.delete(cacheKey);
+        }
+      }
+    },
   });
-
-  const processVanillaFileCache = new Map<
-    string,
-    {
-      lastInvalidationTimestamp: number;
-      result: ProcessedVanillaFile;
-    }
-  >();
 
   const cssCache = new NormalizedMap<{ css: string }>(root);
   const classRegistrationsByModuleId = new NormalizedMap<{
@@ -394,7 +414,10 @@ export const createCompiler = ({
         await lock(async () => {
           runner.cssAdapter = cssAdapter;
 
-          const fileExports = await runner.executeFile(filePath);
+          const fileExports = (await runner.executeFile(filePath)) as Record<
+            string,
+            unknown
+          >;
 
           const moduleId = normalizePath(filePath);
           const moduleNode = server.moduleGraph.getModuleById(moduleId);
@@ -511,5 +534,62 @@ export const createCompiler = ({
 
       return allCss;
     },
+    /**
+     * Returns an importer tree based off the compiler's module graph. We can't use the
+     * consuming Vite dev server's module graph as it ends up modified by the `transform` hook to a
+     * point where we can't reconstruct the original importer chain.
+     */
+    async findImporterTree(filePath, transformedModules) {
+      const { server } = await vitePromise;
+
+      // The compiler's module graph is always a subset of the consuming Vite dev server's module
+      // graph, so this early exit will be hit for any modules that aren't involved in compiling VE
+      // modules
+      const moduleNode = server.moduleGraph.getModuleById(
+        normalizePath(filePath),
+      );
+      if (!moduleNode) {
+        return new Set();
+      }
+
+      return _findImporterTree(moduleNode, transformedModules, server);
+    },
   };
 };
+
+function _findImporterTree(
+  moduleNode: ModuleNode,
+  transformedModules: Set<string>,
+  server: ViteDevServer,
+  visited = new Set<string>(),
+): Set<ModuleNode> {
+  const result = new Set<ModuleNode>();
+  if (!moduleNode.id || visited.has(moduleNode.id)) {
+    return result;
+  }
+
+  // Include the starting module in the tree
+  result.add(moduleNode);
+  visited.add(moduleNode.id);
+
+  // Stop if we hit a transformed module as this is a VE module boundary that we don't
+  // need to invalidate past
+  if (transformedModules.has(moduleNode.id)) {
+    return result;
+  }
+
+  for (const importer of moduleNode.importers) {
+    const chain = _findImporterTree(
+      importer,
+      transformedModules,
+      server,
+      visited,
+    );
+
+    for (const mod of chain) {
+      result.add(mod);
+    }
+  }
+
+  return result;
+}
