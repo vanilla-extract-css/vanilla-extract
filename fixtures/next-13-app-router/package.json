@@ -7,8 +7,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "clean-build": "pnpm clean && pnpm build",
-    "clean": "pnpm clean:dev && pnpm clean:prod",
     "clean:dev": "rm -rf .next",
     "clean:prod": "rm -rf dist"
   },
@@ -19,7 +17,7 @@
     "@vanilla-extract/css": "workspace:*",
     "@vanilla-extract/recipes": "workspace:*",
     "@vanilla-extract/sprinkles": "workspace:*",
-    "next": "npm:next@13.5.4",
+    "next": "npm:next@13.5.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

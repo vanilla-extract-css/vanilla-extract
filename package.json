@@ -16,8 +16,9 @@
     "test:unit": "pnpm test:jest && pnpm test:vitest",
     "test:jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "test:vitest": "vitest --watch=false",
-    "test:playwright": "NODE_OPTIONS=--no-experimental-fetch pnpm test:build-next && playwright test",
-    "test:build-next": "node scripts/copy-next-plugin.ts && pnpm --filter=@fixtures/next-* clean-build",
+    "test:playwright": "pnpm test:clean-next && pnpm test:build-next && playwright test",
+    "test:clean-next": "pnpm --filter=@fixtures/next-* run '/^clean.*/'",
+    "test:build-next": "node scripts/copy-next-plugin.ts && pnpm --filter=@fixtures/next-* run '/^build.*/'",
     "format": "prettier --write .",
     "lint": "pnpm run '/^lint:.*/'",
     "lint:manypkg": "manypkg check",
@@ -28,15 +29,15 @@
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
     "release": "pnpm prepare-release && changeset publish"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.8",
-    "@manypkg/cli": "^0.21.4",
-    "@playwright/test": "^1.43.1",
+    "@manypkg/cli": "^0.25.1",
+    "@playwright/test": "^1.57.0",
     "@preconstruct/cli": "^2.8.2",
     "@testing-library/jest-dom": "^6.4.2",
     "@types/jest": "^29.5.12",
@@ -62,5 +63,12 @@
   "manypkg": {
     "workspaceProtocol": "require"
   },
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@10.24.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "download"
+    }
+  }
 }

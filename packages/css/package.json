@@ -12,6 +12,7 @@
   },
   "exports": {
     "./package.json": "./package.json",
+    "./vanilla.virtual.css?*": "./vanilla.virtual.css?*",
     ".": {
       "types": "./dist/vanilla-extract-css.cjs.d.ts",
       "browser": {
@@ -106,7 +107,8 @@
     "/transformCss",
     "/fileScope",
     "/injectStyles",
-    "/disableRuntimeStyles"
+    "/disableRuntimeStyles",
+    "vanilla.virtual.css"
   ],
   "repository": {
     "type": "git",

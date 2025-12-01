@@ -2,7 +2,11 @@ import {
   createCompiler,
   type Compiler as VeCompiler,
 } from '@vanilla-extract/compiler';
-import type { IdentifierOption } from '@vanilla-extract/integration';
+import {
+  deserializeCss,
+  serializeCss,
+  type IdentifierOption,
+} from '@vanilla-extract/integration';
 import * as path from 'node:path';
 import { createNextFontVePlugin } from './next-font/plugin';
 import type fs from 'node:fs';
@@ -22,6 +26,7 @@ export type TurboLoaderContext<OptionsType> = {
 
   rootContext: string;
   resourcePath: string;
+  resourceQuery?: string;
 };
 
 export type TurboLoaderOptions = {
@@ -62,9 +67,11 @@ const getOrMakeCompiler = async ({
     root: loaderContext.rootContext,
     identifiers,
     enableFileWatcher: false,
-    cssImportSpecifier: (_filePath, css) => {
-      const base64 = Buffer.from(css, 'utf8').toString('base64');
-      return `data:text/css;base64,${base64}`;
+    splitCssPerRule: true,
+    cssImportSpecifier: async (_filePath, css) => {
+      return `@vanilla-extract/css/vanilla.virtual.css?ve-css=${encodeURIComponent(
+        await serializeCss(css),
+      )}`;
     },
     viteConfig: {
       define: defineEnv,
@@ -115,6 +122,12 @@ const getOrMakeCompiler = async ({
 export default async function turbopackVanillaExtractLoader(
   this: TurboLoaderContext<TurboLoaderOptions>,
 ) {
+  // Check if this is a CSS request via query param
+  if (this.resourceQuery?.startsWith('?ve-css=')) {
+    const encodedCss = this.resourceQuery.slice(8);
+    return await deserializeCss(decodeURIComponent(encodedCss));
+  }
+
   const options = this.getOptions() as TurboLoaderOptions;
   const identifiers =
     options.identifiers ??

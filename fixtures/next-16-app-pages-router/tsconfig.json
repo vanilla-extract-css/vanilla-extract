@@ -24,13 +24,19 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "dist/types/**/*.ts",
-    "dist/dev/types/**/*.ts"
+    "**/*.ts",
+    "**/*.tsx",
+    "dist/turbo/types/**/*.ts",
+    "dist/turbo/dev/types/**/*.ts",
+    "dist/webpack/types/**/*.ts",
+    "dist/webpack/dev/types/**/*.ts",
+    ".next/turbo/types/**/*.ts",
+    ".next/turbo/dev/types/**/*.ts",
+    ".next/webpack/types/**/*.ts",
+    ".next/webpack/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

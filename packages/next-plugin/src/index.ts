@@ -196,11 +196,17 @@ export const createVanillaExtractPlugin = (
         ],
       } as const;
 
+      const vanillaExtractCssRule = {
+        as: '*.css',
+        loaders: [require.resolve('@vanilla-extract/turbopack-plugin')],
+      } as const;
+
       turbopack.rules = {
         ...(turbopack.rules || {}),
         ...Object.fromEntries(
           turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
         ),
+        'vanilla.virtual.css': vanillaExtractCssRule,
       };
     }
 

@@ -258,7 +258,17 @@ export interface CreateCompilerOptions {
    * @default true
    */
   enableFileWatcher?: boolean;
-  cssImportSpecifier?: (filePath: string, css: string) => string;
+  cssImportSpecifier?: (
+    filePath: string,
+    css: string,
+  ) => string | Promise<string>;
+  /**
+   * When true, generates one CSS import per rule instead of one per file.
+   * This can help bundlers like Turbopack deduplicate shared CSS more effectively.
+   *
+   * @default false
+   */
+  splitCssPerRule?: boolean;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -270,6 +280,7 @@ export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
+  splitCssPerRule = false,
   viteConfig,
   enableFileWatcher,
   viteResolve,
@@ -298,7 +309,7 @@ export const createCompiler = ({
     }
   >();
 
-  const cssCache = new NormalizedMap<{ css: string }>(root);
+  const cssCache = new NormalizedMap<{ css: string; cssRules: string[] }>(root);
   const classRegistrationsByModuleId = new NormalizedMap<{
     localClassNames: Set<string>;
     composedClassLists: Array<Composition>;
@@ -428,17 +439,20 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              let css = '';
+              let cssRules: string[] = [];
 
               if (cssObjs.length > 0) {
-                css = transformCss({
+                cssRules = transformCss({
                   localClassNames: Array.from(localClassNames),
                   composedClassLists: orderedComposedClassLists,
                   cssObjs,
-                }).join('\n');
+                });
               }
 
-              cssCache.set(cssDepModuleId, { css });
+              cssCache.set(cssDepModuleId, {
+                css: cssRules.join('\n'),
+                cssRules,
+              });
             } else if (cachedClassRegistrations) {
               cachedClassRegistrations.localClassNames.forEach(
                 (localClassName) => {
@@ -450,11 +464,23 @@ export const createCompiler = ({
               );
             }
 
-            const css = cssCache.get(cssDepModuleId)?.css ?? '';
+            const { css = '', cssRules = [] } =
+              cssCache.get(cssDepModuleId) ?? {};
+
             if (cssObjs || css) {
-              cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId, css)}';`,
-              );
+              if (splitCssPerRule) {
+                const importSpecifiers = await Promise.all(
+                  cssRules.map((rule, i) =>
+                    cssImportSpecifier(cssDepModuleId + `#${i}`, rule),
+                  ),
+                );
+                for (const specifier of importSpecifiers) {
+                  cssImports.push(`import '${specifier}';`);
+                }
+              } else {
+                const specifier = await cssImportSpecifier(cssDepModuleId, css);
+                cssImports.push(`import '${specifier}';`);
+              }
             }
           }
 
