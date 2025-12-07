@@ -13,7 +13,7 @@
     "@docsearch/css": "3.3.3",
     "@docsearch/react": "3.3.3",
     "@mdx-js/react": "^1.6.22",
-    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "dedent": "^1.5.3",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

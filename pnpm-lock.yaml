@@ -680,9 +680,9 @@ importers:
       '@mdx-js/react':
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
-      classnames:
-        specifier: ^2.5.1
-        version: 2.5.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       dedent:
         specifier: ^1.5.3
         version: 1.5.3
@@ -798,9 +798,6 @@ importers:
       null-loader:
         specifier: ^4.0.1
         version: 4.0.1(webpack@5.90.0)
-      remove-markdown:
-        specifier: ^0.3.0
-        version: 0.3.0
       tailwindcss:
         specifier: ^2.1.2
         version: 2.2.19(autoprefixer@10.4.17(postcss@8.5.6))(postcss@8.5.6)(ts-node@10.9.1(@types/node@16.11.10)(typescript@4.9.4))
@@ -5350,9 +5347,6 @@ packages:
   class-utils@0.3.6:
     resolution: {integrity: sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==}
     engines: {node: '>=0.10.0'}
-
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   clean-css@5.2.2:
     resolution: {integrity: sha512-/eR8ru5zyxKzpBLv9YZvMXgTSSQn7AdkMItMYynsFgGwTveCRVam9IUPFloE85B4vAIj05IuKmmEoV7/AQjT0w==}
@@ -10189,9 +10183,6 @@ packages:
 
   remark-textr@3.0.4:
     resolution: {integrity: sha512-5SvSJCw3TERrRuu+cqKd8/9B0HXZNUS7i8DFXFaFQAPINutEDiun82X4N6wnVw6qGILBt012HRdAZ4myXnR2rw==}
-
-  remove-markdown@0.3.0:
-    resolution: {integrity: sha512-5392eIuy1mhjM74739VunOlsOYKjsH82rQcTBlJ1bkICVC3dQ3ksQzTHh4jGHQFnM+1xzLzcFOMH+BofqXhroQ==}
 
   remove-trailing-separator@1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
@@ -17252,8 +17243,6 @@ snapshots:
       isobject: 3.0.1
       static-extend: 0.1.2
 
-  classnames@2.5.1: {}
-
   clean-css@5.2.2:
     dependencies:
       source-map: 0.6.1
@@ -23073,8 +23062,6 @@ snapshots:
     dependencies:
       textr: 0.3.0
       unist-util-visit: 1.4.1
-
-  remove-markdown@0.3.0: {}
 
   remove-trailing-separator@1.1.0: {}
 
