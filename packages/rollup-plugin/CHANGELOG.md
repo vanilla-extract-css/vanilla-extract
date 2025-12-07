@@ -1,5 +1,33 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.5.0
+
+### Minor Changes
+
+- [#1654](https://github.com/vanilla-extract-css/vanilla-extract/pull/1654) [`fbc2c31`](https://github.com/vanilla-extract-css/vanilla-extract/commit/fbc2c3118f1d008a7d016ca2c7bec1c19c077404) Thanks [@askoufis](https://github.com/askoufis)! - Add optional `unstable_injectFilescopes` flag
+
+  The `unstable_injectFilescopes` flag injects filescopes into Vanilla Extract modules instead of generating CSS. This is useful for utility or component libraries that prefer their consumers to process Vanilla Extract files instead of bundling CSS.
+
+  Note that this flag only works with `preserveModules: true`.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.6
+
+## 1.4.3
+
+### Patch Changes
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
+## 1.4.2
+
+### Patch Changes
+
+- [#1616](https://github.com/vanilla-extract-css/vanilla-extract/pull/1616) [`e2c439f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e2c439ffa96dce570f2d472d2ca6ee40c69e3ee9) Thanks [@radnan](https://github.com/radnan)! - allow plugin to work in rolldown
+
 ## 1.4.1
 
 ### Patch Changes

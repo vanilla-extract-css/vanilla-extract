@@ -8,20 +8,20 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['20', '']
-    name: Lint & Test (${{ (matrix.node && matrix.node != '20') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
+        node: ['', '24']
+    name: Lint & Test (${{ (matrix.node && matrix.node != '24') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up PNPM
         uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -43,20 +43,20 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['20', '']
-    name: Windows Tests (${{ (matrix.node && matrix.node != '20') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
+        node: ['', '24']
+    name: Windows Tests (${{ (matrix.node && matrix.node != '24') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: windows-latest
     env:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up PNPM
         uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -77,13 +77,13 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up PNPM
         uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -101,7 +101,7 @@ jobs:
         run: pnpm test:playwright
 
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: ${{ failure() }}
         with:
           name: test-results
           path: test-results/

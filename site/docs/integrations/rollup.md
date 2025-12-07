@@ -35,8 +35,7 @@ export default {
 This plugin works well with Rollup's `preserveModules`.
 
 Rollup by default places assets in an "assets" directory.
-You can configure [asset file names](https://rollupjs.org/guide/en/#outputassetfilenames)
-if you care about CSS assets being placed right next to the corresponding JS files.
+You can configure [asset file names](https://rollupjs.org/guide/en/#outputassetfilenames) if you care about CSS assets being placed right next to the corresponding JS files.
 
 ```js
 // rollup.config.js
@@ -86,10 +85,19 @@ vanillaExtractPlugin({
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
+### untable_injectedFilescopes
+
+Injects filescopes into Vanilla Extract modules instead of generating CSS.
+This is useful for utility or component libraries that prefer their consumers to process Vanilla Extract files instead of bundling CSS.
+
+Note that this flag only works with `preserveModules: true`.
+
 ### esbuildOptions
 
-esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles. You can pass additional options here to customize that process.
-Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader`, `tsconfig` and `conditions`). See the [build API](https://esbuild.github.io/api/#build-api) documentation.
+esbuild is used internally to compile `.css.ts` files before evaluating them to extract styles.
+You can pass additional options here to customize that process.
+Accepts a subset of esbuild build options (`plugins`, `external`, `define`, `loader`, `tsconfig` and `conditions`).
+See the [build API](https://esbuild.github.io/api/#build-api) documentation.
 
 ### extract
 

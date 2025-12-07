@@ -1,4 +1,3 @@
-import { glob } from 'tinyglobby';
 import { existsSync } from 'fs';
 import fs from 'fs/promises';
 import path from 'path';
@@ -14,11 +13,7 @@ if (!existsSync(nextPluginDistDir)) {
   throw new Error('packages/next-plugin/dist is missing.');
 }
 
-const nextFixtureDirs = await glob('fixtures/next-*', {
-  onlyDirectories: true,
-  absolute: true,
-  expandDirectories: false,
-});
+const nextFixtureDirs = await Array.fromAsync(fs.glob('fixtures/next-*'));
 
 if (nextFixtureDirs.length === 0) {
   throw new Error('No next fixtures found.');
