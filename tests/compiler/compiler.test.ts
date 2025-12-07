@@ -25,7 +25,9 @@ describe('compiler', () => {
     | 'vitePlugins'
     | 'tsconfigPaths'
     | 'basePath'
-    | 'getAllCss',
+    | 'getAllCss'
+    | 'assetsInlineLimit'
+    | 'assetsNoInlineLimit',
     ReturnType<typeof createCompiler>
   >;
 
@@ -82,6 +84,22 @@ describe('compiler', () => {
       }),
       getAllCss: createCompiler({
         root: __dirname,
+      }),
+      assetsInlineLimit: createCompiler({
+        root: __dirname,
+        viteConfig: {
+          build: {
+            assetsInlineLimit: 512,
+          },
+        },
+      }),
+      assetsNoInlineLimit: createCompiler({
+        root: __dirname,
+        viteConfig: {
+          build: {
+            assetsInlineLimit: 0,
+          },
+        },
       }),
     };
   });
@@ -581,6 +599,56 @@ describe('compiler', () => {
         border: 1px solid black;
       }
 
+    `);
+  });
+
+  test('setting build.assetsInlineLimit = 0 should disable inlining', async () => {
+    const compiler = compilers.assetsNoInlineLimit;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/assets-inline-limit/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/assets-inline-limit/styles.css.ts.vanilla.css';
+      export var square = 'styles_square__upl4cj0';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .styles_square__upl4cj0 {
+        width: 100px;
+        height: 100px;
+        background-image: url("/fixtures/assets-inline-limit/square.svg");
+        background-size: cover;
+      }
+    `);
+  });
+
+  test('setting build.assetsInlineLimit = 512 should inline assets appropriately', async () => {
+    const compiler = compilers.assetsInlineLimit;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/assets-inline-limit/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/assets-inline-limit/styles.css.ts.vanilla.css';
+      export var square = 'styles_square__upl4cj0';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .styles_square__upl4cj0 {
+        width: 100px;
+        height: 100px;
+        background-image: url("data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3c!--%20Uploaded%20to:%20SVG%20Repo,%20www.svgrepo.com,%20Generator:%20SVG%20Repo%20Mixer%20Tools%20--%3e%3csvg%20width='800px'%20height='800px'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='1'%20y='1'%20width='14'%20height='14'%20fill='%23000000'/%3e%3c/svg%3e");
+        background-size: cover;
+      }
     `);
   });
 });
