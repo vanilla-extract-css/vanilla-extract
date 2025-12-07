@@ -9,16 +9,16 @@
     "start": "remix-serve ./build/server/index.js"
   },
   "dependencies": {
-    "@remix-run/node": "^2.8.0",
-    "@remix-run/react": "^2.8.0",
-    "@remix-run/serve": "^2.8.0",
+    "@remix-run/node": "^2.17.2",
+    "@remix-run/react": "^2.17.2",
+    "@remix-run/serve": "^2.17.2",
     "@vanilla-extract/css": "workspace:*",
     "isbot": "^4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.8.0",
+    "@remix-run/dev": "^2.17.2",
     "@types/react": "^18.2.55",
     "@vanilla-extract/vite-plugin": "workspace:*",
     "vite": "^5.0.0 || ^6.0.0 || ^7.0.0"

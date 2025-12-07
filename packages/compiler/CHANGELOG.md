@@ -1,5 +1,22 @@
 # @vanilla-extract/compiler
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd)]:
+  - @vanilla-extract/css@1.17.5
+  - @vanilla-extract/integration@8.0.6
+
+## 0.3.2
+
+### Patch Changes
+
+- [#1638](https://github.com/vanilla-extract-css/vanilla-extract/pull/1638) [`46ef1db`](https://github.com/vanilla-extract-css/vanilla-extract/commit/46ef1db201ad83d50c4620e331ec53f9affe1d84) Thanks [@PsychoLlama](https://github.com/PsychoLlama)! - Inherit parent vite `server.watch` options
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
 ## 0.3.1
 
 ### Patch Changes

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "Preserve", // Vanilla Extract is bundled with preconstruct (effectively Rollup)
-    "lib": ["ES2023", "dom", "dom.iterable"], // ES2023 aligns with Node 22, and we need DOM APIs for fixtures and the docs site
+    "lib": ["ES2023", "ESNext.Array", "dom", "dom.iterable"], // ES2023 aligns with Node 22, and we need DOM APIs for fixtures and the docs site
     "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
