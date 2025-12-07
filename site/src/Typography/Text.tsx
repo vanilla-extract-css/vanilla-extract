@@ -1,5 +1,5 @@
 import type { ReactNode, ElementType } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { Box } from '../system';
 import * as styles from './typography.css';
 import { sprinkles, type Sprinkles } from '../system/styles/sprinkles.css';
@@ -35,7 +35,7 @@ export const useTextStyles = ({
   align,
   baseline = true,
 }: TextStyleProps) =>
-  classnames(
+  clsx(
     styles.font[type],
     baseline ? styles.text[size].trimmed : styles.text[size].untrimmed,
     sprinkles({ color: colorMap[color], textAlign: align }),

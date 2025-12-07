@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { Box } from '../system';
 import * as styles from './Fab.css';
 
@@ -18,7 +18,7 @@ export const Fab = ({
       zIndex={0}
       cursor="pointer"
       onClick={onClick}
-      className={classnames(styles.fab, open ? styles.isOpen : null)}
+      className={clsx(styles.fab, open ? styles.isOpen : null)}
     >
       <Box
         position="absolute"

@@ -165,7 +165,7 @@ export function createGlobalThemeContract(
         : (value as string);
 
     const varName =
-      typeof rawVarName === 'string' ? rawVarName.replace(/^\-\-/, '') : null;
+      typeof rawVarName === 'string' ? rawVarName.replace(/^--/, '') : null;
 
     if (
       typeof varName !== 'string' ||
