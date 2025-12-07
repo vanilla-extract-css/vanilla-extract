@@ -7,17 +7,7 @@ export type Resolve<T> = {
   [Key in keyof T]: T[Key];
 } & {};
 
-// csstype is yet to ship container property types as they are not in
-// the output MDN spec files yet. Remove this once that's done.
-// https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries
-interface ContainerProperties {
-  container?: string;
-  containerType?: 'size' | 'inline-size' | (string & {});
-  containerName?: string;
-}
-
-type CSSTypeProperties = Properties<number | (string & {})> &
-  ContainerProperties;
+type CSSTypeProperties = Properties<number | (string & {})>;
 
 export type CSSProperties = {
   [Property in keyof CSSTypeProperties]:
