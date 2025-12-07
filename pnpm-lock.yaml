@@ -123,9 +123,6 @@ importers:
       '@vanilla-extract/css':
         specifier: workspace:*
         version: link:../../packages/css
-      isbot:
-        specifier: ^4
-        version: 4.4.0
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -897,9 +894,6 @@ importers:
       esbuild:
         specifier: ~0.27.0
         version: 0.27.0
-      got:
-        specifier: ^11.8.2
-        version: 11.8.3
       html-webpack-plugin:
         specifier: ^5.3.1
         version: 5.5.0(webpack@5.90.0(esbuild@0.27.0))
@@ -909,9 +903,6 @@ importers:
       minimist:
         specifier: ^1.2.5
         version: 1.2.8
-      path-browserify:
-        specifier: ^1.0.1
-        version: 1.0.1
       portfinder:
         specifier: ^1.0.28
         version: 1.0.28
@@ -4082,10 +4073,6 @@ packages:
     resolution: {integrity: sha512-/aPsuoj/1Dw/kzhkgz+ES6TxG0zfTMGLwuK2ZG00k/iJzYHTLCE8mVU8EPqEOp/lmxPoq1C1C9RYToRKb2KEfg==}
     engines: {node: '>=10'}
 
-  '@sindresorhus/is@4.2.0':
-    resolution: {integrity: sha512-VkE3KLBmJwcCaVARtQpfuKcKv8gcBmUubrfHGF84dXuuW6jgsRYxPtzcIhPyK9WAPpRt2/xY6zkD9MnRaJzSyw==}
-    engines: {node: '>=10'}
-
   '@sindresorhus/is@5.6.0':
     resolution: {integrity: sha512-TV7t8GKYaJWsn00tFDqBw8+Uqmr8A0fRU1tvTQhyZzGv0sJCGRQL3JGMI3ucuKo3XIZdUP+Lx7/gh2t3lewy7g==}
     engines: {node: '>=14.16'}
@@ -5177,10 +5164,6 @@ packages:
   cacheable-lookup@2.0.1:
     resolution: {integrity: sha512-EMMbsiOTcdngM/K6gV/OxF2x0t07+vMOWxZNSCRQMjO2MY2nhZQ6OYhOOpyQrbhqsgtvKGI7hcq6xjnA92USjg==}
     engines: {node: '>=10'}
-
-  cacheable-lookup@5.0.4:
-    resolution: {integrity: sha512-2/kNscPhpcxrOigMZzbiWF7dz8ilhb/nIHU3EyZiXWXpeq/au8qJ8VhdftMkty3n7Gj6HIGalQG8oiBNB3AJgA==}
-    engines: {node: '>=10.6.0'}
 
   cacheable-lookup@7.0.0:
     resolution: {integrity: sha512-+qJyx4xiKra8mZrcwhjMRMUhD5NR1R8esPkzIYxX96JiecFoxAXFuz/GpR3+ev4PE1WamHip78wV0vcmPQtp8w==}
@@ -6911,10 +6894,6 @@ packages:
     resolution: {integrity: sha512-aWTDeNw9g+XqEZNcTjMMZSy7B7yE9toWOFYip7ofFTLleJhvZwUxxTxkTpKvF+p1SAA4VHmuEy7PiHTHyq8tJg==}
     engines: {node: '>=10'}
 
-  got@11.8.3:
-    resolution: {integrity: sha512-7gtQ5KiPh1RtGS9/Jbv1ofDpBFuq42gyfEib+ejaRBJuj/3tQFeR5+gw57e4ipaU8c/rCjvX6fkQz2lyDlGAOg==}
-    engines: {node: '>=10.19.0'}
-
   got@12.6.1:
     resolution: {integrity: sha512-mThBblvlAF1d4O5oqyvN+ZxLAYwIJK7bpMxgYqPD9okW0C3qm5FFn7k811QrcuEBwaogR3ngOFoCfs6mRv7teQ==}
     engines: {node: '>=14.16'}
@@ -7198,10 +7177,6 @@ packages:
   http-proxy@1.18.1:
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
     engines: {node: '>=8.0.0'}
-
-  http2-wrapper@1.0.3:
-    resolution: {integrity: sha512-V+23sDMr12Wnz7iTcDeJr3O6AIxlnvT/bmaAAAP/Xda35C90p9599p0F1eHR/N1KILWSoWVAiOMFjBBXaXSMxg==}
-    engines: {node: '>=10.19.0'}
 
   http2-wrapper@2.2.1:
     resolution: {integrity: sha512-V5nVw1PAOgfI3Lmeaj2Exmeg7fenjhRUgz1lPSezy1CuhPYbgQtbQj4jZfEAEMlaL+vupsvhjqCyjzob0yxsmQ==}
@@ -7669,10 +7644,6 @@ packages:
 
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
-
-  isbot@4.4.0:
-    resolution: {integrity: sha512-8ZvOWUA68kyJO4hHJdWjyreq7TYNWTS9y15IzeqVdKxR9pPr3P/3r9AHcoIv9M0Rllkao5qWz2v1lmcyKIVCzQ==}
-    engines: {node: '>=18'}
 
   iserror@0.0.2:
     resolution: {integrity: sha512-oKGGrFVaWwETimP3SiWwjDeY27ovZoyZPHtxblC4hCq9fXxed/jasx+ATWFFjCVSRZng8VTMsN1nDnGo6zMBSw==}
@@ -9370,9 +9341,6 @@ packages:
   pascalcase@0.1.1:
     resolution: {integrity: sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==}
     engines: {node: '>=0.10.0'}
-
-  path-browserify@1.0.1:
-    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
   path-case@2.1.1:
     resolution: {integrity: sha512-Ou0N05MioItesaLr9q8TtHVWmJ6fxWdqKB2RohFmNWVyJ+2zeKIeDNWAN6B/Pe7wpzWChhZX6nONYmOnMeJQ/Q==}
@@ -15705,8 +15673,6 @@ snapshots:
 
   '@sindresorhus/is@2.1.1': {}
 
-  '@sindresorhus/is@4.2.0': {}
-
   '@sindresorhus/is@5.6.0': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
@@ -17033,8 +16999,6 @@ snapshots:
     dependencies:
       '@types/keyv': 3.1.3
       keyv: 4.5.4
-
-  cacheable-lookup@5.0.4: {}
 
   cacheable-lookup@7.0.0: {}
 
@@ -19044,20 +19008,6 @@ snapshots:
       to-readable-stream: 2.1.0
       type-fest: 0.10.0
 
-  got@11.8.3:
-    dependencies:
-      '@sindresorhus/is': 4.2.0
-      '@szmarczak/http-timer': 4.0.6
-      '@types/cacheable-request': 6.0.2
-      '@types/responselike': 1.0.0
-      cacheable-lookup: 5.0.4
-      cacheable-request: 7.0.2
-      decompress-response: 6.0.0
-      http2-wrapper: 1.0.3
-      lowercase-keys: 2.0.0
-      p-cancelable: 2.1.1
-      responselike: 2.0.0
-
   got@12.6.1:
     dependencies:
       '@sindresorhus/is': 5.6.0
@@ -19456,11 +19406,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  http2-wrapper@1.0.3:
-    dependencies:
-      quick-lru: 5.1.1
-      resolve-alpn: 1.2.1
-
   http2-wrapper@2.2.1:
     dependencies:
       quick-lru: 5.1.1
@@ -19838,8 +19783,6 @@ snapshots:
   is-yarn-global@0.3.0: {}
 
   isarray@1.0.0: {}
-
-  isbot@4.4.0: {}
 
   iserror@0.0.2: {}
 
@@ -22173,8 +22116,6 @@ snapshots:
       tslib: 2.5.0
 
   pascalcase@0.1.1: {}
-
-  path-browserify@1.0.1: {}
 
   path-case@2.1.1:
     dependencies:
