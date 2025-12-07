@@ -2,4 +2,4 @@
 '@vanilla-extract/integration': patch
 ---
 
-base64url encode generated CSS source to avoid errors in virtual file paths
+`serializeCss|deserializeCss`: Use `base64url` encoding instead of `base64` to avoid errors in virtual file paths
