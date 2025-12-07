@@ -1,16 +1,5 @@
 const matter = require('gray-matter');
 const GithubSlugger = require('github-slugger');
-const removeMarkdown = require('remove-markdown');
-
-const stripMarkdown = (content) => {
-  const strippedContent = content
-    // Replace newlines with spaces
-    .replace(/(\r\n|\n|\r)/gm, ' ')
-    // Remove code blocks
-    .replace(/```(.*)```/gm, '');
-
-  return removeMarkdown(strippedContent);
-};
 
 const getBreadcrumbs = (headings, index, level = Infinity, value = []) => {
   const target = headings[index];
@@ -26,7 +15,7 @@ const parseContents = (rawContent) => {
 
   const { content, data } = matter(rawContent);
 
-  const headings = content.match(/#{1,}( [ -\w\(\)\.]*)/g).map((heading) => {
+  const headings = content.match(/#{1,}( [ -\w().]*)/g).map((heading) => {
     const split = heading.split('#');
 
     return {
@@ -41,15 +30,7 @@ const parseContents = (rawContent) => {
     breadcrumbs: getBreadcrumbs(headings, index),
   }));
 
-  const sections = breadcrumbs.map((heading, index) => {
-    const nextHeadingIndex =
-      index < headings.length - 1
-        ? content.lastIndexOf(headings[index + 1].raw)
-        : content.length;
-
-    const currHeadingIndex =
-      content.lastIndexOf(heading.raw) + heading.raw.length;
-
+  const sections = breadcrumbs.map((heading) => {
     return {
       ...heading,
       page: data.title,

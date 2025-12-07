@@ -54,7 +54,6 @@
     "mini-css-extract-plugin": "^2.7.7",
     "netlify-cli": "^11.8.3",
     "null-loader": "^4.0.1",
-    "remove-markdown": "^0.3.0",
     "tailwindcss": "^2.1.2",
     "webpack": "^5.90.0",
     "webpack-bundle-analyzer": "^4.4.1",
