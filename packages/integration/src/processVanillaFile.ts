@@ -269,7 +269,9 @@ function stringifyExports(
         } catch (err) {
           console.error(err);
 
-          throw new Error('Invalid function serialization params');
+          throw new Error('Invalid function serialization params', {
+            cause: err,
+          });
         }
       }
 

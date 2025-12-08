@@ -123,6 +123,7 @@ const createViteServer = async ({
         // Can be removed once https://github.com/vitejs/vite/pull/19247 is released.
         exclude: [/node_modules/],
       },
+      assetsInlineLimit: viteConfig.build?.assetsInlineLimit,
     },
     ssr: {
       noExternal: true,

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Meta } from 'react-head';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { useActiveHash, useHeadingRouteUpdates } from '../useHeadingRoute';
 import SiblingDoc from './SiblingDoc/SiblingDoc';
 import mdxComponents from '../mdx-components';
@@ -120,7 +120,7 @@ const MenuBackdrop = ({
     background={{ lightMode: 'teal100', darkMode: 'black' }}
     opacity={open ? undefined : 0}
     pointerEvents={open ? { desktop: 'none' } : 'none'}
-    className={classnames(
+    className={clsx(
       styles.backdrop,
       open ? styles.backdrop_isVisible : undefined,
     )}
@@ -155,7 +155,7 @@ const PrimaryNav = ({
       zIndex={1}
       pointerEvents={open ? undefined : { mobile: 'none', desktop: 'auto' }}
       opacity={open ? undefined : { mobile: 0, desktop: 1 }}
-      className={classnames(
+      className={clsx(
         styles.sidebar,
         styles.primaryNav,
         open ? styles.primaryNavOpen : undefined,
@@ -208,7 +208,7 @@ const PrimaryNav = ({
                           paddingTop="xlarge"
                           marginLeft="xsmall"
                           opacity={active ? undefined : 0}
-                          className={classnames(
+                          className={clsx(
                             styles.activeIndicator,
                             active ? styles.active : '',
                           )}
@@ -364,7 +364,7 @@ const SecondaryNav = ({
                     paddingTop={l2 ? 'xlarge' : 'large'}
                     marginLeft={l2 ? 'xsmall' : 'xlarge'}
                     opacity={active ? undefined : 0}
-                    className={classnames(
+                    className={clsx(
                       styles.activeIndicator,
                       !l2 ? styles.activeIndicatorRight : '',
                       active ? styles.active : '',
