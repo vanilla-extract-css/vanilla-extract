@@ -137,6 +137,7 @@ const getOrMakeCompiler = async ({
                 'next/dist/server/image-optimizer.js'
               );
               const imageSize: { width?: number; height?: number } =
+                // @ts-expect-error - next.js version mismatch loads next 12 types but uses next 16 code
                 await getImageSize(await imageAsBuffer).catch((error) => {
                   const message = `Process image "${sourceImage}" failed: ${error}`;
                   throw new Error(message);
