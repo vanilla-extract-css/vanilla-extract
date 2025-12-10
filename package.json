@@ -63,12 +63,5 @@
   "manypkg": {
     "workspaceProtocol": "require"
   },
-  "packageManager": "pnpm@10.24.0",
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": "^24",
-      "onFail": "download"
-    }
-  }
+  "packageManager": "pnpm@10.24.0"
 }
