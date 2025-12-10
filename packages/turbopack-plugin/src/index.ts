@@ -96,6 +96,72 @@ const getOrMakeCompiler = async ({
           },
         },
         {
+          name: 'vanilla-extract-next-image',
+          enforce: 'pre',
+          async resolveId(source: string, importer: string | undefined) {
+            if (!importer) return null;
+
+            if (
+              source.endsWith('.png') ||
+              source.endsWith('.svg') ||
+              source.endsWith('.jpg') ||
+              source.endsWith('.jpeg') ||
+              source.endsWith('.gif') ||
+              source.endsWith('.webp') ||
+              source.endsWith('.avif') ||
+              source.endsWith('.ico') ||
+              source.endsWith('.bmp')
+            ) {
+              const sourceImage = path.isAbsolute(source)
+                ? path.join(loaderContext.rootContext, source)
+                : path.join(path.dirname(importer), source);
+
+              // since we'll be using the image in our final css file, we must craft an import path that will resolve to the image file from the css file
+              const referenceFile = require.resolve(
+                '@vanilla-extract/css/vanilla.virtual.css?ve-css=unknown',
+                { paths: [importer] },
+              );
+              const relativeImport = path.relative(
+                path.dirname(referenceFile),
+                sourceImage,
+              );
+
+              // determine the dimensions of the image
+              const imageAsBuffer = new Promise<Buffer>((resolve, reject) => {
+                loaderContext.fs.readFile(sourceImage, (error, data) => {
+                  if (error) reject(error);
+                  resolve(data);
+                });
+              });
+              const { getImageSize } = await import(
+                'next/dist/server/image-optimizer.js'
+              );
+              const imageSize: { width?: number; height?: number } =
+                // @ts-expect-error - next.js version mismatch loads next 12 types but uses next 16 code
+                await getImageSize(await imageAsBuffer).catch((error) => {
+                  const message = `Process image "${sourceImage}" failed: ${error}`;
+                  throw new Error(message);
+                });
+
+              const moduleContent = `export default {
+                src: '${relativeImport}',
+                height: ${imageSize.height},
+                width: ${imageSize.width},
+                blurDataURL: undefined,
+                blurWidth: undefined,
+                blurHeight: undefined,
+              }`;
+
+              return (
+                'data:text/javascript;base64,' +
+                Buffer.from(moduleContent).toString('base64')
+              );
+            }
+
+            return null;
+          },
+        },
+        {
           // avoid module resolution errors by letting turbopack resolve our modules for us
           name: 'vanilla-extract-turbo-resolve',
           // do NOT enforce pre as it breaks builds on some projects (not sure why)

@@ -16,6 +16,8 @@ export default function Home() {
       <Link href="/next-font">next font</Link>
       <br />
       <Link href="/duplication-test">duplication test</Link>
+      <br />
+      <Link href="/next-image">next image</Link>
     </>
   );
 }
