@@ -18,6 +18,7 @@ const full = [
   { route: '/duplication-test', index: '/' },
   { route: '/function-serializer', index: '/' },
   { route: '/next-font', index: '/' },
+  { route: '/next-image', index: '/' },
 ];
 
 const getTasks = (type: 'full' | 'limited') => {
