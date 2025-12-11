@@ -16,7 +16,7 @@
     "test:unit": "pnpm test:jest && pnpm test:vitest",
     "test:jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "test:vitest": "vitest --watch=false",
-    "test:playwright": "NODE_OPTIONS=--no-experimental-fetch pnpm test:build-next && playwright test",
+    "test:playwright": "pnpm test:build-next && playwright test",
     "test:build-next": "node scripts/copy-next-plugin.ts && pnpm --filter=@fixtures/next-* clean-build",
     "format": "prettier --write .",
     "lint": "pnpm run '/^lint:.*/'",
