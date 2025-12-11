@@ -11,6 +11,8 @@ jobs:
     name: Publish & Deploy
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     env:
       CI: true
     steps:
@@ -44,6 +46,8 @@ jobs:
     name: Publish snapshot version
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     env:
       CI: true
     steps:
