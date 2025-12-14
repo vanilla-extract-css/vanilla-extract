@@ -2525,7 +2525,9 @@ describe('transformCss', () => {
       .testClass {
         opacity: 1;
         top: 100%;
-        @starting-style {
+      }
+      @starting-style {
+        .testClass {
           opacity: 0;
           top: 50%;
         }
@@ -2563,7 +2565,9 @@ describe('transformCss', () => {
       @media screen and (min-width: 700px) {
         .testClass {
           top: 0;
-          @starting-style {
+        }
+        @starting-style {
+          .testClass {
             top: 100%;
           }
         }
@@ -2597,7 +2601,9 @@ describe('transformCss', () => {
       @container sidebar (min-width: 700px) {
         .testClass {
           top: 0;
-          @starting-style {
+        }
+        @starting-style {
+          .testClass {
             top: 100%;
           }
         }
@@ -2632,7 +2638,9 @@ describe('transformCss', () => {
       @layer mock-layer {
         .testClass {
           top: 0;
-          @starting-style {
+        }
+        @starting-style {
+          .testClass {
             top: 100%;
           }
         }
@@ -2665,7 +2673,9 @@ describe('transformCss', () => {
     ).toMatchInlineSnapshot(`
       .testClass:hover {
         top: 0;
-        @starting-style {
+      }
+      @starting-style {
+        .testClass:hover {
           top: 100%;
         }
       }
@@ -2698,7 +2708,9 @@ describe('transformCss', () => {
       @supports (display: grid) {
         .testClass {
           top: 0;
-          @starting-style {
+        }
+        @starting-style {
+          .testClass {
             top: 100%;
           }
         }
@@ -2706,7 +2718,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should process both simple pseudos and selectors inside @starting-style', () => {
+  it('should handle simple pseudos and selectors inside @starting-style', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -2716,6 +2728,7 @@ describe('transformCss', () => {
             type: 'local',
             selector: 'testClass',
             rule: {
+              color: 'orange',
               '@starting-style': {
                 color: 'green',
                 ':hover': {
@@ -2725,7 +2738,7 @@ describe('transformCss', () => {
                   backgroundColor: 'blue',
                 },
                 selectors: {
-                  '&.active': {
+                  '.active &': {
                     color: 'purple',
                   },
                   '& + &': {
@@ -2739,20 +2752,83 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       .testClass {
-        @starting-style {
+        color: orange;
+      }
+      @starting-style {
+        .testClass {
           color: green;
-          :hover {
-            color: red;
-          }
-          :focus {
-            background-color: blue;
-          }
-          selectors {
-            &.active {
-              color: purple;
-            }
-            & + & {
-              margin-left: 10px;
+        }
+        .testClass:hover {
+          color: red;
+        }
+        .testClass:focus {
+          background-color: blue;
+        }
+        .active .testClass {
+          color: purple;
+        }
+        .testClass + .testClass {
+          margin-left: 10px;
+        }
+      }
+    `);
+  });
+
+  it('should handle many at-rules with an inner starting-style', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: 'orange',
+              '@media': {
+                'screen and (min-width: 700px)': {
+                  '@container': {
+                    'sidebar (min-width: 700px)': {
+                      '@supports': {
+                        '(display: grid)': {
+                          '@starting-style': {
+                            color: 'green',
+                            ':hover': {
+                              color: 'red',
+                            },
+                            selectors: {
+                              '& + &': {
+                                marginLeft: '10px',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        color: orange;
+      }
+      @media screen and (min-width: 700px) {
+        @container sidebar (min-width: 700px) {
+          @supports (display: grid) {
+            @starting-style {
+              .testClass {
+                color: green;
+              }
+              .testClass:hover {
+                color: red;
+              }
+              .testClass + .testClass {
+                margin-left: 10px;
+              }
             }
           }
         }
@@ -2760,6 +2836,8 @@ describe('transformCss', () => {
     `);
   });
 
+  // BUG: This is a long-standing bug with all at-rules, not just starting-style. This should result
+  // in a runtime error as well as a type error.
   it('should not process simple pseudos and selectors inside @starting-style for non-local root types', () => {
     expect(
       transformCss({
@@ -2770,8 +2848,10 @@ describe('transformCss', () => {
             type: 'global',
             selector: '.globalClass',
             rule: {
+              color: 'orange',
               '@starting-style': {
                 color: 'green',
+                // @ts-expect-error
                 ':hover': {
                   color: 'red',
                 },
@@ -2779,7 +2859,7 @@ describe('transformCss', () => {
                   backgroundColor: 'blue',
                 },
                 selectors: {
-                  '&.active': {
+                  '.active &': {
                     color: 'purple',
                   },
                 },
@@ -2790,19 +2870,11 @@ describe('transformCss', () => {
       }).join('\n'),
     ).toMatchInlineSnapshot(`
       .globalClass {
-        @starting-style {
+        color: orange;
+      }
+      @starting-style {
+        .globalClass {
           color: green;
-          :hover {
-            color: red;
-          }
-          :focus {
-            background-color: blue;
-          }
-          selectors {
-            &.active {
-              color: purple;
-            }
-          }
         }
       }
     `);

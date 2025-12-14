@@ -101,6 +101,7 @@ const specialKeys = [
   '@media',
   '@supports',
   '@container',
+  '@starting-style',
   'selectors',
 ];
 
@@ -410,8 +411,8 @@ class Stylesheet {
         conditions,
       );
       this.transformStartingStyle(
-        root,
-        selectorRule!['@starting-style'],
+        selectorRoot,
+        selectorRule['@starting-style'],
         conditions,
       );
     });
@@ -621,17 +622,19 @@ class Stylesheet {
     parentConditions: Array<string> = [],
   ) {
     if (rules) {
-      // Check if there are any nested at-rule keys inside this block.
-      // The presence of any key starting with '@' indicates nested queries,
-      // which are not allowed for @starting-style.
       const nestedAtRuleKey = Object.keys(rules).find((key) =>
         key.startsWith('@'),
       );
+
       if (nestedAtRuleKey) {
         throw new Error(
           `Nested at-rules (e.g. "${nestedAtRuleKey}") are not allowed inside @starting-style.`,
         );
       }
+
+      this.currConditionalRuleset?.addConditionPrecedence(parentConditions, [
+        '@starting-style',
+      ]);
 
       const conditions = [...parentConditions, '@starting-style'];
 
@@ -643,7 +646,6 @@ class Stylesheet {
         conditions,
       );
 
-      // Process any simple pseudos or selectors associated with this style.
       if (root.type === 'local') {
         this.transformSimplePseudos(root, rules, conditions);
         this.transformSelectors(root, rules, conditions);
