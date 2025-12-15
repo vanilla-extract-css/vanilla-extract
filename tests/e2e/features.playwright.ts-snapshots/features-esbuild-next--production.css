@@ -43,9 +43,6 @@ body ._1o6ek50a {
 }
 ._1o6ek50b {
   background-color: black;
-  @starting-style {
-    background-color: white;
-  }
 }
 @media screen and (min-width: 700px) {
   ._1o6ek500 {
@@ -53,5 +50,10 @@ body ._1o6ek50a {
   }
   ._1o6ek500:after {
     content: "Above 700px";
+  }
+}
+@starting-style {
+  ._1o6ek50b {
+    background-color: white;
   }
 }

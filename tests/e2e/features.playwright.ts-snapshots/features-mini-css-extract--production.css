@@ -43,9 +43,6 @@ body ._87f2rua {
 }
 ._87f2rub {
   background-color: black;
-  @starting-style {
-    background-color: white;
-  }
 }
 @media screen and (min-width: 700px) {
   ._87f2ru0 {
@@ -53,5 +50,10 @@ body ._87f2rua {
   }
   ._87f2ru0:after {
     content: "Above 700px";
+  }
+}
+@starting-style {
+  ._87f2rub {
+    background-color: white;
   }
 }

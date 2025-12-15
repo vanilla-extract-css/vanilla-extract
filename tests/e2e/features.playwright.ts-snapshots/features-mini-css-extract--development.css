@@ -43,9 +43,6 @@ body .features_styleVariantsCompositionInSelector_variant__87f2rua {
 }
 .features_styleWithStartingStyle__87f2rub {
   background-color: black;
-  @starting-style {
-    background-color: white;
-  }
 }
 @media screen and (min-width: 700px) {
   .features_mergedStyle__87f2ru0 {
@@ -53,5 +50,10 @@ body .features_styleVariantsCompositionInSelector_variant__87f2rua {
   }
   .features_mergedStyle__87f2ru0:after {
     content: "Above 700px";
+  }
+}
+@starting-style {
+  .features_styleWithStartingStyle__87f2rub {
+    background-color: white;
   }
 }
