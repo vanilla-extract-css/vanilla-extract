@@ -46,7 +46,7 @@ export type StartingStyle<StyleType> = {
   '@starting-style'?: Omit<StyleType, '@starting-style'>;
 };
 
-interface AllQueries<StyleType>
+export interface AllQueries<StyleType>
   extends MediaQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
