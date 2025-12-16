@@ -85,7 +85,7 @@ function composeStylesIntoSet(
   }
 }
 
-export function dudupeAndJoinClassList(classNames: Array<ClassNames>) {
+export function dedupeAndJoinClassList(classNames: Array<ClassNames>) {
   const set: Set<string> = new Set();
 
   composeStylesIntoSet(set, ...classNames);
