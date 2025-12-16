@@ -14,4 +14,4 @@ export const styleWithStartingStyle = style({
     backgroundColor: 'white',
   },
 });
-``
+```
