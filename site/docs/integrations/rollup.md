@@ -112,7 +112,5 @@ vanillaExtractPlugin({
 });
 ```
 
-| Option        | Type      | Default        | Description                                                                                                                       |
-| :------------ | :-------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| **name**      | `string`  | `'bundle.css'` | Name the bundled CSS. [output.assetFilenames](https://rollupjs.org/configuration-options/#output-assetfilenames) can affect this. |
-| **sourcemap** | `boolean` | `false`        | Set to `true` to also output `.css.map` file.                                                                                     |
+- `name`: Default `'bundle.css'`. Name the bundled CSS. [`output.assetFilenames`](https://rollupjs.org/configuration-options/#output-assetfilenames) can affect this.
+- `sourcemap`: Default `false`. Set to `true` to also output `.css.map` file.
