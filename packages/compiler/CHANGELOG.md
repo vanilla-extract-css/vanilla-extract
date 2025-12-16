@@ -1,5 +1,15 @@
 # @vanilla-extract/compiler
 
+## 0.3.4
+
+### Patch Changes
+
+- [#1665](https://github.com/vanilla-extract-css/vanilla-extract/pull/1665) [`352fc19`](https://github.com/vanilla-extract-css/vanilla-extract/commit/352fc19169e5f0233f8135842857399ccd46727d) Thanks [@askoufis](https://github.com/askoufis)! - Pass through `viteConfig.build.assetsInlineLimit` to the compiler's `vite` server
+
+- Updated dependencies [[`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704), [`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a), [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a), [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea)]:
+  - @vanilla-extract/integration@8.0.7
+  - @vanilla-extract/css@1.18.0
+
 ## 0.3.3
 
 ### Patch Changes

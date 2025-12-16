@@ -1,5 +1,12 @@
 # @vanilla-extract/next-plugin
 
+## 2.4.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.25
+
 ## 2.4.16
 
 ### Patch Changes
