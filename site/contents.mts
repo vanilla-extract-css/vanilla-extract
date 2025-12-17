@@ -1,4 +1,4 @@
-const contents = [
+export const contents = [
   {
     group: 'overview',
     label: 'Overview',
@@ -63,5 +63,3 @@ const contents = [
     ],
   },
 ];
-
-module.exports = contents;
