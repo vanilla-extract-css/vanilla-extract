@@ -31,7 +31,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build && node ./site/makeDocsManifest
+        run: pnpm build && pnpm --filter "./site" generate:docs-manifest
 
       - name: Lint
         run: pnpm lint

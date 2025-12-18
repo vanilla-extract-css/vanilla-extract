@@ -81,7 +81,7 @@ const Header = () => (
       right={0}
       bottom={0}
       zIndex={-1}
-      background={{ lightMode: 'teal100', darkMode: 'gray900' }}
+      background={{ lightMode: 'teal100', darkMode: 'zinc900' }}
       className={styles.headerBg}
     />
     <ReactRouterLink
@@ -150,7 +150,7 @@ const PrimaryNav = ({
       position="fixed"
       background={{
         lightMode: 'white',
-        darkMode: 'gray900',
+        darkMode: 'zinc900',
       }}
       zIndex={1}
       pointerEvents={open ? undefined : { mobile: 'none', desktop: 'auto' }}

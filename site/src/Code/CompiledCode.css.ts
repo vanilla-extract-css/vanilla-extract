@@ -27,7 +27,7 @@ export const root = style([
     },
     selectors: {
       [`.${darkMode} &::before`]: {
-        background: fallbackVar(darkModeBg, vars.palette.gray900),
+        background: fallbackVar(darkModeBg, vars.palette.zinc900),
       },
     },
   },
@@ -36,7 +36,7 @@ export const root = style([
 const backgroundColor = createVar();
 export const fileNameFocus = style({
   vars: {
-    [backgroundColor]: vars.palette.coolGray900,
+    [backgroundColor]: vars.palette.gray900,
   },
   outline: 'none',
   ':focus-visible': {
@@ -45,7 +45,7 @@ export const fileNameFocus = style({
   selectors: {
     [`.${darkMode} &:focus-visible`]: {
       vars: {
-        [backgroundColor]: vars.palette.gray900,
+        [backgroundColor]: vars.palette.zinc900,
       },
     },
   },

@@ -17,7 +17,7 @@ const themeVars = createThemeContract({
 
 const lightVars = assignVars(themeVars, {
   base: vars.palette.blue800,
-  subtle: vars.palette.coolGray400,
+  subtle: vars.palette.gray400,
   blue: vars.palette.blue600,
   green: vars.palette.green600,
   pink: vars.palette.pink600,
@@ -25,7 +25,7 @@ const lightVars = assignVars(themeVars, {
 
 const darkVars = assignVars(themeVars, {
   base: vars.palette.white,
-  subtle: vars.palette.gray400,
+  subtle: vars.palette.zinc400,
   blue: vars.palette.blue300,
   green: vars.palette.green300,
   pink: vars.palette.pink400,

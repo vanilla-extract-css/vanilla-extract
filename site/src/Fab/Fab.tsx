@@ -13,7 +13,7 @@ export const Fab = ({
     <Box
       component="button"
       position="relative"
-      background={{ lightMode: 'white', darkMode: 'gray300' }}
+      background={{ lightMode: 'white', darkMode: 'zinc300' }}
       borderRadius="full"
       zIndex={0}
       cursor="pointer"
@@ -22,17 +22,17 @@ export const Fab = ({
     >
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box

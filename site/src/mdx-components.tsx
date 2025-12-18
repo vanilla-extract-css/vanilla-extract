@@ -80,7 +80,7 @@ const A = ({
       highlightOnFocus={!isInlineCodeLink}
       className={
         isInlineCodeLink
-          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'gray200' } })
+          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'zinc200' } })
           : undefined
       }
     />

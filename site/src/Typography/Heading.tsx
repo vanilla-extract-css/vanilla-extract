@@ -41,7 +41,7 @@ export const useHeadingStyles = (
     branded ? styles.font.brand : styles.font.heading,
     sprinkles({
       textAlign: align,
-      color: { lightMode: 'coolGray900', darkMode: 'gray100' },
+      color: { lightMode: 'gray900', darkMode: 'zinc100' },
     }),
     styles.heading[level].trimmed,
   );

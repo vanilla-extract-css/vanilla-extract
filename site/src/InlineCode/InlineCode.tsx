@@ -10,7 +10,7 @@ export default ({ children }: InlineCodeProps) => {
   return (
     <Box
       component="code"
-      color={{ lightMode: 'pink700', darkMode: 'gray200' }}
+      color={{ lightMode: 'pink700', darkMode: 'zinc200' }}
       display="inline-block"
       position="relative"
       paddingX="small"

@@ -20,7 +20,7 @@ export const code = style({
   },
   selectors: {
     [`.${darkMode} &::before`]: {
-      background: vars.palette.gray800,
+      background: vars.palette.zinc800,
     },
     [`a > &`]: {
       textDecoration: 'underline 0.05em',

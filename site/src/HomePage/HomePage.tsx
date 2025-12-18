@@ -26,7 +26,7 @@ const InstallPrompt = () => {
       padding="large"
       background={{
         lightMode: 'teal200muted',
-        darkMode: 'gray800',
+        darkMode: 'zinc800',
       }}
     >
       <Box display={{ mobile: 'none', tablet: 'block' }}>
@@ -55,7 +55,7 @@ export const HomePage = () => {
         alignItems="center"
         justifyContent="center"
         style={{ height: 600, width: 1200, gap: 70 }}
-        background={{ lightMode: 'teal200', darkMode: 'gray700' }}
+        background={{ lightMode: 'teal200', darkMode: 'zinc700' }}
       >
         <Box style={{ marginTop: '-45px' }}>
           <Logo height={280} />
@@ -87,7 +87,7 @@ export const HomePage = () => {
         paddingTop={{ mobile: 'large', tablet: 'xxlarge' }}
         paddingBottom="xxxlarge"
         marginBottom="xxxlarge"
-        background={{ lightMode: 'teal100', darkMode: 'gray900' }}
+        background={{ lightMode: 'teal100', darkMode: 'zinc900' }}
         className={styles.skewedContainer}
       >
         <ContentBlock
@@ -149,7 +149,7 @@ export const HomePage = () => {
                     >
                       <Box style={{ maxWidth: 480 }}>
                         <Text align={{ mobile: 'center', desktop: 'left' }}>
-                          <Box color={{ darkMode: 'gray300' }}>
+                          <Box color={{ darkMode: 'zinc300' }}>
                             Use TypeScript as your preprocessor. Write
                             type&#8209;safe, locally scoped classes, variables
                             and themes, then generate static
@@ -305,19 +305,19 @@ export const HomePage = () => {
         <Box
           position="relative"
           paddingY="xxxlarge"
-          background={{ lightMode: 'blue100', darkMode: 'gray900' }}
+          background={{ lightMode: 'blue100', darkMode: 'zinc900' }}
           className={styles.skewedContainerSecondary}
         >
           <ContentBlock withGutters size="standard">
             <Stack space="xxlarge">
               <Heading level="3" align="center">
-                <Box color={{ lightMode: 'blue900', darkMode: 'gray50' }}>
+                <Box color={{ lightMode: 'blue900', darkMode: 'zinc50' }}>
                   Leverage the full power of CSS&nbsp;&amp;&nbsp;TypeScript
                 </Box>
               </Heading>
               <Box paddingX="large">
                 <Text align="center" color="neutral">
-                  <Box color={{ lightMode: 'blue800', darkMode: 'gray400' }}>
+                  <Box color={{ lightMode: 'blue800', darkMode: 'zinc400' }}>
                     Write maintainable CSS at scale without sacrificing platform
                     features. Variables, selectors, pseudo&#8209;classes,
                     media/feature/container queries, keyframes, font&#8209;face
@@ -525,7 +525,7 @@ export const HomePage = () => {
           <Box
             position="relative"
             paddingY="xxxlarge"
-            background={{ lightMode: 'blue100', darkMode: 'gray900' }}
+            background={{ lightMode: 'blue100', darkMode: 'zinc900' }}
             className={styles.skewedContainerSecondary}
           >
             <ContentBlock size="xxlarge" withGutters>
