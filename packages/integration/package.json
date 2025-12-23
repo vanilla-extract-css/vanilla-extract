@@ -27,6 +27,7 @@
     "mlly": "^1.4.2"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.20.5"
+    "@types/babel__core": "^7.20.5",
+    "@fixtures/sprinkles": "workspace:*"
   }
 }
