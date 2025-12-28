@@ -32,12 +32,12 @@ export const ButtonLink = ({
       borderRadius: 'large',
       ...(variant === 'solid'
         ? {
-            background: { lightMode: 'coolGray900', darkMode: 'gray100' },
-            color: { lightMode: 'coolGray50', darkMode: 'gray900' },
+            background: { lightMode: 'gray900', darkMode: 'zinc100' },
+            color: { lightMode: 'gray50', darkMode: 'zinc900' },
           }
         : {}),
       ...(variant === 'transparent'
-        ? { color: { lightMode: 'coolGray900', darkMode: 'gray100' } }
+        ? { color: { lightMode: 'gray900', darkMode: 'zinc100' } }
         : {}),
     }),
     styles.button,
