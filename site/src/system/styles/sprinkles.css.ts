@@ -1,4 +1,3 @@
-import mapValues from 'lodash/mapValues';
 import {
   defineProperties,
   createSprinkles,
@@ -9,6 +8,7 @@ import {
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';
 import { vars } from '../../themes.css';
+import { entries, fromEntries } from '../../objectUtils';
 
 const space = vars.spacing;
 export type Space = keyof typeof space;
@@ -28,10 +28,15 @@ const margins = {
   ...negativeSpace,
 };
 
-const responsiveProperties = defineProperties({
-  conditions: mapValues(breakpoints, (bp) =>
+const conditions = fromEntries(
+  entries(breakpoints).map(([key, bp]) => [
+    key,
     bp === 0 ? {} : { '@media': `screen and (min-width: ${bp}px)` },
-  ),
+  ]),
+);
+
+const responsiveProperties = defineProperties({
+  conditions,
   defaultCondition: 'mobile',
   properties: {
     position: ['absolute', 'relative', 'fixed'],

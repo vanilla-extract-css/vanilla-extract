@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import throttle from 'lodash/throttle';
+import { throttle } from 'throttle-debounce';
 
 let activeHash: string | null = null;
 const listeners = new Set<(activeHash: string | null) => void>();
@@ -38,7 +38,9 @@ export const useHeadingRouteUpdates = (headingHashes: Array<string>) => {
 
   useEffect(() => {
     const onScroll = throttle(
+      50,
       () => {
+        console.log('func');
         const offset = window.scrollY + window.innerHeight;
         const height = document.documentElement.offsetHeight;
 
@@ -73,8 +75,7 @@ export const useHeadingRouteUpdates = (headingHashes: Array<string>) => {
           updateActiveRoute(results[0].hash);
         }
       },
-      50,
-      { leading: false },
+      { noLeading: true },
     );
 
     window.addEventListener('scroll', onScroll);

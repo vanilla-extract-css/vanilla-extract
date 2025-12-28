@@ -85,7 +85,7 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: join(__dirname, 'src/assets') }],
       }),
-      ...(process.env.CI !== 'true' && isProduction
+      ...(true
         ? [
             new BundleAnalyzerPlugin({
               analyzerMode: 'static',

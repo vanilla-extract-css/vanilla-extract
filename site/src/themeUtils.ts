@@ -1,8 +1,7 @@
-import omit from 'lodash/omit';
-import isEqual from 'lodash/isEqual';
+import { dequal as isEqual } from 'dequal';
 import type { StyleRule } from '@vanilla-extract/css';
 import type { Properties } from 'csstype';
-import mapValues from 'lodash/mapValues';
+import { entries, fromEntries } from './objectUtils';
 
 export const breakpoints = {
   mobile: 0,
@@ -13,9 +12,13 @@ export const breakpoints = {
 export type Breakpoint = keyof typeof breakpoints;
 type CSSProps = Omit<StyleRule, '@media' | '@supports'>;
 
-export const queries = mapValues(
-  omit(breakpoints, 'mobile'),
-  (bp) => `screen and (min-width: ${bp}px)`,
+const { mobile: _, ...nonMobileBreakpoints } = breakpoints;
+
+export const queries = fromEntries(
+  entries(nonMobileBreakpoints).map(([key, bp]) => [
+    key,
+    `screen and (min-width: ${bp}px)`,
+  ]),
 );
 
 const makeMediaQuery =
@@ -42,18 +45,16 @@ export const responsiveStyle = ({
   tablet,
   desktop,
 }: ResponsiveStyle): StyleRule => {
-  const mobileStyles = omit(mobile, '@media');
+  const tabletStyles = !tablet || isEqual(tablet, mobile) ? null : tablet;
 
-  const tabletStyles = !tablet || isEqual(tablet, mobileStyles) ? null : tablet;
-
-  const stylesBelowDesktop = tabletStyles || mobileStyles;
+  const stylesBelowDesktop = tabletStyles || mobile;
   const desktopStyles =
     !desktop || isEqual(desktop, stylesBelowDesktop) ? null : desktop;
 
   const hasMediaQueries = tabletStyles || desktopStyles;
 
   return {
-    ...mobileStyles,
+    ...mobile,
     ...(hasMediaQueries
       ? {
           '@media': {

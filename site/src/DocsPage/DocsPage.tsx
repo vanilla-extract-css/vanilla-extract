@@ -20,7 +20,6 @@ import * as styles from './DocsPage.css';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 
-import mapKeys from 'lodash/mapKeys';
 import { SearchInput } from '../SearchInput/SearchInput';
 
 interface DocsRouteProps {
@@ -311,11 +310,15 @@ const PrimaryNav = ({
   );
 };
 
-const headingForRoute = mapKeys(pages, (d) => {
-  return d.route.endsWith('/')
-    ? d.route.slice(0, d.route.lastIndexOf('/'))
-    : d.route;
+const headingForRouteEntries = pages.map((page) => {
+  const heading = page.route.endsWith('/')
+    ? page.route.slice(0, page.route.lastIndexOf('/'))
+    : page.route;
+
+  return [heading, page] as const;
 });
+
+const headingForRoute = Object.fromEntries(headingForRouteEntries);
 
 const SecondaryNav = ({
   pathname,
