@@ -15,5 +15,9 @@ export { hash } from './hash';
 export { addFileScope, normalizePath } from './addFileScope';
 export { serializeCss, deserializeCss } from './serialize';
 export { transformSync, transform } from './transform';
-export { cssFileFilter, virtualCssFileFilter } from './filters';
+export {
+  cssFileFilter,
+  virtualCssFileFilter,
+  isSourceVanillaFile,
+} from './filters';
 export type { IdentifierOption } from './types';
