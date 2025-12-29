@@ -26,12 +26,7 @@ export function addFileScope({
 
   const { hasESM, isMixed } = detectSyntax(source);
 
-  if (source.includes('@vanilla-extract/css/fileScope')) {
-    source = source.replace(
-      /setFileScope\(((\n|.)*?)\)/,
-      `setFileScope("${normalizedPath}", "${packageName}")`,
-    );
-  } else {
+  if (!source.includes('@vanilla-extract/css/fileScope')) {
     if (hasESM && !isMixed) {
       source = dedent(`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
