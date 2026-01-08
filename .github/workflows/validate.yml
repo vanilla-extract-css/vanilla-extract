@@ -12,8 +12,8 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['', '24']
-    name: Lint & Test (${{ (matrix.node && matrix.node != '24') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
+        node: ['', '22']
+    name: Lint & Test (${{ (matrix.node && matrix.node != '22') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -35,7 +35,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build && node ./site/makeDocsManifest
+        run: pnpm build && pnpm --filter "./site" generate:docs-manifest
 
       - name: Lint
         run: pnpm lint
@@ -47,8 +47,8 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['', '24']
-    name: Windows Tests (${{ (matrix.node && matrix.node != '24') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
+        node: ['', '22']
+    name: Windows Tests (${{ (matrix.node && matrix.node != '22') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: windows-latest
     env:
       CI: true

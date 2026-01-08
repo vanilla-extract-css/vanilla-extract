@@ -9,6 +9,7 @@ export default `
     <div id="${testNodes.compositionOnly}" class="${styles.compositionOnly}">Composition only</div>
     <div id="${testNodes.styleCompositionInSelector}" class="${styles.styleCompositionInSelector}">Style composition in selector</div>
     <div id="${testNodes.styleVariantsCompositionInSelector}" class="${styles.styleVariantsCompositionInSelector.variant}">Style variants composition in selector</div>
+    <div id="${testNodes.styleWithStartingStyle}" class="${styles.styleWithStartingStyle}">Style with @starting-style rule</div>
   `;
 
 // @ts-expect-error Vite env not defined
