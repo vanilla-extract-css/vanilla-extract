@@ -15,41 +15,46 @@ npm install --save-dev @vanilla-extract/next-plugin
 
 ## Setup
 
-If you don't have a `next.config.js` file in the root of your project, create one. Add the plugin to your `next.config.js` file.
+If you don't have a `next.config.js` or `next.config.ts` file in the root of your project, create one. Add the plugin to your Next.js config file.
 
-```js
-const {
-  createVanillaExtractPlugin
-} = require('@vanilla-extract/next-plugin');
+```ts
+// next.config.ts
+import type { NextConfig } from 'next';
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 const withVanillaExtract = createVanillaExtractPlugin();
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig: NextConfig = {};
 
-module.exports = withVanillaExtract(nextConfig);
+export default withVanillaExtract(nextConfig);
 ```
 
 If required, this plugin can be composed with other plugins.
 
-```js
-const {
-  createVanillaExtractPlugin
-} = require('@vanilla-extract/next-plugin');
+```ts
+// next.config.ts
+import type { NextConfig } from 'next';
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+import createMDX from '@next/mdx';
+
 const withVanillaExtract = createVanillaExtractPlugin();
 
-const withMDX = require('@next/mdx')({
+const withMDX = createMDX({
   extension: /\.mdx$/
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig: NextConfig = {};
 
-module.exports = withVanillaExtract(withMDX(nextConfig));
+export default withVanillaExtract(withMDX(nextConfig));
 ```
+
+## Version Support
+
+- **Next.js >= 16.x**: Both Turbopack and Webpack are supported
+- **Next.js <= 15.x**: Webpack-only support
 
 ## Configuration
 
-The plugin accepts the following as optional configuration:
+The plugin accepts the following as optional configuration, passed to `createVanillaExtractPlugin`.
 
 ### identifiers
 
@@ -60,12 +65,53 @@ Different formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc)
 - A custom identifier function takes an object parameter with properties `hash`, `filePath`, `debugId`, and `packageName`, and returns a customized identifier. e.g.
 
 ```ts
+// next.config.ts
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+
 const withVanillaExtract = createVanillaExtractPlugin({
   identifiers: ({ hash }) => `prefix_${hash}`
 });
 ```
 
 Each integration will set a default value based on the configuration options passed to the bundler.
+
+### turbopackMode
+
+You can control Turbopack autoconfiguration using `turbopackMode`:
+
+- `auto` (default): enable Turbopack config only when Next >= 16.0.0
+- `on`: force-enable Turbopack config
+- `off`: never configure Turbopack (Webpack-only)
+
+For example, to disable Turbopack integration explicitly:
+
+```ts
+// next.config.ts
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+
+const withVanillaExtract = createVanillaExtractPlugin({
+  turbopackMode: 'off'
+});
+
+export default withVanillaExtract({});
+```
+
+If you already manage `turbopack.rules` yourself for the same file globs, the plugin may throw to avoid rule conflicts. In that case, set `turbopackMode: 'off'` and apply your Turbopack config manually.
+
+### turbopackGlob
+
+By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. You can override this via `turbopackGlob`:
+
+```ts
+// next.config.ts
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+
+const withVanillaExtract = createVanillaExtractPlugin({
+  turbopackGlob: ['**/*.css.ts', '**/*.css.tsx']
+});
+
+export default withVanillaExtract({});
+```
 
 ## Transpiling Vanilla Extract-dependent Libraries
 
@@ -83,20 +129,18 @@ export default function App() {
 }
 ```
 
-```js
-// next.config.js
-const {
-  createVanillaExtractPlugin
-} = require('@vanilla-extract/next-plugin');
+```ts
+// next.config.ts
+import type { NextConfig } from 'next';
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 const withVanillaExtract = createVanillaExtractPlugin();
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   transpilePackages: ['@company/design-system']
 };
 
 // Next.js Vanilla Extract integration will now compile @company/design-system styles
-module.exports = withVanillaExtract(nextConfig);
+export default withVanillaExtract(nextConfig);
 ```
 
 [`transpilepackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages

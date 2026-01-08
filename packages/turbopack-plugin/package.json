@@ -1,0 +1,35 @@
+{
+  "name": "@vanilla-extract/turbopack-plugin",
+  "version": "0.0.0",
+  "description": "Turbopack loader for vanilla-extract",
+  "main": "dist/vanilla-extract-turbopack-plugin.cjs.js",
+  "module": "dist/vanilla-extract-turbopack-plugin.esm.js",
+  "types": "dist/vanilla-extract-turbopack-plugin.cjs.d.ts",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/turbopack-plugin"
+  },
+  "author": "SEEK",
+  "license": "MIT",
+  "dependencies": {
+    "@swc/core": "^1.13.5",
+    "@vanilla-extract/compiler": "workspace:^",
+    "@vanilla-extract/integration": "workspace:^"
+  },
+  "devDependencies": {
+    "next": "12.3.4",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0"
+  },
+  "peerDependencies": {
+    "next": ">=12.1.7"
+  }
+}
