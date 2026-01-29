@@ -1,5 +1,27 @@
 # @vanilla-extract/integration
 
+## 8.0.7
+
+### Patch Changes
+
+- [#1648](https://github.com/vanilla-extract-css/vanilla-extract/pull/1648) [`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704) Thanks [@sallustfire](https://github.com/sallustfire)! - `serializeCss|deserializeCss`: Use `base64url` encoding instead of `base64` to avoid errors in virtual file paths
+
+- Updated dependencies [[`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a), [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a), [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea)]:
+  - @vanilla-extract/css@1.18.0
+
+## 8.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd)]:
+  - @vanilla-extract/css@1.17.5
+
+## 8.0.5
+
+### Patch Changes
+
+- [#1653](https://github.com/vanilla-extract-css/vanilla-extract/pull/1653) [`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1) Thanks [@askoufis](https://github.com/askoufis)! - Update `esbuild` dependency range to include `^0.26.0` and `^0.27.0`
+
 ## 8.0.4
 
 ### Patch Changes

@@ -22,7 +22,7 @@ export class ConditionalRuleset {
    *
    * e.g. mobile -> tablet, desktop
    */
-  precedenceLookup: Map<Query, Set<String>>;
+  precedenceLookup: Map<Query, Set<string>>;
 
   constructor() {
     this.ruleset = new Map();

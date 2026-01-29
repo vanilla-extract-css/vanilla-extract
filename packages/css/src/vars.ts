@@ -38,11 +38,11 @@ const buildPropertyRule = ({
   ...(initialValue != null ? { initialValue } : {}),
 });
 
+export function createVar(debugId?: string): CSSVarFunction;
 export function createVar(
   declaration: VarDeclaration,
   debugId?: string,
 ): CSSVarFunction;
-export function createVar(debugId?: string): CSSVarFunction;
 export function createVar(
   debugIdOrDeclaration?: string | VarDeclaration,
   debugId?: string,
@@ -165,7 +165,7 @@ export function createGlobalThemeContract(
         : (value as string);
 
     const varName =
-      typeof rawVarName === 'string' ? rawVarName.replace(/^\-\-/, '') : null;
+      typeof rawVarName === 'string' ? rawVarName.replace(/^--/, '') : null;
 
     if (
       typeof varName !== 'string' ||

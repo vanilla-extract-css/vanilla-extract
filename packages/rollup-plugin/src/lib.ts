@@ -1,6 +1,7 @@
 import { cssFileFilter } from '@vanilla-extract/integration';
 import MagicString, { Bundle as MagicStringBundle } from 'magic-string';
 import type { ModuleInfo, PluginContext } from 'rollup';
+import { posix } from 'path';
 
 /** Generate a CSS bundle from Rollup context */
 export function generateCssBundle(
@@ -120,4 +121,14 @@ export function stripSideEffectImportsMatching(
     output = output.replace(match[0], '');
   }
   return output;
+}
+
+export async function tryGetPackageName(cwd: string): Promise<string | null> {
+  try {
+    const packageJson = require(posix.join(cwd, 'package.json'));
+
+    return packageJson?.name || null;
+  } catch {
+    return null;
+  }
 }

@@ -554,6 +554,303 @@ export { altTheme, responsiveTheme, theme, vars };
 ]
 `;
 
+exports[`rollup-plugin Rollup settings should build with preserveModules and inject filescopes 1`] = `
+[
+  [
+    "src/index.js",
+    "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
+import { vars, altTheme, theme, responsiveTheme } from './themes.css.js';
+import { container, button, opacity } from './styles.css.js';
+import { shadow } from './shared.css.js';
+import testNodes from '../test-nodes.json.js';
+
+const inlineTheme = assignInlineVars(vars, {
+  colors: {
+    backgroundColor: "orange",
+    text: "black"
+  },
+  space: {
+    1: "4px",
+    2: "8px",
+    3: "12px"
+  }
+});
+function render() {
+  document.body.innerHTML = \`
+  <div id="\${testNodes.root}" class="\${shadow}"> 
+    Root theme
+    <div id="\${testNodes.rootContainer}" class="\${container}">
+      <button id="\${testNodes.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
+        Alt theme
+        <div id="\${testNodes.altContainer}" class="\${container}">
+          <button id="\${testNodes.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
+            Back to root theme
+            <div id="\${testNodes.nestedRootContainer}" class="\${container}">
+              <button id="\${testNodes.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
+              Inline theme
+                <div id="\${testNodes.inlineThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme <span class="{\${opacity["1/4"]}}">button</span></button>
+                  <div>
+                  Dynamic vars
+                    <div id="\${testNodes.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${testNodes.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
+              Responsive theme
+                <div id="\${testNodes.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${testNodes.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+  const dynamicVarsContainer = document.getElementById(
+    testNodes.dynamicVarsContainer
+  );
+  if (!dynamicVarsContainer) {
+    throw new Error("Dynamic vars container not found.");
+  }
+  setElementVars(dynamicVarsContainer, vars, {
+    colors: {
+      backgroundColor: "transparent",
+      text: "papayawhip"
+    },
+    space: {
+      1: "5px",
+      2: "10px",
+      3: "15px"
+    }
+  });
+  setElementVars(dynamicVarsContainer, {
+    [vars.colors.backgroundColor]: "darksalmon"
+  });
+}
+render();
+",
+  ],
+  [
+    "src/shared.css.js",
+    "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+import { style, globalStyle } from '@vanilla-extract/css';
+
+setFileScope("src/shared.css.ts", "@fixtures/themed");
+const shadow = style({
+  boxShadow: "0 0 5px red"
+}, "shadow");
+globalStyle("body", {
+  backgroundColor: "skyblue"
+});
+globalStyle("body, button", {
+  lineHeight: "16px"
+});
+endFileScope();
+
+export { shadow };
+",
+  ],
+  [
+    "src/styles.css.js",
+    "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+import { fontFace, globalFontFace, style, fallbackVar, globalStyle, createVar, styleVariants } from '@vanilla-extract/css';
+import { shadow } from './shared.css.js';
+import { vars, altTheme, theme } from './themes.css.js';
+
+setFileScope("src/styles.css.ts", "@fixtures/themed");
+const impact = fontFace({
+  src: 'local("Impact")'
+}, "impact");
+globalFontFace("MyGlobalComicSans", {
+  src: 'local("Comic Sans MS")'
+});
+const container = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.space[2],
+  padding: vars.space[3],
+  "@media": {
+    "only screen and (min-width: 500px)": {
+      border: \`1px solid \${vars.colors.backgroundColor}\`
+    }
+  }
+}, "container");
+const iDunno = style([{
+  zIndex: 1
+}, {
+  position: "relative"
+}], "iDunno");
+const button = style([{
+  fontFamily: impact,
+  backgroundColor: fallbackVar(vars.colors.backgroundColor, '"THIS FALLBACK VALUE SHOULD NEVER BE USED"'),
+  color: vars.colors.text,
+  borderRadius: "9999px",
+  "@media": {
+    "only screen and (min-width: 500px)": {
+      padding: vars.space[1]
+    },
+    "only screen and (min-width: 1000px)": {
+      padding: vars.space[2]
+    }
+  },
+  selectors: {
+    [\`\${altTheme} \${theme} \${container} &\`]: {
+      fontFamily: "MyGlobalComicSans",
+      outline: "5px solid red"
+    }
+  }
+}, shadow, iDunno], "button");
+globalStyle(\`body \${iDunno}:after\`, {
+  content: "'I am content'"
+});
+const blankVar1 = createVar({
+  syntax: "<number>",
+  inherits: false,
+  initialValue: "0.5"
+}, "blankVar1");
+const blankVar2 = createVar("blankVar2");
+const opacity = styleVariants({
+  "1/2": blankVar1,
+  "1/4": fallbackVar(blankVar1, blankVar2, "0.25")
+}, (value) => ({
+  selectors: {
+    "html &": {
+      opacity: value
+    }
+  }
+}), "opacity");
+endFileScope();
+
+export { button, container, opacity };
+",
+  ],
+  [
+    "src/themes.css.js",
+    "import { setFileScope, endFileScope } from '@vanilla-extract/css/fileScope';
+import { style, createGlobalTheme, createTheme, layer, assignVars } from '@vanilla-extract/css';
+
+setFileScope("src/themes.css.ts", "@fixtures/themed");
+const theme = style({}, "theme");
+const vars = createGlobalTheme(\`:root, \${theme}\`, {
+  colors: {
+    backgroundColor: "blue",
+    text: "white"
+  },
+  space: {
+    1: "4px",
+    2: "8px",
+    3: "12px"
+  }
+});
+const altTheme = createTheme(vars, {
+  colors: {
+    backgroundColor: "green",
+    text: "white"
+  },
+  space: {
+    1: "8px",
+    2: "12px",
+    3: "16px"
+  }
+}, "altTheme");
+const themeLayer = layer("themeLayer");
+const [altTheme2Class, altTheme2Contract] = createTheme({
+  "@layer": themeLayer,
+  colors: {
+    backgroundColor: "green",
+    text: "white"
+  },
+  space: {
+    1: "8px",
+    2: "12px",
+    3: "16px"
+  }
+}, "altTheme2Class");
+createGlobalTheme(":root", altTheme2Contract, {
+  "@layer": "globalThemeLayer",
+  colors: {
+    backgroundColor: "green",
+    text: "white"
+  },
+  space: {
+    1: "8px",
+    2: "12px",
+    3: "16px"
+  }
+});
+const responsiveTheme = style({
+  vars: assignVars(vars, {
+    colors: {
+      backgroundColor: "pink",
+      text: "purple"
+    },
+    space: {
+      1: "6px",
+      2: "12px",
+      3: "18px"
+    }
+  }),
+  "@media": {
+    "screen and (min-width: 768px)": {
+      vars: assignVars(vars.colors, {
+        backgroundColor: "purple",
+        text: "pink"
+      })
+    }
+  }
+}, "responsiveTheme");
+endFileScope();
+
+export { altTheme, altTheme2Class, altTheme2Contract, responsiveTheme, theme, vars };
+",
+  ],
+  [
+    "test-nodes.json.js",
+    "var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
+var testNodes = {
+	root: root,
+	rootContainer: rootContainer,
+	rootButton: rootButton,
+	altContainer: altContainer,
+	altButton: altButton,
+	nestedRootContainer: nestedRootContainer,
+	nestedRootButton: nestedRootButton,
+	inlineThemeContainer: inlineThemeContainer,
+	inlineThemeButton: inlineThemeButton,
+	dynamicVarsContainer: dynamicVarsContainer,
+	dynamicVarsButton: dynamicVarsButton,
+	responsiveThemeContainer: responsiveThemeContainer,
+	responsiveThemeButton: responsiveThemeButton
+};
+
+export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
+",
+  ],
+]
+`;
+
 exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
 [
   [
@@ -570,7 +867,7 @@ exports[`rollup-plugin Rollup settings should build with sourcemaps 1`] = `
   ],
   [
     "src/index.js",
-    "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",
+    "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",
   ],
   [
     "src/index.js.map",
@@ -2162,6 +2459,271 @@ export { altTheme, responsiveTheme, theme, vars };",
     --colors-text__cvta172: pink;
   }
 }",
+  ],
+]
+`;
+
+exports[`rollup-plugin should be compatible with rolldown should build with preserveModules and inject filescopes 1`] = `
+[
+  [
+    "index.js",
+    "import { altTheme, responsiveTheme, theme, vars } from "./themes.css.js";
+import { shadow } from "./shared.css.js";
+import { button, container, opacity } from "./styles.css.js";
+import test_nodes_default from "./test-nodes.js";
+import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
+
+//#region fixtures/themed/src/index.ts
+const inlineTheme = assignInlineVars(vars, {
+	colors: {
+		backgroundColor: "orange",
+		text: "black"
+	},
+	space: {
+		1: "4px",
+		2: "8px",
+		3: "12px"
+	}
+});
+function render() {
+	document.body.innerHTML = \`
+  <div id="\${test_nodes_default.root}" class="\${shadow}"> 
+    Root theme
+    <div id="\${test_nodes_default.rootContainer}" class="\${container}">
+      <button id="\${test_nodes_default.rootButton}" class="\${button}">Main theme button</button>
+      <div class="\${altTheme}"> 
+        Alt theme
+        <div id="\${test_nodes_default.altContainer}" class="\${container}">
+          <button id="\${test_nodes_default.altButton}" class="\${button}">Alt theme button</button>
+          <div class="\${theme}"> 
+            Back to root theme
+            <div id="\${test_nodes_default.nestedRootContainer}" class="\${container}">
+              <button id="\${test_nodes_default.nestedRootButton}" class="\${button}">Main theme button</button>
+            <div style="\${inlineTheme}">
+              Inline theme
+                <div id="\${test_nodes_default.inlineThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.inlineThemeButton}" class="\${button} \${opacity["1/2"]}">Inline theme <span class="{\${opacity["1/4"]}}">button</span></button>
+                  <div>
+                  Dynamic vars
+                    <div id="\${test_nodes_default.dynamicVarsContainer}" class="\${container}">
+                      <button id="\${test_nodes_default.dynamicVarsButton}" class="\${button}">Dynamic vars button</button>
+                  <div class="\${responsiveTheme}">
+              Responsive theme
+                <div id="\${test_nodes_default.responsiveThemeContainer}" class="\${container}">
+                  <button id="\${test_nodes_default.responsiveThemeButton}" class="\${button}">Responsive theme button</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+\`;
+	const dynamicVarsContainer = document.getElementById(test_nodes_default.dynamicVarsContainer);
+	if (!dynamicVarsContainer) throw new Error("Dynamic vars container not found.");
+	setElementVars(dynamicVarsContainer, vars, {
+		colors: {
+			backgroundColor: "transparent",
+			text: "papayawhip"
+		},
+		space: {
+			1: "5px",
+			2: "10px",
+			3: "15px"
+		}
+	});
+	setElementVars(dynamicVarsContainer, { [vars.colors.backgroundColor]: "darksalmon" });
+}
+render();
+
+//#endregion",
+  ],
+  [
+    "shared.css.js",
+    "import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
+import { globalStyle, style } from "@vanilla-extract/css";
+
+//#region fixtures/themed/src/shared.css.ts
+setFileScope("src/shared.css.ts", "@fixtures/themed");
+const shadow = style({ boxShadow: "0 0 5px red" }, "shadow");
+globalStyle("body", { backgroundColor: "skyblue" });
+globalStyle("body, button", { lineHeight: "16px" });
+endFileScope();
+
+//#endregion
+export { shadow };",
+  ],
+  [
+    "styles.css.js",
+    "import { altTheme, theme, vars } from "./themes.css.js";
+import { shadow } from "./shared.css.js";
+import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
+import { createVar, fallbackVar, fontFace, globalFontFace, globalStyle, style, styleVariants } from "@vanilla-extract/css";
+
+//#region fixtures/themed/src/styles.css.ts
+setFileScope("src/styles.css.ts", "@fixtures/themed");
+const impact = fontFace({ src: "local(\\"Impact\\")" }, "impact");
+globalFontFace("MyGlobalComicSans", { src: "local(\\"Comic Sans MS\\")" });
+const container = style({
+	display: "flex",
+	flexDirection: "column",
+	gap: vars.space[2],
+	padding: vars.space[3],
+	"@media": { "only screen and (min-width: 500px)": { border: \`1px solid \${vars.colors.backgroundColor}\` } }
+}, "container");
+const iDunno = style([{ zIndex: 1 }, { position: "relative" }], "iDunno");
+const button = style([
+	{
+		fontFamily: impact,
+		backgroundColor: fallbackVar(vars.colors.backgroundColor, "\\"THIS FALLBACK VALUE SHOULD NEVER BE USED\\""),
+		color: vars.colors.text,
+		borderRadius: "9999px",
+		"@media": {
+			"only screen and (min-width: 500px)": { padding: vars.space[1] },
+			"only screen and (min-width: 1000px)": { padding: vars.space[2] }
+		},
+		selectors: { [\`\${altTheme} \${theme} \${container} &\`]: {
+			fontFamily: "MyGlobalComicSans",
+			outline: "5px solid red"
+		} }
+	},
+	shadow,
+	iDunno
+], "button");
+globalStyle(\`body \${iDunno}:after\`, { content: "'I am content'" });
+const blankVar1 = createVar({
+	syntax: "<number>",
+	inherits: false,
+	initialValue: "0.5"
+}, "blankVar1");
+const blankVar2 = createVar("blankVar2");
+const opacity = styleVariants({
+	"1/2": blankVar1,
+	"1/4": fallbackVar(blankVar1, blankVar2, "0.25")
+}, (value) => ({ selectors: { "html &": { opacity: value } } }), "opacity");
+endFileScope();
+
+//#endregion
+export { button, container, opacity };",
+  ],
+  [
+    "test-nodes.js",
+    "//#region fixtures/themed/test-nodes.json
+var root = "root";
+var rootContainer = "rootContainer";
+var rootButton = "rootButton";
+var altContainer = "altContainer";
+var altButton = "altButton";
+var nestedRootContainer = "nestedRootContainer";
+var nestedRootButton = "nestedRootButton";
+var inlineThemeContainer = "inlineThemeContainer";
+var inlineThemeButton = "inlineThemeButton";
+var dynamicVarsContainer = "dynamicVarsContainer";
+var dynamicVarsButton = "dynamicVarsButton";
+var responsiveThemeContainer = "responsiveThemeContainer";
+var responsiveThemeButton = "responsiveThemeButton";
+var test_nodes_default = {
+	root,
+	rootContainer,
+	rootButton,
+	altContainer,
+	altButton,
+	nestedRootContainer,
+	nestedRootButton,
+	inlineThemeContainer,
+	inlineThemeButton,
+	dynamicVarsContainer,
+	dynamicVarsButton,
+	responsiveThemeContainer,
+	responsiveThemeButton
+};
+
+//#endregion
+export { test_nodes_default as default };",
+  ],
+  [
+    "themes.css.js",
+    "import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
+import { assignVars, createGlobalTheme, createTheme, layer, style } from "@vanilla-extract/css";
+
+//#region fixtures/themed/src/themes.css.ts
+setFileScope("src/themes.css.ts", "@fixtures/themed");
+const theme = style({}, "theme");
+const vars = createGlobalTheme(\`:root, \${theme}\`, {
+	colors: {
+		backgroundColor: "blue",
+		text: "white"
+	},
+	space: {
+		1: "4px",
+		2: "8px",
+		3: "12px"
+	}
+});
+const altTheme = createTheme(vars, {
+	colors: {
+		backgroundColor: "green",
+		text: "white"
+	},
+	space: {
+		1: "8px",
+		2: "12px",
+		3: "16px"
+	}
+}, "altTheme");
+const themeLayer = layer("themeLayer");
+const [altTheme2Class, altTheme2Contract] = createTheme({
+	"@layer": themeLayer,
+	colors: {
+		backgroundColor: "green",
+		text: "white"
+	},
+	space: {
+		1: "8px",
+		2: "12px",
+		3: "16px"
+	}
+}, "altTheme2Class");
+const altTheme3 = createGlobalTheme(":root", altTheme2Contract, {
+	"@layer": "globalThemeLayer",
+	colors: {
+		backgroundColor: "green",
+		text: "white"
+	},
+	space: {
+		1: "8px",
+		2: "12px",
+		3: "16px"
+	}
+});
+const responsiveTheme = style({
+	vars: assignVars(vars, {
+		colors: {
+			backgroundColor: "pink",
+			text: "purple"
+		},
+		space: {
+			1: "6px",
+			2: "12px",
+			3: "18px"
+		}
+	}),
+	"@media": { "screen and (min-width: 768px)": { vars: assignVars(vars.colors, {
+		backgroundColor: "purple",
+		text: "pink"
+	}) } }
+}, "responsiveTheme");
+endFileScope();
+
+//#endregion
+export { altTheme, responsiveTheme, theme, vars };",
   ],
 ]
 `;

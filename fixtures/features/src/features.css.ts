@@ -60,3 +60,10 @@ export const styleVariantsCompositionInSelector = styleVariants({
 globalStyle(`body ${styleVariantsCompositionInSelector.variant}`, {
   fontSize: '24px',
 });
+
+export const styleWithStartingStyle = style({
+  backgroundColor: 'black',
+  '@starting-style': {
+    backgroundColor: 'white',
+  },
+});

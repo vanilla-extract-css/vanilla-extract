@@ -56,6 +56,7 @@ module.exports = [
               loader: 'babel-loader',
               options: {
                 babelrc: true,
+                cacheDirectory: true,
               },
             },
           ],
@@ -125,6 +126,7 @@ module.exports = [
               loader: 'babel-loader',
               options: {
                 babelrc: true,
+                cacheDirectory: true,
               },
             },
           ],

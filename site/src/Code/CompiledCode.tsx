@@ -189,7 +189,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
         >
           <Box
             component="button"
-            background="gray600"
+            background="zinc600"
             borderRadius="medium"
             padding="medium"
             cursor="pointer"

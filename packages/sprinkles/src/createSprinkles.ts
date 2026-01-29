@@ -170,9 +170,6 @@ export const createSprinkles =
               }
             }
 
-            const format = (v: string | number) =>
-              typeof v === 'string' ? `"${v}"` : v;
-
             const invalidPropValue = (
               prop: string,
               value: string | number,
@@ -277,3 +274,7 @@ export const createSprinkles =
       properties: new Set(sprinklesKeys),
     });
   };
+
+function format(v: string | number) {
+  return typeof v === 'string' ? `"${v}"` : v;
+}

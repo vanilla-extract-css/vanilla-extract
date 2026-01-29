@@ -6,10 +6,15 @@ import {
   type IdentifierOption,
   getSourceFromVirtualCssFile,
   virtualCssFileFilter,
+  transform,
   type CompileOptions,
 } from '@vanilla-extract/integration';
 import { posix } from 'path';
-import { generateCssBundle, stripSideEffectImportsMatching } from './lib';
+import {
+  generateCssBundle,
+  stripSideEffectImportsMatching,
+  tryGetPackageName,
+} from './lib';
 
 const { relative, normalize, dirname } = posix;
 
@@ -51,6 +56,17 @@ export interface Options {
         sourcemap?: boolean;
       }
     | false;
+
+  /**
+   * Inject filescopes into Vanilla Extract modules instead of generating CSS.
+   * Useful for utility or component libraries that prefer their consumers to
+   * process Vanilla Extract files instead of bundling CSS.
+   *
+   * Only works with `preserveModules: true`.
+   *
+   * @default false
+   */
+  unstable_injectFilescopes?: boolean;
 }
 
 export function vanillaExtractPlugin({
@@ -58,6 +74,7 @@ export function vanillaExtractPlugin({
   cwd = process.cwd(),
   esbuildOptions,
   extract = false,
+  unstable_injectFilescopes = false,
 }: Options = {}): Plugin {
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -71,14 +88,29 @@ export function vanillaExtractPlugin({
     },
 
     // Transform .css.js to .js
-    async transform(_code, id) {
+    async transform(code, id) {
       if (!cssFileFilter.test(id)) {
         return null;
       }
 
+      const identOption = identifiers ?? (isProduction ? 'short' : 'debug');
       const [filePath] = id.split('?');
 
-      const identOption = identifiers ?? (isProduction ? 'short' : 'debug');
+      if (unstable_injectFilescopes) {
+        const packageName = await tryGetPackageName(cwd);
+        const transformedCode = await transform({
+          source: code,
+          filePath: id,
+          rootPath: cwd,
+          packageName: packageName ?? '',
+          identOption,
+        });
+
+        return {
+          code: transformedCode,
+          map: { mappings: '' },
+        };
+      }
 
       const { source, watchFiles } = await compile({
         filePath,
