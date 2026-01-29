@@ -38,7 +38,7 @@ export function ColorModeProvider({ children }: { children: ReactNode }) {
 
     try {
       localStorage.setItem(themeKey, c);
-    } catch (e) {}
+    } catch {}
   };
 
   return (

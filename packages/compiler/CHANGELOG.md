@@ -1,5 +1,32 @@
 # @vanilla-extract/compiler
 
+## 0.3.4
+
+### Patch Changes
+
+- [#1665](https://github.com/vanilla-extract-css/vanilla-extract/pull/1665) [`352fc19`](https://github.com/vanilla-extract-css/vanilla-extract/commit/352fc19169e5f0233f8135842857399ccd46727d) Thanks [@askoufis](https://github.com/askoufis)! - Pass through `viteConfig.build.assetsInlineLimit` to the compiler's `vite` server
+
+- Updated dependencies [[`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704), [`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a), [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a), [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea)]:
+  - @vanilla-extract/integration@8.0.7
+  - @vanilla-extract/css@1.18.0
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd)]:
+  - @vanilla-extract/css@1.17.5
+  - @vanilla-extract/integration@8.0.6
+
+## 0.3.2
+
+### Patch Changes
+
+- [#1638](https://github.com/vanilla-extract-css/vanilla-extract/pull/1638) [`46ef1db`](https://github.com/vanilla-extract-css/vanilla-extract/commit/46ef1db201ad83d50c4620e331ec53f9affe1d84) Thanks [@PsychoLlama](https://github.com/PsychoLlama)! - Inherit parent vite `server.watch` options
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
 ## 0.3.1
 
 ### Patch Changes

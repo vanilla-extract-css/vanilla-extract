@@ -40,7 +40,7 @@
 .spi1frd {
   gap: 20px;
 }
-@media only screen and (min-width: 600px) {
+@media only screen and (width >= 600px) {
   .spi1frb {
     border: 2px solid green;
   }

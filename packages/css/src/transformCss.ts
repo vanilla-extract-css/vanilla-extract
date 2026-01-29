@@ -101,6 +101,7 @@ const specialKeys = [
   '@media',
   '@supports',
   '@container',
+  '@starting-style',
   'selectors',
 ];
 
@@ -188,6 +189,7 @@ class Stylesheet {
       this.transformMedia(root, root.rule['@media']);
       this.transformSupports(root, root.rule['@supports']);
       this.transformContainer(root, root.rule['@container']);
+      this.transformStartingStyle(root, root.rule['@starting-style']);
 
       this.transformSimplePseudos(root, root.rule);
       this.transformSelectors(root, root.rule);
@@ -287,7 +289,7 @@ class Stylesheet {
         value &&
         (value.includes('"') ||
           value.includes("'") ||
-          /^([A-Za-z\-]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)(\s|$)/.test(
+          /^([A-Za-z-]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)(\s|$)/.test(
             value,
           ))
           ? value
@@ -408,6 +410,11 @@ class Stylesheet {
         selectorRule['@container'],
         conditions,
       );
+      this.transformStartingStyle(
+        selectorRoot,
+        selectorRule['@starting-style'],
+        conditions,
+      );
     });
   }
 
@@ -445,6 +452,11 @@ class Stylesheet {
         this.transformLayer(root, mediaRule!['@layer'], conditions);
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
+        this.transformStartingStyle(
+          root,
+          mediaRule!['@starting-style'],
+          conditions,
+        );
       }
     }
   }
@@ -481,6 +493,11 @@ class Stylesheet {
         this.transformLayer(root, containerRule!['@layer'], conditions);
         this.transformSupports(root, containerRule!['@supports'], conditions);
         this.transformMedia(root, containerRule!['@media'], conditions);
+        this.transformStartingStyle(
+          root,
+          containerRule!['@starting-style'],
+          conditions,
+        );
       });
     }
   }
@@ -516,6 +533,11 @@ class Stylesheet {
         this.transformMedia(root, layerRule!['@media'], conditions);
         this.transformSupports(root, layerRule!['@supports'], conditions);
         this.transformContainer(root, layerRule!['@container'], conditions);
+        this.transformStartingStyle(
+          root,
+          layerRule!['@starting-style'],
+          conditions,
+        );
       });
     }
   }
@@ -550,6 +572,11 @@ class Stylesheet {
         this.transformLayer(root, supportsRule!['@layer'], conditions);
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
+        this.transformStartingStyle(
+          root,
+          supportsRule!['@starting-style'],
+          conditions,
+        );
       });
     }
   }
@@ -585,6 +612,43 @@ class Stylesheet {
             rule: rule[key as keyof typeof rule] as CSSPropertiesWithVars,
           });
         }
+      }
+    }
+  }
+
+  transformStartingStyle(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@starting-style'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      const nestedAtRuleKey = Object.keys(rules).find((key) =>
+        key.startsWith('@'),
+      );
+
+      if (nestedAtRuleKey) {
+        throw new Error(
+          `Nested at-rules (e.g. "${nestedAtRuleKey}") are not allowed inside @starting-style.`,
+        );
+      }
+
+      this.currConditionalRuleset?.addConditionPrecedence(parentConditions, [
+        '@starting-style',
+      ]);
+
+      const conditions = [...parentConditions, '@starting-style'];
+
+      this.addConditionalRule(
+        {
+          selector: root.selector,
+          rule: omit(rules, specialKeys),
+        },
+        conditions,
+      );
+
+      if (root.type === 'local') {
+        this.transformSimplePseudos(root, rules, conditions);
+        this.transformSelectors(root, rules, conditions);
       }
     }
   }

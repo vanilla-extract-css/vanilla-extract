@@ -1,5 +1,39 @@
 # @vanilla-extract/css
 
+## 1.18.0
+
+### Minor Changes
+
+- [#1566](https://github.com/vanilla-extract-css/vanilla-extract/pull/1566) [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea) Thanks [@lfantone](https://github.com/lfantone)! - `style`: Add support for `@starting-style` rules
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { style } from '@vanilla-extact/css';
+  export const styleWithStartingStyle = style({
+    backgroundColor: 'black',
+    '@starting-style': {
+      backgroundColor: 'white'
+    }
+  });
+  ```
+
+### Patch Changes
+
+- [#1646](https://github.com/vanilla-extract-css/vanilla-extract/pull/1646) [`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a) Thanks [@plesiecki](https://github.com/plesiecki)! - Swap the order of `createVar`'s overloads to enable inference of `VarDelcaration` type
+
+- [#1666](https://github.com/vanilla-extract-css/vanilla-extract/pull/1666) [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a) Thanks [@askoufis](https://github.com/askoufis)! - Remove custom container properties type
+
+  The [`csstype`] package used by Vanilla Extract now provides types for container properties, so the custom type definitions that were previously necessary have been removed.
+
+  [`csstype`]: https://www.npmjs.com/package/csstype
+
+## 1.17.5
+
+### Patch Changes
+
+- [#1655](https://github.com/vanilla-extract-css/vanilla-extract/pull/1655) [`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd) Thanks [@askoufis](https://github.com/askoufis)! - Update `csstype` dependency to `^3.2.3`
+
 ## 1.17.4
 
 ### Patch Changes

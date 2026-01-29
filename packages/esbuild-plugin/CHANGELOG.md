@@ -1,5 +1,26 @@
 # @vanilla-extract/esbuild-plugin
 
+## 2.3.21
+
+### Patch Changes
+
+- Updated dependencies [[`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704)]:
+  - @vanilla-extract/integration@8.0.7
+
+## 2.3.20
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.6
+
+## 2.3.19
+
+### Patch Changes
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
 ## 2.3.18
 
 ### Patch Changes
