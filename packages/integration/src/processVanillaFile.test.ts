@@ -1,5 +1,8 @@
 import { addFunctionSerializer } from '../../css/src/functionSerializer';
-import { serializeVanillaModule } from './processVanillaFile';
+import {
+  processVanillaFile,
+  serializeVanillaModule,
+} from './processVanillaFile';
 
 describe('serializeVanillaModule', () => {
   test('with plain object exports', () => {
@@ -140,7 +143,7 @@ describe('serializeVanillaModule', () => {
   });
 
   test('should handle deprecated __recipe__ function serialization', () => {
-    const sprinkles = () => {};
+    const sprinkles = () => { };
     // Once support for `__recipe__` is removed, this test can be removed,
     // and all other tests that use `__function_serializer__` should be updated
     // to use `addFunctionSerializer`
@@ -254,5 +257,49 @@ describe('serializeVanillaModule', () => {
       export var reReExport = reExport;
       export var otherComplexExport = reExport;"
     `);
+  });
+});
+
+describe('processVanillaFile', () => {
+  jest.useFakeTimers();
+  test('should process vanilla file with correct promise order', async () => {
+    const serializeVirtualCssPath1 = jest.fn(
+      ({ source }) =>
+        new Promise<string>((resolve) => {
+          setTimeout(() => resolve(source), 1);
+        }),
+    );
+    const serializeVirtualCssPath2 = jest.fn(({ source }) =>
+      Promise.resolve(source),
+    );
+
+    const [result] = await Promise.all([
+      processVanillaFile({
+        source: `
+        const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+        const { style, globalStyle } = require('@vanilla-extract/css'); 
+        __vanilla_filescope__.setFileScope("dependency.css.ts", "test");
+        exports.x = style({ color: 'blue' });
+        __vanilla_filescope__.endFileScope();
+        __vanilla_filescope__.setFileScope("style1.css.ts", "test");
+        exports.y = style([exports.x]);
+        globalStyle('body ' + exports.y, { color: 'red' });
+        __vanilla_filescope__.endFileScope();
+      `,
+        filePath: require.resolve('@fixtures/sprinkles'),
+        serializeVirtualCssPath: serializeVirtualCssPath1,
+      }),
+      processVanillaFile({
+        source: `
+        const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
+        __vanilla_filescope__.setFileScope("style2.css.ts", "test");
+        __vanilla_filescope__.endFileScope();
+      `,
+        filePath: require.resolve('@fixtures/sprinkles'),
+        serializeVirtualCssPath: serializeVirtualCssPath2,
+      }),
+      jest.runAllTimersAsync(),
+    ]);
+    expect(result).toMatch(/.*export var y = .*style1.*/);
   });
 });
