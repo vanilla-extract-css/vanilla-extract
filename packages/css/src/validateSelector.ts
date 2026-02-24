@@ -53,6 +53,25 @@ export const validateSelector = (
         ) {
           return; // Found it
         }
+
+        if (
+          token.type === 'pseudo' &&
+          Array.isArray(token.data) &&
+          (token.name === 'is' || token.name === 'where')
+        ) {
+          for (const subSelector of token.data) {
+            if (
+              subSelector.some(
+                (t: (typeof tokens)[number]) =>
+                  t.type === 'attribute' &&
+                  t.name === 'class' &&
+                  t.value === targetClassName,
+              )
+            ) {
+              return; // Found it
+            }
+          }
+        }
       }
     } catch (err) {
       throw new Error(
