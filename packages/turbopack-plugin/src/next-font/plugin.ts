@@ -6,7 +6,7 @@ export function createNextFontVePlugin(): Plugin {
     name: 've-next-font-stub',
     enforce: 'pre',
     async transform(code: string, id: string) {
-      if (!/\.(?:[cm]?[jt]s|[jt]sx)$/.test(id) || !code.includes('next/font')) {
+      if (!/\.(m|c)?(js|ts)x?$/.test(id) || !code.includes('next/font')) {
         return null;
       }
 
