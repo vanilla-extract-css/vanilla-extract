@@ -42,15 +42,14 @@ function getFontFamily(
   // Original logic:
   // Local: [Name, Name Fallback, ...UserFallbacks]
   // Google: [Name, ...UserFallbacks] OR [Name, Name Fallback]
-  if (isLocal) {
+  const hasUserFallbacks = fallbacks && fallbacks.length > 0;
+  
+  if (isLocal || !hasUserFallbacks) {
     parts.push(formatFontFamily(`${baseName} Fallback`));
-    if (fallbacks) parts.push(...fallbacks);
-  } else {
-    if (fallbacks && fallbacks.length > 0) {
-      parts.push(...fallbacks);
-    } else {
-      parts.push(formatFontFamily(`${baseName} Fallback`));
-    }
+  }
+
+  if (hasUserFallbacks) {
+    parts.push(...fallbacks);
   }
 
   return parts.join(', ');
