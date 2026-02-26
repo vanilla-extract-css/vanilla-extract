@@ -27,7 +27,7 @@ const GENERIC_FAMILIES = new Set([
 // --- Helpers ---
 
 function formatFontFamily(name: string): string {
-  const clean = name.replace(/['"]/g, '');
+  const clean = name.replace(/['\"]/g, '');
   return GENERIC_FAMILIES.has(clean.toLowerCase()) ? clean : `'${clean}'`;
 }
 
@@ -43,7 +43,7 @@ function getFontFamily(
   // Local: [Name, Name Fallback, ...UserFallbacks]
   // Google: [Name, ...UserFallbacks] OR [Name, Name Fallback]
   const hasUserFallbacks = fallbacks && fallbacks.length > 0;
-  
+
   if (isLocal || !hasUserFallbacks) {
     parts.push(formatFontFamily(`${baseName} Fallback`));
   }
@@ -127,6 +127,62 @@ function extractFontOptions(args: any[]): FontOptions {
   return options;
 }
 
+async function createStubNode(
+  family: string,
+  weight: number | undefined,
+  style: string | undefined,
+) {
+  const styleObj = [
+    `fontFamily: ${JSON.stringify(family)}`,
+    weight !== undefined ? `fontWeight: ${weight}` : null,
+    style !== undefined ? `fontStyle: ${JSON.stringify(style)}` : null,
+  ]
+    .filter(Boolean)
+    .join(', ');
+
+  const stubSource = `({
+      get className() { throw new Error(${JSON.stringify(THROW_MSG)}); },
+      get variable() { throw new Error(${JSON.stringify(THROW_MSG)}); },
+      style: { ${styleObj} }
+    })`;
+
+  // Parse this tiny snippet to get an Expression node
+  const m = await swc.parse(stubSource, { syntax: 'ecmascript' });
+  return (m.body[0] as any).expression;
+}
+
+async function processDeclarator(
+  decl: any,
+  imports: Map<string, { type: 'local' | 'google'; name: string }>,
+): Promise<any> {
+  if (!decl.init || decl.init.type !== 'CallExpression') return;
+
+  const callee = decl.init.callee;
+  if (callee.type !== 'Identifier') return;
+
+  const fontDef = imports.get(callee.value);
+  if (!fontDef) return;
+
+  const args = decl.init.arguments || [];
+  const opts = extractFontOptions(args);
+  const varName = decl.id.value || 'font';
+
+  const isGoogle = fontDef.type === 'google';
+  const familyName = isGoogle ? fontDef.name : varName;
+
+  const family = getFontFamily(familyName, opts.fallback, !isGoogle);
+  let weight = parseWeight(opts.weight);
+  let style = parseStyle(opts.style, isGoogle);
+
+  // Local fonts only stub weight/style if src is a simple string
+  if (!isGoogle && typeof opts.src !== 'string') {
+    weight = undefined;
+    style = undefined;
+  }
+
+  return createStubNode(family, weight, style);
+}
+
 // --- Main Transform ---
 
 export async function transformNextFont(
@@ -191,71 +247,19 @@ export async function transformNextFont(
   }
 
   // 3. Transform Declarations
-  // We need to parse the stub object asynchronously, so we create a helper.
-  const createStubNode = async (
-    family: string,
-    weight: number | undefined,
-    style: string | undefined,
-  ) => {
-    const styleObj = [
-      `fontFamily: ${JSON.stringify(family)}`,
-      weight !== undefined ? `fontWeight: ${weight}` : null,
-      style !== undefined ? `fontStyle: ${JSON.stringify(style)}` : null,
-    ]
-      .filter(Boolean)
-      .join(', ');
-
-    const stubSource = `({
-      get className() { throw new Error(${JSON.stringify(THROW_MSG)}); },
-      get variable() { throw new Error(${JSON.stringify(THROW_MSG)}); },
-      style: { ${styleObj} }
-    })`;
-
-    // Parse this tiny snippet to get an Expression node
-    const m = await swc.parse(stubSource, { syntax: 'ecmascript' });
-    return (m.body[0] as any).expression;
-  };
-
-  const processDeclarator = async (decl: any) => {
-    if (!decl.init || decl.init.type !== 'CallExpression') return;
-
-    const callee = decl.init.callee;
-    if (callee.type !== 'Identifier') return;
-
-    const fontDef = imports.get(callee.value);
-    if (!fontDef) return;
-
-    const args = decl.init.arguments || [];
-    const opts = extractFontOptions(args);
-    const varName = decl.id.value || 'font';
-
-    const isGoogle = fontDef.type === 'google';
-    const familyName = isGoogle ? fontDef.name : varName;
-
-    const family = getFontFamily(familyName, opts.fallback, !isGoogle);
-    let weight = parseWeight(opts.weight);
-    let style = parseStyle(opts.style, isGoogle);
-
-    // Local fonts only stub weight/style if src is a simple string
-    if (!isGoogle && typeof opts.src !== 'string') {
-      weight = undefined;
-      style = undefined;
-    }
-
-    decl.init = await createStubNode(family, weight, style);
-  };
-
   for (const item of newBody) {
     if (item.type === 'VariableDeclaration') {
       for (const decl of item.declarations) {
-        await processDeclarator(decl);
+        const stubNode = await processDeclarator(decl, imports);
+        if (stubNode) decl.init = stubNode;
       }
     } else if (
       item.type === 'ExportDeclaration' &&
       item.declaration.type === 'VariableDeclaration'
     ) {
       for (const decl of item.declaration.declarations) {
-        await processDeclarator(decl);
+        const stubNode = await processDeclarator(decl, imports);
+        if (stubNode) decl.init = stubNode;
       }
     }
   }
