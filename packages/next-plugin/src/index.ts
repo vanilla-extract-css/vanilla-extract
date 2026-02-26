@@ -172,6 +172,12 @@ export const createVanillaExtractPlugin = (
       turbopackMode === 'on' ||
       (turbopackMode === 'auto' && supportsTurbopackRules);
 
+    if (turbopackMode === 'on' && !supportsTurbopackRules) {
+      console.warn(
+        `[@vanilla-extract/next-plugin] Turbopack is configured but does not seem supported. Expected Next.js >= 16.0.0, got ${nextVersion}`,
+      );
+    }
+
     let turbopack: typeof nextConfig.turbopack;
     if (enableTurbopack) {
       turbopack = { ...(nextConfig.turbopack || {}) };
