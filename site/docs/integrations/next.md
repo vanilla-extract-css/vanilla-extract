@@ -77,6 +77,8 @@ Each integration will set a default value based on the configuration options pas
 
 ### turbopackMode
 
+> ⚠️&nbsp;&nbsp;Turbopack support is experimental. Its API is unstable and may undergo breaking changes in non-major versions. Additionally, it may not handle all features supported by Next.js.
+
 You can control Turbopack autoconfiguration using `turbopackMode`:
 
 - `auto` (default): enable Turbopack config only when Next >= 16.0.0
