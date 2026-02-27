@@ -19,14 +19,16 @@ import semver from 'semver';
 const require = createRequire(import.meta.url);
 
 type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
-  turbopackGlob?: string[];
-  /**
-   * controls whether we attempt to configure turbopack
-   * auto: enable only when Next >= 16.0.0
-   * on: force enable regardless of detected Next version
-   * off: never configure turbopack, webpack only
-   */
-  turbopackMode?: 'auto' | 'on' | 'off';
+  unstable_turbopack?: {
+    glob?: string[];
+    /**
+     * controls whether we attempt to configure turbopack
+     * auto: enable only when Next >= 16.0.0
+     * on: force enable regardless of detected Next version
+     * off: never configure turbopack, webpack only
+     */
+    mode?: 'auto' | 'on' | 'off';
+  };
 };
 
 const NextMiniCssExtractPlugin = NextMiniCssExtractPluginDefault as any;
@@ -148,11 +150,12 @@ export const createVanillaExtractPlugin = (
   pluginOptions: PluginOptions = {},
 ) => {
   return (nextConfig: NextConfig = {}): NextConfig => {
+    const { unstable_turbopack: turbopackOptions = {}, ...webpackPluginOptions } =
+      pluginOptions;
     const {
-      turbopackMode = 'auto',
-      turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
-      ...webpackPluginOptions
-    } = pluginOptions;
+      mode: turbopackMode = 'auto',
+      glob: turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
+    } = turbopackOptions;
     // detect Next version and decide whether to configure turbopack
     const nextVersion = (() => {
       try {

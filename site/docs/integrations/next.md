@@ -75,11 +75,15 @@ const withVanillaExtract = createVanillaExtractPlugin({
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
-### turbopackMode
+### unstable_turbopack
 
 > ⚠️&nbsp;&nbsp;Turbopack support is experimental. Its API is unstable and may undergo breaking changes in non-major versions. Additionally, it may not handle all features supported by Next.js.
 
-You can control Turbopack autoconfiguration using `turbopackMode`:
+Turbopack-related options are grouped under the `unstable_turbopack` key.
+
+#### unstable_turbopack.mode
+
+You can control Turbopack autoconfiguration using `mode`:
 
 - `auto` (default): enable Turbopack config only when Next >= 16.0.0
 - `on`: force-enable Turbopack config
@@ -92,24 +96,24 @@ For example, to disable Turbopack integration explicitly:
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const withVanillaExtract = createVanillaExtractPlugin({
-  turbopackMode: 'off'
+  unstable_turbopack: { mode: 'off' }
 });
 
 export default withVanillaExtract({});
 ```
 
-If you already manage `turbopack.rules` yourself for the same file globs, the plugin may throw to avoid rule conflicts. In that case, set `turbopackMode: 'off'` and apply your Turbopack config manually.
+If you already manage `turbopack.rules` yourself for the same file globs, the plugin may throw to avoid rule conflicts. In that case, set `mode: 'off'` and apply your Turbopack config manually.
 
-### turbopackGlob
+#### unstable_turbopack.glob
 
-By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. You can override this via `turbopackGlob`:
+By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. You can override this via `glob`:
 
 ```ts
 // next.config.ts
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const withVanillaExtract = createVanillaExtractPlugin({
-  turbopackGlob: ['**/*.css.ts', '**/*.css.tsx']
+  unstable_turbopack: { glob: ['**/*.css.ts', '**/*.css.tsx'] }
 });
 
 export default withVanillaExtract({});
