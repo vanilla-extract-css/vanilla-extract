@@ -117,7 +117,8 @@ function extractFontOptions(args: Argument[]): FontOptions {
     if (prop.type !== 'KeyValueProperty') continue;
 
     const keyNode = prop.key;
-    if (keyNode.type !== 'Identifier' && keyNode.type !== 'StringLiteral') continue;
+    if (keyNode.type !== 'Identifier' && keyNode.type !== 'StringLiteral')
+      continue;
     const key = keyNode.value;
     const value = unwrapValue(prop.value);
 
@@ -125,8 +126,15 @@ function extractFontOptions(args: Argument[]): FontOptions {
     if (key === 'weight') options.weight = value;
     if (key === 'style') options.style = value;
     if (key === 'fallback') {
-      if (!Array.isArray(value) || !value.every((v): v is string => typeof v === 'string')) {
-        throw new Error(`[vanilla-extract/turbopack-plugin] next/font: 'fallback' must be an array of strings, got: ${JSON.stringify(value)}`);
+      if (
+        !Array.isArray(value) ||
+        !value.every((v): v is string => typeof v === 'string')
+      ) {
+        throw new Error(
+          `[vanilla-extract/turbopack-plugin] next/font: 'fallback' must be an array of strings, got: ${JSON.stringify(
+            value,
+          )}`,
+        );
       }
       options.fallback = value;
     }
@@ -158,7 +166,9 @@ async function createStubNode(
   const m = await swc.parse(stubSource, { syntax: 'ecmascript' });
   const stmt = m.body[0];
   if (stmt?.type !== 'ExpressionStatement') {
-    throw new Error('[vanilla-extract/turbopack-plugin] Internal error: stub source did not produce an ExpressionStatement');
+    throw new Error(
+      '[vanilla-extract/turbopack-plugin] Internal error: stub source did not produce an ExpressionStatement',
+    );
   }
   return stmt.expression;
 }

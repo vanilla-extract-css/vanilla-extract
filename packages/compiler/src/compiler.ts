@@ -239,7 +239,7 @@ export interface Compiler {
       outputCss?: boolean;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
-  invalidateAllModules(): Promise<void>;
+  unstable_invalidateAllModules(): Promise<void>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
   getAllCss(): string;
@@ -269,7 +269,7 @@ export interface CreateCompilerOptions {
    *
    * @default false
    */
-  splitCssPerRule?: boolean;
+  unstable_splitCssPerRule?: boolean;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -281,7 +281,7 @@ export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
-  splitCssPerRule = false,
+  unstable_splitCssPerRule: splitCssPerRule = false,
   viteConfig,
   enableFileWatcher,
   viteResolve,
@@ -509,7 +509,7 @@ export const createCompiler = ({
 
       return result;
     },
-    async invalidateAllModules() {
+    async unstable_invalidateAllModules() {
       const { server, runner } = await vitePromise;
 
       for (const [key] of runner.moduleCache.entries()) {

@@ -2,4 +2,4 @@
 '@vanilla-extract/compiler': minor
 ---
 
-add `invalidateAllModules` to manually clear module cache
+add `unstable_invalidateAllModules` to manually clear module cache

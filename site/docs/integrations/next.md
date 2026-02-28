@@ -113,7 +113,9 @@ By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. Y
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const withVanillaExtract = createVanillaExtractPlugin({
-  unstable_turbopack: { glob: ['**/*.css.ts', '**/*.css.tsx'] }
+  unstable_turbopack: {
+    glob: ['**/*.css.ts', '**/*.css.tsx']
+  }
 });
 
 export default withVanillaExtract({});

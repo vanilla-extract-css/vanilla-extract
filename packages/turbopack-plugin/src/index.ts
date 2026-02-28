@@ -67,7 +67,7 @@ const getOrMakeCompiler = async ({
     root: loaderContext.rootContext,
     identifiers,
     enableFileWatcher: false,
-    splitCssPerRule: true,
+    unstable_splitCssPerRule: true,
     cssImportSpecifier: async (_filePath, css) => {
       return `@vanilla-extract/css/vanilla.virtual.css?ve-css=${encodeURIComponent(
         await serializeCss(css),
@@ -208,7 +208,7 @@ export default async function turbopackVanillaExtractLoader(
 
   // if turbopack invokes the loader quickly, vite can't invalidate the module fast enough
   // so we disable the internal file watcher and manually invalidate the module instead
-  await compiler.invalidateAllModules();
+  await compiler.unstable_invalidateAllModules();
 
   const { source, watchFiles } = await compiler.processVanillaFile(
     this.resourcePath,

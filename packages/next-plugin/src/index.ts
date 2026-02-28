@@ -150,8 +150,10 @@ export const createVanillaExtractPlugin = (
   pluginOptions: PluginOptions = {},
 ) => {
   return (nextConfig: NextConfig = {}): NextConfig => {
-    const { unstable_turbopack: turbopackOptions = {}, ...webpackPluginOptions } =
-      pluginOptions;
+    const {
+      unstable_turbopack: turbopackOptions = {},
+      ...webpackPluginOptions
+    } = pluginOptions;
     const {
       mode: turbopackMode = 'auto',
       glob: turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
