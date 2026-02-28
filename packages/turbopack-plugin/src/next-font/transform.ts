@@ -1,4 +1,5 @@
 import * as swc from '@swc/core';
+import type { Argument, Expression, VariableDeclarator } from '@swc/core';
 
 export type NextFontTransformResult = {
   code: string;
@@ -55,7 +56,7 @@ function getFontFamily(
   return parts.join(', ');
 }
 
-function parseWeight(weight: any): number | undefined {
+function parseWeight(weight: unknown): number | undefined {
   if (typeof weight === 'number') return weight;
   if (typeof weight === 'string' && weight && !weight.includes(' ')) {
     const n = Number(weight);
@@ -64,7 +65,7 @@ function parseWeight(weight: any): number | undefined {
   return undefined;
 }
 
-function parseStyle(style: any, isGoogle: boolean): string | undefined {
+function parseStyle(style: unknown, isGoogle: boolean): string | undefined {
   if (Array.isArray(style)) return undefined;
   if (typeof style === 'string' && style && !style.includes(' ')) return style;
   return isGoogle ? 'normal' : undefined;
@@ -73,9 +74,9 @@ function parseStyle(style: any, isGoogle: boolean): string | undefined {
 // --- AST Utilities ---
 
 type FontOptions = {
-  src?: any;
-  weight?: any;
-  style?: any;
+  src?: unknown;
+  weight?: unknown;
+  style?: unknown;
   fallback?: string[];
 };
 
@@ -83,7 +84,7 @@ type FontOptions = {
  * Extract simple values from AST nodes (literals, arrays of literals).
  * Returns `undefined` if too complex.
  */
-function unwrapValue(node: any): any {
+function unwrapValue(node: Expression | undefined): unknown {
   if (!node) return undefined;
 
   // Handle basic literals
@@ -94,8 +95,8 @@ function unwrapValue(node: any): any {
   // Handle arrays
   if (node.type === 'ArrayExpression') {
     return node.elements
-      .map((el: any) => unwrapValue(el?.expression || el))
-      .filter((v: any) => v !== undefined);
+      .map((el) => unwrapValue(el?.expression))
+      .filter((v) => v !== undefined);
   }
 
   return undefined;
@@ -104,7 +105,7 @@ function unwrapValue(node: any): any {
 /**
  * Extracts the configuration object from the first argument of a call.
  */
-function extractFontOptions(args: any[]): FontOptions {
+function extractFontOptions(args: Argument[]): FontOptions {
   const options: FontOptions = {};
   const configNode = args[0]?.expression;
 
@@ -113,15 +114,22 @@ function extractFontOptions(args: any[]): FontOptions {
   }
 
   for (const prop of configNode.properties) {
-    if (prop.type !== 'KeyValueProperty' && prop.type !== 'Property') continue;
+    if (prop.type !== 'KeyValueProperty') continue;
 
-    const key = prop.key.value || prop.key.name; // Handle StringLiteral or Identifier keys
+    const keyNode = prop.key;
+    if (keyNode.type !== 'Identifier' && keyNode.type !== 'StringLiteral') continue;
+    const key = keyNode.value;
     const value = unwrapValue(prop.value);
 
     if (key === 'src') options.src = value;
     if (key === 'weight') options.weight = value;
     if (key === 'style') options.style = value;
-    if (key === 'fallback') options.fallback = value;
+    if (key === 'fallback') {
+      if (!Array.isArray(value) || !value.every((v): v is string => typeof v === 'string')) {
+        throw new Error(`[vanilla-extract/turbopack-plugin] next/font: 'fallback' must be an array of strings, got: ${JSON.stringify(value)}`);
+      }
+      options.fallback = value;
+    }
   }
 
   return options;
@@ -131,7 +139,7 @@ async function createStubNode(
   family: string,
   weight: number | undefined,
   style: string | undefined,
-) {
+): Promise<Expression> {
   const styleObj = [
     `fontFamily: ${JSON.stringify(family)}`,
     weight !== undefined ? `fontWeight: ${weight}` : null,
@@ -148,13 +156,17 @@ async function createStubNode(
 
   // Parse this tiny snippet to get an Expression node
   const m = await swc.parse(stubSource, { syntax: 'ecmascript' });
-  return (m.body[0] as any).expression;
+  const stmt = m.body[0];
+  if (stmt?.type !== 'ExpressionStatement') {
+    throw new Error('[vanilla-extract/turbopack-plugin] Internal error: stub source did not produce an ExpressionStatement');
+  }
+  return stmt.expression;
 }
 
 async function processDeclarator(
-  decl: any,
+  decl: VariableDeclarator,
   imports: Map<string, { type: 'local' | 'google'; name: string }>,
-): Promise<any> {
+): Promise<Expression | undefined> {
   if (!decl.init || decl.init.type !== 'CallExpression') return;
 
   const callee = decl.init.callee;
@@ -165,7 +177,7 @@ async function processDeclarator(
 
   const args = decl.init.arguments || [];
   const opts = extractFontOptions(args);
-  const varName = decl.id.value || 'font';
+  const varName = decl.id.type === 'Identifier' ? decl.id.value : 'font';
 
   const isGoogle = fontDef.type === 'google';
   const familyName = isGoogle ? fontDef.name : varName;
