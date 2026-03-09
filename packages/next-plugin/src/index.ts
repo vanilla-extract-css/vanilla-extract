@@ -155,7 +155,7 @@ export const createVanillaExtractPlugin = (
       ...webpackPluginOptions
     } = pluginOptions;
     const {
-      mode: turbopackMode = 'auto',
+      mode: turbopackMode = 'off',
       glob: turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
     } = turbopackOptions;
     // detect Next version and decide whether to configure turbopack
