@@ -1,6 +1,8 @@
 import { NextConfig } from 'next';
 import { createVanillaExtractPlugin } from './next-plugin/dist/vanilla-extract-next-plugin.cjs.js';
-const withVanillaExtract = createVanillaExtractPlugin();
+const withVanillaExtract = createVanillaExtractPlugin({
+  unstable_turbopack: { mode: 'auto' },
+});
 
 export const config: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || '.next',
