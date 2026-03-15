@@ -1,5 +1,11 @@
 # @vanilla-extract/next-plugin
 
+## 2.5.1
+
+### Patch Changes
+
+- [#1692](https://github.com/vanilla-extract-css/vanilla-extract/pull/1692) [`495bc90`](https://github.com/vanilla-extract-css/vanilla-extract/commit/495bc902e19b69aa3ebd52ab94072e8535183708) Thanks [@askoufis](https://github.com/askoufis)! - Update turbopack plugin dep to fix bad release
+
 ## 2.5.0
 
 ### Minor Changes
