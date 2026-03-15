@@ -40,7 +40,7 @@ function getSupportedBrowsers(dir: string, isDevelopment: boolean) {
       path: dir,
       env: isDevelopment ? 'development' : 'production',
     });
-  } catch (_) {
+  } catch {
     return undefined;
   }
 }
@@ -184,7 +184,7 @@ export const createVanillaExtractPlugin = (
 
     let turbopack: typeof nextConfig.turbopack;
     if (enableTurbopack) {
-      turbopack = { ...(nextConfig.turbopack || {}) };
+      turbopack = { ...nextConfig.turbopack };
 
       if (turbopackGlob.some((glob) => turbopack.rules?.[glob])) {
         throw new Error(
@@ -212,7 +212,7 @@ export const createVanillaExtractPlugin = (
       } as const;
 
       turbopack.rules = {
-        ...(turbopack.rules || {}),
+        ...turbopack.rules,
         ...Object.fromEntries(
           turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
         ),
