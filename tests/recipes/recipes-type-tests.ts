@@ -3,8 +3,7 @@
 */
 import { recipe, type RecipeVariants } from '@vanilla-extract/recipes';
 
-// @ts-expect-error Unused args
-const noop = (...args: Array<any>) => {};
+const noop = (..._args: Array<any>) => {};
 
 type AssertIsString<S> = S extends string ? true : never;
 

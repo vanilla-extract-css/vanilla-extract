@@ -28,7 +28,7 @@ const GENERIC_FAMILIES = new Set([
 // --- Helpers ---
 
 function formatFontFamily(name: string): string {
-  const clean = name.replace(/['\"]/g, '');
+  const clean = name.replace(/['"]/g, '');
   return GENERIC_FAMILIES.has(clean.toLowerCase()) ? clean : `'${clean}'`;
 }
 
@@ -213,8 +213,8 @@ export async function transformNextFont(
 ): Promise<NextFontTransformResult> {
   // 1. Parse
   const isTs = /\.(?:[cm]?ts|tsx)$/.test(filename);
-  const isTsx = /\.tsx$/.test(filename);
-  const isJsx = /\.jsx$/.test(filename);
+  const isTsx = filename.endsWith('.tsx');
+  const isJsx = filename.endsWith('.jsx');
 
   const module = await swc.parse(code, {
     syntax: isTs ? 'typescript' : 'ecmascript',

@@ -17,8 +17,7 @@ import {
   conditionalPropertiesWithoutResponsiveArray,
 } from './index.css';
 
-// @ts-expect-error Unused args
-const noop = (...args: Array<any>) => {};
+const noop = (..._args: Array<any>) => {};
 
 () => {
   const sprinkles = createSprinkles(

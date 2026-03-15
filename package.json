@@ -19,11 +19,12 @@
     "test:playwright": "pnpm test:clean-next && pnpm test:build-next && playwright test",
     "test:clean-next": "pnpm --filter=@fixtures/next-* run '/^clean.*/'",
     "test:build-next": "node scripts/copy-next-plugin.ts && pnpm --filter=@fixtures/next-* run '/^build.*/'",
-    "format": "prettier --write .",
-    "lint": "pnpm run '/^lint:.*/'",
+    "format": "oxlint --fix && prettier --write .",
+    "lint": "pnpm run --no-bail '/^lint:.*/'",
     "lint:manypkg": "manypkg check",
     "lint:prettier": "prettier --cache --check .",
     "lint:tsc": "tsc",
+    "lint:oxlint": "oxlint",
     "copy-readme-to-packages": "node scripts/copy-readme-to-packages.ts",
     "version": "changeset version && pnpm install --lockfile-only",
     "prepare-release": "pnpm copy-readme-to-packages && pnpm build",
@@ -47,6 +48,7 @@
     "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "oxlint": "^1.55.0",
     "prettier": "^3.8.1",
     "tsx": "^4.20.6",
     "typescript": "^5.8.3",
@@ -63,5 +65,5 @@
   "manypkg": {
     "workspaceProtocol": "require"
   },
-  "packageManager": "pnpm@10.24.0"
+  "packageManager": "pnpm@10.32.0"
 }
