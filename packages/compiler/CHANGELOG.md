@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1687](https://github.com/vanilla-extract-css/vanilla-extract/pull/1687) [`e29f242`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e29f242953fcb46315cebe5b3374a5a1f89d93af) Thanks [@askoufis](https://github.com/askoufis)! - Add support for Vite 8
+
 ## 0.4.0
 
 ### Minor Changes
