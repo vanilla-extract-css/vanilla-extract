@@ -5,7 +5,10 @@ import cssnano from 'cssnano';
 
 export const stylesheetName = 'main.css';
 
-export async function getStylesheet(url: string, stylesheetName = 'main.css') {
+export async function getStylesheet(
+  url: string,
+  stylesheetName = 'main.css',
+): Promise<string> {
   const response = await fetch(new URL(stylesheetName, url));
   // Just remove comments and normalize whitespace
   // https://cssnano.co/docs/what-are-optimisations/#what-optimisations-do-you-support%3F

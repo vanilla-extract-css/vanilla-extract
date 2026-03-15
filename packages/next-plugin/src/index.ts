@@ -130,9 +130,8 @@ const getVanillaExtractCssLoaders = (
 
   // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/global.ts#L29-L38
   loaders.push({
-    loader: require.resolve(
-      'next/dist/build/webpack/loaders/postcss-loader/src',
-    ),
+    loader:
+      require.resolve('next/dist/build/webpack/loaders/postcss-loader/src'),
     options: {
       postcss,
     },

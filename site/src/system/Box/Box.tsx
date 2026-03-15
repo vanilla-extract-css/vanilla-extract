@@ -4,7 +4,8 @@ import * as resetStyles from '../styles/reset.css';
 import { sprinkles, type Sprinkles } from '../styles/sprinkles.css';
 
 export interface BoxProps
-  extends Omit<
+  extends
+    Omit<
       AllHTMLAttributes<HTMLElement>,
       | 'className'
       | 'content'
