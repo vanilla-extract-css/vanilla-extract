@@ -34,25 +34,25 @@ type ChildSprinkleProps<Sprinkles extends SprinklesProperties['styles']> = {
         Sprinkles[Prop]['responsiveArray']
       >
     : Sprinkles[Prop] extends ConditionalProperty
-    ? ConditionalStyle<Sprinkles[Prop]['values']>
-    : Sprinkles[Prop] extends ShorthandProperty
-    ? Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
-      ? ConditionalStyleWithResponsiveArray<
-          Sprinkles[Sprinkles[Prop]['mappings'][number]]['values'],
-          Sprinkles[Sprinkles[Prop]['mappings'][number]]['responsiveArray']
-        >
-      : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalProperty
-      ? ConditionalStyle<
-          Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
-        >
-      : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends UnconditionalProperty
-      ?
-          | keyof Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
-          | undefined
-      : never
-    : Sprinkles[Prop] extends UnconditionalProperty
-    ? keyof Sprinkles[Prop]['values'] | undefined
-    : never;
+      ? ConditionalStyle<Sprinkles[Prop]['values']>
+      : Sprinkles[Prop] extends ShorthandProperty
+        ? Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalWithResponsiveArrayProperty
+          ? ConditionalStyleWithResponsiveArray<
+              Sprinkles[Sprinkles[Prop]['mappings'][number]]['values'],
+              Sprinkles[Sprinkles[Prop]['mappings'][number]]['responsiveArray']
+            >
+          : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends ConditionalProperty
+            ? ConditionalStyle<
+                Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
+              >
+            : Sprinkles[Sprinkles[Prop]['mappings'][number]] extends UnconditionalProperty
+              ?
+                  | keyof Sprinkles[Sprinkles[Prop]['mappings'][number]]['values']
+                  | undefined
+              : never
+        : Sprinkles[Prop] extends UnconditionalProperty
+          ? keyof Sprinkles[Prop]['values'] | undefined
+          : never;
 };
 
 type SprinkleProps<Args extends ReadonlyArray<any>> = Args extends [
