@@ -19,6 +19,7 @@ import {
 
 const noop = (..._args: Array<any>) => {};
 
+// oxlint-disable-next-line no-unused-expressions
 () => {
   const sprinkles = createSprinkles(
     propertiesWithShorthands,
@@ -142,9 +143,11 @@ const noop = (..._args: Array<any>) => {};
   testGenericNormalizeValue('');
 
   // @ts-expect-error - Strings shouldn't map to objects
+  // oxlint-disable-next-line no-unused-expressions
   mapValue(alignProp, () => 'baz').mobile;
 
   // @ts-expect-error - Numbers shouldn't map to objects
+  // oxlint-disable-next-line no-unused-expressions
   mapValue(3, () => 4).mobile;
 
   const mapValueWithoutDefaultCondition = createMapValueFn(
