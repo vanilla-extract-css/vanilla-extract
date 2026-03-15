@@ -15,7 +15,8 @@ npm install --save-dev @vanilla-extract/next-plugin
 
 ## Setup
 
-If you don't have a `next.config.js` or `next.config.ts` file in the root of your project, create one. Add the plugin to your Next.js config file.
+If you don't have a `next.config.js` or `next.config.ts` file in the root of your project, create one.
+Then add the plugin to your Next.js config file:
 
 ```ts
 // next.config.ts
@@ -50,7 +51,7 @@ export default withVanillaExtract(withMDX(nextConfig));
 ## Version Support
 
 - **Next.js >= 16.x**: Both Turbopack and Webpack are supported
-- **Next.js <= 15.x**: Webpack-only support
+- **Next.js <= 15.x**: Only Webpack is supported
 
 ## Configuration
 
@@ -79,24 +80,20 @@ Each integration will set a default value based on the configuration options pas
 
 > ⚠️&nbsp;&nbsp;Turbopack support is experimental. Its API is unstable and may undergo breaking changes in non-major versions. Additionally, it may not handle all features supported by Next.js.
 
-Turbopack-related options are grouped under the `unstable_turbopack` key.
+You can control Turbopack autoconfiguration using `unstable_turbopack.mode`:
 
-#### unstable_turbopack.mode
-
-You can control Turbopack autoconfiguration using `mode`:
-
-- `auto` (default): enable Turbopack config only when Next >= 16.0.0
+- `off`: (default) never configure Turbopack (i.e. use Webpack)
+- `auto`: enable Turbopack config only when Next >= 16.0.0
 - `on`: force-enable Turbopack config
-- `off`: never configure Turbopack (Webpack-only)
 
-For example, to disable Turbopack integration explicitly:
+For example:
 
 ```ts
 // next.config.ts
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const withVanillaExtract = createVanillaExtractPlugin({
-  unstable_turbopack: { mode: 'off' }
+  unstable_turbopack: { mode: 'auto' }
 });
 
 export default withVanillaExtract({});
@@ -104,9 +101,8 @@ export default withVanillaExtract({});
 
 If you already manage `turbopack.rules` yourself for the same file globs, the plugin may throw to avoid rule conflicts. In that case, set `mode: 'off'` and apply your Turbopack config manually.
 
-#### unstable_turbopack.glob
-
-By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}`. You can override this via `glob`:
+By default Turbopack integration processes `**/*.css.{js,cjs,mjs,jsx,ts,tsx}` files.
+You can override this with `unstable_turbopack.glob`:
 
 ```ts
 // next.config.ts
@@ -114,6 +110,7 @@ import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const withVanillaExtract = createVanillaExtractPlugin({
   unstable_turbopack: {
+    mode: 'auto',
     glob: ['**/*.css.ts', '**/*.css.tsx']
   }
 });
@@ -151,4 +148,4 @@ const nextConfig: NextConfig = {
 export default withVanillaExtract(nextConfig);
 ```
 
-[`transpilepackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages
+[`transpilePackages`]: https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages
