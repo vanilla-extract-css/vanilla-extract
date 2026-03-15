@@ -1,10 +1,12 @@
-import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
+import { type PlaywrightTestConfig, defineConfig } from '@playwright/test';
 import { cpus } from 'os';
+import { NEXT_SERVERS } from './tests/servers';
 
 // Prevent Vite from attempting to clear the screen
 process.stdout.isTTY = false;
 
 const config: PlaywrightTestConfig = defineConfig({
+  fullyParallel: true,
   testMatch: '**/*.playwright.ts',
   updateSnapshots: 'none',
   expect: {
@@ -13,8 +15,16 @@ const config: PlaywrightTestConfig = defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
+  webServer: NEXT_SERVERS.map((server) => ({
+    command: server.script + ` --port ${server.port}`,
+    env: { NODE_ENV: server.isProduction ? 'production' : 'development' },
+    url: `http://localhost:${server.port}`,
+    reuseExistingServer: !process.env.CI,
+    name: server.name,
+  })),
   workers: process.env.CI ? cpus().length : undefined,
   retries: process.env.CI ? 2 : 0,
+  timeout: 120_000,
   forbidOnly: !!process.env.CI,
   snapshotDir: 'tests/e2e/snapshots',
   // put all snapshots in one directory

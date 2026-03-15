@@ -21,12 +21,15 @@
   "author": "SEEK",
   "license": "MIT",
   "dependencies": {
-    "@vanilla-extract/webpack-plugin": "workspace:^"
+    "@vanilla-extract/turbopack-plugin": "workspace:^",
+    "@vanilla-extract/webpack-plugin": "workspace:^",
+    "semver": "^7.6.3"
   },
   "peerDependencies": {
     "next": ">=12.1.7"
   },
   "devDependencies": {
+    "@types/semver": "^7.7.1",
     "next": "12.3.4",
     "webpack": "^5.90.0"
   }

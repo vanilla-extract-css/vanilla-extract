@@ -1,0 +1,7 @@
+---
+'@vanilla-extract/next-plugin': minor
+---
+
+Add experimental turbopack support for Next.js >= 16.0.0
+
+See [the Next.js docs](https://vanilla-extract.style/documentation/integrations/next/#unstable_turbopack) for more info.
