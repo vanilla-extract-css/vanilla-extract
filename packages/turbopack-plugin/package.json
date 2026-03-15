@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/turbopack-plugin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Turbopack loader for vanilla-extract",
   "main": "dist/vanilla-extract-turbopack-plugin.cjs.js",
   "module": "dist/vanilla-extract-turbopack-plugin.esm.js",
