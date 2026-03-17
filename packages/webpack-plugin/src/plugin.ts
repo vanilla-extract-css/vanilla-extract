@@ -1,8 +1,15 @@
-import { cssFileFilter, IdentifierOption } from '@vanilla-extract/integration';
+import {
+  cssFileFilter,
+  type IdentifierOption,
+} from '@vanilla-extract/integration';
 import type { Compiler, RuleSetRule } from 'webpack';
 
 import { ChildCompiler } from './compiler';
-import createCompat, { WebpackCompat } from './compat';
+import createCompat, { type WebpackCompat } from './compat';
+
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 const pluginName = 'VanillaExtractPlugin';
 
@@ -85,7 +92,7 @@ export abstract class AbstractVanillaExtractPlugin {
   protected inject(
     compiler: Compiler,
     virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader',
-  ) {
+  ): void {
     const compat = createCompat(
       Boolean(compiler.webpack && compiler.webpack.version),
     );

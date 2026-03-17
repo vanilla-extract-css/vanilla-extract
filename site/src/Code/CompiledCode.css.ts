@@ -1,4 +1,9 @@
-import { createVar, fallbackVar, style, StyleRule } from '@vanilla-extract/css';
+import {
+  createVar,
+  fallbackVar,
+  style,
+  type StyleRule,
+} from '@vanilla-extract/css';
 import { calc } from '@vanilla-extract/css-utils';
 import { darkMode, sprinkles } from '../system/styles/sprinkles.css';
 import { vars } from '../themes.css';
@@ -22,7 +27,7 @@ export const root = style([
     },
     selectors: {
       [`.${darkMode} &::before`]: {
-        background: fallbackVar(darkModeBg, vars.palette.gray900),
+        background: fallbackVar(darkModeBg, vars.palette.zinc900),
       },
     },
   },
@@ -31,7 +36,7 @@ export const root = style([
 const backgroundColor = createVar();
 export const fileNameFocus = style({
   vars: {
-    [backgroundColor]: vars.palette.coolGray900,
+    [backgroundColor]: vars.palette.gray900,
   },
   outline: 'none',
   ':focus-visible': {
@@ -40,7 +45,7 @@ export const fileNameFocus = style({
   selectors: {
     [`.${darkMode} &:focus-visible`]: {
       vars: {
-        [backgroundColor]: vars.palette.gray900,
+        [backgroundColor]: vars.palette.zinc900,
       },
     },
   },

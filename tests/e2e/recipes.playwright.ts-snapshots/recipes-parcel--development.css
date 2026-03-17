@@ -40,7 +40,7 @@
 .styles_stack_space_medium__spi1frd {
   gap: 20px;
 }
-@media only screen and (min-width: 600px) {
+@media only screen and (width >= 600px) {
   .styles_button_compound_0__spi1frb {
     border: 2px solid green;
   }

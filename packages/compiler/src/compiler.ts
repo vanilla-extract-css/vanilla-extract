@@ -93,18 +93,27 @@ const createViteServer = async ({
   root,
   identifiers,
   viteConfig,
+  enableFileWatcher = true,
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
->) => {
+> &
+  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
   const server = await vite.createServer({
     ...viteConfig,
+    // The vite-node server should not rewrite imported asset URLs within VE stylesheets.
+    // Doing so interferes with Vite's resolution and bundling of these assets at build time.
+    base: undefined,
     configFile: false,
     root,
+    // Don't include HTML middlewares
+    appType: 'custom',
     server: {
+      middlewareMode: viteConfig.server?.middlewareMode,
       hmr: false,
+      watch: enableFileWatcher ? viteConfig.server?.watch : null,
     },
     logLevel: 'silent',
     optimizeDeps: {
@@ -117,6 +126,7 @@ const createViteServer = async ({
         // Can be removed once https://github.com/vitejs/vite/pull/19247 is released.
         exclude: [/node_modules/],
       },
+      assetsInlineLimit: viteConfig.build?.assetsInlineLimit,
     },
     ssr: {
       noExternal: true,
@@ -191,9 +201,11 @@ const createViteServer = async ({
     },
   });
 
-  server.watcher.on('change', (filePath) => {
-    runner.moduleCache.invalidateDepTree([filePath]);
-  });
+  if (enableFileWatcher) {
+    server.watcher.on('change', (filePath) => {
+      runner.moduleCache.invalidateDepTree([filePath]);
+    });
+  }
 
   return {
     server,
@@ -230,8 +242,10 @@ export interface Compiler {
       outputCss?: boolean;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
+  unstable_invalidateAllModules(): Promise<void>;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
+  getAllCss(): string;
 }
 
 interface ProcessedVanillaFile {
@@ -241,7 +255,24 @@ interface ProcessedVanillaFile {
 
 export interface CreateCompilerOptions {
   root: string;
-  cssImportSpecifier?: (filePath: string) => string;
+  /**
+   * By default, the compiler sets up its own file watcher. This option allows you to disable it if
+   * necessary, such as during a production build.
+   *
+   * @default true
+   */
+  enableFileWatcher?: boolean;
+  cssImportSpecifier?: (
+    filePath: string,
+    css: string,
+  ) => string | Promise<string>;
+  /**
+   * When true, generates one CSS import per rule instead of one per file.
+   * This can help bundlers like Turbopack deduplicate shared CSS more effectively.
+   *
+   * @default false
+   */
+  unstable_splitCssPerRule?: boolean;
   identifiers?: IdentifierOption;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
@@ -253,7 +284,9 @@ export const createCompiler = ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
+  unstable_splitCssPerRule: splitCssPerRule = false,
   viteConfig,
+  enableFileWatcher,
   viteResolve,
   vitePlugins,
 }: CreateCompilerOptions): Compiler => {
@@ -269,6 +302,7 @@ export const createCompiler = ({
       resolve: viteResolve,
       plugins: vitePlugins,
     },
+    enableFileWatcher,
   });
 
   const processVanillaFileCache = new Map<
@@ -279,7 +313,7 @@ export const createCompiler = ({
     }
   >();
 
-  const cssCache = new NormalizedMap<{ css: string }>(root);
+  const cssCache = new NormalizedMap<{ css: string; cssRules: string[] }>(root);
   const classRegistrationsByModuleId = new NormalizedMap<{
     localClassNames: Set<string>;
     composedClassLists: Array<Composition>;
@@ -385,8 +419,8 @@ export const createCompiler = ({
             throw new Error(`Can't find ModuleNode for ${filePath}`);
           }
 
-          const cssImports = [];
-          const orderedComposedClassLists = [];
+          const cssImports: string[] = [];
+          const orderedComposedClassLists: Composition[] = [];
 
           const scanModule = createModuleScanner();
           const { cssDeps, watchFiles } = scanModule(moduleNode);
@@ -409,17 +443,20 @@ export const createCompiler = ({
             }
 
             if (cssObjs) {
-              let css = '';
+              let cssRules: string[] = [];
 
               if (cssObjs.length > 0) {
-                css = transformCss({
+                cssRules = transformCss({
                   localClassNames: Array.from(localClassNames),
                   composedClassLists: orderedComposedClassLists,
                   cssObjs,
-                }).join('\n');
+                });
               }
 
-              cssCache.set(cssDepModuleId, { css });
+              cssCache.set(cssDepModuleId, {
+                css: cssRules.join('\n'),
+                cssRules,
+              });
             } else if (cachedClassRegistrations) {
               cachedClassRegistrations.localClassNames.forEach(
                 (localClassName) => {
@@ -431,10 +468,23 @@ export const createCompiler = ({
               );
             }
 
-            if (cssObjs || cachedCss?.css) {
-              cssImports.push(
-                `import '${cssImportSpecifier(cssDepModuleId)}';`,
-              );
+            const { css = '', cssRules = [] } =
+              cssCache.get(cssDepModuleId) ?? {};
+
+            if (cssObjs || css) {
+              if (splitCssPerRule) {
+                const importSpecifiers = await Promise.all(
+                  cssRules.map((rule, i) =>
+                    cssImportSpecifier(cssDepModuleId + `#${i}`, rule),
+                  ),
+                );
+                for (const specifier of importSpecifiers) {
+                  cssImports.push(`import '${specifier}';`);
+                }
+              } else {
+                const specifier = await cssImportSpecifier(cssDepModuleId, css);
+                cssImports.push(`import '${specifier}';`);
+              }
             }
           }
 
@@ -462,6 +512,21 @@ export const createCompiler = ({
 
       return result;
     },
+    async unstable_invalidateAllModules() {
+      const { server, runner } = await vitePromise;
+
+      for (const [key] of runner.moduleCache.entries()) {
+        if (!key.includes('node_modules')) {
+          runner.moduleCache.delete(key);
+        }
+      }
+
+      for (const [id, moduleNode] of server.moduleGraph.idToModuleMap) {
+        if (!id.includes('node_modules')) {
+          server.moduleGraph.invalidateModule(moduleNode);
+        }
+      }
+    },
     getCssForFile(filePath: string) {
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const moduleId = normalizePath(filePath);
@@ -481,6 +546,17 @@ export const createCompiler = ({
       const { server } = await vitePromise;
 
       await server.close();
+    },
+    getAllCss() {
+      let allCss = '';
+
+      for (const { css } of cssCache.values()) {
+        if (css) {
+          allCss += css + '\n';
+        }
+      }
+
+      return allCss;
     },
   };
 };

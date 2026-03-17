@@ -1,5 +1,76 @@
 # @vanilla-extract/css
 
+## 1.19.0
+
+### Minor Changes
+
+- [#1686](https://github.com/vanilla-extract-css/vanilla-extract/pull/1686) [`1a63a60`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1a63a600b7a707f9317ce5f6607998eba4eb9c99) Thanks [@askoufis](https://github.com/askoufis)! - Add `./vanilla.virtual.css?*` entrypoint for Turbopack integration
+
+## 1.18.0
+
+### Minor Changes
+
+- [#1566](https://github.com/vanilla-extract-css/vanilla-extract/pull/1566) [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea) Thanks [@lfantone](https://github.com/lfantone)! - `style`: Add support for `@starting-style` rules
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { style } from '@vanilla-extact/css';
+  export const styleWithStartingStyle = style({
+    backgroundColor: 'black',
+    '@starting-style': {
+      backgroundColor: 'white'
+    }
+  });
+  ```
+
+### Patch Changes
+
+- [#1646](https://github.com/vanilla-extract-css/vanilla-extract/pull/1646) [`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a) Thanks [@plesiecki](https://github.com/plesiecki)! - Swap the order of `createVar`'s overloads to enable inference of `VarDelcaration` type
+
+- [#1666](https://github.com/vanilla-extract-css/vanilla-extract/pull/1666) [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a) Thanks [@askoufis](https://github.com/askoufis)! - Remove custom container properties type
+
+  The [`csstype`] package used by Vanilla Extract now provides types for container properties, so the custom type definitions that were previously necessary have been removed.
+
+  [`csstype`]: https://www.npmjs.com/package/csstype
+
+## 1.17.5
+
+### Patch Changes
+
+- [#1655](https://github.com/vanilla-extract-css/vanilla-extract/pull/1655) [`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd) Thanks [@askoufis](https://github.com/askoufis)! - Update `csstype` dependency to `^3.2.3`
+
+## 1.17.4
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+- Updated dependencies [[`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd)]:
+  - @vanilla-extract/private@1.0.9
+
+## 1.17.3
+
+### Patch Changes
+
+- [#1596](https://github.com/vanilla-extract-css/vanilla-extract/pull/1596) [`f0533be`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f0533be939e6835ae961e3dd10b764c0c052ee75) Thanks [@cqh963852](https://github.com/cqh963852)! - `addFunctionSerializer`: Fix `args` type to support arrays of primitive values
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`9d16de8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9d16de85b149b531f2e049e8d93bdb862667ff1f), [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/private@1.0.8
+
+## 1.17.2
+
+### Patch Changes
+
+- [#1557](https://github.com/vanilla-extract-css/vanilla-extract/pull/1557) [`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8) Thanks [@askoufis](https://github.com/askoufis)! - `css`: Improve type-checking performance of string literal types that include CSS variables
+
+- [#1560](https://github.com/vanilla-extract-css/vanilla-extract/pull/1560) [`c66be53`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c66be53d600802b2922da1d6034e2a5ff3fbbcae) Thanks [@andjsrk](https://github.com/andjsrk)! - Remove unnecessary intersections in a few types
+
+- Updated dependencies [[`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8)]:
+  - @vanilla-extract/private@1.0.7
+
 ## 1.17.1
 
 ### Patch Changes

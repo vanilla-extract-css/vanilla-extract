@@ -1,4 +1,4 @@
-import { MapLeafNodes } from './types';
+import type { MapLeafNodes } from './types';
 
 type Primitive = string | number | null | undefined;
 

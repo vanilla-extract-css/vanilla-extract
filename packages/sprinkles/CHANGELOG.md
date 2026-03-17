@@ -1,5 +1,17 @@
 # @vanilla-extract/sprinkles
 
+## 1.6.5
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+## 1.6.4
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
 ## 1.6.3
 
 ### Patch Changes
@@ -34,7 +46,7 @@
   export const sprinklesLayer = layer();
 
   const properties = defineProperties({
-    '@layer': sprinklesLayer,
+    '@layer': sprinklesLayer
     // etc.
   });
   ```
@@ -67,27 +79,30 @@
   **Example usage**
 
   ```ts
-  import { createContainer, style } from '@vanilla-extract/css';
+  import {
+    createContainer,
+    style
+  } from '@vanilla-extract/css';
   import { defineProperties } from '@vanilla-extract/sprinkles';
 
   const containerName = createContainer();
 
   export const container = style({
     containerName,
-    containerType: 'size',
+    containerType: 'size'
   });
 
   const containerProperties = defineProperties({
     conditions: {
       small: {},
       medium: {
-        '@container': `${containerName} (min-width: 768px)`,
+        '@container': `${containerName} (min-width: 768px)`
       },
       large: {
-        '@container': `${containerName} (min-width: 1024px)`,
-      },
+        '@container': `${containerName} (min-width: 1024px)`
+      }
     },
-    defaultCondition: 'small',
+    defaultCondition: 'small'
     // etc.
   });
   ```
@@ -178,10 +193,12 @@
 
   const responsiveStyles = createAtomicStyles({
     conditions: {
-      lightMode: { '@media': '(prefers-color-scheme: light)' },
-      darkMode: { '@media': '(prefers-color-scheme: dark)' },
+      lightMode: {
+        '@media': '(prefers-color-scheme: light)'
+      },
+      darkMode: { '@media': '(prefers-color-scheme: dark)' }
     },
-    defaultCondition: ['lightMode', 'darkMode'],
+    defaultCondition: ['lightMode', 'darkMode']
     // etc.
   });
   ```
@@ -223,15 +240,15 @@
       background: {
         red: {
           vars: { [alpha]: '1' },
-          background: `rgba(255, 0, 0, ${alpha})`,
-        },
+          background: `rgba(255, 0, 0, ${alpha})`
+        }
       },
       backgroundOpacity: {
         1: { vars: { [alpha]: '1' } },
-        0.1: { vars: { [alpha]: '0.1' } },
-      },
+        0.1: { vars: { [alpha]: '0.1' } }
+      }
       // etc.
-    },
+    }
   });
   ```
 
@@ -253,11 +270,11 @@
   import { atoms } from './sprinkles.css.ts';
 
   export const container = atoms({
-    padding: 'small',
+    padding: 'small'
   });
 
   globalStyle(`${container} *`, {
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   });
   ```
 
@@ -382,13 +399,13 @@
     conditions: {
       mobile: {},
       desktop: {
-        '@media': 'screen and (min-width: 786px)',
-      },
+        '@media': 'screen and (min-width: 786px)'
+      }
     },
     responsiveArray: ['mobile', 'desktop'],
     properties: {
-      opacity: [0, 1],
-    },
+      opacity: [0, 1]
+    }
   });
   ```
 

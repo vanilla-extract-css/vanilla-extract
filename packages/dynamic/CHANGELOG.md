@@ -1,5 +1,30 @@
 # @vanilla-extract/dynamic
 
+## 2.1.5
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+- Updated dependencies [[`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd)]:
+  - @vanilla-extract/private@1.0.9
+
+## 2.1.4
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies [[`9d16de8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9d16de85b149b531f2e049e8d93bdb862667ff1f), [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e)]:
+  - @vanilla-extract/private@1.0.8
+
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`134117d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/134117d32e25d92edc24c8c863d757294d7b5df8)]:
+  - @vanilla-extract/private@1.0.7
+
 ## 2.1.2
 
 ### Patch Changes
@@ -28,7 +53,11 @@
 
   ```tsx
   import { assignInlineVars } from '@vanilla-extract/dynamic';
-  import { container, brandColor, textColor } from './styles.css.ts';
+  import {
+    container,
+    brandColor,
+    textColor
+  } from './styles.css.ts';
 
   // If `tone` is `undefined`, the following inline style becomes:
   // { '--brandColor__8uideo0': 'pink' }
@@ -38,7 +67,7 @@
       className={container}
       style={assignInlineVars({
         [brandColor]: 'pink',
-        [textColor]: tone === 'critical' ? 'red' : null,
+        [textColor]: tone === 'critical' ? 'red' : null
       })}
     >
       ...
@@ -60,7 +89,7 @@
 
   setElementVars(el, {
     [brandColor]: 'pink',
-    [textColor]: null,
+    [textColor]: null
   });
   ```
 
@@ -107,7 +136,7 @@
     <section
       style={assignInlineVars({
         [vars.colors.brand]: 'pink',
-        [vars.colors.accent]: 'green',
+        [vars.colors.accent]: 'green'
       })}
     >
       ...
@@ -127,7 +156,7 @@
     <section
       style={assignInlineVars(vars.colors, {
         brand: 'pink',
-        accent: 'green',
+        accent: 'green'
       })}
     >
       ...
@@ -146,7 +175,7 @@
   document.write(`
     <section style="${assignInlineVars({
       [vars.colors.brand]: 'pink',
-      [vars.colors.accent]: 'green',
+      [vars.colors.accent]: 'green'
     })}">
       ...
     </section>
@@ -167,7 +196,7 @@
 
   setElementVars(el, {
     [vars.colors.brand]: 'pink',
-    [vars.colors.accent]: 'green',
+    [vars.colors.accent]: 'green'
   });
   ```
 
@@ -183,7 +212,7 @@
 
   setElementVars(el, vars.colors, {
     brand: 'pink',
-    accent: 'green',
+    accent: 'green'
   });
   ```
 

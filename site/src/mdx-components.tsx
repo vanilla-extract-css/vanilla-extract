@@ -1,8 +1,8 @@
 import {
-  ReactNode,
-  ComponentProps,
-  AllHTMLAttributes,
-  ElementType,
+  type ReactNode,
+  type ComponentProps,
+  type AllHTMLAttributes,
+  type ElementType,
   createElement,
   Children,
 } from 'react';
@@ -12,10 +12,10 @@ import { Box } from './system';
 import InlineCode from './InlineCode/InlineCode';
 import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
-import { HeadingLevel, useHeadingStyles } from './Typography/Heading';
+import { type HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
-import { CompiledCode, CompiledCodeProps } from './Code/CompiledCode';
-import { BoxProps } from './system/Box/Box';
+import { CompiledCode, type CompiledCodeProps } from './Code/CompiledCode';
+import { type BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
@@ -52,8 +52,8 @@ const RemoveNestedParagraphs = (props: { children: ReactNode }) => (
 
 const A = ({
   href,
-  color, // Omit
-  type, // Omit
+  color: _color,
+  type: _type,
   ...restProps
 }: JSX.IntrinsicElements['a']) => {
   let isInlineCodeLink = false;
@@ -80,7 +80,7 @@ const A = ({
       highlightOnFocus={!isInlineCodeLink}
       className={
         isInlineCodeLink
-          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'gray200' } })
+          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'zinc200' } })
           : undefined
       }
     />
@@ -214,7 +214,7 @@ export default {
     let resolvedTitle = '';
     let resolvedChildren = dangerouslySetInnerHTML.__html;
     const matches = resolvedChildren.match(
-      /^(?<node>\<span class=\".*\"\>(?:\/[\/*])(?:\s)?(?<title>[^*\/]*)(?:\*\/)?\<\/span\>)/,
+      /^(?<node><span class=".*">(?:\/[/*])(?:\s)?(?<title>[^*/]*)(?:\*\/)?<\/span>)/,
     );
 
     if (matches && matches.groups) {

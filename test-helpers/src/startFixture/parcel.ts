@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Parcel } from '@parcel/core';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export interface ParcelFixtureOptions {
   type: 'parcel';
@@ -34,6 +34,8 @@ export const startParcelFixture = async (
     logLevel: 'verbose',
   });
 
+  // Not sure how to remove the `async` here
+  // oxlint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const subscription = await bundler.watch((err, buildEvent) => {
       if (err) {

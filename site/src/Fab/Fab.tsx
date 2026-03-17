@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { Box } from '../system';
 import * as styles from './Fab.css';
 
@@ -13,26 +13,26 @@ export const Fab = ({
     <Box
       component="button"
       position="relative"
-      background={{ lightMode: 'white', darkMode: 'gray300' }}
+      background={{ lightMode: 'white', darkMode: 'zinc300' }}
       borderRadius="full"
       zIndex={0}
       cursor="pointer"
       onClick={onClick}
-      className={classnames(styles.fab, open ? styles.isOpen : null)}
+      className={clsx(styles.fab, open ? styles.isOpen : null)}
     >
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box
         position="absolute"
-        background={{ lightMode: 'coolGray900', darkMode: 'gray800' }}
+        background={{ lightMode: 'gray900', darkMode: 'zinc800' }}
         className={styles.bar}
       />
       <Box

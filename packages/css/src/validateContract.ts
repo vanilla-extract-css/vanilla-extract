@@ -1,10 +1,16 @@
-import { Contract, walkObject } from '@vanilla-extract/private';
+import { type Contract, walkObject } from '@vanilla-extract/private';
 import { diff } from 'deep-object-diff';
 import pc from 'picocolors';
 
 const normaliseObject = (obj: Contract) => walkObject(obj, () => '');
 
-export function validateContract(contract: any, tokens: any) {
+export function validateContract(
+  contract: any,
+  tokens: any,
+): {
+  valid: boolean;
+  diffString: string;
+} {
   const theDiff = diff(normaliseObject(contract), normaliseObject(tokens));
   const valid = Object.keys(theDiff).length === 0;
 

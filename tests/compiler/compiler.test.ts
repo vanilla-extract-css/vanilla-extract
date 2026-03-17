@@ -1,6 +1,8 @@
 import path from 'path';
+import { afterAll, describe, expect, test } from 'vitest';
 import { createCompiler } from '@vanilla-extract/compiler';
 import { normalizePath } from '@vanilla-extract/integration';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
@@ -17,63 +19,74 @@ function getLocalFiles(files: Set<string>) {
 }
 
 describe('compiler', () => {
-  let compilers: Record<
-    | 'default'
-    | 'cssImportSpecifier'
-    | 'shortIdentifiers'
-    | 'viteResolve'
-    | 'vitePlugins'
-    | 'tsconfigPaths',
-    ReturnType<typeof createCompiler>
-  >;
-
-  beforeAll(async () => {
-    const tsconfigPaths = (await import('vite-tsconfig-paths')).default;
-
-    compilers = {
-      default: createCompiler({
-        root: __dirname,
-      }),
-      cssImportSpecifier: createCompiler({
-        root: __dirname,
-        cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
-      }),
-      shortIdentifiers: createCompiler({
-        root: __dirname,
-        identifiers: 'short',
-      }),
-      viteResolve: createCompiler({
-        root: __dirname,
-        viteResolve: {
-          alias: {
-            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+  const compilers = {
+    default: createCompiler({
+      root: __dirname,
+    }),
+    cssImportSpecifier: createCompiler({
+      root: __dirname,
+      cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
+    }),
+    shortIdentifiers: createCompiler({
+      root: __dirname,
+      identifiers: 'short',
+    }),
+    viteResolve: createCompiler({
+      root: __dirname,
+      viteResolve: {
+        alias: {
+          '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+        },
+      },
+    }),
+    vitePlugins: createCompiler({
+      root: __dirname,
+      vitePlugins: [
+        {
+          name: 'test-plugin',
+          resolveId(id) {
+            if (id === '~/vars') {
+              return '\0resolved-vars';
+            }
+          },
+          load: (id) => {
+            if (id === '\0resolved-vars') {
+              return `export const color = "green"`;
+            }
           },
         },
-      }),
-      vitePlugins: createCompiler({
-        root: __dirname,
-        vitePlugins: [
-          {
-            name: 'test-plugin',
-            resolveId(id) {
-              if (id === '~/vars') {
-                return '\0resolved-vars';
-              }
-            },
-            load: (id) => {
-              if (id === '\0resolved-vars') {
-                return `export const color = "green"`;
-              }
-            },
-          },
-        ],
-      }),
-      tsconfigPaths: createCompiler({
-        root: __dirname,
-        vitePlugins: [tsconfigPaths()],
-      }),
-    };
-  });
+      ],
+    }),
+    tsconfigPaths: createCompiler({
+      root: __dirname,
+      vitePlugins: [tsconfigPaths()],
+    }),
+    basePath: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        base: '/assets/',
+      },
+    }),
+    getAllCss: createCompiler({
+      root: __dirname,
+    }),
+    assetsInlineLimit: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        build: {
+          assetsInlineLimit: 512,
+        },
+      },
+    }),
+    assetsNoInlineLimit: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        build: {
+          assetsInlineLimit: 0,
+        },
+      },
+    }),
+  } as const;
 
   afterAll(async () => {
     await Promise.allSettled(
@@ -518,6 +531,106 @@ describe('compiler', () => {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+      }
+    `);
+  });
+
+  test('base path should be ignored', async () => {
+    const compiler = compilers.basePath;
+
+    const cssPath = path.join(__dirname, 'fixtures/vite-config/image.css.ts');
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/vite-config/image.css.ts.vanilla.css';
+      export var imageStyle1 = 'image_imageStyle1__1lseqzh0';
+      export var imageStyle2 = 'image_imageStyle2__1lseqzh1';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .image_imageStyle1__1lseqzh0 {
+        background-image: url('/fixtures/vite-config/test.jpg');
+      }
+      .image_imageStyle2__1lseqzh1 {
+        background-image: url('/fixtures/vite-config/test.jpg');
+      }
+    `);
+  });
+
+  test('getAllCss should return all CSS that has been processed', async () => {
+    const compiler = compilers.getAllCss;
+
+    const buttonCssPath = './fixtures/class-composition/button.css.ts';
+    await compiler.processVanillaFile(buttonCssPath);
+    const stepperCssPath = './fixtures/class-composition/stepper.css.ts';
+    await compiler.processVanillaFile(stepperCssPath);
+
+    expect(compiler.getAllCss()).toMatchInlineSnapshot(`
+      .base_fontFamilyBase__1xukjx0 {
+        font-family: Arial, sans-serif;
+      }
+      .base_base__1xukjx1 {
+        background: blue;
+      }
+      .button_button__59rihu0 {
+        color: red;
+      }
+      .stepper_stepperContainer__p034sj0 {
+        font-size: 32px;
+      }
+      .stepper_stepperContainer__p034sj0 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
+        border: 1px solid black;
+      }
+    `);
+  });
+
+  test('setting build.assetsInlineLimit = 0 should disable inlining', async () => {
+    const compiler = compilers.assetsNoInlineLimit;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/assets-inline-limit/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/assets-inline-limit/styles.css.ts.vanilla.css';
+      export var square = 'styles_square__upl4cj0';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .styles_square__upl4cj0 {
+        width: 100px;
+        height: 100px;
+        background-image: url("/fixtures/assets-inline-limit/square.svg");
+        background-size: cover;
+      }
+    `);
+  });
+
+  test('setting build.assetsInlineLimit = 512 should inline assets appropriately', async () => {
+    const compiler = compilers.assetsInlineLimit;
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/assets-inline-limit/styles.css.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    const { css } = compiler.getCssForFile(cssPath);
+
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/assets-inline-limit/styles.css.ts.vanilla.css';
+      export var square = 'styles_square__upl4cj0';
+    `);
+
+    expect(css).toMatchInlineSnapshot(`
+      .styles_square__upl4cj0 {
+        width: 100px;
+        height: 100px;
+        background-image: url("data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3c!--%20Uploaded%20to:%20SVG%20Repo,%20www.svgrepo.com,%20Generator:%20SVG%20Repo%20Mixer%20Tools%20--%3e%3csvg%20width='800px'%20height='800px'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='1'%20y='1'%20width='14'%20height='14'%20fill='%23000000'/%3e%3c/svg%3e");
+        background-size: cover;
       }
     `);
   });

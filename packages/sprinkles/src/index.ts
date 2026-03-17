@@ -1,17 +1,17 @@
 import {
   style,
   composeStyles,
-  CSSProperties,
-  StyleRule,
+  type CSSProperties,
+  type StyleRule,
 } from '@vanilla-extract/css';
 import { addRecipe } from '@vanilla-extract/css/recipe';
 import { hasFileScope } from '@vanilla-extract/css/fileScope';
 
 import {
-  SprinklesFn,
+  type SprinklesFn,
   createSprinkles as internalCreateSprinkles,
 } from './createSprinkles';
-import { SprinklesProperties, ResponsiveArrayConfig } from './types';
+import type { SprinklesProperties, ResponsiveArrayConfig } from './types';
 
 export { createNormalizeValueFn, createMapValueFn } from './createUtils';
 export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
@@ -70,8 +70,8 @@ type Values<Property, Result> = {
   [Value in Property extends ReadonlyArray<any>
     ? Property[number]
     : Property extends Array<any>
-    ? Property[number]
-    : keyof Property]: Result;
+      ? Property[number]
+      : keyof Property]: Result;
 };
 
 type UnconditionalAtomicStyles<Properties extends AtomicProperties> = {
@@ -374,8 +374,9 @@ export function createSprinkles<
   });
 }
 
-/** @deprecated - Use `defineProperties` */
-export const createAtomicStyles = defineProperties;
-
-/** @deprecated - Use `createSprinkles` */
-export const createAtomsFn = createSprinkles;
+export {
+  /** @deprecated - Use `defineProperties` */
+  defineProperties as createAtomicStyles,
+  /** @deprecated - Use `createSprinkles` */
+  createSprinkles as createAtomsFn,
+};

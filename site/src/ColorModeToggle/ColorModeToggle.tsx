@@ -3,7 +3,7 @@ import {
   useState,
   createContext,
   useContext,
-  ReactNode,
+  type ReactNode,
 } from 'react';
 import { Box } from '../system';
 import * as styles from './ColorModeToggle.css';
@@ -38,7 +38,7 @@ export function ColorModeProvider({ children }: { children: ReactNode }) {
 
     try {
       localStorage.setItem(themeKey, c);
-    } catch (e) {}
+    } catch {}
   };
 
   return (

@@ -41,11 +41,19 @@ body ._1o6ek507 {
 body ._1o6ek50a {
   font-size: 24px;
 }
+._1o6ek50b {
+  background-color: black;
+}
 @media screen and (min-width: 700px) {
   ._1o6ek500 {
     color: plum;
   }
   ._1o6ek500:after {
     content: "Above 700px";
+  }
+}
+@starting-style {
+  ._1o6ek50b {
+    background-color: white;
   }
 }

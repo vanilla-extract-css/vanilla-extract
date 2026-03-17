@@ -1,10 +1,11 @@
-import { createElement, AllHTMLAttributes, ElementType } from 'react';
-import classnames from 'classnames';
+import { createElement, type AllHTMLAttributes, type ElementType } from 'react';
+import clsx from 'clsx';
 import * as resetStyles from '../styles/reset.css';
-import { sprinkles, Sprinkles } from '../styles/sprinkles.css';
+import { sprinkles, type Sprinkles } from '../styles/sprinkles.css';
 
 export interface BoxProps
-  extends Omit<
+  extends
+    Omit<
       AllHTMLAttributes<HTMLElement>,
       | 'className'
       | 'content'
@@ -16,7 +17,7 @@ export interface BoxProps
     >,
     Sprinkles {
   component?: ElementType;
-  className?: Parameters<typeof classnames>[0];
+  className?: Parameters<typeof clsx>[0];
 }
 
 export const Box = ({
@@ -64,7 +65,7 @@ export const Box = ({
   overflow,
   ...restProps
 }: BoxProps) => {
-  const atomClasses = classnames(
+  const atomClasses = clsx(
     resetStyles.base,
     resetStyles.element[component as keyof typeof resetStyles.element],
     sprinkles({

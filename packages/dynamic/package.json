@@ -1,6 +1,6 @@
 {
   "name": "@vanilla-extract/dynamic",
-  "version": "2.1.2",
+  "version": "2.1.5",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
   "sideEffects": false,
   "main": "dist/vanilla-extract-dynamic.cjs.js",

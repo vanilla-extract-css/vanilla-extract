@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Box, Stack } from '../system';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
@@ -24,7 +24,7 @@ export const Tweet = ({ handle, name, avatar, url, children }: TweetProps) => (
           <Box
             // borderRadius="full"
             className={styles.avatar}
-            background={{ lightMode: 'coolGray100', darkMode: 'black' }}
+            background={{ lightMode: 'gray100', darkMode: 'black' }}
             style={{
               backgroundImage: `url(${avatar})`,
               backgroundSize: 'cover',

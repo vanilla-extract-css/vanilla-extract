@@ -1,4 +1,9 @@
-import { types as t, PluginObj, PluginPass, NodePath } from '@babel/core';
+import {
+  types as t,
+  type PluginObj,
+  type PluginPass,
+  type NodePath,
+} from '@babel/core';
 
 const packageIdentifiers = new Set([
   '@vanilla-extract/css',

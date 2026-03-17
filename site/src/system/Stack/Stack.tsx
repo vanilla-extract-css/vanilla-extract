@@ -1,7 +1,10 @@
-import { Children, ReactNode } from 'react';
+import { Children, type ReactNode } from 'react';
 import { Box } from '../';
-import { BoxProps } from '../Box/Box';
-import { mapResponsiveValue, ResponsiveValue } from '../styles/sprinkles.css';
+import type { BoxProps } from '../Box/Box';
+import {
+  mapResponsiveValue,
+  type ResponsiveValue,
+} from '../styles/sprinkles.css';
 
 const alignToFlexAlign = {
   left: 'flex-start',

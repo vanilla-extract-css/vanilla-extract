@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Box } from '../';
 import * as styles from './ContentBlock.css';
-import { BoxProps } from '../Box/Box';
+import type { BoxProps } from '../Box/Box';
 
 export const ContentBlock = ({
   children,

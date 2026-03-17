@@ -5,8 +5,8 @@ import {
   defineProperties,
   createMapValueFn,
   createNormalizeValueFn,
-  ConditionalValue,
-  RequiredConditionalValue,
+  type ConditionalValue,
+  type RequiredConditionalValue,
 } from '@vanilla-extract/sprinkles';
 import { createSprinkles } from '@vanilla-extract/sprinkles';
 
@@ -17,9 +17,9 @@ import {
   conditionalPropertiesWithoutResponsiveArray,
 } from './index.css';
 
-// @ts-expect-error Unused args
-const noop = (...args: Array<any>) => {};
+const noop = (..._args: Array<any>) => {};
 
+// oxlint-disable-next-line no-unused-expressions
 () => {
   const sprinkles = createSprinkles(
     propertiesWithShorthands,
@@ -143,9 +143,11 @@ const noop = (...args: Array<any>) => {};
   testGenericNormalizeValue('');
 
   // @ts-expect-error - Strings shouldn't map to objects
+  // oxlint-disable-next-line no-unused-expressions
   mapValue(alignProp, () => 'baz').mobile;
 
   // @ts-expect-error - Numbers shouldn't map to objects
+  // oxlint-disable-next-line no-unused-expressions
   mapValue(3, () => 4).mobile;
 
   const mapValueWithoutDefaultCondition = createMapValueFn(

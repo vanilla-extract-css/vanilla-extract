@@ -1,4 +1,4 @@
-export function get(obj: any, path: Array<string>) {
+export function get(obj: any, path: Array<string>): any {
   let result = obj;
 
   for (const key of path) {

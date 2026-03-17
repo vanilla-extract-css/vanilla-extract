@@ -1,12 +1,12 @@
 import portfinder from 'portfinder';
 
-import { startWebpackFixture, WebpackFixtureOptions } from './webpack';
-import { startEsbuildFixture, EsbuildFixtureOptions } from './esbuild';
-import { startViteFixture, ViteFixtureOptions } from './vite';
-import { startParcelFixture, ParcelFixtureOptions } from './parcel';
-import { NextFixtureOptions, startNextFixture } from './next';
+import { startWebpackFixture, type WebpackFixtureOptions } from './webpack';
+import { startEsbuildFixture, type EsbuildFixtureOptions } from './esbuild';
+import { startViteFixture, type ViteFixtureOptions } from './vite';
+import { startParcelFixture, type ParcelFixtureOptions } from './parcel';
+import { type NextFixtureOptions, startNextFixture } from './next';
 
-import { TestServer } from './types';
+import type { TestServer } from './types';
 
 export * from './types';
 
@@ -69,7 +69,11 @@ export async function startFixture(
     });
   }
 
-  if (type === 'next-pages-router' || type === 'next-app-router') {
+  if (
+    type === 'next-12-pages-router' ||
+    type === 'next-13-app-router' ||
+    type === 'next-16-app-pages-router'
+  ) {
     return startNextFixture({
       type,
       port,

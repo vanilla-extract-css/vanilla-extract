@@ -7,8 +7,8 @@ import {
   getSourceFromVirtualCssFile,
   compile,
   vanillaExtractTransformPlugin,
-  IdentifierOption,
-  CompileOptions,
+  type IdentifierOption,
+  type CompileOptions,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 
@@ -70,7 +70,7 @@ export function vanillaExtractPlugin({
       );
 
       build.onLoad({ filter: cssFileFilter }, async ({ path }) => {
-        const combinedEsbuildOptions = { ...esbuildOptions } ?? {};
+        const combinedEsbuildOptions = { ...esbuildOptions };
         const identOption =
           identifiers ?? (build.initialOptions.minify ? 'short' : 'debug');
 

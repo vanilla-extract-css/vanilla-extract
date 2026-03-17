@@ -1,4 +1,5 @@
-import { isEqual, dudupeAndJoinClassList } from './utils';
+import { describe, expect, it } from 'vitest';
+import { isEqual, dedupeAndJoinClassList } from './utils';
 
 describe('isEqual', () => {
   it.each([
@@ -15,7 +16,7 @@ describe('isEqual', () => {
   });
 });
 
-describe('dudupeAndJoinClassList', () => {
+describe('dedupeAndJoinClassList', () => {
   it.each([
     { args: ['1'], output: '1' },
     { args: ['1 1'], output: '1' },
@@ -36,6 +37,6 @@ describe('dudupeAndJoinClassList', () => {
     { args: [' 1  2  3  2 ', ' 2  3  4 2 ', ' 1  5  1 '], output: '1 2 3 4 5' },
     { args: ['1', '', '2'], output: '1 2' },
   ])('composeStyles', ({ args, output }) => {
-    expect(dudupeAndJoinClassList(args)).toBe(output);
+    expect(dedupeAndJoinClassList(args)).toBe(output);
   });
 });

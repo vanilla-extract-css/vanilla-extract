@@ -4,7 +4,7 @@ import {
   createSprinkles,
   createMapValueFn,
   createNormalizeValueFn,
-  ConditionalValue,
+  type ConditionalValue,
 } from '@vanilla-extract/sprinkles';
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';

@@ -7,7 +7,7 @@ import {
 import {
   cssFileFilter,
   vanillaExtractTransformPlugin,
-  IdentifierOption,
+  type IdentifierOption,
 } from '@vanilla-extract/integration';
 import type { Plugin } from 'esbuild';
 

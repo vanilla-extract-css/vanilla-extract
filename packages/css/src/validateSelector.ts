@@ -4,10 +4,13 @@ import dedent from 'dedent';
 
 // https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
 function escapeRegex(string: string) {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
-export const validateSelector = (selector: string, targetClassName: string) => {
+export const validateSelector = (
+  selector: string,
+  targetClassName: string,
+): void => {
   const replaceTarget = () => {
     const targetRegex = new RegExp(
       `.${escapeRegex(cssesc(targetClassName, { isIdentifier: true }))}`,
@@ -21,7 +24,7 @@ export const validateSelector = (selector: string, targetClassName: string) => {
   try {
     selectorParts = parse(selector);
   } catch (err) {
-    throw new Error(`Invalid selector: ${replaceTarget()}`);
+    throw new Error(`Invalid selector: ${replaceTarget()}`, { cause: err });
   }
 
   selectorParts.forEach((tokens) => {
@@ -64,6 +67,7 @@ export const validateSelector = (selector: string, targetClassName: string) => {
         
         If your selector is targeting something global, use the 'globalStyle' function instead, e.g. if you wanted to write ${'`& h1`'}, you should instead write 'globalStyle(${'`${parent} h1`'}, { ... })'
       `,
+        { cause: err },
       );
     }
   });

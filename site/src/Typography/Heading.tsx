@@ -1,9 +1,9 @@
-import { ElementType, ReactNode } from 'react';
-import classnames from 'classnames';
+import type { ElementType, ReactNode } from 'react';
+import clsx from 'clsx';
 
 import * as styles from './typography.css';
 import { Box } from '../system';
-import { sprinkles, Sprinkles } from '../system/styles/sprinkles.css';
+import { sprinkles, type Sprinkles } from '../system/styles/sprinkles.css';
 
 export type HeadingLevel = keyof typeof styles.heading;
 
@@ -37,11 +37,11 @@ export const useHeadingStyles = (
   branded?: boolean,
   align?: Sprinkles['textAlign'],
 ) =>
-  classnames(
+  clsx(
     branded ? styles.font.brand : styles.font.heading,
     sprinkles({
       textAlign: align,
-      color: { lightMode: 'coolGray900', darkMode: 'gray100' },
+      color: { lightMode: 'gray900', darkMode: 'zinc100' },
     }),
     styles.heading[level].trimmed,
   );

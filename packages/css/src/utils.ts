@@ -5,7 +5,7 @@ type BasicObj = { [key: string]: any };
 export function forEach<Input extends BasicObj>(
   obj: Input | undefined,
   fn: <Key extends keyof Input>(value: Input[Key], key: string) => void,
-) {
+): void {
   for (const key in obj) {
     fn(obj[key], key);
   }
@@ -85,7 +85,7 @@ function composeStylesIntoSet(
   }
 }
 
-export function dudupeAndJoinClassList(classNames: Array<ClassNames>) {
+export function dedupeAndJoinClassList(classNames: Array<ClassNames>) {
   const set: Set<string> = new Set();
 
   composeStylesIntoSet(set, ...classNames);

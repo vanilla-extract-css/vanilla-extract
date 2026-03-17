@@ -1,9 +1,9 @@
-import { Children, ReactNode } from 'react';
+import { Children, type ReactNode } from 'react';
 import { Box } from '../Box/Box';
 import {
   mapResponsiveValue,
-  ResponsiveValue,
-  Space,
+  type ResponsiveValue,
+  type Space,
 } from '../styles/sprinkles.css';
 
 interface Props {

@@ -44,7 +44,7 @@ function render() {
             <div style="${inlineTheme}">
               Inline theme
                 <div id="${testNodes.inlineThemeContainer}" class="${container}">
-                  <button id="${testNodes.inlineThemeButton}" class="${button} ${opacity['1/2']}">Inline theme button</button>
+                  <button id="${testNodes.inlineThemeButton}" class="${button} ${opacity['1/2']}">Inline theme <span class="{${opacity['1/4']}}">button</span></button>
                   <div>
                   Dynamic vars
                     <div id="${testNodes.dynamicVarsContainer}" class="${container}">

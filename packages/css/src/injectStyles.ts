@@ -6,7 +6,7 @@ interface InjectStylesOptions {
   fileScope: FileScope;
   css: string;
 }
-export const injectStyles = ({ fileScope, css }: InjectStylesOptions) => {
+export const injectStyles = ({ fileScope, css }: InjectStylesOptions): void => {
   const fileScopeId = fileScope.packageName
     ? [fileScope.packageName, fileScope.filePath].join('/')
     : fileScope.filePath;

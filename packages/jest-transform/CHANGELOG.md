@@ -1,5 +1,60 @@
 # @vanilla-extract/jest-transform
 
+## 1.1.21
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.8
+
+## 1.1.20
+
+### Patch Changes
+
+- Updated dependencies [[`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704)]:
+  - @vanilla-extract/integration@8.0.7
+
+## 1.1.19
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.6
+
+## 1.1.18
+
+### Patch Changes
+
+- [#1653](https://github.com/vanilla-extract-css/vanilla-extract/pull/1653) [`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1) Thanks [@askoufis](https://github.com/askoufis)! - Update `esbuild` dependency range to include `^0.26.0` and `^0.27.0`
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
+## 1.1.17
+
+### Patch Changes
+
+- [#1610](https://github.com/vanilla-extract-css/vanilla-extract/pull/1610) [`2b0be1b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/2b0be1be15dcdc3df3248305fe80e566cce794cd) Thanks [@askoufis](https://github.com/askoufis)! - Revert "Improve ESM package entrypoints (#1597)" to fix `Named export not found` error when importing ESM entrypoints
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.4
+
+## 1.1.16
+
+### Patch Changes
+
+- [#1597](https://github.com/vanilla-extract-css/vanilla-extract/pull/1597) [`a7fccf8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a7fccf8a2626d610c060e095e0b9fb48a4ca5c9e) Thanks [@drwpow](https://github.com/drwpow)! - Fix ESM import path
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.3
+
+## 1.1.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.2
+
 ## 1.1.14
 
 ### Patch Changes

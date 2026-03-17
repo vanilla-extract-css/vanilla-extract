@@ -41,11 +41,19 @@ body .features_styleCompositionInSelector__1o6ek507 {
 body .features_styleVariantsCompositionInSelector_variant__1o6ek50a {
   font-size: 24px;
 }
+.features_styleWithStartingStyle__1o6ek50b {
+  background-color: black;
+}
 @media screen and (min-width: 700px) {
   .features_mergedStyle__1o6ek500 {
     color: plum;
   }
   .features_mergedStyle__1o6ek500:after {
     content: "Above 700px";
+  }
+}
+@starting-style {
+  .features_styleWithStartingStyle__1o6ek50b {
+    background-color: white;
   }
 }
