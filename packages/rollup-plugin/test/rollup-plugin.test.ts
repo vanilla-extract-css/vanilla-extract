@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import {
   rolldown,
   type InputOptions as RolldownInputOptions,

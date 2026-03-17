@@ -1,10 +1,12 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
+import '@testing-library/jest-dom/vitest';
+import { describe, expect, it } from 'vitest';
 import { screen } from '@testing-library/dom';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
-import { hide, padding, twentyTheme, blackBg, vars } from './jest-dom.css';
+import { hide, padding, twentyTheme, blackBg, vars } from './jsdom.css.ts';
 
 describe('jest-dom', () => {
   it('should attach css to nodes', () => {

@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { addFunctionSerializer } from '../../css/src/functionSerializer';
 import { serializeVanillaModule } from './processVanillaFile';
 

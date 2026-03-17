@@ -210,7 +210,7 @@ export function vanillaExtractPlugin({
       closeWatcher() {
         return compiler?.close();
       },
-      async transform(code, id, options = {}) {
+      async transform(code, id, options) {
         const [validId] = id.split('?');
 
         if (!cssFileFilter.test(validId)) {
@@ -242,7 +242,7 @@ export function vanillaExtractPlugin({
           };
 
           // We don't need to watch files or invalidate modules in build mode or during SSR
-          if (isBuild || options.ssr) {
+          if (isBuild || options?.ssr) {
             return result;
           }
 
