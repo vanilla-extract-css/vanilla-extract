@@ -11,37 +11,43 @@
 .features_styleWithComposition__1o6ek501:hover {
   background-color: slategray;
 }
-.features_styleVariantsWithComposition_variant__1o6ek502 {
+.features_styleWithNestedComposition__1o6ek502 {
   background-color: powderblue;
 }
-.features_styleVariantsWithComposition_variant__1o6ek502:hover {
+.features_styleWithNestedComposition__1o6ek502:hover {
   background-color: slategray;
 }
-.features_styleVariantsWithMappedComposition_variant__1o6ek503 {
+.features_styleVariantsWithComposition_variant__1o6ek503 {
   background-color: powderblue;
 }
-.features_styleVariantsWithMappedComposition_variant__1o6ek503:hover {
+.features_styleVariantsWithComposition_variant__1o6ek503:hover {
   background-color: slategray;
 }
-.features_styleCompositionInSelector__1o6ek505 {
-  color: white;
+.features_styleVariantsWithMappedComposition_variant__1o6ek504 {
+  background-color: powderblue;
+}
+.features_styleVariantsWithMappedComposition_variant__1o6ek504:hover {
+  background-color: slategray;
 }
 .features_styleCompositionInSelector__1o6ek506 {
-  background-color: black;
-}
-body .features_styleCompositionInSelector__1o6ek507 {
-  font-size: 24px;
-}
-.features_styleVariantsCompositionInSelector_variant__1o6ek508 {
   color: white;
 }
-.features_styleVariantsCompositionInSelector_variant__1o6ek509 {
+.features_styleCompositionInSelector__1o6ek507 {
   background-color: black;
 }
-body .features_styleVariantsCompositionInSelector_variant__1o6ek50a {
+body .features_styleCompositionInSelector__1o6ek508 {
   font-size: 24px;
 }
-.features_styleWithStartingStyle__1o6ek50b {
+.features_styleVariantsCompositionInSelector_variant__1o6ek509 {
+  color: white;
+}
+.features_styleVariantsCompositionInSelector_variant__1o6ek50a {
+  background-color: black;
+}
+body .features_styleVariantsCompositionInSelector_variant__1o6ek50b {
+  font-size: 24px;
+}
+.features_styleWithStartingStyle__1o6ek50c {
   background-color: black;
 }
 @media screen and (min-width: 700px) {
@@ -53,7 +59,7 @@ body .features_styleVariantsCompositionInSelector_variant__1o6ek50a {
   }
 }
 @starting-style {
-  .features_styleWithStartingStyle__1o6ek50b {
+  .features_styleWithStartingStyle__1o6ek50c {
     background-color: white;
   }
 }

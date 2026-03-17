@@ -11,37 +11,43 @@
 .features_styleWithComposition__87f2ru1:hover {
   background-color: slategray;
 }
-.features_styleVariantsWithComposition_variant__87f2ru2 {
+.features_styleWithNestedComposition__87f2ru2 {
   background-color: powderblue;
 }
-.features_styleVariantsWithComposition_variant__87f2ru2:hover {
+.features_styleWithNestedComposition__87f2ru2:hover {
   background-color: slategray;
 }
-.features_styleVariantsWithMappedComposition_variant__87f2ru3 {
+.features_styleVariantsWithComposition_variant__87f2ru3 {
   background-color: powderblue;
 }
-.features_styleVariantsWithMappedComposition_variant__87f2ru3:hover {
+.features_styleVariantsWithComposition_variant__87f2ru3:hover {
   background-color: slategray;
 }
-.features_styleCompositionInSelector__87f2ru5 {
-  color: white;
+.features_styleVariantsWithMappedComposition_variant__87f2ru4 {
+  background-color: powderblue;
+}
+.features_styleVariantsWithMappedComposition_variant__87f2ru4:hover {
+  background-color: slategray;
 }
 .features_styleCompositionInSelector__87f2ru6 {
-  background-color: black;
-}
-body .features_styleCompositionInSelector__87f2ru7 {
-  font-size: 24px;
-}
-.features_styleVariantsCompositionInSelector_variant__87f2ru8 {
   color: white;
 }
-.features_styleVariantsCompositionInSelector_variant__87f2ru9 {
+.features_styleCompositionInSelector__87f2ru7 {
   background-color: black;
 }
-body .features_styleVariantsCompositionInSelector_variant__87f2rua {
+body .features_styleCompositionInSelector__87f2ru8 {
   font-size: 24px;
 }
-.features_styleWithStartingStyle__87f2rub {
+.features_styleVariantsCompositionInSelector_variant__87f2ru9 {
+  color: white;
+}
+.features_styleVariantsCompositionInSelector_variant__87f2rua {
+  background-color: black;
+}
+body .features_styleVariantsCompositionInSelector_variant__87f2rub {
+  font-size: 24px;
+}
+.features_styleWithStartingStyle__87f2ruc {
   background-color: black;
 }
 @media screen and (min-width: 700px) {
@@ -53,7 +59,7 @@ body .features_styleVariantsCompositionInSelector_variant__87f2rua {
   }
 }
 @starting-style {
-  .features_styleWithStartingStyle__87f2rub {
+  .features_styleWithStartingStyle__87f2ruc {
     background-color: white;
   }
 }

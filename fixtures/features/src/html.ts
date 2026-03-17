@@ -4,6 +4,7 @@ import testNodes from '../test-nodes.json';
 export default `
     <div id="${testNodes.mergedStyle}" class="${styles.mergedStyle}">Merged style</div>
     <div id="${testNodes.styleWithComposition}" class="${styles.styleWithComposition}">Style with composition</div>
+    <div id="${testNodes.styleWithNestedComposition}" class="${styles.styleWithNestedComposition}">Style with nested composition</div>
     <div id="${testNodes.styleVariantsWithComposition}" class="${styles.styleVariantsWithComposition.variant}">Style variants with composition</div>
     <div id="${testNodes.styleVariantsWithMappedComposition}" class="${styles.styleVariantsWithMappedComposition.variant}">Style variants with mapped composition</div>
     <div id="${testNodes.compositionOnly}" class="${styles.compositionOnly}">Composition only</div>
