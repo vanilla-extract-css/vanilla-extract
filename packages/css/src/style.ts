@@ -32,7 +32,6 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
       classList.push(rule);
     } else {
       styleRules.push(rule);
-
     }
   }
 
