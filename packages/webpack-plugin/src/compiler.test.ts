@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { escapeWebpackTemplateString } from './compiler';
 
 describe('escapeWebpackTemplateString()', () => {

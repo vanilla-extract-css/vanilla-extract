@@ -1,5 +1,6 @@
+import { describe, expect, it } from 'vitest';
 import { assignInlineVars } from './';
-import { vars } from './assignInlineVars.test.css';
+import { vars } from './assignInlineVars.css.ts';
 
 describe('assignInlineVars', () => {
   describe('basic assignment', () => {
@@ -15,8 +16,8 @@ describe('assignInlineVars', () => {
     it('assigns vars', () => {
       expect(style).toMatchInlineSnapshot(`
         {
-          "--baz-qux__1byvgzh1": "2",
-          "--foo-bar__1byvgzh0": "1",
+          "--baz-qux__17tpfwq1": "2",
+          "--foo-bar__17tpfwq0": "1",
           "--global-var-1": "3",
           "--global-var-2": "4",
         }
@@ -25,7 +26,7 @@ describe('assignInlineVars', () => {
 
     it('converts to valid inline styles when calling toString', () => {
       expect(style.toString()).toMatchInlineSnapshot(
-        `"--foo-bar__1byvgzh0:1;--baz-qux__1byvgzh1:2;--global-var-1:3;--global-var-2:4"`,
+        `"--foo-bar__17tpfwq0:1;--baz-qux__17tpfwq1:2;--global-var-1:3;--global-var-2:4"`,
       );
     });
   });
@@ -39,15 +40,15 @@ describe('assignInlineVars', () => {
     it('assigns contract vars', () => {
       expect(style).toMatchInlineSnapshot(`
         {
-          "--baz-qux__1byvgzh1": "2",
-          "--foo-bar__1byvgzh0": "1",
+          "--baz-qux__17tpfwq1": "2",
+          "--foo-bar__17tpfwq0": "1",
         }
       `);
     });
 
     it('converts to valid inline styles when calling toString', () => {
       expect(style.toString()).toMatchInlineSnapshot(
-        `"--foo-bar__1byvgzh0:1;--baz-qux__1byvgzh1:2"`,
+        `"--foo-bar__17tpfwq0:1;--baz-qux__17tpfwq1:2"`,
       );
     });
   });

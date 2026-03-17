@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { setFileScope, endFileScope } from './fileScope';
 import { createVar } from './vars';
 import { transformCss } from './transformCss';
@@ -2315,7 +2316,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `Simple pseudos are not valid in "globalStyle"`,
+      `[Error: Simple pseudos are not valid in "globalStyle"]`,
     );
   });
 
@@ -2340,7 +2341,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `Selectors are not allowed within "globalStyle"`,
+      `[Error: Selectors are not allowed within "globalStyle"]`,
     );
   });
 
@@ -2903,7 +2904,7 @@ describe('transformCss', () => {
         ],
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      'Nested at-rules (e.g. "@media") are not allowed inside @starting-style.',
+      `[Error: Nested at-rules (e.g. "@media") are not allowed inside @starting-style.]`,
     );
   });
 });

@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
 import { deserializeCss } from '@vanilla-extract/integration';

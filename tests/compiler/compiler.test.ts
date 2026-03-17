@@ -1,6 +1,8 @@
 import path from 'path';
+import { afterAll, describe, expect, test } from 'vitest';
 import { createCompiler } from '@vanilla-extract/compiler';
 import { normalizePath } from '@vanilla-extract/integration';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 expect.addSnapshotSerializer({
   test: (val) => typeof val === 'string',
@@ -17,92 +19,74 @@ function getLocalFiles(files: Set<string>) {
 }
 
 describe('compiler', () => {
-  let compilers: Record<
-    | 'default'
-    | 'cssImportSpecifier'
-    | 'shortIdentifiers'
-    | 'viteResolve'
-    | 'vitePlugins'
-    | 'tsconfigPaths'
-    | 'basePath'
-    | 'getAllCss'
-    | 'assetsInlineLimit'
-    | 'assetsNoInlineLimit',
-    ReturnType<typeof createCompiler>
-  >;
-
-  beforeAll(async () => {
-    const tsconfigPaths = (await import('vite-tsconfig-paths')).default;
-
-    compilers = {
-      default: createCompiler({
-        root: __dirname,
-      }),
-      cssImportSpecifier: createCompiler({
-        root: __dirname,
-        cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
-      }),
-      shortIdentifiers: createCompiler({
-        root: __dirname,
-        identifiers: 'short',
-      }),
-      viteResolve: createCompiler({
-        root: __dirname,
-        viteResolve: {
-          alias: {
-            '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+  const compilers = {
+    default: createCompiler({
+      root: __dirname,
+    }),
+    cssImportSpecifier: createCompiler({
+      root: __dirname,
+      cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
+    }),
+    shortIdentifiers: createCompiler({
+      root: __dirname,
+      identifiers: 'short',
+    }),
+    viteResolve: createCompiler({
+      root: __dirname,
+      viteResolve: {
+        alias: {
+          '@util': path.resolve(__dirname, 'fixtures/vite-config/util'),
+        },
+      },
+    }),
+    vitePlugins: createCompiler({
+      root: __dirname,
+      vitePlugins: [
+        {
+          name: 'test-plugin',
+          resolveId(id) {
+            if (id === '~/vars') {
+              return '\0resolved-vars';
+            }
+          },
+          load: (id) => {
+            if (id === '\0resolved-vars') {
+              return `export const color = "green"`;
+            }
           },
         },
-      }),
-      vitePlugins: createCompiler({
-        root: __dirname,
-        vitePlugins: [
-          {
-            name: 'test-plugin',
-            resolveId(id) {
-              if (id === '~/vars') {
-                return '\0resolved-vars';
-              }
-            },
-            load: (id) => {
-              if (id === '\0resolved-vars') {
-                return `export const color = "green"`;
-              }
-            },
-          },
-        ],
-      }),
-      tsconfigPaths: createCompiler({
-        root: __dirname,
-        vitePlugins: [tsconfigPaths()],
-      }),
-      basePath: createCompiler({
-        root: __dirname,
-        viteConfig: {
-          base: '/assets/',
+      ],
+    }),
+    tsconfigPaths: createCompiler({
+      root: __dirname,
+      vitePlugins: [tsconfigPaths()],
+    }),
+    basePath: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        base: '/assets/',
+      },
+    }),
+    getAllCss: createCompiler({
+      root: __dirname,
+    }),
+    assetsInlineLimit: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        build: {
+          assetsInlineLimit: 512,
         },
-      }),
-      getAllCss: createCompiler({
-        root: __dirname,
-      }),
-      assetsInlineLimit: createCompiler({
-        root: __dirname,
-        viteConfig: {
-          build: {
-            assetsInlineLimit: 512,
-          },
+      },
+    }),
+    assetsNoInlineLimit: createCompiler({
+      root: __dirname,
+      viteConfig: {
+        build: {
+          assetsInlineLimit: 0,
         },
-      }),
-      assetsNoInlineLimit: createCompiler({
-        root: __dirname,
-        viteConfig: {
-          build: {
-            assetsInlineLimit: 0,
-          },
-        },
-      }),
-    };
-  });
+      },
+    }),
+  } as const;
 
   afterAll(async () => {
     await Promise.allSettled(
@@ -598,7 +582,6 @@ describe('compiler', () => {
       .stepper_stepperContainer__p034sj0 .button_button__59rihu0.stepper_stepperButton__p034sj1 {
         border: 1px solid black;
       }
-
     `);
   });
 
