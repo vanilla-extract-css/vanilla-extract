@@ -108,7 +108,10 @@ const createViteServer = async ({
     base: undefined,
     configFile: false,
     root,
+    // Don't include HTML middlewares
+    appType: 'custom',
     server: {
+      middlewareMode: viteConfig.server?.middlewareMode,
       hmr: false,
       watch: enableFileWatcher ? viteConfig.server?.watch : null,
     },
