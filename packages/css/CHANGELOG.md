@@ -1,5 +1,21 @@
 # @vanilla-extract/css
 
+## 1.19.1
+
+### Patch Changes
+
+- [#1558](https://github.com/vanilla-extract-css/vanilla-extract/pull/1558) [`9b1bfd0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9b1bfd068a61a042ff0276a901edf4e44f6c8cea) Thanks [@andjsrk](https://github.com/andjsrk)! - `style`: Fixed a bug where nested arrays of classnames could cause missing or malformed CSS during [style composition](https://vanilla-extract.style/documentation/style-composition/) in certain situations.
+
+  For example, the following style composition would not generate CSS for the `backgroundColor: 'orange'` style, and would also generate malformed CSS:
+
+  ```ts
+  const styleWithNestedComposition = style([
+    [style1, style2],
+    { backgroundColor: 'orange' },
+    [style3]
+  ]);
+  ```
+
 ## 1.19.0
 
 ### Minor Changes
@@ -849,7 +865,6 @@
   Previously all conditional CSS (@media and @supports) in a `.css.ts` file would merge together. This meant each unique query (e.g. `@media screen and (min-width: 700px)`) would only be rendered once. This output is ideal for file size but can lead to the conditions being rendered in the wrong order. The new strategy will still merge conditions together but only if it is considered safe to do so.
 
 * [#152](https://github.com/vanilla-extract-css/vanilla-extract/pull/152) [`ae532f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ae532f5a112c0e89a510fea224b43c6706ce6ac2) Thanks [@Saartje87](https://github.com/Saartje87)! - Added support for the following simple pseudo selectors
-
   - `::-webkit-resizer`
   - `::-webkit-scrollbar-button`
   - `::-webkit-scrollbar-corner`
@@ -936,7 +951,6 @@
 ### Patch Changes
 
 - [#47](https://github.com/vanilla-extract-css/vanilla-extract/pull/47) [`a18bc03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a18bc034885a8b1cc1396b3890111067d4858626) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve dev prefixes on generated class names
-
   - Add file name to class names even if no debug id is present
   - If file is the index file use directory name instead
 

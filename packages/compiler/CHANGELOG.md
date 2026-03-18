@@ -1,5 +1,19 @@
 # @vanilla-extract/compiler
 
+## 0.5.1
+
+### Patch Changes
+
+- [#1696](https://github.com/vanilla-extract-css/vanilla-extract/pull/1696) [`680097c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/680097c49f79a562fdd88aba85ce0f655ed8fb5a) Thanks [@askoufis](https://github.com/askoufis)! - Set `appType: 'custom'` on compiler's Vite server to disable unused HTML middlewares
+
+- [#1696](https://github.com/vanilla-extract-css/vanilla-extract/pull/1696) [`680097c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/680097c49f79a562fdd88aba85ce0f655ed8fb5a) Thanks [@askoufis](https://github.com/askoufis)! - Propagate `server.middlewareMode` from parent server's Vite config
+
+- [#1694](https://github.com/vanilla-extract-css/vanilla-extract/pull/1694) [`d1257c7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/d1257c7e934865bd381941f601af5305cbcc2b90) Thanks [@askoufis](https://github.com/askoufis)! - Add `^5.0.0` and `^6.0.0` to `vite-node` dependency range
+
+- Updated dependencies [[`9b1bfd0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9b1bfd068a61a042ff0276a901edf4e44f6c8cea), [`c34e69a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c34e69a918b55e02ce8106a193b10dcfce933437)]:
+  - @vanilla-extract/css@1.19.1
+  - @vanilla-extract/integration@8.0.9
+
 ## 0.5.0
 
 ### Minor Changes
