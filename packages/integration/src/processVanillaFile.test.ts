@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { addFunctionSerializer } from '../../css/src/functionSerializer';
 import {
   processVanillaFile,
@@ -144,7 +144,7 @@ describe('serializeVanillaModule', () => {
   });
 
   test('should handle deprecated __recipe__ function serialization', () => {
-    const sprinkles = () => { };
+    const sprinkles = () => {};
     // Once support for `__recipe__` is removed, this test can be removed,
     // and all other tests that use `__function_serializer__` should be updated
     // to use `addFunctionSerializer`
@@ -262,15 +262,16 @@ describe('serializeVanillaModule', () => {
 });
 
 describe('processVanillaFile', () => {
-  jest.useFakeTimers();
   test('should process vanilla file with correct promise order', async () => {
-    const serializeVirtualCssPath1 = jest.fn(
+    vi.useFakeTimers();
+
+    const serializeVirtualCssPath1 = vi.fn(
       ({ source }) =>
         new Promise<string>((resolve) => {
           setTimeout(() => resolve(source), 1);
         }),
     );
-    const serializeVirtualCssPath2 = jest.fn(({ source }) =>
+    const serializeVirtualCssPath2 = vi.fn(({ source }) =>
       Promise.resolve(source),
     );
 
@@ -299,8 +300,20 @@ describe('processVanillaFile', () => {
         filePath: require.resolve('@fixtures/sprinkles'),
         serializeVirtualCssPath: serializeVirtualCssPath2,
       }),
-      jest.runAllTimersAsync(),
+      vi.runAllTimersAsync(),
     ]);
-    expect(result).toMatch(/.*export var y = .*style1.*/);
+
+    expect(result).toMatchInlineSnapshot(`
+      ".dependency__ma8c4x0 {
+        color: blue;
+      }
+      body .style1__emvcy10 {
+        color: red;
+      }
+      export var x = 'dependency__ma8c4x0';
+      export var y = 'style1__emvcy10 dependency__ma8c4x0';"
+    `);
+
+    vi.useRealTimers();
   });
 });
