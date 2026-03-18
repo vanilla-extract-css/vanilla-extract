@@ -1,5 +1,13 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.5.3
+
+### Patch Changes
+
+- [#1699](https://github.com/vanilla-extract-css/vanilla-extract/pull/1699) [`c5780ad`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c5780ad7bfdd298a7a93e42552d8a521213771a8) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a bug where side-effect `require`s would not be stripped when bundling CSS with the `extract` option
+
+- [#1699](https://github.com/vanilla-extract-css/vanilla-extract/pull/1699) [`c5780ad`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c5780ad7bfdd298a7a93e42552d8a521213771a8) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a bug where side-effect imports would not be stripped in `.cjs` or `.mjs` files when bundling CSS with the `extract` option
+
 ## 1.5.2
 
 ### Patch Changes
