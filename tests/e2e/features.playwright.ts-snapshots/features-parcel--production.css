@@ -23,25 +23,31 @@
 ._87f2ru3:hover {
   background-color: #708090;
 }
-._87f2ru5 {
-  color: #fff;
+._87f2ru4 {
+  background-color: #b0e0e6;
+}
+._87f2ru4:hover {
+  background-color: #708090;
 }
 ._87f2ru6 {
-  background-color: #000;
-}
-body ._87f2ru7 {
-  font-size: 24px;
-}
-._87f2ru8 {
   color: #fff;
 }
-._87f2ru9 {
+._87f2ru7 {
   background-color: #000;
 }
-body ._87f2rua {
+body ._87f2ru8 {
   font-size: 24px;
 }
-._87f2rub {
+._87f2ru9 {
+  color: #fff;
+}
+._87f2rua {
+  background-color: #000;
+}
+body ._87f2rub {
+  font-size: 24px;
+}
+._87f2ruc {
   background-color: #000;
 }
 @media screen and (width >= 700px) {
@@ -53,7 +59,7 @@ body ._87f2rua {
   }
 }
 @starting-style {
-  ._87f2rub {
+  ._87f2ruc {
     background-color: #fff;
   }
 }

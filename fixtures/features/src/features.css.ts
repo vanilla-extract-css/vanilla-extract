@@ -24,6 +24,12 @@ export const styleWithComposition = style([
   { selectors: { '&:hover': { backgroundColor: 'slategray' } } },
 ]);
 
+export const styleWithNestedComposition = style([
+  { backgroundColor: 'powderblue' },
+  [mergedStyle],
+  { selectors: { '&:hover': { backgroundColor: 'slategray' } } },
+]);
+
 export const styleVariantsWithComposition = styleVariants({
   variant: [
     { backgroundColor: 'powderblue' },

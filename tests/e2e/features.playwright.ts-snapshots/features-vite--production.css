@@ -23,25 +23,31 @@
 ._1o6ek503:hover {
   background-color: slategray;
 }
-._1o6ek505 {
-  color: white;
+._1o6ek504 {
+  background-color: powderblue;
+}
+._1o6ek504:hover {
+  background-color: slategray;
 }
 ._1o6ek506 {
-  background-color: black;
-}
-body ._1o6ek507 {
-  font-size: 24px;
-}
-._1o6ek508 {
   color: white;
 }
-._1o6ek509 {
+._1o6ek507 {
   background-color: black;
 }
-body ._1o6ek50a {
+body ._1o6ek508 {
   font-size: 24px;
 }
-._1o6ek50b {
+._1o6ek509 {
+  color: white;
+}
+._1o6ek50a {
+  background-color: black;
+}
+body ._1o6ek50b {
+  font-size: 24px;
+}
+._1o6ek50c {
   background-color: black;
 }
 @media screen and (min-width: 700px) {
@@ -53,7 +59,7 @@ body ._1o6ek50a {
   }
 }
 @starting-style {
-  ._1o6ek50b {
+  ._1o6ek50c {
     background-color: white;
   }
 }
