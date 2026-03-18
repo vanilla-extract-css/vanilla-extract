@@ -211,12 +211,13 @@ export function vanillaExtractPlugin({
       }
       await Promise.all(
         Object.entries(bundle).map(async ([id, chunk]) => {
+          const isJsFile = /\.(m|c)?js$/.test(id);
           if (
             chunk.type === 'chunk' &&
-            id.endsWith('.js') &&
+            isJsFile &&
             chunk.imports.some((specifier) => extractedCssIds.has(specifier))
           ) {
-            chunk.code = await stripSideEffectImportsMatching(chunk.code, [
+            chunk.code = stripSideEffectImportsMatching(chunk.code, [
               ...extractedCssIds,
             ]);
           }
