@@ -73,6 +73,7 @@ jobs:
   playwright:
     name: Playwright tests
     runs-on: macos-latest
+    if: github.ref != 'refs/heads/changeset-release/master' && github.head_ref != 'changeset-release/master'
     env:
       CI: true
     steps:
