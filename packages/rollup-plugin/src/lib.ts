@@ -102,26 +102,17 @@ export function sortModules(modules: Record<string, ImportChain>): string[] {
   return sortedModules.map(([id]) => id);
 }
 
-const SIDE_EFFECT_IMPORT_RE = /^\s*import\s+['"]([^'"]+)['"]\s*;?\s*/gm;
+const SIDE_EFFECT_IMPORT_RE =
+  /^\s*(?:import\s+['"]([^'"]+)['"]|require\s*\(\s*['"]([^'"]+)['"]\s*\))\s*;?\s*/gm;
 
-/** Remove specific side effect imports from JS */
-export function stripSideEffectImportsMatching(
+/** Remove specific side effect imports and requires from JS */
+export const stripSideEffectImportsMatching = (
   code: string,
   sources: string[],
-): string {
-  const matches = code.matchAll(SIDE_EFFECT_IMPORT_RE);
-  if (!matches) {
-    return code;
-  }
-  let output = code;
-  for (const match of matches) {
-    if (!match[1] || !sources.includes(match[1])) {
-      continue;
-    }
-    output = output.replace(match[0], '');
-  }
-  return output;
-}
+): string =>
+  code.replace(SIDE_EFFECT_IMPORT_RE, (match, importSource, requireSource) =>
+    sources.includes(importSource ?? requireSource) ? '' : match,
+  );
 
 export async function tryGetPackageName(cwd: string): Promise<string | null> {
   try {

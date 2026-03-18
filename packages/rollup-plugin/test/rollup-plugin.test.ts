@@ -386,8 +386,7 @@ describe('rollup-plugin', () => {
 });
 
 describe('stripSideEffectImportsMatching', () => {
-  it('strips only specified side effects', () => {
-    // assert all specified imports are stripped
+  it('strips only specified side effects in ESM', () => {
     expect(
       stripSideEffectImportsMatching(
         `import React from 'react';
@@ -410,7 +409,6 @@ export default function Button() {
   });
 
   it('leaves code alone if no side effects specified', () => {
-    // assert empty array returns code as expected
     const code = `import React from 'react';
 import 'button.vanilla.css';
 import './foobar.js';
@@ -419,5 +417,27 @@ export default function Button() {
   return <button>My Button</button>;
 }`;
     expect(stripSideEffectImportsMatching(code, [])).toBe(code);
+  });
+
+  it('strips only specified side effects in CJS', () => {
+    expect(
+      stripSideEffectImportsMatching(
+        `const React = require('react');
+require('button.vanilla.css');
+require('./foobar.js');
+
+module.exports = function Button() {
+  return <button>My Button</button>;
+}`,
+        ['button.vanilla.css', 'checkbox.vanilla.css', 'radio.vanilla.css'],
+      ),
+    ).toBe(
+      `const React = require('react');
+require('./foobar.js');
+
+module.exports = function Button() {
+  return <button>My Button</button>;
+}`,
+    );
   });
 });
