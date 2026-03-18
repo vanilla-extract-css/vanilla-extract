@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 8.0.9
+
+### Patch Changes
+
+- [#1585](https://github.com/vanilla-extract-css/vanilla-extract/pull/1585) [`c34e69a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c34e69a918b55e02ce8106a193b10dcfce933437) Thanks [@sashank-gogula-glean](https://github.com/sashank-gogula-glean)! - Fixed a race condition in `processVanillaFile` that could cause missing classnames during CSS serialization
+
+- Updated dependencies [[`9b1bfd0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9b1bfd068a61a042ff0276a901edf4e44f6c8cea)]:
+  - @vanilla-extract/css@1.19.1
+
 ## 8.0.8
 
 ### Patch Changes
