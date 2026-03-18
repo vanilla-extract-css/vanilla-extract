@@ -46,6 +46,8 @@ export class ConditionalRuleset {
   }
 
   getConditionalRulesetByPath(conditionPath: Array<Query>): ConditionalRuleset {
+    // Couldn't fine a way around this
+    // oxlint-disable-next-line typescript/no-this-alias
     let currRuleset: ConditionalRuleset = this;
 
     for (const query of conditionPath) {

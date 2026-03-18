@@ -47,7 +47,8 @@ export type StartingStyle<StyleType> = {
 };
 
 interface AllQueries<StyleType>
-  extends MediaQueries<StyleType & AllQueries<StyleType>>,
+  extends
+    MediaQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
     Layers<StyleType & AllQueries<StyleType>>,

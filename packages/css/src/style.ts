@@ -28,7 +28,7 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const styleRules = [];
 
   for (const rule of rules) {
-    if (typeof rule === 'string') {
+    if (typeof rule === 'string' || Array.isArray(rule)) {
       classList.push(rule);
     } else {
       styleRules.push(rule);

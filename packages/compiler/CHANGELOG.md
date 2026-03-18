@@ -1,5 +1,27 @@
 # @vanilla-extract/compiler
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1687](https://github.com/vanilla-extract-css/vanilla-extract/pull/1687) [`e29f242`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e29f242953fcb46315cebe5b3374a5a1f89d93af) Thanks [@askoufis](https://github.com/askoufis)! - Add support for Vite 8
+
+## 0.4.0
+
+### Minor Changes
+
+- [#1639](https://github.com/vanilla-extract-css/vanilla-extract/pull/1639) [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1) Thanks [@RJWadley](https://github.com/RJWadley)! - Add `unstable_splitCssPerRule` option to generate one CSS import per rule instead of one per file
+
+- [#1639](https://github.com/vanilla-extract-css/vanilla-extract/pull/1639) [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1) Thanks [@RJWadley](https://github.com/RJWadley)! - Add `unstable_invalidateAllModules` API to manually clear module cache
+
+- [#1639](https://github.com/vanilla-extract-css/vanilla-extract/pull/1639) [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1) Thanks [@RJWadley](https://github.com/RJWadley)! - `createCompiler`: The `cssImportSpecifier` option now receives the CSS content in addition to the module id
+
+### Patch Changes
+
+- Updated dependencies [[`1a63a60`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1a63a600b7a707f9317ce5f6607998eba4eb9c99)]:
+  - @vanilla-extract/css@1.19.0
+  - @vanilla-extract/integration@8.0.8
+
 ## 0.3.4
 
 ### Patch Changes

@@ -1,5 +1,24 @@
 # @vanilla-extract/vite-plugin
 
+## 5.2.0
+
+### Minor Changes
+
+- [#1687](https://github.com/vanilla-extract-css/vanilla-extract/pull/1687) [`e29f242`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e29f242953fcb46315cebe5b3374a5a1f89d93af) Thanks [@askoufis](https://github.com/askoufis)! - Add support for Vite 8
+
+### Patch Changes
+
+- Updated dependencies [[`e29f242`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e29f242953fcb46315cebe5b3374a5a1f89d93af)]:
+  - @vanilla-extract/compiler@0.5.0
+
+## 5.1.5
+
+### Patch Changes
+
+- Updated dependencies [[`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1), [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1), [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1)]:
+  - @vanilla-extract/compiler@0.4.0
+  - @vanilla-extract/integration@8.0.8
+
 ## 5.1.4
 
 ### Patch Changes
@@ -729,7 +748,6 @@
 ### Major Changes
 
 - [#323](https://github.com/vanilla-extract-css/vanilla-extract/pull/323) [`1e7d647`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can now be configured via the `identifiers` option which accepts either `short` or `debug`.
-
   - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
   - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `somefile_mystyle_hnw5tz3`
 

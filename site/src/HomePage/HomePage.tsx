@@ -194,7 +194,7 @@ export const HomePage = () => {
                     code={[
                       {
                         fileName: 'styles.css.ts',
-                        contents: dedent/*ts*/ `
+                        contents: dedent /*ts*/ `
                         import { createTheme, style } from '@vanilla-extract/css';
 
                         export const [themeClass, vars] = createTheme({
@@ -331,7 +331,7 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: dedent/*css*/ `
+                    contents: dedent /*css*/ `
                       import { style } from '@vanilla-extract/css';
 
                       export const className = style({
@@ -379,7 +379,7 @@ export const HomePage = () => {
                     code={[
                       {
                         fileName: 'styles.css.ts',
-                        contents: dedent/*ts*/ `
+                        contents: dedent /*ts*/ `
                           import { createTheme, style } from '@vanilla-extract/css';
 
                           export const [themeClass, vars] = createTheme({
@@ -420,7 +420,7 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: dedent/*ts*/ `
+                    contents: dedent /*ts*/ `
                       import { style, createVar } from '@vanilla-extract/css';
 
                       const shadowColor = createVar();
@@ -461,7 +461,7 @@ export const HomePage = () => {
                 code={[
                   {
                     fileName: 'styles.css.ts',
-                    contents: dedent/*ts*/ `
+                    contents: dedent /*ts*/ `
                       import { styleVariants } from '@vanilla-extract/css';
 
                       export const background = styleVariants({
@@ -502,7 +502,7 @@ export const HomePage = () => {
                   {
                     fileName: 'output.css',
                     language: 'css',
-                    contents: dedent/*css*/ `
+                    contents: dedent /*css*/ `
                       :root {
                         --space-none__ya5b7b0: 0;
                         --space-small__ya5b7b1: 4px;

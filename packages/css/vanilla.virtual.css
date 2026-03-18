@@ -1,0 +1,10 @@
+/* 
+
+This is a noop file for extracted CSS source to point to.
+
+Some loaders, like Webpack and Turbopack, require a file to exist on disk for virtual source files.
+
+For turbopack specifically, this reference file must be resolvable from any context where css is imported
+even if the next plugin itself isn't available (for example, in a monorepo).
+
+*/

@@ -34,6 +34,8 @@ export const startParcelFixture = async (
     logLevel: 'verbose',
   });
 
+  // Not sure how to remove the `async` here
+  // oxlint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const subscription = await bundler.watch((err, buildEvent) => {
       if (err) {

@@ -12,3 +12,4 @@ test-results
 .next
 .DS_Store
 .idea
+next-env.d.ts
