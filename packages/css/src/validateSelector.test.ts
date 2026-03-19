@@ -34,6 +34,10 @@ describe('validateSelector', () => {
       ':is(.target):hover',
       '.a :where(.target)',
       '.a > :is(.target)',
+      ':where(.target, .a.target)',
+      ':is(.target, .a.target)',
+      ':where(.target, .a .target)',
+      ':is(.target, .a .target)',
     ];
 
     validSelectors.forEach((selector) =>
@@ -61,6 +65,8 @@ describe('validateSelector', () => {
       ':is(.target) > .a',
       ':where(.target, .a)',
       ':is(.target, .a)',
+      ':where(.target, .a, .target)',
+      ':is(.target, .a, .target)',
       ':where(.target, .target > span)',
       ':is(.target, .target > span)',
     ];
