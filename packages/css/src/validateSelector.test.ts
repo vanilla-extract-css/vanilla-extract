@@ -42,11 +42,9 @@ describe('validateSelector', () => {
       '.target:is(h1, h2, h3)',
     ];
 
-    validSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).not.toThrow();
-      }),
-    );
+    it.each(validSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).not.toThrow();
+    });
   });
 
   describe('invalid selectors', () => {
@@ -75,10 +73,8 @@ describe('validateSelector', () => {
       ':is(.a, .b, .c)',
     ];
 
-    invalidSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).toThrow();
-      }),
-    );
+    it.each(invalidSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).toThrow();
+    });
   });
 });
