@@ -38,13 +38,13 @@ describe('validateSelector', () => {
       ':is(.target, .a.target)',
       ':where(.target, .a .target)',
       ':is(.target, .a .target)',
+      ':is(h1, h2, h3) .target',
+      '.target:is(h1, h2, h3)',
     ];
 
-    validSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).not.toThrow();
-      }),
-    );
+    it.each(validSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).not.toThrow();
+    });
   });
 
   describe('invalid selectors', () => {
@@ -69,12 +69,12 @@ describe('validateSelector', () => {
       ':is(.target, .a, .target)',
       ':where(.target, .target > span)',
       ':is(.target, .target > span)',
+      ':where(.a, .b, .c)',
+      ':is(.a, .b, .c)',
     ];
 
-    invalidSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).toThrow();
-      }),
-    );
+    it.each(invalidSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).toThrow();
+    });
   });
 });
