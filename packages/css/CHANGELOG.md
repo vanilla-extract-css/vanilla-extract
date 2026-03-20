@@ -1,5 +1,25 @@
 # @vanilla-extract/css
 
+## 1.20.0
+
+### Minor Changes
+
+- [#1702](https://github.com/vanilla-extract-css/vanilla-extract/pull/1702) [`48a9caf`](https://github.com/vanilla-extract-css/vanilla-extract/commit/48a9cafbbd4abfcc1bf0e72f01ad4f19f59e48cd) Thanks [@bschlenk](https://github.com/bschlenk)! - Allow `:where` and `:is` in `selectors` if all selectors target `&`
+
+  EXAMPLE USAGE:
+
+  ```ts
+  const example = style({
+    color: 'red',
+    selectors: {
+      // Valid: all selectors in the list target `example`
+      ':is(h1 > &, h2 > &)': { color: 'blue' }
+      // Invalid: the second selector in the list does not target `example`
+      ':is(h1 > &, h2)': { color: 'blue' }
+    }
+  });
+  ```
+
 ## 1.19.1
 
 ### Patch Changes

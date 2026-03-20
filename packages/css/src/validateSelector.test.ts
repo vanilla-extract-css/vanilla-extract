@@ -28,13 +28,23 @@ describe('validateSelector', () => {
       '.a:where(.b, .c) > .target',
       '.a:is(.b, .c) > .target',
       '.target, .foo .target',
+      ':where(.target)',
+      ':where(.target):hover',
+      ':is(.target)',
+      ':is(.target):hover',
+      '.a :where(.target)',
+      '.a > :is(.target)',
+      ':where(.target, .a.target)',
+      ':is(.target, .a.target)',
+      ':where(.target, .a .target)',
+      ':is(.target, .a .target)',
+      ':is(h1, h2, h3) .target',
+      '.target:is(h1, h2, h3)',
     ];
 
-    validSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).not.toThrow();
-      }),
-    );
+    it.each(validSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).not.toThrow();
+    });
   });
 
   describe('invalid selectors', () => {
@@ -51,12 +61,20 @@ describe('validateSelector', () => {
       '.target + .a',
       '.target ~ .a',
       '.target:where(:hover, :focus) .a',
+      ':where(.target) .a',
+      ':is(.target) > .a',
+      ':where(.target, .a)',
+      ':is(.target, .a)',
+      ':where(.target, .a, .target)',
+      ':is(.target, .a, .target)',
+      ':where(.target, .target > span)',
+      ':is(.target, .target > span)',
+      ':where(.a, .b, .c)',
+      ':is(.a, .b, .c)',
     ];
 
-    invalidSelectors.forEach((selector) =>
-      it(selector, () => {
-        expect(() => validateSelector(selector, 'target')).toThrow();
-      }),
-    );
+    it.each(invalidSelectors)('%s', (selector) => {
+      expect(() => validateSelector(selector, 'target')).toThrow();
+    });
   });
 });
