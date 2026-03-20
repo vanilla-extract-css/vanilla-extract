@@ -1,5 +1,12 @@
 # @vanilla-extract/turbopack-plugin
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`b066d1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b066d1c253ee09f2967bfddd7b6762f5dfa2d7d7)]:
+  - @vanilla-extract/compiler@0.6.0
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.6.0
+
+### Minor Changes
+
+- [#1701](https://github.com/vanilla-extract-css/vanilla-extract/pull/1701) [`b066d1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b066d1c253ee09f2967bfddd7b6762f5dfa2d7d7) Thanks [@askoufis](https://github.com/askoufis)! - Expose `compiler.findImporterTree` API
+
 ## 0.5.1
 
 ### Patch Changes

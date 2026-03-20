@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 5.2.1
+
+### Patch Changes
+
+- [#1701](https://github.com/vanilla-extract-css/vanilla-extract/pull/1701) [`b066d1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b066d1c253ee09f2967bfddd7b6762f5dfa2d7d7) Thanks [@askoufis](https://github.com/askoufis)! - Reduce unnecessary HMR invalidations and fix broken HMR in Astro, Nuxt and Qwik
+
+- Updated dependencies [[`b066d1c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b066d1c253ee09f2967bfddd7b6762f5dfa2d7d7)]:
+  - @vanilla-extract/compiler@0.6.0
+
 ## 5.2.0
 
 ### Minor Changes
