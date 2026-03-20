@@ -86,6 +86,9 @@ describe('compiler', () => {
         },
       },
     }),
+    importerTree: createCompiler({
+      root: __dirname,
+    }),
   } as const;
 
   afterAll(async () => {
@@ -633,5 +636,198 @@ describe('compiler', () => {
         background-size: cover;
       }
     `);
+  });
+
+  test('should generate correct importer trees', async () => {
+    const compiler = compilers.importerTree;
+
+    const stylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/styles.css.ts',
+    );
+    const moreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/moreStyles.css.ts',
+    );
+    const evenMoreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/evenMoreStyles.css.ts',
+    );
+
+    await Promise.all([
+      compiler.processVanillaFile(stylesPath),
+      compiler.processVanillaFile(moreStylesPath),
+      compiler.processVanillaFile(evenMoreStylesPath),
+    ]);
+
+    const transformedVeModules = new Set([
+      path.resolve(__dirname, stylesPath),
+      path.resolve(__dirname, evenMoreStylesPath),
+    ]);
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(stylesPath),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(moreStylesPath),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/moreStyles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(path.join(__dirname, 'fixtures/importer-tree/tokens.ts')),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(
+          path.join(__dirname, 'fixtures/importer-tree/otherTokens.ts'),
+        ),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/otherTokens.ts,
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+          {{__dirname}}/fixtures/importer-tree/moreStyles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(
+          path.join(__dirname, 'fixtures/importer-tree/moreStyles2.css.ts'),
+        ),
+        transformedVeModules,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/moreStyles2.css.ts,
+          {{__dirname}}/fixtures/importer-tree/reExporter.ts,
+          {{__dirname}}/fixtures/importer-tree/evenMoreStyles.css.ts,
+        ]
+      `);
+    }
+  });
+
+  test('should stop traversal at all VE module boundaries when all are transformed', async () => {
+    const compiler = compilers.importerTree;
+
+    const stylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/styles.css.ts',
+    );
+    const moreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/moreStyles.css.ts',
+    );
+    const evenMoreStylesPath = path.join(
+      __dirname,
+      'fixtures/importer-tree/evenMoreStyles.css.ts',
+    );
+
+    await Promise.all([
+      compiler.processVanillaFile(stylesPath),
+      compiler.processVanillaFile(moreStylesPath),
+      compiler.processVanillaFile(evenMoreStylesPath),
+    ]);
+
+    // All VE modules are in the transformed set (realistic scenario)
+    const allTransformed = new Set([
+      path.resolve(__dirname, stylesPath),
+      path.resolve(__dirname, moreStylesPath),
+      path.resolve(__dirname, evenMoreStylesPath),
+    ]);
+
+    {
+      // otherTokens is imported by both tokens.ts (via styles.css.ts) and moreStyles.css.ts
+      // With all VE modules transformed, traversal should stop at both boundaries
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(
+          path.join(__dirname, 'fixtures/importer-tree/otherTokens.ts'),
+        ),
+        allTransformed,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/otherTokens.ts,
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+          {{__dirname}}/fixtures/importer-tree/moreStyles.css.ts,
+        ]
+      `);
+    }
+
+    {
+      // tokens.ts is only imported by styles.css.ts – should stop there
+      const importerTree = await compiler.findImporterTree(
+        path.resolve(path.join(__dirname, 'fixtures/importer-tree/tokens.ts')),
+        allTransformed,
+      );
+
+      const res = Array.from(importerTree).map((importer) => importer.id);
+
+      expect(res).toMatchInlineSnapshot(`
+        [
+          {{__dirname}}/fixtures/importer-tree/tokens.ts,
+          {{__dirname}}/fixtures/importer-tree/styles.css.ts,
+        ]
+      `);
+    }
+  });
+
+  test('should return empty set for files not in the compiler module graph', async () => {
+    const compiler = compilers.importerTree;
+
+    const importerTree = await compiler.findImporterTree(
+      path.resolve(path.join(__dirname, 'fixtures/importer-tree/unknown.ts')),
+      new Set(),
+    );
+
+    expect(importerTree.size).toBe(0);
   });
 });
