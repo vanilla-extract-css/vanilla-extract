@@ -1,5 +1,8 @@
 ---
-'@vanilla-extract/css': patch
+'@vanilla-extract/css': minor
 ---
 
-Allow :where and :is in selectors if all selectors target &
+Allow `:where` and `:is` in `selectors` if all selectors target `&`
+
+EXAMPLE USAGE:
+
