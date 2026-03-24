@@ -1,41 +1,27 @@
-import { expect } from '@playwright/test';
-import {
-  getStylesheet,
-  startFixture,
-  type TestServer,
-} from '@vanilla-extract-private/test-helpers';
+import { expect, test } from '@playwright/test';
+import { getPageStylesheets } from '@vanilla-extract-private/test-helpers';
 
-import test from './fixture';
-import { all as testCases } from './testCases';
+import { BUNDLER_SERVERS } from '../servers';
 
-testCases.forEach(({ type, mode, snapshotCss = true }) => {
-  test.describe(`features - ${type} (${mode})`, () => {
-    let server: TestServer;
+const FIXTURE = 'features';
 
-    test.beforeAll(async ({ port }) => {
-      server = await startFixture('features', {
-        type,
-        mode,
-        basePort: port,
+BUNDLER_SERVERS.filter((s) => s.fixtures.includes(FIXTURE)).forEach(
+  ({ name, type, mode, port, snapshotCss }) => {
+    test.describe(`${FIXTURE} - ${name}`, () => {
+      const url = `http://localhost:${port}/${FIXTURE}/`;
+
+      test('screenshot', async ({ page }) => {
+        await page.goto(url);
+
+        expect(await page.screenshot()).toMatchSnapshot(`${FIXTURE}.png`);
       });
+
+      if (snapshotCss) {
+        test('CSS @agnostic', async ({ page }) => {
+          const css = await getPageStylesheets(page, url);
+          expect(css).toMatchSnapshot(`${FIXTURE}-${type}--${mode}.css`);
+        });
+      }
     });
-
-    test('screenshot', async ({ page }) => {
-      await page.goto(server.url);
-
-      expect(await page.screenshot()).toMatchSnapshot('features.png');
-    });
-
-    if (snapshotCss) {
-      test('CSS @agnostic', async () => {
-        expect(
-          await getStylesheet(server.url, server.stylesheet),
-        ).toMatchSnapshot(`features-${type}--${mode}.css`);
-      });
-    }
-
-    test.afterAll(async () => {
-      await server.close();
-    });
-  });
-});
+  },
+);

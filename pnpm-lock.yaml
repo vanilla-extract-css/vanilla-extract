@@ -143,6 +143,42 @@ importers:
         specifier: ^18.2.19
         version: 18.2.19
 
+  fixtures/esbuild-app:
+    dependencies:
+      '@fixtures/features':
+        specifier: workspace:*
+        version: link:../features
+      '@fixtures/layers':
+        specifier: workspace:*
+        version: link:../layers
+      '@fixtures/low-level':
+        specifier: workspace:*
+        version: link:../low-level
+      '@fixtures/recipes':
+        specifier: workspace:*
+        version: link:../recipes
+      '@fixtures/sprinkles':
+        specifier: workspace:*
+        version: link:../sprinkles
+      '@fixtures/themed':
+        specifier: workspace:*
+        version: link:../themed
+      '@fixtures/thirdparty':
+        specifier: workspace:*
+        version: link:../thirdparty
+      '@vanilla-extract/esbuild-plugin':
+        specifier: workspace:*
+        version: link:../../packages/esbuild-plugin
+      '@vanilla-extract/esbuild-plugin-next':
+        specifier: workspace:*
+        version: link:../../packages/esbuild-plugin-next
+      esbuild:
+        specifier: ~0.27.0
+        version: 0.27.1
+      minimist:
+        specifier: ^1.2.5
+        version: 1.2.8
+
   fixtures/features:
     dependencies:
       '@vanilla-extract/css':
@@ -284,6 +320,42 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webpack-plugin
 
+  fixtures/parcel-app:
+    dependencies:
+      '@fixtures/features':
+        specifier: workspace:*
+        version: link:../features
+      '@fixtures/layers':
+        specifier: workspace:*
+        version: link:../layers
+      '@fixtures/low-level':
+        specifier: workspace:*
+        version: link:../low-level
+      '@fixtures/recipes':
+        specifier: workspace:*
+        version: link:../recipes
+      '@fixtures/sprinkles':
+        specifier: workspace:*
+        version: link:../sprinkles
+      '@fixtures/themed':
+        specifier: workspace:*
+        version: link:../themed
+      '@fixtures/thirdparty':
+        specifier: workspace:*
+        version: link:../thirdparty
+      '@parcel/config-default':
+        specifier: ^2.15.0
+        version: 2.15.0(@parcel/core@2.15.0)
+      '@parcel/core':
+        specifier: ^2.15.0
+        version: 2.15.0
+      '@vanilla-extract/parcel-transformer':
+        specifier: workspace:*
+        version: link:../../packages/parcel-transformer
+      minimist:
+        specifier: ^1.2.5
+        version: 1.2.8
+
   fixtures/react-library-example:
     dependencies:
       '@vanilla-extract/css':
@@ -368,6 +440,106 @@ importers:
       '@vanilla-extract/css':
         specifier: workspace:^
         version: link:../../packages/css
+
+  fixtures/vite-app:
+    dependencies:
+      '@fixtures/features':
+        specifier: workspace:*
+        version: link:../features
+      '@fixtures/layers':
+        specifier: workspace:*
+        version: link:../layers
+      '@fixtures/low-level':
+        specifier: workspace:*
+        version: link:../low-level
+      '@fixtures/recipes':
+        specifier: workspace:*
+        version: link:../recipes
+      '@fixtures/sprinkles':
+        specifier: workspace:*
+        version: link:../sprinkles
+      '@fixtures/themed':
+        specifier: workspace:*
+        version: link:../themed
+      '@fixtures/thirdparty':
+        specifier: workspace:*
+        version: link:../thirdparty
+      '@vanilla-extract/vite-plugin':
+        specifier: workspace:*
+        version: link:../../packages/vite-plugin
+      vite:
+        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        version: 8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
+
+  fixtures/webpack-app:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.23.9
+        version: 7.23.9
+      '@babel/preset-env':
+        specifier: ^7.23.9
+        version: 7.23.9(@babel/core@7.23.9)
+      '@babel/preset-typescript':
+        specifier: ^7.23.3
+        version: 7.23.3(@babel/core@7.23.9)
+      '@fixtures/features':
+        specifier: workspace:*
+        version: link:../features
+      '@fixtures/layers':
+        specifier: workspace:*
+        version: link:../layers
+      '@fixtures/low-level':
+        specifier: workspace:*
+        version: link:../low-level
+      '@fixtures/recipes':
+        specifier: workspace:*
+        version: link:../recipes
+      '@fixtures/sprinkles':
+        specifier: workspace:*
+        version: link:../sprinkles
+      '@fixtures/template-string-paths':
+        specifier: workspace:*
+        version: link:../template-string-paths
+      '@fixtures/themed':
+        specifier: workspace:*
+        version: link:../themed
+      '@fixtures/thirdparty':
+        specifier: workspace:*
+        version: link:../thirdparty
+      '@vanilla-extract/webpack-plugin':
+        specifier: workspace:*
+        version: link:../../packages/webpack-plugin
+      babel-loader:
+        specifier: ^10.0.0
+        version: 10.0.0(@babel/core@7.23.9)(webpack@5.104.0(esbuild@0.27.1))
+      css-loader:
+        specifier: ^7.1.2
+        version: 7.1.2(webpack@5.104.0(esbuild@0.27.1))
+      html-webpack-plugin:
+        specifier: ^5.3.1
+        version: 5.5.0(webpack@5.104.0(esbuild@0.27.1))
+      mini-css-extract-plugin:
+        specifier: ^2.9.4
+        version: 2.9.4(webpack@5.104.0(esbuild@0.27.1))
+      minimist:
+        specifier: ^1.2.5
+        version: 1.2.8
+      serve-handler:
+        specifier: ^6.1.3
+        version: 6.1.3
+      style-loader:
+        specifier: ^2.0.0
+        version: 2.0.0(webpack@5.104.0(esbuild@0.27.1))
+      webpack:
+        specifier: ^5.90.0
+        version: 5.104.0(esbuild@0.27.1)
+      webpack-dev-server:
+        specifier: ^5.2.2
+        version: 5.2.2(webpack@5.104.0(esbuild@0.27.1))
+    devDependencies:
+      '@types/serve-handler':
+        specifier: ^6
+        version: 6.1.1
 
   packages/babel-plugin-debug-ids:
     dependencies:
@@ -820,9 +992,6 @@ importers:
 
   test-helpers:
     dependencies:
-      '@babel/core':
-        specifier: ^7.23.9
-        version: 7.23.9
       '@fixtures/features':
         specifier: workspace:*
         version: link:../fixtures/features
@@ -859,54 +1028,12 @@ importers:
       '@fixtures/unused-modules':
         specifier: workspace:*
         version: link:../fixtures/unused-modules
-      '@parcel/config-default':
-        specifier: ^2.15.0
-        version: 2.15.0(@parcel/core@2.15.0)
-      '@parcel/core':
-        specifier: ^2.15.0
-        version: 2.15.0
-      '@types/mini-css-extract-plugin':
-        specifier: ^1.2.2
-        version: 1.4.3(esbuild@0.27.1)
-      '@types/webpack-dev-server':
-        specifier: ^3.11.1
-        version: 3.11.6
-      '@vanilla-extract/esbuild-plugin':
-        specifier: workspace:*
-        version: link:../packages/esbuild-plugin
-      '@vanilla-extract/esbuild-plugin-next':
-        specifier: workspace:*
-        version: link:../packages/esbuild-plugin-next
-      '@vanilla-extract/parcel-transformer':
-        specifier: workspace:*
-        version: link:../packages/parcel-transformer
-      '@vanilla-extract/vite-plugin':
-        specifier: workspace:*
-        version: link:../packages/vite-plugin
-      '@vanilla-extract/webpack-plugin':
-        specifier: workspace:*
-        version: link:../packages/webpack-plugin
-      babel-loader:
-        specifier: ^10.0.0
-        version: 10.0.0(@babel/core@7.23.9)(webpack@5.104.0(esbuild@0.27.1))
-      css-loader:
-        specifier: ^7.1.2
-        version: 7.1.2(webpack@5.104.0(esbuild@0.27.1))
       cssnano:
         specifier: ^5.1.15
         version: 5.1.15(postcss@8.5.8)
       cssnano-preset-lite:
         specifier: ^2.1.3
         version: 2.1.3(postcss@8.5.8)
-      esbuild:
-        specifier: ~0.27.0
-        version: 0.27.1
-      html-webpack-plugin:
-        specifier: ^5.3.1
-        version: 5.5.0(webpack@5.104.0(esbuild@0.27.1))
-      mini-css-extract-plugin:
-        specifier: ^2.9.4
-        version: 2.9.4(webpack@5.104.0(esbuild@0.27.1))
       minimist:
         specifier: ^1.2.5
         version: 1.2.8
@@ -922,24 +1049,6 @@ importers:
       serve-handler:
         specifier: ^6.1.3
         version: 6.1.3
-      style-loader:
-        specifier: ^2.0.0
-        version: 2.0.0(webpack@5.104.0(esbuild@0.27.1))
-      vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-        version: 8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-      vite-plugin-inspect:
-        specifier: ^11.3.0
-        version: 11.3.3(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0))
-      webpack:
-        specifier: ^5.90.0
-        version: 5.104.0(esbuild@0.27.1)
-      webpack-dev-server:
-        specifier: ^5.2.2
-        version: 5.2.2(webpack@5.104.0(esbuild@0.27.1))
-      webpack-merge:
-        specifier: ^6.0.1
-        version: 6.0.1
     devDependencies:
       '@types/minimist':
         specifier: ^1
@@ -4234,9 +4343,6 @@ packages:
   '@types/mime@1.3.2':
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
 
-  '@types/mini-css-extract-plugin@1.4.3':
-    resolution: {integrity: sha512-jyOSVaF4ie2jUGr1uohqeyDrp7ktRthdFxDKzTgbPZtl0QI5geEopW7UKD/DEfn0XgV1KEq/RnZlUmnrEAWbmg==}
-
   '@types/minimatch@3.0.5':
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
 
@@ -4327,32 +4433,14 @@ packages:
   '@types/sockjs@0.3.36':
     resolution: {integrity: sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==}
 
-  '@types/source-list-map@0.1.2':
-    resolution: {integrity: sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==}
-
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
-
-  '@types/tapable@1.0.8':
-    resolution: {integrity: sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==}
-
-  '@types/uglify-js@3.13.1':
-    resolution: {integrity: sha512-O3MmRAk6ZuAKa9CHgg0Pr0+lUOqoMLpc9AS4R8ano2auvsg7IE8syF3Xh/NPr26TWklxYcqoEEFdzLLs1fV9PQ==}
 
   '@types/unist@2.0.6':
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
 
   '@types/webpack-bundle-analyzer@4.7.0':
     resolution: {integrity: sha512-c5i2ThslSNSG8W891BRvOd/RoCjI2zwph8maD22b1adtSns20j+0azDDMCK06DiVrzTgnwiDl5Ntmu1YRJw8Sg==}
-
-  '@types/webpack-dev-server@3.11.6':
-    resolution: {integrity: sha512-XCph0RiiqFGetukCTC3KVnY1jwLcZ84illFRMbyFzCcWl90B/76ew0tSqF46oBhnLC4obNDG7dMO0JfTN0MgMQ==}
-
-  '@types/webpack-sources@3.2.0':
-    resolution: {integrity: sha512-Ft7YH3lEVRQ6ls8k4Ff1oB4jN6oy/XmU6tQISKdhfh+1mR+viZFphS6WL0IrtDOzvefmJg5a0s7ZQoRXwqTEFg==}
-
-  '@types/webpack@4.41.32':
-    resolution: {integrity: sha512-cb+0ioil/7oz5//7tZUSwbrSAN/NWHrQylz5cW8G0dWTcF/g+/dSdMlKVZspBYuMAN1+WnwHrkxiRrLcwd0Heg==}
 
   '@types/whatwg-mimetype@3.0.2':
     resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
@@ -4880,9 +4968,6 @@ packages:
 
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
-
-  birpc@2.9.0:
-    resolution: {integrity: sha512-KrayHS5pBi69Xi9JmvoqrIgYGDkD6mcSe/i6YKi3w5kekCLzrX4+nawcXqrj2tIp50Kw/mT/s3p+GVK0A0sKxw==}
 
   bl@1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
@@ -5928,9 +6013,6 @@ packages:
   error-ex@1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
 
-  error-stack-parser-es@1.0.5:
-    resolution: {integrity: sha512-5qucVt2XcuGMcEGgWI7i+yZpmpByQ8J1lHhcL7PwqCwu9FPP3VUXzT4ltHe5i2z9dePwEHcDVOAfSnHsOlCXRA==}
-
   error-stack-parser@2.1.4:
     resolution: {integrity: sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==}
 
@@ -6731,10 +6813,6 @@ packages:
 
   http-parser-js@0.5.3:
     resolution: {integrity: sha512-t7hjvef/5HEK7RWTdUzVUhl8zkEu+LlaE0IYzdMuvbSDipxBRpOn4Uhw8ZyECEa808iVT8XCjzo6xmYt4CiLZg==}
-
-  http-proxy-middleware@1.3.1:
-    resolution: {integrity: sha512-13eVVDYS4z79w7f1+NPllJtOQFx/FdUW4btIvVRMaRlUY9VGstAbo5MOhLEuUgZFRHn3x50ufn25zkj/boZnEg==}
-    engines: {node: '>=8.0.0'}
 
   http-proxy-middleware@2.0.9:
     resolution: {integrity: sha512-c1IyJYLYppU574+YI7R4QyX2ystMtVXZwIdzazUIPIJsHuWNd+mho2j+bKoHftndicGj9yh+xjd+l0yj7VeT1Q==}
@@ -8365,9 +8443,6 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  ohash@2.0.11:
-    resolution: {integrity: sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ==}
-
   omit.js@2.0.2:
     resolution: {integrity: sha512-hJmu9D+bNB40YpL9jYebQl4lsTW6yEHRTroJzNLqQJYHm7c+NQnJGfZmIWh8S3q3KoaxV1aLhV6B3+0N0/kyJg==}
 
@@ -8704,9 +8779,6 @@ packages:
 
   pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
-
-  perfect-debounce@2.0.0:
-    resolution: {integrity: sha512-fkEH/OBiKrqqI/yIgjR92lMfs2K8105zt/VT6+7eTjNwisrsh47CeIED9z58zI7DfKdH3uHAn25ziRZn3kgAow==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -9647,10 +9719,6 @@ packages:
     resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
     engines: {node: '>= 10'}
 
-  sirv@3.0.2:
-    resolution: {integrity: sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g==}
-    engines: {node: '>=18'}
-
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
@@ -9729,10 +9797,6 @@ packages:
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-
-  source-map@0.7.3:
-    resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
-    engines: {node: '>= 8'}
 
   sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
@@ -10501,10 +10565,6 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  unplugin-utils@0.3.1:
-    resolution: {integrity: sha512-5lWVjgi6vuHhJ526bI4nlCOmkCIF3nnfXkCMDeMJrtdvxTs6ZFCM8oNufGTsDbKv/tJ/xj8RpvXjRuPBZJuJog==}
-    engines: {node: '>=20.19.0'}
-
   unset-value@1.0.0:
     resolution: {integrity: sha512-PcA2tsuGSF9cnySLHTLSh2qrQiJ70mn+r+Glzxv2TWZblxsxCC52BDlZoPCsz7STd9pN7EZetkWZBAvk4cgZdQ==}
     engines: {node: '>=0.10.0'}
@@ -10618,30 +10678,10 @@ packages:
   vfile@4.2.1:
     resolution: {integrity: sha512-O6AE4OskCG5S1emQ/4gl8zK586RqA3srz3nfK/Viy0UPToBc5Trp9BVFb1u0CjsKrAWwnpr4ifM/KBXPWwJbCA==}
 
-  vite-dev-rpc@1.1.0:
-    resolution: {integrity: sha512-pKXZlgoXGoE8sEKiKJSng4hI1sQ4wi5YT24FCrwrLt6opmkjlqPPVmiPWWJn8M8byMxRGzp1CrFuqQs4M/Z39A==}
-    peerDependencies:
-      vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0-0 || ^5.0.0-0 || ^6.0.1 || ^7.0.0-0
-
-  vite-hot-client@2.1.0:
-    resolution: {integrity: sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==}
-    peerDependencies:
-      vite: ^2.6.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
-
   vite-node@6.0.0:
     resolution: {integrity: sha512-oj4PVrT+pDh6GYf5wfUXkcZyekYS8kKPfLPXVl8qe324Ec6l4K2DUKNadRbZ3LQl0qGcDz+PyOo7ZAh00Y+JjQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
-
-  vite-plugin-inspect@11.3.3:
-    resolution: {integrity: sha512-u2eV5La99oHoYPHE6UvbwgEqKKOQGz86wMg40CCosP6q8BkB6e5xPneZfYagK4ojPJSj5anHCrnvC20DpwVdRA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@nuxt/kit': '*'
-      vite: ^6.0.0 || ^7.0.0-0
-    peerDependenciesMeta:
-      '@nuxt/kit':
-        optional: true
 
   vite-tsconfig-paths@5.1.4:
     resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
@@ -14707,17 +14747,6 @@ snapshots:
 
   '@types/mime@1.3.2': {}
 
-  '@types/mini-css-extract-plugin@1.4.3(esbuild@0.27.1)':
-    dependencies:
-      '@types/node': 22.15.3
-      tapable: 2.3.0
-      webpack: 5.104.0(esbuild@0.27.1)
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-      - webpack-cli
-
   '@types/minimatch@3.0.5': {}
 
   '@types/minimist@1.2.2': {}
@@ -14819,16 +14848,8 @@ snapshots:
     dependencies:
       '@types/node': 22.15.3
 
-  '@types/source-list-map@0.1.2': {}
-
   '@types/stack-utils@2.0.1':
     optional: true
-
-  '@types/tapable@1.0.8': {}
-
-  '@types/uglify-js@3.13.1':
-    dependencies:
-      source-map: 0.6.1
 
   '@types/unist@2.0.6': {}
 
@@ -14842,31 +14863,6 @@ snapshots:
       - esbuild
       - uglify-js
       - webpack-cli
-
-  '@types/webpack-dev-server@3.11.6':
-    dependencies:
-      '@types/connect-history-api-fallback': 1.5.4
-      '@types/express': 4.17.21
-      '@types/serve-static': 1.15.7
-      '@types/webpack': 4.41.32
-      http-proxy-middleware: 1.3.1
-    transitivePeerDependencies:
-      - debug
-
-  '@types/webpack-sources@3.2.0':
-    dependencies:
-      '@types/node': 22.15.3
-      '@types/source-list-map': 0.1.2
-      source-map: 0.7.3
-
-  '@types/webpack@4.41.32':
-    dependencies:
-      '@types/node': 22.15.3
-      '@types/tapable': 1.0.8
-      '@types/uglify-js': 3.13.1
-      '@types/webpack-sources': 3.2.0
-      anymatch: 3.1.2
-      source-map: 0.6.1
 
   '@types/whatwg-mimetype@3.0.2':
     optional: true
@@ -15459,8 +15455,6 @@ snapshots:
   bindings@1.5.0:
     dependencies:
       file-uri-to-path: 1.0.0
-
-  birpc@2.9.0: {}
 
   bl@1.2.3:
     dependencies:
@@ -16627,8 +16621,6 @@ snapshots:
     dependencies:
       is-arrayish: 0.2.1
 
-  error-stack-parser-es@1.0.5: {}
-
   error-stack-parser@2.1.4:
     dependencies:
       stackframe: 1.3.4
@@ -17636,16 +17628,6 @@ snapshots:
       toidentifier: 1.0.1
 
   http-parser-js@0.5.3: {}
-
-  http-proxy-middleware@1.3.1:
-    dependencies:
-      '@types/http-proxy': 1.17.9
-      http-proxy: 1.18.1(debug@4.4.3)
-      is-glob: 4.0.3
-      is-plain-obj: 3.0.0
-      micromatch: 4.0.8
-    transitivePeerDependencies:
-      - debug
 
   http-proxy-middleware@2.0.9(@types/express@4.17.21)(debug@4.4.3):
     dependencies:
@@ -19654,8 +19636,6 @@ snapshots:
 
   obug@2.1.1: {}
 
-  ohash@2.0.11: {}
-
   omit.js@2.0.2: {}
 
   on-finished@2.4.1:
@@ -20009,8 +19989,6 @@ snapshots:
   pathe@2.0.3: {}
 
   pend@1.2.0: {}
-
-  perfect-debounce@2.0.0: {}
 
   picocolors@1.1.1: {}
 
@@ -21151,12 +21129,6 @@ snapshots:
       mrmime: 2.0.0
       totalist: 3.0.1
 
-  sirv@3.0.2:
-    dependencies:
-      '@polka/url': 1.0.0-next.24
-      mrmime: 2.0.0
-      totalist: 3.0.1
-
   sisteransi@1.0.5:
     optional: true
 
@@ -21244,8 +21216,6 @@ snapshots:
   source-map@0.5.7: {}
 
   source-map@0.6.1: {}
-
-  source-map@0.7.3: {}
 
   sourcemap-codec@1.4.8: {}
 
@@ -22013,11 +21983,6 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin-utils@0.3.1:
-    dependencies:
-      pathe: 2.0.3
-      picomatch: 4.0.3
-
   unset-value@1.0.0:
     dependencies:
       has-value: 0.3.1
@@ -22139,16 +22104,6 @@ snapshots:
       unist-util-stringify-position: 2.0.3
       vfile-message: 2.0.4
 
-  vite-dev-rpc@1.1.0(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
-    dependencies:
-      birpc: 2.9.0
-      vite: 8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-      vite-hot-client: 2.1.0(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0))
-
-  vite-hot-client@2.1.0(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
-    dependencies:
-      vite: 8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-
   vite-node@6.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0):
     dependencies:
       cac: 7.0.0
@@ -22169,21 +22124,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-
-  vite-plugin-inspect@11.3.3(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
-    dependencies:
-      ansis: 4.2.0
-      debug: 4.4.3(supports-color@9.2.3)
-      error-stack-parser-es: 1.0.5
-      ohash: 2.0.11
-      open: 10.2.0
-      perfect-debounce: 2.0.0
-      sirv: 3.0.2
-      unplugin-utils: 0.3.1
-      vite: 8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-      vite-dev-rpc: 1.1.0(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0))
-    transitivePeerDependencies:
-      - supports-color
 
   vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@8.0.0(@types/node@22.15.3)(esbuild@0.27.1)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
     dependencies:

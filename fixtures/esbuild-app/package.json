@@ -1,0 +1,19 @@
+{
+  "name": "@fixtures/esbuild-app",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@fixtures/features": "workspace:*",
+    "@fixtures/layers": "workspace:*",
+    "@fixtures/low-level": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@fixtures/themed": "workspace:*",
+    "@fixtures/thirdparty": "workspace:*",
+    "@vanilla-extract/esbuild-plugin": "workspace:*",
+    "@vanilla-extract/esbuild-plugin-next": "workspace:*",
+    "esbuild": "~0.27.0",
+    "minimist": "^1.2.5"
+  }
+}

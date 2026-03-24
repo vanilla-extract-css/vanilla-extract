@@ -1,0 +1,22 @@
+{
+  "name": "@fixtures/vite-app",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@fixtures/features": "workspace:*",
+    "@fixtures/layers": "workspace:*",
+    "@fixtures/low-level": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@fixtures/themed": "workspace:*",
+    "@fixtures/thirdparty": "workspace:*",
+    "@vanilla-extract/vite-plugin": "workspace:*",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+  }
+}

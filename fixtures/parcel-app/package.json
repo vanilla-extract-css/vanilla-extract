@@ -1,0 +1,19 @@
+{
+  "name": "@fixtures/parcel-app",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@fixtures/features": "workspace:*",
+    "@fixtures/layers": "workspace:*",
+    "@fixtures/low-level": "workspace:*",
+    "@fixtures/recipes": "workspace:*",
+    "@fixtures/sprinkles": "workspace:*",
+    "@fixtures/themed": "workspace:*",
+    "@fixtures/thirdparty": "workspace:*",
+    "@parcel/config-default": "^2.15.0",
+    "@parcel/core": "^2.15.0",
+    "@vanilla-extract/parcel-transformer": "workspace:*",
+    "minimist": "^1.2.5"
+  }
+}

@@ -1,9 +1,7 @@
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { readFileSync } from 'fs';
 import { globSync } from 'node:fs';
 import path from 'path';
-
-import test from './fixture';
 
 const fixtureDir = path.resolve(
   __dirname,

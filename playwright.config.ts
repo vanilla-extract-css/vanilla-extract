@@ -1,9 +1,34 @@
 import { type PlaywrightTestConfig, defineConfig } from '@playwright/test';
 import { cpus } from 'os';
-import { NEXT_SERVERS } from './tests/servers';
+import { NEXT_SERVERS, BUNDLER_SERVERS } from './tests/servers';
 
 // Prevent Vite from attempting to clear the screen
 process.stdout.isTTY = false;
+
+function bundlerServerCommand(server: (typeof BUNDLER_SERVERS)[number]): string {
+  const { type, mode, port } = server;
+
+  if (type === 'vite') {
+    if (mode === 'development') {
+      return `pnpm --filter=@fixtures/vite-app dev --port ${port}`;
+    }
+    return `pnpm --filter=@fixtures/vite-app build && pnpm --filter=@fixtures/vite-app serve --port ${port}`;
+  }
+
+  if (type === 'mini-css-extract' || type === 'style-loader') {
+    return `node fixtures/webpack-app/serve.ts --port ${port} --mode ${mode} --css-loader ${type}`;
+  }
+
+  if (type.startsWith('esbuild')) {
+    return `node fixtures/esbuild-app/serve.ts --port ${port} --mode ${mode} --variant ${type}`;
+  }
+
+  if (type === 'parcel') {
+    return `node fixtures/parcel-app/serve.ts --port ${port} --mode ${mode}`;
+  }
+
+  throw new Error(`Unknown bundler server type: ${type}`);
+}
 
 const config: PlaywrightTestConfig = defineConfig({
   fullyParallel: true,
@@ -15,13 +40,22 @@ const config: PlaywrightTestConfig = defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
-  webServer: NEXT_SERVERS.map((server) => ({
-    command: server.script + ` --port ${server.port}`,
-    env: { NODE_ENV: server.isProduction ? 'production' : 'development' },
-    url: `http://localhost:${server.port}`,
-    reuseExistingServer: !process.env.CI,
-    name: server.name,
-  })),
+  webServer: [
+    ...NEXT_SERVERS.map((server) => ({
+      command: server.script + ` --port ${server.port}`,
+      env: { NODE_ENV: server.isProduction ? 'production' : 'development' },
+      url: `http://localhost:${server.port}`,
+      reuseExistingServer: !process.env.CI,
+      name: server.name,
+    })),
+    ...BUNDLER_SERVERS.map((server) => ({
+      command: bundlerServerCommand(server),
+      env: { NODE_ENV: server.mode },
+      url: `http://localhost:${server.port}`,
+      reuseExistingServer: !process.env.CI,
+      name: server.name,
+    })),
+  ],
   workers: process.env.CI ? cpus().length : undefined,
   retries: process.env.CI ? 2 : 0,
   timeout: 120_000,

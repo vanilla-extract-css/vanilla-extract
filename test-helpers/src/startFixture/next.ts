@@ -3,11 +3,27 @@ import type {
   NextServerOptions,
 } from '@fixtures/next-12-pages-router/node_modules/next/dist/server/next';
 import { existsSync } from 'fs';
-import { Server as _Server, createServer } from 'http';
+import http, { Server as _Server, createServer } from 'http';
+import handler from 'serve-handler';
 import path from 'path';
 
 import type { TestServer } from './types';
-import { serveAssets } from './vite';
+
+const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
+  new Promise<() => Promise<void>>((resolve) => {
+    const server = http.createServer((request, response) => {
+      return handler(request, response, { public: dir });
+    });
+
+    server.listen(port, () => {
+      resolve(
+        () =>
+          new Promise<void>((closeRes) => {
+            server.close(() => closeRes());
+          }),
+      );
+    });
+  });
 
 type Server = _Server & {
   __app?: NextServer;
