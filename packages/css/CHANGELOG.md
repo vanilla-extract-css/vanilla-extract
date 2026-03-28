@@ -1,5 +1,11 @@
 # @vanilla-extract/css
 
+## 1.20.1
+
+### Patch Changes
+
+- [#1710](https://github.com/vanilla-extract-css/vanilla-extract/pull/1710) [`1677593`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16775939763349513c527b2f33398a03d7d75057) Thanks [@askoufis](https://github.com/askoufis)! - Replace `cssesc` dependency with vendored version
+
 ## 1.20.0
 
 ### Minor Changes
