@@ -1,5 +1,5 @@
 import { NextConfig } from 'next';
-import { createVanillaExtractPlugin } from './next-plugin/dist/vanilla-extract-next-plugin.cjs.js';
+import { createVanillaExtractPlugin } from './next-plugin/dist/index.mjs';
 const withVanillaExtract = createVanillaExtractPlugin({
   unstable_turbopack: { mode: 'auto' },
 });

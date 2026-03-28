@@ -18,7 +18,8 @@
     "skipLibCheck": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "customConditions": ["@vanilla-extract/source"]
   },
   "exclude": [
     "node_modules",

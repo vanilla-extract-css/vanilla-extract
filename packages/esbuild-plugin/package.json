@@ -2,19 +2,30 @@
   "name": "@vanilla-extract/esbuild-plugin",
   "version": "2.3.22",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-esbuild-plugin.cjs.js",
-  "module": "dist/vanilla-extract-esbuild-plugin.esm.js",
-  "types": "dist/vanilla-extract-esbuild-plugin.cjs.d.ts",
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/esbuild-plugin"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@vanilla-extract/integration": "workspace:^"
   },
@@ -28,5 +39,14 @@
   },
   "devDependencies": {
     "esbuild": "~0.27.0"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

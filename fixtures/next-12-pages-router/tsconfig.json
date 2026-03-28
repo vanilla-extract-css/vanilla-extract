@@ -5,7 +5,9 @@
     "jsx": "preserve",
     "strictNullChecks": true,
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    // Unset this as it's incompatible with next 12 apparently, even if you set the correct moduleResolution
+    "customConditions": null
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

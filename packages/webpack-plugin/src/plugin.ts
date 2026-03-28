@@ -103,7 +103,7 @@ export abstract class AbstractVanillaExtractPlugin {
       test: this.test,
       use: [
         {
-          loader: require.resolve('../loader'),
+          loader: require.resolve('@vanilla-extract/webpack-plugin/loader'),
           options: {
             outputCss: this.outputCss,
             childCompiler: this.childCompiler,

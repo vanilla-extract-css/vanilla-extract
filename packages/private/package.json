@@ -2,23 +2,38 @@
   "name": "@vanilla-extract/private",
   "version": "1.0.9",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "sideEffects": false,
-  "main": "dist/vanilla-extract-private.cjs.js",
-  "module": "dist/vanilla-extract-private.esm.js",
-  "types": "dist/vanilla-extract-private.cjs.d.ts",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/private"
   },
-  "author": "SEEK",
-  "license": "MIT"
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
+  }
 }

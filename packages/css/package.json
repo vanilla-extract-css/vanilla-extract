@@ -2,90 +2,60 @@
   "name": "@vanilla-extract/css",
   "version": "1.20.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "sideEffects": true,
-  "main": "dist/vanilla-extract-css.cjs.js",
-  "module": "dist/vanilla-extract-css.esm.js",
-  "types": "dist/vanilla-extract-css.cjs.d.ts",
-  "browser": {
-    "./dist/vanilla-extract-css.cjs.js": "./dist/vanilla-extract-css.browser.cjs.js",
-    "./dist/vanilla-extract-css.esm.js": "./dist/vanilla-extract-css.browser.esm.js"
+  "author": "SEEK",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
+    "directory": "packages/css"
   },
+  "sideEffects": true,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "exports": {
-    "./package.json": "./package.json",
-    "./vanilla.virtual.css?*": "./vanilla.virtual.css?*",
     ".": {
-      "types": "./dist/vanilla-extract-css.cjs.d.ts",
-      "browser": {
-        "module": "./dist/vanilla-extract-css.browser.esm.js",
-        "default": "./dist/vanilla-extract-css.browser.cjs.js"
-      },
-      "module": "./dist/vanilla-extract-css.esm.js",
-      "default": "./dist/vanilla-extract-css.cjs.js"
-    },
-    "./recipe": {
-      "types": "./recipe/dist/vanilla-extract-css-recipe.cjs.d.ts",
-      "browser": {
-        "module": "./recipe/dist/vanilla-extract-css-recipe.browser.esm.js",
-        "default": "./recipe/dist/vanilla-extract-css-recipe.browser.cjs.js"
-      },
-      "module": "./recipe/dist/vanilla-extract-css-recipe.esm.js",
-      "default": "./recipe/dist/vanilla-extract-css-recipe.cjs.js"
-    },
-    "./functionSerializer": {
-      "types": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.d.ts",
-      "browser": {
-        "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.esm.js",
-        "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.browser.cjs.js"
-      },
-      "module": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.esm.js",
-      "default": "./functionSerializer/dist/vanilla-extract-css-functionSerializer.cjs.js"
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./adapter": {
-      "types": "./adapter/dist/vanilla-extract-css-adapter.cjs.d.ts",
-      "browser": {
-        "module": "./adapter/dist/vanilla-extract-css-adapter.browser.esm.js",
-        "default": "./adapter/dist/vanilla-extract-css-adapter.browser.cjs.js"
-      },
-      "module": "./adapter/dist/vanilla-extract-css-adapter.esm.js",
-      "default": "./adapter/dist/vanilla-extract-css-adapter.cjs.js"
-    },
-    "./transformCss": {
-      "types": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.d.ts",
-      "browser": {
-        "module": "./transformCss/dist/vanilla-extract-css-transformCss.browser.esm.js",
-        "default": "./transformCss/dist/vanilla-extract-css-transformCss.browser.cjs.js"
-      },
-      "module": "./transformCss/dist/vanilla-extract-css-transformCss.esm.js",
-      "default": "./transformCss/dist/vanilla-extract-css-transformCss.cjs.js"
-    },
-    "./fileScope": {
-      "types": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.d.ts",
-      "browser": {
-        "module": "./fileScope/dist/vanilla-extract-css-fileScope.browser.esm.js",
-        "default": "./fileScope/dist/vanilla-extract-css-fileScope.browser.cjs.js"
-      },
-      "module": "./fileScope/dist/vanilla-extract-css-fileScope.esm.js",
-      "default": "./fileScope/dist/vanilla-extract-css-fileScope.cjs.js"
-    },
-    "./fileScope/package.json": "./fileScope/package.json",
-    "./injectStyles": {
-      "types": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.d.ts",
-      "browser": {
-        "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.esm.js",
-        "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.browser.cjs.js"
-      },
-      "module": "./injectStyles/dist/vanilla-extract-css-injectStyles.esm.js",
-      "default": "./injectStyles/dist/vanilla-extract-css-injectStyles.cjs.js"
+      "@vanilla-extract/source": "./src/adapter.ts",
+      "import": "./dist/adapter.mjs",
+      "require": "./dist/adapter.cjs"
     },
     "./disableRuntimeStyles": {
-      "types": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.d.ts",
-      "browser": {
-        "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.esm.js",
-        "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.browser.cjs.js"
-      },
-      "module": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.esm.js",
-      "default": "./disableRuntimeStyles/dist/vanilla-extract-css-disableRuntimeStyles.cjs.js"
-    }
+      "@vanilla-extract/source": "./src/disableRuntimeStyles.ts",
+      "import": "./dist/disableRuntimeStyles.mjs",
+      "require": "./dist/disableRuntimeStyles.cjs"
+    },
+    "./fileScope": {
+      "@vanilla-extract/source": "./src/fileScope.ts",
+      "import": "./dist/fileScope.mjs",
+      "require": "./dist/fileScope.cjs"
+    },
+    "./functionSerializer": {
+      "@vanilla-extract/source": "./src/functionSerializer.ts",
+      "import": "./dist/functionSerializer.mjs",
+      "require": "./dist/functionSerializer.cjs"
+    },
+    "./injectStyles": {
+      "@vanilla-extract/source": "./src/injectStyles.ts",
+      "import": "./dist/injectStyles.mjs",
+      "require": "./dist/injectStyles.cjs"
+    },
+    "./recipe": {
+      "@vanilla-extract/source": "./src/recipe.ts",
+      "import": "./dist/recipe.mjs",
+      "require": "./dist/recipe.cjs"
+    },
+    "./transformCss": {
+      "@vanilla-extract/source": "./src/transformCss.ts",
+      "import": "./dist/transformCss.mjs",
+      "require": "./dist/transformCss.cjs"
+    },
+    "./package.json": "./package.json",
+    "./vanilla.virtual.css?*": "./vanilla.virtual.css?*"
   },
   "preconstruct": {
     "entrypoints": [
@@ -100,23 +70,12 @@
     ]
   },
   "files": [
-    "/dist",
-    "/recipe",
-    "/functionSerializer",
-    "/adapter",
-    "/transformCss",
-    "/fileScope",
-    "/injectStyles",
-    "/disableRuntimeStyles",
+    "dist",
     "vanilla.virtual.css"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
-    "directory": "packages/css"
+  "scripts": {
+    "build": "tsdown "
   },
-  "author": "SEEK",
-  "license": "MIT",
   "dependencies": {
     "@emotion/hash": "^0.9.0",
     "@vanilla-extract/private": "workspace:^",
@@ -129,5 +88,43 @@
     "media-query-parser": "^2.0.2",
     "modern-ahocorasick": "^1.0.0",
     "picocolors": "^1.0.0"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./adapter": {
+        "import": "./dist/adapter.mjs",
+        "require": "./dist/adapter.cjs"
+      },
+      "./disableRuntimeStyles": {
+        "import": "./dist/disableRuntimeStyles.mjs",
+        "require": "./dist/disableRuntimeStyles.cjs"
+      },
+      "./fileScope": {
+        "import": "./dist/fileScope.mjs",
+        "require": "./dist/fileScope.cjs"
+      },
+      "./functionSerializer": {
+        "import": "./dist/functionSerializer.mjs",
+        "require": "./dist/functionSerializer.cjs"
+      },
+      "./injectStyles": {
+        "import": "./dist/injectStyles.mjs",
+        "require": "./dist/injectStyles.cjs"
+      },
+      "./recipe": {
+        "import": "./dist/recipe.mjs",
+        "require": "./dist/recipe.cjs"
+      },
+      "./transformCss": {
+        "import": "./dist/transformCss.mjs",
+        "require": "./dist/transformCss.cjs"
+      },
+      "./package.json": "./package.json",
+      "./vanilla.virtual.css?*": "./vanilla.virtual.css?*"
+    }
   }
 }

@@ -1,4 +1,0 @@
-{
-  "main": "dist/vanilla-extract-sprinkles-createRuntimeSprinkles.cjs.js",
-  "module": "dist/vanilla-extract-sprinkles-createRuntimeSprinkles.esm.js"
-}

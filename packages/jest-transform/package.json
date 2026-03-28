@@ -2,29 +2,42 @@
   "name": "@vanilla-extract/jest-transform",
   "version": "1.1.21",
   "description": "Jest transformer for vanilla-extract",
-  "main": "dist/vanilla-extract-jest-transform.cjs.js",
-  "module": "dist/vanilla-extract-jest-transform.esm.js",
-  "types": "dist/vanilla-extract-jest-transform.cjs.d.ts",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/jest-transform"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
+    "@jest/transform": "^29.0.3",
     "@vanilla-extract/integration": "workspace:^",
     "esbuild": "npm:esbuild@>=0.17.6 <0.28.0"
   },
-  "devDependencies": {
-    "@jest/transform": "^29.0.3"
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

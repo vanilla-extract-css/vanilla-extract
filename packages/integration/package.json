@@ -1,19 +1,31 @@
 {
   "name": "@vanilla-extract/integration",
-  "version": "8.0.9",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-integration.cjs.js",
-  "types": "dist/vanilla-extract-integration.cjs.d.ts",
-  "files": [
-    "/dist"
-  ],
+  "version": "8.0.9",
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/integration"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@babel/core": "^7.23.9",
     "@babel/plugin-syntax-typescript": "^7.23.3",
@@ -21,12 +33,20 @@
     "@vanilla-extract/css": "workspace:^",
     "dedent": "^1.5.3",
     "esbuild": "npm:esbuild@>=0.17.6 <0.28.0",
-    "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
     "mlly": "^1.4.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

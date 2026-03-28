@@ -2,19 +2,30 @@
   "name": "@vanilla-extract/vite-plugin",
   "version": "5.2.2",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-vite-plugin.cjs.js",
-  "module": "dist/vanilla-extract-vite-plugin.esm.js",
-  "types": "dist/vanilla-extract-vite-plugin.cjs.d.ts",
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/vite-plugin"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@vanilla-extract/compiler": "workspace:^",
     "@vanilla-extract/integration": "workspace:^"
@@ -24,5 +35,14 @@
   },
   "peerDependencies": {
     "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

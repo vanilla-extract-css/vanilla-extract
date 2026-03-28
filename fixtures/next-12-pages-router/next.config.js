@@ -1,6 +1,4 @@
-const {
-  createVanillaExtractPlugin,
-} = require('./next-plugin/dist/vanilla-extract-next-plugin.cjs.js');
+const { createVanillaExtractPlugin } = require('./next-plugin/dist/index.cjs');
 
 const withVanillaExtract = createVanillaExtractPlugin();
 

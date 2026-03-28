@@ -66,7 +66,8 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build
+        # Enable PNPM shell emulation just for this step to avoid making a separate build script for windows
+        run: pnpm config set shellEmulator true && pnpm build && pnpm config set shellEmulator false
 
       - name: Unit Test
         run: pnpm test:unit

@@ -2,24 +2,30 @@
   "name": "@vanilla-extract/next-plugin",
   "version": "2.5.1",
   "description": "Zero-runtime Stylesheets-in-TypeScript",
-  "main": "dist/vanilla-extract-next-plugin.cjs.js",
-  "module": "dist/vanilla-extract-next-plugin.esm.js",
-  "types": "dist/vanilla-extract-next-plugin.cjs.d.ts",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/next-plugin"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@vanilla-extract/turbopack-plugin": "workspace:^",
     "@vanilla-extract/webpack-plugin": "workspace:^",
@@ -32,5 +38,14 @@
     "@types/semver": "^7.7.1",
     "next": "12.3.4",
     "webpack": "^5.90.0"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

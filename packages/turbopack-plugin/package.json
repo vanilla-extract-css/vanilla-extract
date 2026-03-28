@@ -2,24 +2,30 @@
   "name": "@vanilla-extract/turbopack-plugin",
   "version": "0.1.3",
   "description": "Turbopack loader for vanilla-extract",
-  "main": "dist/vanilla-extract-turbopack-plugin.cjs.js",
-  "module": "dist/vanilla-extract-turbopack-plugin.esm.js",
-  "types": "dist/vanilla-extract-turbopack-plugin.cjs.d.ts",
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
-  },
-  "files": [
-    "/dist"
-  ],
+  "author": "SEEK",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanilla-extract-css/vanilla-extract.git",
     "directory": "packages/turbopack-plugin"
   },
-  "author": "SEEK",
-  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "@vanilla-extract/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@swc/core": "^1.13.5",
     "@vanilla-extract/compiler": "workspace:^",
@@ -31,5 +37,14 @@
   },
   "peerDependencies": {
     "next": ">=12.1.7"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

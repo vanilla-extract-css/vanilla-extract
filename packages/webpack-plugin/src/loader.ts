@@ -16,20 +16,17 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 
-const virtualFileLoader = require.resolve(
-  path.join(
-    path.dirname(require.resolve('../../package.json')),
-    'virtualFileLoader',
-  ),
-);
+const virtualFileLoader =
+  require.resolve('@vanilla-extract/webpack-plugin/virtualFileLoader');
 
+// TODO: Should extracted.js and vanilla.virtual.css be entrypoints too?
 const virtualFileLoaderExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
+  path.dirname(require.resolve('@vanilla-extract/webpack-plugin/package.json')),
   'extracted.js',
 );
 
 const virtualNextFileLoaderExtractionFile = path.join(
-  path.dirname(require.resolve('../../package.json')),
+  path.dirname(require.resolve('@vanilla-extract/webpack-plugin/package.json')),
   'vanilla.virtual.css',
 );
 

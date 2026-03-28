@@ -1,7 +1,7 @@
 import type { FileScope, Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
 import { removeAdapter, setAdapter } from '@vanilla-extract/css/adapter';
-import evalCode from 'eval';
+import { evalCode } from './evalCode';
 import { stringify } from 'javascript-stringify';
 import dedent from 'dedent';
 
@@ -120,12 +120,11 @@ export async function processVanillaFile({
     }
   `;
 
-  const evalResult = evalCode(
-    adapterBoundSource,
-    filePath,
-    { console, process, __adapter__: cssAdapter },
-    true,
-  ) as Record<string, unknown>;
+  const evalResult = evalCode(adapterBoundSource, filePath, {
+    console,
+    process,
+    __adapter__: cssAdapter,
+  });
 
   process.env.NODE_ENV = currentNodeEnv;
 
