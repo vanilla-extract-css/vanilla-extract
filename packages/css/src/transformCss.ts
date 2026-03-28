@@ -1,5 +1,4 @@
 import { getVarName } from '@vanilla-extract/private';
-import cssesc from 'cssesc';
 import AhoCorasick from 'modern-ahocorasick';
 
 import type {
@@ -21,6 +20,7 @@ import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
 import { validateMediaQuery } from './validateMediaQuery';
+import { cssesc } from './cssesc';
 
 const DECLARATION = '__DECLARATION';
 

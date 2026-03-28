@@ -408,9 +408,6 @@ importers:
       css-what:
         specifier: ^6.1.0
         version: 6.1.0
-      cssesc:
-        specifier: ^3.0.0
-        version: 3.0.0
       csstype:
         specifier: ^3.2.3
         version: 3.2.3
@@ -435,10 +432,6 @@ importers:
       picocolors:
         specifier: ^1.0.0
         version: 1.1.1
-    devDependencies:
-      '@types/cssesc':
-        specifier: ^3.0.0
-        version: 3.0.0
 
   packages/dynamic:
     dependencies:
@@ -4137,9 +4130,6 @@ packages:
 
   '@types/connect@3.4.35':
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
-
-  '@types/cssesc@3.0.0':
-    resolution: {integrity: sha512-4mBnOrTpVKn+tYzlnMO7cwDkDa6wlQ2bBXW+79/6ahMd36GF216kxWYxgz+S4d5Ev1ByFbnQbPGxV4P5BSL8MA==}
 
   '@types/debug@4.1.7':
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
@@ -14588,8 +14578,6 @@ snapshots:
   '@types/connect@3.4.35':
     dependencies:
       '@types/node': 22.15.3
-
-  '@types/cssesc@3.0.0': {}
 
   '@types/debug@4.1.7':
     dependencies:

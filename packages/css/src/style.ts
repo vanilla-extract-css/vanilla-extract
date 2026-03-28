@@ -1,4 +1,3 @@
-import cssesc from 'cssesc';
 import dedent from 'dedent';
 import deepmerge from 'deepmerge';
 
@@ -19,6 +18,7 @@ import {
 import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dedupeAndJoinClassList } from './utils';
+import { cssesc } from './cssesc';
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
