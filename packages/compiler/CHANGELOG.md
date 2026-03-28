@@ -1,5 +1,18 @@
 # @vanilla-extract/compiler
 
+## 0.7.0
+
+### Minor Changes
+
+- [#1710](https://github.com/vanilla-extract-css/vanilla-extract/pull/1710) [`1677593`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16775939763349513c527b2f33398a03d7d75057) Thanks [@askoufis](https://github.com/askoufis)! - Don't mark `cssesc` dependency as `external`
+
+  `cssesc` has been vendored into the `@vanilla-extract/css` package due to its lack of ESM support
+
+### Patch Changes
+
+- Updated dependencies [[`1677593`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16775939763349513c527b2f33398a03d7d75057)]:
+  - @vanilla-extract/css@1.20.1
+
 ## 0.6.0
 
 ### Minor Changes
