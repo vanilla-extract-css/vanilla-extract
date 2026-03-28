@@ -7,7 +7,6 @@ import {
   type MapLeafNodes,
   type CSSVarFunction,
 } from '@vanilla-extract/private';
-import cssesc from 'cssesc';
 
 import type { Tokens, NullableTokens, ThemeVars } from './types';
 import { validateContract } from './validateContract';
@@ -15,6 +14,7 @@ import { getFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import type { PropertySyntax } from './types';
 import { appendCss } from './adapter';
+import { cssesc } from './cssesc';
 
 type VarDeclaration =
   | {
