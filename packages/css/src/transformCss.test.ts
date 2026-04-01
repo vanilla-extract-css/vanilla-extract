@@ -2907,6 +2907,70 @@ describe('transformCss', () => {
       `[Error: Nested at-rules (e.g. "@media") are not allowed inside @starting-style.]`,
     );
   });
+
+  it('should handle position-try', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'positionTry',
+            name: '--my-position',
+            rule: {
+              top: 0,
+              left: '100%',
+              width: 200,
+              margin: '0 0 0 10px',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @position-try --my-position {
+        top: 0;
+        left: 100%;
+        width: 200px;
+        margin: 0 0 0 10px;
+      }
+    `);
+  });
+
+  it('should handle multiple position-try rules', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'positionTry',
+            name: '--pos-left',
+            rule: {
+              left: 0,
+              right: 'auto',
+            },
+          },
+          {
+            type: 'positionTry',
+            name: '--pos-right',
+            rule: {
+              left: 'auto',
+              right: 0,
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @position-try --pos-left {
+        left: 0;
+        right: auto;
+      }
+      @position-try --pos-right {
+        left: auto;
+        right: 0;
+      }
+    `);
+  });
 });
 
 endFileScope();

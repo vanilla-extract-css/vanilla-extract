@@ -5,6 +5,7 @@ import type {
   CSS,
   CSSStyleBlock,
   CSSKeyframesBlock,
+  CSSPositionTryBlock,
   CSSPropertiesWithVars,
   StyleRule,
   StyleWithSelectors,
@@ -117,6 +118,7 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
+  positionTryRules: Array<CSSPositionTryBlock>;
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
@@ -131,6 +133,7 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
+    this.positionTryRules = [];
     this.propertyRules = [];
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
@@ -168,6 +171,13 @@ class Stylesheet {
         }),
       );
       this.keyframesRules.push(root);
+
+      return;
+    }
+
+    if (root.type === 'positionTry') {
+      root.rule = this.transformProperties(root.rule);
+      this.positionTryRules.push(root);
 
       return;
     }
@@ -669,6 +679,13 @@ class Stylesheet {
     // Render keyframes
     for (const keyframe of this.keyframesRules) {
       css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
+    }
+
+    // Render position-try rules
+    for (const positionTry of this.positionTryRules) {
+      css.push(
+        renderCss({ [`@position-try ${positionTry.name}`]: positionTry.rule }),
+      );
     }
 
     // Render layer definitions

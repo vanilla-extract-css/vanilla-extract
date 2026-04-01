@@ -11,6 +11,8 @@ export default `
     <div id="${testNodes.styleCompositionInSelector}" class="${styles.styleCompositionInSelector}">Style composition in selector</div>
     <div id="${testNodes.styleVariantsCompositionInSelector}" class="${styles.styleVariantsCompositionInSelector.variant}">Style variants composition in selector</div>
     <div id="${testNodes.styleWithStartingStyle}" class="${styles.styleWithStartingStyle}">Style with @starting-style rule</div>
+    <div id="${testNodes.anchorElement}" class="${styles.anchorElement}">Anchor</div>
+    <div id="${testNodes.anchoredElement}" class="${styles.anchoredElement}">Anchored (position-try)</div>
   `;
 
 // @ts-expect-error Vite env not defined

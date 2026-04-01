@@ -1,4 +1,10 @@
-import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
+import {
+  createVar,
+  globalStyle,
+  positionTry,
+  style,
+  styleVariants,
+} from '@vanilla-extract/css';
 
 export const mergedStyle = style([
   { height: 50, ':after': { display: 'block', content: '"Below 700px"' } },
@@ -72,4 +78,39 @@ export const styleWithStartingStyle = style({
   '@starting-style': {
     backgroundColor: 'white',
   },
+});
+
+const moveToBottom = positionTry({
+  positionArea: 'bottom span-right',
+  width: 150,
+  margin: '10px 0 0 0',
+});
+
+// TODO: This needs to be an ident, not `var(--foo)` to work with positionAnchor
+// Maybe we need to expose `createIdent` for this purpose?
+// Would also be good for `positionTry`
+const anchorName = createVar();
+
+export const anchorElement = style({
+  anchorName: anchorName,
+  backgroundColor: 'coral',
+  width: 150,
+  height: 50,
+  textAlign: 'center',
+  lineHeight: '50px',
+  marginTop: 40,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+});
+
+export const anchoredElement = style({
+  positionAnchor: anchorName,
+  position: 'fixed',
+  positionArea: 'right center',
+  width: 200,
+  margin: '0 0 0 10px',
+  positionTryFallbacks: moveToBottom,
+  backgroundColor: 'lightblue',
+  padding: 10,
+  textAlign: 'center',
 });

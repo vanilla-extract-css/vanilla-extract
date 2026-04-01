@@ -4,6 +4,7 @@ import deepmerge from 'deepmerge';
 import type {
   FontFaceRule,
   CSSKeyframes,
+  PositionTryRule,
   StyleRule,
   GlobalStyleRule,
   ClassNames,
@@ -147,6 +148,26 @@ export function keyframes(rule: CSSKeyframes, debugId?: string): string {
 
 export function globalKeyframes(name: string, rule: CSSKeyframes): void {
   appendCss({ type: 'keyframes', name, rule }, getFileScope());
+}
+
+export function positionTry(
+  rule: PositionTryRule,
+  debugId?: string,
+): string {
+  const name = `--${cssesc(generateIdentifier(debugId), {
+    isIdentifier: true,
+  })}`;
+
+  appendCss({ type: 'positionTry', name, rule }, getFileScope());
+
+  return name;
+}
+
+export function globalPositionTry(
+  name: string,
+  rule: PositionTryRule,
+): void {
+  appendCss({ type: 'positionTry', name, rule }, getFileScope());
 }
 
 export function styleVariants<

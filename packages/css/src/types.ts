@@ -72,6 +72,49 @@ export type GlobalFontFaceRule = Omit<AtRule.FontFaceFallback, 'src'> &
   Required<Pick<AtRule.FontFaceFallback, 'src'>>;
 export type FontFaceRule = Omit<GlobalFontFaceRule, 'fontFamily'>;
 
+export type PositionTryRule = Pick<
+  CSSProperties,
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'inset'
+  | 'insetBlock'
+  | 'insetBlockStart'
+  | 'insetBlockEnd'
+  | 'insetInline'
+  | 'insetInlineStart'
+  | 'insetInlineEnd'
+  | 'margin'
+  | 'marginTop'
+  | 'marginRight'
+  | 'marginBottom'
+  | 'marginLeft'
+  | 'marginBlock'
+  | 'marginBlockStart'
+  | 'marginBlockEnd'
+  | 'marginInline'
+  | 'marginInlineStart'
+  | 'marginInlineEnd'
+  | 'width'
+  | 'height'
+  | 'minWidth'
+  | 'minHeight'
+  | 'maxWidth'
+  | 'maxHeight'
+  | 'blockSize'
+  | 'inlineSize'
+  | 'minBlockSize'
+  | 'minInlineSize'
+  | 'maxBlockSize'
+  | 'maxInlineSize'
+  | 'alignSelf'
+  | 'justifySelf'
+  | 'placeSelf'
+  | 'positionAnchor'
+  | 'positionArea'
+>;
+
 export type CSSStyleBlock = {
   type: 'local';
   selector: string;
@@ -100,6 +143,12 @@ export type CSSLayerDeclaration = {
   name: string;
 };
 
+export type CSSPositionTryBlock = {
+  type: 'positionTry';
+  name: string;
+  rule: PositionTryRule;
+};
+
 export type CSSPropertyBlock = {
   type: 'property';
   name: string;
@@ -112,7 +161,8 @@ export type CSS =
   | CSSKeyframesBlock
   | CSSSelectorBlock
   | CSSLayerDeclaration
-  | CSSPropertyBlock;
+  | CSSPropertyBlock
+  | CSSPositionTryBlock;
 
 export type FileScope = {
   packageName?: string;
