@@ -85,9 +85,10 @@ vanillaExtractPlugin({
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
-### untable_injectedFilescopes
+### unstable_injectFilescopes
 
-Injects filescopes into Vanilla Extract modules instead of generating CSS.
+When set to `true`, injects filescopes into Vanilla Extract modules instead of generating CSS.
+Defaults to `false`.
 This is useful for utility or component libraries that prefer their consumers to process Vanilla Extract files instead of bundling CSS.
 
 Note that this flag only works with `preserveModules: true`.
