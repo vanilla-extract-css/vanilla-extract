@@ -1167,6 +1167,509 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should handle @scope queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              display: 'flex',
+              '@scope': {
+                '(.start)': {
+                  display: 'grid',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        display: flex;
+      }
+      @scope (.start) {
+        .testClass {
+          display: grid;
+        }
+      }
+    `);
+  });
+
+  it('should handle @scope queries inside selectors', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: 'red',
+              '@scope': {
+                '(.start)': {
+                  color: 'yellow',
+                },
+                '(.start) to (.end)': {
+                  color: 'green',
+                },
+              },
+              selectors: {
+                'body &': {
+                  '@scope': {
+                    '(.start)': {
+                      color: 'green',
+                    },
+                    '(.start) to (.end)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        color: red;
+      }
+      @scope (.start) {
+        .testClass {
+          color: yellow;
+        }
+        body .testClass {
+          color: green;
+        }
+      }
+      @scope (.start) to (.end) {
+        .testClass {
+          color: green;
+        }
+        body .testClass {
+          color: purple;
+        }
+      }
+    `);
+  });
+
+  it('should merge @scope queries', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              color: 'green',
+              '@scope': {
+                '(.start) to (.end)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              color: 'purple',
+              '@scope': {
+                '(.start)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              color: 'purple',
+              '@scope': {
+                '(.start)': {
+                  color: 'green',
+                },
+                '(.start) to (.end)': {
+                  color: 'yellow',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        color: green;
+      }
+      .otherClass {
+        color: purple;
+      }
+      .otherOtherClass {
+        color: purple;
+      }
+      @scope (.start) {
+        .otherClass {
+          color: red;
+        }
+        .otherOtherClass {
+          color: green;
+        }
+      }
+      @scope (.start) to (.end) {
+        .testClass {
+          color: red;
+        }
+        .otherOtherClass {
+          color: yellow;
+        }
+      }
+    `);
+  });
+
+  it('should not merge @scope queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@scope': {
+                '(.start) to (.end)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@scope': {
+                '(.start)': {
+                  color: 'yellow',
+                },
+                '(.start) to (.end)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@scope': {
+                '(.scope)': {
+                  color: 'yellow',
+                },
+                '(.start) to (.end)': {
+                  color: 'purple',
+                },
+                '(.start)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@scope': {
+                '(.scope)': {
+                  color: 'yellow',
+                },
+                '(.start)': {
+                  color: 'purple',
+                },
+                '(.new-scope)': {
+                  color: 'purple',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @scope (.start) {
+        .otherClass {
+          color: yellow;
+        }
+      }
+      @scope (.start) to (.end) {
+        .testClass {
+          color: red;
+        }
+        .otherClass {
+          color: purple;
+        }
+      }
+      @scope (.scope) {
+        .otherOtherClass {
+          color: yellow;
+        }
+        .otherOtherOtherClass {
+          color: yellow;
+        }
+      }
+      @scope (.start) to (.end) {
+        .otherOtherClass {
+          color: purple;
+        }
+      }
+      @scope (.start) {
+        .otherOtherClass {
+          color: purple;
+        }
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }
+      @scope (.new-scope) {
+        .otherOtherOtherClass {
+          color: purple;
+        }
+      }
+    `);
+  });
+
+  it('should not merge nested @scope queries if not safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@scope': {
+                    '(.start) to (.end)': {
+                      color: 'red',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@scope': {
+                    '(.start)': {
+                      color: 'yellow',
+                    },
+                    '(.start) to (.end)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@scope': {
+                    '(.scope)': {
+                      color: 'yellow',
+                    },
+                    '(.start) to (.end)': {
+                      color: 'purple',
+                    },
+                    '(.start)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: 'local',
+            selector: '.otherOtherOtherClass',
+            rule: {
+              '@supports': {
+                '(display: grid)': {
+                  '@scope': {
+                    '(.scope)': {
+                      color: 'yellow',
+                    },
+                    '(.start)': {
+                      color: 'purple',
+                    },
+                    '(.new-scope)': {
+                      color: 'purple',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @supports (display: grid) {
+        @scope (.start) {
+          .otherClass {
+            color: yellow;
+          }
+        }
+        @scope (.start) to (.end) {
+          .testClass {
+            color: red;
+          }
+          .otherClass {
+            color: purple;
+          }
+        }
+      }
+      @supports (display: grid) {
+        @scope (.scope) {
+          .otherOtherClass {
+            color: yellow;
+          }
+          .otherOtherOtherClass {
+            color: yellow;
+          }
+        }
+        @scope (.start) to (.end) {
+          .otherOtherClass {
+            color: purple;
+          }
+        }
+        @scope (.start) {
+          .otherOtherClass {
+            color: purple;
+          }
+          .otherOtherOtherClass {
+            color: purple;
+          }
+        }
+        @scope (.new-scope) {
+          .otherOtherOtherClass {
+            color: purple;
+          }
+        }
+      }
+    `);
+  });
+
+  it('should merge nested @scope queries if safe to do so', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@scope': {
+                '(.start) to (.end)': {
+                  padding: '50px',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherClass',
+            rule: {
+              '@scope': {
+                '(.scope)': {
+                  color: 'red',
+                },
+              },
+            },
+          },
+
+          {
+            type: 'local',
+            selector: '.otherOtherClass',
+            rule: {
+              '@scope': {
+                '(.start)': {
+                  background: 'blue',
+                },
+
+                '(.start) to (.end)': {
+                  background: 'green',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @scope (.start) {
+        .otherOtherClass {
+          background: blue;
+        }
+      }
+      @scope (.start) to (.end) {
+        .testClass {
+          padding: 50px;
+        }
+        .otherOtherClass {
+          background: green;
+        }
+      }
+      @scope (.scope) {
+        .otherClass {
+          color: red;
+        }
+      }
+    `);
+  });
+
+  it('should handle complexe @scope query', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              '@scope': {
+                '(&)': {
+                  padding: '50px',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @scope (.testClass) {
+        .testClass {
+          padding: 50px;
+        }
+      }
+    `);
+  });
+
   it('should handle container queries inside selectors', () => {
     expect(
       transformCss({
