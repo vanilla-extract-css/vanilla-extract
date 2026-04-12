@@ -1,5 +1,11 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.27
+
+### Patch Changes
+
+- [#1722](https://github.com/vanilla-extract-css/vanilla-extract/pull/1722) [`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where the `externals` option was silently ignored
+
 ## 2.3.26
 
 ### Patch Changes
@@ -339,7 +345,6 @@
 ### Major Changes
 
 - [#323](https://github.com/vanilla-extract-css/vanilla-extract/pull/323) [`1e7d647`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can now be configured via the `identifiers` option which accepts either `short` or `debug`.
-
   - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
   - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `somefile_mystyle_hnw5tz3`
 

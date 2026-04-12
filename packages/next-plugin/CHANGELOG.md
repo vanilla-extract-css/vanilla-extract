@@ -1,5 +1,14 @@
 # @vanilla-extract/next-plugin
 
+## 2.5.2
+
+### Patch Changes
+
+- [#1722](https://github.com/vanilla-extract-css/vanilla-extract/pull/1722) [`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where the `externals` option was silently ignored
+
+- Updated dependencies [[`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc)]:
+  - @vanilla-extract/webpack-plugin@2.3.27
+
 ## 2.5.1
 
 ### Patch Changes
