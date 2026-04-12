@@ -1,7 +1,11 @@
 import type { LoaderContext } from './types';
 import createCompat from './compat';
 
-// Should be "ExternalsItem" but webpack doesn't expose it
+// Webpack exposes the `Externals` type which is a union of several types.
+// We likely intended to only accept a subset of these, but chose to use `any`.
+// We handle potential array inputs, but really we should be more specific about what we accept
+// here, or handling all types. Changing this type would be a breaking change,
+// so we can look at this in a future major release.
 type Externals = any;
 
 interface CompilationResult {
@@ -131,7 +135,7 @@ function compileVanillaSource(
     new ExternalsPlugin('commonjs', [
       '@vanilla-extract/css',
       '@vanilla-extract/css/fileScope',
-      externals,
+      ...(Array.isArray(externals) ? externals : [externals]),
     ]).apply(childCompiler);
 
     let source: string;

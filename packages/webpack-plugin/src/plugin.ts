@@ -57,6 +57,10 @@ export interface PluginOptions {
   test?: RuleSetRule['test'];
   identifiers?: IdentifierOption;
   outputCss?: boolean;
+  /**
+   * Effectively `ExternalItem[]` from webpack. Currently typed as `any` as this type was
+   * previously not exposed. The `any` type will be fixed in the next major version.
+   */
   externals?: any;
   /** @deprecated */
   allowRuntime?: boolean;
