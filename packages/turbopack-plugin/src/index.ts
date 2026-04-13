@@ -11,6 +11,7 @@ import * as path from 'node:path';
 import { createNextFontVePlugin } from './next-font/plugin';
 import type fs from 'node:fs';
 import { injectFontImports } from './next-font/inject';
+import { prefixRegex } from '@rolldown/pluginutils';
 
 export type TurboLoaderContext<OptionsType> = {
   getOptions: {
@@ -58,12 +59,15 @@ const getOrMakeCompiler = async ({
 }): Promise<VeCompiler> => {
   if (sharedCompiler) return sharedCompiler;
 
+  const resolvedNextImageVirtualModulePrefix =
+    '\0virtual:vanilla-extract-next-image?';
+
   const defineEnv: Record<string, string> = {};
   for (const [key, value] of Object.entries(nextEnv ?? {})) {
     defineEnv[`process.env.${key}`] = JSON.stringify(value);
   }
 
-  sharedCompiler = createCompiler({
+  sharedCompiler = await createCompiler({
     root: loaderContext.rootContext,
     identifiers,
     enableFileWatcher: false,
@@ -81,18 +85,22 @@ const getOrMakeCompiler = async ({
           // route vite file reads through turbopack's fs to handle dependency tracking automatically
           name: 'vanilla-extract-turbo-fs',
           enforce: 'pre',
-          async load(id: string) {
-            return new Promise((resolve, reject) => {
-              // we can reuse this fs instance across all loader calls
-              // turbopack will associate dependencies to the file currently being loaded
-              loaderContext.fs.readFile(id, (error, data) => {
-                if (error) {
-                  reject(error);
-                } else if (typeof data === 'string') {
-                  resolve({ code: data });
-                } else resolve(null);
+          load: {
+            // oxlint-disable-next-line no-control-regex No way around this I think
+            filter: { id: { exclude: /^\0/ } },
+            async handler(id: string) {
+              return new Promise((resolve, reject) => {
+                // we can reuse this fs instance across all loader calls
+                // turbopack will associate dependencies to the file currently being loaded
+                loaderContext.fs.readFile(id, (error, data) => {
+                  if (error) {
+                    reject(error);
+                  } else if (typeof data === 'string') {
+                    resolve({ code: data });
+                  } else resolve(null);
+                });
               });
-            });
+            },
           },
         },
         {
@@ -112,13 +120,33 @@ const getOrMakeCompiler = async ({
               source.endsWith('.ico') ||
               source.endsWith('.bmp')
             ) {
-              const sourceImage = path.isAbsolute(source)
-                ? path.join(loaderContext.rootContext, source)
-                : path.join(path.dirname(importer), source);
+              return (
+                resolvedNextImageVirtualModulePrefix +
+                new URLSearchParams({ spec: source, importer }).toString()
+              );
+            }
+
+            return null;
+          },
+          load: {
+            filter: { id: prefixRegex(resolvedNextImageVirtualModulePrefix) },
+            async handler(id: string) {
+              const params = new URLSearchParams(
+                id.slice(resolvedNextImageVirtualModulePrefix.length),
+              );
+              const spec = params.get('spec');
+              const importer = params.get('importer');
+              if (!spec || !importer) {
+                return null;
+              }
+
+              const sourceImage = path.isAbsolute(spec)
+                ? path.join(loaderContext.rootContext, spec)
+                : path.join(path.dirname(importer), spec);
 
               // since we'll be using the image in our final css file, we must craft an import path that will resolve to the image file from the css file
               const referenceFile = require.resolve(
-                '@vanilla-extract/css/vanilla.virtual.css?ve-css=unknown',
+                '@vanilla-extract/css/vanilla.virtual.css?ve-css=placeholder',
                 { paths: [importer] },
               );
               const relativeImport = path.relative(
@@ -126,13 +154,13 @@ const getOrMakeCompiler = async ({
                 sourceImage,
               );
 
-              // determine the dimensions of the image
               const imageAsBuffer = new Promise<Buffer>((resolve, reject) => {
                 loaderContext.fs.readFile(sourceImage, (error, data) => {
                   if (error) reject(error);
                   resolve(data);
                 });
               });
+
               const { getImageSize } =
                 await import('next/dist/server/image-optimizer.js');
               const imageSize: { width?: number; height?: number } =
@@ -142,7 +170,7 @@ const getOrMakeCompiler = async ({
                   throw new Error(message);
                 });
 
-              const moduleContent = `export default {
+              const code = `export default {
                 src: '${relativeImport}',
                 height: ${imageSize.height},
                 width: ${imageSize.width},
@@ -151,13 +179,8 @@ const getOrMakeCompiler = async ({
                 blurHeight: undefined,
               }`;
 
-              return (
-                'data:text/javascript;base64,' +
-                Buffer.from(moduleContent).toString('base64')
-              );
-            }
-
-            return null;
+              return { code };
+            },
           },
         },
         {

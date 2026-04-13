@@ -2,7 +2,14 @@ import assert from 'assert';
 import { join, isAbsolute } from 'path';
 import type { Adapter } from '@vanilla-extract/css';
 import { transformCss } from '@vanilla-extract/css/transformCss';
-import type { ModuleNode, UserConfig as ViteUserConfig } from 'vite';
+import {
+  type ModuleNode,
+  type UserConfig as ViteUserConfig,
+  type ViteDevServer,
+  createServer,
+  createServerModuleRunner,
+} from 'vite';
+import { type ModuleRunner, EvaluatedModules } from 'vite/module-runner';
 
 import {
   cssFileFilter,
@@ -13,6 +20,7 @@ import {
   type IdentifierOption,
 } from '@vanilla-extract/integration';
 import { lock } from './lock';
+import { VanillaExtractModuleRunner } from './VanillaExtractModuleRunner';
 
 type Css = Parameters<Adapter['appendCss']>[0];
 type Composition = Parameters<Adapter['registerComposition']>[0];
@@ -89,6 +97,12 @@ const createModuleScanner = () => {
   return scanModule;
 };
 
+type Context = {
+  server: ViteDevServer;
+  runner: ModuleRunner;
+  evaluator: VanillaExtractModuleRunner;
+};
+
 const createViteServer = async ({
   root,
   identifiers,
@@ -97,11 +111,10 @@ const createViteServer = async ({
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
 > &
-  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
+  Pick<CreateCompilerOptions, 'enableFileWatcher'>): Promise<Context> => {
   const pkg = getPackageInfo(root);
-  const vite = await import('vite');
 
-  const server = await vite.createServer({
+  const server = await createServer({
     ...viteConfig,
     // The vite-node server should not rewrite imported asset URLs within VE stylesheets.
     // Doing so interferes with Vite's resolution and bundling of these assets at build time.
@@ -111,8 +124,10 @@ const createViteServer = async ({
     // Don't include HTML middlewares
     appType: 'custom',
     server: {
+      preTransformRequests: false,
       middlewareMode: viteConfig.server?.middlewareMode,
       hmr: false,
+      ws: false,
       watch: enableFileWatcher ? viteConfig.server?.watch : null,
     },
     logLevel: 'silent',
@@ -129,7 +144,12 @@ const createViteServer = async ({
       assetsInlineLimit: viteConfig.build?.assetsInlineLimit,
     },
     ssr: {
-      noExternal: true,
+      // `createServerModuleRunner` evaluates modules as ESM (`AsyncFunction`). Forcing every
+      // dependency through the SSR transform (`noExternal: true`) executes arbitrary CJS in that
+      // context (`module is not defined`). Externalize `node_modules` by default and only pull
+      // Vanilla Extract packages through Vite.
+      external: true,
+      noExternal: [/^@vanilla-extract\//, /^@emotion\//],
     },
     plugins: [
       {
@@ -165,46 +185,27 @@ const createViteServer = async ({
       ...(viteConfig.plugins ?? []),
     ],
   });
+  const evaluator = new VanillaExtractModuleRunner();
 
-  // this is need to initialize the plugins
-  await server.pluginContainer.buildStart({});
-
-  const { ViteNodeRunner } = await import('vite-node/client');
-  const { ViteNodeServer } = await import('vite-node/server');
-
-  const node = new ViteNodeServer(server);
-
-  class ViteNodeRunnerWithContext extends ViteNodeRunner {
-    cssAdapter: Adapter | undefined;
-
-    prepareContext(context: Record<string, any>): Record<string, any> {
-      return {
-        ...super.prepareContext(context),
-        [globalAdapterIdentifier]: this.cssAdapter,
-      };
-    }
-  }
-
-  const runner = new ViteNodeRunnerWithContext({
-    root,
-    base: server.config.base,
-    fetchModule(id) {
-      return node.fetchModule(id);
-    },
-    resolveId(id, importer) {
-      return node.resolveId(id, importer);
-    },
+  const runner = createServerModuleRunner(server.environments.ssr, {
+    hmr: { logger: false },
+    sourcemapInterceptor: false,
+    evaluator,
   });
 
   if (enableFileWatcher) {
     server.watcher.on('change', (filePath) => {
-      runner.moduleCache.invalidateDepTree([filePath]);
+      const mod = runner.evaluatedModules.getModuleById(filePath);
+      if (mod) {
+        runner.evaluatedModules.invalidateModule(mod);
+      }
     });
   }
 
   return {
     server,
     runner,
+    evaluator,
   };
 };
 
@@ -237,14 +238,14 @@ export interface Compiler {
       outputCss?: boolean;
     },
   ): Promise<{ source: string; watchFiles: Set<string> }>;
-  unstable_invalidateAllModules(): Promise<void>;
+  unstable_invalidateAllModules(): void;
   getCssForFile(virtualCssFilePath: string): { filePath: string; css: string };
   close(): Promise<void>;
   getAllCss(): string;
   findImporterTree(
     filePath: string,
     transformedVeModules: Set<string>,
-  ): Promise<Set<ModuleNode>>;
+  ): Set<ModuleNode>;
 }
 
 interface ProcessedVanillaFile {
@@ -279,7 +280,7 @@ export interface CreateCompilerOptions {
   /** @deprecated */
   vitePlugins?: ViteUserConfig['plugins'];
 }
-export const createCompiler = ({
+export const createCompiler = async ({
   root,
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
@@ -288,13 +289,13 @@ export const createCompiler = ({
   enableFileWatcher,
   viteResolve,
   vitePlugins,
-}: CreateCompilerOptions): Compiler => {
+}: CreateCompilerOptions): Promise<Compiler> => {
   assert(
     !(viteConfig && (viteResolve || vitePlugins)),
     'viteConfig cannot be used with viteResolve or vitePlugins',
   );
 
-  const vitePromise = createViteServer({
+  const { server, runner, evaluator } = await createViteServer({
     root,
     identifiers,
     viteConfig: viteConfig ?? {
@@ -323,8 +324,6 @@ export const createCompiler = ({
       filePath,
       options = {},
     ): Promise<ProcessedVanillaFile> {
-      const { server, runner } = await vitePromise;
-
       filePath = isAbsolute(filePath) ? filePath : join(root, filePath);
       const outputCss = options.outputCss ?? true;
 
@@ -405,14 +404,17 @@ export const createCompiler = ({
         },
       };
 
+      evaluator.setInjectedGlobalState({
+        [globalAdapterIdentifier]: cssAdapter,
+      });
+
+      const cache = new EvaluatedModules();
+      runner.evaluatedModules = cache;
+
       const { fileExports, cssImports, watchFiles, lastInvalidationTimestamp } =
         await lock(async () => {
-          runner.cssAdapter = cssAdapter;
-
-          const fileExports = (await runner.executeFile(filePath)) as Record<
-            string,
-            unknown
-          >;
+          const fileExports =
+            await runner.import<Record<string, unknown>>(filePath);
 
           const moduleId = normalizePath(filePath);
           const moduleNode = server.moduleGraph.getModuleById(moduleId);
@@ -514,12 +516,14 @@ export const createCompiler = ({
 
       return result;
     },
-    async unstable_invalidateAllModules() {
-      const { server, runner } = await vitePromise;
-
-      for (const [key] of runner.moduleCache.entries()) {
-        if (!key.includes('node_modules')) {
-          runner.moduleCache.delete(key);
+    unstable_invalidateAllModules() {
+      const evaluatedIds = runner.evaluatedModules.idToModuleMap.keys();
+      for (const id of evaluatedIds) {
+        if (!id.includes('node_modules')) {
+          const mod = runner.evaluatedModules.getModuleById(id);
+          if (mod) {
+            runner.evaluatedModules.invalidateModule(mod);
+          }
         }
       }
 
@@ -545,9 +549,11 @@ export const createCompiler = ({
       };
     },
     async close() {
-      const { server } = await vitePromise;
-
-      await server.close();
+      try {
+        await runner.close();
+      } finally {
+        await server.close();
+      }
     },
     getAllCss() {
       let allCss = '';
@@ -565,9 +571,7 @@ export const createCompiler = ({
      * consuming Vite dev server's module graph as it ends up modified by the `transform` hook to a
      * point where we can't reconstruct the original importer chain.
      */
-    async findImporterTree(filePath, transformedModules) {
-      const { server } = await vitePromise;
-
+    findImporterTree(filePath, transformedModules) {
       // The compiler's module graph is always a subset of the consuming Vite dev server's module
       // graph, so this early exit will be hit for any modules that aren't involved in compiling VE
       // modules

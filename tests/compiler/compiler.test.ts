@@ -18,20 +18,20 @@ function getLocalFiles(files: Set<string>) {
     .filter((file) => file.startsWith(posixDirname));
 }
 
-describe('compiler', () => {
+describe('compiler', async () => {
   const compilers = {
-    default: createCompiler({
+    default: await createCompiler({
       root: __dirname,
     }),
-    cssImportSpecifier: createCompiler({
+    cssImportSpecifier: await createCompiler({
       root: __dirname,
       cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
     }),
-    shortIdentifiers: createCompiler({
+    shortIdentifiers: await createCompiler({
       root: __dirname,
       identifiers: 'short',
     }),
-    viteResolve: createCompiler({
+    viteResolve: await createCompiler({
       root: __dirname,
       viteResolve: {
         alias: {
@@ -39,7 +39,7 @@ describe('compiler', () => {
         },
       },
     }),
-    vitePlugins: createCompiler({
+    vitePlugins: await createCompiler({
       root: __dirname,
       vitePlugins: [
         {
@@ -57,20 +57,20 @@ describe('compiler', () => {
         },
       ],
     }),
-    tsconfigPaths: createCompiler({
+    tsconfigPaths: await createCompiler({
       root: __dirname,
       vitePlugins: [tsconfigPaths()],
     }),
-    basePath: createCompiler({
+    basePath: await createCompiler({
       root: __dirname,
       viteConfig: {
         base: '/assets/',
       },
     }),
-    getAllCss: createCompiler({
+    getAllCss: await createCompiler({
       root: __dirname,
     }),
-    assetsInlineLimit: createCompiler({
+    assetsInlineLimit: await createCompiler({
       root: __dirname,
       viteConfig: {
         build: {
@@ -78,7 +78,7 @@ describe('compiler', () => {
         },
       },
     }),
-    assetsNoInlineLimit: createCompiler({
+    assetsNoInlineLimit: await createCompiler({
       root: __dirname,
       viteConfig: {
         build: {
@@ -86,7 +86,7 @@ describe('compiler', () => {
         },
       },
     }),
-    importerTree: createCompiler({
+    importerTree: await createCompiler({
       root: __dirname,
     }),
   } as const;
@@ -382,6 +382,7 @@ describe('compiler', () => {
     // The `root` className string should be a composition of multiple classes:
     expect(outputA.source).toMatchInlineSnapshot(`
       import '{{__dirname}}/fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/unused-compositions/styles_a.css.ts.vanilla.css';
       export var root = 'styles_a_root__mh4uy80 shared_shared__5i7sy00';
     `);
 
@@ -392,6 +393,7 @@ describe('compiler', () => {
     // The `root` className string should be a composition of multiple classes:
     expect(outputB.source).toMatchInlineSnapshot(`
       import '{{__dirname}}/fixtures/unused-compositions/shared.css.ts.vanilla.css';
+      import '{{__dirname}}/fixtures/unused-compositions/styles_b.css.ts.vanilla.css';
       export var root = 'styles_b_root__1k6843p0 shared_shared__5i7sy00';
     `);
 

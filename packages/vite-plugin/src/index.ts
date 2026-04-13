@@ -219,7 +219,7 @@ export function vanillaExtractPlugin({
               ),
           };
 
-          compiler = createCompiler({
+          compiler = await createCompiler({
             root: config.root,
             identifiers: getIdentOption(),
             cssImportSpecifier: fileIdToVirtualId,
@@ -301,7 +301,7 @@ export function vanillaExtractPlugin({
           return;
         }
 
-        const importerChain = await compiler.findImporterTree(
+        const importerChain = compiler.findImporterTree(
           normalizePath(file),
           transformedModules,
         );

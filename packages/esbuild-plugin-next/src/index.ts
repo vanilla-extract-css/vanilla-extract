@@ -39,7 +39,7 @@ export function vanillaExtractPlugin({
       const identifiers =
         identOption || (build.initialOptions.minify ? 'short' : 'debug');
 
-      const compiler = createCompiler({ root, identifiers, vitePlugins });
+      const compiler = await createCompiler({ root, identifiers, vitePlugins });
 
       build.onDispose(async () => {
         await compiler.close();

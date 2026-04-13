@@ -391,11 +391,8 @@ importers:
         specifier: workspace:^
         version: link:../integration
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^7.0.0 || ^8.0.0
         version: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-      vite-node:
-        specifier: ^3.2.2 || ^5.0.0 || ^6.0.0
-        version: 6.0.0(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
 
   packages/css:
     dependencies:
@@ -594,6 +591,9 @@ importers:
 
   packages/turbopack-plugin:
     dependencies:
+      '@rolldown/pluginutils':
+        specifier: 1.0.0-rc.11
+        version: 1.0.0-rc.11
       '@swc/core':
         specifier: ^1.13.5
         version: 1.15.8
@@ -608,7 +608,7 @@ importers:
         specifier: 12.3.4
         version: 12.3.4(@babel/core@7.23.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^7.0.0 || ^8.0.0
         version: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
 
   packages/utils: {}
@@ -623,7 +623,7 @@ importers:
         version: link:../integration
     devDependencies:
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^7.0.0 || ^8.0.0
         version: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
 
   packages/webpack-plugin:
@@ -919,7 +919,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(webpack@5.104.0(esbuild@0.28.0))
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^7.0.0 || ^8.0.0
         version: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
       vite-plugin-inspect:
         specifier: ^11.3.0
@@ -3865,6 +3865,9 @@ packages:
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
 
+  '@rolldown/pluginutils@1.0.0-rc.11':
+    resolution: {integrity: sha512-xQO9vbwBecJRv9EUcQ/y0dzSTJgA7Q6UVN7xp6B81+tBGSLVAK03yJ9NkJaUA7JFD91kbjxRSC/mDnmvXzbHoQ==}
+
   '@rolldown/pluginutils@1.0.0-rc.12':
     resolution: {integrity: sha512-HHMwmarRKvoFsJorqYlFeFRzXZqCt2ETQlEDOb9aqssrnVBB1/+xgTGtuTrIk5vzLNX1MjMtTf7W9z3tsSbrxw==}
 
@@ -5118,10 +5121,6 @@ packages:
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
-
-  cac@7.0.0:
-    resolution: {integrity: sha512-tixWYgm5ZoOD+3g6UTea91eow5z6AAHaho3g0V9CNSNb45gM8SmflpAc+GRd1InC4AqN/07Unrgp56Y94N9hJQ==}
-    engines: {node: '>=20.19.0'}
 
   cache-base@1.0.1:
     resolution: {integrity: sha512-AKcdTnFSWATd5/GCPRxr2ChwIJ85CeyrEyjRHlKxQ56d4XJMGym0uAiKn0xbLOGOl3+yRpOTi484dVCEc5AUzQ==}
@@ -10775,11 +10774,6 @@ packages:
     peerDependencies:
       vite: ^2.6.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
 
-  vite-node@6.0.0:
-    resolution: {integrity: sha512-oj4PVrT+pDh6GYf5wfUXkcZyekYS8kKPfLPXVl8qe324Ec6l4K2DUKNadRbZ3LQl0qGcDz+PyOo7ZAh00Y+JjQ==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-
   vite-plugin-inspect@11.3.3:
     resolution: {integrity: sha512-u2eV5La99oHoYPHE6UvbwgEqKKOQGz86wMg40CCosP6q8BkB6e5xPneZfYagK4ojPJSj5anHCrnvC20DpwVdRA==}
     engines: {node: '>=14'}
@@ -14462,6 +14456,8 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
+  '@rolldown/pluginutils@1.0.0-rc.11': {}
+
   '@rolldown/pluginutils@1.0.0-rc.12': {}
 
   '@rollup/plugin-alias@3.1.8(rollup@2.79.1)':
@@ -15810,8 +15806,6 @@ snapshots:
   bytes@3.0.0: {}
 
   bytes@3.1.2: {}
-
-  cac@7.0.0: {}
 
   cache-base@1.0.1:
     dependencies:
@@ -22398,27 +22392,6 @@ snapshots:
   vite-hot-client@2.1.0(vite@8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
     dependencies:
       vite: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-
-  vite-node@6.0.0(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0):
-    dependencies:
-      cac: 7.0.0
-      es-module-lexer: 2.0.0
-      obug: 2.1.1
-      pathe: 2.0.3
-      vite: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - '@vitejs/devtools'
-      - esbuild
-      - jiti
-      - less
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
 
   vite-plugin-inspect@11.3.3(vite@8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)):
     dependencies:
