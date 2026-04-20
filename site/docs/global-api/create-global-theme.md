@@ -25,7 +25,7 @@ export const vars = createGlobalTheme(':root', {
 
 All theme values must be provided or it’s a type error.
 
-Importing this stylesheet as a side effect to include the styles in your CSS bundle.
+Import this stylesheet as a side effect to include the styles in your CSS bundle.
 
 ```ts
 // app.ts

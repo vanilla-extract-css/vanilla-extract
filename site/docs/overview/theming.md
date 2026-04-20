@@ -243,7 +243,7 @@ export const container = style({
 This pattern opens up a lot of interesting possibilities. Type-safe runtime theming without the need for runtime creation and injection of CSS.
 
 [createtheme]: /documentation/api/create-theme/
-[createthemecontract]: /documentation/api/create-theme/
+[createthemecontract]: /documentation/api/create-theme-contract/
 [assigninlinevars]: /documentation/packages/dynamic/#assigninlinevars
 [createvar]: /documentation/api/create-var
 [tiny]: https://bundlephobia.com/package/@vanilla-extract/dynamic
