@@ -252,7 +252,7 @@ describe('compiler', () => {
     }
 
     expect(
-      // We know `error.message` is defined here
+      // oxlint-disable-next-line typescript/no-non-null-assertion We know `error.message` is defined here
       normalizePath(error!.message),
     ).toMatchInlineSnapshot(
       `No CSS for file: {{__dirname}}/does-not-exist.css.ts`,

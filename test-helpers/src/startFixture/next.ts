@@ -59,12 +59,16 @@ const startNextApp = async (
 ) => {
   const { dir, dev } = options;
 
+  if (!dir) {
+    throw new Error("No 'dir' option provided for Next.js server");
+  }
+
   const nextServer = await import(
-    path.join(dir!, 'node_modules', 'next', 'dist', 'server', 'next')
+    path.join(dir, 'node_modules', 'next', 'dist', 'server', 'next')
   );
 
   if (!dev) {
-    const buildId = existsSync(path.join(dir!, DIST_DIR, 'BUILD_ID'));
+    const buildId = existsSync(path.join(dir, DIST_DIR, 'BUILD_ID'));
 
     if (!buildId) {
       throw new Error(`No production build found for ${type} in ${dir}/${DIST_DIR}
