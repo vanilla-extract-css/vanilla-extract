@@ -63,3 +63,8 @@ body .features_styleVariantsCompositionInSelector_variant__87f2rub {
     background-color: white;
   }
 }
+@scope (body) {
+  .features_styleWithScopeRule__87f2rud:after {
+    content: "Scoped to body";
+  }
+}
