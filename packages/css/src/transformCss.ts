@@ -560,7 +560,7 @@ class Stylesheet {
         Object.keys(rules).map((bounds) => {
           transformedScopeBounds[bounds] = `@scope ${this.transformSelector(
             bounds.replace(
-              RegExp('(?<=^(?:[^"\']*|"[^"]*"|\'[^\']*\')*)&', 'g'),
+              RegExp(`(?<=^(?:[^"\\']*|"(?:\\\\.|[^"\\\\])*"|\\'(?:\\\\.|[^'\\\\])*\\')*)&`, 'g'),
               root.selector,
             ),
           )}`;

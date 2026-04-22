@@ -1642,7 +1642,7 @@ describe('transformCss', () => {
     `);
   });
 
-  it('should handle complexe @scope query', () => {
+  it('should handle complex @scope query', () => {
     expect(
       transformCss({
         composedClassLists: [],
@@ -1653,8 +1653,11 @@ describe('transformCss', () => {
             selector: 'testClass',
             rule: {
               '@scope': {
-                '(&)': {
+                '(&, &[title="test & success"], &[title="test \\"&\\" success"], &&)': {
                   padding: '50px',
+                },
+                "(&, &[title='test & success'], &[title='test \\'&\\' success'], &&)": {
+                  padding: '60px',
                 },
               },
             },
@@ -1662,9 +1665,14 @@ describe('transformCss', () => {
         ],
       }).join('\n'),
     ).toMatchInlineSnapshot(`
-      @scope (.testClass) {
+      @scope (.testClass, .testClass[title="test & success"], .testClass[title="test \\"&\\" success"], .testClass.testClass) {
         .testClass {
           padding: 50px;
+        }
+      }
+      @scope (.testClass, .testClass[title='test & success'], .testClass[title='test \\'&\\' success'], .testClass.testClass) {
+        .testClass {
+          padding: 60px;
         }
       }
     `);
