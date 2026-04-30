@@ -287,11 +287,11 @@ class Stylesheet {
       content: contentArray.map((value) =>
         // This logic was adapted from Stitches :)
         value &&
-          (value.includes('"') ||
-            value.includes("'") ||
-            /^([A-Za-z-]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)(\s|$)/.test(
-              value,
-            ))
+        (value.includes('"') ||
+          value.includes("'") ||
+          /^([A-Za-z-]+\([^]*|[^]*-quote|inherit|initial|none|normal|revert|unset)(\s|$)/.test(
+            value,
+          ))
           ? value
           : `"${value}"`,
       ),
@@ -370,7 +370,8 @@ class Stylesheet {
     forEach(rule.selectors, (selectorRule, selector) => {
       if (root.type !== 'local') {
         throw new Error(
-          `Selectors are not allowed within ${root.type === 'global' ? '"globalStyle"' : '"selectors"'
+          `Selectors are not allowed within ${
+            root.type === 'global' ? '"globalStyle"' : '"selectors"'
           }`,
         );
       }
@@ -590,7 +591,8 @@ class Stylesheet {
       if (simplePseudoLookup[key]) {
         if (root.type !== 'local') {
           throw new Error(
-            `Simple pseudos are not valid in ${root.type === 'global' ? '"globalStyle"' : '"selectors"'
+            `Simple pseudos are not valid in ${
+              root.type === 'global' ? '"globalStyle"' : '"selectors"'
             }`,
           );
         }
