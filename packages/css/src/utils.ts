@@ -92,3 +92,7 @@ export function dedupeAndJoinClassList(classNames: Array<ClassNames>) {
 
   return Array.from(set).join(' ');
 }
+
+export function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
