@@ -106,10 +106,10 @@ export function assertVarName(
 export function fallbackVar(
   ...values: [string, ...Array<string>]
 ): CSSVarFunction {
-  let finalValue = '';
+  let finalValue: string | null = null;
 
   values.reverse().forEach((value) => {
-    if (finalValue === '') {
+    if (finalValue === null) {
       finalValue = String(value);
     } else {
       assertVarName(value);
@@ -118,7 +118,7 @@ export function fallbackVar(
     }
   });
 
-  return finalValue as CSSVarFunction;
+  return (finalValue ?? '') as CSSVarFunction;
 }
 
 export function assignVars<VarContract extends Contract>(
