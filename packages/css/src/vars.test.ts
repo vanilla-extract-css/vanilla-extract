@@ -8,6 +8,12 @@ describe('fallbackVar', () => {
     );
   });
 
+  it('supports an empty string fallback', () => {
+    expect(fallbackVar('var(--foo-bar)', '')).toMatchInlineSnapshot(
+      `"var(--foo-bar, )"`,
+    );
+  });
+
   it('supports a single numeric fallback', () => {
     expect(fallbackVar('var(--foo-bar)', '10px')).toMatchInlineSnapshot(
       `"var(--foo-bar, 10px)"`,
