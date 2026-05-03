@@ -107,10 +107,12 @@ export function fallbackVar(
   ...values: [string, ...Array<string>]
 ): CSSVarFunction {
   let finalValue = '';
+  let hasValue = false;
 
   values.reverse().forEach((value) => {
-    if (finalValue === '') {
+    if (!hasValue) {
       finalValue = String(value);
+      hasValue = true;
     } else {
       assertVarName(value);
 
