@@ -45,6 +45,18 @@ describe('fallbackVar', () => {
     );
   });
 
+  it('supports an empty string fallback', () => {
+    expect(fallbackVar('var(--foo-bar)', '')).toMatchInlineSnapshot(
+      `"var(--foo-bar, )"`,
+    );
+  });
+
+  it('supports multiple fallbacks resolving to an empty string', () => {
+    expect(
+      fallbackVar('var(--foo)', 'var(--bar)', ''),
+    ).toMatchInlineSnapshot(`"var(--foo, var(--bar, ))"`);
+  });
+
   it('should throw with invalid vars', () => {
     expect(() => {
       fallbackVar('INVALID', '10px');
