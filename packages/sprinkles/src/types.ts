@@ -15,9 +15,52 @@ export interface RequiredResponsiveArray<
 }
 
 export type ResponsiveArrayConfig<Value> = ResponsiveArray<
-  2 | 3 | 4 | 5 | 6 | 7 | 8,
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20,
   Value
 >;
+
+type ClampedLength<MaxLength extends number> = MaxLength extends
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  ? MaxLength
+  : 20;
 
 export type ResponsiveArrayByMaxLength<MaxLength extends number, Value> = [
   never,
@@ -29,7 +72,100 @@ export type ResponsiveArrayByMaxLength<MaxLength extends number, Value> = [
   ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6, Value | null>,
   ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7, Value | null>,
   ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8, Value | null>,
-][MaxLength];
+  ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9, Value | null>,
+  ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10, Value | null>,
+  ResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11, Value | null>,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
+    Value | null
+  >,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13,
+    Value | null
+  >,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14,
+    Value | null
+  >,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15,
+    Value | null
+  >,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16,
+    Value | null
+  >,
+  ResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17,
+    Value | null
+  >,
+  ResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18,
+    Value | null
+  >,
+  ResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19,
+    Value | null
+  >,
+  ResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20,
+    Value | null
+  >,
+][ClampedLength<MaxLength>];
 
 export type RequiredResponsiveArrayByMaxLength<
   MaxLength extends number,
@@ -44,7 +180,103 @@ export type RequiredResponsiveArrayByMaxLength<
   RequiredResponsiveArray<1 | 2 | 3 | 4 | 5 | 6, Value | null>,
   RequiredResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7, Value | null>,
   RequiredResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8, Value | null>,
-][MaxLength];
+  RequiredResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9, Value | null>,
+  RequiredResponsiveArray<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10, Value | null>,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19,
+    Value | null
+  >,
+  RequiredResponsiveArray<
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20,
+    Value | null
+  >,
+][ClampedLength<MaxLength>];
 
 export type ConditionalPropertyValue = {
   defaultClass: string | undefined;
