@@ -122,6 +122,49 @@ const noop = (..._args: Array<any>) => {};
   // Valid value - config defined outside the defineProperties function
   defineProperties(atomicProperties);
 
+  const manyResponsiveProperties = defineProperties({
+    defaultCondition: 'bp1',
+    conditions: {
+      bp1: {},
+      bp2: {},
+      bp3: {},
+      bp4: {},
+      bp5: {},
+      bp6: {},
+      bp7: {},
+      bp8: {},
+      bp9: {},
+    },
+    responsiveArray: [
+      'bp1',
+      'bp2',
+      'bp3',
+      'bp4',
+      'bp5',
+      'bp6',
+      'bp7',
+      'bp8',
+      'bp9',
+    ],
+    properties: {
+      display: ['block', 'none'],
+    },
+  });
+
+  createSprinkles(manyResponsiveProperties)({
+    display: [
+      'block',
+      null,
+      'none',
+      null,
+      'block',
+      null,
+      'none',
+      null,
+      'block',
+    ],
+  });
+
   const mapValue = createMapValueFn(conditionalProperties);
   const normalizeValue = createNormalizeValueFn(conditionalProperties);
 
