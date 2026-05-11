@@ -38,7 +38,7 @@ const getAdapter = () => {
 };
 
 function extractFilesFromCodeBlock(code) {
-  const fileMatches = code.matchAll(/(?:\/\/\s(?<fileName>[\w\.]+\.tsx?))/g);
+  const fileMatches = code.matchAll(/(?:\/\/\s(?<fileName>[\w.]+\.tsx?))/g);
 
   let lastIndex = code.length - 1;
 

@@ -1,27 +1,3 @@
-@layer themes_themeLayer__cdwe0v7;
-@layer globalThemeLayer;
-:root,
-.themes_theme__cdwe0v0 {
-  --colors-backgroundColor__cdwe0v1: blue;
-  --colors-text__cdwe0v2: white;
-  --space-1__cdwe0v3: 4px;
-  --space-2__cdwe0v4: 8px;
-  --space-3__cdwe0v5: 12px;
-}
-.themes_altTheme__cdwe0v6 {
-  --colors-backgroundColor__cdwe0v1: green;
-  --colors-text__cdwe0v2: white;
-  --space-1__cdwe0v3: 8px;
-  --space-2__cdwe0v4: 12px;
-  --space-3__cdwe0v5: 16px;
-}
-.themes_responsiveTheme__cdwe0ve {
-  --colors-backgroundColor__cdwe0v1: pink;
-  --colors-text__cdwe0v2: purple;
-  --space-1__cdwe0v3: 6px;
-  --space-2__cdwe0v4: 12px;
-  --space-3__cdwe0v5: 18px;
-}
 @layer themes_themeLayer__cdwe0v7 {
   .themes_altTheme2Class__cdwe0v8 {
     --colors-backgroundColor__cdwe0v9: green;
@@ -40,24 +16,12 @@
     --space-3__cdwe0vd: 16px;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (width >= 768px) {
   .themes_responsiveTheme__cdwe0ve {
     --colors-backgroundColor__cdwe0v1: purple;
     --colors-text__cdwe0v2: pink;
   }
 }
-.shared_shadow__5iqv0q0 {
-  box-shadow: 0 0 5px red;
-}
-body {
-  background-color: #87ceeb;
-}
-body,
-button {
-  line-height: 16px;
-}
-@layer themes_themeLayer__cdwe0v7;
-@layer globalThemeLayer;
 :root,
 .themes_theme__cdwe0v0 {
   --colors-backgroundColor__cdwe0v1: blue;
@@ -80,25 +44,7 @@ button {
   --space-2__cdwe0v4: 12px;
   --space-3__cdwe0v5: 18px;
 }
-@layer themes_themeLayer__cdwe0v7 {
-  .themes_altTheme2Class__cdwe0v8 {
-    --colors-backgroundColor__cdwe0v9: green;
-    --colors-text__cdwe0va: white;
-    --space-1__cdwe0vb: 8px;
-    --space-2__cdwe0vc: 12px;
-    --space-3__cdwe0vd: 16px;
-  }
-}
-@layer globalThemeLayer {
-  :root {
-    --colors-backgroundColor__cdwe0v9: green;
-    --colors-text__cdwe0va: white;
-    --space-1__cdwe0vb: 8px;
-    --space-2__cdwe0vc: 12px;
-    --space-3__cdwe0vd: 16px;
-  }
-}
-@media screen and (min-width: 768px) {
+@media screen and (width >= 768px) {
   .themes_responsiveTheme__cdwe0ve {
     --colors-backgroundColor__cdwe0v1: purple;
     --colors-text__cdwe0v2: pink;
@@ -152,7 +98,7 @@ html .styles_opacity_1\/2__blj6yb6 {
 html .styles_opacity_1\/4__blj6yb7 {
   opacity: var(--blankVar1__blj6yb4, var(--blankVar2__blj6yb5, 0.25));
 }
-@media only screen and (min-width: 500px) {
+@media only screen and (width >= 500px) {
   .styles_container__blj6yb1 {
     border: 1px solid var(--colors-backgroundColor__cdwe0v1);
   }
@@ -160,7 +106,7 @@ html .styles_opacity_1\/4__blj6yb7 {
     padding: var(--space-1__cdwe0v3);
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (width >= 1000px) {
   .styles_button__blj6yb3 {
     padding: var(--space-2__cdwe0v4);
   }

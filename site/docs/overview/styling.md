@@ -191,10 +191,10 @@ import { style } from '@vanilla-extract/css';
 
 const invalid = style({
   selectors: {
-    // ❌ ERROR: Targetting `a[href]`
+    // ❌ ERROR: Targeting `a[href]`
     '& a[href]': {...},
 
-    // ❌ ERROR: Targetting `.otherClass`
+    // ❌ ERROR: Targeting `.otherClass`
     '& ~ div > .otherClass': {...}
   }
 });
@@ -210,7 +210,7 @@ import { style } from '@vanilla-extract/css';
 export const child = style({});
 export const parent = style({
   selectors: {
-    // ❌ ERROR: Targetting `child` from `parent`
+    // ❌ ERROR: Targeting `child` from `parent`
     [`& ${child}`]: {...}
   }
 });

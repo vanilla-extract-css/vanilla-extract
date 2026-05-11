@@ -1,4 +1,3 @@
-import cssesc from 'cssesc';
 import dedent from 'dedent';
 import deepmerge from 'deepmerge';
 
@@ -18,7 +17,8 @@ import {
 } from './adapter';
 import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
-import { dudupeAndJoinClassList } from './utils';
+import { dedupeAndJoinClassList } from './utils';
+import { cssesc } from './cssesc';
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
@@ -28,7 +28,7 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const styleRules = [];
 
   for (const rule of rules) {
-    if (typeof rule === 'string') {
+    if (typeof rule === 'string' || Array.isArray(rule)) {
       classList.push(rule);
     } else {
       styleRules.push(rule);
@@ -38,7 +38,7 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   let result = className;
 
   if (classList.length > 0) {
-    result = `${className} ${dudupeAndJoinClassList(classList)}`;
+    result = `${className} ${dedupeAndJoinClassList(classList)}`;
 
     registerComposition(
       {
@@ -84,7 +84,7 @@ export function style(rule: ComplexStyleRule, debugId?: string): string {
  * @deprecated The same functionality is now provided by the 'style' function when you pass it an array
  */
 export function composeStyles(...classNames: Array<ClassNames>): string {
-  const compose = hasFileScope() ? composedStyle : dudupeAndJoinClassList;
+  const compose = hasFileScope() ? composedStyle : dedupeAndJoinClassList;
 
   return compose(classNames);
 }

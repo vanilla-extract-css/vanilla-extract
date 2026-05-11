@@ -1,6 +1,6 @@
 import { Link, type LinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { type TextProps, useTextStyles } from './Text';
 import * as styles from './Link.css';
 import { sprinkles } from '../system/styles/sprinkles.css';
@@ -29,7 +29,7 @@ export default ({
   className,
   ...restProps
 }: Props) => {
-  const classNames = classnames(
+  const classNames = clsx(
     inline ? undefined : sprinkles({ display: 'block' }),
     underline === 'hover' ? styles.underlineOnHover : undefined,
     underline === 'never' ? styles.underlineNever : undefined,
@@ -38,7 +38,7 @@ export default ({
     className,
   );
 
-  if (typeof to === 'string' && /^http/.test(to)) {
+  if (typeof to === 'string' && to.startsWith('http')) {
     return <a href={to} {...restProps} className={classNames} />;
   }
 

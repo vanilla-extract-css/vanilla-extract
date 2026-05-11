@@ -1,5 +1,56 @@
 # @vanilla-extract/next-plugin
 
+## 2.5.2
+
+### Patch Changes
+
+- [#1722](https://github.com/vanilla-extract-css/vanilla-extract/pull/1722) [`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where the `externals` option was silently ignored
+
+- Updated dependencies [[`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc)]:
+  - @vanilla-extract/webpack-plugin@2.3.27
+
+## 2.5.1
+
+### Patch Changes
+
+- [#1692](https://github.com/vanilla-extract-css/vanilla-extract/pull/1692) [`495bc90`](https://github.com/vanilla-extract-css/vanilla-extract/commit/495bc902e19b69aa3ebd52ab94072e8535183708) Thanks [@askoufis](https://github.com/askoufis)! - Update turbopack plugin dep to fix bad release
+
+## 2.5.0
+
+### Minor Changes
+
+- [#1639](https://github.com/vanilla-extract-css/vanilla-extract/pull/1639) [`c0e2812`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c0e2812f532f934d52c4728a0a167327420ff6f1) Thanks [@RJWadley](https://github.com/RJWadley)! - Add experimental Turbopack support for Next.js >= 16.0.0
+
+  See [the Next.js docs](https://vanilla-extract.style/documentation/integrations/next/#unstable_turbopack) for more info.
+  Ensure you are on the latest version of `@vanilla-extract/css` before attempting to use Turbopack.
+
+### Patch Changes
+
+- Updated dependencies [[`1a63a60`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1a63a600b7a707f9317ce5f6607998eba4eb9c99)]:
+  - @vanilla-extract/turbopack-plugin@0.1.0
+  - @vanilla-extract/webpack-plugin@2.3.26
+
+## 2.4.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.25
+
+## 2.4.16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.24
+
+## 2.4.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/webpack-plugin@2.3.23
+
 ## 2.4.14
 
 ### Patch Changes

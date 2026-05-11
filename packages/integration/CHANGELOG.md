@@ -1,5 +1,49 @@
 # @vanilla-extract/integration
 
+## 8.0.10
+
+### Patch Changes
+
+- [#1713](https://github.com/vanilla-extract-css/vanilla-extract/pull/1713) [`919574c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/919574c0e56c6235dab2c1dd7d07462b442c4561) Thanks [@askoufis](https://github.com/askoufis)! - Support `esbuild@~0.28.0` in dependency range
+
+## 8.0.9
+
+### Patch Changes
+
+- [#1585](https://github.com/vanilla-extract-css/vanilla-extract/pull/1585) [`c34e69a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c34e69a918b55e02ce8106a193b10dcfce933437) Thanks [@sashank-gogula-glean](https://github.com/sashank-gogula-glean)! - Fixed a race condition in `processVanillaFile` that could cause missing classnames during CSS serialization
+
+- Updated dependencies [[`9b1bfd0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9b1bfd068a61a042ff0276a901edf4e44f6c8cea)]:
+  - @vanilla-extract/css@1.19.1
+
+## 8.0.8
+
+### Patch Changes
+
+- Updated dependencies [[`1a63a60`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1a63a600b7a707f9317ce5f6607998eba4eb9c99)]:
+  - @vanilla-extract/css@1.19.0
+
+## 8.0.7
+
+### Patch Changes
+
+- [#1648](https://github.com/vanilla-extract-css/vanilla-extract/pull/1648) [`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704) Thanks [@sallustfire](https://github.com/sallustfire)! - `serializeCss|deserializeCss`: Use `base64url` encoding instead of `base64` to avoid errors in virtual file paths
+
+- Updated dependencies [[`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a), [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a), [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea)]:
+  - @vanilla-extract/css@1.18.0
+
+## 8.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd)]:
+  - @vanilla-extract/css@1.17.5
+
+## 8.0.5
+
+### Patch Changes
+
+- [#1653](https://github.com/vanilla-extract-css/vanilla-extract/pull/1653) [`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1) Thanks [@askoufis](https://github.com/askoufis)! - Update `esbuild` dependency range to include `^0.26.0` and `^0.27.0`
+
 ## 8.0.4
 
 ### Patch Changes

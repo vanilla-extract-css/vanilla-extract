@@ -1,5 +1,39 @@
 # @vanilla-extract/webpack-plugin
 
+## 2.3.27
+
+### Patch Changes
+
+- [#1722](https://github.com/vanilla-extract-css/vanilla-extract/pull/1722) [`99edac2`](https://github.com/vanilla-extract-css/vanilla-extract/commit/99edac2ee3ae8c6b37d70dd8e65f95fa34a0babc) Thanks [@askoufis](https://github.com/askoufis)! - Fixes a bug where the `externals` option was silently ignored
+
+## 2.3.26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.8
+
+## 2.3.25
+
+### Patch Changes
+
+- Updated dependencies [[`a440470`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a440470b9912aab705ae32cd5248ff6479535704)]:
+  - @vanilla-extract/integration@8.0.7
+
+## 2.3.24
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @vanilla-extract/integration@8.0.6
+
+## 2.3.23
+
+### Patch Changes
+
+- Updated dependencies [[`ad5a08b`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad5a08b1a8117ccf7f7778895c193943918124e1)]:
+  - @vanilla-extract/integration@8.0.5
+
 ## 2.3.22
 
 ### Patch Changes
@@ -311,7 +345,6 @@
 ### Major Changes
 
 - [#323](https://github.com/vanilla-extract-css/vanilla-extract/pull/323) [`1e7d647`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1e7d6470398a0fbcbdef4118e678150932cd9275) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Formatting of identifiers (e.g. class names, keyframes, CSS Vars, etc) can now be configured via the `identifiers` option which accepts either `short` or `debug`.
-
   - `short` identifiers are a 7+ character hash. e.g. `hnw5tz3`
   - `debug` identifiers contain human readable prefixes representing the owning filename and a potential rule level debug name. e.g. `somefile_mystyle_hnw5tz3`
 

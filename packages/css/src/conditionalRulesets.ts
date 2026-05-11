@@ -22,7 +22,7 @@ export class ConditionalRuleset {
    *
    * e.g. mobile -> tablet, desktop
    */
-  precedenceLookup: Map<Query, Set<String>>;
+  precedenceLookup: Map<Query, Set<string>>;
 
   constructor() {
     this.ruleset = new Map();
@@ -46,6 +46,8 @@ export class ConditionalRuleset {
   }
 
   getConditionalRulesetByPath(conditionPath: Array<Query>): ConditionalRuleset {
+    // Couldn't fine a way around this
+    // oxlint-disable-next-line typescript/no-this-alias
     let currRuleset: ConditionalRuleset = this;
 
     for (const query of conditionPath) {

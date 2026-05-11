@@ -1,13 +1,14 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as adapter from './adapter';
 import { endFileScope, setFileScope } from './fileScope';
 import { globalLayer, layer } from './layer';
 
-jest.mock('./adapter', () => ({
-  ...jest.requireActual<typeof adapter>('./adapter'),
-  appendCss: jest.fn().mockName('appendCss'),
+vi.mock('./adapter', async () => ({
+  ...(await vi.importActual<typeof adapter>('./adapter')),
+  appendCss: vi.fn().mockName('appendCss'),
 }));
 
-const appendCss = jest.mocked(adapter.appendCss);
+const appendCss = vi.mocked(adapter.appendCss);
 
 beforeEach(() => {
   setFileScope('path/to/file.css.ts', 'foo-package');

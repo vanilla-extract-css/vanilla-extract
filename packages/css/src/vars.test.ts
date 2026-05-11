@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { fallbackVar, createGlobalThemeContract } from './vars';
 
 describe('fallbackVar', () => {
@@ -47,24 +48,32 @@ describe('fallbackVar', () => {
   it('should throw with invalid vars', () => {
     expect(() => {
       fallbackVar('INVALID', '10px');
-    }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+    }).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Invalid variable name: INVALID]`,
+    );
 
     expect(() => {
       fallbackVar('INVALID1', 'INVALID2', '10px');
-    }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID2"`);
+    }).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Invalid variable name: INVALID2]`,
+    );
 
     expect(() => {
       // @ts-expect-error
       fallbackVar('INVALID', 10, 10);
-    }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: 10"`);
+    }).toThrowErrorMatchingInlineSnapshot(`[Error: Invalid variable name: 10]`);
 
     expect(() => {
       fallbackVar('var(--foo-bar)', 'INVALID', '10px');
-    }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+    }).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Invalid variable name: INVALID]`,
+    );
 
     expect(() => {
       fallbackVar('INVALID', 'var(--foo-bar)', '10px');
-    }).toThrowErrorMatchingInlineSnapshot(`"Invalid variable name: INVALID"`);
+    }).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Invalid variable name: INVALID]`,
+    );
   });
 });
 
@@ -189,7 +198,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.red": null"`,
+      `[Error: Invalid variable name for "color.red": null]`,
     );
   });
 
@@ -203,7 +212,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.blue": color'blue"`,
+      `[Error: Invalid variable name for "color.blue": color'blue]`,
     );
   });
 
@@ -217,7 +226,7 @@ describe('createGlobalThemeContract', () => {
         },
       }),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.green": 123-color-green"`,
+      `[Error: Invalid variable name for "color.green": 123-color-green]`,
     );
   });
 
@@ -235,7 +244,7 @@ describe('createGlobalThemeContract', () => {
         () => null,
       ),
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invalid variable name for "color.red": null"`,
+      `[Error: Invalid variable name for "color.red": null]`,
     );
   });
 });

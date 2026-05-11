@@ -24,6 +24,12 @@ export const styleWithComposition = style([
   { selectors: { '&:hover': { backgroundColor: 'slategray' } } },
 ]);
 
+export const styleWithNestedComposition = style([
+  { backgroundColor: 'powderblue' },
+  [mergedStyle],
+  { selectors: { '&:hover': { backgroundColor: 'slategray' } } },
+]);
+
 export const styleVariantsWithComposition = styleVariants({
   variant: [
     { backgroundColor: 'powderblue' },
@@ -59,4 +65,11 @@ export const styleVariantsCompositionInSelector = styleVariants({
 
 globalStyle(`body ${styleVariantsCompositionInSelector.variant}`, {
   fontSize: '24px',
+});
+
+export const styleWithStartingStyle = style({
+  backgroundColor: 'black',
+  '@starting-style': {
+    backgroundColor: 'white',
+  },
 });

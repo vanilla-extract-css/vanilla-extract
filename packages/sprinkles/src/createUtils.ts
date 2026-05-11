@@ -11,14 +11,15 @@ type ExtractValue<
     | boolean
     | Partial<Record<string, string | number | boolean>>
     | ResponsiveArrayByMaxLength<number, string | number | boolean | null>,
-> = Value extends ResponsiveArrayByMaxLength<
-  number,
-  string | number | boolean | null
->
-  ? NonNullable<Value[number]>
-  : Value extends Partial<Record<string, string | number | boolean>>
-  ? NonNullable<Value[keyof Value]>
-  : Value;
+> =
+  Value extends ResponsiveArrayByMaxLength<
+    number,
+    string | number | boolean | null
+  >
+    ? NonNullable<Value[number]>
+    : Value extends Partial<Record<string, string | number | boolean>>
+      ? NonNullable<Value[keyof Value]>
+      : Value;
 
 type Conditions<ConditionName extends string> = {
   conditions: {
@@ -59,26 +60,27 @@ type RequiredConditionalObject<
 export type RequiredConditionalValue<
   SprinklesProperties extends Conditions<string>,
   Value extends string | number | boolean,
-> = ExtractDefaultCondition<SprinklesProperties> extends false
-  ? never
-  :
-      | Value
-      | RequiredConditionalObject<
-          Exclude<ExtractDefaultCondition<SprinklesProperties>, false>,
-          Exclude<
-            ExtractConditionNames<SprinklesProperties>,
-            ExtractDefaultCondition<SprinklesProperties>
-          >,
-          Value
-        >
-      | (SprinklesProperties['conditions']['responsiveArray'] extends {
-          length: number;
-        }
-          ? RequiredResponsiveArrayByMaxLength<
-              SprinklesProperties['conditions']['responsiveArray']['length'],
-              Value
-            >
-          : never);
+> =
+  ExtractDefaultCondition<SprinklesProperties> extends false
+    ? never
+    :
+        | Value
+        | RequiredConditionalObject<
+            Exclude<ExtractDefaultCondition<SprinklesProperties>, false>,
+            Exclude<
+              ExtractConditionNames<SprinklesProperties>,
+              ExtractDefaultCondition<SprinklesProperties>
+            >,
+            Value
+          >
+        | (SprinklesProperties['conditions']['responsiveArray'] extends {
+            length: number;
+          }
+            ? RequiredResponsiveArrayByMaxLength<
+                SprinklesProperties['conditions']['responsiveArray']['length'],
+                Value
+              >
+            : never);
 
 export function createNormalizeValueFn<
   SprinklesProperties extends Conditions<string>,

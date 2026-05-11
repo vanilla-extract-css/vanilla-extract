@@ -49,7 +49,7 @@ export const startWebpackFixture = (
     logLevel = 'errors-only',
   }: WebpackFixtureOptions,
 ): Promise<TestServer> =>
-  new Promise(async (resolve) => {
+  new Promise((resolve) => {
     const fixtureEntry = require.resolve(
       `@fixtures/${fixtureName}/src/index.ts`,
     );

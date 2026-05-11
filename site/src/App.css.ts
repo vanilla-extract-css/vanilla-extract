@@ -9,11 +9,11 @@ globalStyle('html, body', {
 
 globalStyle(`.${darkMode}`, {
   background: vars.palette.black,
-  color: vars.palette.gray50,
+  color: vars.palette.zinc50,
   colorScheme: 'dark',
 });
 
 globalStyle('html', {
   background: vars.palette.white,
-  color: vars.palette.coolGray900,
+  color: vars.palette.gray900,
 });

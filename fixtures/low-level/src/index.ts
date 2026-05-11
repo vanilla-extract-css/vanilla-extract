@@ -8,3 +8,9 @@ document.body.innerHTML = `
   </div>
 </div>
 `;
+
+// @ts-expect-error Vite env not defined
+if (import.meta.hot) {
+  // @ts-expect-error Vite env not defined
+  import.meta.hot.accept();
+}

@@ -52,8 +52,8 @@ const RemoveNestedParagraphs = (props: { children: ReactNode }) => (
 
 const A = ({
   href,
-  color, // Omit
-  type, // Omit
+  color: _color,
+  type: _type,
   ...restProps
 }: JSX.IntrinsicElements['a']) => {
   let isInlineCodeLink = false;
@@ -80,7 +80,7 @@ const A = ({
       highlightOnFocus={!isInlineCodeLink}
       className={
         isInlineCodeLink
-          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'gray200' } })
+          ? sprinkles({ color: { lightMode: 'pink700', darkMode: 'zinc200' } })
           : undefined
       }
     />
@@ -214,7 +214,7 @@ export default {
     let resolvedTitle = '';
     let resolvedChildren = dangerouslySetInnerHTML.__html;
     const matches = resolvedChildren.match(
-      /^(?<node>\<span class=\".*\"\>(?:\/[\/*])(?:\s)?(?<title>[^*\/]*)(?:\*\/)?\<\/span\>)/,
+      /^(?<node><span class=".*">(?:\/[/*])(?:\s)?(?<title>[^*/]*)(?:\*\/)?<\/span>)/,
     );
 
     if (matches && matches.groups) {

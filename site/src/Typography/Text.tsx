@@ -1,15 +1,15 @@
 import type { ReactNode, ElementType } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { Box } from '../system';
 import * as styles from './typography.css';
 import { sprinkles, type Sprinkles } from '../system/styles/sprinkles.css';
 
 const colorMap = {
-  neutral: { lightMode: 'coolGray700', darkMode: 'gray100' },
-  strong: { lightMode: 'coolGray900', darkMode: 'gray100' },
+  neutral: { lightMode: 'gray700', darkMode: 'zinc100' },
+  strong: { lightMode: 'gray900', darkMode: 'zinc100' },
   code: { lightMode: 'white' },
-  link: { lightMode: 'coolGray700', darkMode: 'gray100' },
-  secondary: { lightMode: 'coolGray500', darkMode: 'gray400' },
+  link: { lightMode: 'gray700', darkMode: 'zinc100' },
+  secondary: { lightMode: 'gray500', darkMode: 'zinc400' },
   highlight: { lightMode: 'pink500' },
 } as const;
 
@@ -35,7 +35,7 @@ export const useTextStyles = ({
   align,
   baseline = true,
 }: TextStyleProps) =>
-  classnames(
+  clsx(
     styles.font[type],
     baseline ? styles.text[size].trimmed : styles.text[size].untrimmed,
     sprinkles({ color: colorMap[color], textAlign: align }),

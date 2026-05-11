@@ -1,11 +1,14 @@
-// @ts-ignore
+// @ts-expect-error
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter/dist/esm/index';
-// @ts-ignore
+// @ts-expect-error
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-// @ts-ignore
+// @ts-expect-error
 import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+// @ts-expect-error
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 SyntaxHighlighter.registerLanguage('tsx', tsx);
 SyntaxHighlighter.registerLanguage('ts', ts);
+SyntaxHighlighter.registerLanguage('css', css);
 
 import { Box } from '../system';
 import Text from '../Typography/Text';

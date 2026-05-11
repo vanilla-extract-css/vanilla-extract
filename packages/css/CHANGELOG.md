@@ -1,5 +1,87 @@
 # @vanilla-extract/css
 
+## 1.20.1
+
+### Patch Changes
+
+- [#1710](https://github.com/vanilla-extract-css/vanilla-extract/pull/1710) [`1677593`](https://github.com/vanilla-extract-css/vanilla-extract/commit/16775939763349513c527b2f33398a03d7d75057) Thanks [@askoufis](https://github.com/askoufis)! - Replace `cssesc` dependency with vendored version
+
+## 1.20.0
+
+### Minor Changes
+
+- [#1702](https://github.com/vanilla-extract-css/vanilla-extract/pull/1702) [`48a9caf`](https://github.com/vanilla-extract-css/vanilla-extract/commit/48a9cafbbd4abfcc1bf0e72f01ad4f19f59e48cd) Thanks [@bschlenk](https://github.com/bschlenk)! - Allow `:where` and `:is` in `selectors` if all selectors target `&`
+
+  EXAMPLE USAGE:
+
+  ```ts
+  const example = style({
+    color: 'red',
+    selectors: {
+      // Valid: all selectors in the list target `example`
+      ':is(h1 > &, h2 > &)': { color: 'blue' }
+      // Invalid: the second selector in the list does not target `example`
+      ':is(h1 > &, h2)': { color: 'blue' }
+    }
+  });
+  ```
+
+## 1.19.1
+
+### Patch Changes
+
+- [#1558](https://github.com/vanilla-extract-css/vanilla-extract/pull/1558) [`9b1bfd0`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9b1bfd068a61a042ff0276a901edf4e44f6c8cea) Thanks [@andjsrk](https://github.com/andjsrk)! - `style`: Fixed a bug where nested arrays of classnames could cause missing or malformed CSS during [style composition](https://vanilla-extract.style/documentation/style-composition/) in certain situations.
+
+  For example, the following style composition would not generate CSS for the `backgroundColor: 'orange'` style, and would also generate malformed CSS:
+
+  ```ts
+  const styleWithNestedComposition = style([
+    [style1, style2],
+    { backgroundColor: 'orange' },
+    [style3]
+  ]);
+  ```
+
+## 1.19.0
+
+### Minor Changes
+
+- [#1686](https://github.com/vanilla-extract-css/vanilla-extract/pull/1686) [`1a63a60`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1a63a600b7a707f9317ce5f6607998eba4eb9c99) Thanks [@askoufis](https://github.com/askoufis)! - Add `./vanilla.virtual.css?*` entrypoint for Turbopack integration
+
+## 1.18.0
+
+### Minor Changes
+
+- [#1566](https://github.com/vanilla-extract-css/vanilla-extract/pull/1566) [`8b49b35`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8b49b354d4364ce6e0db5e8ba16c92ca3e6b9cea) Thanks [@lfantone](https://github.com/lfantone)! - `style`: Add support for `@starting-style` rules
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { style } from '@vanilla-extact/css';
+  export const styleWithStartingStyle = style({
+    backgroundColor: 'black',
+    '@starting-style': {
+      backgroundColor: 'white'
+    }
+  });
+  ```
+
+### Patch Changes
+
+- [#1646](https://github.com/vanilla-extract-css/vanilla-extract/pull/1646) [`0b2c09e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/0b2c09e0fec1bee0e996f1920a106daab471178a) Thanks [@plesiecki](https://github.com/plesiecki)! - Swap the order of `createVar`'s overloads to enable inference of `VarDelcaration` type
+
+- [#1666](https://github.com/vanilla-extract-css/vanilla-extract/pull/1666) [`c6047fb`](https://github.com/vanilla-extract-css/vanilla-extract/commit/c6047fbe3f5e55a45780aa3dffd478a7743b8b3a) Thanks [@askoufis](https://github.com/askoufis)! - Remove custom container properties type
+
+  The [`csstype`] package used by Vanilla Extract now provides types for container properties, so the custom type definitions that were previously necessary have been removed.
+
+  [`csstype`]: https://www.npmjs.com/package/csstype
+
+## 1.17.5
+
+### Patch Changes
+
+- [#1655](https://github.com/vanilla-extract-css/vanilla-extract/pull/1655) [`11a7c66`](https://github.com/vanilla-extract-css/vanilla-extract/commit/11a7c668683d0c3e324d4337676e807680a895bd) Thanks [@askoufis](https://github.com/askoufis)! - Update `csstype` dependency to `^3.2.3`
+
 ## 1.17.4
 
 ### Patch Changes
@@ -809,7 +891,6 @@
   Previously all conditional CSS (@media and @supports) in a `.css.ts` file would merge together. This meant each unique query (e.g. `@media screen and (min-width: 700px)`) would only be rendered once. This output is ideal for file size but can lead to the conditions being rendered in the wrong order. The new strategy will still merge conditions together but only if it is considered safe to do so.
 
 * [#152](https://github.com/vanilla-extract-css/vanilla-extract/pull/152) [`ae532f5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ae532f5a112c0e89a510fea224b43c6706ce6ac2) Thanks [@Saartje87](https://github.com/Saartje87)! - Added support for the following simple pseudo selectors
-
   - `::-webkit-resizer`
   - `::-webkit-scrollbar-button`
   - `::-webkit-scrollbar-corner`
@@ -896,7 +977,6 @@
 ### Patch Changes
 
 - [#47](https://github.com/vanilla-extract-css/vanilla-extract/pull/47) [`a18bc03`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a18bc034885a8b1cc1396b3890111067d4858626) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Improve dev prefixes on generated class names
-
   - Add file name to class names even if no debug id is present
   - If file is the index file use directory name instead
 

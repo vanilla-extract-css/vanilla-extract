@@ -1,9 +1,11 @@
 {
   "mergedStyle": "mergedStyle",
   "styleWithComposition": "styleWithComposition",
+  "styleWithNestedComposition": "styleWithNestedComposition",
   "styleVariantsWithComposition": "styleVariantsWithComposition",
   "styleVariantsWithMappedComposition": "styleVariantsWithMappedComposition",
   "compositionOnly": "compositionOnly",
   "styleCompositionInSelector": "styleCompositionInSelector",
-  "styleVariantsCompositionInSelector": "styleVariantsCompositionInSelector"
+  "styleVariantsCompositionInSelector": "styleVariantsCompositionInSelector",
+  "styleWithStartingStyle": "styleWithStartingStyle"
 }

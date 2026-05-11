@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import dedent from 'dedent';
 import { sep, posix, win32 } from 'path';
 

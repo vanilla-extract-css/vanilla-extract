@@ -1,7 +1,7 @@
 import type {
   NextServer,
   NextServerOptions,
-} from '@fixtures/next-pages-router/node_modules/next/dist/server/next';
+} from '@fixtures/next-12-pages-router/node_modules/next/dist/server/next';
 import { existsSync } from 'fs';
 import { Server as _Server, createServer } from 'http';
 import path from 'path';
@@ -20,7 +20,10 @@ const DIST_DIR = 'dist';
 export const nextFixtures = ['sprinkles', 'recipes', 'features'] as const;
 
 export interface NextFixtureOptions {
-  type: 'next-app-router' | 'next-pages-router';
+  type:
+    | 'next-13-app-router'
+    | 'next-12-pages-router'
+    | 'next-16-app-pages-router';
   mode?: 'development' | 'production';
   port: number;
 }
@@ -92,7 +95,7 @@ export const startNextFixture = async ({
   // using export mode for production build in next 13
   // due to issues with the distDir config not being set
   // properly.
-  if (!dev && type === 'next-app-router') {
+  if (!dev && type === 'next-13-app-router') {
     // Use vite to server the static build.
     const closeServer = await serveAssets({
       port,

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { transformSync } from '@babel/core';
 // @ts-expect-error
 import typescriptSyntax from '@babel/plugin-syntax-typescript';
