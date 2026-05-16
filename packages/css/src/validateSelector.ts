@@ -1,7 +1,7 @@
 import { parse } from 'css-what';
 import dedent from 'dedent';
 import { cssesc } from './cssesc';
-import { escapeRegExp } from './utils';
+import { escapeRegex } from './utils';
 
 type Selector = ReturnType<typeof parse>[number];
 
@@ -47,7 +47,7 @@ export const validateSelector = (
 ): void => {
   const replaceTarget = () => {
     const targetRegex = new RegExp(
-      `.${escapeRegExp(cssesc(targetClassName, { isIdentifier: true }))}`,
+      `.${escapeRegex(cssesc(targetClassName, { isIdentifier: true }))}`,
       'g',
     );
     return selector.replace(targetRegex, '&');

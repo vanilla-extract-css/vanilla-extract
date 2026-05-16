@@ -93,8 +93,7 @@ export function dedupeAndJoinClassList(classNames: Array<ClassNames>) {
   return Array.from(set).join(' ');
 }
 
-// Escapes regex metacharacters so a string can be matched literally within a RegExp.
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
-export function escapeRegExp(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+export function escapeRegex(string: string) {
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
