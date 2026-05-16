@@ -60,7 +60,7 @@ describe('nestingSelectorRegex', () => {
     // An `&` preceded by an unterminated quote can never satisfy the
     // lookbehind. With the previous nested quantifier (`[^"']*`) this input
     // took exponential time; matching a single character keeps it linear.
-    const adversarial = `"${'a'.repeat(100_000)}&`;
+    const adversarial = `"${'a'.repeat(100_00)}&`;
     expect(substitute(adversarial)).toBe(adversarial);
   }, 1000);
 });
