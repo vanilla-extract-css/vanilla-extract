@@ -16,6 +16,7 @@ import type {
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { forEach, omit, mapKeys } from './utils';
+import { nestingSelectorRegex } from './nestingSelectorRegex';
 import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
@@ -559,10 +560,7 @@ class Stylesheet {
         parentConditions,
         Object.keys(rules).map((bounds) => {
           transformedScopeBounds[bounds] = `@scope ${this.transformSelector(
-            bounds.replace(
-              RegExp(`(?<=^(?:[^"\\']*|"(?:\\\\.|[^"\\\\])*"|\\'(?:\\\\.|[^'\\\\])*\\')*)&`, 'g'),
-              root.selector,
-            ),
+            bounds.replace(nestingSelectorRegex, root.selector),
           )}`;
           return transformedScopeBounds[bounds];
         }),
