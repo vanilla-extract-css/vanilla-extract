@@ -2888,6 +2888,47 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should map composed class lists containing regex metacharacters into single identifiers', () => {
+    const composedRow =
+      'metadataRow sprinkles_color_var(--theme-text-secondary) metadataBase';
+    const composedItem =
+      'metadataItem sprinkles_align+center sprinkles_display.flex';
+
+    expect(
+      transformCss({
+        composedClassLists: [
+          { identifier: 'metadataRow', classList: composedRow },
+          { identifier: 'metadataItem', classList: composedItem },
+        ],
+        localClassNames: [
+          'metadataRow',
+          'sprinkles_color_var(--theme-text-secondary)',
+          'metadataBase',
+          'metadataItem',
+          'sprinkles_align+center',
+          'sprinkles_display.flex',
+        ],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'metadataItem',
+            rule: {
+              selectors: {
+                [`${composedRow} ${composedItem}:not(:first-child)::before`]: {
+                  content: '"bullet"',
+                },
+              },
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .metadataRow .metadataItem:not(:first-child)::before {
+        content: "bullet";
+      }
+    `);
+  });
+
   it('should handle the pseudo-elements with params', () => {
     expect(
       transformCss({

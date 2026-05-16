@@ -1,5 +1,3 @@
-import path from 'path';
-
 import type {
   Plugin,
   ResolvedConfig,
@@ -18,6 +16,7 @@ import {
   transform,
   normalizePath,
 } from '@vanilla-extract/integration';
+import { getAbsoluteId } from './ids';
 
 const PLUGIN_NAMESPACE = 'vite-plugin-vanilla-extract';
 const virtualExtCss = '.vanilla.css';
@@ -75,25 +74,6 @@ export function vanillaExtractPlugin({
 
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
-  const getAbsoluteId = (filePath: string) => {
-    let resolvedId = filePath;
-
-    if (
-      filePath.startsWith(config.root) ||
-      // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
-      // Paths from vite are always normalized, so we have to use the posix path separator
-      (path.isAbsolute(filePath) &&
-        filePath.split(path.posix.sep)[1] ===
-          config.root.split(path.posix.sep)[1])
-    ) {
-      resolvedId = filePath;
-    } else {
-      // In SSR mode we can have paths like /app/styles.css.ts
-      resolvedId = path.join(config.root, filePath);
-    }
-
-    return normalizePath(resolvedId);
-  };
 
   /**
    * Custom invalidation function that takes a chain of importers to invalidate. If an importer is a
@@ -264,7 +244,10 @@ export function vanillaExtractPlugin({
           return null;
         }
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
@@ -321,7 +304,10 @@ export function vanillaExtractPlugin({
 
         if (!isVirtualId(validId)) return;
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         if (
           // We should always have CSS for a file here.
@@ -338,7 +324,10 @@ export function vanillaExtractPlugin({
 
         if (!isVirtualId(validId) || !compiler) return;
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
