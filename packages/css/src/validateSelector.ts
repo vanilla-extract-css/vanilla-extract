@@ -1,11 +1,7 @@
 import { parse } from 'css-what';
 import dedent from 'dedent';
 import { cssesc } from './cssesc';
-
-// https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
-function escapeRegex(string: string) {
-  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
+import { escapeRegExp } from './utils';
 
 type Selector = ReturnType<typeof parse>[number];
 
@@ -51,7 +47,7 @@ export const validateSelector = (
 ): void => {
   const replaceTarget = () => {
     const targetRegex = new RegExp(
-      `.${escapeRegex(cssesc(targetClassName, { isIdentifier: true }))}`,
+      `.${escapeRegExp(cssesc(targetClassName, { isIdentifier: true }))}`,
       'g',
     );
     return selector.replace(targetRegex, '&');

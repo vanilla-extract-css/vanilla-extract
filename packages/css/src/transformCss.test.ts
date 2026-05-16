@@ -2411,7 +2411,11 @@ describe('transformCss', () => {
           },
         ],
       }).join('\n'),
-    ).toMatchInlineSnapshot();
+    ).toMatchInlineSnapshot(`
+      .metadataRow .metadataItem:not(:first-child)::before {
+        content: "bullet";
+      }
+    `);
   });
 
   it('should handle the pseudo-elements with params', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isEqual, dedupeAndJoinClassList } from './utils';
+import { isEqual, dedupeAndJoinClassList, escapeRegExp } from './utils';
 
 describe('isEqual', () => {
   it.each([
@@ -38,5 +38,33 @@ describe('dedupeAndJoinClassList', () => {
     { args: ['1', '', '2'], output: '1 2' },
   ])('composeStyles', ({ args, output }) => {
     expect(dedupeAndJoinClassList(args)).toBe(output);
+  });
+});
+
+describe('escapeRegExp', () => {
+  it.each([
+    { input: 'plainClassName', output: 'plainClassName' },
+    {
+      input: 'with-dashes_and_underscores',
+      output: 'with-dashes_and_underscores',
+    },
+    {
+      input: 'sprinkles_color_var(--theme-text)',
+      output: 'sprinkles_color_var\\(--theme-text\\)',
+    },
+    { input: 'sprinkles_align+center', output: 'sprinkles_align\\+center' },
+    { input: 'sprinkles_display.flex', output: 'sprinkles_display\\.flex' },
+    {
+      input: '.*+?^${}()|[]\\',
+      output: '\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]\\\\',
+    },
+  ])('escapes regex metacharacters', ({ input, output }) => {
+    expect(escapeRegExp(input)).toBe(output);
+  });
+
+  it('produces a pattern that matches the original string literally', () => {
+    const value = 'sprinkles_align+center.flex(1)|[x]';
+
+    expect(new RegExp(escapeRegExp(value)).test(value)).toBe(true);
   });
 });
