@@ -110,17 +110,18 @@ describe('getAbsoluteId', () => {
     ).toBe('/example-repo/apps/example-app/app/styles.css.ts.vanilla.css');
   });
 
-  it('is idempotent when applied to an already-resolved id', () => {
-    const root = 'C:/example-repo/apps/example-app';
-    const cases = [
-      '@id/C:/example-repo/packages/example-lib/src/styles.css.ts.vanilla.css',
-      '/app/styles.css.ts.vanilla.css',
-    ];
+  const cases = [
+    '@id/C:/example-repo/packages/example-lib/src/styles.css.ts.vanilla.css',
+    '/app/styles.css.ts.vanilla.css',
+  ];
 
-    for (const filePath of cases) {
+  it.each(cases)(
+    'is idempotent when applied to an already-resolved id',
+    (filePath) => {
+      const root = 'C:/example-repo/apps/example-app';
       const resolved = getAbsoluteId({ root, filePath });
 
       expect(getAbsoluteId({ root, filePath: resolved })).toBe(resolved);
-    }
-  });
+    },
+  );
 });
