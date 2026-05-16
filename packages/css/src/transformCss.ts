@@ -15,7 +15,7 @@ import type {
   CSSPropertyBlock,
 } from './types';
 import { markCompositionUsed } from './adapter';
-import { forEach, omit, mapKeys } from './utils';
+import { forEach, omit, mapKeys, escapeRegex } from './utils';
 import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
 import { simplePseudos, simplePseudoLookup } from './simplePseudos';
@@ -143,7 +143,7 @@ class Stylesheet {
     this.composedClassLists = composedClassLists
       .map(({ identifier, classList }) => ({
         identifier,
-        regex: RegExp(`(${classList})`, 'g'),
+        regex: RegExp(`(${escapeRegex(classList)})`, 'g'),
       }))
       .reverse();
   }

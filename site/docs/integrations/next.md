@@ -76,6 +76,14 @@ const withVanillaExtract = createVanillaExtractPlugin({
 
 Each integration will set a default value based on the configuration options passed to the bundler.
 
+### externals
+
+Effectively [`ExternalItem[]`] from webpack.
+Currently typed as `any` as this type was previously not exposed.
+The `any` type will be fixed in the next major version.
+
+[`ExternalItem[]`]: https://github.com/webpack/webpack/blob/9211be0f7a04feb45e1074e6cf848a657dd82ebc/declarations/WebpackOptions.d.ts#L207-L211
+
 ### unstable_turbopack
 
 > ⚠️&nbsp;&nbsp;Turbopack support is experimental. Its API is unstable and may undergo breaking changes in non-major versions. Additionally, it may not handle all features supported by Next.js.
