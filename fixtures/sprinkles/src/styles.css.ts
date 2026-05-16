@@ -49,7 +49,7 @@ const scopeConditions = {
   conditions: {
     unscoped: {},
     document: {
-      '@scope': `(${document})`
+      '@scope': `(${document})`,
     },
   },
   responsiveArray: ['unscoped', 'document'],
@@ -107,7 +107,7 @@ const scopeLayerProperties = defineProperties({
       },
     },
     borderColor: {
-      neutral: { vars: { [color]: 'black' }},
+      neutral: { vars: { [color]: 'black' } },
       primary: { vars: { [color]: 'blue' } },
       secondary: { vars: { [color]: 'red' } },
     },
@@ -152,22 +152,22 @@ export const normalizeResponsiveValue =
 
 export const preComposedSprinkles = sprinkles({
   display: 'block',
-  flexDirection: "row",
-  order: "second",
+  flexDirection: 'row',
+  order: 'second',
   paddingTop: 'small',
   background: 'red',
   backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
   color: 'red',
   textOpacity: 0.8,
-  border: "light",
-  borderColor: { document: "primary", unscoped: "secondary" }
+  border: 'light',
+  borderColor: { document: 'primary', unscoped: 'secondary' },
 });
 
 export const preComposedSprinklesUsedInSelector = sprinkles({
   display: 'flex',
-  flexDirection: "column",
+  flexDirection: 'column',
   paddingTop: 'medium',
-  order: "first",
+  order: 'first',
 });
 
 globalStyle('body', {

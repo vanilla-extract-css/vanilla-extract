@@ -1653,12 +1653,14 @@ describe('transformCss', () => {
             selector: 'testClass',
             rule: {
               '@scope': {
-                '(&, &[title="test & success"], &[title="test \\"&\\" success"], &&)': {
-                  padding: '50px',
-                },
-                "(&, &[title='test & success'], &[title='test \\'&\\' success'], &&)": {
-                  padding: '60px',
-                },
+                '(&, &[title="test & success"], &[title="test \\"&\\" success"], &&)':
+                  {
+                    padding: '50px',
+                  },
+                "(&, &[title='test & success'], &[title='test \\'&\\' success'], &&)":
+                  {
+                    padding: '60px',
+                  },
               },
             },
           },
