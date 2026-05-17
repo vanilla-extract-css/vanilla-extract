@@ -1,5 +1,17 @@
 # @vanilla-extract/css
 
+## 1.20.2
+
+### Patch Changes
+
+- [#1731](https://github.com/vanilla-extract-css/vanilla-extract/pull/1731) [`aec0ab7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/aec0ab71227df4834de93287fcf6a3b622d48aa1) Thanks [@sashank-gogula-glean](https://github.com/sashank-gogula-glean)! - Fix incorrect class name substitution when composed class lists contain regex metacharacters
+
+  Class names containing characters such as `(`, `)`, `+`, or `.` were being interpreted as regex syntax when building the substitution pattern for composed class lists, causing malformed matches. The class list is now escaped before constructing the `RegExp`.
+
+- [#1740](https://github.com/vanilla-extract-css/vanilla-extract/pull/1740) [`a4b120f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a4b120f43eeaf8a3545d8d69d3c70073435e0bf9) Thanks [@askoufis](https://github.com/askoufis)! - Fix a bug causing `fallbackVar` to discard an empty string passed as the fallback value
+
+  An empty string fallback was silently dropped, producing `var(--myVar)` instead of the CSS empty-fallback form `var(--myVar, )`. `fallbackVar` now treats `''` like any other fallback value.
+
 ## 1.20.1
 
 ### Patch Changes
