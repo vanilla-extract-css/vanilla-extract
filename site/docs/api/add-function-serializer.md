@@ -15,7 +15,7 @@ To address this limitation, the `addFunctionSerializer` utility allows you to an
 
 As a basic example, let's say we want to create a library called `my-awesome-styled-div` that lets you create a React component that renders a `<div>` with static CSS bound to it, and we want our consumers to use it in their `.css.ts` files like this:
 
-```ts
+```tsx
 // MyComponent.css.ts
 
 import { styledDiv } from 'my-awesome-styled-div';
