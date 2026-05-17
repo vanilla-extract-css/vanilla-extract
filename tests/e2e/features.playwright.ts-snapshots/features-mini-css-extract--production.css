@@ -63,3 +63,8 @@ body ._87f2rub {
     background-color: white;
   }
 }
+@scope (body) {
+  ._87f2rud:after {
+    content: "Scoped to body";
+  }
+}
