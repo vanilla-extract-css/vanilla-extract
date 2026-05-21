@@ -49,7 +49,15 @@ export interface CompileOptions {
   cwd?: string;
   esbuildOptions?: Pick<
     EsbuildOptions,
-    'plugins' | 'external' | 'define' | 'loader' | 'tsconfig' | 'conditions'
+    | 'plugins'
+    | 'external'
+    | 'define'
+    | 'loader'
+    | 'tsconfig'
+    | 'conditions'
+    | 'logLevel'
+    | 'logLimit'
+    | 'logOverride'
   >;
 }
 export async function compile({
@@ -77,6 +85,9 @@ export async function compile({
     define: esbuildOptions?.define,
     tsconfig: esbuildOptions?.tsconfig,
     conditions: esbuildOptions?.conditions,
+    logLevel: esbuildOptions?.logLevel,
+    logLimit: esbuildOptions?.logLimit,
+    logOverride: esbuildOptions?.logOverride,
   });
 
   const { outputFiles, metafile } = result;
