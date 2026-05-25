@@ -29,7 +29,7 @@ export const vanillaExtractTransformPlugin = ({
         source: originalSource,
         filePath: path,
         rootPath: build.initialOptions.absWorkingDir!,
-        packageName: packageInfo.name,
+        packageName: packageInfo?.name,
         identOption:
           identOption ?? (build.initialOptions.minify ? 'short' : 'debug'),
       });

@@ -65,7 +65,7 @@ export function vanillaExtractPlugin({
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
   let server: ViteDevServer;
-  let packageName: string;
+  let packageName: string | undefined;
   let compiler: Compiler | undefined;
   let isBuild: boolean;
   const vitePromise = import('vite');
@@ -162,7 +162,7 @@ export function vanillaExtractPlugin({
       configResolved(_resolvedConfig) {
         config = _resolvedConfig;
         isBuild = config.command === 'build' && !config.build.watch;
-        packageName = getPackageInfo(config.root).name;
+        packageName = getPackageInfo(config.root)?.name;
       },
       async buildStart() {
         // Ensure we re-use the compiler instance between builds, e.g. in watch mode
