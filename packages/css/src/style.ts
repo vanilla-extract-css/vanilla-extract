@@ -168,6 +168,7 @@ export function styleVariants(...args: any[]) {
 
     const classMap: Record<string | number, string> = {};
     for (const key in data) {
+      if (!Object.keys(data[key]).length) continue;
       classMap[key] = style(
         mapData(data[key], key),
         debugId ? `${debugId}_${key}` : key,
