@@ -67,6 +67,7 @@ export function vanillaExtractPlugin({
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
+  let compilerReady: Promise<void> | undefined;
   let isBuild: boolean;
   const vitePromise = import('vite');
 
@@ -111,6 +112,65 @@ export function vanillaExtractPlugin({
         }
       }
     }
+  };
+
+  /**
+   * Lazily creates the compiler, memoizing the initialization promise.
+   *
+   * `buildStart` kicks this off eagerly, but `transform` also awaits it. This
+   * matters because `transform` can run before `buildStart` has finished
+   * creating the compiler when another plugin emits an additional entry whose
+   * module graph is transformed concurrently (e.g. a module federation plugin
+   * exposing a module as its own chunk). Without awaiting, `transform` would
+   * bail and leave the `.css.ts` untransformed, producing runtime `style()`
+   * calls that throw "Styles were unable to be assigned to a file".
+   */
+  const ensureCompiler = () => {
+    if (unstable_mode === 'transform') {
+      return Promise.resolve();
+    }
+
+    compilerReady ??= (async () => {
+      const { loadConfigFromFile } = await vitePromise;
+
+      let configForViteCompiler: UserConfig | undefined;
+
+      // The user has a vite config file
+      if (config.configFile) {
+        const configFile = await loadConfigFromFile(
+          {
+            command: config.command,
+            mode: config.mode,
+            isSsrBuild: configEnv.isSsrBuild,
+          },
+          config.configFile,
+        );
+
+        configForViteCompiler = configFile?.config;
+      }
+      // The user is using a vite-based framework that has a custom config file
+      else {
+        configForViteCompiler = config.inlineConfig;
+      }
+
+      const viteConfig = {
+        ...configForViteCompiler,
+        plugins: configForViteCompiler?.plugins
+          ?.flat()
+          .filter(isPluginObject)
+          .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
+      };
+
+      compiler = createCompiler({
+        root: config.root,
+        identifiers: getIdentOption(),
+        cssImportSpecifier: fileIdToVirtualId,
+        viteConfig,
+        enableFileWatcher: !isBuild,
+      });
+    })();
+
+    return compilerReady;
   };
 
   return [
@@ -166,47 +226,7 @@ export function vanillaExtractPlugin({
       },
       async buildStart() {
         // Ensure we re-use the compiler instance between builds, e.g. in watch mode
-        if (unstable_mode !== 'transform' && !compiler) {
-          const { loadConfigFromFile } = await vitePromise;
-
-          let configForViteCompiler: UserConfig | undefined;
-
-          // The user has a vite config file
-          if (config.configFile) {
-            const configFile = await loadConfigFromFile(
-              {
-                command: config.command,
-                mode: config.mode,
-                isSsrBuild: configEnv.isSsrBuild,
-              },
-              config.configFile,
-            );
-
-            configForViteCompiler = configFile?.config;
-          }
-          // The user is using a vite-based framework that has a custom config file
-          else {
-            configForViteCompiler = config.inlineConfig;
-          }
-
-          const viteConfig = {
-            ...configForViteCompiler,
-            plugins: configForViteCompiler?.plugins
-              ?.flat()
-              .filter(isPluginObject)
-              .filter(
-                withUserPluginFilter({ mode: config.mode, pluginFilter }),
-              ),
-          };
-
-          compiler = createCompiler({
-            root: config.root,
-            identifiers: getIdentOption(),
-            cssImportSpecifier: fileIdToVirtualId,
-            viteConfig,
-            enableFileWatcher: !isBuild,
-          });
-        }
+        await ensureCompiler();
       },
       buildEnd() {
         // When using the rollup watcher, we don't want to close the compiler after every build.
@@ -238,6 +258,15 @@ export function vanillaExtractPlugin({
             packageName,
             identOption,
           });
+        }
+
+        // `transform` can run before `buildStart` has finished creating the
+        // compiler (e.g. when another plugin emits an additional entry whose
+        // module graph is transformed concurrently). Await the memoized
+        // initialization rather than bailing, which would leave this `.css.ts`
+        // untransformed.
+        if (!compiler) {
+          await ensureCompiler();
         }
 
         if (!compiler) {
