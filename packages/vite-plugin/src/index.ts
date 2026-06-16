@@ -264,10 +264,9 @@ export function vanillaExtractPlugin({
         // compiler (e.g. when another plugin emits an additional entry whose
         // module graph is transformed concurrently). Await the memoized
         // initialization rather than bailing, which would leave this `.css.ts`
-        // untransformed.
-        if (!compiler) {
-          await ensureCompiler();
-        }
+        // untransformed. `ensureCompiler` is memoized, so this is a no-op once
+        // the compiler exists.
+        await ensureCompiler();
 
         if (!compiler) {
           return null;
