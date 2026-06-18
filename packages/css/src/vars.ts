@@ -81,18 +81,20 @@ export function createGlobalVar(
   name: string,
   declaration?: VarDeclaration,
 ): CSSVarFunction {
+  const varName = name.replace(/^--/, '');
+
   if (declaration && typeof declaration === 'object') {
     appendCss(
       {
         type: 'property',
-        name: `--${name}`,
+        name: `--${varName}`,
         rule: buildPropertyRule(declaration),
       },
       getFileScope(),
     );
   }
 
-  return `var(--${name})`;
+  return `var(--${varName})`;
 }
 
 export function assertVarName(

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fallbackVar, createGlobalThemeContract } from './vars';
+import { fallbackVar, createGlobalThemeContract, createGlobalVar } from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
@@ -85,6 +85,20 @@ describe('fallbackVar', () => {
       fallbackVar('INVALID', 'var(--foo-bar)', '10px');
     }).toThrowErrorMatchingInlineSnapshot(
       `[Error: Invalid variable name: INVALID]`,
+    );
+  });
+});
+
+describe('createGlobalVar', () => {
+  it('creates a global var reference', () => {
+    expect(createGlobalVar('my-global-var')).toMatchInlineSnapshot(
+      `"var(--my-global-var)"`,
+    );
+  });
+
+  it('ignores leading double hyphen', () => {
+    expect(createGlobalVar('--my-global-var')).toMatchInlineSnapshot(
+      `"var(--my-global-var)"`,
     );
   });
 });

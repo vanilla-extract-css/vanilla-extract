@@ -16,6 +16,8 @@ import {
 } from '@vanilla-extract/css';
 
 const opacityVar = createGlobalVar('opacity');
+// A leading `--` is optional and will be trimmed:
+// const opacityVar = createGlobalVar('--opacity');
 
 export const content = style({
   opacity: opacityVar
