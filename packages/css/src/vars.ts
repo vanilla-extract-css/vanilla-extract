@@ -108,8 +108,8 @@ export function fallbackVar(
 ): CSSVarFunction {
   let finalValue = '';
 
-  values.reverse().forEach((value) => {
-    if (finalValue === '') {
+  values.reverse().forEach((value, index) => {
+    if (index === 0) {
       finalValue = String(value);
     } else {
       assertVarName(value);
