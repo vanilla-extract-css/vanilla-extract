@@ -36,7 +36,7 @@
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@manypkg/cli": "^0.25.1",
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.61.0",
     "@preconstruct/cli": "^2.8.2",
     "@types/node": "^22.15.3",
     "@vanilla-extract/vite-plugin": "workspace:*",
