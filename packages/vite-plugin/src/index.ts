@@ -114,6 +114,46 @@ export function vanillaExtractPlugin({
     }
   };
 
+  const initializeCompiler = async () => {
+    const { loadConfigFromFile } = await vitePromise;
+
+    let configForViteCompiler: UserConfig | undefined;
+
+    // The user has a vite config file
+    if (config.configFile) {
+      const configFile = await loadConfigFromFile(
+        {
+          command: config.command,
+          mode: config.mode,
+          isSsrBuild: configEnv.isSsrBuild,
+        },
+        config.configFile,
+      );
+
+      configForViteCompiler = configFile?.config;
+    }
+    // The user is using a vite-based framework that has a custom config file
+    else {
+      configForViteCompiler = config.inlineConfig;
+    }
+
+    const viteConfig = {
+      ...configForViteCompiler,
+      plugins: configForViteCompiler?.plugins
+        ?.flat()
+        .filter(isPluginObject)
+        .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
+    };
+
+    compiler = createCompiler({
+      root: config.root,
+      identifiers: getIdentOption(),
+      cssImportSpecifier: fileIdToVirtualId,
+      viteConfig,
+      enableFileWatcher: !isBuild,
+    });
+  };
+
   /**
    * Lazily creates the compiler, memoizing the initialization promise.
    *
@@ -130,46 +170,7 @@ export function vanillaExtractPlugin({
       return Promise.resolve();
     }
 
-    compilerReady ??= (async () => {
-      const { loadConfigFromFile } = await vitePromise;
-
-      let configForViteCompiler: UserConfig | undefined;
-
-      // The user has a vite config file
-      if (config.configFile) {
-        const configFile = await loadConfigFromFile(
-          {
-            command: config.command,
-            mode: config.mode,
-            isSsrBuild: configEnv.isSsrBuild,
-          },
-          config.configFile,
-        );
-
-        configForViteCompiler = configFile?.config;
-      }
-      // The user is using a vite-based framework that has a custom config file
-      else {
-        configForViteCompiler = config.inlineConfig;
-      }
-
-      const viteConfig = {
-        ...configForViteCompiler,
-        plugins: configForViteCompiler?.plugins
-          ?.flat()
-          .filter(isPluginObject)
-          .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
-      };
-
-      compiler = createCompiler({
-        root: config.root,
-        identifiers: getIdentOption(),
-        cssImportSpecifier: fileIdToVirtualId,
-        viteConfig,
-        enableFileWatcher: !isBuild,
-      });
-    })();
-
+    compilerReady ??= initializeCompiler();
     return compilerReady;
   };
 
