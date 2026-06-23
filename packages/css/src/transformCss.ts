@@ -15,6 +15,7 @@ import type {
   CSSPropertyBlock,
 } from './types';
 import { markCompositionUsed } from './adapter';
+import { nestingSelectorRegex } from './nestingSelectorRegex';
 import { forEach, omit, mapKeys, escapeRegex } from './utils';
 import { validateSelector } from './validateSelector';
 import { ConditionalRuleset } from './conditionalRulesets';
@@ -98,6 +99,7 @@ const DOUBLE_SPACE = '  ';
 const specialKeys = [
   ...simplePseudos,
   '@layer',
+  '@scope',
   '@media',
   '@supports',
   '@container',
@@ -186,6 +188,7 @@ class Stylesheet {
       });
 
       this.transformLayer(root, root.rule['@layer']);
+      this.transformScope(root, root.rule['@scope']);
       this.transformMedia(root, root.rule['@media']);
       this.transformSupports(root, root.rule['@supports']);
       this.transformContainer(root, root.rule['@container']);
@@ -399,6 +402,7 @@ class Stylesheet {
       };
 
       this.transformLayer(selectorRoot, selectorRule['@layer'], conditions);
+      this.transformScope(selectorRoot, selectorRule['@scope'], conditions);
       this.transformSupports(
         selectorRoot,
         selectorRule['@supports'],
@@ -450,6 +454,7 @@ class Stylesheet {
         }
 
         this.transformLayer(root, mediaRule!['@layer'], conditions);
+        this.transformScope(root, mediaRule!['@scope'], conditions);
         this.transformSupports(root, mediaRule!['@supports'], conditions);
         this.transformContainer(root, mediaRule!['@container'], conditions);
         this.transformStartingStyle(
@@ -491,6 +496,7 @@ class Stylesheet {
         }
 
         this.transformLayer(root, containerRule!['@layer'], conditions);
+        this.transformScope(root, containerRule!['@scope'], conditions);
         this.transformSupports(root, containerRule!['@supports'], conditions);
         this.transformMedia(root, containerRule!['@media'], conditions);
         this.transformStartingStyle(
@@ -530,6 +536,7 @@ class Stylesheet {
           this.transformSelectors(root, layerRule!, conditions);
         }
 
+        this.transformScope(root, layerRule!['@scope'], conditions);
         this.transformMedia(root, layerRule!['@media'], conditions);
         this.transformSupports(root, layerRule!['@supports'], conditions);
         this.transformContainer(root, layerRule!['@container'], conditions);
@@ -539,6 +546,55 @@ class Stylesheet {
           conditions,
         );
       });
+    }
+  }
+
+  transformScope(
+    root: CSSStyleBlock | CSSSelectorBlock,
+    rules: WithQueries<StyleWithSelectors>['@scope'],
+    parentConditions: Array<string> = [],
+  ) {
+    if (rules) {
+      const transformedScopeBounds: Record<string, string> = {};
+      this.currConditionalRuleset?.addConditionPrecedence(
+        parentConditions,
+        Object.keys(rules).map((bounds) => {
+          transformedScopeBounds[bounds] = `@scope ${this.transformSelector(
+            bounds.replace(nestingSelectorRegex, root.selector),
+          )}`;
+          return transformedScopeBounds[bounds];
+        }),
+      );
+
+      for (const [bounds, scopeRule] of Object.entries(rules)) {
+        const conditions = [
+          ...parentConditions,
+          transformedScopeBounds[bounds],
+        ];
+
+        this.addConditionalRule(
+          {
+            selector: root.selector,
+            rule: omit(scopeRule, specialKeys),
+          },
+          conditions,
+        );
+
+        if (root.type === 'local') {
+          this.transformSimplePseudos(root, scopeRule!, conditions);
+          this.transformSelectors(root, scopeRule!, conditions);
+        }
+
+        this.transformLayer(root, scopeRule!['@layer'], conditions);
+        this.transformMedia(root, scopeRule!['@media'], conditions);
+        this.transformSupports(root, scopeRule!['@supports'], conditions);
+        this.transformContainer(root, scopeRule!['@container'], conditions);
+        this.transformStartingStyle(
+          root,
+          scopeRule!['@starting-style'],
+          conditions,
+        );
+      }
     }
   }
 
@@ -570,6 +626,7 @@ class Stylesheet {
         }
 
         this.transformLayer(root, supportsRule!['@layer'], conditions);
+        this.transformScope(root, supportsRule!['@scope'], conditions);
         this.transformMedia(root, supportsRule!['@media'], conditions);
         this.transformContainer(root, supportsRule!['@container'], conditions);
         this.transformStartingStyle(
