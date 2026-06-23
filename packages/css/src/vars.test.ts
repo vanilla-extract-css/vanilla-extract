@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { fallbackVar, createGlobalThemeContract, createGlobalVar } from './vars';
+import {
+  fallbackVar,
+  createGlobalThemeContract,
+  createGlobalVar,
+} from './vars';
 
 describe('fallbackVar', () => {
   it('supports a single string fallback', () => {
