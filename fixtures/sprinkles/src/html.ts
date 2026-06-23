@@ -5,6 +5,7 @@ import {
   preComposedSprinkles,
   preComposedSprinklesUsedInSelector,
   container,
+  document,
 } from './styles.css';
 import testNodes from '../test-nodes.json';
 
@@ -23,6 +24,7 @@ export default `
       Sprinkles
     </div>
     <div class="${preComposedSprinkles}">Precomposed sprinkles</div>
+    <div class="${document}"><div class="${preComposedSprinkles}">Precomposed sprinkles in document scope</div></div>
     <div class="${preComposedSprinklesUsedInSelector}">Precomposed Sprinkles Used In Selector</div>
   </div>
 `;
