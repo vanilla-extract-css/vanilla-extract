@@ -76,13 +76,13 @@ jobs:
       - name: Unit Test
         run: pnpm test:unit
   playwright:
-    name: Playwright tests (shard ${{ matrix.shard }}/4)
+    name: Playwright tests (shard ${{ matrix.shard }}/2)
     runs-on: macos-latest
     if: github.ref != 'refs/heads/changeset-release/master' && github.head_ref != 'changeset-release/master'
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2]
     env:
       CI: true
     steps:
