@@ -18,7 +18,7 @@
     "test:clean-next": "pnpm --filter=@fixtures/next-* run '/^clean.*/'",
     "test:build-next": "node scripts/copy-next-plugin.ts && pnpm --filter=@fixtures/next-* run '/^build.*/'",
     "format": "oxlint --fix && prettier --write .",
-    "lint": "pnpm run '/^lint:.*/'",
+    "lint": "pnpm run --no-bail '/^lint:.*/'",
     "lint:manypkg": "manypkg check",
     "lint:prettier": "prettier --cache --check .",
     "lint:tsc": "tsc",
