@@ -104,7 +104,7 @@ jobs:
         run: pnpm install
 
       - name: Install Browsers
-        run: pnpm playwright install chromium
+        run: pnpm playwright install chromium --only-shell
 
       - name: Build packages
         run: pnpm build
