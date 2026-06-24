@@ -16,7 +16,7 @@ import {
   tryGetPackageName,
 } from './lib';
 
-const { relative, normalize, dirname } = posix;
+const { relative, normalize, dirname, basename } = posix;
 
 export interface Options {
   /**
@@ -157,9 +157,11 @@ export function vanillaExtractPlugin({
           return codeResult;
         }
 
+        // Strip directory: rolldown rejects relative/absolute paths in `name`,
+        // and `moduleInfo.id` can be relative for cross-package `.css.ts` imports.
         const assetId = this.emitFile({
           type: 'asset',
-          name: moduleInfo.id,
+          name: basename(moduleInfo.id),
           source: moduleInfo.meta.css,
         });
         const assetPath = this.getFileName(assetId);

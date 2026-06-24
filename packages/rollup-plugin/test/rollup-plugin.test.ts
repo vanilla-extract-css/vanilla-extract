@@ -382,6 +382,30 @@ describe('rollup-plugin', () => {
         ]),
       ).toMatchSnapshot();
     });
+
+    it('strips directory prefix from emitted .css asset names for cross-package .css.ts imports', async () => {
+      const cwd = path.dirname(
+        require.resolve('@fixtures/thirdparty/package.json'),
+      );
+      const bundle = await rolldown({
+        input: path.join(cwd, 'src/index.ts'),
+        external: ['@vanilla-extract/dynamic', '@vanilla-extract/css'],
+        plugins: [vanillaExtractPlugin({ cwd })],
+      });
+      const { output } = await bundle.generate({
+        format: 'esm',
+        assetFileNames: '[name][extname]',
+      });
+      const cssAssets = output.filter(
+        (file): file is OutputAsset =>
+          file.type === 'asset' && file.fileName.endsWith('.css'),
+      );
+      expect(cssAssets.length).toBeGreaterThan(0);
+      for (const asset of cssAssets) {
+        expect(asset.name).toBeDefined();
+        expect(asset.name).not.toContain('/');
+      }
+    });
   });
 });
 
