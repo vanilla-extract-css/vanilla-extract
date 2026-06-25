@@ -47,7 +47,7 @@ export function buildImportChain(
   id: string,
   plugin: Pick<PluginContext, 'getModuleInfo' | 'warn'>,
 ): ImportChain {
-  let mod: ModuleInfo | null = plugin.getModuleInfo(id)!;
+  let mod: ModuleInfo | null = plugin.getModuleInfo(id);
   if (!mod) {
     return [];
   }

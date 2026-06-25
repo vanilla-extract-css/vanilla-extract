@@ -28,6 +28,7 @@ export const vanillaExtractTransformPlugin = ({
       const source = await transform({
         source: originalSource,
         filePath: path,
+        // oxlint-disable-next-line typescript/no-non-null-assertion Ignoring this for now, not sure if this will ever actually be null
         rootPath: build.initialOptions.absWorkingDir!,
         packageName: packageInfo.name,
         identOption:

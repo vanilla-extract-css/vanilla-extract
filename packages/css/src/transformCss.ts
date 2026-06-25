@@ -449,17 +449,17 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePseudos(root, mediaRule!, conditions);
-          this.transformSelectors(root, mediaRule!, conditions);
+          this.transformSimplePseudos(root, mediaRule, conditions);
+          this.transformSelectors(root, mediaRule, conditions);
         }
 
-        this.transformLayer(root, mediaRule!['@layer'], conditions);
-        this.transformScope(root, mediaRule!['@scope'], conditions);
-        this.transformSupports(root, mediaRule!['@supports'], conditions);
-        this.transformContainer(root, mediaRule!['@container'], conditions);
+        this.transformLayer(root, mediaRule['@layer'], conditions);
+        this.transformScope(root, mediaRule['@scope'], conditions);
+        this.transformSupports(root, mediaRule['@supports'], conditions);
+        this.transformContainer(root, mediaRule['@container'], conditions);
         this.transformStartingStyle(
           root,
-          mediaRule!['@starting-style'],
+          mediaRule['@starting-style'],
           conditions,
         );
       }
@@ -491,17 +491,17 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePseudos(root, containerRule!, conditions);
-          this.transformSelectors(root, containerRule!, conditions);
+          this.transformSimplePseudos(root, containerRule, conditions);
+          this.transformSelectors(root, containerRule, conditions);
         }
 
-        this.transformLayer(root, containerRule!['@layer'], conditions);
-        this.transformScope(root, containerRule!['@scope'], conditions);
-        this.transformSupports(root, containerRule!['@supports'], conditions);
-        this.transformMedia(root, containerRule!['@media'], conditions);
+        this.transformLayer(root, containerRule['@layer'], conditions);
+        this.transformScope(root, containerRule['@scope'], conditions);
+        this.transformSupports(root, containerRule['@supports'], conditions);
+        this.transformMedia(root, containerRule['@media'], conditions);
         this.transformStartingStyle(
           root,
-          containerRule!['@starting-style'],
+          containerRule['@starting-style'],
           conditions,
         );
       });
@@ -532,17 +532,17 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePseudos(root, layerRule!, conditions);
-          this.transformSelectors(root, layerRule!, conditions);
+          this.transformSimplePseudos(root, layerRule, conditions);
+          this.transformSelectors(root, layerRule, conditions);
         }
 
-        this.transformScope(root, layerRule!['@scope'], conditions);
-        this.transformMedia(root, layerRule!['@media'], conditions);
-        this.transformSupports(root, layerRule!['@supports'], conditions);
-        this.transformContainer(root, layerRule!['@container'], conditions);
+        this.transformScope(root, layerRule['@scope'], conditions);
+        this.transformMedia(root, layerRule['@media'], conditions);
+        this.transformSupports(root, layerRule['@supports'], conditions);
+        this.transformContainer(root, layerRule['@container'], conditions);
         this.transformStartingStyle(
           root,
-          layerRule!['@starting-style'],
+          layerRule['@starting-style'],
           conditions,
         );
       });
@@ -581,17 +581,17 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePseudos(root, scopeRule!, conditions);
-          this.transformSelectors(root, scopeRule!, conditions);
+          this.transformSimplePseudos(root, scopeRule, conditions);
+          this.transformSelectors(root, scopeRule, conditions);
         }
 
-        this.transformLayer(root, scopeRule!['@layer'], conditions);
-        this.transformMedia(root, scopeRule!['@media'], conditions);
-        this.transformSupports(root, scopeRule!['@supports'], conditions);
-        this.transformContainer(root, scopeRule!['@container'], conditions);
+        this.transformLayer(root, scopeRule['@layer'], conditions);
+        this.transformMedia(root, scopeRule['@media'], conditions);
+        this.transformSupports(root, scopeRule['@supports'], conditions);
+        this.transformContainer(root, scopeRule['@container'], conditions);
         this.transformStartingStyle(
           root,
-          scopeRule!['@starting-style'],
+          scopeRule['@starting-style'],
           conditions,
         );
       }
@@ -621,17 +621,17 @@ class Stylesheet {
         );
 
         if (root.type === 'local') {
-          this.transformSimplePseudos(root, supportsRule!, conditions);
-          this.transformSelectors(root, supportsRule!, conditions);
+          this.transformSimplePseudos(root, supportsRule, conditions);
+          this.transformSelectors(root, supportsRule, conditions);
         }
 
-        this.transformLayer(root, supportsRule!['@layer'], conditions);
-        this.transformScope(root, supportsRule!['@scope'], conditions);
-        this.transformMedia(root, supportsRule!['@media'], conditions);
-        this.transformContainer(root, supportsRule!['@container'], conditions);
+        this.transformLayer(root, supportsRule['@layer'], conditions);
+        this.transformScope(root, supportsRule['@scope'], conditions);
+        this.transformMedia(root, supportsRule['@media'], conditions);
+        this.transformContainer(root, supportsRule['@container'], conditions);
         this.transformStartingStyle(
           root,
-          supportsRule!['@starting-style'],
+          supportsRule['@starting-style'],
           conditions,
         );
       });
