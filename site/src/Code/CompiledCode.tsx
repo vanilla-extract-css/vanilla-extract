@@ -18,8 +18,8 @@ export interface CompiledCodeProps {
   code: Array<File>;
   css?: Record<string, string>;
   background?: {
-    lightMode?: keyof typeof vars.palette;
-    darkMode?: keyof typeof vars.palette;
+    lightMode: keyof typeof vars.palette;
+    darkMode: keyof typeof vars.palette;
   };
 }
 
@@ -44,8 +44,8 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
       style={
         background
           ? assignInlineVars({
-              [styles.darkModeBg]: vars.palette[background.darkMode!],
-              [styles.lightModeBg]: vars.palette[background.lightMode!],
+              [styles.darkModeBg]: vars.palette[background.darkMode],
+              [styles.lightModeBg]: vars.palette[background.lightMode],
             })
           : undefined
       }
