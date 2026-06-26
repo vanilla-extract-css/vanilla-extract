@@ -40,6 +40,14 @@
 .styles_stack_space_medium__spi1frd {
   gap: 20px;
 }
+.styles_child__spi1frg {
+  background-color: red;
+  font-size: 24px;
+  line-height: 40px;
+}
+.styles_parentRecipe_size_empty__spi1frf .styles_child__spi1frg {
+  background-color: #00f;
+}
 @media only screen and (width >= 600px) {
   .styles_button_compound_0__spi1frb {
     border: 2px solid green;

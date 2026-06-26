@@ -37,8 +37,17 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
 
   let result = className;
 
-  if (classList.length > 0) {
-    result = `${className} ${dedupeAndJoinClassList(classList)}`;
+  // `dedupeAndJoinClassList` skips empty strings, so the result here can be
+  // empty even when `classList` is not (e.g. `style([''])`, which is what
+  // recipe variants produce for empty-string values). In that case there is
+  // nothing to compose: registering the composition anyway would (a) leave a
+  // trailing space in `result`, and (b) build a class-list regex with a
+  // trailing space in `transformCss`, which then consumes the descendant
+  // combinator when consumers use this class in a selector (see #1745).
+  const joinedClassList = dedupeAndJoinClassList(classList);
+
+  if (joinedClassList.length > 0) {
+    result = `${className} ${joinedClassList}`;
 
     registerComposition(
       {

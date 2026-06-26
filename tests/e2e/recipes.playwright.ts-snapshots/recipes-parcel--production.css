@@ -40,6 +40,14 @@
 .spi1frd {
   gap: 20px;
 }
+.spi1frg {
+  background-color: red;
+  font-size: 24px;
+  line-height: 40px;
+}
+.spi1frf .spi1frg {
+  background-color: #00f;
+}
 @media only screen and (width >= 600px) {
   .spi1frb {
     border: 2px solid green;
