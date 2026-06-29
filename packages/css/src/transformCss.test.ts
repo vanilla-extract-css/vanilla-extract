@@ -2749,6 +2749,7 @@ describe('transformCss', () => {
               display: 'block',
               paddingTop: 10,
               lineHeight: 20,
+              boxOrdinalGroup: 2,
               vars: {
                 '--my-var': '12',
                 [testVar]: '24',
@@ -2764,6 +2765,7 @@ describe('transformCss', () => {
         display: block;
         padding-top: 10px;
         line-height: 20;
+        box-ordinal-group: 2;
       }
     `);
   });
