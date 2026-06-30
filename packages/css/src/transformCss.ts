@@ -33,6 +33,7 @@ const UNITLESS: Record<string, boolean> = {
   borderImageWidth: true,
   boxFlex: true,
   boxFlexGroup: true,
+  boxOrdinalGroup: true,
   columnCount: true,
   columns: true,
   flex: true,
