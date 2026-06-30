@@ -3,7 +3,7 @@
 exports[`rollup-plugin > Rollup settings > should build with preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -15,7 +15,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -73,7 +73,7 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
     "@layer themes_themeLayer__cvta177;
 @layer globalThemeLayer;
 :root, .themes_theme__cvta170 {
@@ -208,7 +208,7 @@ render();
   ],
   [
     "src/shared.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
+    "import './../assets/shared.css.ts.vanilla-G_Gyt4-e.css';
 
 var shadow = "shared_shadow__4dtfen0";
 
@@ -217,9 +217,9 @@ export { shadow };
   ],
   [
     "src/styles.css.js",
-    "import './../assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
-import './../assets/src/styles.css.ts.vanilla-BfisGtko.css';
+    "import './../assets/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './../assets/themes.css.ts.vanilla-s9rcEmBH.css';
+import './../assets/styles.css.ts.vanilla-BfisGtko.css';
 
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
@@ -230,7 +230,7 @@ export { button, container, opacity };
   ],
   [
     "src/themes.css.js",
-    "import './../assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
+    "import './../assets/themes.css.ts.vanilla-s9rcEmBH.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
@@ -854,15 +854,15 @@ export { altButton, altContainer, testNodes as default, dynamicVarsButton, dynam
 exports[`rollup-plugin > Rollup settings > should build with sourcemaps 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
     "",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
     "",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
     "",
   ],
   [
@@ -911,7 +911,7 @@ exports[`rollup-plugin > Rollup settings > should build with sourcemaps 1`] = `
 exports[`rollup-plugin > Rollup settings > should build without preserveModules 1`] = `
 [
   [
-    "assets/src/shared.css.ts.vanilla-G_Gyt4-e.css",
+    "assets/shared.css.ts.vanilla-G_Gyt4-e.css",
     ".shared_shadow__4dtfen0 {
   box-shadow: 0 0 5px red;
 }
@@ -923,7 +923,7 @@ body, button {
 }",
   ],
   [
-    "assets/src/styles.css.ts.vanilla-BfisGtko.css",
+    "assets/styles.css.ts.vanilla-BfisGtko.css",
     "@font-face {
   src: local("Impact");
   font-family: "styles_impact__jteyb10";
@@ -981,7 +981,7 @@ html .styles_opacity_1\\/4__jteyb17 {
 }",
   ],
   [
-    "assets/src/themes.css.ts.vanilla-s9rcEmBH.css",
+    "assets/themes.css.ts.vanilla-s9rcEmBH.css",
     "@layer themes_themeLayer__cvta177;
 @layer globalThemeLayer;
 :root, .themes_theme__cvta170 {
@@ -1033,9 +1033,9 @@ html .styles_opacity_1\\/4__jteyb17 {
   [
     "index.js",
     "import { assignInlineVars, setElementVars } from '@vanilla-extract/dynamic';
-import './assets/src/themes.css.ts.vanilla-s9rcEmBH.css';
-import './assets/src/shared.css.ts.vanilla-G_Gyt4-e.css';
-import './assets/src/styles.css.ts.vanilla-BfisGtko.css';
+import './assets/themes.css.ts.vanilla-s9rcEmBH.css';
+import './assets/shared.css.ts.vanilla-G_Gyt4-e.css';
+import './assets/styles.css.ts.vanilla-BfisGtko.css';
 
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
