@@ -1,5 +1,3 @@
-import path from 'path';
-
 import type {
   Plugin,
   ResolvedConfig,
@@ -18,6 +16,7 @@ import {
   transform,
   normalizePath,
 } from '@vanilla-extract/integration';
+import { getAbsoluteId } from './ids';
 
 const PLUGIN_NAMESPACE = 'vite-plugin-vanilla-extract';
 const virtualExtCss = '.vanilla.css';
@@ -68,6 +67,7 @@ export function vanillaExtractPlugin({
   let server: ViteDevServer;
   let packageName: string;
   let compiler: Compiler | undefined;
+  let compilerReady: Promise<void> | undefined;
   let isBuild: boolean;
   const vitePromise = import('vite');
 
@@ -75,25 +75,6 @@ export function vanillaExtractPlugin({
 
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
-  const getAbsoluteId = (filePath: string) => {
-    let resolvedId = filePath;
-
-    if (
-      filePath.startsWith(config.root) ||
-      // In monorepos the absolute path will be outside of config.root, so we check that they have the same root on the file system
-      // Paths from vite are always normalized, so we have to use the posix path separator
-      (path.isAbsolute(filePath) &&
-        filePath.split(path.posix.sep)[1] ===
-          config.root.split(path.posix.sep)[1])
-    ) {
-      resolvedId = filePath;
-    } else {
-      // In SSR mode we can have paths like /app/styles.css.ts
-      resolvedId = path.join(config.root, filePath);
-    }
-
-    return normalizePath(resolvedId);
-  };
 
   /**
    * Custom invalidation function that takes a chain of importers to invalidate. If an importer is a
@@ -131,6 +112,66 @@ export function vanillaExtractPlugin({
         }
       }
     }
+  };
+
+  const initializeCompiler = async () => {
+    const { loadConfigFromFile } = await vitePromise;
+
+    let configForViteCompiler: UserConfig | undefined;
+
+    // The user has a vite config file
+    if (config.configFile) {
+      const configFile = await loadConfigFromFile(
+        {
+          command: config.command,
+          mode: config.mode,
+          isSsrBuild: configEnv.isSsrBuild,
+        },
+        config.configFile,
+      );
+
+      configForViteCompiler = configFile?.config;
+    }
+    // The user is using a vite-based framework that has a custom config file
+    else {
+      configForViteCompiler = config.inlineConfig;
+    }
+
+    const viteConfig = {
+      ...configForViteCompiler,
+      plugins: configForViteCompiler?.plugins
+        ?.flat()
+        .filter(isPluginObject)
+        .filter(withUserPluginFilter({ mode: config.mode, pluginFilter })),
+    };
+
+    compiler = createCompiler({
+      root: config.root,
+      identifiers: getIdentOption(),
+      cssImportSpecifier: fileIdToVirtualId,
+      viteConfig,
+      enableFileWatcher: !isBuild,
+    });
+  };
+
+  /**
+   * Lazily creates the compiler, memoizing the initialization promise.
+   *
+   * `buildStart` kicks this off eagerly, but `transform` also awaits it. This
+   * matters because `transform` can run before `buildStart` has finished
+   * creating the compiler when another plugin emits an additional entry whose
+   * module graph is transformed concurrently (e.g. a module federation plugin
+   * exposing a module as its own chunk). Without awaiting, `transform` would
+   * bail and leave the `.css.ts` untransformed, producing runtime `style()`
+   * calls that throw "Styles were unable to be assigned to a file".
+   */
+  const ensureCompiler = () => {
+    if (unstable_mode === 'transform') {
+      return Promise.resolve();
+    }
+
+    compilerReady ??= initializeCompiler();
+    return compilerReady;
   };
 
   return [
@@ -186,47 +227,7 @@ export function vanillaExtractPlugin({
       },
       async buildStart() {
         // Ensure we re-use the compiler instance between builds, e.g. in watch mode
-        if (unstable_mode !== 'transform' && !compiler) {
-          const { loadConfigFromFile } = await vitePromise;
-
-          let configForViteCompiler: UserConfig | undefined;
-
-          // The user has a vite config file
-          if (config.configFile) {
-            const configFile = await loadConfigFromFile(
-              {
-                command: config.command,
-                mode: config.mode,
-                isSsrBuild: configEnv.isSsrBuild,
-              },
-              config.configFile,
-            );
-
-            configForViteCompiler = configFile?.config;
-          }
-          // The user is using a vite-based framework that has a custom config file
-          else {
-            configForViteCompiler = config.inlineConfig;
-          }
-
-          const viteConfig = {
-            ...configForViteCompiler,
-            plugins: configForViteCompiler?.plugins
-              ?.flat()
-              .filter(isPluginObject)
-              .filter(
-                withUserPluginFilter({ mode: config.mode, pluginFilter }),
-              ),
-          };
-
-          compiler = createCompiler({
-            root: config.root,
-            identifiers: getIdentOption(),
-            cssImportSpecifier: fileIdToVirtualId,
-            viteConfig,
-            enableFileWatcher: !isBuild,
-          });
-        }
+        await ensureCompiler();
       },
       buildEnd() {
         // When using the rollup watcher, we don't want to close the compiler after every build.
@@ -260,11 +261,22 @@ export function vanillaExtractPlugin({
           });
         }
 
+        // `transform` can run before `buildStart` has finished creating the
+        // compiler (e.g. when another plugin emits an additional entry whose
+        // module graph is transformed concurrently). Await the memoized
+        // initialization rather than bailing, which would leave this `.css.ts`
+        // untransformed. `ensureCompiler` is memoized, so this is a no-op once
+        // the compiler exists.
+        await ensureCompiler();
+
         if (!compiler) {
           return null;
         }
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
@@ -321,7 +333,10 @@ export function vanillaExtractPlugin({
 
         if (!isVirtualId(validId)) return;
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         if (
           // We should always have CSS for a file here.
@@ -338,7 +353,10 @@ export function vanillaExtractPlugin({
 
         if (!isVirtualId(validId) || !compiler) return;
 
-        const absoluteId = getAbsoluteId(validId);
+        const absoluteId = getAbsoluteId({
+          filePath: validId,
+          root: config.root,
+        });
 
         const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 

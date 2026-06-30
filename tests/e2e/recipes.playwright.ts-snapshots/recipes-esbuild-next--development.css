@@ -40,6 +40,14 @@
 .styles_stack_space_medium__103pmpmd {
   gap: 20px;
 }
+.styles_child__103pmpmg {
+  font-size: 24px;
+  line-height: 40px;
+  background-color: red;
+}
+.styles_parentRecipe_size_empty__103pmpmf .styles_child__103pmpmg {
+  background-color: blue;
+}
 @media only screen and (min-width: 600px) {
   .styles_button_compound_0__103pmpmb {
     border: 2px green solid;

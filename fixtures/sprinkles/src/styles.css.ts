@@ -13,6 +13,7 @@ import {
 
 const alpha = createVar();
 const textAlpha = createVar();
+const color = createVar();
 
 const containerName = createContainer();
 
@@ -20,6 +21,7 @@ export const container = style({
   containerName,
   containerType: 'size',
 });
+export const document = style({});
 
 const responsiveConditions = {
   defaultCondition: 'mobile',
@@ -40,6 +42,17 @@ const responsiveConditions = {
     },
   },
   responsiveArray: ['mobile', 'tablet', 'desktop'],
+} as const;
+
+const scopeConditions = {
+  defaultCondition: 'unscoped',
+  conditions: {
+    unscoped: {},
+    document: {
+      '@scope': `(${document})`,
+    },
+  },
+  responsiveArray: ['unscoped', 'document'],
 } as const;
 
 const responsiveProperties = defineProperties({
@@ -72,6 +85,35 @@ const responsiveLayerProperties = defineProperties({
   },
 });
 
+const scopeProperties = defineProperties({
+  ...scopeConditions,
+  properties: {
+    flexDirection: ['row', 'column'],
+    order: {
+      first: '1',
+      second: '2',
+    },
+  },
+});
+
+const scopeLayerProperties = defineProperties({
+  '@layer': 'responsive-layer-name',
+  ...scopeConditions,
+  properties: {
+    border: {
+      light: {
+        vars: { [color]: 'black' },
+        border: `4px solid ${color}`,
+      },
+    },
+    borderColor: {
+      neutral: { vars: { [color]: 'black' } },
+      primary: { vars: { [color]: 'blue' } },
+      secondary: { vars: { [color]: 'red' } },
+    },
+  },
+});
+
 const unconditionalProperties = defineProperties({
   properties: {
     color: {
@@ -98,6 +140,8 @@ const unconditionalLayerProperties = defineProperties({
 export const sprinkles = createSprinkles(
   responsiveProperties,
   responsiveLayerProperties,
+  scopeProperties,
+  scopeLayerProperties,
   unconditionalProperties,
   unconditionalLayerProperties,
 );
@@ -108,16 +152,22 @@ export const normalizeResponsiveValue =
 
 export const preComposedSprinkles = sprinkles({
   display: 'block',
+  flexDirection: 'row',
+  order: 'second',
   paddingTop: 'small',
   background: 'red',
   backgroundOpacity: { mobile: 0.1, tablet: 0.2, desktop: 0.3 },
   color: 'red',
   textOpacity: 0.8,
+  border: 'light',
+  borderColor: { document: 'primary', unscoped: 'secondary' },
 });
 
 export const preComposedSprinklesUsedInSelector = sprinkles({
   display: 'flex',
+  flexDirection: 'column',
   paddingTop: 'medium',
+  order: 'first',
 });
 
 globalStyle('body', {

@@ -40,6 +40,14 @@
 ._103pmpmd {
   gap: 20px;
 }
+._103pmpmg {
+  font-size: 24px;
+  line-height: 40px;
+  background-color: red;
+}
+._103pmpmf ._103pmpmg {
+  background-color: blue;
+}
 @media only screen and (min-width: 600px) {
   ._103pmpmb {
     border: 2px green solid;

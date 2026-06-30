@@ -27,21 +27,17 @@ export const parseContents = (rawContent: any) => {
   const slugger = new GithubSlugger();
 
   const { content, data } = matter(rawContent);
-  const headingsMatch = content.match(/#{1,}( [ -\w().]*)/g);
+  const headings = [...content.matchAll(/^(#{1,6}) +(.+?)\s*$/gm)].map(
+    (match) => ({
+      raw: match[0],
+      level: match[1].length,
+      name: match[2],
+    }),
+  );
 
-  if (!headingsMatch) {
+  if (headings.length === 0) {
     throw new Error('No headings found in the document. Something went wrong.');
   }
-
-  const headings = headingsMatch.map((heading) => {
-    const split = heading.split('#');
-
-    return {
-      raw: heading,
-      level: split.length - 1,
-      name: split[split.length - 1].trim(),
-    };
-  });
 
   const breadcrumbs = headings.map((heading, index) => ({
     ...heading,
@@ -49,10 +45,18 @@ export const parseContents = (rawContent: any) => {
   }));
 
   const sections = breadcrumbs.map((heading) => {
+    const hash = slugger.slug(heading.name);
+
+    if (!hash) {
+      throw new Error(
+        `Failed to generate a slug for heading "${heading.raw}". Headings must contain slug-able characters.`,
+      );
+    }
+
     return {
       ...heading,
       page: data.title,
-      hash: slugger.slug(heading.name),
+      hash,
     };
   });
 

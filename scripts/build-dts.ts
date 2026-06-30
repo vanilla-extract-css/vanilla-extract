@@ -14,7 +14,7 @@ function resolveEntry<PackageJson>(
 ): string {
   const entryPath = entryName
     ? resolve(pkg, entryName, { browser: false, require: true })
-    : legacy(pkg, { browser: false, fields: ['main'] })!;
+    : legacy(pkg, { browser: false, fields: ['main'] });
 
   if (!entryPath || entryPath.length === 0) {
     throw new Error('No entry found. Invalid package.json?');

@@ -45,3 +45,24 @@ export const color = style({
   color: fallbackVar(primaryVar, secondaryVar, 'blue')
 });
 ```
+
+## Empty string fallback
+
+An empty string is a valid fallback value.
+It produces the CSS empty-fallback form, e.g. `var(--insetVar__qzfheg0, )`, which allows the variable to resolve to nothing when it has not been set.
+
+```ts compiled
+// style.css.ts
+
+import {
+  createVar,
+  fallbackVar,
+  style
+} from '@vanilla-extract/css';
+
+export const insetVar = createVar();
+
+export const shadow = style({
+  boxShadow: `${fallbackVar(insetVar, '')} 0 0 0 3px red`
+});
+```

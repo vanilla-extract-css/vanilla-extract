@@ -1,5 +1,65 @@
 # @vanilla-extract/css
 
+## 1.21.1
+
+### Patch Changes
+
+- [#1756](https://github.com/vanilla-extract-css/vanilla-extract/pull/1756) [`b5ca20a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b5ca20aa22063eab32eb8f415870c25301821eb8) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a style composition bug that caused incorrect selector substitution in some cases
+
+- [#1758](https://github.com/vanilla-extract-css/vanilla-extract/pull/1758) [`46eb58c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/46eb58c68729ee2090395506e0ee8b27342669b2) Thanks [@greymoth-jp](https://github.com/greymoth-jp)! - Add `boxOrdinalGroup` to the list of unitless properties so numeric values are no longer suffixed with `px`
+
+## 1.21.0
+
+### Minor Changes
+
+- [#1749](https://github.com/vanilla-extract-css/vanilla-extract/pull/1749) [`caacf56`](https://github.com/vanilla-extract-css/vanilla-extract/commit/caacf56afcd99cee4a813d4a1a184f5a9715a489) Thanks [@bschlenk](https://github.com/bschlenk)! - Allow `createGlobalVar` to accept a name with a leading `--`
+
+  Similar to `createGlobalThemeContract`, `createGlobalVar` now trims a leading `--` from the variable name. This can be useful if you want to keep the full variable name searchable in your codebase.
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { createGlobalVar } from '@vanilla-extract/css';
+
+  // Both produce `var(--my-global-var)`
+  const a = createGlobalVar('my-global-var');
+  const b = createGlobalVar('--my-global-var');
+  ```
+
+- [#1720](https://github.com/vanilla-extract-css/vanilla-extract/pull/1720) [`7bbe189`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7bbe18993e4b2c71e5d8ba0c3d99c38658d410a3) Thanks [@cahnory](https://github.com/cahnory)! - `style, globalStyle`: Add support for `@scope` rules
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { style, globalStyle } from '@vanilla-extact/css';
+
+  export const styleWithScopeRule = style({
+    '@scope': {
+      '(body)': {
+        ':after': { content: '"Scoped to body"' }
+      }
+    }
+  });
+
+  globalStyle('div', {
+    '@scope': {
+      '(body)': {
+        ':after': { content: '"Scoped to body"' }
+      }
+    }
+  });
+  ```
+
+### Patch Changes
+
+- [#1731](https://github.com/vanilla-extract-css/vanilla-extract/pull/1731) [`aec0ab7`](https://github.com/vanilla-extract-css/vanilla-extract/commit/aec0ab71227df4834de93287fcf6a3b622d48aa1) Thanks [@sashank-gogula-glean](https://github.com/sashank-gogula-glean)! - Fix incorrect class name substitution when composed class lists contain regex metacharacters
+
+  Class names containing characters such as `(`, `)`, `+`, or `.` were being interpreted as regex syntax when building the substitution pattern for composed class lists, causing malformed matches. The class list is now escaped before constructing the `RegExp`.
+
+- [#1740](https://github.com/vanilla-extract-css/vanilla-extract/pull/1740) [`a4b120f`](https://github.com/vanilla-extract-css/vanilla-extract/commit/a4b120f43eeaf8a3545d8d69d3c70073435e0bf9) Thanks [@askoufis](https://github.com/askoufis)! - Fix a bug causing `fallbackVar` to discard an empty string passed as the fallback value
+
+  An empty string fallback was silently dropped, producing `var(--myVar)` instead of the CSS empty-fallback form `var(--myVar, )`. `fallbackVar` now treats `''` like any other fallback value.
+
 ## 1.20.1
 
 ### Patch Changes

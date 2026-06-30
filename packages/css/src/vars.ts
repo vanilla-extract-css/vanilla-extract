@@ -81,18 +81,20 @@ export function createGlobalVar(
   name: string,
   declaration?: VarDeclaration,
 ): CSSVarFunction {
+  const varName = name.replace(/^--/, '');
+
   if (declaration && typeof declaration === 'object') {
     appendCss(
       {
         type: 'property',
-        name: `--${name}`,
+        name: `--${varName}`,
         rule: buildPropertyRule(declaration),
       },
       getFileScope(),
     );
   }
 
-  return `var(--${name})`;
+  return `var(--${varName})`;
 }
 
 export function assertVarName(
@@ -108,8 +110,8 @@ export function fallbackVar(
 ): CSSVarFunction {
   let finalValue = '';
 
-  values.reverse().forEach((value) => {
-    if (finalValue === '') {
+  values.reverse().forEach((value, index) => {
+    if (index === 0) {
       finalValue = String(value);
     } else {
       assertVarName(value);

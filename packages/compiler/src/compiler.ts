@@ -46,6 +46,7 @@ const createModuleScanner = () => {
     }
 
     if (cache.has(cacheKey)) {
+      // oxlint-disable-next-line typescript/no-non-null-assertion Previous line has already done a check for the presence of the cacheKey
       return cache.get(cacheKey)!;
     }
 
@@ -376,8 +377,8 @@ export const createCompiler = ({
 
           const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
-            .get(moduleId)!
-            .localClassNames.add(className);
+            .get(moduleId)
+            ?.localClassNames.add(className);
         },
         registerComposition: (composedClassList, fileScope) => {
           if (!fileScope) {
@@ -390,8 +391,8 @@ export const createCompiler = ({
 
           const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
-            .get(moduleId)!
-            .composedClassLists.push(composedClassList);
+            .get(moduleId)
+            ?.composedClassLists.push(composedClassList);
         },
         markCompositionUsed: () => {
           // This compiler currently retains all composition classes

@@ -1,6 +1,7 @@
 name: Validate
 
 on: [push, pull_request]
+permissions: {}
 
 jobs:
   test:
@@ -15,13 +16,15 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Set up PNPM
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -50,13 +53,15 @@ jobs:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Set up PNPM
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: ${{ matrix.node }}
           node-version-file: ${{ matrix.node == '' && '.nvmrc' || '' }}
@@ -71,20 +76,25 @@ jobs:
       - name: Unit Test
         run: pnpm test:unit
   playwright:
-    name: Playwright tests
+    name: Playwright tests (shard ${{ matrix.shard }}/2)
     runs-on: macos-latest
-    if: github.ref != 'refs/heads/changeset-release/master' && github.head_ref != 'changeset-release/master'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     env:
       CI: true
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Set up PNPM
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -93,16 +103,16 @@ jobs:
         run: pnpm install
 
       - name: Install Browsers
-        run: pnpm playwright install chromium
+        run: pnpm playwright install chromium --only-shell
 
       - name: Build packages
         run: pnpm build
 
       - name: Playwright tests
-        run: pnpm test:playwright
+        run: pnpm test:playwright --shard=${{ matrix.shard }}/2
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: ${{ failure() }}
         with:
-          name: test-results
+          name: test-results-shard-${{ matrix.shard }}
           path: test-results/
