@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.21.1
+
+### Patch Changes
+
+- [#1756](https://github.com/vanilla-extract-css/vanilla-extract/pull/1756) [`b5ca20a`](https://github.com/vanilla-extract-css/vanilla-extract/commit/b5ca20aa22063eab32eb8f415870c25301821eb8) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a style composition bug that caused incorrect selector substitution in some cases
+
+- [#1758](https://github.com/vanilla-extract-css/vanilla-extract/pull/1758) [`46eb58c`](https://github.com/vanilla-extract-css/vanilla-extract/commit/46eb58c68729ee2090395506e0ee8b27342669b2) Thanks [@greymoth-jp](https://github.com/greymoth-jp)! - Add `boxOrdinalGroup` to the list of unitless properties so numeric values are no longer suffixed with `px`
+
 ## 1.21.0
 
 ### Minor Changes
