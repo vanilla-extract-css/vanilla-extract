@@ -78,7 +78,6 @@ jobs:
   playwright:
     name: Playwright tests (shard ${{ matrix.shard }}/2)
     runs-on: macos-latest
-    if: github.ref != 'refs/heads/changeset-release/master' && github.head_ref != 'changeset-release/master'
     strategy:
       fail-fast: false
       matrix:
