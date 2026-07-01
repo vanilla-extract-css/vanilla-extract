@@ -48,7 +48,10 @@ const _getDebugFileName = (path: string): string => {
 
   const debugFileName = file !== 'index' ? file : dir;
 
-  return debugFileName;
+  // Dots are not valid in CSS class names without escaping, so replace them
+  // with underscores to keep dev mode identifiers stable. This is relevant for
+  // file names with additional extensions, e.g. `foo.vanilla.css.ts`.
+  return debugFileName.replace(/\./g, '_');
 };
 
 const memoizedGetDebugFileName = () => {
