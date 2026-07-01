@@ -8,6 +8,7 @@ import type {
   ModuleNode,
   ViteDevServer,
 } from 'vite';
+import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
@@ -43,6 +44,18 @@ interface Options {
   identifiers?: IdentifierOption;
   unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss' | 'inlineCssInDev';
+  /**
+   * Files to include in processing. Defaults to all .css.ts/.css.js files.
+   * Uses the same glob pattern syntax as @rollup/pluginutils.
+   */
+  include?: FilterPattern;
+  /**
+   * Files to exclude from processing. Useful for excluding pre-compiled
+   * .css.js files from node_modules that shouldn't be reprocessed.
+   * Uses the same glob pattern syntax as @rollup/pluginutils.
+   * @example [/node_modules\/my-library/]
+   */
+  exclude?: FilterPattern;
 }
 
 // Plugins that we know are compatible with the `vite-node` compiler
@@ -57,12 +70,17 @@ const withUserPluginFilter =
   (plugin: Plugin) =>
     pluginFilter({ name: plugin.name, mode });
 
+export type VanillaExtractPluginOptions = Options;
+
 export function vanillaExtractPlugin({
   identifiers,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode = 'emitCss',
+  include,
+  exclude,
 }: Options = {}): Plugin[] {
   let config: ResolvedConfig;
+  const filter = createFilter(include, exclude);
   let configEnv: ConfigEnv;
   let server: ViteDevServer;
   let packageName: string;
@@ -242,7 +260,7 @@ export function vanillaExtractPlugin({
       async transform(code, id, options) {
         const [validId] = id.split('?');
 
-        if (!cssFileFilter.test(validId)) {
+        if (!cssFileFilter.test(validId) || !filter(validId)) {
           return null;
         }
 

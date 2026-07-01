@@ -1,0 +1,15 @@
+{
+  "name": "@fixtures/precompiled-lib",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@vanilla-extract/recipes": "workspace:*"
+  }
+}

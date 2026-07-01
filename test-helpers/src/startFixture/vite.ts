@@ -3,7 +3,10 @@ import http from 'http';
 
 import type { InlineConfig } from 'vite';
 import handler from 'serve-handler';
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import {
+  vanillaExtractPlugin,
+  type VanillaExtractPluginOptions,
+} from '@vanilla-extract/vite-plugin';
 import inspect from 'vite-plugin-inspect';
 
 import type { TestServer } from './types';
@@ -30,10 +33,18 @@ export interface ViteFixtureOptions {
   type: 'vite';
   mode?: 'development' | 'production';
   port: number;
+  /**
+   * Options to pass to the vanilla-extract plugin.
+   */
+  vanillaExtractOptions?: VanillaExtractPluginOptions;
 }
 export const startViteFixture = async (
   fixtureName: string,
-  { mode = 'development', port = 3000 }: ViteFixtureOptions,
+  {
+    mode = 'development',
+    port = 3000,
+    vanillaExtractOptions,
+  }: ViteFixtureOptions,
 ): Promise<TestServer> => {
   const root = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
@@ -43,7 +54,10 @@ export const startViteFixture = async (
     configFile: false,
     root,
     logLevel: 'error',
-    plugins: [vanillaExtractPlugin(), mode === 'development' && inspect()],
+    plugins: [
+      vanillaExtractPlugin(vanillaExtractOptions),
+      mode === 'development' && inspect(),
+    ],
     server: {
       port,
       strictPort: true,

@@ -1,0 +1,11 @@
+{
+  "name": "@fixtures/precompiled-exclude",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "author": "SEEK",
+  "private": true,
+  "dependencies": {
+    "@fixtures/precompiled-lib": "workspace:*",
+    "@vanilla-extract/css": "workspace:*"
+  }
+}

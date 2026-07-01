@@ -58,6 +58,8 @@ export async function startFixture(
       type,
       port,
       mode: options.mode,
+      vanillaExtractOptions: (options as ViteFixtureOptions)
+        .vanillaExtractOptions,
     });
   }
 

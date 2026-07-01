@@ -4,6 +4,7 @@ packages:
   - 'test-helpers'
   - 'fixtures/*'
   - 'fixtures/thirdparty/**'
+  - 'fixtures/precompiled-exclude/**'
   - 'site'
   - 'examples/*'
   - 'tests'
