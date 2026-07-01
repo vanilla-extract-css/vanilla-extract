@@ -3463,6 +3463,95 @@ describe('transformCss', () => {
       `[Error: Nested at-rules (e.g. "@media") are not allowed inside @starting-style.]`,
     );
   });
+  it('should handle @page rules', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'page',
+            selector: '',
+            rule: {
+              margin: '1cm',
+              size: 'A4',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @page {
+        margin: 1cm;
+        size: A4;
+      }
+    `);
+  });
+
+  it('should handle @page rules with a selector', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'page',
+            selector: ':first',
+            rule: {
+              marginTop: '5cm',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @page :first {
+        margin-top: 5cm;
+      }
+    `);
+  });
+
+  it('should handle named @page rules', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'page',
+            selector: 'myPage',
+            rule: {
+              size: 'landscape',
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @page myPage {
+        size: landscape;
+      }
+    `);
+  });
+
+  it('should pixelify @page rule values', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [],
+        cssObjs: [
+          {
+            type: 'page',
+            selector: '',
+            rule: {
+              margin: 10,
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      @page {
+        margin: 10px;
+      }
+    `);
+  });
 });
 
 endFileScope();
