@@ -11,12 +11,15 @@ import type {
 import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
+  DEFAULT_FILE_EXTENSIONS,
   type IdentifierOption,
   getPackageInfo,
   transform,
   normalizePath,
 } from '@vanilla-extract/integration';
 import { getAbsoluteId } from './ids';
+
+export { DEFAULT_FILE_EXTENSIONS };
 
 const PLUGIN_NAMESPACE = 'vite-plugin-vanilla-extract';
 const virtualExtCss = '.vanilla.css';
@@ -43,6 +46,52 @@ interface Options {
   identifiers?: IdentifierOption;
   unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss' | 'inlineCssInDev';
+  /**
+   * Custom file extension(s) for vanilla-extract files. When specified, only
+   * files ending with these exact extensions will be processed instead of the
+   * default `.css.ts`, `.css.tsx`, etc.
+   *
+   * Unlike the default behavior which matches `.css.(ts|tsx|js|jsx|mjs|cjs)`,
+   * this option requires you to specify each exact extension you want to match.
+   *
+   * @example
+   * // Process only .ve.ts and .ve.tsx files
+   * vanillaExtractPlugin({ fileExtension: ['.ve.ts', '.ve.tsx'] })
+   *
+   * @example
+   * // Process only .styles.ts files
+   * vanillaExtractPlugin({ fileExtension: '.styles.ts' })
+   *
+   * @example
+   * // Add custom extensions while keeping the defaults
+   * import { DEFAULT_FILE_EXTENSIONS } from '@vanilla-extract/vite-plugin';
+   * vanillaExtractPlugin({ fileExtension: [...DEFAULT_FILE_EXTENSIONS, '.ve.ts'] })
+   */
+  fileExtension?: string | string[];
+}
+
+/**
+ * Creates a RegExp that matches files ending with the specified exact extension(s).
+ *
+ * @example
+ * createFileExtensionFilter('.ve.ts') // matches: foo.ve.ts
+ * createFileExtensionFilter(['.ve.ts', '.ve.tsx']) // matches: foo.ve.ts, bar.ve.tsx
+ */
+function createFileExtensionFilter(fileExtension: string | string[]): RegExp {
+  const extensions = Array.isArray(fileExtension)
+    ? fileExtension
+    : [fileExtension];
+
+  // Escape special regex characters and normalize extensions (ensure leading dot)
+  const escapedExtensions = extensions.map((ext) => {
+    const normalizedExt = ext.startsWith('.') ? ext : `.${ext}`;
+    return normalizedExt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  });
+
+  // Build pattern that matches exact extensions with optional ?used suffix (Vite adds this)
+  // e.g., (\.ve\.ts|\.ve\.tsx)(\?used)?$
+  const extensionPattern = escapedExtensions.join('|');
+  return new RegExp(`(${extensionPattern})(\\?used)?$`);
 }
 
 // Plugins that we know are compatible with the `vite-node` compiler
@@ -61,7 +110,13 @@ export function vanillaExtractPlugin({
   identifiers,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode = 'emitCss',
+  fileExtension,
 }: Options = {}): Plugin[] {
+  // Create file filter based on fileExtension option or use default
+  const veFileFilter = fileExtension
+    ? createFileExtensionFilter(fileExtension)
+    : cssFileFilter;
+
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
   let server: ViteDevServer;
@@ -95,7 +150,7 @@ export function vanillaExtractPlugin({
     const seen = new Set<ModuleNode>();
 
     for (const mod of importerChain) {
-      if (mod.id && cssFileFilter.test(mod.id)) {
+      if (mod.id && veFileFilter.test(mod.id)) {
         const virtualModules = moduleGraph.getModulesByFile(
           fileIdToVirtualId(mod.id),
         );
@@ -242,7 +297,7 @@ export function vanillaExtractPlugin({
       async transform(code, id, options) {
         const [validId] = id.split('?');
 
-        if (!cssFileFilter.test(validId)) {
+        if (!veFileFilter.test(validId)) {
           return null;
         }
 
