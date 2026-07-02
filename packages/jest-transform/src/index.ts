@@ -19,13 +19,13 @@ const vanillaTransformer: Transformer = {
       };
     }
 
-    const { name: packageName } = getPackageInfo(options.config.rootDir);
+    const packageInfo = getPackageInfo(options.config.rootDir);
 
     const code = transformSync({
       source,
       filePath,
       rootPath: options.config.rootDir,
-      packageName: packageName,
+      packageName: packageInfo?.name,
       identOption: 'debug',
     });
 
