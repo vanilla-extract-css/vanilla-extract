@@ -974,6 +974,12 @@ importers:
       '@vanilla-extract/sprinkles':
         specifier: workspace:*
         version: link:../packages/sprinkles
+      '@vanilla-extract/vite-plugin':
+        specifier: workspace:*
+        version: link:../packages/vite-plugin
+      vite:
+        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        version: 8.0.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(supports-color@9.2.3)(typescript@5.8.3)(vite@8.0.5)
