@@ -126,3 +126,29 @@ export const shorthandsWithZeroValues = defineProperties({
     mt: ['marginTop'],
   },
 });
+
+export const responsiveBackgroundProperties = defineProperties({
+  defaultCondition: 'mobile',
+  conditions: {
+    mobile: {},
+    tablet: {
+      '@media': 'screen and (min-width: 786px)',
+    },
+  },
+  properties: {
+    backgroundColor: ['red', 'blue'],
+  },
+});
+
+export const stateBackgroundProperties = defineProperties({
+  defaultCondition: 'default',
+  conditions: {
+    default: {},
+    focus: {
+      selector: '&:focus',
+    },
+  },
+  properties: {
+    backgroundColor: ['red', 'blue'],
+  },
+});

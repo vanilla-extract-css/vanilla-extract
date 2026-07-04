@@ -67,11 +67,36 @@ export type SprinklesFn<Args extends ReadonlyArray<SprinklesProperties>> = ((
   props: SprinkleProps<Args>,
 ) => string) & { properties: Set<keyof SprinkleProps<Args>> };
 
+class SprinklesError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'SprinklesError';
+  }
+}
+
+function validateUniqueProperties(args: ReadonlyArray<SprinklesProperties>) {
+  const propertyNames = new Set<string>();
+
+  for (const { styles } of args) {
+    for (const property of Object.keys(styles)) {
+      if (propertyNames.has(property)) {
+        throw new SprinklesError(
+          `"${property}" is defined in multiple properties collections. Properties and shorthands must be unique across all collections passed to createSprinkles`,
+        );
+      }
+
+      propertyNames.add(property);
+    }
+  }
+}
+
 export const createSprinkles =
   <Args extends ReadonlyArray<SprinklesProperties>>(
     composeStyles: (classList: string) => string,
   ) =>
   (...args: Args): SprinklesFn<Args> => {
+    validateUniqueProperties(args);
+
     const sprinklesStyles = Object.assign({}, ...args.map((a) => a.styles));
     const sprinklesKeys = Object.keys(sprinklesStyles) as Array<
       keyof SprinkleProps<Args>
@@ -163,13 +188,6 @@ export const createSprinkles =
           }
         } catch (e) {
           if (process.env.NODE_ENV !== 'production') {
-            class SprinklesError extends Error {
-              constructor(message: string) {
-                super(message);
-                this.name = 'SprinklesError';
-              }
-            }
-
             const invalidPropValue = (
               prop: string,
               value: string | number,

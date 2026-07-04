@@ -13,7 +13,9 @@ import {
   conditionalPropertiesWithMultipleDefaultConditions,
   conditionalPropertiesWithoutDefaultCondition,
   conditionalPropertiesWithoutResponsiveArray,
+  responsiveBackgroundProperties,
   shorthandsWithZeroValues,
+  stateBackgroundProperties,
 } from './index.css';
 
 describe('sprinkles', () => {
@@ -437,6 +439,17 @@ describe('sprinkles', () => {
         }),
       ).toThrowErrorMatchingInlineSnapshot(
         `[SprinklesError: "paddingTop" has no condition named "ultraWide". Possible values are "mobile", "tablet", "desktop"]`,
+      );
+    });
+
+    it('should handle duplicate properties across collections', () => {
+      expect(() =>
+        createSprinkles(
+          responsiveBackgroundProperties,
+          stateBackgroundProperties,
+        ),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `[SprinklesError: "backgroundColor" is defined in multiple properties collections. Properties and shorthands must be unique across all collections passed to createSprinkles]`,
       );
     });
   });
