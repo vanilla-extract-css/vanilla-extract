@@ -258,6 +258,50 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
 
     expect(didAttemptTransform).toBe(true);
   });
+
+  /**
+   * Test that empty array processes no files (useful when consuming
+   * pre-compiled libraries without any local vanilla-extract styles)
+   */
+  it('processes no files when fileExtension is empty array', async () => {
+    const { vanillaExtractPlugin } = await import('./index');
+
+    const plugins = vanillaExtractPlugin({
+      fileExtension: [],
+    });
+
+    const mainPlugin = plugins.find(
+      (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
+    );
+    expect(mainPlugin).toBeDefined();
+
+    const transformFn = mainPlugin!.transform as Function;
+    const mockContext = createMockPluginContext();
+
+    // .css.ts should NOT be processed
+    const cssResult = await transformFn.call(
+      mockContext,
+      'export const x = 1;',
+      '/project/src/styles.css.ts',
+    );
+    expect(cssResult).toBeNull();
+
+    // .ve.ts should NOT be processed
+    const veResult = await transformFn.call(
+      mockContext,
+      'export const x = 1;',
+      '/project/src/styles.ve.ts',
+    );
+    expect(veResult).toBeNull();
+
+    // Any file should NOT be processed
+    const anyResult = await transformFn.call(
+      mockContext,
+      'export const x = 1;',
+      '/project/src/styles.anything.ts',
+    );
+    expect(anyResult).toBeNull();
+  });
 });
 
 describe('DEFAULT_FILE_EXTENSIONS', () => {

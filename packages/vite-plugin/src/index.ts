@@ -82,6 +82,11 @@ function createFileExtensionFilter(fileExtension: string | string[]): RegExp {
     ? fileExtension
     : [fileExtension];
 
+  // Empty array means match nothing
+  if (extensions.length === 0) {
+    return /(?!)/; // Regex that never matches
+  }
+
   // Escape special regex characters and normalize extensions (ensure leading dot)
   const escapedExtensions = extensions.map((ext) => {
     const normalizedExt = ext.startsWith('.') ? ext : `.${ext}`;
@@ -206,6 +211,7 @@ export function vanillaExtractPlugin({
       cssImportSpecifier: fileIdToVirtualId,
       viteConfig,
       enableFileWatcher: !isBuild,
+      fileFilter: veFileFilter,
     });
   };
 
