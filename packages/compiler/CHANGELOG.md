@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1765](https://github.com/vanilla-extract-css/vanilla-extract/pull/1765) [`9c28671`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9c28671701e9b5263ef92058deed8261da1416a0) Thanks [@askoufis](https://github.com/askoufis)! - `processVanillaFile`: Don't serialize import specifiers for module dependencies that emit no CSS
+
 ## 0.7.0
 
 ### Minor Changes
