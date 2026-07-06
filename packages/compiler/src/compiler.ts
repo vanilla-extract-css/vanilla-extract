@@ -456,6 +456,9 @@ export const createCompiler = ({
                 });
               }
 
+              // `cssObjs` will be defined for every VE module with an injected file scope,
+              // so `cssRules` is always defined. VE modules that don't emit any CSS will have
+              // `css` set to an empty string.
               cssCache.set(cssDepModuleId, {
                 css: cssRules.join('\n'),
                 cssRules,
@@ -474,7 +477,8 @@ export const createCompiler = ({
             const { css = '', cssRules = [] } =
               cssCache.get(cssDepModuleId) ?? {};
 
-            if (cssObjs || css) {
+            const depEmitsCss = Boolean(cssObjs?.length || css);
+            if (depEmitsCss) {
               if (splitCssPerRule) {
                 const importSpecifiers = await Promise.all(
                   cssRules.map((rule, i) =>
