@@ -97,7 +97,10 @@ const createViteServer = async ({
   viteConfig,
   enableFileWatcher = true,
 }: Required<
-  Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig' | 'fileFilter'>
+  Pick<
+    CreateCompilerOptions,
+    'root' | 'identifiers' | 'viteConfig' | 'fileFilter'
+  >
 > &
   Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
   const pkg = getPackageInfo(root);

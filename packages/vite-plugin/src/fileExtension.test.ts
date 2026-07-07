@@ -51,10 +51,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
     expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     const result = await transformFn.call(
@@ -80,9 +80,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // The transform should attempt to process .ve.ts files (will throw because no compiler,
@@ -115,9 +116,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // .ve.tsx should NOT be matched since only .ve.ts was specified
@@ -141,9 +143,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     let didAttemptTransform = false;
@@ -173,9 +176,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // .ve.ts should be processed
@@ -239,9 +243,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // Files with ?used should still be processed (Vite adds this)
@@ -273,9 +278,10 @@ describe('vanillaExtractPlugin fileExtension option (full extension)', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // .css.ts should NOT be processed
@@ -324,9 +330,8 @@ describe('DEFAULT_FILE_EXTENSIONS', () => {
   });
 
   it('can be spread with custom extensions', async () => {
-    const { vanillaExtractPlugin, DEFAULT_FILE_EXTENSIONS } = await import(
-      './index'
-    );
+    const { vanillaExtractPlugin, DEFAULT_FILE_EXTENSIONS } =
+      await import('./index');
 
     // Should work with spread operator to combine defaults + custom
     const plugins = vanillaExtractPlugin({
@@ -338,9 +343,8 @@ describe('DEFAULT_FILE_EXTENSIONS', () => {
   });
 
   it('processes default extensions when combined with custom ones', async () => {
-    const { vanillaExtractPlugin, DEFAULT_FILE_EXTENSIONS } = await import(
-      './index'
-    );
+    const { vanillaExtractPlugin, DEFAULT_FILE_EXTENSIONS } =
+      await import('./index');
 
     const plugins = vanillaExtractPlugin({
       fileExtension: [...DEFAULT_FILE_EXTENSIONS, '.ve.ts'],
@@ -349,9 +353,10 @@ describe('DEFAULT_FILE_EXTENSIONS', () => {
     const mainPlugin = plugins.find(
       (p): p is Plugin => p.name === 'vite-plugin-vanilla-extract',
     );
-    expect(mainPlugin).toBeDefined();
+    expect(mainPlugin?.transform).toBeDefined();
+    if (!mainPlugin?.transform) throw new Error('unreachable');
 
-    const transformFn = mainPlugin!.transform as Function;
+    const transformFn = mainPlugin.transform as Function;
     const mockContext = createMockPluginContext();
 
     // .css.ts should still be processed

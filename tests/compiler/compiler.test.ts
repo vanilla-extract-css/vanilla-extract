@@ -834,7 +834,7 @@ describe('compiler', () => {
     expect(importerTree.size).toBe(0);
   });
 
-test('fileFilter option restricts which files get file scope transform', async () => {
+  test('fileFilter option restricts which files get file scope transform', async () => {
     const compiler = compilers.customFileFilter;
 
     // The compiler was created with fileFilter: /\.styles\.ts$/
