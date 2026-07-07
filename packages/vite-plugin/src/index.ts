@@ -399,12 +399,14 @@ export function vanillaExtractPlugin({
           root: config.root,
         });
 
-        if (
-          // We should always have CSS for a file here.
-          // The only valid scenario for a missing one is if someone had written
-          // a file in their app using the .vanilla.js/.vanilla.css extension
-          compiler?.getCssForFile(virtualIdToFileId(absoluteId))
-        ) {
+        if (!compiler) return;
+
+        // The only valid scenario for a missing CSS entry is if someone had
+        // written a file in their app using the .vanilla.js/.vanilla.css
+        // extension, or the file produced no CSS output.
+        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+
+        if (css) {
           // Keep the original query string for HMR.
           return absoluteId + (query ? `?${query}` : '');
         }
@@ -421,7 +423,9 @@ export function vanillaExtractPlugin({
 
         const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
 
-        return css;
+        if (css) {
+          return css;
+        }
       },
     },
   ];
