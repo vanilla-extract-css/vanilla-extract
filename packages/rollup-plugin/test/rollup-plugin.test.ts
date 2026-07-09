@@ -7,8 +7,6 @@ import {
 import {
   rollup,
   type InputPluginOption,
-  type OutputAsset,
-  type OutputChunk,
   type OutputOptions,
   type RollupOptions,
 } from 'rollup';
@@ -22,14 +20,44 @@ import {
 } from '..';
 import { stripSideEffectImportsMatching } from '../src/lib';
 
+type BuildOutputFile = {
+  fileName: string;
+  type: string;
+  source?: string | Uint8Array;
+  code?: string;
+  map?: { mappings?: string } | null;
+};
+
+const formatOutputForSnapshot = (output: BuildOutputFile[]) =>
+  output.map((chunkOrAsset) => [
+    chunkOrAsset.fileName,
+    chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
+  ]);
+
+const formatSourcemapOutputForSnapshot = (output: BuildOutputFile[]) =>
+  output.map((chunkOrAsset) => [
+    chunkOrAsset.fileName,
+    chunkOrAsset.type === 'asset' ? '' : chunkOrAsset.map?.mappings,
+  ]);
+
+const filterJsChunkCodes = (output: BuildOutputFile[]) =>
+  output
+    .filter((file) => file.type === 'chunk' && file.fileName.endsWith('.js'))
+    .map((file) => file.code);
+
+const filterAssetSources = (output: BuildOutputFile[], fileName: string) =>
+  output
+    .filter((file) => file.type === 'asset' && file.fileName === fileName)
+    .map((file) => file.source);
+
 interface BuildOptions extends VanillaExtractPluginOptions {
   rollup: RollupOptions & { output: OutputOptions };
 }
 
-async function build({
+const build = async ({
   rollup: rollupOptions,
   ...pluginOptions
-}: BuildOptions) {
+}: BuildOptions) => {
   const bundle = await rollup({
     input: require.resolve('@fixtures/themed/src/index.ts'),
     external: ['@vanilla-extract/dynamic'],
@@ -48,17 +76,12 @@ async function build({
   const { output } = await bundle.generate(rollupOptions.output);
   output.sort((a, b) => a.fileName.localeCompare(b.fileName));
   return output;
-}
+};
 
-async function buildAndMatchSnapshot(options: BuildOptions) {
+const buildAndMatchSnapshot = async (options: BuildOptions) => {
   const output = await build(options);
-  expect(
-    output.map((chunkOrAsset) => [
-      chunkOrAsset.fileName,
-      chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
-    ]),
-  ).toMatchSnapshot();
-}
+  expect(formatOutputForSnapshot(output)).toMatchSnapshot();
+};
 
 describe('rollup-plugin', () => {
   describe('options', () => {
@@ -81,25 +104,19 @@ describe('rollup-plugin', () => {
       });
 
       // assert essential files were made
-      const bundleAsset = output.find(
-        (file) => file.type === 'asset' && file.fileName === 'app.css',
-      );
-      expect(bundleAsset).toBeTruthy();
-      const sourcemapAsset = output.find(
-        (file) => file.type === 'asset' && file.fileName === 'app.css.map',
-      );
-      expect(sourcemapAsset).toBeTruthy();
+      expect(filterAssetSources(output, 'app.css')).toHaveLength(1);
 
       // assert .css imports were removed
-      const jsFiles = output.filter(
-        (file) => file.type === 'chunk' && file.fileName.endsWith('.js'),
-      ) as OutputChunk[];
-      for (const jsFile of jsFiles) {
-        expect(jsFile.code).not.toMatch(/^import .*\.css['"]/m);
+      const jsChunkCodes = filterJsChunkCodes(output);
+      expect(jsChunkCodes.length).toBeGreaterThan(0);
+      for (const code of jsChunkCodes) {
+        expect(code).not.toMatch(/^import .*\.css['"]/m);
       }
 
       // assert bundle CSS reflects order from @fixtures/react-library-example/index.ts
-      const map = JSON.parse(String((sourcemapAsset as OutputAsset).source));
+      const sourcemapSources = filterAssetSources(output, 'app.css.map');
+      expect(sourcemapSources).toHaveLength(1);
+      const map = JSON.parse(String(sourcemapSources[0]));
       expect(map.sources).toEqual([
         'src/styles/reset.css.ts.vanilla.css',
         'src/styles/vars.css.ts.vanilla.css',
@@ -116,14 +133,11 @@ describe('rollup-plugin', () => {
 
       // snapshot output for everything else
       expect(
-        output
-          .filter((chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map')) // remove .msps
-          .map((chunkOrAsset) => [
-            chunkOrAsset.fileName,
-            chunkOrAsset.type === 'asset'
-              ? chunkOrAsset.source
-              : chunkOrAsset.code,
-          ]),
+        formatOutputForSnapshot(
+          output.filter(
+            (chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map'),
+          ),
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -194,22 +208,18 @@ describe('rollup-plugin', () => {
           },
         },
       });
-      expect(
-        output.map((chunkOrAsset) => [
-          chunkOrAsset.fileName,
-          chunkOrAsset.type === 'asset' ? '' : chunkOrAsset.map?.mappings,
-        ]),
-      ).toMatchSnapshot();
+
+      expect(formatSourcemapOutputForSnapshot(output)).toMatchSnapshot();
     });
   });
 
   describe('should be compatible with rolldown', () => {
-    async function build({
+    const build = async ({
       rollup: rollupOptions,
       ...pluginOptions
     }: VanillaExtractPluginOptions & {
       rollup: RolldownInputOptions & { output: RolldownOutputOptions };
-    }) {
+    }) => {
       const bundle = await rolldown({
         external: [
           '@vanilla-extract/dynamic',
@@ -228,29 +238,57 @@ describe('rollup-plugin', () => {
       const { output } = await bundle.generate(rollupOptions.output);
       output.sort((a, b) => a.fileName.localeCompare(b.fileName));
       return output;
-    }
+    };
 
-    async function buildAndMatchSnapshot(
+    const buildAndMatchSnapshot = async (
       outputOptions: RolldownOutputOptions,
       { unstable_injectFilescopes }: { unstable_injectFilescopes?: boolean } = {
         unstable_injectFilescopes: false,
       },
-    ) {
+    ) => {
       const output = await build({
         rollup: {
           output: outputOptions,
         },
         unstable_injectFilescopes,
       });
-      expect(
-        output.map((chunkOrAsset) => [
-          chunkOrAsset.fileName,
-          chunkOrAsset.type === 'asset'
-            ? chunkOrAsset.source
-            : chunkOrAsset.code,
-        ]),
-      ).toMatchSnapshot();
-    }
+      expect(formatOutputForSnapshot(output)).toMatchSnapshot();
+    };
+
+    const buildThirdparty = async ({
+      cwd,
+      outputOptions,
+    }: {
+      cwd: string;
+      outputOptions: RolldownOutputOptions;
+    }) => {
+      const packageRoot = path.dirname(
+        require.resolve('@fixtures/thirdparty/package.json'),
+      );
+      const bundle = await rolldown({
+        input: path.join(packageRoot, 'src/index.ts'),
+        external: ['@vanilla-extract/dynamic', '@vanilla-extract/css'],
+        plugins: [vanillaExtractPlugin({ cwd })],
+      });
+
+      const { output } = await bundle.generate(outputOptions);
+      output.sort((a, b) => a.fileName.localeCompare(b.fileName));
+
+      return output;
+    };
+
+    const buildThirdpartyAndMatchSnapshot = async (cwd: string) => {
+      const output = await buildThirdparty({
+        cwd,
+        outputOptions: {
+          format: 'esm',
+          preserveModules: true,
+          assetFileNames: 'assets/[name]-[hash][extname]',
+        },
+      });
+
+      expect(formatOutputForSnapshot(output)).toMatchSnapshot();
+    };
 
     it('extract generates .css bundle', async () => {
       const cwd = path.dirname(
@@ -271,25 +309,19 @@ describe('rollup-plugin', () => {
       });
 
       // assert essential files were made
-      const bundleAsset = output.find(
-        (file) => file.type === 'asset' && file.fileName === 'app.css',
-      );
-      expect(bundleAsset).toBeTruthy();
-      const sourcemapAsset = output.find(
-        (file) => file.type === 'asset' && file.fileName === 'app.css.map',
-      );
-      expect(sourcemapAsset).toBeTruthy();
+      expect(filterAssetSources(output, 'app.css')).toHaveLength(1);
 
       // assert .css imports were removed
-      const jsFiles = output.filter(
-        (file) => file.type === 'chunk' && file.fileName.endsWith('.js'),
-      ) as OutputChunk[];
-      for (const jsFile of jsFiles) {
-        expect(jsFile.code).not.toMatch(/^import .*\.css['"]/m);
+      const jsChunkCodes = filterJsChunkCodes(output);
+      expect(jsChunkCodes.length).toBeGreaterThan(0);
+      for (const code of jsChunkCodes) {
+        expect(code).not.toMatch(/^import .*\.css['"]/m);
       }
 
       // assert bundle CSS reflects order from @fixtures/react-library-example/index.ts
-      const map = JSON.parse(String((sourcemapAsset as OutputAsset).source));
+      const sourcemapSources = filterAssetSources(output, 'app.css.map');
+      expect(sourcemapSources).toHaveLength(1);
+      const map = JSON.parse(String(sourcemapSources[0]));
       expect(map.sources).toEqual([
         'src/styles/reset.css.ts.vanilla.css',
         'src/styles/vars.css.ts.vanilla.css',
@@ -306,14 +338,11 @@ describe('rollup-plugin', () => {
 
       // snapshot output for everything else
       expect(
-        output
-          .filter((chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map')) // remove .msps
-          .map((chunkOrAsset) => [
-            chunkOrAsset.fileName,
-            chunkOrAsset.type === 'asset'
-              ? chunkOrAsset.source
-              : chunkOrAsset.code,
-          ]),
+        formatOutputForSnapshot(
+          output.filter(
+            (chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map'),
+          ),
+        ),
       ).toMatchSnapshot();
     });
 
@@ -375,12 +404,24 @@ describe('rollup-plugin', () => {
           },
         },
       });
-      expect(
-        output.map((chunkOrAsset) => [
-          chunkOrAsset.fileName,
-          chunkOrAsset.type === 'asset' ? '' : chunkOrAsset.map?.mappings,
-        ]),
-      ).toMatchSnapshot();
+
+      expect(formatSourcemapOutputForSnapshot(output)).toMatchSnapshot();
+    });
+
+    it('should build thirdparty dependencies', async () => {
+      const cwd = path.dirname(
+        require.resolve('@fixtures/thirdparty/package.json'),
+      );
+
+      await buildThirdpartyAndMatchSnapshot(cwd);
+    });
+
+    it('should build thirdparty dependencies with nested cwd', async () => {
+      const packageRoot = path.dirname(
+        require.resolve('@fixtures/thirdparty/package.json'),
+      );
+
+      await buildThirdpartyAndMatchSnapshot(path.join(packageRoot, 'src'));
     });
   });
 });
