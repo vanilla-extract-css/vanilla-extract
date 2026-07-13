@@ -84,6 +84,10 @@ Want to work at a higher level while maximising style re-use? Check out  🍨 [S
 
 ---
 
+## [Contributing]
+
+[Contributing]: ./CONTRIBUTING.md
+
 ## Thanks
 
 - [Nathan Nam Tran](https://twitter.com/naistran) for creating [css-in-js-loader](https://github.com/naistran/css-in-js-loader), which served as the initial starting point for [treat](https://seek-oss.github.io/treat), the precursor to this library.
