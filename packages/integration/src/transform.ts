@@ -1,5 +1,7 @@
 import * as babel from '@babel/core';
-import vanillaBabelPlugin from '@vanilla-extract/babel-plugin-debug-ids';
+import vanillaBabelPlugin, {
+  mightHaveDebuggableCalls,
+} from '@vanilla-extract/babel-plugin-debug-ids';
 // @ts-expect-error
 import typescriptSyntax from '@babel/plugin-syntax-typescript';
 
@@ -23,7 +25,11 @@ export const transformSync = ({
 }: TransformParams): string => {
   let code = source;
 
-  if (identOption === 'debug') {
+  // Skip the Babel pass entirely when the source provably contains no calls
+  // the debug-ids plugin could touch (e.g. files using only `globalStyle`).
+  // This avoids parsing + regenerating large generated stylesheets for nothing
+  // — and sidesteps Babel's ">500KB" code-generator deopt on such files.
+  if (identOption === 'debug' && mightHaveDebuggableCalls(source)) {
     const result = babel.transformSync(source, {
       filename: filePath,
       cwd: rootPath,
@@ -57,7 +63,8 @@ export const transform = async ({
 }: TransformParams): Promise<string> => {
   let code = source;
 
-  if (identOption === 'debug') {
+  // See `transformSync` above — same no-op-Babel bail-out.
+  if (identOption === 'debug' && mightHaveDebuggableCalls(source)) {
     const result = await babel.transformAsync(source, {
       filename: filePath,
       cwd: rootPath,
