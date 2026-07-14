@@ -1,5 +1,11 @@
 # @vanilla-extract/compiler
 
+## 0.7.2
+
+### Patch Changes
+
+- [#1771](https://github.com/vanilla-extract-css/vanilla-extract/pull/1771) [`32d8d27`](https://github.com/vanilla-extract-css/vanilla-extract/commit/32d8d274cd6d569f93812cd3c463adfd7c88f68c) Thanks [@askoufis](https://github.com/askoufis)! - `processVanillaFile`: Don't serialize CSS imports for modules whose CSS objects transform to an empty string (e.g. files that only compose existing atomic classes from a recipe)
+
 ## 0.7.1
 
 ### Patch Changes

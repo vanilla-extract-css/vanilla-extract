@@ -1,5 +1,14 @@
 # @vanilla-extract/vite-plugin
 
+## 5.2.5
+
+### Patch Changes
+
+- [#1771](https://github.com/vanilla-extract-css/vanilla-extract/pull/1771) [`32d8d27`](https://github.com/vanilla-extract-css/vanilla-extract/commit/32d8d274cd6d569f93812cd3c463adfd7c88f68c) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/compiler` dependency to fix a bug that caused Vite to try (and fail) to emit an empty CSS file
+
+- Updated dependencies [[`32d8d27`](https://github.com/vanilla-extract-css/vanilla-extract/commit/32d8d274cd6d569f93812cd3c463adfd7c88f68c)]:
+  - @vanilla-extract/compiler@0.7.2
+
 ## 5.2.4
 
 ### Patch Changes
