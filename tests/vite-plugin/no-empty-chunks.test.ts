@@ -76,3 +76,47 @@ describe('vite-plugin lib build', () => {
     `);
   });
 });
+
+describe('vite-plugin empty recipe CSS', () => {
+  const fixtureRoot = path.join(__dirname, 'fixtures/empty-recipe-css');
+  let outDir: string;
+
+  afterAll(async () => {
+    if (outDir) {
+      await fs.rm(outDir, { recursive: true, force: true });
+    }
+  });
+
+  test('builds when a file only composes existing classes', async () => {
+    outDir = await fs.mkdtemp(path.join(os.tmpdir(), 've-empty-recipe-css-'));
+
+    await build({
+      root: fixtureRoot,
+      configFile: false,
+      plugins: [vanillaExtractPlugin()],
+      build: {
+        outDir,
+        emptyOutDir: true,
+        rollupOptions: {
+          input: path.join(fixtureRoot, 'src/main.ts'),
+        },
+      },
+      logLevel: 'silent',
+    });
+
+    const assets = await fs.readdir(path.join(outDir, 'assets'));
+    const cssFile = assets.find((file) => file.endsWith('.css'));
+    expect(cssFile).toBeDefined();
+
+    const css = await fs.readFile(
+      // The previous assertion ensures that `cssFile` will be defined
+      // oxlint-disable-next-line typescript/no-non-null-assertion
+      path.join(outDir, 'assets', cssFile!),
+      'utf-8',
+    );
+
+    expect(css).toMatchInlineSnapshot(
+      `._4yrjge0{padding:0}._4yrjge1{padding:8px}._4yrjge2{padding:16px}`,
+    );
+  });
+});

@@ -477,8 +477,12 @@ export const createCompiler = ({
             const { css = '', cssRules = [] } =
               cssCache.get(cssDepModuleId) ?? {};
 
-            const depEmitsCss = Boolean(cssObjs?.length || css);
-            if (depEmitsCss) {
+            // Check the transformed CSS, not `cssObjs.length`. A module can
+            // register CSS objects that transform to nothing (e.g. `recipe()`
+            // calls `style({})` for a default base class, or variants that only
+            // compose existing atomic classes). Emitting an import for empty CSS
+            // leaves a dangling virtual module that bundlers fail to resolve.
+            if (css) {
               if (splitCssPerRule) {
                 const importSpecifiers = await Promise.all(
                   cssRules.map((rule, i) =>
