@@ -6,6 +6,7 @@ import type {
   CSSKeyframes,
   StyleRule,
   GlobalStyleRule,
+  GlobalPageStyleRule,
   ClassNames,
   ComplexStyleRule,
 } from './types';
@@ -156,6 +157,30 @@ export function keyframes(rule: CSSKeyframes, debugId?: string): string {
 
 export function globalKeyframes(name: string, rule: CSSKeyframes): void {
   appendCss({ type: 'keyframes', name, rule }, getFileScope());
+}
+
+export function page(rule: GlobalPageStyleRule, debugId?: string): string {
+  const name = cssesc(generateIdentifier(debugId), { isIdentifier: true });
+
+  appendCss({ type: 'page', selector: name, rule }, getFileScope());
+
+  return name;
+}
+
+export function globalPage(rule: GlobalPageStyleRule): void;
+export function globalPage(selector: string, rule: GlobalPageStyleRule): void;
+export function globalPage(
+  selectorOrRule: string | GlobalPageStyleRule,
+  rule?: GlobalPageStyleRule,
+): void {
+  if (typeof selectorOrRule === 'string') {
+    appendCss(
+      { type: 'page', selector: selectorOrRule, rule: rule! },
+      getFileScope(),
+    );
+  } else {
+    appendCss({ type: 'page', selector: '', rule: selectorOrRule }, getFileScope());
+  }
 }
 
 export function styleVariants<
