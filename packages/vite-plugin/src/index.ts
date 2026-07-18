@@ -43,6 +43,13 @@ interface Options {
   identifiers?: IdentifierOption;
   unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss' | 'inlineCssInDev';
+  /**
+   * The regex used to detect Vanilla Extract files. Override this to use a different file naming
+   * convention (e.g. to match `css.ts` instead of the default `*.css.ts`).
+   *
+   * @default cssFileFilter
+   */
+  cssFileFilter?: RegExp;
 }
 
 // Plugins that we know are compatible with the `vite-node` compiler
@@ -61,6 +68,7 @@ export function vanillaExtractPlugin({
   identifiers,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode = 'emitCss',
+  cssFileFilter: fileFilter = cssFileFilter,
 }: Options = {}): Plugin[] {
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
@@ -95,7 +103,7 @@ export function vanillaExtractPlugin({
     const seen = new Set<ModuleNode>();
 
     for (const mod of importerChain) {
-      if (mod.id && cssFileFilter.test(mod.id)) {
+      if (mod.id && fileFilter.test(mod.id)) {
         const virtualModules = moduleGraph.getModulesByFile(
           fileIdToVirtualId(mod.id),
         );
@@ -149,6 +157,7 @@ export function vanillaExtractPlugin({
       root: config.root,
       identifiers: getIdentOption(),
       cssImportSpecifier: fileIdToVirtualId,
+      cssFileFilter: fileFilter,
       viteConfig,
       enableFileWatcher: !isBuild,
     });
@@ -242,7 +251,7 @@ export function vanillaExtractPlugin({
       async transform(code, id, options) {
         const [validId] = id.split('?');
 
-        if (!cssFileFilter.test(validId)) {
+        if (!fileFilter.test(validId)) {
           return null;
         }
 
@@ -280,7 +289,9 @@ export function vanillaExtractPlugin({
 
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
-          { outputCss: true },
+          {
+            outputCss: true,
+          },
         );
 
         transformedModules.add(normalizedId);
