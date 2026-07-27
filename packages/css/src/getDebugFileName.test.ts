@@ -33,6 +33,16 @@ const testCases = [
     input: 'myFile.css.ts',
     expected: 'myFile',
   },
+  {
+    name: 'dottedFileName',
+    input: 'src/Button.vanilla.css.ts',
+    expected: 'Button_vanilla',
+  },
+  {
+    name: 'dottedDirName',
+    input: 'src/my.components/index.css.ts',
+    expected: 'my_components',
+  },
 ];
 
 describe('getDebugFileName', () => {

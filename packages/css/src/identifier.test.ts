@@ -107,4 +107,21 @@ describe('identifier', () => {
       expect(() => generateIdentifier(`a b`)).toThrow();
     });
   });
+
+  describe('with a file name containing dots', () => {
+    beforeAll(() => {
+      setFileScope('path/to/file.vanilla.css.ts');
+    });
+
+    afterAll(() => {
+      endFileScope();
+    });
+
+    it('should not include dots in the identifier', () => {
+      const identifier = generateIdentifier(undefined);
+      expect(identifier).not.toContain('.');
+      expect(identifier).toMatch(/^[A-Z_][0-9A-Z_-]*$/i);
+      expect(identifier).toMatchInlineSnapshot(`"file_vanilla__e09nxg0"`);
+    });
+  });
 });
