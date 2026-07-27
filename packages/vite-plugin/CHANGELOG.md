@@ -1,5 +1,11 @@
 # @vanilla-extract/vite-plugin
 
+## 5.2.6
+
+### Patch Changes
+
+- [#1776](https://github.com/vanilla-extract-css/vanilla-extract/pull/1776) [`272a1db`](https://github.com/vanilla-extract-css/vanilla-extract/commit/272a1db31a1216d6148f10eb1d2ec6b0a0d7f8ae) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a cache miss race condition that could sometimes cause a `No CSS for file` error
+
 ## 5.2.5
 
 ### Patch Changes
