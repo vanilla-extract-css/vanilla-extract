@@ -174,6 +174,42 @@ export function vanillaExtractPlugin({
     return compilerReady;
   };
 
+  /**
+   * Virtual `*.vanilla.css` modules are only populated after the parent
+   * `.css.ts` has been `processVanillaFile`'d. That normally happens in
+   * `transform`, but Vite can serve the parent without re-running `transform`
+   * (notably 304 Not Modified after a server restart with a warm browser
+   * cache), leaving the compiler CSS cache empty when the virtual module is
+   * requested. On miss, process the parent so virtual CSS is self-sufficient.
+   *
+   * A future (likely breaking) refactor should consider a soft-read/ensure API
+   * in the compiler so plugins don't have to catch thrown cache misses or call
+   * `processVanillaFile` themselves.
+   */
+  const ensureCssForVirtualId = async (absoluteVirtualId: string) => {
+    await ensureCompiler();
+
+    if (!compiler) {
+      return null;
+    }
+
+    const fileId = virtualIdToFileId(absoluteVirtualId);
+
+    try {
+      return compiler.getCssForFile(fileId).css;
+    } catch {
+      // Not in cache yet for this compiler lifetime
+    }
+
+    await compiler.processVanillaFile(fileId, { outputCss: true });
+
+    try {
+      return compiler.getCssForFile(fileId).css;
+    } catch {
+      return null;
+    }
+  };
+
   return [
     {
       name: `${PLUGIN_NAMESPACE}-inline-dev-css`,
@@ -328,7 +364,7 @@ export function vanillaExtractPlugin({
           timestamp,
         });
       },
-      resolveId(source) {
+      async resolveId(source) {
         const [validId, query] = source.split('?');
 
         if (!isVirtualId(validId)) return;
@@ -338,29 +374,24 @@ export function vanillaExtractPlugin({
           root: config.root,
         });
 
-        if (!compiler) return;
-
-        // The only valid scenario for a missing CSS entry is if someone had
-        // written a file in their app using the .vanilla.js/.vanilla.css
-        // extension, or the file produced no CSS output.
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+        const css = await ensureCssForVirtualId(absoluteId);
 
         if (css) {
           // Keep the original query string for HMR.
           return absoluteId + (query ? `?${query}` : '');
         }
       },
-      load(id) {
+      async load(id) {
         const [validId] = id.split('?');
 
-        if (!isVirtualId(validId) || !compiler) return;
+        if (!isVirtualId(validId)) return;
 
         const absoluteId = getAbsoluteId({
           filePath: validId,
           root: config.root,
         });
 
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+        const css = await ensureCssForVirtualId(absoluteId);
 
         if (css) {
           return css;
