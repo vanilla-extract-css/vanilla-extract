@@ -73,3 +73,14 @@ export const styleWithStartingStyle = style({
     backgroundColor: 'white',
   },
 });
+
+export const styleWithScopeRule = style([
+  mergedStyle,
+  {
+    '@scope': {
+      '(body)': {
+        ':after': { content: '"Scoped to body"' },
+      },
+    },
+  },
+]);

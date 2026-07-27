@@ -18,7 +18,12 @@ export type { ConditionalValue, RequiredConditionalValue } from './createUtils';
 
 export type { ResponsiveArray, SprinklesProperties } from './types';
 
-type ConditionKey = '@media' | '@supports' | '@container' | 'selector';
+type ConditionKey =
+  | '@media'
+  | '@scope'
+  | '@supports'
+  | '@container'
+  | 'selector';
 type Condition = Partial<Record<ConditionKey, string>>;
 
 type BaseConditions = { [conditionName: string]: Condition };
@@ -277,6 +282,14 @@ export function defineProperties(options: any): any {
             styleValue = {
               '@media': {
                 [condition['@media']]: styleValue,
+              },
+            };
+          }
+
+          if (condition['@scope']) {
+            styleValue = {
+              '@scope': {
+                [condition['@scope']]: styleValue,
               },
             };
           }

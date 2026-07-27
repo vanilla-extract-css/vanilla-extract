@@ -1,5 +1,13 @@
 # @vanilla-extract/rollup-plugin
 
+## 1.5.4
+
+### Patch Changes
+
+- [#1767](https://github.com/vanilla-extract-css/vanilla-extract/pull/1767) [`45bc884`](https://github.com/vanilla-extract-css/vanilla-extract/commit/45bc8844b5f44ec2ae3bc13fde27fc15e6df98c9) Thanks [@askoufis](https://github.com/askoufis)! - Fixed an issue where rolldown builds could fail when emitted CSS asset names include relative paths, such as when processing dependency or nested `.css.ts` files.
+
+  This may change filepaths in build output (directory prefixes from input paths are no longer included in emitted CSS filenames), but asset contents and import paths in JS output remain correct.
+
 ## 1.5.3
 
 ### Patch Changes

@@ -252,7 +252,7 @@ describe('compiler', () => {
     }
 
     expect(
-      // We know `error.message` is defined here
+      // oxlint-disable-next-line typescript/no-non-null-assertion We know `error.message` is defined here
       normalizePath(error!.message),
     ).toMatchInlineSnapshot(
       `No CSS for file: {{__dirname}}/does-not-exist.css.ts`,
@@ -482,7 +482,6 @@ describe('compiler', () => {
     const { css } = compiler.getCssForFile(cssPath);
 
     expect(output.source).toMatchInlineSnapshot(`
-      import '{{__dirname}}/fixtures/vite-config/util/vars.css.ts.vanilla.css';
       import '{{__dirname}}/fixtures/vite-config/alias.css.ts.vanilla.css';
       export var root = 'alias_root__ez4dr20';
     `);
@@ -829,5 +828,66 @@ describe('compiler', () => {
     );
 
     expect(importerTree.size).toBe(0);
+  });
+
+  test('should not emit CSS imports for dependencies that produce no CSS', async () => {
+    const compiler = createCompiler({
+      root: __dirname,
+    });
+
+    const cssPath = path.join(__dirname, 'fixtures/no-css-output/a.css.ts');
+    const dependencyCssPath = path.join(
+      __dirname,
+      'fixtures/no-css-output/contract.css.ts',
+    );
+
+    const output = await compiler.processVanillaFile(cssPath);
+
+    expect(output.source).not.toContain(
+      normalizePath(`${dependencyCssPath}.vanilla.css`),
+    );
+    expect(output.source).toContain(normalizePath(`${cssPath}.vanilla.css`));
+
+    const { css } = compiler.getCssForFile(cssPath);
+    expect(css).toMatchInlineSnapshot(`
+        .a_a__1mnazgr0 {
+          --component-token: var(--global-token);
+        }
+      `);
+
+    await compiler.close();
+  });
+
+  test('should not emit a CSS import when a module only composes existing classes', async () => {
+    const compiler = createCompiler({
+      root: __dirname,
+    });
+
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/empty-recipe-css/recipe.css.ts',
+    );
+    const sprinklesCssPath = path.join(
+      __dirname,
+      'fixtures/empty-recipe-css/sprinkles.css.ts',
+    );
+
+    const output = await compiler.processVanillaFile(cssPath);
+
+    expect(output.source).not.toContain(
+      normalizePath(`${cssPath}.vanilla.css`),
+    );
+    expect(output.source).toContain(
+      normalizePath(`${sprinklesCssPath}.vanilla.css`),
+    );
+
+    const { css } = compiler.getCssForFile(cssPath);
+    expect(css).toBe('');
+
+    const { css: sprinklesCss } = compiler.getCssForFile(sprinklesCssPath);
+    expect(sprinklesCss).toContain('.sprinkles_padding_0');
+    expect(sprinklesCss).toContain('padding: 16px');
+
+    await compiler.close();
   });
 });

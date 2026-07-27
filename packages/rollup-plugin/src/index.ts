@@ -16,7 +16,7 @@ import {
   tryGetPackageName,
 } from './lib';
 
-const { relative, normalize, dirname } = posix;
+const { relative, normalize, dirname, basename } = posix;
 
 export interface Options {
   /**
@@ -159,7 +159,8 @@ export function vanillaExtractPlugin({
 
         const assetId = this.emitFile({
           type: 'asset',
-          name: moduleInfo.id,
+          name: basename(moduleInfo.id),
+          originalFileName: moduleInfo.id,
           source: moduleInfo.meta.css,
         });
         const assetPath = this.getFileName(assetId);

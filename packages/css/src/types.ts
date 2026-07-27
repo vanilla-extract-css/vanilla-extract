@@ -39,6 +39,7 @@ type Query<Key extends string, StyleType> = {
 };
 
 export type MediaQueries<StyleType> = Query<'@media', StyleType>;
+export type ScopeQueries<StyleType> = Query<'@scope', StyleType>;
 export type FeatureQueries<StyleType> = Query<'@supports', StyleType>;
 export type ContainerQueries<StyleType> = Query<'@container', StyleType>;
 export type Layers<StyleType> = Query<'@layer', StyleType>;
@@ -49,6 +50,7 @@ export type StartingStyle<StyleType> = {
 interface AllQueries<StyleType>
   extends
     MediaQueries<StyleType & AllQueries<StyleType>>,
+    ScopeQueries<StyleType & AllQueries<StyleType>>,
     FeatureQueries<StyleType & AllQueries<StyleType>>,
     ContainerQueries<StyleType & AllQueries<StyleType>>,
     Layers<StyleType & AllQueries<StyleType>>,

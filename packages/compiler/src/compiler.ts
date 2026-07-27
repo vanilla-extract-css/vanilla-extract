@@ -46,6 +46,7 @@ const createModuleScanner = () => {
     }
 
     if (cache.has(cacheKey)) {
+      // oxlint-disable-next-line typescript/no-non-null-assertion Previous line has already done a check for the presence of the cacheKey
       return cache.get(cacheKey)!;
     }
 
@@ -376,8 +377,8 @@ export const createCompiler = ({
 
           const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
-            .get(moduleId)!
-            .localClassNames.add(className);
+            .get(moduleId)
+            ?.localClassNames.add(className);
         },
         registerComposition: (composedClassList, fileScope) => {
           if (!fileScope) {
@@ -390,8 +391,8 @@ export const createCompiler = ({
 
           const moduleId = normalizePath(fileScope.filePath);
           classRegistrationsByModuleId
-            .get(moduleId)!
-            .composedClassLists.push(composedClassList);
+            .get(moduleId)
+            ?.composedClassLists.push(composedClassList);
         },
         markCompositionUsed: () => {
           // This compiler currently retains all composition classes
@@ -455,6 +456,9 @@ export const createCompiler = ({
                 });
               }
 
+              // `cssObjs` will be defined for every VE module with an injected file scope,
+              // so `cssRules` is always defined. VE modules that don't emit any CSS will have
+              // `css` set to an empty string.
               cssCache.set(cssDepModuleId, {
                 css: cssRules.join('\n'),
                 cssRules,
@@ -473,7 +477,12 @@ export const createCompiler = ({
             const { css = '', cssRules = [] } =
               cssCache.get(cssDepModuleId) ?? {};
 
-            if (cssObjs || css) {
+            // Check the transformed CSS, not `cssObjs.length`. A module can
+            // register CSS objects that transform to nothing (e.g. `recipe()`
+            // calls `style({})` for a default base class, or variants that only
+            // compose existing atomic classes). Emitting an import for empty CSS
+            // leaves a dangling virtual module that bundlers fail to resolve.
+            if (css) {
               if (splitCssPerRule) {
                 const importSpecifiers = await Promise.all(
                   cssRules.map((rule, i) =>

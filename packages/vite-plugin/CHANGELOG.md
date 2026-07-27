@@ -1,5 +1,35 @@
 # @vanilla-extract/vite-plugin
 
+## 5.2.5
+
+### Patch Changes
+
+- [#1771](https://github.com/vanilla-extract-css/vanilla-extract/pull/1771) [`32d8d27`](https://github.com/vanilla-extract-css/vanilla-extract/commit/32d8d274cd6d569f93812cd3c463adfd7c88f68c) Thanks [@askoufis](https://github.com/askoufis)! - Update `@vanilla-extract/compiler` dependency to fix a bug that caused Vite to try (and fail) to emit an empty CSS file
+
+- Updated dependencies [[`32d8d27`](https://github.com/vanilla-extract-css/vanilla-extract/commit/32d8d274cd6d569f93812cd3c463adfd7c88f68c)]:
+  - @vanilla-extract/compiler@0.7.2
+
+## 5.2.4
+
+### Patch Changes
+
+- [#1765](https://github.com/vanilla-extract-css/vanilla-extract/pull/1765) [`9c28671`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9c28671701e9b5263ef92058deed8261da1416a0) Thanks [@askoufis](https://github.com/askoufis)! - Fixed a bug that caused Vite to emit empty CSS files when processing Vanilla Extract modules that emit no CSS
+
+- Updated dependencies [[`9c28671`](https://github.com/vanilla-extract-css/vanilla-extract/commit/9c28671701e9b5263ef92058deed8261da1416a0)]:
+  - @vanilla-extract/compiler@0.7.1
+
+## 5.2.3
+
+### Patch Changes
+
+- [#1718](https://github.com/vanilla-extract-css/vanilla-extract/pull/1718) [`f9975b5`](https://github.com/vanilla-extract-css/vanilla-extract/commit/f9975b516537abec53c6ffaf9b9d90c834cc1cf2) Thanks [@MagneH](https://github.com/MagneH)! - Fix `No CSS for file` error in Vite dev mode when virtual CSS modules are resolved through Vite's `@id/` id wrapper
+
+  This was most commonly hit with workspace `.css.ts` imports in pnpm monorepos on Windows, where Vite produces ids shaped like `@id/C:/...`, but it can also occur on macOS/Linux. The plugin now unwraps these ids before resolving the virtual CSS file so they map to the correct compiler cache entry.
+
+- [#1748](https://github.com/vanilla-extract-css/vanilla-extract/pull/1748) [`792d5c6`](https://github.com/vanilla-extract-css/vanilla-extract/commit/792d5c66a96a5acdb304153f9843c01003fbe36b) Thanks [@smitev](https://github.com/smitev)! - Fixed an issue where `.css.ts` files could be left untransformed
+
+  This was most commonly hit when using module federation plugins that expose modules as their own chunks, resulting in untransformed runtime `style()` calls throwing `Styles were unable to be assigned to a file`.
+
 ## 5.2.2
 
 ### Patch Changes

@@ -72,10 +72,17 @@ const getVanillaExtractCssLoaders = (
 
             // These elements should always exist. If they do not,
             // this code should fail.
-            const anchorElement = document.querySelector(
-              '#__next_css__DO_NOT_USE__',
-            )!;
-            const parentNode = anchorElement.parentNode!; // Normally <head>
+            const anchorElementSelector = '#__next_css__DO_NOT_USE__';
+            const anchorElement = document.querySelector(anchorElementSelector);
+            if (!anchorElement) {
+              throw new Error(`Failed to query "${anchorElementSelector}"`);
+            }
+
+            // Normally <head>
+            const parentNode = anchorElement.parentNode;
+            if (!parentNode) {
+              throw new Error('Anchor element has no parent node');
+            }
 
             // Each style tag should be placed right before our
             // anchor. By inserting before and not after, we do not

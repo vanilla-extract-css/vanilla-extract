@@ -63,3 +63,8 @@ body ._1o6ek50b {
     background-color: white;
   }
 }
+@scope (body) {
+  ._1o6ek50d:after {
+    content: "Scoped to body";
+  }
+}

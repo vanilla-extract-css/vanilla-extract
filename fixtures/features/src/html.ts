@@ -11,6 +11,7 @@ export default `
     <div id="${testNodes.styleCompositionInSelector}" class="${styles.styleCompositionInSelector}">Style composition in selector</div>
     <div id="${testNodes.styleVariantsCompositionInSelector}" class="${styles.styleVariantsCompositionInSelector.variant}">Style variants composition in selector</div>
     <div id="${testNodes.styleWithStartingStyle}" class="${styles.styleWithStartingStyle}">Style with @starting-style rule</div>
+    <div id="${testNodes.styleWithScopeRule}" class="${styles.styleWithScopeRule}">Style with @scope rule</div>
   `;
 
 // @ts-expect-error Vite env not defined

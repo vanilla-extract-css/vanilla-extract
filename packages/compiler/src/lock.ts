@@ -31,7 +31,7 @@ async function processQueue() {
   }
 
   isProcessingQueue = true;
-  const fn = queue.shift()!;
+  const fn = queue.shift();
 
-  await fn();
+  await fn?.();
 }

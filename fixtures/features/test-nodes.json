@@ -7,5 +7,6 @@
   "compositionOnly": "compositionOnly",
   "styleCompositionInSelector": "styleCompositionInSelector",
   "styleVariantsCompositionInSelector": "styleVariantsCompositionInSelector",
-  "styleWithStartingStyle": "styleWithStartingStyle"
+  "styleWithStartingStyle": "styleWithStartingStyle",
+  "styleWithScopeRule": "styleWithScopeRule"
 }

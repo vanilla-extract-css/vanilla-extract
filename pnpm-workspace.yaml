@@ -8,3 +8,20 @@ packages:
   - 'examples/*'
   - 'tests'
   - 'scripts'
+dedupePeers: true
+
+minimumReleaseAge: 4320
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver
+  - undici-types
+blockExoticSubdeps: true
+allowBuilds:
+  '@netlify/esbuild': false
+  '@swc/core': false
+  esbuild: false
+  lmdb: false
+  modern-ahocorasick: false
+  msgpackr-extract: false
+  netlify-cli: false
+  sharp: false

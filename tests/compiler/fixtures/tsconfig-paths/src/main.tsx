@@ -1,5 +1,8 @@
 import { box } from 'main.css';
 
-document.getElementById('root')!.innerHTML = `
-  <div class="${box}">hello world</div>
-`;
+const root = document.getElementById('root');
+if (!root) {
+  throw new Error("Failed to get 'root' element");
+}
+
+root.innerHTML = `<div class="${box}">hello world</div>`;

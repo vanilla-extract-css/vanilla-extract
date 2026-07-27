@@ -113,3 +113,30 @@ export const stack = recipe({
     space: 'medium',
   },
 });
+
+// Recipe with an empty-string variant value. Recipe variants accept `''` to
+// declare a variant that has no styles of its own but should still produce a
+// classname that can be referenced from elsewhere.
+export const parentRecipe = recipe({
+  variants: {
+    size: {
+      empty: '',
+    },
+  },
+});
+
+const emptyParentClass = parentRecipe.classNames.variants.size.empty;
+
+// Reproduces vanilla-extract#1745: when the parent class came from an
+// empty-string variant, the descendant combinator between the parent and `&`
+// must be preserved in the compiled selector.
+export const child = style({
+  fontSize: '24px',
+  lineHeight: '40px',
+  backgroundColor: 'red',
+  selectors: {
+    [`.${emptyParentClass} &`]: {
+      backgroundColor: 'blue',
+    },
+  },
+});

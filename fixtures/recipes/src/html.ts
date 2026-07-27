@@ -1,4 +1,4 @@
-import { button, stack } from './styles.css';
+import { button, child, parentRecipe, stack } from './styles.css';
 
 export default `<div class="${stack()}">
     <button class="${button()}"> 
@@ -17,4 +17,13 @@ export default `<div class="${stack()}">
     })}"> 
       Small angry button
     </button>
+    <div class="${parentRecipe({ size: 'empty' })}">
+      parent recipe consumer (black)
+      <div class="${child}">
+        child composed with parent recipe classname (blue)
+      </div>
+    </div>
+    <div class="${child}">
+      sibling composed with parent recipe classname (red)
+    </div>
   </div>`;

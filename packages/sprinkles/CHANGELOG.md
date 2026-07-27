@@ -1,5 +1,38 @@
 # @vanilla-extract/sprinkles
 
+## 1.7.0
+
+### Minor Changes
+
+- [#1720](https://github.com/vanilla-extract-css/vanilla-extract/pull/1720) [`7bbe189`](https://github.com/vanilla-extract-css/vanilla-extract/commit/7bbe18993e4b2c71e5d8ba0c3d99c38658d410a3) Thanks [@cahnory](https://github.com/cahnory)! - Add support for `@scope` to `conditions`
+
+  **EXAMPLE USAGE**:
+
+  ```ts
+  import { style } from '@vanilla-extract/css';
+  import { defineProperties } from '@vanilla-extract/sprinkles';
+
+  const scopeRoot = style();
+
+  const scopedProperties = defineProperties({
+    defaultCondition: 'unscoped',
+    conditions: {
+      unscoped: {},
+      document: {
+        '@scope': `(${scopeRoot})`
+      }
+    },
+    responsiveArray: ['unscoped', 'scoped'],
+    properties: {
+      flexDirection: ['row', 'column'],
+      order: {
+        first: '1',
+        second: '2'
+      }
+    }
+  });
+  ```
+
 ## 1.6.5
 
 ### Patch Changes
@@ -149,7 +182,6 @@
 - [#360](https://github.com/vanilla-extract-css/vanilla-extract/pull/360) [`4ceb76e`](https://github.com/vanilla-extract-css/vanilla-extract/commit/4ceb76efd8063cb833e2f63a708968d054f76dc0) Thanks [@michaeltaranto](https://github.com/michaeltaranto)! - Clean up public API, deprecating old API names. Also adding sprinkles to the docs site and using `sprinkles` in favour of `atoms` for the canoncial examples.
 
   API changes include:
-
   - Rename `createAtomicStyles` to `defineProperties`, `createAtomicStyles` is now deprecated
   - Rename `createAtomsFn` to `createSprinkles`, `createAtomsFn` is now deprecated
   - Rename `AtomicStyles` type to `SprinklesProperties`, `AtomicStyles` is now deprecated
@@ -355,7 +387,6 @@
 ### Patch Changes
 
 - [#98](https://github.com/vanilla-extract-css/vanilla-extract/pull/98) [`45a6eef`](https://github.com/vanilla-extract-css/vanilla-extract/commit/45a6eeff8548db3841615e38589f57cbd526ea8a) Thanks [@mattcompiles](https://github.com/mattcompiles)! - Fix some minor type issues
-
   - Better support passing config to `createAtomicStyles` that was not defined inline
   - Remove array methods being exposed on properties using number arrays
 

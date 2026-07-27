@@ -11,7 +11,7 @@ export const breakpoints = {
 };
 
 export type Breakpoint = keyof typeof breakpoints;
-type CSSProps = Omit<StyleRule, '@media' | '@supports'>;
+type CSSProps = Omit<StyleRule, '@media' | '@supports' | '@scope'>;
 
 export const queries = mapValues(
   omit(breakpoints, 'mobile'),
