@@ -7,11 +7,10 @@ parent: integrations
 
 A plugin for integrating vanilla-extract with [Rollup](https://rollupjs.org/).
 
-This plugin is useful for library development but not suitable for application bundles.
-Rollup has no built-in CSS bundling, so this plugin just outputs styles as individual CSS assets.
+> 💡&nbsp;&nbsp;This plugin is also compatible with [Rolldown](https://rolldown.rs/)
 
-For applications we instead recommend to use Vite
-(which itself uses Rollup under the hood but comes with its own CSS bundling).
+This plugin is useful for library development but not suitable for application bundles.
+For applications we instead recommend [Vite](/documentation/integrations/vite) (which itself uses Rolldown under the hood but comes with its own CSS bundling).
 
 ## Installation
 
@@ -102,7 +101,8 @@ See the [build API](https://esbuild.github.io/api/#build-api) documentation.
 
 ### extract
 
-Extract all generated `.css` into one bundle. This also removes side effect `import '*.css'` statements.
+Extract all generated `.css` into one bundle.
+This also removes side effect `import '*.css'` statements.
 
 ```ts
 vanillaExtractPlugin({
