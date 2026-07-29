@@ -7,6 +7,12 @@ parent: integrations
 
 A plugin for integrating vanilla-extract with [Vite](https://vitejs.dev/).
 
+> 🚧&nbsp;&nbsp;Building libraries with the vanilla-extract Vite plugin is not supported.
+> The plugin targets web applications and lacks library-specific features like injecting filescopes and combining CSS into a single file.
+> It may appear to work, but this isn't tested and can break without warning - use [the Rollup plugin] instead.
+
+[The Rollup plugin]: /documentation/integrations/rollup
+
 ## Installation
 
 ```bash
