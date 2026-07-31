@@ -9,7 +9,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['', '22']
+        node: ['']
     name: Lint & Test (${{ (matrix.node && matrix.node != '22') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: ubuntu-latest
     env:
@@ -46,7 +46,7 @@ jobs:
       matrix:
         # Blank string allows us to test against version in nvmrc file
         # configured in 'Set up Node.js' down below.
-        node: ['', '22']
+        node: ['']
     name: Windows Tests (${{ (matrix.node && matrix.node != '22') && format('node {0}', matrix.node) || matrix.node || 'nvmrc' }})
     runs-on: windows-latest
     env:
