@@ -29,20 +29,20 @@ export function addFileScope({
   if (source.includes('@vanilla-extract/css/fileScope')) {
     source = source.replace(
       /setFileScope\(((\n|.)*?)\)/,
-      `setFileScope("${normalizedPath}", "${packageName}")`,
+      `setFileScope(${JSON.stringify(normalizedPath)}, ${JSON.stringify(packageName)})`,
     );
   } else {
     if (hasESM && !isMixed) {
       source = dedent(`
         import { setFileScope, endFileScope } from "@vanilla-extract/css/fileScope";
-        setFileScope("${normalizedPath}", "${packageName}");
+        setFileScope(${JSON.stringify(normalizedPath)}, ${JSON.stringify(packageName)});
         ${source}
         endFileScope();
       `);
     } else {
       source = dedent(`
         const __vanilla_filescope__ = require("@vanilla-extract/css/fileScope");
-        __vanilla_filescope__.setFileScope("${normalizedPath}", "${packageName}");
+        __vanilla_filescope__.setFileScope(${JSON.stringify(normalizedPath)}, ${JSON.stringify(packageName)});
         ${source}
         __vanilla_filescope__.endFileScope();
       `);
