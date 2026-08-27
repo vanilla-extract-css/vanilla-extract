@@ -24,6 +24,7 @@
     "eval": "0.1.8",
     "find-up": "^5.0.0",
     "javascript-stringify": "^2.0.1",
+    "json5": "^2.2.3",
     "mlly": "^1.4.2"
   },
   "devDependencies": {
