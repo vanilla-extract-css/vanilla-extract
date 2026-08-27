@@ -206,8 +206,14 @@ export default async function turbopackVanillaExtractLoader(
   });
 
   // if turbopack invokes the loader quickly, vite can't invalidate the module fast enough
-  // so we disable the internal file watcher and manually invalidate the module instead
-  await compiler.unstable_invalidateAllModules();
+  // so we disable the internal file watcher and manually invalidate the module instead.
+  //
+  // A production build never mutates its inputs, so there is nothing to invalidate: dropping the
+  // whole module graph before every file only forces the shared compiler to re-evaluate each
+  // file's imports from scratch, which is quadratic in the number of `.css.ts` files.
+  if (process.env.NODE_ENV !== 'production') {
+    await compiler.unstable_invalidateAllModules();
+  }
 
   const { source, watchFiles } = await compiler.processVanillaFile(
     this.resourcePath,
