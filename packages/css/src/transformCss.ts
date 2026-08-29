@@ -13,6 +13,7 @@ import type {
   Composition,
   WithQueries,
   CSSPropertyBlock,
+  CSSPageBlock,
 } from './types';
 import { markCompositionUsed } from './adapter';
 import { nestingSelectorRegex } from './nestingSelectorRegex';
@@ -120,6 +121,7 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
+  pageRules: Array<CSSPageBlock>;
   localClassNamesMap: Map<string, string>;
   localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
@@ -134,6 +136,7 @@ class Stylesheet {
     this.conditionalRulesets = [new ConditionalRuleset()];
     this.fontFaceRules = [];
     this.keyframesRules = [];
+    this.pageRules = [];
     this.propertyRules = [];
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
@@ -171,6 +174,13 @@ class Stylesheet {
         }),
       );
       this.keyframesRules.push(root);
+
+      return;
+    }
+
+    if (root.type === 'page') {
+      root.rule = this.transformVars(this.transformProperties(root.rule));
+      this.pageRules.push(root);
 
       return;
     }
@@ -727,6 +737,11 @@ class Stylesheet {
     // Render keyframes
     for (const keyframe of this.keyframesRules) {
       css.push(renderCss({ [`@keyframes ${keyframe.name}`]: keyframe.rule }));
+    }
+
+    // Render page rules
+    for (const { selector, rule } of this.pageRules) {
+      css.push(renderCss({ [selector ? `@page ${selector}` : '@page']: rule }));
     }
 
     // Render layer definitions
