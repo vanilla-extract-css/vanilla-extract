@@ -45,7 +45,7 @@ export const createRuntimeFn = <Variants extends VariantGroups>(
 
         const selectionClassName =
           // @ts-expect-error
-          config.variantClassNames[variantName][selection];
+          config.variantClassNames[variantName]?.[selection];
 
         if (selectionClassName) {
           className += ' ' + selectionClassName;
