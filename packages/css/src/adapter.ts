@@ -1,3 +1,4 @@
+import { cssCache } from './cssCache';
 import type { Adapter } from './types';
 
 export const mockAdapter: Adapter = {
@@ -43,6 +44,12 @@ export const removeAdapter = (): void => {
 };
 
 export const appendCss: Adapter['appendCss'] = (...props) => {
+  const cssDef = props[0];
+  if (cssDef.type === 'local' || cssDef.type === 'global') {
+    const { selector, rule } = cssDef;
+    cssCache.set(selector, rule);
+  }
+
   return currentAdapter().appendCss(...props);
 };
 
