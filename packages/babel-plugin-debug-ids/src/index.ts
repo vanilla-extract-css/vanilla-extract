@@ -75,6 +75,28 @@ const styleFunctions = [
 
 type StyleFunction = (typeof styleFunctions)[number];
 
+// Word-bounded so it never matches the intentionally-excluded `global*`
+// variants (`globalStyle`, `globalKeyframes`, …), whose calls never receive a
+// debug ID. Built once at module load from the debuggable names.
+const debuggableCallRE = new RegExp(
+  `\\b(?:${Object.keys(debuggableFunctionConfig).join('|')})\\b`,
+);
+
+/**
+ * A cheap, conservative pre-check for whether {@link default this plugin} could
+ * add a debug ID to any call in `source`. Returns `false` only when the source
+ * provably contains none of the debuggable function names, letting callers skip
+ * an otherwise no-op Babel transform.
+ *
+ * It is safe against false negatives: a call the plugin acts on must reference a
+ * debuggable name literally — as a named import (`import { style }` /
+ * `import { style as s }`) or a namespace member access (`ns.style(...)`) — so
+ * the name always appears in the source text. False positives (running Babel
+ * when nothing changes) are harmless.
+ */
+export const mightHaveDebuggableCalls = (source: string): boolean =>
+  debuggableCallRE.test(source);
+
 const extractName = (node: t.Node) => {
   if (t.isObjectProperty(node) && t.isIdentifier(node.key)) {
     return node.key.name;
