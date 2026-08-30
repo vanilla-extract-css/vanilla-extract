@@ -27,6 +27,10 @@ describe('compiler', () => {
       root: __dirname,
       cssImportSpecifier: (filePath) => filePath + '.custom-extension.css',
     }),
+    cssFileFilter: createCompiler({
+      root: __dirname,
+      cssFileFilter: /\.vanilla\.ts$/,
+    }),
     shortIdentifiers: createCompiler({
       root: __dirname,
       identifiers: 'short',
@@ -292,6 +296,29 @@ describe('compiler', () => {
       import '{{__dirname}}/fixtures/class-composition/shared.css.ts.custom-extension.css';
       import '{{__dirname}}/fixtures/class-composition/styles.css.ts.custom-extension.css';
       export var className = 'styles_className__q7x3ow0 shared_shared__16bmd920';
+    `);
+  });
+
+  test('custom cssFileFilter', async () => {
+    const compiler = compilers.cssFileFilter;
+
+    // A `.vanilla.ts` file is only recognised as a Vanilla Extract module because of the custom
+    // `cssFileFilter`; the default filter would leave it untransformed.
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/custom-filter/styles.vanilla.ts',
+    );
+    const output = await compiler.processVanillaFile(cssPath);
+    expect(output.source).toMatchInlineSnapshot(`
+      import '{{__dirname}}/fixtures/custom-filter/styles.vanilla.ts.vanilla.css';
+      export var className = 'className__s28xxj0';
+    `);
+
+    const { css } = compiler.getCssForFile(cssPath);
+    expect(css).toMatchInlineSnapshot(`
+      .className__s28xxj0 {
+        color: red;
+      }
     `);
   });
 

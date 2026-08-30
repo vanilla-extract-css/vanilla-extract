@@ -24,7 +24,7 @@ type ModuleScanResult = {
   watchFiles: Set<string>;
 };
 
-const createModuleScanner = () => {
+const createModuleScanner = (fileFilter: RegExp) => {
   const cache = new Map<string, ModuleScanResult>();
 
   const scanModule = (
@@ -69,7 +69,7 @@ const createModuleScanner = () => {
 
     const cssDepsArray = Array.from(cssDeps);
 
-    if (moduleNode.id && cssFileFilter.test(moduleNode.id)) {
+    if (moduleNode.id && fileFilter.test(moduleNode.id)) {
       cssDepsArray.push(moduleNode.id);
     }
 
@@ -94,11 +94,14 @@ const createViteServer = async ({
   root,
   identifiers,
   viteConfig,
+  fileFilter,
   enableFileWatcher = true,
 }: Required<
   Pick<CreateCompilerOptions, 'root' | 'identifiers' | 'viteConfig'>
 > &
-  Pick<CreateCompilerOptions, 'enableFileWatcher'>) => {
+  Pick<CreateCompilerOptions, 'enableFileWatcher'> & {
+    fileFilter: RegExp;
+  }) => {
   const pkg = getPackageInfo(root);
   const vite = await import('vite');
 
@@ -149,7 +152,7 @@ const createViteServer = async ({
       {
         name: 'vanilla-extract-transform',
         async transform(code, id) {
-          if (cssFileFilter.test(id)) {
+          if (fileFilter.test(id)) {
             const filescopedCode = await transform({
               source: code,
               rootPath: root,
@@ -274,6 +277,13 @@ export interface CreateCompilerOptions {
    */
   unstable_splitCssPerRule?: boolean;
   identifiers?: IdentifierOption;
+  /**
+   * The regex used to detect Vanilla Extract files. Override this to use a different file naming
+   * convention (e.g. to match `css.ts` instead of the default `*.css.ts`).
+   *
+   * @default cssFileFilter
+   */
+  cssFileFilter?: RegExp;
   viteConfig?: ViteUserConfig;
   /** @deprecated */
   viteResolve?: ViteUserConfig['resolve'];
@@ -285,6 +295,7 @@ export const createCompiler = ({
   identifiers = 'debug',
   cssImportSpecifier = (filePath) => filePath + '.vanilla.css',
   unstable_splitCssPerRule: splitCssPerRule = false,
+  cssFileFilter: fileFilter = cssFileFilter,
   viteConfig,
   enableFileWatcher,
   viteResolve,
@@ -302,6 +313,7 @@ export const createCompiler = ({
       resolve: viteResolve,
       plugins: vitePlugins,
     },
+    fileFilter,
     enableFileWatcher,
   });
 
@@ -425,7 +437,7 @@ export const createCompiler = ({
           const cssImports: string[] = [];
           const orderedComposedClassLists: Composition[] = [];
 
-          const scanModule = createModuleScanner();
+          const scanModule = createModuleScanner(fileFilter);
           const { cssDeps, watchFiles } = scanModule(moduleNode);
 
           for (const cssDep of cssDeps) {
