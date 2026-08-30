@@ -10,7 +10,7 @@ interface TransformParams {
   source: string;
   filePath: string;
   rootPath: string;
-  packageName: string;
+  packageName?: string;
   identOption: IdentifierOption;
   globalAdapterIdentifier?: string;
 }

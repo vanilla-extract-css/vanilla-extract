@@ -30,7 +30,7 @@ export const vanillaExtractTransformPlugin = ({
         filePath: path,
         // oxlint-disable-next-line typescript/no-non-null-assertion Ignoring this for now, not sure if this will ever actually be null
         rootPath: build.initialOptions.absWorkingDir!,
-        packageName: packageInfo.name,
+        packageName: packageInfo?.name,
         identOption:
           identOption ?? (build.initialOptions.minify ? 'short' : 'debug'),
       });
