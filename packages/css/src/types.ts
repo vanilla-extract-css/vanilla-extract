@@ -108,13 +108,22 @@ export type CSSPropertyBlock = {
   rule: AtRule.Property;
 };
 
+export type GlobalPageStyleRule = CSSPropertiesWithVars;
+
+export type CSSPageBlock = {
+  type: 'page';
+  selector: string;
+  rule: GlobalPageStyleRule;
+};
+
 export type CSS =
   | CSSStyleBlock
   | CSSFontFaceBlock
   | CSSKeyframesBlock
   | CSSSelectorBlock
   | CSSLayerDeclaration
-  | CSSPropertyBlock;
+  | CSSPropertyBlock
+  | CSSPageBlock;
 
 export type FileScope = {
   packageName?: string;
