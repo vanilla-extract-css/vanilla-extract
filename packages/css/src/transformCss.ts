@@ -114,6 +114,64 @@ interface CSSRule {
   rule: CSSPropertiesWithVars;
 }
 
+type ClassNameMatch = {
+  pattern: string;
+  patternIndex: number;
+  start: number;
+  end: number;
+};
+
+type ClassNameSearch = {
+  search(text: string): ClassNameMatch[];
+};
+
+/**
+ * modern-ahocorasick v3 requires Intl.Segmenter. Vanilla Extract can also be
+ * evaluated in older build runtimes, so retain the former UTF-16 substring
+ * behavior when the platform does not provide that API.
+ */
+class LegacyClassNameSearch implements ClassNameSearch {
+  constructor(private readonly patterns: Array<string>) {}
+
+  search(text: string) {
+    const matches: Array<ClassNameMatch> = [];
+
+    this.patterns.forEach((pattern, patternIndex) => {
+      if (pattern.length === 0) {
+        return;
+      }
+
+      let start = text.indexOf(pattern);
+      while (start !== -1) {
+        matches.push({
+          pattern,
+          patternIndex,
+          start,
+          end: start + pattern.length,
+        });
+        start = text.indexOf(pattern, start + 1);
+      }
+    });
+
+    matches.sort(
+      (left, right) =>
+        left.end - right.end ||
+        right.end - right.start - (left.end - left.start) ||
+        left.patternIndex - right.patternIndex,
+    );
+
+    return matches;
+  }
+}
+
+function createClassNameSearch(patterns: Array<string>): ClassNameSearch {
+  if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
+    return new AhoCorasick(patterns);
+  }
+
+  return new LegacyClassNameSearch(patterns);
+}
+
 class Stylesheet {
   rules: Array<CSSRule>;
   conditionalRulesets: Array<ConditionalRuleset>;
@@ -121,7 +179,7 @@ class Stylesheet {
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNamesMap: Map<string, string>;
-  localClassNamesSearch: AhoCorasick;
+  localClassNamesSearch: ClassNameSearch;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
   layers: Map<string, Array<string>>;
   propertyRules: Array<CSSPropertyBlock>;
@@ -138,7 +196,7 @@ class Stylesheet {
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
-    this.localClassNamesSearch = new AhoCorasick(localClassNames);
+    this.localClassNamesSearch = createClassNameSearch(localClassNames);
     this.layers = new Map();
 
     // Class list compositions should be priortized by Newer > Older
@@ -328,10 +386,21 @@ class Stylesheet {
 
     let lastReplaceIndex = transformedSelector.length;
 
-    // Perform replacements backwards to simplify index handling
+    // modern-ahocorasick v3 returns independent UTF-16 half-open ranges,
+    // ordered by end, then pattern length, then input order. Keep only the
+    // first (longest) match for each end position to preserve the selector
+    // replacement semantics used by the former grouped result shape.
     for (let i = results.length - 1; i >= 0; i--) {
-      const [endIndex, [firstMatch]] = results[i];
-      const startIndex = endIndex - firstMatch.length + 1;
+      const currentMatch = results[i];
+      if (i > 0 && results[i - 1].end === currentMatch.end) {
+        continue;
+      }
+
+      const {
+        start: startIndex,
+        end: endIndex,
+        pattern: firstMatch,
+      } = currentMatch;
 
       // Class names can be substrings of other class names
       // e.g. '_1g1ptzo1' and '_1g1ptzo10'
@@ -344,7 +413,7 @@ class Stylesheet {
       // In either of these cases, the last replace index will occur either before or within the
       // current replacement range (from `startIndex` to `endIndex`).
       // If this occurs, we skip the replacement to avoid transforming the selector incorrectly.
-      const skipReplacement = lastReplaceIndex <= endIndex;
+      const skipReplacement = lastReplaceIndex < endIndex;
 
       if (skipReplacement) {
         continue;
@@ -357,7 +426,7 @@ class Stylesheet {
         transformedSelector = replaceBetweenIndexes(
           transformedSelector,
           startIndex,
-          endIndex + 1,
+          endIndex,
           this.transformClassname(firstMatch),
         );
       }

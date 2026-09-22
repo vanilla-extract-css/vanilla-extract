@@ -25,6 +25,59 @@ expect.addSnapshotSerializer({
 });
 
 describe('transformCss', () => {
+  it('consumes modern-ahocorasick UTF-16 ranges without changing selector boundaries', () => {
+    const declaration = { color: 'red' };
+
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['foo', 'bar'],
+        cssObjs: [{ type: 'local', selector: 'foo bar', rule: declaration }],
+      }),
+    ).toEqual(['.foo .bar {\n  color: red;\n}']);
+
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['a', 'aa', 'aaa'],
+        cssObjs: [{ type: 'local', selector: 'aaaa', rule: declaration }],
+      }),
+    ).toEqual(['.a.aaa {\n  color: red;\n}']);
+
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['😀', 'x'],
+        cssObjs: [{ type: 'local', selector: '😀x', rule: declaration }],
+      })[0],
+    ).toMatch(/^\.\\1F600\.x \{/);
+  });
+  it('falls back when Intl.Segmenter is unavailable', () => {
+    const originalSegmenter = Intl.Segmenter;
+
+    try {
+      Object.defineProperty(Intl, 'Segmenter', {
+        configurable: true,
+        value: undefined,
+      });
+
+      expect(
+        transformCss({
+          composedClassLists: [],
+          localClassNames: ['foo', 'bar'],
+          cssObjs: [
+            { type: 'local', selector: 'foo bar', rule: { color: 'red' } },
+          ],
+        }),
+      ).toEqual(['.foo .bar {\n  color: red;\n}']);
+    } finally {
+      Object.defineProperty(Intl, 'Segmenter', {
+        configurable: true,
+        value: originalSegmenter,
+      });
+    }
+  });
+
   it('should escape class names', () => {
     expect(
       transformCss({
