@@ -15,6 +15,7 @@ import {
   conditionalProperties,
   conditionalPropertiesWithoutDefaultCondition,
   conditionalPropertiesWithoutResponsiveArray,
+  manyConditionsProperties,
 } from './index.css';
 
 const noop = (..._args: Array<any>) => {};
@@ -277,4 +278,93 @@ const noop = (..._args: Array<any>) => {};
     ['row'];
 
   noop(invalidRequiredValue);
+};
+
+/**
+ * More than 8 conditions
+ *
+ * `conditions` (and therefore `responsiveArray`) used to be capped at 8 by
+ * the types. These tests exercise a 12-condition config to make sure the cap
+ * is gone while the connection between `conditions` and `responsiveArray`
+ * (and the responsive array prop values) is preserved.
+ */
+// oxlint-disable-next-line no-unused-expressions
+() => {
+  const sprinkles = createSprinkles(manyConditionsProperties);
+
+  // Valid value - default condition, no responsive syntax
+  sprinkles({ display: 'flex' });
+
+  // Valid value - conditions beyond the 8th are accepted as object keys
+  sprinkles({
+    display: {
+      condition1: 'block',
+      condition9: 'none',
+      condition12: 'flex',
+    },
+  });
+
+  sprinkles({
+    display: {
+      // @ts-expect-error Invalid condition name
+      condition13: 'block',
+    },
+  });
+
+  // Valid value - a responsive array with more than 8 (up to 12) elements.
+  // (`@ts-expect-error` only suppresses the following line, so the array
+  // literals below are kept on a single line to keep the directives accurate.)
+  // prettier-ignore
+  sprinkles({
+    display: ['block', 'none', 'flex', 'block', 'none', 'flex', 'block', 'none', 'flex', 'block', 'none', 'flex'],
+  });
+
+  // Valid value - responsive array shorthand beyond 8 elements
+  // prettier-ignore
+  sprinkles({
+    paddingY: ['small', 'medium', 'large', 'small', 'medium', 'large', 'small', 'medium', 'large', 'small', 'medium', 'large'],
+  });
+
+  // prettier-ignore
+  sprinkles({
+    // @ts-expect-error Too many responsive array values (13 > 12 conditions)
+    display: ['block', 'none', 'flex', 'block', 'none', 'flex', 'block', 'none', 'flex', 'block', 'none', 'flex', 'block'],
+  });
+
+  // prettier-ignore
+  sprinkles({
+    // @ts-expect-error Invalid responsive array value beyond the 8th slot
+    display: ['block', 'none', 'flex', 'block', 'none', 'flex', 'block', 'none', 'nope'],
+  });
+
+  // The connection between `conditions` and `responsiveArray` is maintained:
+  // only condition names are valid `responsiveArray` elements. `responsiveArray`
+  // is placed first so the caught error anchors to it rather than another prop.
+  defineProperties({
+    // @ts-expect-error 'd' is not a defined condition name
+    responsiveArray: ['a', 'b', 'd'],
+    defaultCondition: 'a',
+    conditions: {
+      a: {},
+      b: { '@media': 'screen and (min-width: 200px)' },
+      c: { '@media': 'screen and (min-width: 400px)' },
+    },
+    properties: {
+      display: ['block', 'flex'],
+    },
+  });
+
+  // A `responsiveArray` must contain at least two conditions.
+  defineProperties({
+    // @ts-expect-error A single-element responsive array is not allowed
+    responsiveArray: ['a'],
+    defaultCondition: 'a',
+    conditions: {
+      a: {},
+      b: { '@media': 'screen and (min-width: 200px)' },
+    },
+    properties: {
+      display: ['block', 'flex'],
+    },
+  });
 };

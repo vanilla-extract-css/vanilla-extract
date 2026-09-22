@@ -1,5 +1,13 @@
 # @vanilla-extract/sprinkles
 
+## 1.7.1
+
+### Patch Changes
+
+- [#1780](https://github.com/vanilla-extract-css/vanilla-extract/pull/1780) [`8c25d30`](https://github.com/vanilla-extract-css/vanilla-extract/commit/8c25d30f9625c7fac271e105db3734b7e1df90e0) Thanks [@askoufis](https://github.com/askoufis)! - `defineProperties`: Fixed a type limitation that capped `conditions` at 8
+
+  The type definition previously enforced an arbitrary maximum, despite the lack of a runtime constraint. This limit is now gone.
+
 ## 1.7.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @vanilla-extract/turbopack-plugin
 
+## 0.1.4
+
+### Patch Changes
+
+- [#1783](https://github.com/vanilla-extract-css/vanilla-extract/pull/1783) [`ad14778`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ad14778a2edd1944d9bf9cac76afe669d9cbd3a9) Thanks [@mpsq](https://github.com/mpsq)! - perf: Don't invalidate the compiler's module graph each time a file is processed during production builds
+
 ## 0.1.3
 
 ### Patch Changes

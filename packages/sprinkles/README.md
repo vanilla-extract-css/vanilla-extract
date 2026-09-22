@@ -646,7 +646,7 @@ mapResponsiveValue(
 
 ### createNormalizeValueFn
 
-Creates a function for normalizing conditional values into a consistent object stucture. Any primitive values or responsive arrays will be converted to conditional objects.
+Creates a function for normalizing conditional values into a consistent object structure. Any primitive values or responsive arrays will be converted to conditional objects.
 
 This function should be created and exported from your `sprinkles.css.ts` file using the conditions from your defined properties.
 

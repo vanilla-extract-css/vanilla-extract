@@ -1,5 +1,15 @@
 # @vanilla-extract/css
 
+## 1.21.2
+
+### Patch Changes
+
+- [#1742](https://github.com/vanilla-extract-css/vanilla-extract/pull/1742) [`6d56091`](https://github.com/vanilla-extract-css/vanilla-extract/commit/6d5609120803dadc3a3ef36719a36a92ba3b26af) Thanks [@ATOM00blue](https://github.com/ATOM00blue)! - Replace dots with underscores in development mode identifiers
+
+  Replace dots with underscores in `debug` identifiers
+
+  `debug` identifiers are derived from the source file path. For file paths with additional dots beyond the `.css.ts` extension (e.g. `foo.vanilla.css.ts`), the resulting class names contained a literal `.`, which is a CSS selector metacharacter that requires escaping and is a source of instability. Dots in debug identifiers are now replaced with `_`. This only affects `debug` identifiers and not `short` identifiers.
+
 ## 1.21.1
 
 ### Patch Changes

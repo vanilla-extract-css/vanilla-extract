@@ -126,3 +126,46 @@ export const shorthandsWithZeroValues = defineProperties({
     mt: ['marginTop'],
   },
 });
+
+// More than 8 conditions, to verify the responsive array types are no longer
+// capped at 8. Kept last in this file so it doesn't shift the generated
+// identifiers (and therefore snapshots) of the fixtures above it.
+export const manyConditionsProperties = defineProperties({
+  defaultCondition: 'condition1',
+  conditions: {
+    condition1: {},
+    condition2: { '@media': 'screen and (min-width: 200px)' },
+    condition3: { '@media': 'screen and (min-width: 400px)' },
+    condition4: { '@media': 'screen and (min-width: 600px)' },
+    condition5: { '@media': 'screen and (min-width: 800px)' },
+    condition6: { '@media': 'screen and (min-width: 1000px)' },
+    condition7: { '@media': 'screen and (min-width: 1200px)' },
+    condition8: { '@media': 'screen and (min-width: 1400px)' },
+    condition9: { '@media': 'screen and (min-width: 1600px)' },
+    condition10: { '@media': 'screen and (min-width: 1800px)' },
+    condition11: { '@media': 'screen and (min-width: 2000px)' },
+    condition12: { '@media': 'screen and (min-width: 2200px)' },
+  },
+  responsiveArray: [
+    'condition1',
+    'condition2',
+    'condition3',
+    'condition4',
+    'condition5',
+    'condition6',
+    'condition7',
+    'condition8',
+    'condition9',
+    'condition10',
+    'condition11',
+    'condition12',
+  ],
+  properties: {
+    display: ['block', 'none', 'flex'],
+    paddingTop: spacing,
+    paddingBottom: spacing,
+  },
+  shorthands: {
+    paddingY: ['paddingTop', 'paddingBottom'],
+  },
+});
