@@ -205,12 +205,32 @@ export default {
     </Block>
   ),
   code: (props) => {
-    // These props are added by SyntaxHighlighter
-    const { dangerouslySetInnerHTML, ['data-language']: language } =
-      props as typeof props & {
-        'data-language'?: string;
-        dangerouslySetInnerHTML: { __html: string };
-      };
+    // These props are added by SyntaxHighlighter. Code blocks without a
+    // language are left untokenized by mdx-loader's prism plugin, so these
+    // will be undefined — fall back to rendering the raw, unhighlighted
+    // contents instead.
+    const {
+      dangerouslySetInnerHTML,
+      children,
+      ['data-language']: language,
+    } = props as typeof props & {
+      'data-language'?: string;
+      dangerouslySetInnerHTML?: { __html: string };
+    };
+
+    if (!dangerouslySetInnerHTML) {
+      return (
+        <CompiledCode
+          code={[
+            {
+              contents: typeof children === 'string' ? children : '',
+              tokenized: false,
+            },
+          ]}
+        />
+      );
+    }
+
     let resolvedTitle = '';
     let resolvedChildren = dangerouslySetInnerHTML.__html;
     const matches = resolvedChildren.match(

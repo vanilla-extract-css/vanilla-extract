@@ -115,3 +115,10 @@ vanillaExtractPlugin({
 
 - `name`: Default `'bundle.css'`. Name the bundled CSS. [`output.assetFilenames`](https://rollupjs.org/configuration-options/#output-assetfilenames) can affect this.
 - `sourcemap`: Default `false`. Set to `true` to also output `.css.map` file.
+
+Without setting this option or otherwise configuring rollup to rename output files, the plugin will emit CSS in files such as `Button.css.ts.vanilla.css`.
+If a consuming application also processes `.css.ts` files with vanilla-extract, its bundler filter can match those already-built CSS files a second time and fail with an error like:
+
+```
+Cannot import ".../Button.css.ts.vanilla.css" into a JavaScript file without an output path configured
+```
