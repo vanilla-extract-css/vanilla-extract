@@ -15,7 +15,7 @@ import Text from '../Typography/Text';
 import * as styles from './SyntaxHighlighter.css';
 
 export interface CodeProps {
-  language: string;
+  language?: string;
   children: string;
   tokenized?: boolean;
 }
@@ -30,13 +30,15 @@ export default ({ language, children, tokenized }: CodeProps) => {
             data-language={language}
             dangerouslySetInnerHTML={{ __html: children }}
           />
-        ) : (
+        ) : language ? (
           <SyntaxHighlighter
             language={language}
             style={{ [`pre[class*="language-"]`]: {} }}
           >
             {children}
           </SyntaxHighlighter>
+        ) : (
+          <code>{children}</code>
         )}
       </Text>
     </Box>
