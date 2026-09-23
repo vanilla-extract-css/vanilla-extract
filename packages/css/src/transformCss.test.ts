@@ -52,32 +52,6 @@ describe('transformCss', () => {
       })[0],
     ).toMatch(/^\.\\1F600\.x \{/);
   });
-  it('falls back when Intl.Segmenter is unavailable', () => {
-    const originalSegmenter = Intl.Segmenter;
-
-    try {
-      Object.defineProperty(Intl, 'Segmenter', {
-        configurable: true,
-        value: undefined,
-      });
-
-      expect(
-        transformCss({
-          composedClassLists: [],
-          localClassNames: ['foo', 'bar'],
-          cssObjs: [
-            { type: 'local', selector: 'foo bar', rule: { color: 'red' } },
-          ],
-        }),
-      ).toEqual(['.foo .bar {\n  color: red;\n}']);
-    } finally {
-      Object.defineProperty(Intl, 'Segmenter', {
-        configurable: true,
-        value: originalSegmenter,
-      });
-    }
-  });
-
   it('should escape class names', () => {
     expect(
       transformCss({

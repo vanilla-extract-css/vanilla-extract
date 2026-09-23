@@ -114,64 +114,6 @@ interface CSSRule {
   rule: CSSPropertiesWithVars;
 }
 
-type ClassNameMatch = {
-  pattern: string;
-  patternIndex: number;
-  start: number;
-  end: number;
-};
-
-type ClassNameSearch = {
-  search(text: string): ClassNameMatch[];
-};
-
-/**
- * modern-ahocorasick v3 requires Intl.Segmenter. Vanilla Extract can also be
- * evaluated in older build runtimes, so retain the former UTF-16 substring
- * behavior when the platform does not provide that API.
- */
-class LegacyClassNameSearch implements ClassNameSearch {
-  constructor(private readonly patterns: Array<string>) {}
-
-  search(text: string) {
-    const matches: Array<ClassNameMatch> = [];
-
-    this.patterns.forEach((pattern, patternIndex) => {
-      if (pattern.length === 0) {
-        return;
-      }
-
-      let start = text.indexOf(pattern);
-      while (start !== -1) {
-        matches.push({
-          pattern,
-          patternIndex,
-          start,
-          end: start + pattern.length,
-        });
-        start = text.indexOf(pattern, start + 1);
-      }
-    });
-
-    matches.sort(
-      (left, right) =>
-        left.end - right.end ||
-        right.end - right.start - (left.end - left.start) ||
-        left.patternIndex - right.patternIndex,
-    );
-
-    return matches;
-  }
-}
-
-function createClassNameSearch(patterns: Array<string>): ClassNameSearch {
-  if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
-    return new AhoCorasick(patterns);
-  }
-
-  return new LegacyClassNameSearch(patterns);
-}
-
 class Stylesheet {
   rules: Array<CSSRule>;
   conditionalRulesets: Array<ConditionalRuleset>;
@@ -179,7 +121,7 @@ class Stylesheet {
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
   localClassNamesMap: Map<string, string>;
-  localClassNamesSearch: ClassNameSearch;
+  localClassNamesSearch: AhoCorasick;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
   layers: Map<string, Array<string>>;
   propertyRules: Array<CSSPropertyBlock>;
@@ -196,7 +138,7 @@ class Stylesheet {
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
-    this.localClassNamesSearch = createClassNameSearch(localClassNames);
+    this.localClassNamesSearch = new AhoCorasick(localClassNames);
     this.layers = new Map();
 
     // Class list compositions should be priortized by Newer > Older
