@@ -141,7 +141,10 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
               className={styles.sourceContainer}
             >
               <SyntaxHighlighter
-                language={activeFile.language || 'tsx'}
+                language={
+                  activeFile.language ??
+                  (activeFile.tokenized === false ? undefined : 'tsx')
+                }
                 tokenized={activeFile.tokenized}
               >
                 {activeFile.contents}
