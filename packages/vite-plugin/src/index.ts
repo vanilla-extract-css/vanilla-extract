@@ -287,6 +287,10 @@ export function vanillaExtractPlugin({
           root: config.root,
         });
 
+        if (!isBuild) {
+          await compiler.unstable_invalidateAllModules();
+        }
+
         const { source, watchFiles } = await compiler.processVanillaFile(
           absoluteId,
           {
@@ -361,7 +365,7 @@ export function vanillaExtractPlugin({
           return absoluteId + (query ? `?${query}` : '');
         }
       },
-      load(id) {
+      async load(id) {
         const [validId] = id.split('?');
 
         if (!isVirtualId(validId) || !compiler) return;
@@ -370,8 +374,26 @@ export function vanillaExtractPlugin({
           filePath: validId,
           root: config.root,
         });
+        const fileId = virtualIdToFileId(absoluteId);
 
-        const { css } = compiler.getCssForFile(virtualIdToFileId(absoluteId));
+        // Under full bundle mode, plugin HMR hooks never run and the root is absent from the
+        // dev server's watcher, so this virtual module must refresh the compiler itself and
+        // declare its own watch dependencies here.
+        if (!isBuild) {
+          await compiler.unstable_invalidateAllModules();
+
+          const { watchFiles } = await compiler.processVanillaFile(fileId, {
+            outputCss: true,
+          });
+
+          for (const file of watchFiles) {
+            if (!file.includes('node_modules')) {
+              this.addWatchFile(file);
+            }
+          }
+        }
+
+        const { css } = compiler.getCssForFile(fileId);
 
         if (css) {
           return css;
