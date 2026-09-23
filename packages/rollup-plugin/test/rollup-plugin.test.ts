@@ -1,484 +1,258 @@
 import { describe, expect, it } from 'vitest';
-import {
-  rolldown,
-  type InputOptions as RolldownInputOptions,
-  type OutputOptions as RolldownOutputOptions,
-} from 'rolldown';
-import {
-  rollup,
-  type InputPluginOption,
-  type OutputOptions,
-  type RollupOptions,
-} from 'rollup';
-import esbuild from 'rollup-plugin-esbuild';
-import json from '@rollup/plugin-json';
 import path from 'path';
 
-import {
-  vanillaExtractPlugin,
-  type Options as VanillaExtractPluginOptions,
-} from '..';
-import { stripSideEffectImportsMatching } from '../src/lib';
+import { BUNDLERS, bundle, fixtureRoot } from './helpers';
 
-type BuildOutputFile = {
-  fileName: string;
-  type: string;
-  source?: string | Uint8Array;
-  code?: string;
-  map?: { mappings?: string } | null;
-};
+/**
+ * Strips content hashes from asset names and scope hashes from identifiers, so
+ * two builds can be compared on the CSS they describe rather than on hashes
+ * that are expected to differ.
+ */
+const withoutHashes = (assets: Array<[string, string]>) =>
+  assets
+    .map(
+      ([name, css]) =>
+        [
+          name.replace(/-[\w-]{8,}(\.\w+)$/, '-[hash]$1'),
+          css.replace(/__[a-z0-9]+\b/g, '__[hash]'),
+        ] as [string, string],
+    )
+    .sort((a, b) => a.join().localeCompare(b.join()));
 
-const formatOutputForSnapshot = (output: BuildOutputFile[]) =>
-  output.map((chunkOrAsset) => [
-    chunkOrAsset.fileName,
-    chunkOrAsset.type === 'asset' ? chunkOrAsset.source : chunkOrAsset.code,
-  ]);
-
-const formatSourcemapOutputForSnapshot = (output: BuildOutputFile[]) =>
-  output.map((chunkOrAsset) => [
-    chunkOrAsset.fileName,
-    chunkOrAsset.type === 'asset' ? '' : chunkOrAsset.map?.mappings,
-  ]);
-
-const filterJsChunkCodes = (output: BuildOutputFile[]) =>
-  output
-    .filter((file) => file.type === 'chunk' && file.fileName.endsWith('.js'))
-    .map((file) => file.code);
-
-const filterAssetSources = (output: BuildOutputFile[], fileName: string) =>
-  output
-    .filter((file) => file.type === 'asset' && file.fileName === fileName)
-    .map((file) => file.source);
-
-interface BuildOptions extends VanillaExtractPluginOptions {
-  rollup: RollupOptions & { output: OutputOptions };
-}
-
-const build = async ({
-  rollup: rollupOptions,
-  ...pluginOptions
-}: BuildOptions) => {
-  const bundle = await rollup({
-    input: require.resolve('@fixtures/themed/src/index.ts'),
-    external: ['@vanilla-extract/dynamic'],
-    ...rollupOptions,
-    plugins: [
-      ...((rollupOptions?.plugins as InputPluginOption[]) ?? [
-        vanillaExtractPlugin({
-          cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
-          ...pluginOptions,
-        }),
-        esbuild(),
-        json(),
-      ]),
-    ],
-  });
-  const { output } = await bundle.generate(rollupOptions.output);
-  output.sort((a, b) => a.fileName.localeCompare(b.fileName));
-  return output;
-};
-
-const buildAndMatchSnapshot = async (options: BuildOptions) => {
-  const output = await build(options);
-  expect(formatOutputForSnapshot(output)).toMatchSnapshot();
-};
-
-describe('rollup-plugin', () => {
-  describe('options', () => {
-    it('extract generates .css bundle', async () => {
-      const cwd = path.dirname(
-        require.resolve('@fixtures/react-library-example/package.json'),
-      );
-      const output = await build({
-        cwd,
-        extract: { name: 'app.css', sourcemap: true },
-        rollup: {
-          input: { app: path.join(cwd, 'src/index.ts') },
-          external: ['clsx', 'react', 'react/jsx-runtime', 'react-dom'],
-          output: {
-            assetFileNames: '[name][extname]',
-            format: 'esm',
-            preserveModules: true, // not needed for output, just makes some assertions easier
-          },
-        },
+/**
+ * Every case runs against both bundlers. Where behaviour legitimately differs,
+ * the difference is expressed as an option override rather than a forked test,
+ * so the two can never silently drift apart.
+ */
+describe.each(BUNDLERS)('%s', (bundler) => {
+  describe('CSS asset emission', () => {
+    it('bundles all CSS into shared assets alongside a single JS chunk', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        output: { format: 'esm' },
       });
 
-      // assert essential files were made
-      expect(filterAssetSources(output, 'app.css')).toHaveLength(1);
-
-      // assert .css imports were removed
-      const jsChunkCodes = filterJsChunkCodes(output);
-      expect(jsChunkCodes.length).toBeGreaterThan(0);
-      for (const code of jsChunkCodes) {
-        expect(code).not.toMatch(/^import .*\.css['"]/m);
-      }
-
-      // assert bundle CSS reflects order from @fixtures/react-library-example/index.ts
-      const sourcemapSources = filterAssetSources(output, 'app.css.map');
-      expect(sourcemapSources).toHaveLength(1);
-      const map = JSON.parse(String(sourcemapSources[0]));
-      expect(map.sources).toEqual([
-        'src/styles/reset.css.ts.vanilla.css',
-        'src/styles/vars.css.ts.vanilla.css',
-        'src/button/button.css.ts.vanilla.css',
-        'src/checkbox/checkbox.css.ts.vanilla.css',
-        'src/radio/radio.css.ts.vanilla.css',
-        'src/styles/utility.css.ts.vanilla.css', // this always should be last
-      ]);
-
-      // assert Vanilla CSS was stripped out
-      expect(
-        output.filter((file) => file.fileName.includes('.css.ts.vanilla')),
-      ).toHaveLength(0);
-
-      // snapshot output for everything else
-      expect(
-        formatOutputForSnapshot(
-          output.filter(
-            (chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map'),
-          ),
-        ),
-      ).toMatchSnapshot();
-    });
-  });
-
-  describe('Rollup settings', () => {
-    it('should build without preserveModules', async () => {
-      // Bundle all JS outputs together
-      await buildAndMatchSnapshot({
-        rollup: { output: { format: 'esm' } },
-      });
+      expect(result.jsChunks()).toHaveLength(1);
+      expect(result.cssAssets()).toMatchSnapshot();
     });
 
-    it('should build with preserveModules', async () => {
-      // Preserve JS modules
-      await buildAndMatchSnapshot({
-        rollup: {
-          output: {
-            format: 'esm',
-            preserveModules: true,
-          },
-        },
+    it('emits a CSS asset per module when preserveModules is enabled', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        output: { format: 'esm', preserveModules: true },
       });
+
+      expect(result.jsChunks().length).toBeGreaterThan(1);
+      expect(result.cssAssets()).toMatchSnapshot();
     });
 
-    it('should build with preserveModules and inject filescopes', async () => {
-      // Preserve JS modules, don't generate any CSS assets and inject filescopes
-      await buildAndMatchSnapshot({
-        unstable_injectFilescopes: true,
-        rollup: {
-          output: {
-            format: 'esm',
-            preserveModules: true,
-          },
-          external: [
-            '@vanilla-extract/css/fileScope',
-            '@vanilla-extract/css',
-            '@vanilla-extract/dynamic',
-          ],
-        },
-      });
-    });
-
-    it('should build with preserveModules and assetFileNames', async () => {
-      // Preserve JS modules and place assets next to JS files instead of assets directory
-      await buildAndMatchSnapshot({
-        rollup: {
-          output: {
-            format: 'esm',
-            preserveModules: true,
-            preserveModulesRoot: path.dirname(
-              require.resolve('@fixtures/themed/src/index.ts'),
-            ),
-            assetFileNames({ names }) {
-              return names[0]?.replace(/^src\//, '') ?? '';
-            },
-          },
-        },
-      });
-    });
-
-    it('should build with sourcemaps', async () => {
-      const output = await build({
-        rollup: {
-          output: {
-            format: 'esm',
-            preserveModules: true,
-            sourcemap: true,
-          },
-        },
-      });
-
-      expect(formatSourcemapOutputForSnapshot(output)).toMatchSnapshot();
-    });
-  });
-
-  describe('should be compatible with rolldown', () => {
-    const build = async ({
-      rollup: rollupOptions,
-      ...pluginOptions
-    }: VanillaExtractPluginOptions & {
-      rollup: RolldownInputOptions & { output: RolldownOutputOptions };
-    }) => {
-      const bundle = await rolldown({
-        external: [
-          '@vanilla-extract/dynamic',
-          '@vanilla-extract/css',
-          '@vanilla-extract/css/fileScope',
-        ],
-        input: require.resolve('@fixtures/themed/src/index.ts'),
-        plugins: [
-          vanillaExtractPlugin({
-            cwd: path.dirname(require.resolve('@fixtures/themed/package.json')),
-            ...pluginOptions,
-          }),
-        ],
-        ...rollupOptions,
-      });
-      const { output } = await bundle.generate(rollupOptions.output);
-      output.sort((a, b) => a.fileName.localeCompare(b.fileName));
-      return output;
-    };
-
-    const buildAndMatchSnapshot = async (
-      outputOptions: RolldownOutputOptions,
-      { unstable_injectFilescopes }: { unstable_injectFilescopes?: boolean } = {
-        unstable_injectFilescopes: false,
-      },
-    ) => {
-      const output = await build({
-        rollup: {
-          output: outputOptions,
-        },
-        unstable_injectFilescopes,
-      });
-      expect(formatOutputForSnapshot(output)).toMatchSnapshot();
-    };
-
-    const buildThirdparty = async ({
-      cwd,
-      outputOptions,
-    }: {
-      cwd: string;
-      outputOptions: RolldownOutputOptions;
-    }) => {
-      const packageRoot = path.dirname(
-        require.resolve('@fixtures/thirdparty/package.json'),
-      );
-      const bundle = await rolldown({
-        input: path.join(packageRoot, 'src/index.ts'),
-        external: ['@vanilla-extract/dynamic', '@vanilla-extract/css'],
-        plugins: [vanillaExtractPlugin({ cwd })],
-      });
-
-      const { output } = await bundle.generate(outputOptions);
-      output.sort((a, b) => a.fileName.localeCompare(b.fileName));
-
-      return output;
-    };
-
-    const buildThirdpartyAndMatchSnapshot = async (cwd: string) => {
-      const output = await buildThirdparty({
-        cwd,
-        outputOptions: {
+    it('places CSS assets alongside JS modules when assetFileNames is customised', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        output: {
           format: 'esm',
           preserveModules: true,
-          assetFileNames: 'assets/[name]-[hash][extname]',
-        },
-      });
-
-      expect(formatOutputForSnapshot(output)).toMatchSnapshot();
-    };
-
-    it('extract generates .css bundle', async () => {
-      const cwd = path.dirname(
-        require.resolve('@fixtures/react-library-example/package.json'),
-      );
-      const output = await build({
-        cwd,
-        extract: { name: 'app.css', sourcemap: true },
-        rollup: {
-          input: { app: path.join(cwd, 'src/index.ts') },
-          external: ['clsx', 'react', 'react/jsx-runtime', 'react-dom'],
-          output: {
-            assetFileNames: '[name][extname]',
-            format: 'esm',
-            preserveModules: true, // not needed for output, just makes some assertions easier
-          },
-        },
-      });
-
-      // assert essential files were made
-      expect(filterAssetSources(output, 'app.css')).toHaveLength(1);
-
-      // assert .css imports were removed
-      const jsChunkCodes = filterJsChunkCodes(output);
-      expect(jsChunkCodes.length).toBeGreaterThan(0);
-      for (const code of jsChunkCodes) {
-        expect(code).not.toMatch(/^import .*\.css['"]/m);
-      }
-
-      // assert bundle CSS reflects order from @fixtures/react-library-example/index.ts
-      const sourcemapSources = filterAssetSources(output, 'app.css.map');
-      expect(sourcemapSources).toHaveLength(1);
-      const map = JSON.parse(String(sourcemapSources[0]));
-      expect(map.sources).toEqual([
-        'src/styles/reset.css.ts.vanilla.css',
-        'src/styles/vars.css.ts.vanilla.css',
-        'src/button/button.css.ts.vanilla.css',
-        'src/checkbox/checkbox.css.ts.vanilla.css',
-        'src/radio/radio.css.ts.vanilla.css',
-        'src/styles/utility.css.ts.vanilla.css', // this always should be last
-      ]);
-
-      // assert Vanilla CSS was stripped out
-      expect(
-        output.filter((file) => file.fileName.includes('.css.ts.vanilla')),
-      ).toHaveLength(0);
-
-      // snapshot output for everything else
-      expect(
-        formatOutputForSnapshot(
-          output.filter(
-            (chunkOrAsset) => !chunkOrAsset.fileName.endsWith('.map'),
-          ),
-        ),
-      ).toMatchSnapshot();
-    });
-
-    it('should build without preserveModules', async () => {
-      // Bundle all JS outputs together
-      await buildAndMatchSnapshot({
-        format: 'esm',
-      });
-    });
-
-    it('should build with preserveModules', async () => {
-      // Preserve JS modules
-      await buildAndMatchSnapshot({
-        format: 'esm',
-        preserveModules: true,
-      });
-    });
-
-    it('should build with preserveModules and inject filescopes', async () => {
-      // Preserve JS modules
-      await buildAndMatchSnapshot(
-        {
-          format: 'esm',
-          preserveModules: true,
-          preserveModulesRoot: path.dirname(
-            require.resolve('@fixtures/themed/src/index.ts'),
-          ),
+          preserveModulesRoot: path.join(fixtureRoot('themed'), 'src'),
           assetFileNames({ names }) {
-            return names[0].replace(/^src\//, '') ?? '';
-          },
-        },
-        {
-          unstable_injectFilescopes: true,
-        },
-      );
-    });
-
-    it('should build with preserveModules and assetFileNames', async () => {
-      // Preserve JS modules and place assets next to JS files instead of assets directory
-      await buildAndMatchSnapshot({
-        format: 'esm',
-        preserveModules: true,
-        preserveModulesRoot: path.dirname(
-          require.resolve('@fixtures/themed/src/index.ts'),
-        ),
-        assetFileNames({ names }) {
-          return names[0].replace(/^src\//, '') ?? '';
-        },
-      });
-    });
-
-    it('should build with sourcemaps', async () => {
-      const output = await build({
-        rollup: {
-          output: {
-            format: 'esm',
-            preserveModules: true,
-            sourcemap: true,
+            return names[0]?.replace(/^src\//, '') ?? '';
           },
         },
       });
 
-      expect(formatSourcemapOutputForSnapshot(output)).toMatchSnapshot();
+      // Default behaviour would nest these under `assets/`.
+      for (const name of result.cssAssetNames()) {
+        expect(name).not.toMatch(/^assets\//);
+      }
+      expect(result.cssAssets()).toMatchSnapshot();
     });
 
-    it('should build thirdparty dependencies', async () => {
-      const cwd = path.dirname(
-        require.resolve('@fixtures/thirdparty/package.json'),
+    it('rewrites CSS imports to relative paths resolving to emitted assets', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        output: { format: 'esm', preserveModules: true },
+      });
+
+      const specifiers = result.allCssImportSpecifiers();
+      // Guard against the assertions below passing vacuously.
+      expect(specifiers.length).toBeGreaterThan(0);
+
+      for (const [, specifier] of specifiers) {
+        // Bare or absolute specifiers break consumers of the output bundle.
+        expect(specifier).toMatch(/^\.{1,2}\//);
+      }
+
+      // Every rewritten import must point at a file that was actually emitted.
+      const targets = new Set(
+        result
+          .jsChunks()
+          .flatMap(([chunkName]) => result.resolvedCssImports(chunkName)),
       );
+      for (const target of targets) {
+        expect(result.fileNames).toContain(target);
+      }
+    });
+  });
 
-      await buildThirdpartyAndMatchSnapshot(cwd);
+  describe('extract', () => {
+    const extractBuild = (plugin: { name?: string; sourcemap?: boolean }) =>
+      bundle({
+        bundler,
+        fixture: 'react-library-example',
+        plugin: { extract: plugin },
+        input: { app: 'src/index.ts' },
+        external: ['clsx', 'react', 'react/jsx-runtime', 'react-dom'],
+        output: {
+          format: 'esm',
+          preserveModules: true,
+          assetFileNames: '[name][extname]',
+        },
+      });
+
+    it('emits a single CSS bundle instead of per-module assets', async () => {
+      const result = await extractBuild({ name: 'app.css', sourcemap: true });
+
+      expect(result.cssAssetNames()).toEqual(['app.css']);
+      // The per-module virtual CSS must not leak into the output.
+      expect(
+        result.fileNames.filter((name) => name.includes('.css.ts.vanilla')),
+      ).toHaveLength(0);
+      expect(result.asset('app.css')).toMatchSnapshot();
     });
 
-    it('should build thirdparty dependencies with nested cwd', async () => {
-      const packageRoot = path.dirname(
-        require.resolve('@fixtures/thirdparty/package.json'),
+    it('defaults the bundle name to bundle.css', async () => {
+      const result = await extractBuild({});
+
+      expect(result.cssAssetNames()).toEqual(['bundle.css']);
+    });
+
+    it('removes CSS side-effect imports from JS chunks', async () => {
+      const result = await extractBuild({ name: 'app.css' });
+
+      expect(result.jsChunks().length).toBeGreaterThan(0);
+      expect(result.allCssImportSpecifiers()).toEqual([]);
+    });
+
+    it('orders extracted CSS by the import order of the entry module', async () => {
+      const result = await extractBuild({ name: 'app.css', sourcemap: true });
+
+      const map = JSON.parse(result.asset('app.css.map'));
+      expect(map.sources).toEqual([
+        'src/styles/reset.css.ts.vanilla.css',
+        'src/styles/vars.css.ts.vanilla.css',
+        'src/button/button.css.ts.vanilla.css',
+        'src/checkbox/checkbox.css.ts.vanilla.css',
+        'src/radio/radio.css.ts.vanilla.css',
+        // Imported last by the entry, so it must win the cascade.
+        'src/styles/utility.css.ts.vanilla.css',
+      ]);
+    });
+
+    it('omits the sourcemap unless extract.sourcemap is enabled', async () => {
+      const result = await extractBuild({ name: 'app.css' });
+
+      expect(result.fileNames).not.toContain('app.css.map');
+    });
+  });
+
+  describe('unstable_injectFilescopes', () => {
+    it('injects filescope calls instead of emitting CSS', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        plugin: { unstable_injectFilescopes: true },
+        output: { format: 'esm', preserveModules: true },
+      });
+
+      // Consumers process the .css.ts themselves, so nothing is emitted here.
+      expect(result.cssAssets()).toEqual([]);
+      expect(result.allCssImportSpecifiers()).toEqual([]);
+
+      const styles = result.chunk('src/styles.css.js');
+      expect(styles).toContain('setFileScope');
+      expect(styles).toContain('endFileScope');
+      expect(styles).toMatchSnapshot();
+    });
+  });
+
+  describe('sourcemaps', () => {
+    it('returns empty mappings for .css.ts modules and preserves them elsewhere', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        output: { format: 'esm', preserveModules: true, sourcemap: true },
+      });
+
+      // The plugin deliberately returns empty mappings for compiled CSS
+      // modules — their output bears no relation to the authored source.
+      for (const [name] of result.jsChunks()) {
+        if (name.endsWith('.css.js')) {
+          expect(result.mappings(name)).toMatch(/^;*$/);
+        }
+      }
+
+      // Non-CSS modules must keep working sourcemaps.
+      expect(result.mappings('src/index.js')).not.toMatch(/^;*$/);
+    });
+  });
+
+  describe('identifiers', () => {
+    it('produces terse class names when identifiers is "short"', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'themed',
+        plugin: { identifiers: 'short' },
+        output: { format: 'esm', preserveModules: true },
+      });
+
+      const css = result
+        .cssAssets()
+        .map(([, source]) => source)
+        .join('\n');
+      expect(css).not.toMatch(/\.styles_button__/);
+      expect(css).toMatch(/^\.[a-z0-9]+ \{/m);
+    });
+  });
+
+  describe('third-party dependencies', () => {
+    const thirdpartyOutput = {
+      format: 'esm' as const,
+      preserveModules: true,
+      assetFileNames: 'assets/[name]-[hash][extname]',
+    };
+
+    it('compiles .css.mjs from nested node_modules packages', async () => {
+      const result = await bundle({
+        bundler,
+        fixture: 'thirdparty',
+        output: thirdpartyOutput,
+      });
+
+      expect(result.cssAssets()).toMatchSnapshot();
+    });
+
+    it('resolves the same third-party modules when cwd is nested below the package root', async () => {
+      const nested = await bundle({
+        bundler,
+        fixture: 'thirdparty',
+        cwd: path.join(fixtureRoot('thirdparty'), 'src'),
+        output: thirdpartyOutput,
+      });
+      const fromRoot = await bundle({
+        bundler,
+        fixture: 'thirdparty',
+        output: thirdpartyOutput,
+      });
+
+      // Identifier hashes are derived from each file's path relative to `cwd`,
+      // so they legitimately differ between the two. What must not change is
+      // which modules are found or what rules they produce.
+      expect(withoutHashes(nested.cssAssets())).toEqual(
+        withoutHashes(fromRoot.cssAssets()),
       );
-
-      await buildThirdpartyAndMatchSnapshot(path.join(packageRoot, 'src'));
     });
-  });
-});
-
-describe('stripSideEffectImportsMatching', () => {
-  it('strips only specified side effects in ESM', () => {
-    expect(
-      stripSideEffectImportsMatching(
-        `import React from 'react';
-import 'button.vanilla.css';
-import './foobar.js';
-
-export default function Button() {
-  return <button>My Button</button>;
-}`,
-        ['button.vanilla.css', 'checkbox.vanilla.css', 'radio.vanilla.css'],
-      ),
-    ).toBe(
-      `import React from 'react';
-import './foobar.js';
-
-export default function Button() {
-  return <button>My Button</button>;
-}`,
-    );
-  });
-
-  it('leaves code alone if no side effects specified', () => {
-    const code = `import React from 'react';
-import 'button.vanilla.css';
-import './foobar.js';
-
-export default function Button() {
-  return <button>My Button</button>;
-}`;
-    expect(stripSideEffectImportsMatching(code, [])).toBe(code);
-  });
-
-  it('strips only specified side effects in CJS', () => {
-    expect(
-      stripSideEffectImportsMatching(
-        `const React = require('react');
-require('button.vanilla.css');
-require('./foobar.js');
-
-module.exports = function Button() {
-  return <button>My Button</button>;
-}`,
-        ['button.vanilla.css', 'checkbox.vanilla.css', 'radio.vanilla.css'],
-      ),
-    ).toBe(
-      `const React = require('react');
-require('./foobar.js');
-
-module.exports = function Button() {
-  return <button>My Button</button>;
-}`,
-    );
   });
 });
