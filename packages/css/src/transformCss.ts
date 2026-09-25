@@ -120,8 +120,9 @@ class Stylesheet {
   currConditionalRuleset: ConditionalRuleset | undefined;
   fontFaceRules: Array<GlobalFontFaceRule>;
   keyframesRules: Array<CSSKeyframesBlock>;
+  localClassNames: Array<string>;
   localClassNamesMap: Map<string, string>;
-  localClassNamesSearch: AhoCorasick;
+  localClassNamesSearch: AhoCorasick | undefined;
   composedClassLists: Array<{ identifier: string; regex: RegExp }>;
   layers: Map<string, Array<string>>;
   propertyRules: Array<CSSPropertyBlock>;
@@ -138,7 +139,7 @@ class Stylesheet {
     this.localClassNamesMap = new Map(
       localClassNames.map((localClassName) => [localClassName, localClassName]),
     );
-    this.localClassNamesSearch = new AhoCorasick(localClassNames);
+    this.localClassNames = localClassNames;
     this.layers = new Map();
 
     // Class list compositions should be priortized by Newer > Older
@@ -324,6 +325,9 @@ class Stylesheet {
       return this.transformClassname(transformedSelector);
     }
 
+    // Building the search index is expensive when there are many local class names, and most
+    // stylesheets never need it, so only build it the first time it's needed
+    this.localClassNamesSearch ??= new AhoCorasick(this.localClassNames);
     const results = this.localClassNamesSearch.search(transformedSelector);
 
     let lastReplaceIndex = transformedSelector.length;
