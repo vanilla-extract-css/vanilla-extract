@@ -1,5 +1,14 @@
 # @vanilla-extract/integration
 
+## 8.0.11
+
+### Patch Changes
+
+- [#1785](https://github.com/vanilla-extract-css/vanilla-extract/pull/1785) [`ced6c58`](https://github.com/vanilla-extract-css/vanilla-extract/commit/ced6c581cdf3821701e5da3435076cac3fbd97cf) Thanks [@dkhonker](https://github.com/dkhonker)! - Escape `packageName` and `normalizedPath` in `addFileScope` to prevent code injection
+
+- Updated dependencies [[`437578d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/437578d4b90f9f019b0851100d27caa26807d6e8)]:
+  - @vanilla-extract/css@1.21.3
+
 ## 8.0.10
 
 ### Patch Changes
