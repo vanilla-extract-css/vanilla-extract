@@ -1,5 +1,13 @@
 # @vanilla-extract/css
 
+## 1.21.3
+
+### Patch Changes
+
+- [#1791](https://github.com/vanilla-extract-css/vanilla-extract/pull/1791) [`437578d`](https://github.com/vanilla-extract-css/vanilla-extract/commit/437578d4b90f9f019b0851100d27caa26807d6e8) Thanks [@tony-scio](https://github.com/tony-scio)! - perf: Only build the local class name search index when a stylesheet needs it, speeding up builds of stylesheets that use only plain class selectors
+
+- [#1790](https://github.com/vanilla-extract-css/vanilla-extract/pull/1790) [`28767ea`](https://github.com/vanilla-extract-css/vanilla-extract/commit/28767ea1feb44a97168e3150877a68e3ea842ba0) Thanks [@sonofmagic](https://github.com/sonofmagic)! - Upgrade `modern-ahocorasick` dependency to `^3.3.0`
+
 ## 1.21.2
 
 ### Patch Changes
