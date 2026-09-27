@@ -127,7 +127,7 @@
     "deepmerge": "^4.2.2",
     "lru-cache": "^10.4.3",
     "media-query-parser": "^2.0.2",
-    "modern-ahocorasick": "^1.0.0",
+    "modern-ahocorasick": "^3.3.0",
     "picocolors": "^1.0.0"
   }
 }

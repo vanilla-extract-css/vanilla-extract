@@ -332,10 +332,21 @@ class Stylesheet {
 
     let lastReplaceIndex = transformedSelector.length;
 
-    // Perform replacements backwards to simplify index handling
+    // modern-ahocorasick v3 returns independent UTF-16 half-open ranges,
+    // ordered by end, then pattern length, then input order. Keep only the
+    // first (longest) match for each end position to preserve the selector
+    // replacement semantics used by the former grouped result shape.
     for (let i = results.length - 1; i >= 0; i--) {
-      const [endIndex, [firstMatch]] = results[i];
-      const startIndex = endIndex - firstMatch.length + 1;
+      const currentMatch = results[i];
+      if (i > 0 && results[i - 1].end === currentMatch.end) {
+        continue;
+      }
+
+      const {
+        start: startIndex,
+        end: endIndex,
+        pattern: firstMatch,
+      } = currentMatch;
 
       // Class names can be substrings of other class names
       // e.g. '_1g1ptzo1' and '_1g1ptzo10'
@@ -348,7 +359,7 @@ class Stylesheet {
       // In either of these cases, the last replace index will occur either before or within the
       // current replacement range (from `startIndex` to `endIndex`).
       // If this occurs, we skip the replacement to avoid transforming the selector incorrectly.
-      const skipReplacement = lastReplaceIndex <= endIndex;
+      const skipReplacement = lastReplaceIndex < endIndex;
 
       if (skipReplacement) {
         continue;
@@ -361,7 +372,7 @@ class Stylesheet {
         transformedSelector = replaceBetweenIndexes(
           transformedSelector,
           startIndex,
-          endIndex + 1,
+          endIndex,
           this.transformClassname(firstMatch),
         );
       }
