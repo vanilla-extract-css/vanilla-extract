@@ -14,6 +14,13 @@ import type { Plugin } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
+async function hashString(str: string) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return hash;
+}
+
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   /**
@@ -24,6 +31,7 @@ interface VanillaExtractPluginOptions {
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
   esbuildOptions?: CompileOptions['esbuildOptions'];
+  useStyleLoader?: boolean;
 }
 export function vanillaExtractPlugin({
   outputCss,
@@ -32,6 +40,7 @@ export function vanillaExtractPlugin({
   processCss,
   identifiers,
   esbuildOptions,
+  useStyleLoader,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes and debug IDs to code
@@ -58,9 +67,31 @@ export function vanillaExtractPlugin({
           }
 
           const rootDir = build.initialOptions.absWorkingDir ?? process.cwd();
+          const filePath = join(rootDir, fileName);
+          const resolveDir = dirname(filePath);
 
-          const resolveDir = dirname(join(rootDir, fileName));
-
+          // If using style-loader then we need to return a JS file that inserts the CSS into the DOM
+          if (useStyleLoader) {
+            const elementId = `vanilla-extract-${
+              build.initialOptions.minify
+                ? await hashString(fileName)
+                : fileName.replace(/[^a-zA-Z0-9-_]/g, '-')
+            }`;
+            const contents = `
+              if (document.getElementById('${elementId}') === null) {
+                const element = document.createElement('style');
+                element.id = '${elementId}';
+                element.textContent = \`${source}\`;
+                document.head.append(element);
+              }
+              export default {};
+              `;
+            return {
+              contents,
+              loader: 'js',
+              resolveDir,
+            };
+          }
           return {
             contents: source,
             loader: 'css',
