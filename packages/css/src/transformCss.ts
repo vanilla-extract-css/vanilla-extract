@@ -255,18 +255,16 @@ class Stylesheet {
   }
 
   pixelifyProperties(cssRule: CSSPropertiesWithVars) {
+    const result = { ...cssRule };
+
     forEach(cssRule, (value, key) => {
-      if (
-        typeof value === 'number' &&
-        value !== 0 &&
-        !UNITLESS[key as keyof CSSPropertiesWithVars]
-      ) {
+      if (typeof value === 'number' && value !== 0 && !UNITLESS[key]) {
         // @ts-expect-error Any ideas?
-        cssRule[key] = `${value}px`;
+        result[key] = `${value}px`;
       }
     });
 
-    return cssRule;
+    return result;
   }
 
   transformVars({ vars, ...rest }: CSSPropertiesWithVars) {

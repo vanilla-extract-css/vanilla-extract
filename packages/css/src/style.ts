@@ -1,5 +1,5 @@
 import dedent from 'dedent';
-import deepmerge from 'deepmerge';
+import { deepmergeCustom } from 'deepmerge-ts';
 
 import type {
   FontFaceRule,
@@ -19,6 +19,14 @@ import { getFileScope, hasFileScope } from './fileScope';
 import { generateIdentifier } from './identifier';
 import { dedupeAndJoinClassList } from './utils';
 import { cssesc } from './cssesc';
+
+// Replace arrays rather than merging
+const mergeStyleRules = deepmergeCustom({
+  mergeArrays: false,
+  // Matches `deepmerge` behaviour where explicit `undefined` values are merged.
+  // See `style.test.ts`. Potentially worth flipping in the next major version.
+  filterValues: false,
+});
 
 function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   const className = generateIdentifier(debugId);
@@ -65,10 +73,7 @@ function composedStyle(rules: Array<StyleRule | ClassNames>, debugId?: string) {
   }
 
   if (styleRules.length > 0) {
-    const rule = deepmerge.all(styleRules, {
-      // Replace arrays rather than merging
-      arrayMerge: (_, sourceArray) => sourceArray,
-    });
+    const rule = mergeStyleRules(...styleRules) as StyleRule;
 
     appendCss({ type: 'local', selector: className, rule }, getFileScope());
   }
