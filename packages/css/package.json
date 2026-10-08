@@ -124,7 +124,7 @@
     "csstype": "^3.2.3",
     "dedent": "^1.5.3",
     "deep-object-diff": "^1.1.9",
-    "deepmerge": "^4.2.2",
+    "deepmerge-ts": "^8.0.2",
     "lru-cache": "^10.4.3",
     "media-query-parser": "^2.0.2",
     "modern-ahocorasick": "^3.3.0",
