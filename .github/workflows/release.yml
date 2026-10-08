@@ -36,12 +36,11 @@ jobs:
         run: pnpm install
 
       - name: Create release PR or publish to npm
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1.8.0
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          version: pnpm run version
-          publish: pnpm release
-        env:
-          GITHUB_TOKEN: ${{ secrets.VANILLA_EXTRACT_CI_GITHUB_TOKEN }}
+          version-script: pnpm run version
+          publish-script: pnpm release
+          github-token: ${{ secrets.VANILLA_EXTRACT_CI_GITHUB_TOKEN }}
 
   snapshot:
     name: Publish snapshot version
@@ -72,7 +71,7 @@ jobs:
         run: pnpm install
 
       - name: Publish
-        uses: seek-oss/changesets-snapshot@9063bfcb495100964ee0912c5bcb30c4c434c1b3 # v0.3.2
+        uses: seek-oss/changesets-snapshot@56b8b82b8e45fd725daa2890453dfa0fa28f9eb0 # v1.0.0
         with:
           pre-publish: pnpm prepare-release
         env:
