@@ -1,8 +1,25 @@
-import { describe, expect, it } from 'vitest';
+import { existsSync } from 'fs';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { getAbsoluteId } from './ids';
 
+vi.mock('fs', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('fs')>();
+
+  return { ...actual, existsSync: vi.fn(actual.existsSync) };
+});
+
+const mockExistingDirectories = (directories: string[]) => {
+  vi.mocked(existsSync).mockImplementation((filePath) =>
+    directories.includes(String(filePath)),
+  );
+};
+
 describe('getAbsoluteId', () => {
+  afterEach(() => {
+    vi.mocked(existsSync).mockReset();
+  });
+
   it('unwraps Windows absolute Vite ids', () => {
     expect(
       getAbsoluteId({
@@ -108,6 +125,37 @@ describe('getAbsoluteId', () => {
         filePath: '/app/styles.css.ts.vanilla.css',
       }),
     ).toBe('/example-repo/apps/example-app/app/styles.css.ts.vanilla.css');
+  });
+
+  it('resolves SSR-style root-relative ids that start with the root directory name', () => {
+    mockExistingDirectories(['/app/app/routes']);
+
+    expect(
+      getAbsoluteId({
+        root: '/app',
+        filePath: '/app/routes/_index.css.ts.vanilla.css',
+      }),
+    ).toBe('/app/app/routes/_index.css.ts.vanilla.css');
+  });
+
+  it('keeps absolute paths inside a root that matches the first directory name', () => {
+    mockExistingDirectories(['/app/app/routes']);
+
+    expect(
+      getAbsoluteId({
+        root: '/app',
+        filePath: '/app/app/routes/_index.css.ts.vanilla.css',
+      }),
+    ).toBe('/app/app/routes/_index.css.ts.vanilla.css');
+  });
+
+  it('does not treat sibling directories with the root as a prefix as inside the root', () => {
+    expect(
+      getAbsoluteId({
+        root: '/app',
+        filePath: '/application/styles.css.ts.vanilla.css',
+      }),
+    ).toBe('/app/application/styles.css.ts.vanilla.css');
   });
 
   const cases = [
