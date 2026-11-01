@@ -1,13 +1,39 @@
 import { createGlobalTheme, globalFontFace } from '@vanilla-extract/css';
 import colors from 'tailwindcss/colors';
 import { precomputeValues } from '@capsizecss/vanilla-extract';
+import { createFontStack, type FontMetrics } from '@capsizecss/core';
+import appleSystem from '@capsizecss/metrics/appleSystem';
+import arial from '@capsizecss/metrics/arial';
+import dmSans from '@capsizecss/metrics/dMSans';
+import robotoMono from '@capsizecss/metrics/robotoMono';
+import shrikhand from '@capsizecss/metrics/shrikhand';
 
 import type { Breakpoint } from './themeUtils';
 
 const grid = 4;
 const px = (value: string | number) => `${value}px`;
 
-const monoLisaFamily = 'MonoLisaCode';
+// Not in `@capsizecss/metrics`, so measured from MonoLisa 3 in the browser
+const monoLisaCode: FontMetrics = {
+  familyName: 'MonoLisaCode',
+  fullName: 'MonoLisaCode',
+  postscriptName: 'MonoLisaCode',
+  capHeight: 700,
+  ascent: 1040,
+  descent: -340,
+  lineGap: 0,
+  unitsPerEm: 1000,
+  xHeight: 563,
+  xWidthAvg: 640,
+};
+
+// Metric-compatible with Arial, and a common Linux fallback for it
+const liberationSans: FontMetrics = {
+  ...arial,
+  familyName: 'Liberation Sans',
+  fullName: 'Liberation Sans',
+  postscriptName: 'LiberationSans',
+};
 
 // Declared here instead of using MonoLisa's stylesheet, as it doesn't set `font-display`,
 // hiding code while the font loads. The font URLs encode the same options the stylesheet uses.
@@ -20,7 +46,7 @@ const monoLisaUnicodeRanges = [
 const monoLisaUrl = (style: string, unicodeRange: string) => {
   const options = {
     version: '3.000',
-    font_family: monoLisaFamily,
+    font_family: monoLisaCode.familyName,
     style,
     format: 'woff2',
     unicodeRange,
@@ -37,7 +63,7 @@ export const monoLisaPreloadUrl = monoLisaUrl(
 );
 
 globalFontFace(
-  monoLisaFamily,
+  monoLisaCode.familyName,
   ['normal', 'italic'].flatMap((fontStyle) =>
     monoLisaUnicodeRanges.map((unicodeRange) => ({
       src: `url(${monoLisaUrl(fontStyle, unicodeRange)}) format("woff2")`,
@@ -50,34 +76,25 @@ globalFontFace(
 );
 
 const fontMetrics = {
-  brand: {
-    capHeight: 669,
-    ascent: 1026,
-    descent: -432,
-    lineGap: 0,
-    unitsPerEm: 1000,
-  },
-  heading: {
-    capHeight: 700,
-    ascent: 992,
-    descent: -310,
-    lineGap: 0,
-    unitsPerEm: 1000,
-  },
-  body: {
-    capHeight: 1443,
-    ascent: 1950,
-    descent: -494,
-    lineGap: 0,
-    unitsPerEm: 2048,
-  },
-  code: {
-    capHeight: 700,
-    ascent: 1060,
-    descent: -320,
-    lineGap: 0,
-    unitsPerEm: 1000,
-  },
+  brand: shrikhand,
+  heading: dmSans,
+  body: appleSystem,
+  code: monoLisaCode,
+};
+
+const fontStack = (
+  metrics: FontMetrics[],
+  ...unadjustedFallbacks: string[]
+) => {
+  const { fontFamily, fontFaces } = createFontStack(metrics, {
+    fontFaceFormat: 'styleObject',
+  });
+
+  for (const { '@font-face': fontFace } of fontFaces) {
+    globalFontFace(fontFace.fontFamily, fontFace);
+  }
+
+  return [fontFamily, ...unadjustedFallbacks].join(', ');
 };
 
 const tailwindPalette = {
@@ -199,11 +216,11 @@ const calculateTypographyStyles = (
 
 export const vars = createGlobalTheme(':root', {
   fonts: {
+    // Size-adjusting a sans-serif to match Shrikhand cramps it without preventing any layout shift
     brand: 'Shrikhand, "Helvetica Neue", HelveticaNeue, Helvetica, sans-serif',
-    heading:
-      '"DM Sans", "Helvetica Neue", HelveticaNeue, Helvetica, sans-serif',
+    heading: fontStack([dmSans, arial, liberationSans], 'sans-serif'),
     body: '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif',
-    code: `${monoLisaFamily}, "Roboto Mono", Menlo, monospace`,
+    code: fontStack([monoLisaCode, robotoMono], 'Menlo', 'monospace'),
   },
   grid: px(grid),
   spacing: {
@@ -327,7 +344,7 @@ export const vars = createGlobalTheme(':root', {
           rows: 7,
         },
       },
-      'body',
+      'code',
     ),
     small: calculateTypographyStyles(
       {

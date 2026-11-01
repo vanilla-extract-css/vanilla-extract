@@ -669,6 +669,12 @@ importers:
 
   site:
     dependencies:
+      '@capsizecss/core':
+        specifier: ^4.1.3
+        version: 4.1.3
+      '@capsizecss/metrics':
+        specifier: ^4.4.0
+        version: 4.4.0
       '@capsizecss/vanilla-extract':
         specifier: ^2.0.4
         version: 2.0.4(@vanilla-extract/css@packages+css)
@@ -1732,6 +1738,9 @@ packages:
 
   '@capsizecss/core@4.1.3':
     resolution: {integrity: sha512-d2sTTBwKuVioYxpwpU4URMp8VkFK+GI1VNGNawQcF8HBMHzCDa1FLcbeXJSzb5AJik7ZGv3aFVCTs7IS9MhvHg==}
+
+  '@capsizecss/metrics@4.4.0':
+    resolution: {integrity: sha512-c2hY6gnHsHdt41zKv2RAbUM3v1m9TnBGKOWv0ksdScBMlwE5AdZPt+hjZEIziEiYUpdyytZ/ct07WqjzdBOIJw==}
 
   '@capsizecss/vanilla-extract@2.0.4':
     resolution: {integrity: sha512-KImqHutsYyeA718+3Fqg7Bw/RCSKgu+FESsMitWt9u4/KpBpB+s7cW4DWJyC6N5AzOoahYB7Jnu0hKB3HW+X6A==}
@@ -11781,6 +11790,8 @@ snapshots:
   '@capsizecss/core@4.1.3':
     dependencies:
       csstype: 3.2.3
+
+  '@capsizecss/metrics@4.4.0': {}
 
   '@capsizecss/vanilla-extract@2.0.4(@vanilla-extract/css@packages+css)':
     dependencies:
