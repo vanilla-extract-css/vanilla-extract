@@ -5,7 +5,7 @@ dist
 CHANGELOG.md
 README.md
 .github/ISSUE_TEMPLATE
-site/docs-manifest.json
+site/.astro
 .changeset
 .next
 pnpm-lock.yaml

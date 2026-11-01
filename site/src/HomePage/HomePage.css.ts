@@ -69,3 +69,12 @@ export const footerLayout = style([
     desktop: { flexBasis: '25%' },
   }),
 ]);
+
+export const errorUnderline = style({
+  textDecorationStyle: 'dashed',
+  textDecorationColor: vars.palette.red,
+  textDecorationThickness: '3px',
+  textDecorationLine: 'underline',
+  textDecorationSkipInk: 'none',
+  textUnderlineOffset: '2px',
+});

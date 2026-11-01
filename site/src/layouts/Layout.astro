@@ -1,0 +1,80 @@
+---
+import {
+  darkMode,
+  lightMode,
+  themeKey,
+} from '../system/styles/colorModes';
+// The reset has to come before everything else, as styles override it by order
+import '../system/styles/reset.css';
+import '../App.css';
+import { monoLisaPreloadUrl } from '../themes.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+
+const description = 'Zero-runtime Stylesheets-in-TypeScript.';
+const pageTitle = title
+  ? `${title} — vanilla-extract`
+  : 'vanilla-extract — Zero-runtime Stylesheets-in-TypeScript.';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const shareImageUrl = new URL('/og-image.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline define:vars={{ themeKey, darkMode, lightMode }}>
+      try {
+        const preference = localStorage.getItem(themeKey);
+        if (
+          preference == darkMode ||
+          (preference != lightMode &&
+            matchMedia('(prefers-color-scheme:dark)').matches)
+        ) {
+          document.documentElement.classList.add(darkMode);
+        }
+      } catch {}
+    </script>
+    <link
+      rel="preload"
+      href={monoLisaPreloadUrl}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Shrikhand&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+    <meta property="og:title" content={pageTitle} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="description" content={description} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fff" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta property="og:image" content={shareImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="vanilla-extract" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={shareImageUrl} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

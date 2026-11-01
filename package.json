@@ -22,6 +22,7 @@
     "lint:manypkg": "manypkg check",
     "lint:prettier": "prettier --cache --check .",
     "lint:tsc": "tsc",
+    "lint:site": "pnpm --filter=site lint",
     "lint:oxlint": "oxlint",
     "copy-readme-to-packages": "node scripts/copy-readme-to-packages.ts",
     "version": "changeset version && pnpm install --lockfile-only",
