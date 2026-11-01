@@ -1,10 +1,12 @@
 import {
   type AllHTMLAttributes,
+  type ComponentProps,
+  type ComponentType,
   type ElementType,
+  type JSX,
   type ReactNode,
   createElement,
 } from 'react';
-import type { MDXComponents } from 'mdx/types';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
 import InlineCode from './InlineCode/InlineCode';
@@ -21,6 +23,12 @@ import { type BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
+
+type MdxComponents = {
+  [Tag in keyof JSX.IntrinsicElements]?: ComponentType<
+    JSX.IntrinsicElements[Tag]
+  >;
+} & Record<string, ComponentType<any>>;
 
 const Block = ({
   component,
@@ -51,7 +59,7 @@ const A = ({
   type: _type,
   'data-inline-code': isInlineCodeLink,
   ...restProps
-}: JSX.IntrinsicElements['a'] & { 'data-inline-code'?: boolean }) =>
+}: ComponentProps<'a'> & { 'data-inline-code'?: boolean }) =>
   href ? (
     <Link
       to={href}
@@ -232,4 +240,4 @@ export const components = {
       {props.children}
     </Block>
   ),
-} satisfies MDXComponents;
+} satisfies MdxComponents;

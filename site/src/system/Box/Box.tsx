@@ -1,4 +1,9 @@
-import { createElement, type AllHTMLAttributes, type ElementType } from 'react';
+import {
+  createElement,
+  type AllHTMLAttributes,
+  type ElementType,
+  type Ref,
+} from 'react';
 import clsx from 'clsx';
 import * as resetStyles from '../styles/reset.css';
 import { sprinkles, type Sprinkles } from '../styles/sprinkles.css';
@@ -18,6 +23,7 @@ export interface BoxProps
     Sprinkles {
   component?: ElementType;
   className?: Parameters<typeof clsx>[0];
+  ref?: Ref<HTMLElement>;
 }
 
 export const Box = ({
