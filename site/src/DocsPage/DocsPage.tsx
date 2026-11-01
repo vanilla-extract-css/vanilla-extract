@@ -407,6 +407,27 @@ export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
     };
   }, []);
 
+  // Navigating moves this component into the new page, which resets the
+  // primary nav's scroll position, so it's restored after the swap
+  useEffect(() => {
+    let scrollTop = 0;
+    const getPrimaryNav = () => document.querySelector('[data-primary-nav]');
+    const save = () => {
+      scrollTop = getPrimaryNav()?.scrollTop ?? 0;
+    };
+    const restore = () => {
+      getPrimaryNav()?.scrollTo({ top: scrollTop });
+    };
+
+    document.addEventListener('astro:before-swap', save);
+    document.addEventListener('astro:after-swap', restore);
+
+    return () => {
+      document.removeEventListener('astro:before-swap', save);
+      document.removeEventListener('astro:after-swap', restore);
+    };
+  }, []);
+
   useEffect(() => {
     if (menuOpen) {
       document.body.classList.add(styles.bodyLock);
