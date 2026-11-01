@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import {
   darkMode,
   lightMode,
@@ -24,20 +25,25 @@ const shareImageUrl = new URL('/og-image.png', Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <script is:inline define:vars={{ themeKey, darkMode, lightMode }}>
-      try {
-        const preference = localStorage.getItem(themeKey);
-        if (
-          preference == darkMode ||
-          (preference != lightMode &&
-            matchMedia('(prefers-color-scheme:dark)').matches)
-        ) {
-          document.documentElement.classList.add(darkMode);
-        }
-      } catch {}
+      const applyColorMode = () => {
+        try {
+          const preference = localStorage.getItem(themeKey);
+          if (
+            preference == darkMode ||
+            (preference != lightMode &&
+              matchMedia('(prefers-color-scheme:dark)').matches)
+          ) {
+            document.documentElement.classList.add(darkMode);
+          }
+        } catch {}
+      };
+      applyColorMode();
+      // Client-side navigation replaces the `html` element's attributes
+      document.addEventListener('astro:after-swap', applyColorMode);
     </script>
     <link
       rel="preload"
@@ -73,6 +79,7 @@ const shareImageUrl = new URL('/og-image.png', Astro.site);
     <meta property="og:site_name" content="vanilla-extract" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={shareImageUrl} />
+    <ClientRouter />
   </head>
   <body>
     <slot />

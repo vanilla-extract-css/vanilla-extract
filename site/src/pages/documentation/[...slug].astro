@@ -28,6 +28,7 @@ const navHeadings = headings.filter(({ depth }) => depth === 2 || depth === 3);
 <Layout title={page.title}>
   <DocsChrome
     client:load
+    transition:persist="docs-chrome"
     route={page.route}
     groups={groups}
     pages={pages}
