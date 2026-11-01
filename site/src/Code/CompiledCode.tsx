@@ -3,20 +3,31 @@ import clsx from 'clsx';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
+import type { Token } from '../markdown/highlight';
 import * as styles from './CompiledCode.css';
 import * as highlightingStyles from './highlighting.css';
 import { vars } from '../themes.css';
 
 export interface CodeFile {
   fileName?: string;
-  html: string;
+  tokens: Token[];
 }
 
-const HighlightedCode = ({ html }: { html: string }) => (
+const HighlightedCode = ({ tokens }: { tokens: Token[] }) => (
   <Box className={highlightingStyles.root}>
     <Text size="code" component="div" baseline={false}>
       <pre>
-        <code dangerouslySetInnerHTML={{ __html: html }} />
+        <code>
+          {tokens.map(({ content, color, error }, index) => (
+            <span
+              key={index}
+              style={{ color }}
+              className={error ? highlightingStyles.error : undefined}
+            >
+              {content}
+            </span>
+          ))}
+        </code>
       </pre>
     </Text>
   </Box>
@@ -73,13 +84,13 @@ const FileTab = ({
 );
 
 const FilePanel = ({
-  html,
+  tokens,
   css,
   paddingTop,
 }: {
-  html: string;
+  tokens: Token[];
   /** `null` when the file doesn't create any CSS */
-  css?: string | null;
+  css?: Token[] | null;
   paddingTop?: 'large' | 'xlarge';
 }) => {
   const outputId = `${useId()}-output`;
@@ -97,7 +108,7 @@ const FilePanel = ({
             transition="slow"
             className={styles.sourceContainer}
           >
-            <HighlightedCode html={html} />
+            <HighlightedCode tokens={tokens} />
           </Box>
           {hasOutput ? (
             <Box
@@ -116,7 +127,7 @@ const FilePanel = ({
 
                 {css ? (
                   <Box className={styles.maxHeight}>
-                    <HighlightedCode html={css} />
+                    <HighlightedCode tokens={css} />
                   </Box>
                 ) : (
                   <Text size="small" type="code">
@@ -178,7 +189,7 @@ const FilePanel = ({
 export interface CompiledCodeProps {
   code: CodeFile[];
   /** Highlighted CSS, keyed by file name */
-  css?: Record<string, string>;
+  css?: Record<string, Token[]>;
   background?: {
     lightMode: keyof typeof vars.palette;
     darkMode: keyof typeof vars.palette;
@@ -213,7 +224,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
       }
     >
       <Box display="flex" flexWrap="wrap" alignItems="center">
-        {code.map(({ fileName, html }, index) => {
+        {code.map(({ fileName, tokens }, index) => {
           const inputId = multipleFiles ? `${id}-file-${index}` : undefined;
 
           return (
@@ -231,7 +242,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
                 <FileTab fileName={fileName} inputId={inputId} />
               ) : null}
               <FilePanel
-                html={html}
+                tokens={tokens}
                 css={
                   css && fileName?.endsWith('.css.ts')
                     ? (css[fileName] ?? null)

@@ -46,7 +46,7 @@ export const docsPlugin = () =>
             code: await Promise.all(
               files.map(async ({ fileName, contents }) => ({
                 fileName,
-                html: await highlight('tsx', contents),
+                tokens: await highlight('tsx', contents),
               })),
             ),
             css: Object.fromEntries(
@@ -69,7 +69,7 @@ export const docsPlugin = () =>
       const { title, code } = extractTitle(node.value);
 
       ctx.replaceNode(node, {
-        raw: `<CodeBlock ${jsxProps({ fileName: title, html: await highlight(language, code) })} />`,
+        raw: `<CodeBlock ${jsxProps({ fileName: title, tokens: await highlight(language, code) })} />`,
       });
     },
     link(node, ctx) {

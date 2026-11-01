@@ -54,3 +54,12 @@ globalStyle(`${root} pre, ${root} code`, {
   padding: 0,
   margin: 0,
 });
+
+export const error = style({
+  textDecorationStyle: 'dashed',
+  textDecorationColor: vars.palette.red,
+  textDecorationThickness: '3px',
+  textDecorationLine: 'underline',
+  textDecorationSkipInk: 'none',
+  textUnderlineOffset: '2px',
+});

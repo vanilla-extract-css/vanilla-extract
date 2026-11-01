@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import { HomePage, type HomePageProps } from '../HomePage/HomePage';
 import { codeSamples, type CodeSample } from '../HomePage/codeSamples';
-import { errorUnderline } from '../HomePage/HomePage.css';
 import { SearchInput } from '../SearchInput/SearchInput';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
@@ -13,14 +12,9 @@ const pages = (await getDocsPages()).map(toSummary);
 const highlightedCodeSamples = Object.fromEntries(
   await Promise.all(
     Object.entries<CodeSample>(codeSamples).map(
-      async ([name, { fileName, language = 'tsx', contents, errors = [] }]) => [
+      async ([name, { fileName, language = 'tsx', contents, errors }]) => [
         name,
-        {
-          fileName,
-          html: await highlight(language, contents, {
-            errors: { tokens: errors, className: errorUnderline },
-          }),
-        },
+        { fileName, tokens: await highlight(language, contents, { errors }) },
       ],
     ),
   ),
