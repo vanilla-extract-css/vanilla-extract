@@ -683,7 +683,7 @@ importers:
         version: 3.3.3
       '@docsearch/react':
         specifier: 3.3.3
-        version: 3.3.3(@algolia/client-search@4.14.3)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+        version: 3.3.3(@algolia/client-search@4.14.3)(@types/react@19.3.0)(react-dom@19.2.3)(react@19.2.3)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -694,11 +694,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: npm:react@^19.2.0
+        version: 19.2.3
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: npm:react-dom@^19.2.0
+        version: 19.2.3(react@19.2.3)
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.12
@@ -711,22 +711,19 @@ importers:
         version: 8.1.2(@astrojs/markdown-satteri@0.4.6)(astro@7.4.4)
       '@astrojs/react':
         specifier: ^7.1.0
-        version: 7.1.2(@types/node@16.11.10)(@types/react-dom@18.2.19)(@types/react@18.2.55)(esbuild@0.28.0)(jiti@1.21.7)(react-dom@18.2.0)(react@18.2.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
+        version: 7.1.2(@types/node@16.11.10)(@types/react-dom@19.3.0)(@types/react@19.3.0)(esbuild@0.28.0)(jiti@1.21.7)(react-dom@19.2.3)(react@19.2.3)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
       '@isaacs/ttlcache':
         specifier: ^2.1.5
         version: 2.1.5
       '@types/lodash':
         specifier: ^4.14.168
         version: 4.14.177
-      '@types/mdx':
-        specifier: ^2.0.14
-        version: 2.0.14
       '@types/react':
-        specifier: ^18.2.55
-        version: 18.2.55
+        specifier: npm:@types/react@^19.2.0
+        version: 19.3.0
       '@types/react-dom':
-        specifier: ^18.2.19
-        version: 18.2.19
+        specifier: npm:@types/react-dom@^19.2.0
+        version: 19.3.0(@types/react@19.3.0)
       '@vanilla-extract/compiler':
         specifier: workspace:*
         version: link:../packages/compiler
@@ -4577,9 +4574,6 @@ packages:
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
 
-  '@types/mdx@2.0.14':
-    resolution: {integrity: sha512-T48PeuJtvLosNTPVhfnIp3i/n3a4g4Bad7YCq5k64D4u7NwDrAotikQ+5+sjtUvBmxCMlbo3dVL+C2dP0rWHzg==}
-
   '@types/mime@1.3.2':
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
 
@@ -4625,8 +4619,16 @@ packages:
   '@types/react-dom@18.2.19':
     resolution: {integrity: sha512-aZvQL6uUbIJpjZk4U8JZGbau9KDeAwMfmhyWorxgBkqDIEf6ROjRozcmPIicqsUwPUjbkDfHKgGee1Lq65APcA==}
 
+  '@types/react-dom@19.3.0':
+    resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
+    peerDependencies:
+      '@types/react': ^19.3.0
+
   '@types/react@18.2.55':
     resolution: {integrity: sha512-Y2Tz5P4yz23brwm2d7jNon39qoAtMMmalOQv6+fEFt1mT+FcM3D841wDpoUvFXhaYenuROCy3FZYqdTjM7qVyA==}
+
+  '@types/react@19.3.0':
+    resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
 
   '@types/resolve@1.17.1':
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
@@ -11511,15 +11513,15 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@7.1.2(@types/node@16.11.10)(@types/react-dom@18.2.19)(@types/react@18.2.55)(esbuild@0.28.0)(jiti@1.21.7)(react-dom@18.2.0)(react@18.2.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)':
+  '@astrojs/react@7.1.2(@types/node@16.11.10)(@types/react-dom@19.3.0)(@types/react@19.3.0)(esbuild@0.28.0)(jiti@1.21.7)(react-dom@19.2.3)(react@19.2.3)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)':
     dependencies:
       '@astrojs/internal-helpers': 0.13.0
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.2.19
+      '@types/react': 19.3.0
+      '@types/react-dom': 19.3.0(@types/react@19.3.0)
       '@vitejs/plugin-react': 6.1.2(vite@8.3.5)
       devalue: 6.0.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
       ultrahtml: 1.7.0
       vite: 8.3.5(@types/node@16.11.10)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
     transitivePeerDependencies:
@@ -12577,16 +12579,16 @@ snapshots:
 
   '@docsearch/css@3.3.3': {}
 
-  '@docsearch/react@3.3.3(@algolia/client-search@4.14.3)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)':
+  '@docsearch/react@3.3.3(@algolia/client-search@4.14.3)(@types/react@19.3.0)(react-dom@19.2.3)(react@19.2.3)':
     dependencies:
       '@algolia/autocomplete-core': 1.7.4
       '@algolia/autocomplete-preset-algolia': 1.7.4(@algolia/client-search@4.14.3)(algoliasearch@4.14.3)
       '@docsearch/css': 3.3.3
       algoliasearch: 4.14.3
     optionalDependencies:
-      '@types/react': 18.2.55
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      '@types/react': 19.3.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
     transitivePeerDependencies:
       - '@algolia/client-search'
 
@@ -15061,8 +15063,6 @@ snapshots:
     dependencies:
       '@types/unist': 2.0.6
 
-  '@types/mdx@2.0.14': {}
-
   '@types/mime@1.3.2': {}
 
   '@types/mini-css-extract-plugin@1.4.3(@swc/core@1.15.8)(esbuild@0.28.0)(webpack-cli@6.0.1)':
@@ -15113,10 +15113,18 @@ snapshots:
     dependencies:
       '@types/react': 18.2.55
 
+  '@types/react-dom@19.3.0(@types/react@19.3.0)':
+    dependencies:
+      '@types/react': 19.3.0
+
   '@types/react@18.2.55':
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
+      csstype: 3.2.3
+
+  '@types/react@19.3.0':
+    dependencies:
       csstype: 3.2.3
 
   '@types/resolve@1.17.1':
