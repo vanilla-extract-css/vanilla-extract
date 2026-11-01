@@ -67,39 +67,48 @@ theme.tokenColors = [
 
 let highlighter: ReturnType<typeof createHighlighter> | undefined;
 
-interface HighlightOptions {
-  /** Underlines these identifiers, to show them as type errors */
-  errors?: { tokens: string[]; className: string };
+export interface Token {
+  content: string;
+  color?: string;
+  /** Underlined, to show it as a type error */
+  error?: boolean;
 }
 
-const findDecorations = (
-  code: string,
-  { tokens, className }: NonNullable<HighlightOptions['errors']>,
-) =>
-  tokens.flatMap((token) =>
-    Array.from(code.matchAll(new RegExp(`\\b${token}\\b`, 'g')), (match) => ({
-      start: match.index,
-      end: match.index + token.length,
-      properties: { class: className },
-    })),
-  );
+const newline: Token = { content: '\n' };
 
 export async function highlight(
   language: string,
   code: string,
-  { errors }: HighlightOptions = {},
-) {
+  { errors = [] }: { errors?: string[] } = {},
+): Promise<Token[]> {
   const shiki = await (highlighter ??= createHighlighter({
     themes: [theme],
     langs: languages,
   }));
 
-  return shiki.codeToHtml(code, {
+  const lines = shiki.codeToTokensBase(code, {
     lang: languages.find((lang) => lang === language) ?? 'text',
     theme,
-    structure: 'inline',
-    decorations: errors ? findDecorations(code, errors) : undefined,
   });
+
+  const errorPattern =
+    errors.length > 0 ? new RegExp(`\\b(${errors.join('|')})\\b`) : undefined;
+
+  return lines.flatMap((line, index) => [
+    ...(index > 0 ? [newline] : []),
+    ...line.flatMap(({ content, color }) =>
+      errorPattern
+        ? content
+            .split(errorPattern)
+            .filter(Boolean)
+            .map((part) => ({
+              content: part,
+              color,
+              error: errors.includes(part) || undefined,
+            }))
+        : [{ content, color }],
+    ),
+  ]);
 }
 
 const titleComment = /^(?:\/\/\s?([^*/\n]*)|\/\*\s?([^*/\n]*)\*\/)\n/;
