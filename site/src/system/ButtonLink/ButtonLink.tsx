@@ -1,11 +1,10 @@
 import type { ReactNode } from 'react';
 import clsx from 'clsx';
-import { Link, type NavLinkProps } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import * as styles from './ButtonLink.css';
 import { sprinkles } from '../styles/sprinkles.css';
 
-interface ButtonLinkProps extends NavLinkProps {
+interface ButtonLinkProps {
+  to: string;
   variant?: 'solid' | 'transparent';
   icon?: ReactNode;
   children: ReactNode;
@@ -43,28 +42,10 @@ export const ButtonLink = ({
     variant === 'solid' ? styles.solid : undefined,
     variant === 'transparent' ? styles.transparent : undefined,
   );
-  if (typeof to === 'string' && to.startsWith('http')) {
-    return (
-      <a href={to} className={classNames}>
-        {children}
-        {icon}
-      </a>
-    );
-  }
-
-  if (typeof to === 'string' && to.indexOf('#') > -1) {
-    return (
-      <HashLink to={to} className={classNames}>
-        {children}
-        {icon}
-      </HashLink>
-    );
-  }
-
   return (
-    <Link onClick={() => window.scrollTo(0, 0)} to={to} className={classNames}>
+    <a href={to} className={classNames}>
       {children}
       {icon}
-    </Link>
+    </a>
   );
 };

@@ -28,7 +28,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build && pnpm --filter "./site" generate:docs-manifest
+        run: pnpm build
 
       - name: Lint
         run: pnpm lint

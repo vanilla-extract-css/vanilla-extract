@@ -3,7 +3,7 @@ import { Box } from '../system';
 import * as styles from './InlineCode.css';
 
 export interface InlineCodeProps {
-  children: ReactNode;
+  children?: ReactNode;
   inline?: boolean;
 }
 export default ({ children }: InlineCodeProps) => {

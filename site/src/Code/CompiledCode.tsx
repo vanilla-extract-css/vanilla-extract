@@ -2,20 +2,28 @@ import { useId, useState } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
-import SyntaxHighlighter from './SyntaxHighlighter';
-
 import * as styles from './CompiledCode.css';
+import * as highlightingStyles from './highlighting.css';
 import { vars } from '../themes.css';
 
-interface File {
-  contents: string;
+export interface CodeFile {
   fileName?: string;
-  language?: string;
-  tokenized?: boolean;
+  html: string;
 }
 
+const HighlightedCode = ({ html }: { html: string }) => (
+  <Box className={highlightingStyles.root}>
+    <Text size="code" component="div" baseline={false}>
+      <pre>
+        <code dangerouslySetInnerHTML={{ __html: html }} />
+      </pre>
+    </Text>
+  </Box>
+);
+
 export interface CompiledCodeProps {
-  code: Array<File>;
+  code: CodeFile[];
+  /** Highlighted CSS, keyed by file name */
   css?: Record<string, string>;
   background?: {
     lightMode: keyof typeof vars.palette;
@@ -141,15 +149,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
               transition="slow"
               className={styles.sourceContainer}
             >
-              <SyntaxHighlighter
-                language={
-                  activeFile.language ??
-                  (activeFile.tokenized === false ? undefined : 'tsx')
-                }
-                tokenized={activeFile.tokenized}
-              >
-                {activeFile.contents}
-              </SyntaxHighlighter>
+              <HighlightedCode html={activeFile.html} />
             </Box>
             {showOutputPanel ? (
               <Box
@@ -168,9 +168,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
 
                   {activeFileName && css[activeFileName] ? (
                     <Box className={styles.maxHeight}>
-                      <SyntaxHighlighter language="css">
-                        {css[activeFileName]}
-                      </SyntaxHighlighter>
+                      <HighlightedCode html={css[activeFileName]} />
                     </Box>
                   ) : (
                     <Text size="small" type="code">
