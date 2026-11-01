@@ -7,8 +7,6 @@ import {
 } from './compileVanillaExtract';
 import { extractTitle, highlight } from './highlight';
 
-const compiledCodeComponent = 'MdxCompiledCode';
-
 const jsxProps = (props: Record<string, unknown>) =>
   Object.entries(props)
     .filter(([, value]) => value !== undefined)
@@ -55,15 +53,14 @@ export const docsPlugin = () =>
               await Promise.all(
                 Object.entries(css).map(async ([fileName, contents]) => [
                   fileName,
-                  contents && (await highlight('css', contents)),
+                  contents ? await highlight('css', contents) : undefined,
                 ]),
               ),
             ),
           };
 
-          ctx.data.hasCompiledCode = true;
           ctx.replaceNode(node, {
-            raw: `<${compiledCodeComponent} client:visible ${jsxProps(props)} />`,
+            raw: `<CompiledCodeBlock ${jsxProps(props)} />`,
           });
           return;
         }
@@ -90,14 +87,6 @@ export const docsPlugin = () =>
         if (child.type === 'paragraph') {
           ctx.setProperty(child, 'data', { hName: 'blockquote-p' });
         }
-      }
-    },
-    after(root, ctx) {
-      // Hydrated islands have to be imported by the MDX file itself
-      if (ctx.data.hasCompiledCode) {
-        ctx.prependChild(root, {
-          raw: `import ${compiledCodeComponent} from '/src/Code/MdxCompiledCode';`,
-        });
       }
     },
   });
