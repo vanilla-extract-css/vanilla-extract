@@ -1,4 +1,5 @@
-import { useId, useState } from 'react';
+import { Fragment, useId } from 'react';
+import clsx from 'clsx';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
@@ -21,6 +22,159 @@ const HighlightedCode = ({ html }: { html: string }) => (
   </Box>
 );
 
+const FileTab = ({
+  fileName,
+  inputId,
+}: {
+  fileName: string;
+  inputId?: string;
+}) => (
+  <Box
+    component={inputId ? 'label' : 'span'}
+    htmlFor={inputId}
+    cursor={inputId ? 'pointer' : undefined}
+    marginRight="large"
+    marginTop="-medium"
+    borderRadius="small"
+    className={clsx(styles.fileTab, !inputId && styles.onlyFileTab)}
+  >
+    <Box position="relative" display="flex" alignItems="center">
+      <Box
+        component="span"
+        position="absolute"
+        background={{
+          lightMode: 'green300',
+          darkMode: 'green400',
+        }}
+        borderRadius="full"
+        paddingLeft="xsmall"
+        paddingTop="large"
+        marginLeft="xsmall"
+        transition="slow"
+        className={styles.fileIndicator}
+      />
+      <Box
+        component="span"
+        paddingLeft="large"
+        position="relative"
+        className={styles.boldLayoutShiftFix}
+        data-text={fileName}
+      >
+        <Box position="absolute" left={0} paddingLeft="large">
+          <Text size="small" baseline={false}>
+            <Box component="span" className={styles.fileName}>
+              {fileName}
+            </Box>
+          </Text>
+        </Box>
+      </Box>
+    </Box>
+  </Box>
+);
+
+const FilePanel = ({
+  html,
+  css,
+  paddingTop,
+}: {
+  html: string;
+  /** `null` when the file doesn't create any CSS */
+  css?: string | null;
+  paddingTop?: 'large' | 'xlarge';
+}) => {
+  const outputId = `${useId()}-output`;
+  const hasOutput = css !== undefined;
+
+  return (
+    <Box width="full" paddingTop={paddingTop} className={styles.filePanel}>
+      <Box padding="large" margin="-large" overflow="hidden">
+        <Box display="flex">
+          <Box
+            width="full"
+            flexGrow={1}
+            flexShrink={0}
+            minWidth={0}
+            transition="slow"
+            className={styles.sourceContainer}
+          >
+            <HighlightedCode html={html} />
+          </Box>
+          {hasOutput ? (
+            <Box
+              id={outputId}
+              width="full"
+              flexShrink={0}
+              minWidth={0}
+              padding="large"
+              transition="slow"
+              className={styles.outputContainer}
+            >
+              <Stack space="large">
+                <Text weight="strong" size="small" color="secondary">
+                  CSS
+                </Text>
+
+                {css ? (
+                  <Box className={styles.maxHeight}>
+                    <HighlightedCode html={css} />
+                  </Box>
+                ) : (
+                  <Text size="small" type="code">
+                    No CSS created
+                  </Text>
+                )}
+              </Stack>
+            </Box>
+          ) : null}
+        </Box>
+      </Box>
+
+      {hasOutput ? (
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          paddingTop={{ mobile: 'medium' }}
+          className={styles.buttonContainer}
+        >
+          <Box
+            component="label"
+            background="zinc600"
+            borderRadius="medium"
+            padding="medium"
+            cursor="pointer"
+            className={styles.button}
+            position="relative"
+            transition="fast"
+          >
+            <input
+              type="checkbox"
+              aria-controls={outputId}
+              className={styles.showCssInput}
+            />
+            <Box
+              component="span"
+              display="block"
+              background="pink600"
+              position="absolute"
+              inset={0}
+              pointerEvents="none"
+              borderRadius="medium"
+              transition="slow"
+              className={styles.buttonBackground}
+            />
+            <Box component="span" position="relative">
+              <Text size="small" color="code" weight="strong">
+                <span className={styles.showOutputText}>Show Output</span>
+                <span className={styles.closeText}>Close</span>
+              </Text>
+            </Box>
+          </Box>
+        </Box>
+      ) : null}
+    </Box>
+  );
+};
+
 export interface CompiledCodeProps {
   code: CodeFile[];
   /** Highlighted CSS, keyed by file name */
@@ -31,15 +185,14 @@ export interface CompiledCodeProps {
   };
 }
 
+/**
+ * Switching files and showing the CSS are handled by form controls and CSS, so
+ * this doesn't need to be hydrated
+ */
 export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
-  const [activeFileName, setActiveFileName] = useState(code[0].fileName);
-  const [showCss, setShowCss] = useState(false);
-  const showOutputPanel = css && activeFileName?.endsWith('.css.ts');
-
-  const activeFile = code.filter(
-    ({ fileName }) => fileName === activeFileName,
-  )[0];
-  const outputContainerId = useId();
+  const id = useId();
+  const multipleFiles = code.length > 1;
+  const hasFileNames = code.some(({ fileName }) => fileName);
 
   return (
     <Box
@@ -59,168 +212,43 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
           : undefined
       }
     >
-      <Stack space={code.length > 1 ? 'xlarge' : 'large'}>
-        {activeFile.fileName ? (
-          <Box display="flex" alignItems="center">
-            {code.map(({ fileName }) => {
-              const isActiveFile = fileName === activeFileName;
+      <Box display="flex" flexWrap="wrap" alignItems="center">
+        {code.map(({ fileName, html }, index) => {
+          const inputId = multipleFiles ? `${id}-file-${index}` : undefined;
 
-              return (
-                <Box
-                  key={fileName}
-                  component={code.length > 1 ? 'button' : 'span'}
-                  cursor={code.length > 1 ? 'pointer' : undefined}
-                  marginRight="large"
-                  marginTop="-medium"
-                  className={styles.fileNameFocus}
-                  borderRadius="small"
-                  onClick={
-                    code.length > 1
-                      ? () => {
-                          setActiveFileName(fileName);
-                          setShowCss(false);
-                        }
-                      : undefined
-                  }
-                >
-                  <Box position="relative" display="flex" alignItems="center">
-                    <Box
-                      component="span"
-                      position="absolute"
-                      background={{
-                        lightMode: 'green300',
-                        darkMode: 'green400',
-                      }}
-                      borderRadius="full"
-                      paddingLeft="xsmall"
-                      paddingTop="large"
-                      marginLeft="xsmall"
-                      transition="slow"
-                      className={
-                        isActiveFile
-                          ? styles.fileIndicatorActive
-                          : styles.fileIndicatorInactive
-                      }
-                    />
-                    <Box
-                      component="span"
-                      paddingLeft="large"
-                      position="relative"
-                      className={styles.boldLayoutShiftFix}
-                      data-text={fileName}
-                    >
-                      <Box position="absolute" left={0} paddingLeft="large">
-                        <Text
-                          key={fileName}
-                          size="small"
-                          weight={isActiveFile ? 'strong' : undefined}
-                          baseline={false}
-                        >
-                          <Box
-                            component="span"
-                            className={[
-                              styles.fileName,
-                              !isActiveFile
-                                ? styles.fileNameInactive
-                                : undefined,
-                            ]}
-                          >
-                            {fileName}
-                          </Box>
-                        </Text>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-        ) : null}
-        <Box padding="large" margin="-large" overflow="hidden">
-          <Box
-            display="flex"
-            className={showCss ? styles.showCssOnMobile : undefined}
-          >
-            <Box
-              width="full"
-              flexGrow={1}
-              flexShrink={0}
-              minWidth={0}
-              transition="slow"
-              className={styles.sourceContainer}
-            >
-              <HighlightedCode html={activeFile.html} />
-            </Box>
-            {showOutputPanel ? (
-              <Box
-                id={outputContainerId}
-                width="full"
-                flexShrink={0}
-                minWidth={0}
-                padding="large"
-                transition="slow"
-                className={styles.outputContainer}
-              >
-                <Stack space="large">
-                  <Text weight="strong" size="small" color="secondary">
-                    CSS
-                  </Text>
-
-                  {activeFileName && css[activeFileName] ? (
-                    <Box className={styles.maxHeight}>
-                      <HighlightedCode html={css[activeFileName]} />
-                    </Box>
-                  ) : (
-                    <Text size="small" type="code">
-                      No CSS created
-                    </Text>
-                  )}
-                </Stack>
-              </Box>
-            ) : null}
-          </Box>
-        </Box>
-      </Stack>
-
-      {showOutputPanel ? (
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          paddingTop={{ mobile: 'medium' }}
-          className={styles.buttonContainer}
-        >
-          <Box
-            component="button"
-            background="zinc600"
-            borderRadius="medium"
-            padding="medium"
-            cursor="pointer"
-            className={styles.button}
-            onClick={() => setShowCss(!showCss)}
-            position="relative"
-            transition="fast"
-            aria-expanded={showCss}
-            aria-controls={outputContainerId}
-          >
-            <Box
-              component="span"
-              display="block"
-              background="pink600"
-              position="absolute"
-              inset={0}
-              pointerEvents="none"
-              borderRadius="medium"
-              opacity={showCss ? 0 : undefined}
-              transition="slow"
-            />
-            <Box component="span" position="relative">
-              <Text size="small" color="code" weight="strong">
-                {showCss ? 'Close' : 'Show Output'}
-              </Text>
-            </Box>
-          </Box>
-        </Box>
-      ) : null}
+          return (
+            <Fragment key={fileName ?? index}>
+              {inputId ? (
+                <input
+                  type="radio"
+                  name={id}
+                  id={inputId}
+                  defaultChecked={index === 0}
+                  className={styles.fileInput}
+                />
+              ) : null}
+              {fileName ? (
+                <FileTab fileName={fileName} inputId={inputId} />
+              ) : null}
+              <FilePanel
+                html={html}
+                css={
+                  css && fileName?.endsWith('.css.ts')
+                    ? (css[fileName] ?? null)
+                    : undefined
+                }
+                paddingTop={
+                  hasFileNames
+                    ? multipleFiles
+                      ? 'xlarge'
+                      : 'large'
+                    : undefined
+                }
+              />
+            </Fragment>
+          );
+        })}
+      </Box>
     </Box>
   );
 };

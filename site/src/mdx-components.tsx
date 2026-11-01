@@ -12,11 +12,36 @@ import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { type HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
-import { CompiledCode, type CodeFile } from './Code/CompiledCode';
-import { MdxBlock as Block } from './MdxBlock';
+import {
+  CompiledCode,
+  type CodeFile,
+  type CompiledCodeProps,
+} from './Code/CompiledCode';
+import { type BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
+
+const Block = ({
+  component,
+  children,
+  maxWidth = 'large',
+  style,
+  ...restProps
+}: Omit<BoxProps, 'paddingBottom'>) => (
+  <Box
+    component={component}
+    paddingBottom="xxlarge"
+    {...restProps}
+    maxWidth={maxWidth}
+    style={{
+      margin: '0 auto',
+      ...style,
+    }}
+  >
+    {children}
+  </Box>
+);
 
 // Children arrive as pre-rendered HTML, so structural concerns are handled by `markdown/docsPlugin.ts`
 
@@ -78,6 +103,14 @@ const Heading = ({ level, component, children, href }: HeadingProps) => {
 const CodeBlock = (file: CodeFile) => (
   <Block maxWidth="xlarge">
     <CompiledCode code={[file]} />
+  </Block>
+);
+
+const CompiledCodeBlock = (props: CompiledCodeProps) => (
+  <Block maxWidth="xlarge">
+    <Box paddingY="large">
+      <CompiledCode {...props} />
+    </Box>
   </Block>
 );
 
@@ -154,6 +187,7 @@ export const components = {
     </Block>
   ),
   CodeBlock,
+  CompiledCodeBlock,
   code: InlineCode,
   th: (props) => (
     <Text component="th" weight="strong">
