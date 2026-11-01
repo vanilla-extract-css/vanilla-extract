@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { Box, Stack } from '../system';
 import Text from '../Typography/Text';
@@ -31,6 +31,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
   const activeFile = code.filter(
     ({ fileName }) => fileName === activeFileName,
   )[0];
+  const outputContainerId = useId();
 
   return (
     <Box
@@ -152,7 +153,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
             </Box>
             {showOutputPanel ? (
               <Box
-                id="outputContainer"
+                id={outputContainerId}
                 width="full"
                 flexShrink={0}
                 minWidth={0}
@@ -201,7 +202,7 @@ export const CompiledCode = ({ code, css, background }: CompiledCodeProps) => {
             position="relative"
             transition="fast"
             aria-expanded={showCss}
-            aria-controls="outputContainer"
+            aria-controls={outputContainerId}
           >
             <Box
               component="span"
