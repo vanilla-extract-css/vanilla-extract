@@ -1,4 +1,10 @@
-import { useState, useEffect, type ReactNode } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import clsx from 'clsx';
 import type { MarkdownHeading } from 'astro';
 import { useActiveHeading } from '../useActiveHeading';
@@ -119,12 +125,14 @@ const MenuBackdrop = ({
 );
 
 const PrimaryNav = ({
+  navRef,
   open,
   route: currentRoute,
   groups,
   pages,
   onClick,
 }: {
+  navRef: RefObject<HTMLElement | null>;
   open: boolean;
   route: string;
   groups: string[];
@@ -134,7 +142,7 @@ const PrimaryNav = ({
   return (
     <Box
       component="aside"
-      data-primary-nav
+      ref={navRef}
       padding={{ mobile: 'xlarge', desktop: 'large' }}
       paddingY="xlarge"
       position="fixed"
@@ -377,6 +385,7 @@ export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
+  const primaryNavRef = useRef<HTMLElement>(null);
 
   // Changing the primary nav's layout between mobile and desktop would otherwise
   // trigger the transition used for opening and closing the menu
@@ -385,7 +394,7 @@ export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
     let frame: number | undefined;
 
     const onBreakpointChange = () => {
-      const primaryNav = document.querySelector('[data-primary-nav]');
+      const primaryNav = primaryNavRef.current;
       if (!primaryNav) return;
 
       primaryNav.setAttribute('data-crossing-breakpoint', '');
@@ -411,12 +420,11 @@ export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
   // primary nav's scroll position, so it's restored after the swap
   useEffect(() => {
     let scrollTop = 0;
-    const getPrimaryNav = () => document.querySelector('[data-primary-nav]');
     const save = () => {
-      scrollTop = getPrimaryNav()?.scrollTop ?? 0;
+      scrollTop = primaryNavRef.current?.scrollTop ?? 0;
     };
     const restore = () => {
-      getPrimaryNav()?.scrollTo({ top: scrollTop });
+      primaryNavRef.current?.scrollTo({ top: scrollTop });
     };
 
     document.addEventListener('astro:before-swap', save);
@@ -445,6 +453,7 @@ export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
       <MenuBackdrop open={menuOpen} onClick={closeMenu} />
 
       <PrimaryNav
+        navRef={primaryNavRef}
         open={menuOpen}
         onClick={closeMenu}
         route={route}
