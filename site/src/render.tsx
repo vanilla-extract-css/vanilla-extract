@@ -5,6 +5,7 @@ import { HeadProvider } from 'react-head';
 import App from './App';
 import type { StatsCompilation } from 'webpack';
 import { darkMode, lightMode, themeKey } from './system/styles/colorModes';
+import { monoLisaPreloadUrl } from './themes.css';
 
 type HeadTags = React.ReactElement<unknown>[];
 
@@ -55,9 +56,10 @@ export default ({ route, publicPath, entrypoints }: RenderParams) => {
       <script>
       ((d)=>{try{var p=localStorage.getItem('${themeKey}');if(p==d||(p!='${lightMode}'&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add(d)}catch(e){}})('${darkMode}')
       </script>
-      <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-      <link href="https://www.monolisa.dev/api/fonts/initial" rel="stylesheet">
+      <link rel="preload" href="${monoLisaPreloadUrl}" as="font" type="font/woff2" crossorigin>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Shrikhand&display=swap" rel="stylesheet">
       ${cssAssets
         .map(({ name }) => `<link rel="stylesheet" href="${assetPath(name)}">`)
         .join('\n')}

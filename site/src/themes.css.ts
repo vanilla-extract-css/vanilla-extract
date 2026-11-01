@@ -1,4 +1,4 @@
-import { createGlobalTheme } from '@vanilla-extract/css';
+import { createGlobalTheme, globalFontFace } from '@vanilla-extract/css';
 import colors from 'tailwindcss/colors';
 import { precomputeValues } from '@capsizecss/vanilla-extract';
 
@@ -6,6 +6,48 @@ import type { Breakpoint } from './themeUtils';
 
 const grid = 4;
 const px = (value: string | number) => `${value}px`;
+
+const monoLisaFamily = 'MonoLisaCode';
+
+// Declared here instead of using MonoLisa's stylesheet, as it doesn't set `font-display`,
+// hiding code while the font loads. The font URLs encode the same options the stylesheet uses.
+const monoLisaUnicodeRanges = [
+  'U+0000-001F, U+0020-007F, U+2000-206F, U+0300-036F, U+20A0-20CF, U+00A9, U+00AE, U+00DF, U+00D8',
+  'U+0400-04FF',
+  'U+0370-03FF, U+1F00-1FFF, U+0590-05FF, U+0530-058F, U+2500-257F, U+2600-26FF, U+E000-F8FF',
+];
+
+const monoLisaUrl = (style: string, unicodeRange: string) => {
+  const options = {
+    version: '3.000',
+    font_family: monoLisaFamily,
+    style,
+    format: 'woff2',
+    unicodeRange,
+    include: [],
+    exclude: [],
+  };
+
+  return `https://api.monolisa.dev/api/woff?${encodeURIComponent(btoa(JSON.stringify(options)))}`;
+};
+
+export const monoLisaPreloadUrl = monoLisaUrl(
+  'normal',
+  monoLisaUnicodeRanges[0],
+);
+
+globalFontFace(
+  monoLisaFamily,
+  ['normal', 'italic'].flatMap((fontStyle) =>
+    monoLisaUnicodeRanges.map((unicodeRange) => ({
+      src: `url(${monoLisaUrl(fontStyle, unicodeRange)}) format("woff2")`,
+      fontWeight: '1 900',
+      fontStyle,
+      unicodeRange,
+      fontDisplay: 'swap' as const,
+    })),
+  ),
+);
 
 const fontMetrics = {
   brand: {
@@ -161,7 +203,7 @@ export const vars = createGlobalTheme(':root', {
     heading:
       '"DM Sans", "Helvetica Neue", HelveticaNeue, Helvetica, sans-serif',
     body: '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif',
-    code: 'ml, "Roboto Mono", Menlo, monospace',
+    code: `${monoLisaFamily}, "Roboto Mono", Menlo, monospace`,
   },
   grid: px(grid),
   spacing: {
