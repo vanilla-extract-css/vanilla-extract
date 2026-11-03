@@ -89,14 +89,18 @@ Run `pnpm format` to fix any violations that can be automatically fixed.
 
 ## Updating documentation
 
-The Vanilla Extract docs site is authored in markdown files located at [/site/docs].
+The Vanilla Extract docs site is authored in [MDX] files located at [/site/docs].
 To start the docs site locally run `pnpm start-site`.
 
-If you are updating an existing markdown file, make your changes and commit them in your feature PR if possible.
+MDX is stricter than markdown: a bare `<` or `{` in text must be escaped (e.g. `&lt;`), and HTML comments aren't supported.
+Code blocks marked as ` ```ts compiled ` are compiled with vanilla-extract, and the generated CSS is shown alongside the source.
+
+If you are updating an existing MDX file, make your changes and commit them in your feature PR if possible.
 If your change requires a new page on the documentation site and you're not sure where to put it, ask for help in the relevant issue for the change you're implementing.
 If for whatever reason you are unable to write documentation to accompany your change, a maintainer can make the necessary changes for you in a separate PR.
 
 [/site/docs]: ./site/docs
+[MDX]: https://mdxjs.com
 
 ## Writing a changeset
 
