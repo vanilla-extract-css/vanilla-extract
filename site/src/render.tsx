@@ -4,8 +4,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import { HeadProvider } from 'react-head';
 import App from './App';
 import type { StatsCompilation } from 'webpack';
-import { darkMode, lightMode } from './system/styles/sprinkles.css';
-import { themeKey } from './ColorModeToggle/ColorModeToggle';
+import { darkMode, lightMode, themeKey } from './system/styles/colorModes';
 
 type HeadTags = React.ReactElement<unknown>[];
 
