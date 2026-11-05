@@ -11,7 +11,12 @@ import type {
 } from './types';
 import { mapValues } from './utils';
 
-export type { RecipeVariants, RuntimeFn } from './types';
+export type {
+  RecipeVariants,
+  RuntimeFn,
+  VariantGroups,
+  PatternOptions,
+} from './types';
 
 export function recipe<Variants extends VariantGroups>(
   options: PatternOptions<Variants>,
