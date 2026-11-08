@@ -18,6 +18,7 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 allowBuilds:
   '@netlify/esbuild': false
+  '@parcel/watcher': false
   '@swc/core': false
   esbuild: false
   lmdb: false

@@ -3,6 +3,7 @@ import path from 'path';
 import { Parcel } from '@parcel/core';
 
 import type { TestServer } from './types';
+import { createOutputDir } from './outputDir';
 
 export interface ParcelFixtureOptions {
   type: 'parcel';
@@ -17,7 +18,11 @@ export const startParcelFixture = async (
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
-  const distDir = path.join(absWorkingDir, 'dist');
+  const { outputDir, removeOutputDir } = await createOutputDir(
+    fixtureName,
+    `parcel-${mode}`,
+  );
+  const distDir = path.join(outputDir, 'dist');
 
   const bundler = new Parcel({
     entries: entry,
@@ -31,6 +36,11 @@ export const startParcelFixture = async (
       shouldOptimize: false,
     },
     shouldDisableCache: true,
+    // Parcel still writes to its cache with it disabled, and builds share the cache in
+    // the project root by default, so builds in other modes could reuse each other's output
+    cacheDir: path.join(outputDir, 'cache'),
+    // Parcel watches the project root by default, which is the repo root
+    watchDir: absWorkingDir,
     logLevel: 'verbose',
   });
 
@@ -61,6 +71,7 @@ export const startParcelFixture = async (
           stylesheet,
           close: async () => {
             await subscription.unsubscribe();
+            await removeOutputDir();
           },
         });
       }
