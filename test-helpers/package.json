@@ -19,7 +19,6 @@
     "@fixtures/unused-modules": "workspace:*",
     "@parcel/config-default": "^2.15.0",
     "@parcel/core": "^2.15.0",
-    "@types/mini-css-extract-plugin": "^1.2.2",
     "@types/webpack-dev-server": "^3.11.1",
     "@vanilla-extract/esbuild-plugin": "workspace:*",
     "@vanilla-extract/esbuild-plugin-next": "workspace:*",

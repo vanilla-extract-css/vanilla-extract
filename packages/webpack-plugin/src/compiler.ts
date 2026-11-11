@@ -1,5 +1,4 @@
 import type { LoaderContext } from './types';
-import createCompat from './compat';
 
 // Webpack exposes the `Externals` type which is a union of several types.
 // We likely intended to only accept a subset of these, but chose to use `any`.
@@ -75,11 +74,6 @@ function compileVanillaSource(
   externals: Externals | undefined,
 ): Promise<CompilationResult> {
   return new Promise((resolve, reject) => {
-    const isWebpack5 = Boolean(
-      loader._compiler.webpack && loader._compiler.webpack.version,
-    );
-    const compat = createCompat(isWebpack5);
-
     // Escape webpack template strings and Next.js dynamic routes in output files so they don't get replaced
     // Non-standard escape syntax, see https://webpack.js.org/configuration/output/#template-strings
     // and https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
@@ -95,41 +89,27 @@ function compileVanillaSource(
       [],
     );
 
-    const NodeTemplatePlugin = compat.getNodeTemplatePlugin(loader._compiler);
-    const NodeTargetPlugin = compat.getNodeTargetPlugin(loader._compiler);
-    const LimitChunkCountPlugin = compat.getLimitChunkCountPlugin(
-      loader._compiler,
-    );
-    const ExternalsPlugin = compat.getExternalsPlugin(loader._compiler);
+    const {
+      node: { NodeTemplatePlugin, NodeTargetPlugin },
+      optimize: { LimitChunkCountPlugin },
+      ExternalsPlugin,
+      EntryOptionPlugin,
+      library: { EnableLibraryPlugin },
+    } = loader._compiler.webpack;
 
     new NodeTemplatePlugin().apply(childCompiler);
     new NodeTargetPlugin().apply(childCompiler);
 
-    if (compat.isWebpack5) {
-      const {
-        EntryOptionPlugin,
-        library: { EnableLibraryPlugin },
-      } = loader._compiler.webpack;
+    new EnableLibraryPlugin('commonjs2').apply(childCompiler);
 
-      new EnableLibraryPlugin('commonjs2').apply(childCompiler);
-
-      EntryOptionPlugin.applyEntryOption(childCompiler, loader.context, {
-        child: {
-          library: {
-            type: 'commonjs2',
-          },
-          import: [loader.resourcePath],
+    EntryOptionPlugin.applyEntryOption(childCompiler, loader.context, {
+      child: {
+        library: {
+          type: 'commonjs2',
         },
-      });
-    } else {
-      // Webpack 4 code. Remove once support is removed
-      const { LibraryTemplatePlugin, SingleEntryPlugin } = require('webpack');
-
-      new LibraryTemplatePlugin(null, 'commonjs2').apply(childCompiler);
-      new SingleEntryPlugin(loader.context, loader.resourcePath).apply(
-        childCompiler,
-      );
-    }
+        import: [loader.resourcePath],
+      },
+    });
 
     new LimitChunkCountPlugin({ maxChunks: 1 }).apply(childCompiler);
     new ExternalsPlugin('commonjs', [
@@ -140,23 +120,8 @@ function compileVanillaSource(
 
     let source: string;
 
-    if (compat.isWebpack5) {
-      childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
-        compilation.hooks.processAssets.tap(compilerName, () => {
-          source =
-            compilation.assets[loader.resourcePath] &&
-            (compilation.assets[loader.resourcePath].source() as string);
-
-          // Remove all chunk assets
-          compilation.chunks.forEach((chunk) => {
-            chunk.files.forEach((file) => {
-              compilation.deleteAsset(file);
-            });
-          });
-        });
-      });
-    } else {
-      childCompiler.hooks.afterCompile.tap(compilerName, (compilation) => {
+    childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
+      compilation.hooks.processAssets.tap(compilerName, () => {
         source =
           compilation.assets[loader.resourcePath] &&
           (compilation.assets[loader.resourcePath].source() as string);
@@ -164,11 +129,11 @@ function compileVanillaSource(
         // Remove all chunk assets
         compilation.chunks.forEach((chunk) => {
           chunk.files.forEach((file) => {
-            delete compilation.assets[file];
+            compilation.deleteAsset(file);
           });
         });
       });
-    }
+    });
 
     try {
       childCompiler.runAsChild((err, _entries, compilation) => {
