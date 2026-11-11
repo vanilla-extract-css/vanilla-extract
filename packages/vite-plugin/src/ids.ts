@@ -1,3 +1,4 @@
+import { existsSync } from 'fs';
 import { posix } from 'path';
 
 import { normalizePath } from '@vanilla-extract/integration';
@@ -38,18 +39,34 @@ export const getAbsoluteId = ({
 }) => {
   const resolvedId = unwrapViteId(filePath);
 
+  // A Windows drive path is always a real absolute path.
+  if (isWindowsAbsolutePath(resolvedId)) {
+    return normalizePath(resolvedId);
+  }
+
+  // In SSR mode we can have root-relative paths like `/app/styles.css.ts`.
+  const rootRelativeId = normalizePath(posix.join(root, resolvedId));
+
   if (
-    // A Windows drive path is always a real absolute path.
-    isWindowsAbsolutePath(resolvedId) ||
-    resolvedId.startsWith(root) ||
+    resolvedId.startsWith(`${root}/`) ||
     // In monorepos the absolute path is outside of `root`, so we check they
     // share a filesystem root. Vite paths always use posix separators.
     (posix.isAbsolute(resolvedId) &&
       resolvedId.split(posix.sep)[1] === root.split(posix.sep)[1])
   ) {
+    // A root-relative id can look like an absolute path, e.g. with a root of
+    // `/app`, the id `/app/routes/a.css.ts` refers to `/app/app/routes/a.css.ts`.
+    // Prefer the root-relative path only when its directory exists and the
+    // absolute path's doesn't.
+    if (
+      !existsSync(posix.dirname(resolvedId)) &&
+      existsSync(posix.dirname(rootRelativeId))
+    ) {
+      return rootRelativeId;
+    }
+
     return normalizePath(resolvedId);
   }
 
-  // In SSR mode we can have root-relative paths like `/app/styles.css.ts`.
-  return normalizePath(posix.join(root, resolvedId));
+  return rootRelativeId;
 };
