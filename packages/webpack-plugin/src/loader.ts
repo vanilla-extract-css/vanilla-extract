@@ -1,6 +1,4 @@
 import path from 'path';
-// @ts-expect-error
-import loaderUtils from 'loader-utils';
 import {
   getPackageInfo,
   type IdentifierOption,
@@ -43,14 +41,25 @@ interface InternalLoaderOptions extends LoaderOptions {
   virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader';
 }
 
+const stringifyRequest = (loaderContext: LoaderContext, request: string) =>
+  JSON.stringify(
+    loaderContext.utils.contextify(
+      loaderContext.context || loaderContext.rootContext,
+      request,
+    ),
+  );
+
 const defaultIdentifierOption = (
   mode: LoaderContext['mode'],
   identifiers?: IdentifierOption,
 ): IdentifierOption =>
   identifiers ?? (mode === 'production' ? 'short' : 'debug');
 
-export default function (this: LoaderContext, source: string): void {
-  const { identifiers } = loaderUtils.getOptions(this) as InternalLoaderOptions;
+export default function (
+  this: LoaderContext<InternalLoaderOptions>,
+  source: string,
+): void {
+  const { identifiers } = this.getOptions();
 
   const { name } = getPackageInfo(this.rootContext);
 
@@ -71,9 +80,9 @@ export default function (this: LoaderContext, source: string): void {
     });
 }
 
-export function pitch(this: LoaderContext): void {
+export function pitch(this: LoaderContext<InternalLoaderOptions>): void {
   const { childCompiler, outputCss, identifiers, virtualLoader } =
-    loaderUtils.getOptions(this) as InternalLoaderOptions;
+    this.getOptions();
 
   const log = debug(
     `vanilla-extract:loader:${formatResourcePath(this.resourcePath)}`,
@@ -113,14 +122,14 @@ export function pitch(this: LoaderContext): void {
                 source: serializedCss,
               },
             )}`;
-            const request = loaderUtils.stringifyRequest(
+            const request = stringifyRequest(
               this,
               `${fileName}!=!${virtualResourceLoader}!${virtualFileLoaderExtractionFile}`,
             );
             return `import ${request}`;
           } else {
             // https://github.com/SukkaW/style9-webpack/blob/f51c46bbcd95ea3b988d3559c3b35cc056874366/src/next-appdir/style9-next-loader.ts#L64-L72
-            const request = loaderUtils.stringifyRequest(
+            const request = stringifyRequest(
               this,
               // Next.js RSC CSS extraction will discard any loaders in the request.
               // So we need to pass virtual css information through resourceQuery.
