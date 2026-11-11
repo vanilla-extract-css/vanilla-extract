@@ -50,8 +50,9 @@ export default withVanillaExtract(withMDX(nextConfig));
 
 ## Version Support
 
-- **Next.js >= 16.x**: Both Turbopack and Webpack are supported
-- **Next.js &lt;= 15.x**: Only Webpack is supported
+**Only Next.js >= 16 is currently supported**.
+Both Webpack and Turbopack are supported, but Turbopack support is currently experimental.
+See [the Turbopack section](#unstable_turbopack) for more details.
 
 ## Configuration
 
@@ -91,7 +92,7 @@ The `any` type will be fixed in the next major version.
 You can control Turbopack autoconfiguration using `unstable_turbopack.mode`:
 
 - `off`: (default) never configure Turbopack (i.e. use Webpack)
-- `auto`: enable Turbopack config only when Next >= 16.0.0
+- `auto`: enable Turbopack config (equivalent to `on` in v3)
 - `on`: force-enable Turbopack config
 
 For example:

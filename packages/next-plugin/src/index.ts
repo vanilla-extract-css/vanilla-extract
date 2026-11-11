@@ -12,9 +12,7 @@ import type {
   WebpackConfigContext,
 } from 'next/dist/server/config-shared';
 import { createRequire } from 'node:module';
-import * as path from 'node:path';
 import type { TurboLoaderOptions } from '@vanilla-extract/turbopack-plugin';
-import semver from 'semver';
 
 const require = createRequire(import.meta.url);
 
@@ -23,8 +21,8 @@ type PluginOptions = ConstructorParameters<typeof VanillaExtractPlugin>[0] & {
     glob?: string[];
     /**
      * controls whether we attempt to configure turbopack
-     * auto: enable only when Next >= 16.0.0
-     * on: force enable regardless of detected Next version
+     * auto: enable turbopack config (equivalent to `on` as of v3)
+     * on: enable turbopack config
      * off: never configure turbopack, webpack only
      */
     mode?: 'auto' | 'on' | 'off';
@@ -111,6 +109,7 @@ const getVanillaExtractCssLoaders = (
       options.dir,
       getSupportedBrowsers(options.dir, options.dev),
       undefined,
+      undefined,
     );
 
   // https://github.com/vercel/next.js/blob/6e5b935fd7a61497f6854a81aec7df3a5dbf61ac/packages/next/src/build/webpack/config/blocks/css/loaders/global.ts#L28
@@ -164,36 +163,16 @@ export const createVanillaExtractPlugin = (
       mode: turbopackMode = 'off',
       glob: turbopackGlob = ['**/*.css.{js,cjs,mjs,jsx,ts,tsx}'],
     } = turbopackOptions;
-    // detect Next version and decide whether to configure turbopack
-    const nextVersion = (() => {
-      try {
-        // resolve from the consumer app's cwd, not this package
-        const requireFromCwd = createRequire(
-          path.join(process.cwd(), 'package.json'),
-        );
-        const pkg = requireFromCwd('next/package.json') as { version?: string };
-        return pkg?.version ?? null;
-      } catch {
-        return null;
-      }
-    })();
-    const coerced = nextVersion ? semver.coerce(nextVersion) : null;
-    const supportsTurbopackRules = !!coerced && semver.gte(coerced, '16.0.0');
-    const enableTurbopack =
-      turbopackMode === 'on' ||
-      (turbopackMode === 'auto' && supportsTurbopackRules);
+    // In v3 these were made equivalent as the only supported next version (v16) means
+    // turbopack support is guaranteed.
+    const enableTurbopack = turbopackMode === 'on' || turbopackMode === 'auto';
 
-    if (turbopackMode === 'on' && !supportsTurbopackRules) {
-      console.warn(
-        `[@vanilla-extract/next-plugin] Turbopack is configured but does not seem supported. Expected Next.js >= 16.0.0, got ${nextVersion}`,
-      );
-    }
-
-    let turbopack: typeof nextConfig.turbopack;
+    let turbopack: NonNullable<NextConfig['turbopack']> | undefined;
     if (enableTurbopack) {
-      turbopack = { ...nextConfig.turbopack };
+      const turbopackConfig = { ...nextConfig.turbopack };
+      turbopack = turbopackConfig;
 
-      if (turbopackGlob.some((glob) => turbopack.rules?.[glob])) {
+      if (turbopackGlob.some((glob) => turbopackConfig.rules?.[glob])) {
         throw new Error(
           'Vanilla extract could not be applied automatically due to conflicting turbopack rules',
         );
@@ -211,15 +190,15 @@ export const createVanillaExtractPlugin = (
             } satisfies TurboLoaderOptions,
           },
         ],
-      } as const;
+      };
 
       const vanillaExtractCssRule = {
         as: '*.css',
         loaders: [require.resolve('@vanilla-extract/turbopack-plugin')],
-      } as const;
+      };
 
-      turbopack.rules = {
-        ...turbopack.rules,
+      turbopackConfig.rules = {
+        ...turbopackConfig.rules,
         ...Object.fromEntries(
           turbopackGlob.map((glob) => [glob, vanillaExtractRule]),
         ),
@@ -232,16 +211,8 @@ export const createVanillaExtractPlugin = (
       webpack(config: any, options: WebpackConfigContext) {
         const { dir, dev, config: resolvedNextConfig } = options;
 
-        // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/index.ts#L336
-        // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/webpack-config.ts#L626
-        // https://github.com/vercel/next.js/pull/43916
-        // on Next.js 12, findPagesDirResult is a string. on Next.js 13, findPagesDirResult is an object
-        const findPagesDirResult = findPagesDir(
-          dir,
-          resolvedNextConfig.experimental?.appDir ?? false,
-        );
-        // Skip nextConfig check since appDir is stable feature after Next.js 13.4
-        const hasAppDir = !!(findPagesDirResult && findPagesDirResult.appDir);
+        const findPagesDirResult = findPagesDir(dir);
+        const hasAppDir = Boolean(findPagesDirResult.appDir);
 
         const outputCss = true;
 

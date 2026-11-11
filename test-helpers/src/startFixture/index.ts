@@ -69,11 +69,7 @@ export async function startFixture(
     });
   }
 
-  if (
-    type === 'next-12-pages-router' ||
-    type === 'next-13-app-router' ||
-    type === 'next-16-app-pages-router'
-  ) {
+  if (type === 'next-16-app-pages-router') {
     return startNextFixture({
       type,
       port,
