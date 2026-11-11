@@ -120,6 +120,11 @@ export const primaryNav = style({
         },
       },
     },
+    // Without disabling the transition, resizing across the desktop breakpoint
+    // fades the menu out
+    '&[data-crossing-breakpoint]': {
+      transition: 'none',
+    },
   },
 });
 

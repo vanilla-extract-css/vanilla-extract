@@ -56,17 +56,15 @@ describe('vite-plugin lib build', () => {
     expect(await fs.readFile(path.join(outDir, 'a.css.mjs'), 'utf-8'))
       .toMatchInlineSnapshot(`
       /* empty css                           */
-      //#region tests/vite-plugin/fixtures/lib-build/src/a.css.ts
+      // tests/vite-plugin/fixtures/lib-build/src/a.css.ts
       var e = { color: { primary: "var(--component-token)" } }, t = "_158fg7h0";
-      //#endregion
       export { t as a, e as componentContract };
     `);
     expect(await fs.readFile(path.join(outDir, 'b.css.mjs'), 'utf-8'))
       .toMatchInlineSnapshot(`
       /* empty css                           */
-      //#region tests/vite-plugin/fixtures/lib-build/src/b.css.ts
+      // tests/vite-plugin/fixtures/lib-build/src/b.css.ts
       var e = "xbgeyk0";
-      //#endregion
       export { e as b };
     `);
     expect(await fs.readFile(path.join(outDir, 'tests.css'), 'utf-8'))

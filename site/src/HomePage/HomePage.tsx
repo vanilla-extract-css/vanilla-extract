@@ -1,5 +1,4 @@
 import { type ReactNode } from 'react';
-import dedent from 'dedent';
 import { Box, Stack, ContentBlock, Columns, ButtonLink } from '../system';
 import { Heading } from '../Typography/Heading';
 import { Chevron } from '../Chevron/Chevron';
@@ -12,6 +11,7 @@ import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import { GitHubStars } from '../GitHubStars/GitHubStars';
 import { CompiledCode } from '../Code/CompiledCode';
 import { ErrorHighlighter } from '../Code/ErrorHighlighter';
+import { codeSamples } from './codeSamples';
 import * as styles from './HomePage.css';
 import { SearchInput } from '../SearchInput/SearchInput';
 
@@ -188,33 +188,10 @@ export const HomePage = () => {
                     </Box>
                   </Stack>
                 </Box>
-                <ErrorHighlighter tokens={['brandd', 'large']}>
+                <ErrorHighlighter tokens={codeSamples.hero.errors}>
                   <CompiledCode
                     background={{ lightMode: 'teal50', darkMode: 'black' }}
-                    code={[
-                      {
-                        fileName: 'styles.css.ts',
-                        contents: dedent /*ts*/ `
-                        import { createTheme, style } from '@vanilla-extract/css';
-
-                        export const [themeClass, vars] = createTheme({
-                          color: {
-                            brand: 'blue',
-                            white: '#fff'
-                          },
-                          space: {
-                            small: '4px',
-                            medium: '8px',
-                          }
-                        });
-
-                        export const hero = style({
-                          backgroundColor: vars.color.brandd,
-                          color: vars.color.white,
-                          padding: vars.space.large
-                        });`,
-                      },
-                    ]}
+                    code={[codeSamples.hero]}
                   />
                 </ErrorHighlighter>
               </Columns>
@@ -328,29 +305,7 @@ export const HomePage = () => {
 
               <CompiledCode
                 background={{ lightMode: 'blue50', darkMode: 'black' }}
-                code={[
-                  {
-                    fileName: 'styles.css.ts',
-                    contents: dedent /*css*/ `
-                      import { style } from '@vanilla-extract/css';
-
-                      export const className = style({
-                        display: 'flex',
-                        flexDirection: 'column',
-                        selectors: {
-                          '&:nth-child(2n)': {
-                            background: 'aliceblue'
-                          }
-                        },
-                        '@media': {
-                          'screen and (min-width: 768px)': {
-                            flexDirection: 'row'
-                          }
-                        }
-                      });
-                    `,
-                  },
-                ]}
+                code={[codeSamples.fullPower]}
               />
             </Stack>
           </ContentBlock>
@@ -374,28 +329,8 @@ export const HomePage = () => {
                   </Text>
                 </Stack>
 
-                <ErrorHighlighter tokens={['brandd']}>
-                  <CompiledCode
-                    code={[
-                      {
-                        fileName: 'styles.css.ts',
-                        contents: dedent /*ts*/ `
-                          import { createTheme, style } from '@vanilla-extract/css';
-
-                          export const [themeClass, vars] = createTheme({
-                            color: {
-                              brand: 'aquamarine',
-                              accent: 'honeydew',
-                            },
-                          });
-
-                          export const brandedSection = style({
-                            backgroundColor: vars.color.brandd,
-                          });
-                        `,
-                      },
-                    ]}
-                  />
+                <ErrorHighlighter tokens={codeSamples.theming.errors}>
+                  <CompiledCode code={[codeSamples.theming]} />
                 </ErrorHighlighter>
               </Columns>
             </ContentBlock>
@@ -416,30 +351,7 @@ export const HomePage = () => {
                   vanilla-extract.
                 </Text>
               </Stack>
-              <CompiledCode
-                code={[
-                  {
-                    fileName: 'styles.css.ts',
-                    contents: dedent /*ts*/ `
-                      import { style, createVar } from '@vanilla-extract/css';
-
-                      const shadowColor = createVar();
-
-                      export const shadow = style({
-                        boxShadow: ${'`0 0 10px ${shadowColor}`'},
-                        selectors: {
-                          '.light &': {
-                            vars: { [shadowColor]: 'black' }
-                          },
-                          '.dark &': {
-                            vars: { [shadowColor]: 'white' }
-                          },
-                        },
-                      });
-                    `,
-                  },
-                ]}
-              />
+              <CompiledCode code={[codeSamples.variables]} />
             </Columns>
           </ContentBlock>
 
@@ -457,28 +369,7 @@ export const HomePage = () => {
                   up by name. No awkward naming conventions required.
                 </Text>
               </Stack>
-              <CompiledCode
-                code={[
-                  {
-                    fileName: 'styles.css.ts',
-                    contents: dedent /*ts*/ `
-                      import { styleVariants } from '@vanilla-extract/css';
-
-                      export const background = styleVariants({
-                        primary: { background: 'navy' },
-                        secondary: { background: 'blue' },
-                        tertiary: { background: 'aqua' },
-                      });
-
-                      export const color = styleVariants({
-                        neutral: { color: 'black' },
-                        secondary: { color: 'gray' },
-                        link: { color: 'blue' },
-                      });
-                    `,
-                  },
-                ]}
-              />
+              <CompiledCode code={[codeSamples.variants]} />
             </Columns>
           </ContentBlock>
 
@@ -497,26 +388,7 @@ export const HomePage = () => {
                   CSS.
                 </Text>
               </Stack>
-              <CompiledCode
-                code={[
-                  {
-                    fileName: 'output.css',
-                    language: 'css',
-                    contents: dedent /*css*/ `
-                      :root {
-                        --space-none__ya5b7b0: 0;
-                        --space-small__ya5b7b1: 4px;
-                        --space-medium__ya5b7b2: 8px;
-                        --space-large__ya5b7b3: 12px;
-                      }
-
-                      .Hero_container__1ldw6lo0 {
-                        padding: var(--space-medium__ya5b7b2);
-                      }
-                    `,
-                  },
-                ]}
-              />
+              <CompiledCode code={[codeSamples.output]} />
             </Columns>
           </ContentBlock>
         </Stack>
