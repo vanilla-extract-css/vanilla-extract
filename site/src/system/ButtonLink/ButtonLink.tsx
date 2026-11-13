@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import clsx from 'clsx';
 import { Link, type NavLinkProps } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { Box } from '..';
 import * as styles from './ButtonLink.css';
 import { sprinkles } from '../styles/sprinkles.css';
 
@@ -48,11 +47,7 @@ export const ButtonLink = ({
     return (
       <a href={to} className={classNames}>
         {children}
-        {icon ? (
-          <Box display="inline" paddingLeft="small">
-            {icon}
-          </Box>
-        ) : undefined}
+        {icon}
       </a>
     );
   }
@@ -61,11 +56,7 @@ export const ButtonLink = ({
     return (
       <HashLink to={to} className={classNames}>
         {children}
-        {icon ? (
-          <Box display="inline" paddingLeft="small">
-            {icon}
-          </Box>
-        ) : undefined}
+        {icon}
       </HashLink>
     );
   }
@@ -73,11 +64,7 @@ export const ButtonLink = ({
   return (
     <Link onClick={() => window.scrollTo(0, 0)} to={to} className={classNames}>
       {children}
-      {icon ? (
-        <Box display="inline" paddingLeft="xsmall">
-          {icon}
-        </Box>
-      ) : undefined}
+      {icon}
     </Link>
   );
 };

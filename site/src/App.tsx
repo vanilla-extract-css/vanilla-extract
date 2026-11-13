@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Title, Meta } from 'react-head';
 import { HomePage } from './HomePage/HomePage';
 import { DocsPage } from './DocsPage/DocsPage';
-import { ColorModeProvider } from './ColorModeToggle/ColorModeToggle';
 import legacyRoutes from '../legacy-routes.json';
 import './App.css';
 
@@ -11,7 +10,7 @@ const description = 'Zero-runtime Stylesheets-in-TypeScript.';
 
 export default () => {
   return (
-    <ColorModeProvider>
+    <>
       <Title>{pageTitle}</Title>
       <Meta property="og:title" content={pageTitle} />
       <Meta name="twitter:title" content={pageTitle} />
@@ -32,6 +31,6 @@ export default () => {
 
         <Route path="/*" element={<DocsPage />} />
       </Routes>
-    </ColorModeProvider>
+    </>
   );
 };

@@ -17,6 +17,7 @@ import { groups, pages } from '../docs-store';
 import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
+import { queries } from '../themeUtils';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 
@@ -145,6 +146,7 @@ const PrimaryNav = ({
   return (
     <Box
       component="aside"
+      data-primary-nav
       padding={{ mobile: 'xlarge', desktop: 'large' }}
       paddingY="xlarge"
       position="fixed"
@@ -390,6 +392,35 @@ export const DocsPage = () => {
   const normalisedPath = location.pathname.endsWith('/')
     ? location.pathname.slice(0, location.pathname.lastIndexOf('/'))
     : location.pathname;
+
+  // Changing the primary nav's layout between mobile and desktop would otherwise
+  // trigger the transition used for opening and closing the menu
+  useEffect(() => {
+    const desktopQuery = window.matchMedia(queries.desktop);
+    let frame: number | undefined;
+
+    const onBreakpointChange = () => {
+      const primaryNav = document.querySelector('[data-primary-nav]');
+      if (!primaryNav) return;
+
+      primaryNav.setAttribute('data-crossing-breakpoint', '');
+
+      if (frame !== undefined) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(() => {
+          primaryNav.removeAttribute('data-crossing-breakpoint');
+          frame = undefined;
+        });
+      });
+    };
+
+    desktopQuery.addEventListener('change', onBreakpointChange);
+
+    return () => {
+      desktopQuery.removeEventListener('change', onBreakpointChange);
+      if (frame !== undefined) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     if (menuOpen) {

@@ -25,7 +25,7 @@ for (const { group, label, pages } of contents) {
   for (const page of pages) {
     console.log('Loading', page);
 
-    const fileName = join(group, `${page}.md`);
+    const fileName = join(group, `${page}.mdx`);
     const fileContents = await readFile(
       join(import.meta.dirname, './docs', fileName),
     );
