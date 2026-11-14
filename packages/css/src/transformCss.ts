@@ -27,6 +27,7 @@ const DECLARATION = '__DECLARATION';
 
 const UNITLESS: Record<string, boolean> = {
   animationIterationCount: true,
+  aspectRatio: true,
   borderImage: true,
   borderImageOutset: true,
   borderImageSlice: true,
@@ -39,6 +40,7 @@ const UNITLESS: Record<string, boolean> = {
   flex: true,
   flexGrow: true,
   flexShrink: true,
+  fontSizeAdjust: true,
   fontWeight: true,
   gridArea: true,
   gridColumn: true,
@@ -56,7 +58,6 @@ const UNITLESS: Record<string, boolean> = {
   orphans: true,
   scale: true,
   tabSize: true,
-  WebkitLineClamp: true,
   widows: true,
   zIndex: true,
   zoom: true,
@@ -75,6 +76,23 @@ const UNITLESS: Record<string, boolean> = {
   strokeOpacity: true,
   strokeWidth: true,
 };
+
+const VENDOR_PREFIX = /^(?:Webkit|Moz|ms|O)(?=[A-Z])/;
+
+// Vendor-prefixed keys (e.g. `WebkitBoxFlex`, `msFlex`) are unitless when their
+// unprefixed property is
+function isUnitless(key: string) {
+  if (UNITLESS[key]) {
+    return true;
+  }
+
+  const unprefixed = key.replace(VENDOR_PREFIX, '');
+
+  return (
+    unprefixed !== key &&
+    Boolean(UNITLESS[unprefixed[0].toLowerCase() + unprefixed.slice(1)])
+  );
+}
 
 function dashify(str: string) {
   return str
@@ -258,7 +276,7 @@ class Stylesheet {
     const result = { ...cssRule };
 
     forEach(cssRule, (value, key) => {
-      if (typeof value === 'number' && value !== 0 && !UNITLESS[key]) {
+      if (typeof value === 'number' && value !== 0 && !isUnitless(key)) {
         // @ts-expect-error Any ideas?
         result[key] = `${value}px`;
       }
