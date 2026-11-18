@@ -83,6 +83,46 @@ function dashify(str: string) {
     .toLowerCase();
 }
 
+/**
+ * Local class names are found by substring search, so e.g. `aria` also matches inside
+ * `[aria-selected]` and `ocus` inside `:focus`. Only accept matches that form a whole class token,
+ * optionally glued to other local class names (`&&`) or a preceding element name (`body&`).
+ *
+ * Matches are processed right to left, so an accepted match to the right has already been
+ * prefixed with `.`, which makes the character after a glued class name a non-identifier.
+ */
+function isClassNameBoundary(
+  selector: string,
+  startIndex: number,
+  endIndex: number,
+  matches: ReadonlyArray<{ end: number }>,
+) {
+  if (
+    isIdentifierChar(selector[endIndex]) ||
+    selector.lastIndexOf('[', startIndex) >
+      selector.lastIndexOf(']', startIndex)
+  ) {
+    return false;
+  }
+
+  const prev = selector[startIndex - 1];
+  if (!isIdentifierChar(prev)) {
+    return prev !== ':' && prev !== '#';
+  }
+  if (matches.some(({ end }) => end === startIndex)) {
+    return true;
+  }
+
+  let wordStart = startIndex - 1;
+  while (wordStart > 0 && isIdentifierChar(selector[wordStart - 1])) {
+    wordStart--;
+  }
+  return (
+    !/[.#:]/.test(selector[wordStart - 1] ?? '') &&
+    elementNames.has(selector.slice(wordStart, startIndex).toLowerCase())
+  );
+}
+
 function replaceBetweenIndexes(
   target: string,
   startIndex: number,
@@ -96,6 +136,16 @@ function replaceBetweenIndexes(
 }
 
 const DOUBLE_SPACE = '  ';
+
+const identifierCharRegex = /[\w\-\u0080-\uffff]/;
+const isIdentifierChar = (char: string | undefined) =>
+  char !== undefined && identifierCharRegex.test(char);
+
+const elementNames = new Set(
+  'a abbr article aside audio b body button canvas code dd details dialog div dl dt em fieldset figure footer form h1 h2 h3 h4 h5 h6 header hr html i img input label legend li main nav ol optgroup option p path pre section select span strong summary svg table tbody td textarea tfoot th thead tr ul video'.split(
+    ' ',
+  ),
+);
 
 const specialKeys = [
   ...simplePseudos,
@@ -359,7 +409,10 @@ class Stylesheet {
       // If this occurs, we skip the replacement to avoid transforming the selector incorrectly.
       const skipReplacement = lastReplaceIndex < endIndex;
 
-      if (skipReplacement) {
+      if (
+        skipReplacement ||
+        !isClassNameBoundary(transformedSelector, startIndex, endIndex, results)
+      ) {
         continue;
       }
 
