@@ -8,6 +8,7 @@ import type {
   ModuleNode,
   ViteDevServer,
 } from 'vite';
+import { posix } from 'path';
 import { type Compiler, createCompiler } from '@vanilla-extract/compiler';
 import {
   cssFileFilter,
@@ -17,6 +18,7 @@ import {
   normalizePath,
 } from '@vanilla-extract/integration';
 import { getAbsoluteId } from './ids';
+import { generateCssBundle, stripSideEffectImportsMatching } from './lib';
 
 const PLUGIN_NAMESPACE = 'vite-plugin-vanilla-extract';
 const virtualExtCss = '.vanilla.css';
@@ -43,6 +45,37 @@ interface Options {
   identifiers?: IdentifierOption;
   unstable_pluginFilter?: PluginFilter;
   unstable_mode?: 'transform' | 'emitCss' | 'inlineCssInDev';
+  /**
+   * Controls how compiled CSS is emitted when building, mirroring the `extract`
+   * option of the Rollup plugin.
+   *
+   * - `undefined` (default): CSS is handled by Vite's native CSS pipeline,
+   *   e.g. bundled into a single `.css` file per entry in library mode.
+   * - `false`: Each `.css.ts` file is emitted as its own CSS asset (e.g.
+   *   `assets/button.css.ts.vanilla.css`) and JS files keep side-effect
+   *   imports of those assets.
+   * - `{ name?, sourcemap? }`: All CSS is combined into a single asset emitted
+   *   by the plugin, and side-effect CSS imports are stripped from JS output.
+   *
+   * Only applies when building, and has no effect when
+   * `unstable_mode: 'transform'` is set.
+   *
+   * @default undefined
+   */
+  extract?:
+    | {
+        /**
+         * Name of emitted .css file.
+         * @default "bundle.css"
+         */
+        name?: string;
+        /**
+         * Generate a .css.map file?
+         * @default false
+         */
+        sourcemap?: boolean;
+      }
+    | false;
 }
 
 // Plugins that we know are compatible with the `vite-node` compiler
@@ -61,6 +94,7 @@ export function vanillaExtractPlugin({
   identifiers,
   unstable_pluginFilter: pluginFilter = defaultPluginFilter,
   unstable_mode = 'emitCss',
+  extract,
 }: Options = {}): Plugin[] {
   let config: ResolvedConfig;
   let configEnv: ConfigEnv;
@@ -72,6 +106,16 @@ export function vanillaExtractPlugin({
   const vitePromise = import('vite');
 
   const transformedModules = new Set<string>();
+
+  // Only used when `extract: { ... }` is configured
+  let extractedCssIds = new Set<string>();
+  // Only used when `extract: false` is configured; module id -> asset id
+  const emittedCssAssets = new Map<string, string>();
+
+  const extractApplies = () =>
+    config.command === 'build' &&
+    extract !== undefined &&
+    unstable_mode !== 'transform';
 
   const getIdentOption = () =>
     identifiers ?? (config.mode === 'production' ? 'short' : 'debug');
@@ -262,14 +306,125 @@ export function vanillaExtractPlugin({
         packageName = getPackageInfo(config.root).name;
       },
       async buildStart() {
+        // Reset extract state between builds, e.g. in watch mode
+        extractedCssIds = new Set();
+        emittedCssAssets.clear();
+
         // Ensure we re-use the compiler instance between builds, e.g. in watch mode
         await ensureCompiler();
       },
       buildEnd() {
+        // Generate CSS bundle (if extracting)
+        if (extract && extractApplies()) {
+          // Note: this can't happen earlier than buildEnd because the module
+          // graph isn't complete until this point
+          const { bundle, extractedCssIds: extractedIds } =
+            generateCssBundle(this);
+          extractedCssIds = extractedIds;
+
+          const name = extract.name || 'bundle.css';
+          this.emitFile({
+            type: 'asset',
+            name,
+            originalFileName: name,
+            source: bundle.toString(),
+          });
+
+          if (extract.sourcemap) {
+            const sourcemapName = `${name}.map`;
+            this.emitFile({
+              type: 'asset',
+              name: sourcemapName,
+              originalFileName: sourcemapName,
+              source: bundle
+                .generateMap({ file: name, includeContent: true })
+                .toString(),
+            });
+          }
+        }
+
         // When using the rollup watcher, we don't want to close the compiler after every build.
         // Instead, we close it when the watcher is closed via the closeWatcher hook.
         if (!config.build.watch) {
           compiler?.close();
+        }
+      },
+      // Emit per-file CSS assets and replace CSS import paths with relative
+      // paths to the emitted files (only for `extract: false`)
+      renderChunk(code, chunkInfo) {
+        if (extract !== false || !extractApplies()) {
+          return null;
+        }
+
+        const chunkPath = posix.dirname(chunkInfo.fileName);
+        let output = code;
+
+        // Process longest specifiers first so a specifier that is a substring
+        // of another (e.g. nested paths sharing a suffix) can't be corrupted
+        // by an earlier replacement
+        const cssImportPaths = [...chunkInfo.imports].sort(
+          (pathA, pathB) => pathB.length - pathA.length,
+        );
+
+        for (const importPath of cssImportPaths) {
+          const moduleInfo = this.getModuleInfo(importPath);
+
+          if (!moduleInfo) {
+            continue;
+          }
+
+          const css = moduleInfo.meta.css;
+
+          if (typeof css !== 'string') {
+            continue;
+          }
+
+          let assetId = emittedCssAssets.get(importPath);
+
+          if (!assetId) {
+            assetId = this.emitFile({
+              type: 'asset',
+              name: posix.basename(moduleInfo.id),
+              originalFileName: moduleInfo.id,
+              source: css,
+            });
+            emittedCssAssets.set(importPath, assetId);
+          }
+
+          const assetPath = this.getFileName(assetId);
+          const relativeAssetPath = `./${posix.normalize(
+            posix.relative(chunkPath, assetPath),
+          )}`;
+
+          output = output.replace(importPath, relativeAssetPath);
+        }
+
+        if (output === code) {
+          return null;
+        }
+
+        return {
+          code: output,
+          map: null,
+        };
+      },
+      // Remove side effect CSS imports (only for `extract: { ... }`)
+      generateBundle(_options, bundle) {
+        if (!extract || !extractApplies()) {
+          return;
+        }
+
+        for (const chunk of Object.values(bundle)) {
+          const isJsFile = /\.(m|c)?js$/.test(chunk.fileName);
+          if (
+            chunk.type === 'chunk' &&
+            isJsFile &&
+            chunk.imports.some((specifier) => extractedCssIds.has(specifier))
+          ) {
+            chunk.code = stripSideEffectImportsMatching(chunk.code, [
+              ...extractedCssIds,
+            ]);
+          }
         }
       },
       closeWatcher() {
@@ -377,6 +532,17 @@ export function vanillaExtractPlugin({
         const css = await ensureCssForVirtualId(absoluteId);
 
         if (css) {
+          if (extractApplies()) {
+            // Hand CSS emission over to the plugin's extract machinery. The
+            // virtual CSS module is marked external so Vite's CSS pipeline
+            // never bundles it; renderChunk/buildEnd/generateBundle take over.
+            return {
+              id: absoluteId,
+              external: true,
+              meta: { css },
+            };
+          }
+
           // Keep the original query string for HMR.
           return absoluteId + (query ? `?${query}` : '');
         }

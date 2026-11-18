@@ -625,6 +625,9 @@ importers:
       '@vanilla-extract/integration':
         specifier: workspace:^
         version: link:../integration
+      magic-string:
+        specifier: ^0.30.17
+        version: 0.30.21
     devDependencies:
       vite:
         specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
