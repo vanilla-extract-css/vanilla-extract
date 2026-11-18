@@ -89,6 +89,10 @@ describe('compiler', () => {
     importerTree: createCompiler({
       root: __dirname,
     }),
+    customFileFilter: createCompiler({
+      root: __dirname,
+      fileFilter: /\.styles\.ts$/,
+    }),
   } as const;
 
   afterAll(async () => {
@@ -828,6 +832,22 @@ describe('compiler', () => {
     );
 
     expect(importerTree.size).toBe(0);
+  });
+
+  test('fileFilter option restricts which files get file scope transform', async () => {
+    const compiler = compilers.customFileFilter;
+
+    // The compiler was created with fileFilter: /\.styles\.ts$/
+    // So .css.ts files should NOT get the setFileScope transform applied,
+    // causing processVanillaFile to fail with "Styles were unable to be assigned to a file"
+    const cssPath = path.join(
+      __dirname,
+      'fixtures/class-composition/styles.css.ts',
+    );
+
+    await expect(compiler.processVanillaFile(cssPath)).rejects.toThrow(
+      'Styles were unable to be assigned to a file',
+    );
   });
 
   test('should not emit CSS imports for dependencies that produce no CSS', async () => {
