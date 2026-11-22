@@ -312,10 +312,10 @@ importers:
         specifier: workspace:^
         version: link:../integration
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
       vite-node:
-        specifier: ^3.2.2 || ^5.0.0 || ^6.0.0
+        specifier: ^6.0.0
         version: 6.0.0(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
 
   packages/css:
@@ -526,7 +526,7 @@ importers:
         specifier: ^16.0.0
         version: 16.1.1(@babel/core@7.23.9)(@playwright/test@1.61.0)(react-dom@19.2.3)(react@19.2.3)
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
 
   packages/utils: {}
@@ -541,7 +541,7 @@ importers:
         version: link:../integration
     devDependencies:
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
 
   packages/webpack-plugin:
@@ -678,7 +678,7 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@16.11.10)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
 
   test-helpers:
@@ -780,7 +780,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(webpack@5.104.0)
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
       vite-plugin-inspect:
         specifier: ^11.3.0
@@ -838,7 +838,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/vite-plugin
       vite:
-        specifier: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        specifier: ^8.0.0
         version: 8.3.5(@types/node@22.15.3)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.44.1)(tsx@4.21.0)(yaml@2.9.1)
       vite-tsconfig-paths:
         specifier: ^5.1.4
