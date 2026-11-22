@@ -6,14 +6,10 @@ import Link from '../Typography/Link';
 import Text from '../Typography/Text';
 import Logo from '../Logo/Logo';
 import { Tweet } from '../Tweet/Tweet';
-import { groups, pages } from '../docs-store';
-import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
-import { GitHubStars } from '../GitHubStars/GitHubStars';
-import { CompiledCode } from '../Code/CompiledCode';
-import { ErrorHighlighter } from '../Code/ErrorHighlighter';
-import { codeSamples } from './codeSamples';
+import type { DocsPageSummary } from '../docs-store';
+import type { codeSamples } from './codeSamples';
+import { CompiledCode, type CodeFile } from '../Code/CompiledCode';
 import * as styles from './HomePage.css';
-import { SearchInput } from '../SearchInput/SearchInput';
 
 const InstallPrompt = () => {
   return (
@@ -44,7 +40,24 @@ const InstallPrompt = () => {
   );
 };
 
-export const HomePage = () => {
+export interface HomePageProps {
+  groups: string[];
+  pages: DocsPageSummary[];
+  codeSamples: Record<keyof typeof codeSamples, CodeFile>;
+  // Interactive islands, passed in as slots as the rest of the page is static
+  searchInput?: ReactNode;
+  colorModeToggle?: ReactNode;
+  gitHubStars?: ReactNode;
+}
+
+export const HomePage = ({
+  groups,
+  pages,
+  codeSamples,
+  searchInput,
+  colorModeToggle,
+  gitHubStars,
+}: HomePageProps) => {
   return (
     <Box className={styles.homePage}>
       {/* <Box
@@ -105,10 +118,8 @@ export const HomePage = () => {
                 desktop: 'xxlarge',
               }}
             >
-              <Box paddingRight="xsmall">
-                <SearchInput />
-              </Box>
-              <ColorModeToggle />
+              <Box paddingRight="xsmall">{searchInput}</Box>
+              {colorModeToggle}
             </Box>
             <Box>
               <Columns space="none" collapseOnTablet alignY="center">
@@ -183,17 +194,15 @@ export const HomePage = () => {
                         to="https://github.com/vanilla-extract-css/vanilla-extract"
                         variant="transparent"
                       >
-                        <GitHubStars />
+                        {gitHubStars}
                       </ButtonLink>
                     </Box>
                   </Stack>
                 </Box>
-                <ErrorHighlighter tokens={codeSamples.hero.errors}>
-                  <CompiledCode
-                    background={{ lightMode: 'teal50', darkMode: 'black' }}
-                    code={[codeSamples.hero]}
-                  />
-                </ErrorHighlighter>
+                <CompiledCode
+                  background={{ lightMode: 'teal50', darkMode: 'black' }}
+                  code={[codeSamples.hero]}
+                />
               </Columns>
             </Box>
           </Box>
@@ -329,9 +338,7 @@ export const HomePage = () => {
                   </Text>
                 </Stack>
 
-                <ErrorHighlighter tokens={codeSamples.theming.errors}>
-                  <CompiledCode code={[codeSamples.theming]} />
-                </ErrorHighlighter>
+                <CompiledCode code={[codeSamples.theming]} />
               </Columns>
             </ContentBlock>
           </Box>

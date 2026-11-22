@@ -89,7 +89,7 @@ Run `pnpm format` to fix any violations that can be automatically fixed.
 
 ## Updating documentation
 
-The Vanilla Extract docs site is authored in [MDX] files located at [/site/docs].
+The Vanilla Extract docs site is built with [Astro], and authored in [MDX] files located at [/site/docs].
 To start the docs site locally run `pnpm start-site`.
 
 MDX is stricter than markdown: a bare `<` or `{` in text must be escaped (e.g. `&lt;`), and HTML comments aren't supported.
@@ -100,6 +100,7 @@ If your change requires a new page on the documentation site and you're not sure
 If for whatever reason you are unable to write documentation to accompany your change, a maintainer can make the necessary changes for you in a separate PR.
 
 [/site/docs]: ./site/docs
+[Astro]: https://astro.build
 [MDX]: https://mdxjs.com
 
 ## Writing a changeset

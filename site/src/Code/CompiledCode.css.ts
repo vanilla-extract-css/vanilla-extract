@@ -33,17 +33,36 @@ export const root = style([
   },
 ]);
 
+const visuallyHidden = style({
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  margin: 0,
+  opacity: 0,
+  overflow: 'hidden',
+  pointerEvents: 'none',
+});
+
+export const fileInput = style([visuallyHidden]);
+// Covers the button, as clicking the button scrolls the checkbox into view
+export const showCssInput = style([
+  visuallyHidden,
+  { inset: 0, width: '100%', height: '100%' },
+]);
+
+/** Only a single file, so it's always shown as active */
+export const onlyFileTab = style({});
+
 const backgroundColor = createVar();
-export const fileNameFocus = style({
+export const fileTab = style({
   vars: {
     [backgroundColor]: vars.palette.gray900,
   },
-  outline: 'none',
-  ':focus-visible': {
-    boxShadow: `0 0 0 6px ${backgroundColor}, 0px 0px 0px 8px ${vars.palette.blue300}`,
-  },
   selectors: {
-    [`.${darkMode} &:focus-visible`]: {
+    [`${fileInput}:focus-visible + &`]: {
+      boxShadow: `0 0 0 6px ${backgroundColor}, 0px 0px 0px 8px ${vars.palette.blue300}`,
+    },
+    [`.${darkMode} ${fileInput}:focus-visible + &`]: {
       vars: {
         [backgroundColor]: vars.palette.zinc900,
       },
@@ -51,24 +70,42 @@ export const fileNameFocus = style({
   },
 });
 
-export const fileIndicatorInactive = style({
+const activeFileTab = `:is(${fileInput}:checked + ${fileTab}, ${onlyFileTab})`;
+
+export const fileIndicator = style({
   transform: 'skew(-15deg)',
   filter: 'saturate(0)',
   opacity: 0.2,
+  selectors: {
+    [`${activeFileTab} &`]: {
+      transform: 'skew(15deg)',
+      filter: 'none',
+      opacity: 1,
+    },
+  },
 });
-export const fileIndicatorActive = style({
-  transform: 'skew(15deg)',
-});
+
 export const fileName = style({
   color: vars.palette.blue800,
+  opacity: 0.7,
   selectors: {
     [`.${darkMode} &`]: {
       color: vars.palette.white,
     },
+    [`${activeFileTab} &`]: {
+      opacity: 1,
+      fontWeight: vars.weight.strong,
+    },
   },
 });
-export const fileNameInactive = style({
-  opacity: 0.7,
+
+export const filePanel = style({
+  order: 1,
+  selectors: {
+    [`${fileInput}:not(:checked) + ${fileTab} + &`]: {
+      display: 'none',
+    },
+  },
 });
 
 export const boldLayoutShiftFix = style({
@@ -106,8 +143,6 @@ const belowSideBySideStyles = (styles: StyleRule): StyleRule => ({
   },
 });
 
-export const showCssOnMobile = style({});
-
 export const maxHeight = style({
   maxHeight: 'min(65vh, 800px)',
   overflow: 'auto',
@@ -124,7 +159,7 @@ export const sourceContainer = style([
   }),
   {
     selectors: {
-      [`${showCssOnMobile} &`]: belowSideBySideStyles({
+      [`${filePanel}:has(${showCssInput}:checked) &`]: belowSideBySideStyles({
         transform: `scale(.9)`,
         opacity: 0,
       }),
@@ -167,7 +202,7 @@ export const outputContainer = style([
   }),
   {
     selectors: {
-      [`${showCssOnMobile} &`]: belowSideBySideStyles({
+      [`${filePanel}:has(${showCssInput}:checked) &`]: belowSideBySideStyles({
         transform: 'scale(1) translateX(-100%)',
         opacity: 1,
         pointerEvents: 'auto',
@@ -189,7 +224,27 @@ export const button = style({
     transform: 'scale(.95) translateZ(0)',
     transformOrigin: '50% 50%',
   },
-  ':focus-visible': {
-    boxShadow: `0px 0px 0px 4px ${vars.palette.blue400}`,
+  selectors: {
+    [`&:has(${showCssInput}:focus-visible)`]: {
+      boxShadow: `0px 0px 0px 4px ${vars.palette.blue400}`,
+    },
+  },
+});
+
+export const buttonBackground = style({
+  selectors: {
+    [`${filePanel}:has(${showCssInput}:checked) &`]: { opacity: 0 },
+  },
+});
+
+export const showOutputText = style({
+  selectors: {
+    [`${filePanel}:has(${showCssInput}:checked) &`]: { display: 'none' },
+  },
+});
+
+export const closeText = style({
+  selectors: {
+    [`${filePanel}:has(${showCssInput}:not(:checked)) &`]: { display: 'none' },
   },
 });

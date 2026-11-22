@@ -1,68 +1,68 @@
-import { useState, useEffect } from 'react';
 import {
-  Link as ReactRouterLink,
-  Route,
-  Routes,
-  useLocation,
-} from 'react-router-dom';
-import { MDXProvider } from '@mdx-js/react';
-import { Title, Meta } from 'react-head';
+  useState,
+  useEffect,
+  useRef,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import clsx from 'clsx';
-import { useActiveHash, useHeadingRouteUpdates } from '../useHeadingRoute';
+import type { MarkdownHeading } from 'astro';
+import { useActiveHeading } from '../useActiveHeading';
 import SiblingDoc from './SiblingDoc/SiblingDoc';
-import mdxComponents from '../mdx-components';
 import { Fab } from '../Fab/Fab';
 import { Box, ContentBlock, Stack } from '../system';
-import { groups, pages } from '../docs-store';
+import type { DocsPageSummary } from '../docs-store';
 import Logo from '../Logo/Logo';
 import { ColorModeToggle } from '../ColorModeToggle/ColorModeToggle';
 import * as styles from './DocsPage.css';
 import { queries } from '../themeUtils';
 import Link from '../Typography/Link';
 import Text from '../Typography/Text';
-
-import mapKeys from 'lodash/mapKeys';
 import { SearchInput } from '../SearchInput/SearchInput';
 
-interface DocsRouteProps {
-  component: (props: any) => JSX.Element;
-  prevDoc?: {
-    title: string;
-    route: string;
-  };
-  nextDoc?: {
-    title: string;
-    route: string;
-  };
-  hashes: Array<string>;
+interface DocsMainProps {
+  prevDoc?: DocsPageSummary;
+  nextDoc?: DocsPageSummary;
+  children: ReactNode;
 }
 
-const DocsRoute = ({
-  component: Component,
-  prevDoc,
-  nextDoc,
-  hashes,
-}: DocsRouteProps) => {
-  useHeadingRouteUpdates(hashes);
-
-  return (
-    <div>
-      <Component />
-      <ContentBlock size="large">
-        {prevDoc && (
-          <div style={{ float: 'left' }}>
-            <SiblingDoc subtitle="Previous" direction="left" {...prevDoc} />
+export const DocsMain = ({ prevDoc, nextDoc, children }: DocsMainProps) => (
+  <Box className={styles.container} zIndex={-1}>
+    <Box
+      component="main"
+      paddingRight="large"
+      paddingLeft={{ mobile: 'large', desktop: 'xxlarge' }}
+      paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
+      className={styles.main}
+    >
+      <ContentBlock
+        size={{ mobile: 'standard', tablet: 'xlarge', desktop: 'xxlarge' }}
+      >
+        <Box paddingBottom="xxxlarge">
+          <div>
+            {children}
+            <ContentBlock size="large">
+              {prevDoc && (
+                <div style={{ float: 'left' }}>
+                  <SiblingDoc
+                    subtitle="Previous"
+                    direction="left"
+                    {...prevDoc}
+                  />
+                </div>
+              )}
+              {nextDoc && (
+                <div style={{ float: 'right' }}>
+                  <SiblingDoc subtitle="Next" direction="right" {...nextDoc} />
+                </div>
+              )}
+            </ContentBlock>
           </div>
-        )}
-        {nextDoc && (
-          <div style={{ float: 'right' }}>
-            <SiblingDoc subtitle="Next" direction="right" {...nextDoc} />
-          </div>
-        )}
+        </Box>
       </ContentBlock>
-    </div>
-  );
-};
+    </Box>
+  </Box>
+);
 
 const Header = () => (
   <Box
@@ -85,12 +85,7 @@ const Header = () => (
       background={{ lightMode: 'teal100', darkMode: 'zinc900' }}
       className={styles.headerBg}
     />
-    <ReactRouterLink
-      to="/"
-      className={styles.homeLink}
-      title="Back to home"
-      onClick={() => window.scrollTo(0, 0)}
-    >
+    <a href="/" className={styles.homeLink} title="Back to home">
       <Box
         paddingLeft={{ mobile: 'none', tablet: 'xsmall', desktop: 'large' }}
         paddingTop={{ mobile: 'xsmall', tablet: 'small', desktop: 'medium' }}
@@ -99,7 +94,7 @@ const Header = () => (
           <Logo height={68} />
         </Box>
       </Box>
-    </ReactRouterLink>
+    </a>
   </Box>
 );
 
@@ -130,23 +125,24 @@ const MenuBackdrop = ({
 );
 
 const PrimaryNav = ({
+  navRef,
   open,
-  pathname,
+  route: currentRoute,
+  groups,
+  pages,
   onClick,
 }: {
+  navRef: RefObject<HTMLElement | null>;
   open: boolean;
-  pathname: string;
+  route: string;
+  groups: string[];
+  pages: DocsPageSummary[];
   onClick: () => void;
 }) => {
-  const selectAndScrollToTop = () => {
-    window.scrollTo(0, 0);
-    onClick();
-  };
-
   return (
     <Box
       component="aside"
-      data-primary-nav
+      ref={navRef}
       padding={{ mobile: 'xlarge', desktop: 'large' }}
       paddingY="xlarge"
       position="fixed"
@@ -182,12 +178,12 @@ const PrimaryNav = ({
 
               <>
                 {groupPages.map(({ route, title }) => {
-                  const active = route === `${pathname}/`;
+                  const active = route === currentRoute;
                   return (
                     <Link
                       key={route}
                       to={route}
-                      onClick={selectAndScrollToTop}
+                      onClick={onClick}
                       weight={active ? 'strong' : undefined}
                       highlightOnFocus={false}
                       underline="never"
@@ -313,23 +309,20 @@ const PrimaryNav = ({
   );
 };
 
-const headingForRoute = mapKeys(pages, (d) => {
-  return d.route.endsWith('/')
-    ? d.route.slice(0, d.route.lastIndexOf('/'))
-    : d.route;
-});
-
-const SecondaryNav = ({
-  pathname,
-  onClick,
+/**
+ * Always returns an element: otherwise Astro doesn't recognise it as React, and
+ * tries other renderers which call it outside of React, breaking its hooks.
+ */
+export const SecondaryNav = ({
+  route,
+  headings,
 }: {
-  pathname: string;
-  onClick: () => void;
+  route: string;
+  headings: MarkdownHeading[];
 }) => {
-  const activeHash = useActiveHash();
-  const { sections, route } = headingForRoute[pathname];
+  const [activeSlug, setActiveSlug] = useActiveHeading(headings);
 
-  return sections.length > 2 ? (
+  return (
     <Box
       component="aside"
       padding="large"
@@ -338,60 +331,61 @@ const SecondaryNav = ({
       className={[styles.sidebar, styles.showOnWideScreens]}
     >
       <Stack space="small">
-        {sections
-          .filter(({ level }) => level === 2 || level === 3)
-          .map(({ hash, name, level }, index) => {
-            const active = activeHash ? hash === activeHash : index === 0;
-            const l2 = level === 2;
+        {headings.map(({ slug, text, depth }, index) => {
+          const active = activeSlug ? slug === activeSlug : index === 0;
+          const l2 = depth === 2;
 
-            return (
-              <Link
-                key={name}
-                to={`${route}${hash ? `#${hash}` : ''}`}
-                color={!active ? 'secondary' : undefined}
-                highlightOnFocus={false}
-                underline="never"
-                size="small"
-                onClick={onClick}
-              >
-                <Box component="span" display="flex" alignItems="center">
-                  <Box
-                    component="span"
-                    background={{
-                      lightMode: l2 ? 'pink300' : 'blue300',
-                      darkMode: l2 ? 'pink400' : 'blue400',
-                    }}
-                    borderRadius="full"
-                    paddingLeft="xsmall"
-                    paddingTop={l2 ? 'xlarge' : 'large'}
-                    marginLeft={l2 ? 'xsmall' : 'xlarge'}
-                    opacity={active ? undefined : 0}
-                    className={clsx(
-                      styles.activeIndicator,
-                      !l2 ? styles.activeIndicatorRight : '',
-                      active ? styles.active : '',
-                    )}
-                  />
-                  <Box component="span" paddingLeft={l2 ? 'large' : 'medium'}>
-                    {name}
-                  </Box>
+          return (
+            <Link
+              key={slug}
+              to={`${route}#${slug}`}
+              color={!active ? 'secondary' : undefined}
+              highlightOnFocus={false}
+              underline="never"
+              size="small"
+              onClick={() => setActiveSlug(slug)}
+            >
+              <Box component="span" display="flex" alignItems="center">
+                <Box
+                  component="span"
+                  background={{
+                    lightMode: l2 ? 'pink300' : 'blue300',
+                    darkMode: l2 ? 'pink400' : 'blue400',
+                  }}
+                  borderRadius="full"
+                  paddingLeft="xsmall"
+                  paddingTop={l2 ? 'xlarge' : 'large'}
+                  marginLeft={l2 ? 'xsmall' : 'xlarge'}
+                  opacity={active ? undefined : 0}
+                  className={clsx(
+                    styles.activeIndicator,
+                    !l2 ? styles.activeIndicatorRight : '',
+                    active ? styles.active : '',
+                  )}
+                />
+                <Box component="span" paddingLeft={l2 ? 'large' : 'medium'}>
+                  {text}
                 </Box>
-              </Link>
-            );
-          })}
+              </Box>
+            </Link>
+          );
+        })}
       </Stack>
     </Box>
-  ) : null;
+  );
 };
 
-export const DocsPage = () => {
-  const location = useLocation();
+interface DocsChromeProps {
+  route: string;
+  groups: string[];
+  pages: DocsPageSummary[];
+}
+
+export const DocsChrome = ({ route, groups, pages }: DocsChromeProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
-  const normalisedPath = location.pathname.endsWith('/')
-    ? location.pathname.slice(0, location.pathname.lastIndexOf('/'))
-    : location.pathname;
+  const primaryNavRef = useRef<HTMLElement>(null);
 
   // Changing the primary nav's layout between mobile and desktop would otherwise
   // trigger the transition used for opening and closing the menu
@@ -400,7 +394,7 @@ export const DocsPage = () => {
     let frame: number | undefined;
 
     const onBreakpointChange = () => {
-      const primaryNav = document.querySelector('[data-primary-nav]');
+      const primaryNav = primaryNavRef.current;
       if (!primaryNav) return;
 
       primaryNav.setAttribute('data-crossing-breakpoint', '');
@@ -439,12 +433,13 @@ export const DocsPage = () => {
       <MenuBackdrop open={menuOpen} onClick={closeMenu} />
 
       <PrimaryNav
+        navRef={primaryNavRef}
         open={menuOpen}
         onClick={closeMenu}
-        pathname={normalisedPath}
+        route={route}
+        groups={groups}
+        pages={pages}
       />
-
-      <SecondaryNav onClick={closeMenu} pathname={normalisedPath} />
 
       <Box zIndex={1} position="fixed" top={0} right={0} padding="large">
         <Box display={{ mobile: 'none', desktop: 'flex' }} alignItems="center">
@@ -462,57 +457,6 @@ export const DocsPage = () => {
             <SearchInput />
           </Box>
           <Fab open={menuOpen} onClick={toggleMenu} />
-        </Box>
-      </Box>
-
-      <Box className={styles.container} zIndex={-1}>
-        <Box
-          component="main"
-          paddingRight="large"
-          paddingLeft={{ mobile: 'large', desktop: 'xxlarge' }}
-          paddingTop={{ mobile: 'xxlarge', desktop: 'xlarge' }}
-          className={styles.main}
-        >
-          <ContentBlock
-            size={{ mobile: 'standard', tablet: 'xlarge', desktop: 'xxlarge' }}
-          >
-            <Box paddingBottom="xxxlarge">
-              <MDXProvider components={mdxComponents}>
-                <Routes>
-                  {pages.map(({ route, Component, title, sections }, index) => {
-                    const prevDoc = pages[index - 1];
-                    const nextDoc = pages[index + 1];
-                    const pageTitle = `${
-                      title ? `${title} — ` : ''
-                    }vanilla-extract`.trim();
-                    const hashes = sections
-                      .filter(({ level }) => level === 2 || level === 3)
-                      .map(({ hash }) => hash);
-
-                    return (
-                      <Route
-                        key={route}
-                        path={route}
-                        element={
-                          <>
-                            <Title>{pageTitle}</Title>
-                            <Meta property="og:title" content={pageTitle} />
-                            <Meta name="twitter:title" content={pageTitle} />
-                            <DocsRoute
-                              nextDoc={nextDoc}
-                              prevDoc={prevDoc}
-                              hashes={hashes}
-                              component={Component}
-                            />
-                          </>
-                        }
-                      />
-                    );
-                  })}
-                </Routes>
-              </MDXProvider>
-            </Box>
-          </ContentBlock>
         </Box>
       </Box>
     </>

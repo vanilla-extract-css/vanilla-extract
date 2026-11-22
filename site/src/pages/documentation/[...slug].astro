@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { DocsChrome, DocsMain, SecondaryNav } from '../../DocsPage/DocsPage';
+import { components } from '../../mdx-components';
+import { getDocsPages, groups, toSummary } from '../../docs-store';
+
+export const getStaticPaths = (async () => {
+  const pages = await getDocsPages();
+
+  return pages.map((page, index) => ({
+    params: { slug: page.slug },
+    props: {
+      page,
+      prevDoc: pages[index - 1] && toSummary(pages[index - 1]),
+      nextDoc: pages[index + 1] && toSummary(pages[index + 1]),
+      pages: pages.map(toSummary),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { page, prevDoc, nextDoc, pages } = Astro.props;
+const { Content, headings } = await render(page.entry);
+const navHeadings = headings.filter(({ depth }) => depth === 2 || depth === 3);
+---
+
+<Layout title={page.title}>
+  <DocsChrome
+    client:load
+    route={page.route}
+    groups={groups}
+    pages={pages}
+  />
+  {
+    headings.length > 2 && (
+      <SecondaryNav client:load route={page.route} headings={navHeadings} />
+    )
+  }
+  <DocsMain prevDoc={prevDoc} nextDoc={nextDoc}>
+    <Content components={components} />
+  </DocsMain>
+</Layout>
