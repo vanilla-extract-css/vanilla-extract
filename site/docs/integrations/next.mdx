@@ -50,8 +50,9 @@ export default withVanillaExtract(withMDX(nextConfig));
 
 ## Version Support
 
-- **Next.js >= 16.x**: Both Turbopack and Webpack are supported
-- **Next.js &lt;= 15.x**: Only Webpack is supported
+**Only Next.js >= 16 is currently supported**.
+Both Webpack and Turbopack are supported, but Turbopack support is currently experimental.
+See [the Turbopack section](#unstable_turbopack) for more details.
 
 ## Configuration
 
@@ -78,11 +79,9 @@ Each integration will set a default value based on the configuration options pas
 
 ### externals
 
-Effectively [`ExternalItem[]`] from webpack.
+Effectively [`ExternalItem[]`](https://github.com/webpack/webpack/blob/9211be0f7a04feb45e1074e6cf848a657dd82ebc/declarations/WebpackOptions.d.ts#L207-L211) from webpack.
 Currently typed as `any` as this type was previously not exposed.
 The `any` type will be fixed in the next major version.
-
-[`ExternalItem[]`]: https://github.com/webpack/webpack/blob/9211be0f7a04feb45e1074e6cf848a657dd82ebc/declarations/WebpackOptions.d.ts#L207-L211
 
 ### unstable_turbopack
 
@@ -91,7 +90,7 @@ The `any` type will be fixed in the next major version.
 You can control Turbopack autoconfiguration using `unstable_turbopack.mode`:
 
 - `off`: (default) never configure Turbopack (i.e. use Webpack)
-- `auto`: enable Turbopack config only when Next >= 16.0.0
+- `auto`: enable Turbopack config (equivalent to `on` in v3)
 - `on`: force-enable Turbopack config
 
 For example:

@@ -8,34 +8,6 @@ interface ServerDefinition {
 
 export const NEXT_SERVERS: ServerDefinition[] = [
   {
-    name: 'Next 12 Dev Server',
-    isProduction: false,
-    script: 'pnpm --filter=next-12-pages-router dev',
-    port: 3001,
-    suite: 'limited',
-  },
-  {
-    name: 'Next 12 Build',
-    isProduction: true,
-    script: 'pnpm --filter=next-12-pages-router start',
-    port: 3002,
-    suite: 'limited',
-  },
-  {
-    name: 'Next 13 Dev Server',
-    isProduction: false,
-    script: 'pnpm --filter=next-13-app-router dev',
-    port: 3003,
-    suite: 'limited',
-  },
-  {
-    name: 'Next 13 Build',
-    isProduction: true,
-    script: 'pnpm --filter=next-13-app-router start',
-    port: 3004,
-    suite: 'limited',
-  },
-  {
     name: 'Next 16 Dev Server (Webpack)',
     isProduction: false,
     script: 'pnpm --filter=next-16-app-pages-router dev-webpack',
