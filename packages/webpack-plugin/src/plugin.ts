@@ -5,7 +5,6 @@ import {
 import type { Compiler, RuleSetRule } from 'webpack';
 
 import { ChildCompiler } from './compiler';
-import createCompat, { type WebpackCompat } from './compat';
 
 import { createRequire } from 'node:module';
 
@@ -13,43 +12,24 @@ const require = createRequire(import.meta.url);
 
 const pluginName = 'VanillaExtractPlugin';
 
-function markCSSFilesAsSideEffects(compiler: Compiler, compat: WebpackCompat) {
+function markCSSFilesAsSideEffects(compiler: Compiler) {
   compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
-    if (compat.isWebpack5) {
-      nmf.hooks.createModule.tap(
-        pluginName,
-        // @ts-expect-error CreateData is typed as 'object'...
-        (createData: {
-          matchResource?: string;
-          settings: { sideEffects?: boolean };
-        }) => {
-          if (
-            createData.matchResource &&
-            (createData.matchResource.endsWith('.vanilla.css') ||
-              createData.matchResource.endsWith('vanilla.virtual.css'))
-          ) {
-            createData.settings.sideEffects = true;
-          }
-        },
-      );
-    } else {
-      nmf.hooks.afterResolve.tap(
-        pluginName,
-        // @ts-expect-error Can't be typesafe for webpack 4
-        (result: {
-          matchResource?: string;
-          settings: { sideEffects?: boolean };
-        }) => {
-          if (
-            result.matchResource &&
-            (result.matchResource.endsWith('.vanilla.css') ||
-              result.matchResource.endsWith('vanilla.virtual.css'))
-          ) {
-            result.settings.sideEffects = true;
-          }
-        },
-      );
-    }
+    nmf.hooks.createModule.tap(
+      pluginName,
+      // @ts-expect-error CreateData is typed as 'object'...
+      (createData: {
+        matchResource?: string;
+        settings: { sideEffects?: boolean };
+      }) => {
+        if (
+          createData.matchResource &&
+          (createData.matchResource.endsWith('.vanilla.css') ||
+            createData.matchResource.endsWith('vanilla.virtual.css'))
+        ) {
+          createData.settings.sideEffects = true;
+        }
+      },
+    );
   });
 }
 
@@ -97,11 +77,7 @@ export abstract class AbstractVanillaExtractPlugin {
     compiler: Compiler,
     virtualLoader: 'virtualFileLoader' | 'virtualNextFileLoader',
   ): void {
-    const compat = createCompat(
-      Boolean(compiler.webpack && compiler.webpack.version),
-    );
-
-    markCSSFilesAsSideEffects(compiler, compat);
+    markCSSFilesAsSideEffects(compiler);
 
     compiler.options.module?.rules.splice(0, 0, {
       test: this.test,

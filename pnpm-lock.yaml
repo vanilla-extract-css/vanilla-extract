@@ -552,9 +552,6 @@ importers:
       debug:
         specifier: ^4.3.1
         version: 4.4.3(supports-color@9.2.3)
-      loader-utils:
-        specifier: ^2.0.0
-        version: 2.0.2
       picocolors:
         specifier: ^1.0.0
         version: 1.1.1
@@ -725,9 +722,6 @@ importers:
       '@parcel/core':
         specifier: ^2.15.0
         version: 2.16.4
-      '@types/mini-css-extract-plugin':
-        specifier: ^1.2.2
-        version: 1.4.3(@swc/core@1.15.8)(esbuild@0.28.0)(webpack-cli@6.0.1)
       '@types/webpack-dev-server':
         specifier: ^3.11.1
         version: 3.11.6
@@ -4332,9 +4326,6 @@ packages:
 
   '@types/mime@1.3.2':
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
-
-  '@types/mini-css-extract-plugin@1.4.3':
-    resolution: {integrity: sha512-jyOSVaF4ie2jUGr1uohqeyDrp7ktRthdFxDKzTgbPZtl0QI5geEopW7UKD/DEfn0XgV1KEq/RnZlUmnrEAWbmg==}
 
   '@types/minimatch@3.0.5':
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
@@ -14662,17 +14653,6 @@ snapshots:
       '@types/unist': 2.0.6
 
   '@types/mime@1.3.2': {}
-
-  '@types/mini-css-extract-plugin@1.4.3(@swc/core@1.15.8)(esbuild@0.28.0)(webpack-cli@6.0.1)':
-    dependencies:
-      '@types/node': 22.15.3
-      tapable: 2.3.0
-      webpack: 5.104.0(@swc/core@1.15.8)(esbuild@0.28.0)(webpack-cli@6.0.1)
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-      - webpack-cli
 
   '@types/minimatch@3.0.5': {}
 
