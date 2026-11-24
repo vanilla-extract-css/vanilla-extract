@@ -7,6 +7,7 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import inspect from 'vite-plugin-inspect';
 
 import type { TestServer } from './types';
+import { createOutputDir } from './outputDir';
 
 export const serveAssets = ({ port, dir }: { port: number; dir: string }) =>
   new Promise<() => Promise<void>>((resolve) => {
@@ -70,8 +71,15 @@ export const startViteFixture = async (
     };
   }
 
-  const result = await build(config);
-  const closeServer = await serveAssets({ port, dir: path.join(root, 'dist') });
+  const { outputDir, removeOutputDir } = await createOutputDir(
+    fixtureName,
+    'vite-production',
+  );
+  const result = await build({
+    ...config,
+    build: { ...config.build, outDir: outputDir },
+  });
+  const closeServer = await serveAssets({ port, dir: outputDir });
 
   if (!('output' in result)) {
     throw new Error('Unexpected build output');
@@ -84,6 +92,9 @@ export const startViteFixture = async (
     type: 'vite',
     url: `http://localhost:${port}`,
     stylesheet,
-    close: closeServer,
+    close: async () => {
+      await closeServer();
+      await removeOutputDir();
+    },
   };
 };

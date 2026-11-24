@@ -1,12 +1,12 @@
 import {
-  type ReactNode,
-  type ComponentProps,
   type AllHTMLAttributes,
+  type ComponentProps,
+  type ComponentType,
   type ElementType,
+  type JSX,
+  type ReactNode,
   createElement,
-  Children,
 } from 'react';
-import { MDXProvider } from '@mdx-js/react';
 import Text, { useTextStyles } from './Typography/Text';
 import { Box } from './system';
 import InlineCode from './InlineCode/InlineCode';
@@ -14,11 +14,21 @@ import Link from './Typography/Link';
 import Blockquote from './Blockquote/Blockquote';
 import { type HeadingLevel, useHeadingStyles } from './Typography/Heading';
 import Divider from './Divider/Divider';
-import { CompiledCode, type CompiledCodeProps } from './Code/CompiledCode';
+import {
+  CompiledCode,
+  type CodeFile,
+  type CompiledCodeProps,
+} from './Code/CompiledCode';
 import { type BoxProps } from './system/Box/Box';
 import { sprinkles } from './system/styles/sprinkles.css';
 import { vars } from './themes.css';
 import * as styles from './mdx-components.css';
+
+type MdxComponents = {
+  [Tag in keyof JSX.IntrinsicElements]?: ComponentType<
+    JSX.IntrinsicElements[Tag]
+  >;
+} & Record<string, ComponentType<any>>;
 
 const Block = ({
   component,
@@ -41,37 +51,16 @@ const Block = ({
   </Box>
 );
 
-const RemoveNestedParagraphs = (props: { children: ReactNode }) => (
-  <MDXProvider
-    {...props}
-    components={{
-      p: ({ children }) => <Text>{children}</Text>,
-    }}
-  />
-);
+// Children arrive as pre-rendered HTML, so structural concerns are handled by `markdown/docsPlugin.ts`
 
 const A = ({
   href,
   color: _color,
   type: _type,
+  'data-inline-code': isInlineCodeLink,
   ...restProps
-}: JSX.IntrinsicElements['a']) => {
-  let isInlineCodeLink = false;
-
-  if (
-    restProps.children &&
-    Children.count(restProps.children) === 1 &&
-    typeof restProps.children === 'object'
-  ) {
-    const child = Children.only(restProps.children);
-    if (child && typeof child === 'object' && 'props' in child) {
-      isInlineCodeLink =
-        child.props.parentName === 'a' &&
-        child.props.originalType === 'inlineCode';
-    }
-  }
-
-  return href ? (
+}: ComponentProps<'a'> & { 'data-inline-code'?: boolean }) =>
+  href ? (
     <Link
       to={href}
       {...restProps}
@@ -87,7 +76,6 @@ const A = ({
   ) : (
     <a {...restProps} />
   );
-};
 
 interface HeadingProps extends AllHTMLAttributes<HTMLHeadingElement> {
   component: ElementType;
@@ -120,7 +108,21 @@ const Heading = ({ level, component, children, href }: HeadingProps) => {
   );
 };
 
-export default {
+const CodeBlock = (file: CodeFile) => (
+  <Block maxWidth="xlarge">
+    <CompiledCode code={[file]} />
+  </Block>
+);
+
+const CompiledCodeBlock = (props: CompiledCodeProps) => (
+  <Block maxWidth="xlarge">
+    <Box paddingY="large">
+      <CompiledCode {...props} />
+    </Box>
+  </Block>
+);
+
+export const components = {
   hr: () => (
     <Block>
       <Divider />
@@ -192,72 +194,9 @@ export default {
       </Box>
     </Block>
   ),
-  pre: ({ children }) => (
-    <Block maxWidth="xlarge" component="pre">
-      {children}
-    </Block>
-  ),
-  compiledcode: (props: CompiledCodeProps) => (
-    <Block maxWidth="xlarge">
-      <Box paddingY="large">
-        <CompiledCode {...props} />
-      </Box>
-    </Block>
-  ),
-  code: (props) => {
-    // These props are added by SyntaxHighlighter. Code blocks without a
-    // language are left untokenized by mdx-loader's prism plugin, so these
-    // will be undefined — fall back to rendering the raw, unhighlighted
-    // contents instead.
-    const {
-      dangerouslySetInnerHTML,
-      children,
-      ['data-language']: language,
-    } = props as typeof props & {
-      'data-language'?: string;
-      dangerouslySetInnerHTML?: { __html: string };
-    };
-
-    if (!dangerouslySetInnerHTML) {
-      return (
-        <CompiledCode
-          code={[
-            {
-              contents: typeof children === 'string' ? children : '',
-              tokenized: false,
-            },
-          ]}
-        />
-      );
-    }
-
-    let resolvedTitle = '';
-    let resolvedChildren = dangerouslySetInnerHTML.__html;
-    const matches = resolvedChildren.match(
-      /^(?<node><span class=".*">(?:\/[/*])(?:\s)?(?<title>[^*/]*)(?:\*\/)?<\/span>)/,
-    );
-
-    if (matches && matches.groups) {
-      resolvedTitle = matches.groups.title;
-      resolvedChildren = resolvedChildren
-        .replace(`${matches.groups.node}`, '')
-        .trim();
-    }
-
-    return (
-      <CompiledCode
-        code={[
-          {
-            fileName: resolvedTitle,
-            contents: resolvedChildren,
-            language,
-            tokenized: true,
-          },
-        ]}
-      />
-    );
-  },
-  inlineCode: InlineCode,
+  CodeBlock,
+  CompiledCodeBlock,
+  code: InlineCode,
   th: (props) => (
     <Text component="th" weight="strong">
       {props.children}
@@ -267,10 +206,11 @@ export default {
   a: A,
   blockquote: ({ children }) => (
     <Block component="blockquote">
-      <RemoveNestedParagraphs>
-        <Blockquote>{children}</Blockquote>
-      </RemoveNestedParagraphs>
+      <Blockquote>{children}</Blockquote>
     </Block>
+  ),
+  'blockquote-p': ({ children }: { children?: ReactNode }) => (
+    <Text>{children}</Text>
   ),
   ul: (props) => (
     <Block
@@ -300,4 +240,4 @@ export default {
       {props.children}
     </Block>
   ),
-} satisfies ComponentProps<typeof MDXProvider>['components'];
+} satisfies MdxComponents;

@@ -26,10 +26,10 @@
     "@vanilla-extract/integration": "workspace:^"
   },
   "devDependencies": {
-    "next": "12.3.4",
-    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+    "next": "^16.0.0",
+    "vite": "^8.0.0"
   },
   "peerDependencies": {
-    "next": ">=12.1.7"
+    "next": "^16.0.0"
   }
 }

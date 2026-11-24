@@ -1779,9 +1779,8 @@ export { Button, Radio as Checkbox, Radio$1 as Radio };
   ],
   [
     "button/button.css.js",
-    "//#region fixtures/react-library-example/src/button/button.css.ts
+    "// fixtures/react-library-example/src/button/button.css.ts
 var btn = "button_btn__s626q60";
-//#endregion
 export { btn };
 ",
   ],
@@ -1790,7 +1789,7 @@ export { btn };
     "import { btn } from "./button.css.js";
 import clsx from "clsx";
 import { jsx } from "react/jsx-runtime";
-//#region fixtures/react-library-example/src/button/button.tsx
+// fixtures/react-library-example/src/button/button.tsx
 function Button({ className, children, type = "button", ...props }) {
 	return /* @__PURE__ */ jsx("button", {
 		...props,
@@ -1799,16 +1798,14 @@ function Button({ className, children, type = "button", ...props }) {
 		children
 	});
 }
-//#endregion
 export { Button as default };
 ",
   ],
   [
     "checkbox/checkbox.css.js",
-    "//#region fixtures/react-library-example/src/checkbox/checkbox.css.ts
+    "// fixtures/react-library-example/src/checkbox/checkbox.css.ts
 var input = "checkbox_input__8y0ume1";
 var label = "checkbox_label__8y0ume0";
-//#endregion
 export { input, label };
 ",
   ],
@@ -1818,7 +1815,7 @@ export { input, label };
 import clsx from "clsx";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { useId } from "react";
-//#region fixtures/react-library-example/src/checkbox/checkbox.tsx
+// fixtures/react-library-example/src/checkbox/checkbox.tsx
 function Radio({ children, className, id, ...props }) {
 	const randomID = useId();
 	return /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx("input", {
@@ -1832,16 +1829,14 @@ function Radio({ children, className, id, ...props }) {
 		children
 	})] });
 }
-//#endregion
 export { Radio as default };
 ",
   ],
   [
     "radio/radio.css.js",
-    "//#region fixtures/react-library-example/src/radio/radio.css.ts
+    "// fixtures/react-library-example/src/radio/radio.css.ts
 var input = "radio_input__1uatvdb1";
 var label = "radio_label__1uatvdb0";
-//#endregion
 export { input, label };
 ",
   ],
@@ -1851,7 +1846,7 @@ export { input, label };
 import clsx from "clsx";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { useId } from "react";
-//#region fixtures/react-library-example/src/radio/radio.tsx
+// fixtures/react-library-example/src/radio/radio.tsx
 function Radio({ children, className, id, ...props }) {
 	const randomID = useId();
 	return /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx("input", {
@@ -1865,7 +1860,6 @@ function Radio({ children, className, id, ...props }) {
 		children
 	})] });
 }
-//#endregion
 export { Radio as default };
 ",
   ],
@@ -1907,7 +1901,7 @@ exports[`rollup-plugin > should be compatible with rolldown > should build third
     "src/index.js",
     "import { block, depBlock, depdepBlock } from "./styles.css.js";
 import { first, third, thirdThird } from "../test-nodes.js";
-//#region fixtures/thirdparty/src/index.ts
+// fixtures/thirdparty/src/index.ts
 document.body.innerHTML = \`
   <div id="\${first}" class="\${block}">
     I'm a first-party block
@@ -1919,7 +1913,6 @@ document.body.innerHTML = \`
     </div>
   </div>
 \`;
-//#endregion
 ",
   ],
   [
@@ -1927,21 +1920,19 @@ document.body.innerHTML = \`
     "import "./../assets/styles.css.mjs.vanilla-D9Urel4Y.css";
 import "./../assets/styles.css.mjs.vanilla-CrOjccUD.css";
 import "./../assets/styles.css.ts.vanilla-Bah2oB25.css";
-//#region fixtures/thirdparty/src/styles.css.ts
+// fixtures/thirdparty/src/styles.css.ts
 var block = "styles_block__1vrxmse1";
 var depBlock = "styles_depBlock__vg1esd1";
 var depdepBlock = "styles_depdepBlock__7q0fkw1";
-//#endregion
 export { block, depBlock, depdepBlock };
 ",
   ],
   [
     "test-nodes.js",
-    "//#region fixtures/thirdparty/test-nodes.json
+    "// fixtures/thirdparty/test-nodes.json
 var first = "first";
 var third = "third";
 var thirdThird = "thirdThird";
-//#endregion
 export { first, third, thirdThird };
 ",
   ],
@@ -1975,7 +1966,7 @@ exports[`rollup-plugin > should be compatible with rolldown > should build third
     "src/index.js",
     "import { block, depBlock, depdepBlock } from "./styles.css.js";
 import { first, third, thirdThird } from "../test-nodes.js";
-//#region fixtures/thirdparty/src/index.ts
+// fixtures/thirdparty/src/index.ts
 document.body.innerHTML = \`
   <div id="\${first}" class="\${block}">
     I'm a first-party block
@@ -1987,7 +1978,6 @@ document.body.innerHTML = \`
     </div>
   </div>
 \`;
-//#endregion
 ",
   ],
   [
@@ -1995,21 +1985,19 @@ document.body.innerHTML = \`
     "import "./../assets/styles.css.mjs.vanilla-BDW24ak-.css";
 import "./../assets/styles.css.mjs.vanilla-DCRy3bAw.css";
 import "./../assets/styles.css.ts.vanilla-Du-3RMhd.css";
-//#region fixtures/thirdparty/src/styles.css.ts
+// fixtures/thirdparty/src/styles.css.ts
 var block = "styles_block__1dwu2ur1";
 var depBlock = "styles_depBlock__mpzl121";
 var depdepBlock = "styles_depdepBlock__9lp6xd1";
-//#endregion
 export { block, depBlock, depdepBlock };
 ",
   ],
   [
     "test-nodes.js",
-    "//#region fixtures/thirdparty/test-nodes.json
+    "// fixtures/thirdparty/test-nodes.json
 var first = "first";
 var third = "third";
 var thirdThird = "thirdThird";
-//#endregion
 export { first, third, thirdThird };
 ",
   ],
@@ -2145,7 +2133,7 @@ import { button, container, opacity } from "./styles.css.js";
 import { shadow } from "./shared.css.js";
 import { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer } from "../test-nodes.js";
 import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
-//#region fixtures/themed/src/index.ts
+// fixtures/themed/src/index.ts
 const inlineTheme = assignInlineVars(vars, {
 	colors: {
 		backgroundColor: "orange",
@@ -2214,15 +2202,13 @@ function render() {
 	setElementVars(dynamicVarsContainer$1, { [vars.colors.backgroundColor]: "darksalmon" });
 }
 render();
-//#endregion
 ",
   ],
   [
     "src/shared.css.js",
     "import "./../assets/shared.css.ts.vanilla-G_Gyt4-e.css";
-//#region fixtures/themed/src/shared.css.ts
+// fixtures/themed/src/shared.css.ts
 var shadow = "shared_shadow__4dtfen0";
-//#endregion
 export { shadow };
 ",
   ],
@@ -2231,21 +2217,20 @@ export { shadow };
     "import "./../assets/themes.css.ts.vanilla-s9rcEmBH.css";
 import "./../assets/shared.css.ts.vanilla-G_Gyt4-e.css";
 import "./../assets/styles.css.ts.vanilla-BfisGtko.css";
-//#region fixtures/themed/src/styles.css.ts
+// fixtures/themed/src/styles.css.ts
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
 var opacity = {
 	"1/2": "styles_opacity_1/2__jteyb16",
 	"1/4": "styles_opacity_1/4__jteyb17"
 };
-//#endregion
 export { button, container, opacity };
 ",
   ],
   [
     "src/themes.css.js",
     "import "./../assets/themes.css.ts.vanilla-s9rcEmBH.css";
-//#region fixtures/themed/src/themes.css.ts
+// fixtures/themed/src/themes.css.ts
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
@@ -2260,13 +2245,12 @@ var vars = {
 		"3": "var(--space-3__cvta175)"
 	}
 };
-//#endregion
 export { altTheme, responsiveTheme, theme, vars };
 ",
   ],
   [
     "test-nodes.js",
-    "//#region fixtures/themed/test-nodes.json
+    "// fixtures/themed/test-nodes.json
 var root = "root";
 var rootContainer = "rootContainer";
 var rootButton = "rootButton";
@@ -2280,7 +2264,6 @@ var dynamicVarsContainer = "dynamicVarsContainer";
 var dynamicVarsButton = "dynamicVarsButton";
 var responsiveThemeContainer = "responsiveThemeContainer";
 var responsiveThemeButton = "responsiveThemeButton";
-//#endregion
 export { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
   ],
@@ -2296,7 +2279,7 @@ import { button, container, opacity } from "./styles.css.js";
 import { shadow } from "./shared.css.js";
 import { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer } from "./test-nodes.js";
 import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
-//#region fixtures/themed/src/index.ts
+// fixtures/themed/src/index.ts
 const inlineTheme = assignInlineVars(vars, {
 	colors: {
 		backgroundColor: "orange",
@@ -2365,15 +2348,13 @@ function render() {
 	setElementVars(dynamicVarsContainer$1, { [vars.colors.backgroundColor]: "darksalmon" });
 }
 render();
-//#endregion
 ",
   ],
   [
     "shared.css.js",
     "import "./shared.css.ts.vanilla.css";
-//#region fixtures/themed/src/shared.css.ts
+// fixtures/themed/src/shared.css.ts
 var shadow = "shared_shadow__4dtfen0";
-//#endregion
 export { shadow };
 ",
   ],
@@ -2394,14 +2375,13 @@ body, button {
     "import "./themes.css.ts.vanilla.css";
 import "./shared.css.ts.vanilla.css";
 import "./styles.css.ts.vanilla.css";
-//#region fixtures/themed/src/styles.css.ts
+// fixtures/themed/src/styles.css.ts
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
 var opacity = {
 	"1/2": "styles_opacity_1/2__jteyb16",
 	"1/4": "styles_opacity_1/4__jteyb17"
 };
-//#endregion
 export { button, container, opacity };
 ",
   ],
@@ -2465,7 +2445,7 @@ html .styles_opacity_1\\/4__jteyb17 {
   ],
   [
     "test-nodes.js",
-    "//#region fixtures/themed/test-nodes.json
+    "// fixtures/themed/test-nodes.json
 var root = "root";
 var rootContainer = "rootContainer";
 var rootButton = "rootButton";
@@ -2479,14 +2459,13 @@ var dynamicVarsContainer = "dynamicVarsContainer";
 var dynamicVarsButton = "dynamicVarsButton";
 var responsiveThemeContainer = "responsiveThemeContainer";
 var responsiveThemeButton = "responsiveThemeButton";
-//#endregion
 export { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
   ],
   [
     "themes.css.js",
     "import "./themes.css.ts.vanilla.css";
-//#region fixtures/themed/src/themes.css.ts
+// fixtures/themed/src/themes.css.ts
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
@@ -2501,7 +2480,6 @@ var vars = {
 		"3": "var(--space-3__cvta175)"
 	}
 };
-//#endregion
 export { altTheme, responsiveTheme, theme, vars };
 ",
   ],
@@ -2563,11 +2541,11 @@ exports[`rollup-plugin > should be compatible with rolldown > should build with 
   [
     "index.js",
     "import { altTheme, responsiveTheme, theme, vars } from "./themes.css.js";
-import { shadow } from "./shared.css.js";
 import { button, container, opacity } from "./styles.css.js";
+import { shadow } from "./shared.css.js";
 import { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer } from "./test-nodes.js";
 import { assignInlineVars, setElementVars } from "@vanilla-extract/dynamic";
-//#region fixtures/themed/src/index.ts
+// fixtures/themed/src/index.ts
 const inlineTheme = assignInlineVars(vars, {
 	colors: {
 		backgroundColor: "orange",
@@ -2636,30 +2614,28 @@ function render() {
 	setElementVars(dynamicVarsContainer$1, { [vars.colors.backgroundColor]: "darksalmon" });
 }
 render();
-//#endregion
 ",
   ],
   [
     "shared.css.js",
     "import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
 import { globalStyle, style } from "@vanilla-extract/css";
-//#region fixtures/themed/src/shared.css.ts
+// fixtures/themed/src/shared.css.ts
 setFileScope("src/shared.css.ts", "@fixtures/themed");
 const shadow = style({ boxShadow: "0 0 5px red" }, "shadow");
 globalStyle("body", { backgroundColor: "skyblue" });
 globalStyle("body, button", { lineHeight: "16px" });
 endFileScope();
-//#endregion
 export { shadow };
 ",
   ],
   [
     "styles.css.js",
-    "import { altTheme, theme, vars } from "./themes.css.js";
-import { shadow } from "./shared.css.js";
+    "import { shadow } from "./shared.css.js";
+import { altTheme, theme, vars } from "./themes.css.js";
 import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
 import { createVar, fallbackVar, fontFace, globalFontFace, globalStyle, style, styleVariants } from "@vanilla-extract/css";
-//#region fixtures/themed/src/styles.css.ts
+// fixtures/themed/src/styles.css.ts
 setFileScope("src/styles.css.ts", "@fixtures/themed");
 const impact = fontFace({ src: "local(\\"Impact\\")" }, "impact");
 globalFontFace("MyGlobalComicSans", { src: "local(\\"Comic Sans MS\\")" });
@@ -2695,18 +2671,18 @@ const blankVar1 = createVar({
 	inherits: false,
 	initialValue: "0.5"
 }, "blankVar1");
+const blankVar2 = createVar("blankVar2");
 const opacity = styleVariants({
 	"1/2": blankVar1,
-	"1/4": fallbackVar(blankVar1, createVar("blankVar2"), "0.25")
+	"1/4": fallbackVar(blankVar1, blankVar2, "0.25")
 }, (value) => ({ selectors: { "html &": { opacity: value } } }), "opacity");
 endFileScope();
-//#endregion
 export { button, container, opacity };
 ",
   ],
   [
     "test-nodes.js",
-    "//#region fixtures/themed/test-nodes.json
+    "// fixtures/themed/test-nodes.json
 var root = "root";
 var rootContainer = "rootContainer";
 var rootButton = "rootButton";
@@ -2720,7 +2696,6 @@ var dynamicVarsContainer = "dynamicVarsContainer";
 var dynamicVarsButton = "dynamicVarsButton";
 var responsiveThemeContainer = "responsiveThemeContainer";
 var responsiveThemeButton = "responsiveThemeButton";
-//#endregion
 export { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlineThemeButton, inlineThemeContainer, nestedRootButton, nestedRootContainer, responsiveThemeButton, responsiveThemeContainer, root, rootButton, rootContainer };
 ",
   ],
@@ -2728,7 +2703,7 @@ export { altButton, altContainer, dynamicVarsButton, dynamicVarsContainer, inlin
     "themes.css.js",
     "import { endFileScope, setFileScope } from "@vanilla-extract/css/fileScope";
 import { assignVars, createGlobalTheme, createTheme, layer, style } from "@vanilla-extract/css";
-//#region fixtures/themed/src/themes.css.ts
+// fixtures/themed/src/themes.css.ts
 setFileScope("src/themes.css.ts", "@fixtures/themed");
 const theme = style({}, "theme");
 const vars = createGlobalTheme(\`:root, \${theme}\`, {
@@ -2753,8 +2728,9 @@ const altTheme = createTheme(vars, {
 		3: "16px"
 	}
 }, "altTheme");
+const themeLayer = layer("themeLayer");
 const [altTheme2Class, altTheme2Contract] = createTheme({
-	"@layer": layer("themeLayer"),
+	"@layer": themeLayer,
 	colors: {
 		backgroundColor: "green",
 		text: "white"
@@ -2795,7 +2771,6 @@ const responsiveTheme = style({
 	}) } }
 }, "responsiveTheme");
 endFileScope();
-//#endregion
 export { altTheme, altTheme2Contract, responsiveTheme, theme, vars };
 ",
   ],
@@ -2987,7 +2962,7 @@ html .styles_opacity_1\\/4__jteyb17 {
 import "./assets/themes.css.ts.vanilla-s9rcEmBH.css";
 import "./assets/shared.css.ts.vanilla-G_Gyt4-e.css";
 import "./assets/styles.css.ts.vanilla-BfisGtko.css";
-//#region fixtures/themed/src/themes.css.ts
+// fixtures/themed/src/themes.css.ts
 var altTheme = "themes_altTheme__cvta176";
 var responsiveTheme = "themes_responsiveTheme__cvta17e";
 var theme = "themes_theme__cvta170";
@@ -3002,19 +2977,16 @@ var vars = {
 		"3": "var(--space-3__cvta175)"
 	}
 };
-//#endregion
-//#region fixtures/themed/src/styles.css.ts
+// fixtures/themed/src/styles.css.ts
 var button = "styles_button__jteyb13 shared_shadow__4dtfen0 styles_iDunno__jteyb12";
 var container = "styles_container__jteyb11";
 var opacity = {
 	"1/2": "styles_opacity_1/2__jteyb16",
 	"1/4": "styles_opacity_1/4__jteyb17"
 };
-//#endregion
-//#region fixtures/themed/src/shared.css.ts
+// fixtures/themed/src/shared.css.ts
 var shadow = "shared_shadow__4dtfen0";
-//#endregion
-//#region fixtures/themed/test-nodes.json
+// fixtures/themed/test-nodes.json
 var root = "root";
 var rootContainer = "rootContainer";
 var rootButton = "rootButton";
@@ -3028,8 +3000,7 @@ var dynamicVarsContainer = "dynamicVarsContainer";
 var dynamicVarsButton = "dynamicVarsButton";
 var responsiveThemeContainer = "responsiveThemeContainer";
 var responsiveThemeButton = "responsiveThemeButton";
-//#endregion
-//#region fixtures/themed/src/index.ts
+// fixtures/themed/src/index.ts
 const inlineTheme = assignInlineVars(vars, {
 	colors: {
 		backgroundColor: "orange",
@@ -3098,7 +3069,6 @@ function render() {
 	setElementVars(dynamicVarsContainer$1, { [vars.colors.backgroundColor]: "darksalmon" });
 }
 render();
-//#endregion
 ",
   ],
 ]

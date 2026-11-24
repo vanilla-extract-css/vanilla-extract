@@ -1,6 +1,12 @@
-import type { Compilation, Compiler } from 'webpack';
+import type {
+  Compilation,
+  Compiler,
+  LoaderContext as WebpackLoaderContext,
+} from 'webpack';
 
-export interface LoaderContext {
+export interface LoaderContext<OptionsType = unknown> {
+  getOptions: WebpackLoaderContext<OptionsType>['getOptions'];
+  utils: WebpackLoaderContext<OptionsType>['utils'];
   addDependency: (filePath: string) => void;
   addContextDependency: (filePath: string) => void;
   cacheable: (value: boolean) => void;

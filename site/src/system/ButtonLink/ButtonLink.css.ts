@@ -4,6 +4,7 @@ import { darkMode } from '../styles/sprinkles.css';
 
 export const button = style({
   textDecoration: 'none',
+  gap: vars.spacing.xsmall,
   fontSize: vars.text.standard.mobile.fontSize,
   fontFamily: vars.fonts.body,
   transition: 'transform .15s ease',

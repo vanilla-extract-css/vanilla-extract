@@ -1,11 +1,12 @@
 import path from 'path';
-import { existsSync, promises as fs } from 'fs';
+import { promises as fs } from 'fs';
 
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 import { vanillaExtractPlugin as vanillaExtractPluginNext } from '@vanilla-extract/esbuild-plugin-next';
 import * as esbuild from 'esbuild';
 
 import type { TestServer } from './types';
+import { createOutputDir } from './outputDir';
 
 export interface EsbuildFixtureOptions {
   type: 'esbuild' | 'esbuild-runtime' | 'esbuild-next' | 'esbuild-next-runtime';
@@ -24,13 +25,10 @@ export const startEsbuildFixture = async (
   const absWorkingDir = path.dirname(
     require.resolve(`@fixtures/${fixtureName}/package.json`),
   );
-  const outdir = path.join(absWorkingDir, 'dist', type, fixtureName);
-
-  if (existsSync(outdir)) {
-    await fs.rm(outdir, { recursive: true });
-  }
-
-  await fs.mkdir(outdir, { recursive: true });
+  const { outputDir: outdir, removeOutputDir } = await createOutputDir(
+    fixtureName,
+    `${type}-${mode}`,
+  );
 
   const ctx = await esbuild.context({
     entryPoints: [entry],
@@ -81,10 +79,9 @@ export const startEsbuildFixture = async (
     type: 'esbuild',
     url: `http://${server.hosts[0]}:${port}`,
     stylesheet: 'index.css',
-    close: () => {
-      ctx.dispose();
-
-      return Promise.resolve();
+    close: async () => {
+      await ctx.dispose();
+      await removeOutputDir();
     },
   };
 };

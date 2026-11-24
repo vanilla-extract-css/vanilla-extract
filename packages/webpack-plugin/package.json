@@ -59,12 +59,11 @@
   "author": "SEEK",
   "license": "MIT",
   "peerDependencies": {
-    "webpack": "^4.30.0 || ^5.20.2"
+    "webpack": "^5.73.0"
   },
   "dependencies": {
     "@vanilla-extract/integration": "workspace:^",
     "debug": "^4.3.1",
-    "loader-utils": "^2.0.0",
     "picocolors": "^1.0.0"
   },
   "devDependencies": {

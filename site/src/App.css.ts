@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
-import { darkMode } from './system/styles/sprinkles.css';
+import { darkMode } from './system/styles/colorModes';
 import { vars } from './themes.css';
 
 globalStyle('html, body', {

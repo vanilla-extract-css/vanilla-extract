@@ -9,6 +9,7 @@ import {
 import { calc } from '@vanilla-extract/css-utils';
 import { breakpoints } from '../../themeUtils';
 import { vars } from '../../themes.css';
+import { darkMode } from './colorModes';
 
 const space = vars.spacing;
 export type Space = keyof typeof space;
@@ -77,8 +78,7 @@ export type ResponsiveValue<Value extends string | number> = ConditionalValue<
   Value
 >;
 
-export const lightMode = 'light';
-export const darkMode = 'dark';
+export { darkMode, lightMode } from './colorModes';
 
 const colorProperties = defineProperties({
   conditions: {

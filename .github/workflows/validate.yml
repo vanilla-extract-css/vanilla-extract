@@ -1,6 +1,11 @@
 name: Validate
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - master
+      - 'changesets-ghcommit-temp/**'
+  pull_request:
 permissions: {}
 
 jobs:
@@ -28,7 +33,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build && pnpm --filter "./site" generate:docs-manifest
+        run: pnpm build
 
       - name: Lint
         run: pnpm lint
@@ -64,12 +69,8 @@ jobs:
       - name: Unit Test
         run: pnpm test:unit
   playwright:
-    name: Playwright tests (shard ${{ matrix.shard }}/2)
+    name: Playwright tests
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2]
     env:
       CI: true
     steps:
@@ -97,11 +98,11 @@ jobs:
         run: pnpm build
 
       - name: Playwright tests
-        run: pnpm test:playwright --shard=${{ matrix.shard }}/2
+        run: pnpm test:playwright
 
       - name: Upload test results
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: ${{ failure() }}
         with:
-          name: test-results-shard-${{ matrix.shard }}
+          name: test-results
           path: test-results/

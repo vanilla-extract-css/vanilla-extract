@@ -4,7 +4,7 @@ module.exports = {
   trailingComma: 'all',
   overrides: [
     {
-      files: '*.md',
+      files: ['*.md', '*.mdx'],
       options: {
         printWidth: 60,
         trailingComma: 'none',
