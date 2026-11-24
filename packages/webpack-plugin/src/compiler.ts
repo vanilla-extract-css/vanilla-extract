@@ -78,6 +78,16 @@ const templateStringRegexp = /\[([\w:]+)\]/g;
 export const escapeWebpackTemplateString = (s: string): string =>
   s.replaceAll(templateStringRegexp, '[\\$1\\]');
 
+// The child compiler inherits the parent's React Refresh transforms, but not the
+// browser runtime that defines the functions they call. Next.js calls bare
+// `$RefreshReg$`/`$RefreshSig$`, while @pmmmwh/react-refresh-webpack-plugin
+// rewrites them to `__webpack_require__.$Refresh$`.
+// https://github.com/vanilla-extract-css/vanilla-extract/issues/1043
+const reactRefreshGlobalStubs = [
+  'var $RefreshReg$ = function () {};',
+  'var $RefreshSig$ = function () { return function (type) { return type; }; };',
+].join('\n');
+
 function compileVanillaSource(
   loader: LoaderContext,
   externals: Externals | undefined,
@@ -104,7 +114,19 @@ function compileVanillaSource(
       ExternalsPlugin,
       EntryOptionPlugin,
       library: { EnableLibraryPlugin },
+      RuntimeModule,
+      RuntimeGlobals,
     } = loader._compiler.webpack;
+
+    class ReactRefreshStubRuntimeModule extends RuntimeModule {
+      constructor() {
+        super('react refresh stub', RuntimeModule.STAGE_BASIC);
+      }
+
+      generate() {
+        return `${RuntimeGlobals.require}.$Refresh$ = { register: function () {}, signature: function () { return function (type) { return type; }; } };`;
+      }
+    }
 
     new NodeTemplatePlugin().apply(childCompiler);
     new NodeTargetPlugin().apply(childCompiler);
@@ -131,10 +153,22 @@ function compileVanillaSource(
     const moduleAssets: Array<Asset> = [];
 
     childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
+      compilation.hooks.additionalTreeRuntimeRequirements.tap(
+        compilerName,
+        (chunk, runtimeRequirements) => {
+          // Ensures `__webpack_require__` is declared even when no module needs it,
+          // e.g. a `.css.ts` file with no exports
+          runtimeRequirements.add(RuntimeGlobals.requireScope);
+          compilation.addRuntimeModule(
+            chunk,
+            new ReactRefreshStubRuntimeModule(),
+          );
+        },
+      );
+
       compilation.hooks.processAssets.tap(compilerName, () => {
-        source =
-          compilation.assets[loader.resourcePath] &&
-          (compilation.assets[loader.resourcePath].source() as string);
+        const asset = compilation.assets[loader.resourcePath];
+        source = asset && `${reactRefreshGlobalStubs}\n${asset.source()}`;
       });
 
       // Runs after every other stage, so assets from plugins inherited from the
