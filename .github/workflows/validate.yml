@@ -1,12 +1,16 @@
 name: Validate
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - master
+      - 'changesets-ghcommit-temp/**'
+  pull_request:
 permissions: {}
 
 jobs:
   test:
     name: Lint & Test
-    if: github.ref != 'refs/heads/master'
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -38,7 +42,6 @@ jobs:
         run: pnpm test:unit
   windows-test:
     name: Windows Tests
-    if: github.ref != 'refs/heads/master'
     runs-on: windows-latest
     env:
       CI: true
@@ -67,7 +70,6 @@ jobs:
         run: pnpm test:unit
   playwright:
     name: Playwright tests
-    if: github.ref != 'refs/heads/master'
     runs-on: macos-latest
     env:
       CI: true
