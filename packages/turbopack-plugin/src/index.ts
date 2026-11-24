@@ -140,10 +140,12 @@ const getOrMakeCompiler = async ({
                 'next/dist/server/image-optimizer/get-image-size.js'
               ).catch(() => import('next/dist/server/image-optimizer.js'));
               const imageSize: { width?: number; height?: number } =
-                await getImageSize(await imageAsBuffer).catch((error) => {
-                  const message = `Process image "${sourceImage}" failed: ${error}`;
-                  throw new Error(message);
-                });
+                await getImageSize(await imageAsBuffer).catch(
+                  (error: unknown) => {
+                    const message = `Process image "${sourceImage}" failed: ${error}`;
+                    throw new Error(message);
+                  },
+                );
 
               const moduleContent = `export default {
                 src: '${relativeImport}',
