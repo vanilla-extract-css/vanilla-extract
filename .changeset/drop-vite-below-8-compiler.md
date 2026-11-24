@@ -1,5 +1,5 @@
 ---
-'@vanilla-extract/compiler': major
+'@vanilla-extract/compiler': minor
 ---
 
 Update `vite` dependency to `^8.0.0` and `vite-node` dependency to `^6.0.0`
