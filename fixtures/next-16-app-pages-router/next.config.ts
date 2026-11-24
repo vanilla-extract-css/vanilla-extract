@@ -1,5 +1,12 @@
+import path from 'node:path';
 import { NextConfig } from 'next';
 import { createVanillaExtractPlugin } from './next-plugin/dist/vanilla-extract-next-plugin.cjs.js';
+
+process.env.NEXT_FONT_GOOGLE_MOCKED_RESPONSES ??= path.join(
+  __dirname,
+  'google-fonts-mock.js',
+);
+
 const withVanillaExtract = createVanillaExtractPlugin({
   unstable_turbopack: { mode: 'auto' },
 });
