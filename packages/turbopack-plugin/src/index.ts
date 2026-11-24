@@ -133,13 +133,19 @@ const getOrMakeCompiler = async ({
                   resolve(data);
                 });
               });
-              const { getImageSize } =
-                await import('next/dist/server/image-optimizer.js');
+              // `getImageSize` moved to its own module in Next.js 16.4, so try
+              // the new location first and fall back to the old one
+              const { getImageSize } = await import(
+                // @ts-expect-error - only exists in newer versions of Next.js
+                'next/dist/server/image-optimizer/get-image-size.js'
+              ).catch(() => import('next/dist/server/image-optimizer.js'));
               const imageSize: { width?: number; height?: number } =
-                await getImageSize(await imageAsBuffer).catch((error) => {
-                  const message = `Process image "${sourceImage}" failed: ${error}`;
-                  throw new Error(message);
-                });
+                await getImageSize(await imageAsBuffer).catch(
+                  (error: unknown) => {
+                    const message = `Process image "${sourceImage}" failed: ${error}`;
+                    throw new Error(message);
+                  },
+                );
 
               const moduleContent = `export default {
                 src: '${relativeImport}',
