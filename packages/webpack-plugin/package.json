@@ -61,6 +61,11 @@
   "peerDependencies": {
     "webpack": "^5.73.0"
   },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@vanilla-extract/integration": "workspace:^",
     "debug": "^4.3.1",
