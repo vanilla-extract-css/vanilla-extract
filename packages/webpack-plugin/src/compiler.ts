@@ -1,3 +1,4 @@
+import type { Asset } from 'webpack';
 import type { LoaderContext } from './types';
 
 // Webpack exposes the `Externals` type which is a union of several types.
@@ -9,6 +10,7 @@ type Externals = any;
 
 interface CompilationResult {
   source: string;
+  moduleAssets: Array<Asset>;
   fileDependencies: Array<string>;
   contextDependencies: Array<string>;
 }
@@ -33,8 +35,15 @@ export class ChildCompiler {
     source: string;
     dependencies: string[];
   }> {
-    const { source, fileDependencies, contextDependencies } =
+    const { source, moduleAssets, fileDependencies, contextDependencies } =
       await compileVanillaSource(loader, this.externals);
+
+    // Emitting through the loader attaches these assets to the parent module, so
+    // they are restored alongside it from webpack's persistent cache
+    // https://github.com/vanilla-extract-css/vanilla-extract/issues/1123
+    moduleAssets.forEach(({ name, source, info }) => {
+      loader.emitFile(name, source.buffer(), undefined, info);
+    });
 
     // Set loader dependencies to dependencies of the child compiler
     fileDependencies.forEach((dep) => {
@@ -119,20 +128,39 @@ function compileVanillaSource(
     ]).apply(childCompiler);
 
     let source: string;
+    const moduleAssets: Array<Asset> = [];
 
     childCompiler.hooks.compilation.tap(compilerName, (compilation) => {
       compilation.hooks.processAssets.tap(compilerName, () => {
         source =
           compilation.assets[loader.resourcePath] &&
           (compilation.assets[loader.resourcePath].source() as string);
-
-        // Remove all chunk assets
-        compilation.chunks.forEach((chunk) => {
-          chunk.files.forEach((file) => {
-            compilation.deleteAsset(file);
-          });
-        });
       });
+
+      // Runs after every other stage, so assets from plugins inherited from the
+      // parent compiler (e.g. Next.js' `.nft.json` traces) are also removed
+      compilation.hooks.processAssets.tap(
+        { name: compilerName, stage: Infinity },
+        () => {
+          const moduleAssetNames = new Set<string>();
+          for (const module of compilation.modules) {
+            const { assets: emittedFiles, filename } = module.buildInfo ?? {};
+            Object.keys(emittedFiles ?? {}).forEach((name) =>
+              moduleAssetNames.add(name),
+            );
+            if (filename) {
+              moduleAssetNames.add(filename);
+            }
+          }
+
+          for (const asset of compilation.getAssets()) {
+            if (moduleAssetNames.has(asset.name)) {
+              moduleAssets.push(asset);
+            }
+            compilation.deleteAsset(asset.name);
+          }
+        },
+      );
     });
 
     try {
@@ -156,6 +184,7 @@ function compileVanillaSource(
 
         resolve({
           source,
+          moduleAssets,
           fileDependencies: Array.from(compilation.fileDependencies),
           contextDependencies: Array.from(compilation.contextDependencies),
         });

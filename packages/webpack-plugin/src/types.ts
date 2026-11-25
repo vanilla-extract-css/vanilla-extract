@@ -18,6 +18,7 @@ export interface LoaderContext<OptionsType = unknown> {
   hot: boolean;
   loaders: any[];
   emitError: (error: Error) => void;
+  emitFile: WebpackLoaderContext<OptionsType>['emitFile'];
   _compiler: Compiler;
   _compilation: Compilation;
   mode: 'production' | 'development' | 'none';
