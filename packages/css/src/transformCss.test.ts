@@ -3085,6 +3085,58 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should not transform local classnames that are only part of another selector token', () => {
+    const transform = (selector: string) =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: [
+          'root',
+          'dark',
+          'aria',
+          'role',
+          'ocus',
+          'focu',
+          'hover',
+          'tton',
+          'lang',
+        ],
+        cssObjs: [{ type: 'global', selector, rule: { color: 'red' } }],
+      })
+        .join('\n')
+        .split(' {')[0];
+
+    expect(transform('root [role="option"][aria-selected="true"]')).toBe(
+      '.root [role="option"][aria-selected="true"]',
+    );
+    expect(transform('root:focus, root:focus-visible, root:hover')).toBe(
+      '.root:focus, .root:focus-visible, .root:hover',
+    );
+    expect(transform('root button')).toBe('.root button');
+    expect(transform('root:lang(en), root [data-theme="dark"]')).toBe(
+      '.root:lang(en), .root [data-theme="dark"]',
+    );
+    expect(transform('root .aria-hidden')).toBe('.root .aria-hidden');
+  });
+
+  it('should transform local classnames glued to other local classnames or element names', () => {
+    const transform = (selector: string) =>
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['root', 'dark', 'item'],
+        cssObjs: [{ type: 'global', selector, rule: { color: 'red' } }],
+      })
+        .join('\n')
+        .split(' {')[0];
+
+    expect(transform('bodydark:has(item)')).toBe('body.dark:has(.item)');
+    expect(transform('rootdark, :not(.x)dark root')).toBe(
+      '.root.dark, :not(.x).dark .root',
+    );
+    expect(transform('li:nth-child(2n of item) root')).toBe(
+      'li:nth-child(2n of .item) .root',
+    );
+  });
+
   it('should handle @starting-style declaration', () => {
     expect(
       transformCss({
