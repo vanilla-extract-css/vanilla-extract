@@ -15,3 +15,4 @@ export * from './vars';
 export { createContainer } from './container';
 export { createViewTransition } from './viewTransition';
 export * from './layer';
+export * from './cssCache';
