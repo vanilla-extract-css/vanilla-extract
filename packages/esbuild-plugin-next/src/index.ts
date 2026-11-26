@@ -13,12 +13,20 @@ import type { Plugin } from 'esbuild';
 
 const vanillaCssNamespace = 'vanilla-extract-css-ns';
 
+async function hashString(str: string) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return hash;
+}
+
 interface VanillaExtractPluginOptions {
   outputCss?: boolean;
   runtime?: boolean;
   processCss?: (css: string) => Promise<string>;
   identifiers?: IdentifierOption;
   compilerVitePlugins?: CreateCompilerOptions['vitePlugins'];
+  useStyleLoader?: boolean;
 }
 export function vanillaExtractPlugin({
   outputCss = true,
@@ -26,6 +34,7 @@ export function vanillaExtractPlugin({
   processCss,
   identifiers: identOption,
   compilerVitePlugins: vitePlugins,
+  useStyleLoader,
 }: VanillaExtractPluginOptions = {}): Plugin {
   if (runtime) {
     // If using runtime CSS then just apply fileScopes and debug IDs to code
@@ -62,11 +71,35 @@ export function vanillaExtractPlugin({
           if (typeof processCss === 'function') {
             css = await processCss(css);
           }
+          const resolveDir = dirname(filePath);
+
+          if (useStyleLoader) {
+            // replace slashes with dashes to make it a valid CSS identifier
+            const elementId = `vanilla-extract-${
+              build.initialOptions.minify
+                ? await hashString(filePath)
+                : filePath.replace(/\//g, '__')
+            }`;
+            const contents = `
+              if (document.getElementById('${elementId}') === null) {
+                const element = document.createElement('style');
+                element.id = '${elementId}';
+                element.textContent = \`${css}\`;
+                document.head.append(element);
+              }
+              export default {};
+              `;
+            return {
+              contents,
+              loader: 'js',
+              resolveDir,
+            };
+          }
 
           return {
             contents: css,
             loader: 'css',
-            resolveDir: dirname(filePath),
+            resolveDir,
           };
         },
       );
