@@ -1,5 +1,21 @@
 # @vanilla-extract/next-plugin
 
+## 3.0.0
+
+### Major Changes
+
+- [#1815](https://github.com/vanilla-extract-css/vanilla-extract/pull/1815) [`cb1f150`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cb1f150b823f9a321b6fb517862c94e0fcbf04d3) Thanks [@askoufis](https://github.com/askoufis)! - Drop support for Next.js versions below 16
+  
+  **BREAKING CHANGE**: The minimum supported version of `next` is now `^16.0.0`. The `semver` dependency has been removed, and `unstable_turbopack.mode` `'auto'` now always enables Turbopack config since Next.js version detection is no longer required. Please note that turbopack support is still experimental.
+  
+  **MIGRATION GUIDE**: Upgrade to Next.js 16 or later.
+
+### Patch Changes
+
+- Updated dependencies [[`cb1f150`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cb1f150b823f9a321b6fb517862c94e0fcbf04d3), [`1d9ffc3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1d9ffc325752ef2d96dac4a377166b4f9881cdeb), [`e434526`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e434526b1e932727a7eb49dea67fa2d90cd37989), [`e690192`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e69019273a807f1c4a4656b7928536b62054598a), [`93fb621`](https://github.com/vanilla-extract-css/vanilla-extract/commit/93fb6215de0f7402c3c9cd15af017312aa1e5ef0), [`995d1e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/995d1e8150e0d8ed73ca711751dcae7ab9939dce)]:
+  - @vanilla-extract/turbopack-plugin@1.0.0
+  - @vanilla-extract/webpack-plugin@3.0.0
+
 ## 2.5.2
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @vanilla-extract/turbopack-plugin
 
+## 1.0.0
+
+### Major Changes
+
+- [#1815](https://github.com/vanilla-extract-css/vanilla-extract/pull/1815) [`cb1f150`](https://github.com/vanilla-extract-css/vanilla-extract/commit/cb1f150b823f9a321b6fb517862c94e0fcbf04d3) Thanks [@askoufis](https://github.com/askoufis)! - Drop support for Next.js versions below 16
+  
+  **BREAKING CHANGE**: The minimum supported version of `next` is now `^16.0.0`. The `semver` dependency has been removed, and `unstable_turbopack.mode` `'auto'` now always enables Turbopack config since Next.js version detection is no longer required. Please note that turbopack support is still experimental.
+  
+  **MIGRATION GUIDE**: Upgrade to Next.js 16 or later.
+
+### Patch Changes
+
+- [#1800](https://github.com/vanilla-extract-css/vanilla-extract/pull/1800) [`e690192`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e69019273a807f1c4a4656b7928536b62054598a) Thanks [@aevarOrigo](https://github.com/aevarOrigo)! - Support Next.js 16.4+ when importing images from `.css.ts` files
+  
+  Previously, builds failed with `TypeError: getImageSize is not a function`.
+- Updated dependencies [[`e6bc070`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e6bc0706a2ed1db1eddacf58fd494c381d5eec92)]:
+  - @vanilla-extract/compiler@0.8.0
+
 ## 0.1.4
 
 ### Patch Changes

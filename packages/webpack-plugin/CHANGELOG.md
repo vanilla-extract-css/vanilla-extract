@@ -1,5 +1,25 @@
 # @vanilla-extract/webpack-plugin
 
+## 3.0.0
+
+### Major Changes
+
+- [#1817](https://github.com/vanilla-extract-css/vanilla-extract/pull/1817) [`1d9ffc3`](https://github.com/vanilla-extract-css/vanilla-extract/commit/1d9ffc325752ef2d96dac4a377166b4f9881cdeb) Thanks [@askoufis](https://github.com/askoufis)! - Drop support for webpack 4. The `peerDependencies` range for `webpack` is now `^5.73.0`, as the plugin now uses the native `this.getOptions()` and `this.utils.contextify()` loader context APIs instead of the `loader-utils` dependency, which has been removed.
+  
+  **BREAKING CHANGE**: Projects using `@vanilla-extract/webpack-plugin` must upgrade to webpack `5.73.0` or later.
+
+### Patch Changes
+
+- [#1823](https://github.com/vanilla-extract-css/vanilla-extract/pull/1823) [`e434526`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e434526b1e932727a7eb49dea67fa2d90cd37989) Thanks [@askoufis](https://github.com/askoufis)! - Make `webpack` an optional peer dependency
+  
+  This fixes an unmet peer dependency warning when using `@vanilla-extract/next-plugin`, as Next.js bundles its own copy of webpack.
+
+- [#1822](https://github.com/vanilla-extract-css/vanilla-extract/pull/1822) [`93fb621`](https://github.com/vanilla-extract-css/vanilla-extract/commit/93fb6215de0f7402c3c9cd15af017312aa1e5ef0) Thanks [@askoufis](https://github.com/askoufis)! - Fix assets emitted while compiling `.css.ts` files (e.g. fonts imported via `asset/resource`) being missing from builds restored from webpack's persistent cache
+  
+  Fixes an issue which caused `RealContentHashPlugin: "unexpected caching problem"` and `Conflict: Multiple assets emit different content to the same filename` errors in Next.js builds (e.g. for `middleware-manifest.json` or `../child.js.nft.json`)
+
+- [#1824](https://github.com/vanilla-extract-css/vanilla-extract/pull/1824) [`995d1e8`](https://github.com/vanilla-extract-css/vanilla-extract/commit/995d1e8150e0d8ed73ca711751dcae7ab9939dce) Thanks [@askoufis](https://github.com/askoufis)! - Fix `$RefreshReg$ is not defined` and `Cannot read properties of undefined (reading 'register')` errors in development when React Refresh is enabled (e.g. Next.js or `@pmmmwh/react-refresh-webpack-plugin`) and a `.css.ts` file imports a module with PascalCase exports
+
 ## 2.3.27
 
 ### Patch Changes
