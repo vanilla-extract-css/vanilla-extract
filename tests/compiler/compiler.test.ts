@@ -1,3 +1,4 @@
+import net from 'net';
 import path from 'path';
 import { afterAll, describe, expect, test } from 'vitest';
 import { createCompiler } from '@vanilla-extract/compiler';
@@ -887,6 +888,34 @@ describe('compiler', () => {
     const { css: sprinklesCss } = compiler.getCssForFile(sprinklesCssPath);
     expect(sprinklesCss).toContain('.sprinkles_padding_0');
     expect(sprinklesCss).toContain('padding: 16px');
+
+    await compiler.close();
+  });
+
+  test('should not open a WebSocket server when the parent server is in middleware mode', async () => {
+    // Vite's default WebSocket port, used when there is no HTTP server to attach to
+    const wsPort = 24678;
+    const isPortFree = () =>
+      new Promise<boolean>((resolve) => {
+        const server = net.createServer();
+        server.once('error', () => resolve(false));
+        server.listen(wsPort, () => server.close(() => resolve(true)));
+      });
+
+    expect(await isPortFree(), 'port is free before the compiler starts').toBe(
+      true,
+    );
+
+    const compiler = createCompiler({
+      root: __dirname,
+      viteConfig: { server: { middlewareMode: true } },
+    });
+
+    await compiler.processVanillaFile(
+      path.join(__dirname, 'fixtures/class-composition/styles.css.ts'),
+    );
+
+    expect(await isPortFree(), 'port is still free after compiling').toBe(true);
 
     await compiler.close();
   });

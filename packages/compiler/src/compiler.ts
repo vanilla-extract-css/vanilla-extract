@@ -114,6 +114,9 @@ const createViteServer = async ({
     server: {
       middlewareMode: viteConfig.server?.middlewareMode,
       hmr: false,
+      // `hmr: false` alone doesn't stop Vite opening a WebSocket server on port 24678 in middleware
+      // mode, which clashes between concurrent dev servers
+      ws: false,
       watch: enableFileWatcher ? viteConfig.server?.watch : null,
     },
     logLevel: 'silent',
