@@ -1,5 +1,20 @@
 # @vanilla-extract/vite-plugin
 
+## 6.0.0
+
+### Major Changes
+
+- [#1818](https://github.com/vanilla-extract-css/vanilla-extract/pull/1818) [`e6bc070`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e6bc0706a2ed1db1eddacf58fd494c381d5eec92) Thanks [@askoufis](https://github.com/askoufis)! - Drop support for Vite versions below 8
+  
+  **BREAKING CHANGE**: The `vite` peer dependency is now `^8.0.0`.
+  
+  **MIGRATION GUIDE**: Upgrade `vite` to version `8.0.0` or later.
+
+### Patch Changes
+
+- Updated dependencies [[`e6bc070`](https://github.com/vanilla-extract-css/vanilla-extract/commit/e6bc0706a2ed1db1eddacf58fd494c381d5eec92)]:
+  - @vanilla-extract/compiler@0.8.0
+
 ## 5.2.6
 
 ### Patch Changes
