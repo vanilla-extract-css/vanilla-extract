@@ -2797,6 +2797,44 @@ describe('transformCss', () => {
     `);
   });
 
+  it('should not cast unitless properties to pixels, including vendor-prefixed ones', () => {
+    expect(
+      transformCss({
+        composedClassLists: [],
+        localClassNames: ['testClass'],
+        cssObjs: [
+          {
+            type: 'local',
+            selector: 'testClass',
+            rule: {
+              aspectRatio: 1.5,
+              fontSizeAdjust: 0.5,
+              WebkitBoxFlex: 1,
+              WebkitFlexGrow: 2,
+              WebkitLineClamp: 3,
+              MozBoxOrdinalGroup: 4,
+              msFlex: 1,
+              MozPaddingStart: 10,
+              WebkitTextStrokeWidth: 2,
+            },
+          },
+        ],
+      }).join('\n'),
+    ).toMatchInlineSnapshot(`
+      .testClass {
+        aspect-ratio: 1.5;
+        font-size-adjust: 0.5;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 2;
+        -webkit-line-clamp: 3;
+        -moz-box-ordinal-group: 4;
+        -ms-flex: 1;
+        -moz-padding-start: 10px;
+        -webkit-text-stroke-width: 2px;
+      }
+    `);
+  });
+
   it('should allow valid global styles', () => {
     expect(
       transformCss({
